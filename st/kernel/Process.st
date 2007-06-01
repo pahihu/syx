@@ -19,13 +19,13 @@ context: aContext
 !
 
 suspend
-    <primitive: 'Process_suspend'>
-	self primitiveFailed
+	suspended := true.
+	self isActive ifTrue: [self yield]
 !
 
 resume
-    <primitive: 'Process_resume'>
-	self primitiveFailed
+	suspended := false.
+	self isActive ifFalse: [Processor activeProcess yield]
 !
 
 terminate

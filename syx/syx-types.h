@@ -33,17 +33,20 @@ G_BEGIN_DECLS
 #define SYX_IS_SMALL_INTEGER(ptr) ((syx_nint)ptr & SYX_TYPE_SMALL_INTEGER_BITS)
 #define SYX_IS_CHARACTER(ptr) (((syx_nint)ptr & SYX_TYPE_POINTER) == SYX_TYPE_CHARACTER_BITS)
 
-#define syx_small_integer_new(n) ((syx_pointer)((n) | SYX_TYPE_SMALL_INTEGER_BITS))
-#define syx_character_new(n) ((syx_pointer)(((n) & ~SYX_TYPE_POINTER_BITS) | SYX_TYPE_CHARACTER_BITS))
+#define syx_small_integer_new(n) ((syx_pointer)(((syx_nint)n) | SYX_TYPE_SMALL_INTEGER_BITS))
+#define syx_character_new(n) ((syx_pointer)((((syx_nint)n) & ~SYX_TYPE_POINTER_BITS) | SYX_TYPE_CHARACTER_BITS))
 #define syx_boolean_new(cond) ((cond) ? SYX_TRUE : SYX_FALSE)
 
 typedef unsigned char syx_bool;
 
+typedef char syx_char;
+typedef unsigned char syx_uchar;
+
 typedef char syx_int8;
 typedef unsigned char syx_uint8;
 
-typedef syx_int8 * syx_string;
-typedef const syx_int8 * syx_symbol;
+typedef syx_char * syx_string;
+typedef const syx_char * syx_symbol;
 
 typedef short int syx_int16;
 typedef unsigned short int syx_uint16;
@@ -57,7 +60,7 @@ typedef unsigned long syx_unint;
 typedef long long int syx_int64;
 typedef unsigned long long int syx_uint64;
 
-typedef unsigned long syx_size;
+typedef long syx_size;
 typedef unsigned int syx_varsize;
 
 typedef void * syx_pointer;

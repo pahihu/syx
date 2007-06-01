@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "syx-object.h"
 #include "syx-memory.h"
 #include "syx-enums.h"
@@ -30,7 +31,7 @@ SyxObject *syx_metaclass_class,
   *syx_method_context_class,
   *syx_block_context_class,
   *syx_process_class,
-  *syx_process_scheduler_class,
+  *syx_processor_scheduler_class,
 
   *syx_symbols,
   *syx_globals;
@@ -99,6 +100,8 @@ syx_metaclass_new (SyxObject *supermetaclass)
   SyxObject *metaclass = syx_object_new (syx_metaclass_class);
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
+  SYX_CLASS_METHODS(metaclass) = syx_dictionary_new (50);
+  SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
   return metaclass;
 }
 
@@ -109,6 +112,8 @@ syx_class_new (SyxObject *superclass)
   SyxObject *class = syx_object_new (metaclass);
   SYX_CLASS_SUPERCLASS(class) = superclass;
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
+  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
+  SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   return class;
 }
 
@@ -131,9 +136,9 @@ syx_symbol_new (syx_symbol symbol)
   if (SYX_IS_NIL (object))
     {
       object = syx_object_new_data (syx_symbol_class, strlen (symbol), strdup (symbol));
-      syx_dictionary_at_const_put (syx_symbols, object, SYX_TRUE);
+      syx_dictionary_at_const_put (syx_symbols, object, object);
     }
-  printf("%p\n", object);
+
   return object;
 }
 
@@ -187,7 +192,7 @@ syx_dictionary_at_symbol (SyxObject *dict, syx_symbol key)
   for (i=0; i < size; i+=2)
     {
       entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !g_strcasecmp (SYX_OBJECT_SYMBOL (entry), key))
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
@@ -207,8 +212,11 @@ syx_dictionary_at_const_put (SyxObject *dict, SyxObject *key, SyxObject *value)
 	{
 	  SYX_OBJECT_DATA(table)[i] = key;
 	  SYX_OBJECT_DATA(table)[i+1] = value;
+	  return;
 	}
     }
+
+  printf("Not enough space for dictionary %p\n", SYX_POINTER (dict));
 }
 
 inline SyxObject *
@@ -322,7 +330,7 @@ syx_symbol *
 syx_class_get_all_instance_variables (SyxObject *class)
 {
   syx_symbol names[256];
-  syx_symbol *ret_names;
+  syx_symbol *ret_names = NULL;
   SyxObject *inst_vars;
   syx_varsize i, size, tot_size;
 
@@ -331,12 +339,17 @@ syx_class_get_all_instance_variables (SyxObject *class)
       inst_vars = SYX_CLASS_INSTANCE_VARIABLES (class);
       size = SYX_OBJECT_SIZE (inst_vars);
 
-      for (i=0; i < size; i++,tot_size++)
-	names[255-tot_size] = SYX_OBJECT_SYMBOL (SYX_OBJECT_DATA(inst_vars)[i]);
+      for (i=size; i > 0; i--)
+	{
+	  tot_size++;
+	  names[255-tot_size+1] = SYX_OBJECT_SYMBOL (SYX_OBJECT_DATA(inst_vars)[i-1]);
+	}
     }
-
-  ret_names = syx_calloc (tot_size, sizeof (syx_symbol) + 1);
-  memcpy (ret_names, &names[255-tot_size], sizeof (syx_symbol));
+  if (tot_size > 0)
+    {
+      ret_names = syx_calloc (tot_size + 1, sizeof (syx_symbol));
+      memcpy (ret_names, &names[255-tot_size+1], tot_size * sizeof (syx_symbol));
+    }
   return ret_names;
 }
 

@@ -11,39 +11,40 @@
 #include "syx-interp.h"
 #include "syx-utils.h"
 
-static syx_varsize find_temporary_name (SyxParser *self, syx_symbol name);
-static syx_varsize find_argument_name (SyxParser *self, syx_symbol name);
-static syx_varsize find_instance_name (SyxParser *self, syx_symbol name);
-static syx_bool parse_term (SyxParser *self, SyxToken token);
-static syx_bool parse_name_term (SyxParser *self, syx_symbol name);
+static syx_varsize _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name);
+static syx_varsize _syx_parser_find_argument_name (SyxParser *self, syx_symbol name);
+static syx_varsize _syx_parser_find_instance_name (SyxParser *self, syx_symbol name);
+static syx_bool _syx_parser_parse_term (SyxParser *self);
+static syx_bool _syx_parser_parse_name_term (SyxParser *self, syx_symbol name);
 
-static void parse_message_pattern (SyxParser *self);
-static void parse_block_message_pattern (SyxParser *self);
-static void parse_method_message_pattern (SyxParser *self);
+static void _syx_parser_parse_message_pattern (SyxParser *self);
+static void _syx_parser_parse_block_message_pattern (SyxParser *self);
+static void _syx_parser_parse_method_message_pattern (SyxParser *self);
 
-static void parse_primitive (SyxParser *self);
-static void parse_temporaries (SyxParser *self);
+static void _syx_parser_parse_primitive (SyxParser *self);
+static void _syx_parser_parse_temporaries (SyxParser *self);
 
-static void parse_body (SyxParser *self);
-static void parse_statement (SyxParser *self);
-static void parse_expression (SyxParser *self);
-static void parse_assignment (SyxParser *self, syx_symbol assign_name);
-static void parse_block (SyxParser *self);
-static void parse_array (SyxParser *self);
-static SyxObject *parse_literal_array (SyxParser *self);
-static void do_continuation (SyxParser *self, syx_bool super_receiver);
-static syx_bool key_continuation (SyxParser *self, syx_bool super_receiver);
-static syx_bool binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
-static syx_bool unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
+static void _syx_parser_parse_body (SyxParser *self);
+static void _syx_parser_parse_statement (SyxParser *self);
+static void _syx_parser_parse_expression (SyxParser *self);
+static void _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name);
+static void _syx_parser_parse_block (SyxParser *self);
+static void _syx_parser_parse_array (SyxParser *self);
+static SyxObject *_syx_parser_parse_literal_array (SyxParser *self);
+
+static void _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver);
+static syx_bool _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver);
+static syx_bool _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
+static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
 
 SyxParser *
 syx_parser_new (SyxLexer *lexer, SyxObject *method, syx_symbol *instance_names, syx_bool in_block, SyxParser *parent_parser)
 {
   SyxParser *self;
-  g_return_val_if_fail (lexer != NULL, NULL);
-  g_return_val_if_fail (SYX_IS_POINTER (method), NULL);
+  if (!lexer || !SYX_IS_POINTER (method))
+    return NULL;
   
-  self = syx_malloc (sizeof (SyxParser ));
+  self = syx_malloc (sizeof (SyxParser));
 
   self->lexer = lexer;
   self->method = method;
@@ -59,27 +60,51 @@ syx_parser_new (SyxLexer *lexer, SyxObject *method, syx_symbol *instance_names, 
   return self;
 }
 
+void
+syx_parser_free (SyxParser *self, syx_bool free_segment)
+{
+  syx_size i;
+  syx_bytecode_free (self->bytecode, FALSE);
+
+  for (i=0; i < self->temporary_names->len; i++)
+    syx_free (self->temporary_names->pdata[i]);
+  for (i=0; i < self->argument_names->len; i++)
+    syx_free (self->argument_names->pdata[i]);
+  g_ptr_array_free (self->temporary_names, TRUE);
+  g_ptr_array_free (self->argument_names, TRUE);
+
+  if (free_segment)
+    {
+      if (self->instance_names)
+	syx_free (self->instance_names);
+      syx_lexer_free (self->lexer, TRUE);
+    }
+
+  syx_free (self);
+}
+
 syx_bool
 syx_parser_parse (SyxParser *self, GError **error)
 {
-  SyxToken token = SYX_TOKEN_INIT;
+  SyxToken token;
 
-  syx_lexer_next_token (self->lexer, &token);
+  token = syx_lexer_next_token (self->lexer);
   if (token.type == SYX_TOKEN_END)
     return TRUE;
 
-  parse_message_pattern (self);
+  _syx_parser_parse_message_pattern (self);
+
   if (!self->in_block)
-    parse_primitive (self);
+    _syx_parser_parse_primitive (self);
 
   self->temporary_scopes = g_queue_new ();
 
-  parse_temporaries (self);
-  parse_body (self);
+  _syx_parser_parse_temporaries (self);
+  _syx_parser_parse_body (self);
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
 
   SYX_METHOD_BYTECODES(self->method) = syx_array_new (self->bytecode->code->len,
-						       (SyxObject **) self->bytecode->code->data);
+						      (SyxObject **) self->bytecode->code->data);
   SYX_METHOD_LITERALS(self->method) = syx_array_new (self->bytecode->literals->len,
 						     (SyxObject **) self->bytecode->literals->pdata);
   SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->argument_names->len);
@@ -90,12 +115,13 @@ syx_parser_parse (SyxParser *self, GError **error)
 }
 
 static syx_varsize
-find_temporary_name (SyxParser *self, syx_symbol name)
+_syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
 {
   SyxParser *cur;
   syx_varsize pos, i, scope_index;
   syx_int32 *scope;
-  g_return_val_if_fail (name != NULL, -1);
+  if (!name)
+    return 0;
 
   for (cur=self, pos=0; cur; cur=cur->parent_parser)
     {
@@ -116,17 +142,18 @@ find_temporary_name (SyxParser *self, syx_symbol name)
 }
 
 static syx_varsize
-find_argument_name (SyxParser *self, syx_symbol name)
+_syx_parser_find_argument_name (SyxParser *self, syx_symbol name)
 {
   SyxParser *cur;
   syx_varsize pos, i;
-  g_return_val_if_fail (name != NULL, -1);
+  if (!name)
+    return 0;
 
   for (cur=self, pos=0; cur; cur=cur->parent_parser)
     {
       for (i=0; i < cur->argument_names->len; i++, pos++)
 	{
-	  if (!g_strcasecmp (cur->argument_names->pdata[i], name))
+	  if (!strcmp (cur->argument_names->pdata[i], name))
 	    return pos + 1;
 	}
     }
@@ -135,17 +162,18 @@ find_argument_name (SyxParser *self, syx_symbol name)
 }
 
 static syx_varsize
-find_instance_name (SyxParser *self, syx_symbol name)
+_syx_parser_find_instance_name (SyxParser *self, syx_symbol name)
 {
   if (!self->instance_names)
     return 0;
 
   syx_varsize i;
-  g_return_val_if_fail (name != NULL, FALSE);
+  if (!name)
+    return 0;
 
   for (i=0; self->instance_names[i]; i++)
     {
-      if (!g_strcasecmp (self->instance_names[i], name))
+      if (!strcmp (self->instance_names[i], name))
 	return i + 1;
     }
 
@@ -153,92 +181,100 @@ find_instance_name (SyxParser *self, syx_symbol name)
 }
 
 static syx_bool
-parse_term (SyxParser *self, SyxToken token)
+_syx_parser_parse_term (SyxParser *self)
 {
+  SyxToken token = syx_lexer_get_last_token (self->lexer);
   syx_bool super_term = FALSE;
   switch (token.type)
     {
     case SYX_TOKEN_NAME_CONST:
-      super_term = parse_name_term (self, g_value_get_string (token.value));
+      super_term = _syx_parser_parse_name_term (self, token.value.string);
+      syx_token_free (token);
       break;
     case SYX_TOKEN_STR_CONST:
-      syx_bytecode_push_literal (self->bytecode, syx_string_new (g_value_get_string (token.value)));
+      syx_bytecode_push_literal (self->bytecode, syx_string_new (token.value.string));
+      syx_token_free (token);
       break;
     case SYX_TOKEN_INT_CONST:
-      syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (g_value_get_int (token.value)));
+      syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (token.value.integer));
+      syx_token_free (token);
       break;
     case SYX_TOKEN_SYM_CONST:
-      syx_bytecode_push_literal (self->bytecode, syx_symbol_new (g_value_get_string (token.value)));
+      syx_bytecode_push_literal (self->bytecode, syx_symbol_new (token.value.string));
+      syx_token_free (token);
       break;
     case SYX_TOKEN_CHAR_CONST:
-      syx_bytecode_push_literal (self->bytecode, syx_character_new (g_value_get_char (token.value)));
+      syx_bytecode_push_literal (self->bytecode, syx_character_new (token.value.character));
+      syx_token_free (token);
       break;
     case SYX_TOKEN_ARRAY_BEGIN:
-      syx_bytecode_push_literal (self->bytecode, parse_literal_array (self));
+      syx_bytecode_push_literal (self->bytecode, _syx_parser_parse_literal_array (self));
+      syx_token_free (token);
       break;
     case SYX_TOKEN_BINARY:
-      if (!G_VALUE_STRCMP (token.value, "("))
+      if (!strcmp (token.value.string, "("))
 	{
-	  syx_lexer_next_token (self->lexer, &token);
-	  parse_expression (self);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
+	  _syx_parser_parse_expression (self);
 	  token = syx_lexer_get_last_token (self->lexer);
-	  if (! (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == ')'))
+	  if (! (token.type == SYX_TOKEN_CLOSING && token.value.character == ')'))
 	    g_error ("Expected ) after sub expression");
 	}
-      else if (!G_VALUE_STRCMP (token.value, "["))
-	parse_block (self);
-      else if (!G_VALUE_STRCMP (token.value, "{"))
-	parse_array (self);
+      else if (!strcmp (token.value.string, "["))
+	_syx_parser_parse_block (self);
+      else if (!strcmp (token.value.string, "{"))
+	_syx_parser_parse_array (self);
       break;
     default:
-      g_error ("Invalid expression start %s\n", g_value_get_string (token.value));
+      g_error ("Invalid expression start\n");
     }
 
-  syx_lexer_next_token (self->lexer, &token);
+  syx_lexer_next_token (self->lexer);
   return super_term;
 }
 
 static syx_bool
-parse_name_term (SyxParser *self, syx_symbol name)
+_syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
 {
   syx_varsize pos;
 
-  if (!g_strcasecmp (name, "self") || !g_strcasecmp (name, "super"))
+  if (!strcmp (name, "self") || !strcmp (name, "super"))
     {
       syx_bytecode_push_argument (self->bytecode, 0);
-      if (!g_strcasecmp (name, "super"))
+      if (!strcmp (name, "super"))
 	return TRUE;
       return FALSE;
     }
 
-  pos = find_argument_name (self, name);
+  pos = _syx_parser_find_argument_name (self, name);
   if (pos > 0)
     {
       syx_bytecode_push_argument (self->bytecode, pos);
       return FALSE;    
     }
   
-  pos = find_temporary_name (self, name);
+  pos = _syx_parser_find_temporary_name (self, name);
   if (pos > 0)
     {
       syx_bytecode_push_temporary (self->bytecode, pos - 1);
       return FALSE;
     }
 
-  pos = find_instance_name (self, name);
+  pos = _syx_parser_find_instance_name (self, name);
   if (pos > 0)
     {
       syx_bytecode_push_instance (self->bytecode, pos - 1);
       return FALSE;
     }
 
-  if (!g_strcasecmp (name, "nil"))
+  if (!strcmp (name, "nil"))
     syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_NIL);
-  else if (!g_strcasecmp (name, "true"))
+  else if (!strcmp (name, "true"))
     syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_TRUE);
-  else if (!g_strcasecmp (name, "false"))
+  else if (!strcmp (name, "false"))
     syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_FALSE);
-  else if (!g_strcasecmp (name, "thisContext"))
+  else if (!strcmp (name, "thisContext"))
     syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_CONTEXT);
   else
     syx_bytecode_push_global (self->bytecode, syx_symbol_new (name));
@@ -247,81 +283,90 @@ parse_name_term (SyxParser *self, syx_symbol name)
 }
 
 static void
-parse_primitive (SyxParser *self)
+_syx_parser_parse_primitive (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
   syx_int32 prim_index;
 
-  if (! (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, "<")))
+  if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "<")))
     return;
+  syx_token_free (token);
 
-  syx_lexer_next_token (self->lexer, &token);
-  if (! (token.type == SYX_TOKEN_NAME_COLON && !G_VALUE_STRCMP (token.value, "primitive:")))
+  token = syx_lexer_next_token (self->lexer);
+  if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "primitive:")))
     g_error ("expected primitive:");
+  syx_token_free (token);
 
-  syx_lexer_next_token (self->lexer, &token);
+  token = syx_lexer_next_token (self->lexer);
   if (token.type != SYX_TOKEN_STR_CONST)
     g_error ("expected a string containing the primitive to be called\n");
 
-  prim_index = syx_primitive_get_index (g_value_get_string (token.value));
+  prim_index = syx_primitive_get_index (token.value.string);
   if (prim_index < 0)
-    g_error ("unknown primitive named %s\n", g_value_get_string (token.value));
+    g_error ("unknown primitive named %s\n", token.value.string);
+  syx_token_free (token);
 
-  syx_lexer_next_token (self->lexer, &token);
-  if (! (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, ">")))
+  token = syx_lexer_next_token (self->lexer);
+  if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
     g_error ("expected >");
+  syx_token_free (token);
 
   syx_bytecode_gen_instruction (self->bytecode, SYX_BYTECODE_DO_PRIMITIVE, prim_index);
   
-  syx_lexer_next_token (self->lexer, &token);
+  syx_lexer_next_token (self->lexer);
   return;
 }
 
 static void
-parse_temporaries (SyxParser *self)
+_syx_parser_parse_temporaries (SyxParser *self)
 {
-  syx_int32 *scope = g_new0 (syx_int32, 2);
+  syx_int32 *scope = syx_calloc (2, sizeof (syx_int32));
+  SyxToken token = syx_lexer_get_last_token (self->lexer);
   scope[0] = scope[1] = self->temporary_names->len;
 
-  SyxToken token = syx_lexer_get_last_token (self->lexer);
-  if (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, "|"))
+  if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|"))
     {
-      syx_lexer_next_token (self->lexer, &token);
+      syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
       while (token.type == SYX_TOKEN_NAME_CONST)
 	{
 	  g_ptr_array_add (self->temporary_names,
-			   g_strdup (g_value_get_string (token.value)));
+			   token.value.string);
 	  scope[1]++;
-	  syx_lexer_next_token (self->lexer, &token);
+	  token = syx_lexer_next_token (self->lexer);
 	}
-      if (! (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, "|")))
+      if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
 	g_error ("Temporary list not terminated by bar");
-      syx_lexer_next_token (self->lexer, &token);
+      syx_token_free (token);
+
+      syx_lexer_next_token (self->lexer);
     }
 
   g_queue_push_head (self->temporary_scopes, scope);
 }
 
 static void
-parse_body (SyxParser *self)
+_syx_parser_parse_body (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
   syx_bool closed_brace = FALSE;
 
   while (token.type != SYX_TOKEN_END)
     {
-      if (self->in_block && token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == ']')
+      if (self->in_block && token.type == SYX_TOKEN_CLOSING && token.value.character == ']')
 	{
 	  closed_brace = TRUE;
+	  syx_token_free (token);
 	  break;
 	}
       
-      parse_statement (self);
-      
+      _syx_parser_parse_statement (self);
+
       token = syx_lexer_get_last_token (self->lexer);
-      if (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == '.')
+      if (token.type == SYX_TOKEN_CLOSING && token.value.character == '.')
 	{
-	  syx_lexer_next_token (self->lexer, &token);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
 	  if (token.type == SYX_TOKEN_CLOSING || token.type == SYX_TOKEN_END)
 	    continue;
 	  syx_bytecode_pop_top (self->bytecode);
@@ -333,65 +378,71 @@ parse_body (SyxParser *self)
 }
 
 static void
-parse_statement (SyxParser *self)
+_syx_parser_parse_statement (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  if (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, "^"))
+
+  if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "^"))
     {
-      syx_lexer_next_token (self->lexer, &token);
-      parse_expression (self);
+      syx_token_free (token);
+      syx_lexer_next_token (self->lexer);
+      _syx_parser_parse_expression (self);
       syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_STACK_RETURN);
     }
   else
-    parse_expression (self);
+    _syx_parser_parse_expression (self);
 }
 
 static void
-parse_expression (SyxParser *self)
+_syx_parser_parse_expression (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  gchar *assign_name;
+  syx_string assign_name;
   syx_bool super_term = FALSE;
 
   if (token.type == SYX_TOKEN_NAME_CONST)
     {
-      assign_name = g_strdup (g_value_get_string (token.value));
-      syx_lexer_next_token (self->lexer, &token);
-      if (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, ":="))
+      assign_name = strdup (token.value.string);
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
+      if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":="))
 	{
-	  syx_lexer_next_token (self->lexer, &token);
-	  parse_assignment (self, assign_name);
-	  g_free (assign_name);
+	  syx_token_free (token);
+	  syx_lexer_next_token (self->lexer);
+	  _syx_parser_parse_assignment (self, assign_name);
 	}
       else // Not an assignment, let it be a name term then
-	super_term = parse_name_term (self, assign_name);
+	super_term = _syx_parser_parse_name_term (self, assign_name);
+
+      syx_free (assign_name);
     }
   else
-    super_term = parse_term (self, token);
-    
+    super_term = _syx_parser_parse_term (self);
+
   /* After we got the initial object, we can do message continuation on it
      specifying if 'super' has been requested instead of self */
 
-  do_continuation (self, super_term);
+  _syx_parser_do_continuation (self, super_term);
 }
 
 static void
-parse_assignment (SyxParser *self, syx_symbol assign_name)
+_syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
 {
   syx_varsize pos;
-  
-  pos = find_temporary_name (self, assign_name);
+
+  pos = _syx_parser_find_temporary_name (self, assign_name);
   if (pos > 0)
     {
-      parse_expression (self);
+      _syx_parser_parse_expression (self);
       syx_bytecode_assign_temporary (self->bytecode, pos - 1);
       return;
     }
 
-  pos = find_instance_name (self, assign_name);
+  pos = _syx_parser_find_instance_name (self, assign_name);
   if (pos > 0)
     {
-      parse_expression (self);
+      _syx_parser_parse_expression (self);
       syx_bytecode_assign_instance (self->bytecode, pos - 1);
       return;
     }
@@ -400,21 +451,22 @@ parse_assignment (SyxParser *self, syx_symbol assign_name)
 }
 
 static void
-do_continuation (SyxParser *self, syx_bool super_receiver)
+_syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
 {
-  SyxToken token = SYX_TOKEN_INIT;
-  glong index[2] = {0, 0};
+  SyxToken token;
+  syx_varsize index[2] = {0, 0};
 
   g_trash_stack_push (&self->duplicate_indexes, &index);
-  super_receiver = key_continuation (self, super_receiver);
+  super_receiver = _syx_parser_do_key_continuation (self, super_receiver);
   
   token = syx_lexer_get_last_token (self->lexer);
-  while (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == ';')
+  while (token.type == SYX_TOKEN_CLOSING && token.value.character == ';')
     {
       syx_bytecode_duplicate_at (self->bytecode, ((glong *)g_trash_stack_peek (&self->duplicate_indexes))[1]);
       syx_bytecode_pop_top (self->bytecode);
-      syx_lexer_next_token (self->lexer, &token);
-      key_continuation (self, super_receiver);
+      syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
+      _syx_parser_do_key_continuation (self, super_receiver);
       token = syx_lexer_get_last_token (self->lexer);
     }
 
@@ -446,17 +498,18 @@ parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool
   self->in_block = TRUE;
 
   token = syx_lexer_get_last_token (self->lexer);
-  if (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, "["))
+  if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "["))
     {
-      syx_lexer_next_token (self->lexer, &token);
-      parse_temporaries (self);
-      parse_body (self);
-      g_queue_pop_head (self->temporary_scopes);
-      syx_lexer_next_token (self->lexer, &token);
+      syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
+      _syx_parser_parse_temporaries (self);
+      _syx_parser_parse_body (self);
+      syx_free (g_queue_pop_head (self->temporary_scopes));
+      token = syx_lexer_next_token (self->lexer);
     }
   else
     {
-      binary_continuation (self, parse_term (self, token), FALSE);
+      _syx_parser_do_binary_continuation (self, _syx_parser_parse_term (self), FALSE);
       syx_bytecode_gen_message (self->bytecode, FALSE, 0, syx_symbol_new ("value"));
     }
 
@@ -466,7 +519,7 @@ parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool
 }
 
 static syx_bool
-key_continuation (SyxParser *self, syx_bool super_receiver)
+_syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 {
   SyxToken token;
   GString *selector;
@@ -474,22 +527,24 @@ key_continuation (SyxParser *self, syx_bool super_receiver)
   syx_bool super_term;
   gulong jump, conditionJump, loopJump;
 
-  super_receiver = binary_continuation (self, super_receiver, TRUE);
+  super_receiver = _syx_parser_do_binary_continuation (self, super_receiver, TRUE);
 
   token = syx_lexer_get_last_token (self->lexer);
   if (token.type == SYX_TOKEN_NAME_COLON)
     {
       save_duplicate_index (self);
       
-      if (!G_VALUE_STRCMP (token.value, "ifTrue:"))
+      if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifTrue:"))
 	{
-	  syx_lexer_next_token (self->lexer, &token);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
 	  parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
 
 	  token = syx_lexer_get_last_token (self->lexer);
-	  if (token.type == SYX_TOKEN_NAME_COLON && !G_VALUE_STRCMP (token.value, "ifFalse:"))
+	  if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifFalse:"))
 	    {
-	      syx_lexer_next_token (self->lexer, &token);
+	      syx_token_free (token);
+	      token = syx_lexer_next_token (self->lexer);
 	      jump = parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump
 	      self->bytecode->code->data[jump] = 0;
@@ -497,15 +552,17 @@ key_continuation (SyxParser *self, syx_bool super_receiver)
 
 	  return FALSE;
 	}
-      else if (!G_VALUE_STRCMP (token.value, "ifFalse:"))
+      else if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifFalse:"))
 	{
-	  syx_lexer_next_token (self->lexer, &token);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
 	  parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_FALSE, FALSE);
 
 	  token = syx_lexer_get_last_token (self->lexer);
-	  if (token.type == SYX_TOKEN_NAME_COLON && !G_VALUE_STRCMP (token.value, "ifTrue:"))
+	  if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifTrue:"))
 	    {
-	      syx_lexer_next_token (self->lexer, &token);
+	      syx_token_free (token);
+	      token = syx_lexer_next_token (self->lexer);
 	      jump = parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump
 	      self->bytecode->code->data[jump] = 0;
@@ -513,9 +570,10 @@ key_continuation (SyxParser *self, syx_bool super_receiver)
 
 	  return FALSE;
 	}
-      else if (!G_VALUE_STRCMP (token.value, "whileTrue:"))
+      else if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "whileTrue:"))
 	{
-	  syx_lexer_next_token (self->lexer, &token);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
 	  loopJump = self->bytecode->code->len;
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_DUPLICATE);
 	  syx_bytecode_gen_message (self->bytecode, FALSE, 0, syx_symbol_new ("value"));
@@ -533,12 +591,13 @@ key_continuation (SyxParser *self, syx_bool super_receiver)
       num_args = 0;
       while (token.type == SYX_TOKEN_NAME_COLON)
 	{
-	  g_string_append (selector, g_value_get_string (token.value));
+	  g_string_append (selector, token.value.string);
 	  num_args++;
-	  syx_lexer_next_token (self->lexer, &token);
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
 
-	  super_term = parse_term (self, token);
-	  binary_continuation (self, super_term, FALSE);
+	  super_term = _syx_parser_parse_term (self);
+	  _syx_parser_do_binary_continuation (self, super_term, FALSE);
 
 	  token = syx_lexer_get_last_token (self->lexer);
 	}
@@ -551,25 +610,26 @@ key_continuation (SyxParser *self, syx_bool super_receiver)
 }
 
 static syx_bool
-binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
+_syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
 {
   SyxObject *selector;
   SyxToken token;
   syx_bool super_term;
 
-  super_receiver = unary_continuation (self, super_receiver, do_cascade);
+  super_receiver = _syx_parser_do_unary_continuation (self, super_receiver, do_cascade);
 
   token = syx_lexer_get_last_token (self->lexer);
   while (token.type == SYX_TOKEN_BINARY)
     {
-      selector = syx_symbol_new (g_value_get_string (token.value));
+      selector = syx_symbol_new (token.value.string);
       
       if (do_cascade)
 	save_duplicate_index (self);
 
-      syx_lexer_next_token (self->lexer, &token);
-      super_term = parse_term (self, token);
-      unary_continuation (self, super_term, FALSE);
+      syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
+      super_term = _syx_parser_parse_term (self);
+      _syx_parser_do_unary_continuation (self, super_term, FALSE);
       token = syx_lexer_get_last_token (self->lexer);
 
       syx_bytecode_gen_message (self->bytecode, super_receiver, 1, selector);
@@ -579,7 +639,7 @@ binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_casca
 }
 
 static syx_bool
-unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
+_syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
 
@@ -589,8 +649,10 @@ unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascad
 	save_duplicate_index (self);
 
       syx_bytecode_gen_message (self->bytecode, super_receiver,
-				0, syx_symbol_new (g_value_get_string (token.value)));
-      syx_lexer_next_token (self->lexer, &token);
+				0, syx_symbol_new (token.value.string));
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
       super_receiver = FALSE;
     }
 
@@ -598,80 +660,82 @@ unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascad
 }
 
 static void
-parse_block (SyxParser *self)
+_syx_parser_parse_block (SyxParser *self)
 {
   SyxObject *closure;
   SyxObject *method = syx_block_new ();
   SyxParser *sub_parser = syx_parser_new (self->lexer, method, self->instance_names, TRUE, self);
+  syx_token_free (syx_lexer_get_last_token (self->lexer));
   syx_parser_parse (sub_parser, NULL);
-
+  syx_parser_free (sub_parser, FALSE);
   closure = syx_block_closure_new (method);
   syx_bytecode_push_block_closure (self->bytecode, closure);
 }
 
 static void
-parse_array (SyxParser *self)
+_syx_parser_parse_array (SyxParser *self)
 {
-  guint num_elements = 0;
-  SyxToken token = SYX_TOKEN_INIT;
+  syx_varsize num_elements = 0;
+  SyxToken token = syx_lexer_get_last_token (self->lexer);
 
-  syx_lexer_next_token (self->lexer, &token);
-  while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == '}')))
+  syx_token_free (token);
+  token = syx_lexer_next_token (self->lexer);
+  while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_CLOSING && token.value.character == '}')))
     {
-      parse_expression (self);
+      _syx_parser_parse_expression (self);
       num_elements++;
       token = syx_lexer_get_last_token (self->lexer);
-      if (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == '.')
-	syx_lexer_next_token (self->lexer, &token);
+      if (token.type == SYX_TOKEN_CLOSING && token.value.character == '.')
+	token = syx_lexer_next_token (self->lexer);
     }
 
   syx_bytecode_push_array (self->bytecode, num_elements);
 }
 
 static SyxObject *
-parse_literal_array (SyxParser *self)
+_syx_parser_parse_literal_array (SyxParser *self)
 {
   GPtrArray *elements = g_ptr_array_new ();
-  SyxToken token = SYX_TOKEN_INIT;
+  SyxToken token;
 
-  syx_lexer_next_token (self->lexer, &token);
-  while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_CLOSING && g_value_get_char (token.value) == ')')))
+  token = syx_lexer_next_token (self->lexer);
+  while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_CLOSING && token.value.character == ')')))
     {
       switch (token.type)
 	{
 	case SYX_TOKEN_ARRAY_BEGIN:
-	  g_ptr_array_add (elements, parse_literal_array (self));
+	  g_ptr_array_add (elements, _syx_parser_parse_literal_array (self));
 	  break;
 	case SYX_TOKEN_INT_CONST:
-	  g_ptr_array_add (elements, syx_small_integer_new (g_value_get_int (token.value)));
+	  g_ptr_array_add (elements, syx_small_integer_new (token.value.integer));
 	  break;
 	case SYX_TOKEN_BINARY:
-	  if (!G_VALUE_STRCMP (token.value, "("))
+	  if (!strcmp (token.value.string, "("))
 	    {
-	      g_ptr_array_add (elements, parse_literal_array (self));
+	      g_ptr_array_add (elements, _syx_parser_parse_literal_array (self));
 	      break;
 	    }
 	case SYX_TOKEN_NAME_CONST:
 	case SYX_TOKEN_NAME_COLON:
 	case SYX_TOKEN_SYM_CONST:
-	  g_ptr_array_add (elements, syx_symbol_new (g_value_get_string (token.value)));
+	  g_ptr_array_add (elements, syx_symbol_new (token.value.string));
 	  break;
 	case SYX_TOKEN_STR_CONST:
-	  g_ptr_array_add (elements, syx_string_new (g_value_get_string (token.value)));
+	  g_ptr_array_add (elements, syx_string_new (token.value.string));
 	  break;
 	default:
 	  g_error ("illegal text in literal array\n");
 	  break;
 	}
 
-      syx_lexer_next_token (self->lexer, &token);
+      token = syx_lexer_next_token (self->lexer);
     }
 
   return syx_array_new (elements->len, elements->pdata);
 }
 
 static void
-parse_method_message_pattern (SyxParser *self)
+_syx_parser_parse_method_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
   GString *selector;
@@ -679,30 +743,37 @@ parse_method_message_pattern (SyxParser *self)
   switch (token.type)
     {
     case SYX_TOKEN_NAME_CONST:
-      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (g_value_get_string (token.value));
-      syx_lexer_next_token (self->lexer, &token);
+      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (token.value.string);
+      syx_token_free (token);
+
+      syx_lexer_next_token (self->lexer);
       break;
     case SYX_TOKEN_BINARY:
-      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (g_value_get_string (token.value));
-      syx_lexer_next_token (self->lexer, &token);
+      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (token.value.string);
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
       if (!token.type == SYX_TOKEN_NAME_CONST)
 	g_error ("Expected name constant for argument name\n");
-      g_ptr_array_add (self->argument_names, g_strdup (g_value_get_string (token.value)));
+      g_ptr_array_add (self->argument_names, token.value.string);
 
-      syx_lexer_next_token (self->lexer, &token);
+      syx_lexer_next_token (self->lexer);
       break;
     case SYX_TOKEN_NAME_COLON:
       selector = g_string_new (NULL);
       while (token.type == SYX_TOKEN_NAME_COLON)
 	{
-	  g_string_append (selector, g_value_get_string (token.value));
-	  syx_lexer_next_token (self->lexer, &token);
-	  if (!token.type == SYX_TOKEN_NAME_CONST)
-	    g_error ("Expected name constant for argument name\n");
-	  g_ptr_array_add (self->argument_names, g_strdup (g_value_get_string (token.value)));
+	  g_string_append (selector, token.value.string);
+	  syx_token_free (token);
 
-	  syx_lexer_next_token (self->lexer, &token);
+	  token = syx_lexer_next_token (self->lexer);
+	  if (token.type != SYX_TOKEN_NAME_CONST)
+	    g_error ("Expected name constant for argument name\n");
+	  g_ptr_array_add (self->argument_names, token.value.string);
+
+	  token = syx_lexer_next_token (self->lexer);
 	}
+
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector->str);
       g_string_free (selector, TRUE);
       break;
@@ -712,30 +783,33 @@ parse_method_message_pattern (SyxParser *self)
 }
 
 static void
-parse_block_message_pattern (SyxParser *self)
+_syx_parser_parse_block_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
 
-  if (! (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, ":")))
+  if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":")))
     return;
 
-  while (token.type == SYX_TOKEN_BINARY && !G_VALUE_STRCMP (token.value, ":"))
+  while (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":"))
     {
-      syx_lexer_next_token (self->lexer, &token);
+      syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
       g_assert (token.type == SYX_TOKEN_NAME_CONST);
-      g_ptr_array_add (self->argument_names, g_strdup (g_value_get_string (token.value)));
+      g_ptr_array_add (self->argument_names, token.value.string);
 
-      syx_lexer_next_token (self->lexer, &token);
+      token = syx_lexer_next_token (self->lexer);
     }
 
-  if (! (token.type == SYX_TOKEN_BINARY && !g_strcasecmp (g_value_get_string (token.value), "|")))
+  if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
     g_error ("Expected | after block message pattern");
 
-  syx_lexer_next_token (self->lexer, &token);
+  syx_token_free (token);
+  syx_lexer_next_token (self->lexer);
+  return;
 }
 
 static void
-parse_message_pattern (SyxParser *self)
+_syx_parser_parse_message_pattern (SyxParser *self)
 {
-  self->in_block ? parse_block_message_pattern (self) : parse_method_message_pattern (self);
+  self->in_block ? _syx_parser_parse_block_message_pattern (self) : _syx_parser_parse_method_message_pattern (self);
 }

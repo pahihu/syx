@@ -18,9 +18,9 @@ G_BEGIN_DECLS
 
 /* Object */
 
-typedef struct SyxObject SyxObject;
+typedef struct _SyxObject SyxObject;
 
-struct SyxObject
+struct _SyxObject
 {
   SyxObject *class; // please use syx_object_get_class ()
   syx_varsize size;
@@ -51,7 +51,7 @@ extern SyxObject *syx_metaclass_class,
   *syx_method_context_class,
   *syx_block_context_class,
   *syx_process_class,
-  *syx_process_scheduler_class,
+  *syx_processor_scheduler_class,
 
   *syx_symbols,
   *syx_globals;

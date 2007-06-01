@@ -16,7 +16,7 @@ G_BEGIN_DECLS
 
 /* A cold parser */
 
-#define IS_EXLMARK(token) (token.type == SYX_TOKEN_BINARY && !g_strcasecmp (g_value_get_string (token.value), "!"))
+#define IS_EXLMARK(token) (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
 
 GQuark
 syx_parser_error_quark (void)
@@ -29,66 +29,58 @@ parse_class (SyxLexer *lexer, GError **error)
 {
   SyxToken token = syx_lexer_get_last_token (lexer);
   SyxObject *superclass, *subclass;
-  syx_symbol temp_str;
   syx_string subclass_name;
   syx_bool existing_class = TRUE;
-  syx_string *splitted_names;
+
+  SyxLexer *inst_vars_lexer;
   SyxObject *inst_vars;
-  SyxObject *inst_vars_temp[256];
+  SyxObject *inst_vars_raw[256];
   syx_varsize inst_vars_size, super_inst_vars_size;
 
   if (token.type != SYX_TOKEN_NAME_CONST)
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Expected a name constant");
+      g_error ("Expected a name constant");
+      syx_token_free (token);
       return FALSE;
     }
 
-  temp_str = g_value_get_string (token.value);
-  if (!g_strcasecmp (temp_str, "nil"))
+  if (!strcmp (token.value.string, "nil"))
     superclass = SYX_NIL;
   else
     {
-      superclass = syx_globals_at (temp_str);
+      superclass = syx_globals_at (token.value.string);
 
       if (SYX_IS_NIL (superclass))
 	{
-	  if (error)
-	    *error = g_error_new (SYX_PARSER_ERROR,
-				  SYX_PARSER_ERROR_LOOKUP,
-				  "Unknown class: %s", temp_str);
+	  g_error ("Unknown class: %s", token.value.string);
+	  syx_token_free (token);
 	  return FALSE;
 	}
     }
-
-  syx_lexer_next_token (lexer, &token);
-  if (!(token.type == SYX_TOKEN_NAME_COLON && !g_strcasecmp (temp_str, "subclass:")))
+  
+  token = syx_lexer_next_token (lexer);
+  if (!(token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "subclass:")))
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Expected #subclass:");
+      syx_token_free (token);
+      g_error ("Expected #subclass:");
       return FALSE;
     }
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
+  token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_SYM_CONST)
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Expected a symbol constant");
+      syx_token_free (token);
+      g_error ("Expected a symbol constant");
       return FALSE;
     }
 
-  subclass_name = g_strdup (g_value_get_string (token.value));
+  subclass_name = strdup (token.value.string);
+  syx_token_free (token);
   subclass = syx_globals_at (subclass_name);
 
-  if (g_strcasecmp (subclass_name, "Object"))
+  if (strcmp (subclass_name, "Object"))
     {
-      // Create the class and its metaclass
       if (SYX_IS_NIL (subclass))
 	existing_class = FALSE;
       else
@@ -98,59 +90,73 @@ parse_class (SyxLexer *lexer, GError **error)
 	}
     }
 
-  syx_lexer_next_token (lexer, &token);
+  token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_NAME_COLON)
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Expected #instanceVariableNames:");
+      syx_token_free (token);
+      g_error ("Expected #instanceVariableNames:");
       return FALSE;
     }
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
+  token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_STR_CONST)
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Expected a string as argument for #instanceVariableNames:");
+      syx_token_free (token);
+      g_error ("Expected a string as argument for #instanceVariableNames:");
       return FALSE;
     }
+  inst_vars_lexer = syx_lexer_new (token.value.string);
 
-  splitted_names = g_strsplit_set (g_strdup (g_value_get_string (token.value)), " ", -1);
-
-  syx_lexer_next_token (lexer, &token);
+  token = syx_lexer_next_token (lexer);
   if (!IS_EXLMARK (token))
     {
       if (error)
 	*error = g_error_new (SYX_PARSER_ERROR,
 			      SYX_PARSER_ERROR_SYNTAX,
 			      "Class definition must terminate with an exlamation mark");
+      syx_token_free (token);
       return FALSE;
     }
+  syx_token_free (token);
 
   if (!existing_class)
     {
       subclass = syx_class_new (superclass);
-      SYX_CLASS_NAME(subclass) = syx_string_new (subclass_name);
-      syx_globals_at_put (syx_symbol_new (subclass_name), subclass);
+      SYX_CLASS_NAME(subclass) = syx_symbol_new (subclass_name);
+      syx_globals_at_put (SYX_CLASS_NAME(subclass), subclass);
     }
+  syx_free (subclass_name);
 
-  for (inst_vars_size=0; splitted_names[inst_vars_size]; inst_vars_size++)
-    inst_vars_temp[inst_vars_size] = syx_string_new (splitted_names[inst_vars_size]);
+  /* Fetch instance variable names using another lexer instance */
+  token = syx_lexer_next_token (inst_vars_lexer);
+  for (inst_vars_size=0; token.type != SYX_TOKEN_END; inst_vars_size++)
+    {
+      if (token.type != SYX_TOKEN_NAME_CONST)
+	{
+	  syx_token_free (token);
+	  g_error ("Expected names for instance variables\n");
+	}
 
+      inst_vars_raw[inst_vars_size] = syx_symbol_new (token.value.string);
+      syx_token_free (token);
+      token = syx_lexer_next_token (inst_vars_lexer);
+    }
+  syx_lexer_free (inst_vars_lexer, TRUE);
+
+  /* Create the instanceVariables array */
   inst_vars = syx_array_new_size (inst_vars_size);
-  memcpy (SYX_OBJECT_DATA (inst_vars), inst_vars_temp, inst_vars_size * sizeof (SyxObject *));
+  /* Copy out of the stack */
+  memcpy (SYX_OBJECT_DATA (inst_vars), inst_vars_raw, sizeof (SyxObject *) * inst_vars_size);
 
+  /* Fetch superclass instanceSize */
   if (SYX_IS_NIL (superclass))
     super_inst_vars_size = 0;
   else
     super_inst_vars_size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (superclass));
-  SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (inst_vars_size + super_inst_vars_size);
 
-  if (existing_class)
-    syx_free (subclass_name);
+  SYX_CLASS_INSTANCE_VARIABLES(subclass) = inst_vars;
+  SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (inst_vars_size + super_inst_vars_size);
 
   return TRUE;
 }
@@ -158,50 +164,63 @@ parse_class (SyxLexer *lexer, GError **error)
 static syx_bool
 parse_methods (SyxLexer *lexer, GError **error)
 {
-  SyxToken token = SYX_TOKEN_INIT;
+  SyxToken token;
   SyxObject *class;
   SyxParser *parser;
   SyxLexer *method_lexer;
   syx_symbol category;
   syx_string chunk;
+  syx_symbol *instance_variables;
 
-  syx_lexer_next_token (lexer, &token);
-  g_return_val_if_fail (token.type == SYX_TOKEN_NAME_CONST, FALSE);
+  token = syx_lexer_next_token (lexer);
+  if (token.type != SYX_TOKEN_NAME_CONST)
+    return FALSE;
 
-  class = syx_globals_at (g_value_get_string (token.value));
+  class = syx_globals_at (token.value.string);
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  if (token.type == SYX_TOKEN_NAME_CONST && !G_VALUE_STRCMP (token.value, "class"))
+  token = syx_lexer_next_token (lexer);
+  if (token.type == SYX_TOKEN_NAME_CONST && !strcmp (token.value.string, "class"))
     {
       class = syx_object_get_class (class);
-      syx_lexer_next_token (lexer, &token);
+      syx_token_free (token);
+      token = syx_lexer_next_token (lexer);
     }
-  g_return_val_if_fail (token.type == SYX_TOKEN_NAME_COLON && !G_VALUE_STRCMP (token.value, "methodsFor:"), FALSE);
 
-  syx_lexer_next_token (lexer, &token);
-  g_return_val_if_fail (token.type == SYX_TOKEN_STR_CONST, FALSE);
+  if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "methodsFor:")))
+    return FALSE;
+  syx_token_free (token);
 
-  category = g_value_get_string (token.value);
+  token = syx_lexer_next_token (lexer);
+  if (token.type != SYX_TOKEN_STR_CONST)
+    return FALSE;
 
-  syx_lexer_next_token (lexer, &token);
-  g_return_val_if_fail (IS_EXLMARK (token), FALSE);
+  //  category = strdup (token.value.string);
+  syx_token_free (token);
+
+  token = syx_lexer_next_token (lexer);
+  if (!IS_EXLMARK (token))
+    return FALSE;
+  syx_token_free (token);
 
   while (TRUE)
     {
       chunk = syx_lexer_next_chunk (lexer);
-      if (!chunk)
-	break;
-
       method_lexer = syx_lexer_new (chunk);
+      if (!method_lexer)
+	break;
+      
+      instance_variables = syx_class_get_all_instance_variables (class);
       parser = syx_parser_new (method_lexer, syx_method_new (),
-			       syx_class_get_all_instance_variables (class),
+			       instance_variables,
 			       FALSE, NULL);
       syx_parser_parse (parser, NULL);
-      g_free (chunk);
 
       syx_dictionary_at_const_put (SYX_CLASS_METHODS(class),
 				   SYX_METHOD_SELECTOR(parser->method),
 				   parser->method);
+
+      syx_parser_free (parser, TRUE);
     }
   
   return TRUE;
@@ -210,21 +229,24 @@ parse_methods (SyxLexer *lexer, GError **error)
 syx_bool
 syx_cold_parse (SyxLexer *lexer, GError **error)
 {
-  SyxToken token = SYX_TOKEN_INIT;
+  SyxToken token;
   syx_bool parseOk = TRUE;
 
   *error = NULL;
 
-  syx_lexer_next_token (lexer, &token);
+  token = syx_lexer_next_token (lexer);
   while (parseOk && token.type != SYX_TOKEN_END)
     {
       if (IS_EXLMARK (token))
 	parseOk = parse_methods (lexer, error);
       else
 	parseOk = parse_class (lexer, error);
-      syx_lexer_next_token (lexer, &token);
-    }
 
+      syx_token_free (token);
+      token = syx_lexer_next_token (lexer);
+    }
+  
+  syx_token_free (token);
   return parseOk;
 }
 
@@ -241,11 +263,20 @@ syx_cold_file_in (syx_symbol filename, GError **error)
     return FALSE;
 
   lexer = syx_lexer_new (g_mapped_file_get_contents (file));
-  g_return_val_if_fail (lexer != NULL, FALSE);
+  if (!lexer)
+    {
+      g_mapped_file_free (file);
+      return FALSE;
+    }
 
   if (!syx_cold_parse (lexer, error))
-    return FALSE;
-  
+    {
+      syx_lexer_free (lexer, FALSE);
+      g_mapped_file_free (file);
+      return FALSE;
+    }
+
+  syx_lexer_free (lexer, FALSE);
   g_mapped_file_free (file);
   return TRUE;
 }

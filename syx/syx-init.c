@@ -24,7 +24,11 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
   g_return_val_if_fail (domain != NULL, NULL);
   g_return_val_if_fail (package != NULL, NULL);
   full_path = g_build_filename (syx_root_path, domain, package, filename, NULL);
-  g_return_val_if_fail (g_file_test (full_path, G_FILE_TEST_EXISTS), NULL);
+  if (!g_file_test (full_path, G_FILE_TEST_EXISTS))
+    {
+      g_free (full_path);
+      return NULL;
+    }
 
   return full_path;
 }
@@ -36,8 +40,7 @@ file_in_basic_decl (void)
   GError *error = NULL;
 
   full_filename = syx_find_file ("st", "kernel", "initialDecl.st");
-  if (!syx_cold_file_in (full_filename, &error))
-    g_error (error->message);
+  syx_cold_file_in (full_filename, &error);
   g_free (full_filename);
 }
 
@@ -69,8 +72,7 @@ file_in_basic (void)
   for (filename = kernel_filenames; *filename; filename++)
     {
       full_filename = syx_find_file ("st", "kernel", *filename);
-      if (!syx_cold_file_in (full_filename, &error))
-	g_error (error->message);
+      syx_cold_file_in (full_filename, &error);
       g_free (full_filename);
     }
 }
@@ -109,11 +111,13 @@ syx_build_basic (void)
   syx_object_set_class (class, syx_metaclass_new (syx_object_get_class (superclass))); \
   SYX_CLASS_SUPERCLASS(class) = superclass;				\
   SYX_CLASS_NAME(class) = syx_symbol_new (name);			\
+  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);			\
   syx_globals_at_put (SYX_CLASS_NAME(class), class)
 
   syx_object_set_class (Object, syx_metaclass_new (Class));
   SYX_CLASS_SUPERCLASS(Object) = SYX_NIL;
   SYX_CLASS_NAME(Object) = syx_symbol_new ("Object");
+  SYX_CLASS_METHODS(Object) = syx_dictionary_new (50);
   syx_globals_at_put (SYX_CLASS_NAME(Object), Object);
 
   SETUP_CLASS ("Behavior", Behavior, Object);
@@ -135,7 +139,7 @@ syx_build_basic (void)
   syx_method_context_class = syx_globals_at ("MethodContext");
   syx_block_context_class = syx_globals_at ("BlockContext");
   syx_process_class = syx_globals_at ("Process");
-  syx_process_scheduler_class = syx_globals_at ("ProcessScheduler");
+  syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   file_in_basic ();
 
   syx_undefined_object_class = syx_globals_at ("UndefinedObject");
@@ -178,7 +182,6 @@ syx_init (syx_symbol root_path)
   g_return_if_fail (root_path != NULL);
   g_return_if_fail (syx_set_root_path (root_path));
 
-  g_type_init ();
   syx_memory_init ();
   
   globals = g_hash_table_new (g_str_hash, g_str_equal);

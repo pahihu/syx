@@ -1,16 +1,17 @@
 !BlockContext methodsFor: 'accessing'!
 
 handlerBlock
-    <primitive: 'BlockContext_handlerBlock'>
-	self primitiveFailed
+    ^handlerBlock
+!
+
+handlerBlock: aBlock
+    handlerBlock := aBlock
 !
 
 handledException: anExceptionClass
-    <primitive: 'BlockContext_handledException_'>
-	self primitiveFailed
+    handledException := anExceptionClass
 !
 
 handledException
-    <primitive: 'BlockContext_handledException'>
-	self primitiveFailed
+    ^handledException
 ! !

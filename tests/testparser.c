@@ -1,10 +1,11 @@
+#include <assert.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   SyxLexer *lexer;
-  SyxMethod *method;
+  SyxObject *method;
   SyxParser *parser;
   GTimer *timer;
 
@@ -17,31 +18,31 @@ main (int argc, char *argv[])
   parser = syx_parser_new (lexer, method, NULL, block, NULL);		\
   syx_parser_parse (parser, NULL)
 
-#define SELECTOR_EQ(expected) (!g_strcasecmp (SYX_SYMBOL(syx_instance_get_variable (method, "selector"))->string, expected))
-#define NUM_ARGS (method->arguments_count)
-#define NUM_TEMPS (method->temporaries_count)
+#define SELECTOR_EQ(expected) (!strcmp (SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(method)), expected))
+#define NUM_ARGS (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method)))
+#define NUM_TEMPS (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method)))
 
   g_timer_start (timer);
 
   PARSE ("unary", FALSE);
-  g_assert (SELECTOR_EQ ("unary"));
-  g_assert (NUM_ARGS == 0);
+  assert (SELECTOR_EQ ("unary"));
+  assert (NUM_ARGS == 0);
 
   PARSE ("+ argument", FALSE);
-  g_assert (SELECTOR_EQ ("+"));
-  g_assert (NUM_ARGS == 1);
+  assert (SELECTOR_EQ ("+"));
+  assert (NUM_ARGS == 1);
 
   PARSE ("keyword: argument message: other", FALSE);
-  g_assert (SELECTOR_EQ ("keyword:message:"));
-  g_assert (NUM_ARGS == 2);
+  assert (SELECTOR_EQ ("keyword:message:"));
+  assert (NUM_ARGS == 2);
 
   PARSE (":a :b :c | ]", TRUE);
-  g_assert (NUM_ARGS == 3);
+  assert (NUM_ARGS == 3);
 
   PARSE ("meth | a b c | a := 'asd'", FALSE);
-  g_assert (SELECTOR_EQ ("meth"));
-  g_assert (NUM_ARGS == 0);
-  g_assert (NUM_TEMPS == 3);
+  assert (SELECTOR_EQ ("meth"));
+  assert (NUM_ARGS == 0);
+  assert (NUM_TEMPS == 3);
 
   PARSE ("meth: anObject self literal: #(a). self array: {anObject}", FALSE);
 

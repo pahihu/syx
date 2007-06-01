@@ -31,11 +31,6 @@ size
 	self primitiveFailed
 !
 
-memoryAddress
-    <primitive: 'Object_memoryAddress'>
-	self primitiveFailed
-!
-
 hash
     ^self
 "    <primitive: 'Object_hash' module: 'Kernel'>"

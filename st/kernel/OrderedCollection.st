@@ -1,8 +1,7 @@
 !OrderedCollection methodsFor: 'basic'!
 
 add: anObject
-    <primitive: 'Object_add'>
-	self primitiveFailed
+    ^self notYetImplemented
 !
 
 addAll: aCollection
@@ -19,6 +18,5 @@ remove: anObject ifAbsent: aBlock
 !
 
 removeAtIndex: anIndex
-    <primitive: 'Object_removeAtIndex'>
-	self primitiveFailed
+    ^self notYetImplemented
 ! !

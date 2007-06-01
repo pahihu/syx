@@ -1,11 +1,12 @@
+#include <assert.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   SyxLexer *lexer;
-  GError *error = NULL;
-  SyxInstance *temp;
+  SyxObject *temp;
+  GError *error;
   GTimer *timer;
 
   syx_init ("..");
@@ -14,31 +15,27 @@ main (int argc, char *argv[])
 
   g_timer_start (timer);
 
-  lexer = syx_lexer_new ("undefined subclass: #Object!");
-  g_assert (syx_cold_parse (lexer, &error) == FALSE);
-  g_assert (error->code == SYX_PARSER_ERROR_LOOKUP);
+  /*  lexer = syx_lexer_new ("undefined subclass: #Object!");
+  assert (syx_cold_parse (lexer, &error) == FALSE);
 
   lexer = syx_lexer_new ("nil message: #Object!");
-  g_assert (syx_cold_parse (lexer, &error) == FALSE);
-  g_assert (error->code == SYX_PARSER_ERROR_SYNTAX);
+  assert (syx_cold_parse (lexer, &error) == FALSE);
 
   lexer = syx_lexer_new ("nil subclass: Object!");
-  g_assert (syx_cold_parse (lexer, &error) == FALSE);
-  g_assert (error->code == SYX_PARSER_ERROR_SYNTAX);
+  assert (syx_cold_parse (lexer, &error) == FALSE);
 
   lexer = syx_lexer_new ("nil subclass: #Object");
-  g_assert (syx_cold_parse (lexer, &error) == FALSE);
-  g_assert (error->code == SYX_PARSER_ERROR_SYNTAX);
+  assert (syx_cold_parse (lexer, &error) == FALSE);*/
   
-  temp = syx_globals_lookup ("Object");
+  temp = syx_globals_at ("Object");
   lexer = syx_lexer_new ("nil subclass: #Object instanceVariableNames: ''!");
-  g_assert (syx_cold_parse (lexer, &error) == TRUE);
-  g_assert (syx_globals_lookup ("Object") == temp);
-  g_assert (SYX_CLASS(temp)->factory_type != SYX_OBJECT_TYPE_COLLECTION);
+  assert (syx_cold_parse (lexer, &error) == TRUE);
+  assert (syx_globals_at ("Object") == temp);
+  syx_lexer_free (lexer, FALSE);
 
-  lexer = syx_lexer_new ("Object variableSubclass: #Indexable instanceVariableNames: ''!");
-  g_assert (syx_cold_parse (lexer, &error) == TRUE);
-  g_assert (SYX_CLASS (syx_globals_lookup ("Indexable"))->factory_type == SYX_OBJECT_TYPE_COLLECTION);
+  lexer = syx_lexer_new ("!Object methodsFor: 'test'! testMethod ^nil! !");
+  assert (syx_cold_parse (lexer, &error) == TRUE);
+  syx_lexer_free (lexer, FALSE);
 
   g_timer_stop (timer);
   g_print("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));

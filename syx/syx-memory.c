@@ -1,60 +1,40 @@
+#include <assert.h>
 #include <unistd.h>
 #include "syx-object.h"
 #include "syx-memory.h"
 
 G_BEGIN_DECLS
 
-static SyxObject _syx_memory[SYX_MEMORY_SIZE];
-static SyxMemoryLink *_syx_freed_memory = NULL;
+static SyxObject *_syx_memory;
 static syx_int32 _syx_registered_objects = 0;
-syx_pointer _empty_memory = NULL;
+syx_pointer _syx_empty_memory = NULL;
 
 /* Memory */
 
 void
 syx_memory_init (void)
 {
-  _empty_memory = syx_malloc (getpagesize ());
+  static syx_bool initialized = FALSE;
+  if (initialized)
+    return;
+
+  _syx_memory = syx_calloc (SYX_MEMORY_SIZE, sizeof (SyxObject));
+  _syx_empty_memory = syx_malloc (getpagesize ());
+  initialized = TRUE;
 }
 
 syx_pointer
 syx_memory_alloc (void)
 {
   syx_pointer ptr;
-  SyxMemoryLink *old_link;
 
   if (_syx_registered_objects == SYX_MEMORY_SIZE - 1)
     g_error ("object memory is full\n");
 
-  if (!_syx_freed_memory)
-    ptr = &_syx_memory[_syx_registered_objects++];
-  else
-    {
-      old_link = _syx_freed_memory;
-      ptr = old_link->ptr;
-      _syx_freed_memory = old_link->prev;
-
-      syx_free (old_link);
-      _syx_registered_objects++;
-    }
+  ptr = _syx_memory + _syx_registered_objects++;
+  assert (SYX_IS_POINTER (ptr));
 
   return ptr;
-}
-
-void
-syx_memory_free (syx_pointer ptr)
-{
-  SyxMemoryLink *link;
-
-  link = syx_malloc (sizeof (SyxMemoryLink));
-  link->ptr = ptr;
-  link->prev = _syx_freed_memory;
-  link->next = NULL;
-  if (_syx_freed_memory)
-    _syx_freed_memory->next = link;
-
-  _syx_freed_memory = link;
-  _syx_registered_objects--;
 }
 
 inline syx_pointer
@@ -104,6 +84,19 @@ syx_realloc (syx_pointer ptr, syx_size size)
     g_error ("out of memory");
 
   return nptr;
+}
+
+void
+syx_freev (syx_pointer *ptrv)
+{
+  syx_pointer *ptrv_p = ptrv;
+
+  while (*ptrv_p)
+    {
+      syx_free (*ptrv_p);
+      ptrv_p++;
+    }
+  syx_free (ptrv);
 }
 
 G_END_DECLS

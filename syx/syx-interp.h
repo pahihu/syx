@@ -1,5 +1,5 @@
-#ifndef SYX_INTERP_H
-#define SYX_INTERP_H
+#ifndef _SYX_INTERP_H
+#define _SYX_INTERP_H
 
 #include <glib.h>
 #include "syx-types.h"
@@ -9,9 +9,9 @@ G_BEGIN_DECLS
 
 /* Execution state of a Process */
 
-typedef struct SyxExecState SyxExecState;
+typedef struct _SyxExecState SyxExecState;
 
-struct SyxExecState
+struct _SyxExecState
 {
   SyxObject *process;
   SyxObject *context;
@@ -20,7 +20,7 @@ struct SyxExecState
   SyxObject **temporaries;
   SyxObject **stack;
   SyxObject **literals;
-  SyxObject **bytecodes;
+  syx_uint8 *bytecodes;
   syx_int32 bytecodes_count;
   syx_int32 byteslice;
   syx_int32 ip, sp;
@@ -88,4 +88,4 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special);
 
 G_END_DECLS
 
-#endif
+#endif /* _SYX_INTERP_H */

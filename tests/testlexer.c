@@ -1,69 +1,86 @@
+#include <assert.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   SyxLexer *lexer;
-  SyxToken token = SYX_TOKEN_INIT;
+  SyxToken token;
 
   syx_init ("..");
 
   lexer = syx_lexer_new ("nameconst 123 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_NAME_CONST);
-  g_assert (!g_strcasecmp (g_value_get_string (token.value), "nameconst"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_NAME_CONST);
+  assert (!strcmp (token.value.string, "nameconst"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_INT_CONST);
-  g_assert (g_value_get_long (token.value) == 123);
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_INT_CONST);
+  assert (token.value.integer == 123);
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_CHAR_CONST);
-  g_assert (g_value_get_char (token.value) == 'c');
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_CHAR_CONST);
+  assert (token.value.character == 'c');
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_CHAR_CONST);
-  g_assert (g_value_get_char (token.value) == ' ');
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_CHAR_CONST);
+  assert (token.value.character == ' ');
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_SYM_CONST);
-  g_assert (!g_strcasecmp (g_value_get_string (token.value), "symbol"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_SYM_CONST);
+  assert (!strcmp (token.value.string, "symbol"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_ARRAY_BEGIN);
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_ARRAY_BEGIN);
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_NAME_CONST);
-  g_assert (!g_strcasecmp (g_value_get_string (token.value), "aaa"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_NAME_CONST);
+  assert (!strcmp (token.value.string, "aaa"));
+  syx_token_free (token);
   
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_CLOSING);
-  g_assert (g_value_get_char (token.value) == ')');
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_CLOSING);
+  assert (token.value.character == ')');
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_STR_CONST);
-  g_assert (!g_strcasecmp (g_value_get_string (token.value), "string"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_STR_CONST);
+  assert (!strcmp (token.value.string, "string"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_BINARY);
-  g_assert (!G_VALUE_STRCMP (token.value, "+"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_BINARY);
+  assert (!strcmp (token.value.string, "+"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_BINARY);
-  g_assert (!G_VALUE_STRCMP (token.value, ":="));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_BINARY);
+  assert (!strcmp (token.value.string, ":="));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_BINARY);
-  g_assert (!G_VALUE_STRCMP (token.value, "->"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_BINARY);
+  assert (!strcmp (token.value.string, "->"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_BINARY);
-  g_assert (!G_VALUE_STRCMP (token.value, "!"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_BINARY);
+  assert (!strcmp (token.value.string, "!"));
+  syx_token_free (token);
 
-  syx_lexer_next_token (lexer, &token);
-  g_assert (token.type == SYX_TOKEN_BINARY);
-  g_assert (!G_VALUE_STRCMP (token.value, "!"));
+  token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_BINARY);
+  assert (!strcmp (token.value.string, "!"));
+  syx_token_free (token);
+
+  syx_lexer_free (lexer, FALSE);
 
   return 0;
 }

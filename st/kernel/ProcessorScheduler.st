@@ -1,22 +1,13 @@
 !ProcessorScheduler methodsFor: 'accessing'!
 
-addProcess: aProcess
-    ^self
+processByteslice
+    ^processByteslice
 !
 
-processList
-    ^processList
-!
-
-processTimeSlice
-    ^processTimeslice
-!
-
-processTimeslice: anInteger
-    processTimeslice: anInteger
+processByteslice: anInteger
+    processByteslice: anInteger
 !
 
 activeProcess
-    <primitive: 'Processor_activeProcess'>
-	^self primitiveFailed
+	^activeProcess
 ! !

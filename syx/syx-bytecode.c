@@ -23,6 +23,14 @@ syx_bytecode_new (void)
 }
 
 void
+syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment)
+{
+  g_byte_array_free (bytecode->code, free_segment);
+  g_ptr_array_free (bytecode->literals, free_segment);
+  syx_free (bytecode);
+}
+
+void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint8 low)
 {
   if (low >= 16)
@@ -130,7 +138,7 @@ SYX_FUNC_BYTECODE (assign_instance, syx_uint8 instance_index)
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_INSTANCE, instance_index);
 }
 
-SYX_FUNC_BYTECODE (duplicate_at, guint index)
+SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
 {
   syx_uint8 instruction = SYX_BYTECODE_DO_SPECIAL * 16 + SYX_BYTECODE_DUPLICATE;
   g_array_insert_val ((GArray *)bytecode->code, index, instruction);

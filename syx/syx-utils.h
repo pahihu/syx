@@ -7,8 +7,6 @@
 
 G_BEGIN_DECLS
 
-#define G_VALUE_STRCMP(value, string) (g_strcasecmp (g_value_get_string (value), string))
-
 #define SYX_PARSER_ERROR syx_parser_error_quark ()
 GQuark syx_parser_error_quark (void);
 syx_bool syx_cold_parse (SyxLexer *lexer, GError **error);

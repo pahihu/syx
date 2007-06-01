@@ -2,16 +2,42 @@
   #include <config.h>
 #endif
 
+#define _GNU_SOURCE
+#include <ctype.h>
+#include <string.h>
 #include "syx-types.h"
 #include "syx-lexer.h"
+#include "syx-memory.h"
 
+static void _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar);
+static void _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar);
+static void _syx_lexer_token_character (SyxLexer *self, SyxToken *token, syx_char lastChar);
+static void _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar);
+static void _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar);
+static syx_bool _syx_char_is_closing (syx_char c);
+static syx_bool _syx_char_is_single_binary (syx_char c);
+
+/**
+ * syx_lexer_new
+ * @text: a string
+ *
+ * This function parses a Glade XML interface file to a GladeInterface
+ * object (which is libglade's internal representation of the
+ * interface data).
+ *
+ * Generally, user code won't need to call this function.  Instead, it
+ * should go through the GladeXML interfaces.
+ *
+ * Returns: a SyxLexer to be used for parsing code
+ */
 SyxLexer *
 syx_lexer_new (syx_symbol text)
 {
   SyxLexer *self;
-  g_return_val_if_fail (text != NULL, NULL);
+  if (!text)
+    return NULL;
 
-  self = g_new0 (SyxLexer, 1);
+  self = syx_malloc (sizeof (SyxLexer));
 
   self->text = self->current_text = text;
   self->pushed_back = -1;
@@ -19,18 +45,37 @@ syx_lexer_new (syx_symbol text)
 
   return self;
 }
-static void
-parse_identifier (SyxLexer *self, SyxToken *token, gchar lastChar)
+
+void
+syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
 {
-  GString *str = g_string_new (NULL);
-  g_string_append_c (str, lastChar);
+  if (free_text)
+    syx_free ((syx_pointer) lexer->text);
+
+  syx_free (lexer);
+}
+
+void
+syx_token_free (SyxToken token)
+{
+  if (token.type > SYX_TOKEN_STRING_ENTRY)
+    syx_free (token.value.string);
+}
+
+static void
+_syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
+{
+  syx_char sstr[256] = {0};
+  syx_string str = sstr;
+
+  *str++ = lastChar;
 
   while ((lastChar = syx_lexer_forward (self)) && g_ascii_isalnum (lastChar))
-    g_string_append_c (str, lastChar);
+    *str++ = lastChar;
 
   if (lastChar == ':')
     {
-      g_string_append_c (str, ':');
+      *str++ = ':';
       token->type = SYX_TOKEN_NAME_COLON;
     }
   else
@@ -39,62 +84,58 @@ parse_identifier (SyxLexer *self, SyxToken *token, gchar lastChar)
       token->type = SYX_TOKEN_NAME_CONST;
     }
 
-  g_value_init (token->value, G_TYPE_STRING);
-  g_value_set_string (token->value, str->str);
-  g_string_free (str, FALSE);
+  token->value.string = strdup (sstr);
 }
 
 static void
-parse_number (SyxLexer *self, SyxToken *token, gchar lastChar)
+_syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  gint intres = lastChar - '0';
+  syx_int32 intres = lastChar - '0';
   while ((lastChar = syx_lexer_forward (self)) && g_ascii_isdigit (lastChar))
     intres = (intres * 10) + (lastChar - '0');
   syx_lexer_push_back (self);
 
+  token->value.integer = intres;
   token->type = SYX_TOKEN_INT_CONST;
-  g_value_init (token->value, G_TYPE_INT);
-  g_value_set_int (token->value, intres);
 }
 
 static void
-parse_character (SyxLexer *self, SyxToken *token, gchar lastChar)
+_syx_lexer_token_character (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
   lastChar = syx_lexer_forward (self);
   token->type = SYX_TOKEN_CHAR_CONST;
-  g_value_init (token->value, G_TYPE_CHAR);
-  g_value_set_char (token->value, lastChar);
+  token->value.character = lastChar;
 }
 
 static void
-parse_symbol (SyxLexer *self, SyxToken *token, gchar lastChar)
+_syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  GString *str = g_string_new (NULL);
+  syx_char sstr[256] = {0};;
+  syx_string str = sstr;
+
   while ((lastChar = syx_lexer_forward (self)) && g_ascii_isalnum (lastChar))
-    g_string_append_c (str, lastChar);
+    *str++ = lastChar;
   syx_lexer_push_back (self);
   
   token->type = SYX_TOKEN_SYM_CONST;
-  g_value_init (token->value, G_TYPE_STRING);
-  g_value_set_string (token->value, str->str);
-  g_string_free (str, FALSE);
+  token->value.string = strdup (sstr);
 }
 
 static void
-parse_string (SyxLexer *self, SyxToken *token, gchar lastChar)
+_syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  GString *str = g_string_new (NULL);
+  syx_char sstr[256] = {0};
+  syx_string str = sstr;
+
   while ((lastChar = syx_lexer_forward (self)) && lastChar != '\'')
-    g_string_append_c (str, lastChar);
+    *str++ = lastChar;
 
   token->type = SYX_TOKEN_STR_CONST;
-  g_value_init (token->value, G_TYPE_STRING);
-  g_value_set_string (token->value, str->str);
-  g_string_free (str, FALSE);
+  token->value.string = strdup (sstr);
 }
 
-static gboolean
-is_closing (gchar c)
+static syx_bool
+_syx_char_is_closing (syx_char c)
 {
   switch (c)
     {
@@ -110,8 +151,8 @@ is_closing (gchar c)
   return FALSE;
 }
 
-static gboolean
-single_binary (gchar c)
+static syx_bool
+_syx_char_is_single_binary (syx_char c)
 {
   switch (c)
     {
@@ -128,16 +169,16 @@ single_binary (gchar c)
   return FALSE;
 }
 
-static gboolean
-binary_second (gchar c)
+static syx_bool
+_syx_char_is_binary_second (syx_char c)
 {
-  return !(g_ascii_isalnum (c) || g_ascii_isspace (c) || is_closing (c) || single_binary (c));
+  return !(isalnum (c) || isspace (c) || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
 }
 
-gchar
+syx_char
 syx_lexer_forward (SyxLexer *lexer)
 {
-  gchar cc;
+  syx_char cc;
 
   if (lexer->pushed_back != -1)
     {
@@ -153,23 +194,19 @@ syx_lexer_forward (SyxLexer *lexer)
   return cc;
 }
 
-gchar
+inline syx_char
 syx_lexer_push_back (SyxLexer *lexer)
 {
   lexer->pushed_back = syx_lexer_get_last_char (lexer);
   return lexer->pushed_back;
 }
 
-void
-syx_lexer_next_token (SyxLexer *lexer, SyxToken *token)
+SyxToken
+syx_lexer_next_token (SyxLexer *lexer)
 {
-  gchar lastChar, secondChar, *str;
-  g_return_if_fail (token != NULL);
-
-  if (G_IS_VALUE (token->value))
-    g_value_unset (token->value);
-  else
-    token->value = g_new0 (GValue, 1);
+  syx_char lastChar, secondChar;
+  syx_string str;
+  SyxToken token;
 
   do
     {
@@ -181,78 +218,84 @@ syx_lexer_next_token (SyxLexer *lexer, SyxToken *token)
 	    lastChar = syx_lexer_forward (lexer);
 	}
     }
-  while (lastChar && (g_ascii_isspace (lastChar) || lastChar == '"'));
+  while (lastChar && (isspace (lastChar) || lastChar == '"'));
 
   if (!lastChar)
-    token->type = SYX_TOKEN_END;
-  else if (g_ascii_isalpha (lastChar))
-    parse_identifier (lexer, token, lastChar);
-  else if (g_ascii_isdigit (lastChar))
-    parse_number (lexer, token, lastChar);
+    token.type = SYX_TOKEN_END;
+  else if (isalpha (lastChar))
+    _syx_lexer_token_identifier (lexer, &token, lastChar);
+  else if (isdigit (lastChar))
+    _syx_lexer_token_number (lexer, &token, lastChar);
   else if (lastChar == '$')
-    parse_character (lexer, token, lastChar);
+    _syx_lexer_token_character (lexer, &token, lastChar);
   else if (lastChar == '#')
     {
       if (syx_lexer_forward (lexer) == '(')
-	token->type = SYX_TOKEN_ARRAY_BEGIN;
+	token.type = SYX_TOKEN_ARRAY_BEGIN;
       else
 	{
 	  syx_lexer_push_back (lexer);
-	  parse_symbol (lexer, token, lastChar);
+	  _syx_lexer_token_symbol (lexer, &token, lastChar);
 	}
     }
   else if (lastChar == '\'')
-    parse_string (lexer, token, lastChar);
-  else if (is_closing (lastChar))
+    _syx_lexer_token_string (lexer, &token, lastChar);
+  else if (_syx_char_is_closing (lastChar))
     {
-      g_value_init (token->value, G_TYPE_CHAR);
-      g_value_set_char (token->value, lastChar);
-      token->type = SYX_TOKEN_CLOSING;
+      token.value.character = lastChar;
+      token.type = SYX_TOKEN_CLOSING;
     }
-  else if (single_binary (lastChar))
+  else if (_syx_char_is_single_binary (lastChar))
     {
-      str = g_new0 (gchar, 2);
+      str = syx_calloc (2, sizeof (syx_char));
       *str = lastChar;
-      g_value_init (token->value, G_TYPE_STRING);
-      g_value_set_string (token->value, str);
-      token->type = SYX_TOKEN_BINARY;
+      token.type = SYX_TOKEN_BINARY;
+      token.value.string = str;
     }
   else
     {
-      str = g_new0 (gchar, 3);
+      str = syx_calloc (3, sizeof (syx_char));
       *str = lastChar;
-      g_value_init (token->value, G_TYPE_STRING);
-      if (binary_second ((secondChar = syx_lexer_forward (lexer))))
+      
+      if (_syx_char_is_binary_second ((secondChar = syx_lexer_forward (lexer))))
 	*(str+1) = secondChar;
       else
 	syx_lexer_push_back (lexer);
-      g_value_set_string (token->value, str);
-      token->type = SYX_TOKEN_BINARY;
+
+      token.type = SYX_TOKEN_BINARY;
+      token.value.string = str;
     }
 
-  lexer->last_token = *token;
+  lexer->last_token = token;
+  return token;
 }
 
-gchar *
+syx_string
 syx_lexer_next_chunk (SyxLexer *lexer)
 {
   SyxToken token;
   syx_symbol start_text;
-  gchar *chunk;
+  syx_string chunk;
 
-  token = lexer->last_token;
   start_text = lexer->current_text;
+  token = syx_lexer_next_token (lexer);
 
-  syx_lexer_next_token (lexer, &token);
-  if ((token.type == SYX_TOKEN_BINARY && !g_strcasecmp (g_value_get_string (token.value), "!")) || token.type == SYX_TOKEN_END)
-    return NULL;
+  if ((token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!")) || token.type == SYX_TOKEN_END)
+    {
+      syx_token_free (token);
+      return NULL;
+    }
 
-  while (! (token.type == SYX_TOKEN_END || 
-	    (token.type == SYX_TOKEN_BINARY
-	     && !g_strcasecmp (g_value_get_string (token.value), "!"))))
-    syx_lexer_next_token (lexer, &token);
+  while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_BINARY
+					    && !strcmp (token.value.string, "!"))))
+    {
+      syx_token_free (token);
+      token = syx_lexer_next_token (lexer);
+    }
 
-  chunk = g_strndup (start_text, lexer->current_text - start_text - 1);
+  syx_token_free (token);
+
+  chunk = strndup (start_text, lexer->current_text - start_text - 1);
   return chunk;
 }
 
@@ -262,7 +305,7 @@ syx_lexer_get_last_token (SyxLexer *lexer)
   return lexer->last_token;
 }
 
-gchar
+syx_char
 syx_lexer_get_last_char (SyxLexer *lexer)
 {
   return lexer->last_char;

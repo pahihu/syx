@@ -23,17 +23,6 @@ syx_plugin_free (SyxPlugin *plugin)
   g_free (plugin);
 }  
 
-GType
-syx_plugin_get_type (void)
-{
-  static GType plugin_type = 0;
-  if (plugin_type == 0)
-    g_boxed_type_register_static ("SyxPlugin",
-				  NULL,
-				  (GBoxedFreeFunc) syx_plugin_free);
-  return plugin_type;
-}
-
 SyxPlugin *
 syx_plugin_new (const gchar *name, gboolean is_permanent, gpointer *plugin_data)
 {
@@ -49,7 +38,7 @@ syx_plugin_new (const gchar *name, gboolean is_permanent, gpointer *plugin_data)
 SyxPlugin *
 syx_plugin_load (const gchar *name, GError **error)
 {
-  GModule *module;
+  /*  GModule *module;
   SyxPlugin *plugin;
   PluginInitFunc plugin_init_func;
   gchar *filename;
@@ -77,7 +66,7 @@ syx_plugin_load (const gchar *name, GError **error)
 
   plugins = g_slist_append (plugins, plugin);
 
-  return plugin;
+  return plugin;*/
 }
 
 GSList *

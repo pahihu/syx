@@ -1,5 +1,5 @@
-#ifndef SYX_BYTECODE_H
-#define SYX_BYTECODE_H
+#ifndef _SYX_BYTECODE_H
+#define _SYX_BYTECODE_H
 
 #include <glib.h>
 #include "syx-types.h"
@@ -11,15 +11,16 @@ G_BEGIN_DECLS
 #define SYX_FUNC_BYTECODE(name,arg)		\
   inline void syx_bytecode_ ## name (SyxBytecode *bytecode, arg)
 
-typedef struct SyxBytecode SyxBytecode;
+typedef struct _SyxBytecode SyxBytecode;
 
-struct SyxBytecode {
+struct _SyxBytecode {
   GByteArray *code;
   GPtrArray *literals;
   syx_int32 stack_size;
 };
 
 SyxBytecode *syx_bytecode_new (void);
+void syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment);
 
 void syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint8 low);
 void syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, SyxObject *selector);
@@ -37,9 +38,9 @@ SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant);
 SYX_FUNC_BYTECODE (push_global, SyxObject *symbol);
 SYX_FUNC_BYTECODE (assign_temporary, syx_uint8 temporary_index);
 SYX_FUNC_BYTECODE (assign_instance, syx_uint8 instance_index);
-SYX_FUNC_BYTECODE (duplicate_at, guint index);
+SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index);
 inline void syx_bytecode_pop_top (SyxBytecode *bytecode);
 
 G_END_DECLS
 
-#endif
+#endif /* _SYX_BYTECODE_H */

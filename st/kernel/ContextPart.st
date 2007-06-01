@@ -32,11 +32,9 @@ returnTo: aContext andAnswer: anObject
 !ContextPart methodsFor: 'accessing'!
 
 parent
-    <primitive: 'Context_parent'>
-	self primitiveFailed
+    ^parent
 !
 
-parent: aContextPart
-    <primitive: 'Context_parent_'>
-	self primitiveFailed
+parent: aContext
+    parent := aContext
 ! !

@@ -7,7 +7,6 @@ dnl version info
 m4_define([syx_version], [0.1])
 m4_define([syx_api_version], [0.1])
 m4_define([glib_required_version], [2.6.0])
-m4_define([gobject_required_version], [2.6.0])
 m4_define([gmodule_required_version], [2.6.0])
 
 dnl init autoconf
@@ -36,10 +35,9 @@ AC_CHECK_FUNCS(setjmp longjmp)
 dnl portable runtime library
 PKG_CHECK_MODULES(BASE_DEPENDENCIES,
 	[glib-2.0 >= glib_required_version
-	gobject-2.0 >= gobject_required_version
 	gmodule-2.0 >= gmodule_required_version])
 
-CFLAGS="-Wall -pedantic -g -pg -O0 $CFLAGS"
+CFLAGS="$CFLAGS -Wall -pedantic -g -O2"
 
 AC_OUTPUT([
 Makefile

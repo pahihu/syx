@@ -42,4 +42,4 @@ syx_SOURCES		=	\
 	main.c
 
 syx_DEPENDENCIES	= $(top_builddir)/syx/libsyx-$(SYX_API_VERSION).la
-syx_LDADD		= $(top_builddir)/syx/libsyx-$(SYX_API_VERSION).la	
+syx_LDADD		= $(top_builddir)/syx/libsyx-$(SYX_API_VERSION).la

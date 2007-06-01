@@ -4,7 +4,7 @@ nil subclass: #Object
     instanceVariableNames: ''!
 
 Object subclass: #Behavior
-       instanceVariableNames: 'name superclass methodDict'!
+       instanceVariableNames: 'name superclass instanceVariables instanceSize methodDict'!
 
 Object subclass: #UndefinedObject
        instanceVariableNames: ''!
@@ -26,42 +26,39 @@ Collection subclass: #SequenceableCollection
 SequenceableCollection subclass: #ArrayedCollection
 		       instanceVariableNames: ''!
 
-ArrayedCollection variableSubclass: #Array
-       instanceVariableNames: ''!
-
-ArrayedCollection variableSubclass: #CharacterArray
+ArrayedCollection subclass: #Array
 		  instanceVariableNames: ''!
 
-Array variableSubclass: #Semaphore
+ArrayedCollection subclass: #ByteArray
+		  instanceVariableNames: ''!
+
+Array subclass: #Semaphore
       instanceVariableNames: 'signals'!
 
-SequenceableCollection variableSubclass: #OrderedCollection
+SequenceableCollection subclass: #OrderedCollection
 		       instanceVariableNames: ''!
 
 "Execution"
 
-Object subclass: #Primitive
-       instanceVariableNames: 'name module'!
-
 Object subclass: #ContextPart
-       instanceVariableNames: ''!
+       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries'!
 
 ContextPart subclass: #MethodContext
 	    instanceVariableNames: ''!
 
 ContextPart subclass: #BlockContext
-	    instanceVariableNames: 'returnContext handledException handlerBlock outerContext'!
+	    instanceVariableNames: 'outerContext returnContext handledException handlerBlock'!
 
 Object subclass: #Process
-       instanceVariableNames: 'context isSuspended'!
+       instanceVariableNames: 'context suspended returnedObject next scheduled'!
 
-OrderedCollection variableSubclass: #CompiledCode
-		  instanceVariableNames: 'literals numArgs numTemps text'!
+OrderedCollection subclass: #CompiledCode
+		  instanceVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: 'selector category primitive'!
+	     instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize'!
 
-CompiledCode subclass: #CompiledBlock
+CompiledMethod subclass: #CompiledBlock
 	     instanceVariableNames: ''!
 
 Object subclass: #BlockClosure
@@ -81,7 +78,7 @@ Exception subclass: #Error
 "Management"
 
 Object subclass: #ProcessorScheduler
-       instanceVariableNames: 'activeProcess processList processTimeslice'!
+       instanceVariableNames: 'byteslice activeProcess'!
 
 Object subclass: #ObjectMemory
        instanceVariableNames: ''!
@@ -108,7 +105,7 @@ ByteStream subclass: #FileStream
 
 "Basic data types"
 
-CharacterArray variableSubclass: #String
+ByteArray subclass: #String
 	       instanceVariableNames: ''!
 
 Object subclass: #Symbol
@@ -143,8 +140,11 @@ Magnitude subclass: #LookupKey
 LookupKey subclass: #Association
 	  instanceVariableNames: ''!
 
+LookupKey subclass: #Link
+       instanceVariableNames: 'next'!
+
 Object subclass: #Dictionary
-       instanceVariableNames: ''!
+       instanceVariableNames: 'hashTable'!
 
 "Gtk"
 

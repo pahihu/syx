@@ -8,8 +8,6 @@
 #include "syx-scheduler.h"
 #include "syx-init.h"
 
-G_BEGIN_DECLS
-
 //#define SYX_DEBUG_CONTEXT
 //#define SYX_DEBUG_CONTEXT_STACK
 //#define SYX_DEBUG_BYTECODE
@@ -19,19 +17,19 @@ G_BEGIN_DECLS
 static syx_uint8 _syx_interp_get_next_byte (SyxExecState *es);
 
 #define syx_interp_stack_push(es, ptr) (es->stack[es->sp++] = ptr)
-#define syx_interp_stack_pop(es) (es->stack[es->sp--])
-#define syx_interp_stack_peek(es) (es->stack[es->sp])
+#define syx_interp_stack_pop(es) (es->stack[es->sp-- - 1])
+#define syx_interp_stack_peek(es) (es->stack[es->sp-1])
 
 syx_bool
 syx_interp_swap_context (SyxExecState *es, SyxObject *context)
 {
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Swap context %p with new %p\n", process->context, context);
+  g_debug ("CONTEXT - Swap context %p with new %p\n", es->context, context);
 #endif
   SYX_METHOD_CONTEXT_IP(es->context) = syx_small_integer_new (es->ip);
   SYX_METHOD_CONTEXT_SP(es->context) = syx_small_integer_new (es->sp);
-  SYX_PROCESS_CONTEXT(es->process) = context;
-  return SYX_IS_NIL (context);
+  SYX_PROCESS_CONTEXT(es->process) = es->context = context;
+  return !SYX_IS_NIL (context);
 }
 
 syx_bool
@@ -44,10 +42,10 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
-  if (syx_interp_swap_context (es, return_context))
+  if (!syx_interp_swap_context (es, return_context))
     {
       syx_interp_stack_push (es, return_object);
-      return TRUE;
+      return FALSE;
     }
 
   syx_scheduler_remove_process (es->process); /* The process have no contexts anymore */
@@ -108,7 +106,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_global)
   object = syx_globals_at (symbol);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push global: '%s'\n", name);
+  g_debug ("BYTECODE - Push global: '%s'\n", symbol);
 #endif
 
   syx_interp_stack_push (es, object);
@@ -411,14 +409,19 @@ syx_process_execute_scheduled (SyxObject *process)
 void
 syx_process_execute_blocking (SyxObject *process)
 {
-  /*  syx_uint8 byte;
+  syx_uint8 byte;
+  SyxExecState *es;
 
-  while (es->ip >= es->bytecodes_count || *es->requested_yield)
+  es = syx_exec_state_new ();
+  syx_exec_state_fetch (es, process);
+
+  while (es->ip < es->bytecodes_count)
     {
-      byte = get_next_byte (process->context);
-      if (!execute_byte (process, byte))
-        return;
-	}*/
+      byte = _syx_interp_get_next_byte (es);
+      if (!_syx_interp_execute_byte (es, byte))
+	{
+	  syx_exec_state_save (es);
+	  return;
+	}
+    }
 }
-
-G_END_DECLS

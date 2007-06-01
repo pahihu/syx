@@ -1,0 +1,30 @@
+2007-06-01  Luca Bruno  <lethalman88@gmail.com>
+
+	* configure.ac: override standard CFLAGS
+	* syx-object.c (syx_dictionary_at_symbol_put): return once we found the right place to put the data
+	* syx-object.c (syx_metaclass_new, syx_class_new): avoid nil values to speed up lookups
+	* syx-object.c (syx_symbol_new): put the symbol itself instead of SYX_TRUE
+	* syx-enums.h (SyxTokenType): put string-based token types at the end so that syx_token_free can free strings
+	* syx-lexer.h: Added SyxToken structure to get rid of GValue
+	* syx-lexer.c: removed GValue dependency and Glib ascii functions usage
+	Renamed all static functions
+	All parts of Syx have been updated with the new behavior of the lexer, including the parser and the tests
+	* syx-lexer.c (syx_lexer_free): added function
+	* syx-lexer.c (syx_token_free): added function
+	* syx-bytecode.c (syx_bytecode_free): added function
+	* syx-parser.c (syx_parser_free): added function
+	Renamed all static functions.
+	* syx-utils.c: completely refactored without using Glib
+	* syx-utils.h: removed G_VALUE_STRCMP
+	* Replaced all g_strcasecmp and g_strdup with strcmp and strdup
+	* syx-init.c (syx_init): removed g_type_init, we do not need GObject for GValue anymore
+	* st/kernel/initialDecl.st: fixed instance variables according to syx-enums.h
+	* syx-memory.c (syx_freev): new function to free NULL terminated arrays
+	* syx-memory.c (_syx_memory): moved from static to dynamic
+	* syx-memory.c (syx_memory_free): removed because of future garbage collector
+	* syx-memory.h (SyxMemoryLink): removed with syx_memory_free
+	* syx-types.h (syx_small_integer_new, syx_character_new): be sure we work on a long before doing bitwise operations
+	* syx-types.h (syx_char): added type
+	* syx-types.h (syx_size): changed from unsigned long to long according to standard size_t
+	Removed lots of Glib memory related dependencies.
+	Recovered a bunch of memory leaks

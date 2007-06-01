@@ -25,12 +25,12 @@ new
 !
 
 basicNew: anInteger
-    <primitive: 'Behavior_newIndexable'>
+    <primitive: 'Behavior_basicNew'>
 	^self primitiveFailed
 !
 
 new: anInteger
-    <primitive: 'Behavior_newIndexable'>
+    <primitive: 'Behavior_basicNew'>
 	^self primitiveFailed
 ! !
 

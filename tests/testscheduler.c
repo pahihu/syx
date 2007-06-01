@@ -1,3 +1,5 @@
+#include <assert.h>
+#include <stdio.h>
 #include "../syx/syx.h"
 
 int
@@ -5,9 +7,7 @@ main (int argc, char *argv[])
 {
   SyxParser *parser;
   SyxLexer *lexer;
-  SyxMethod *method;
-  SyxMethodContext *context;
-  SyxProcess *process;
+  SyxObject *method, *context, *process;
   GError *error = NULL;
   GTimer *timer;
 
@@ -18,8 +18,8 @@ main (int argc, char *argv[])
   lexer = syx_lexer_new (text);						\
   method = syx_method_new ();						\
   parser = syx_parser_new (lexer, method, NULL, FALSE, NULL);		\
-  g_assert (syx_parser_parse (parser, &error) == TRUE);			\
-  context = syx_method_context_new (method, syx_nil, NULL, NULL);	\
+  assert (syx_parser_parse (parser, &error) == TRUE);			\
+  context = syx_method_context_new (SYX_NIL, method, SYX_NIL, syx_array_new (0, NULL)); \
   process = syx_process_new (context);					\
   syx_scheduler_add_process (process);
 
@@ -38,7 +38,7 @@ main (int argc, char *argv[])
   syx_scheduler_run ();
   g_timer_stop (timer);
 
-  g_print("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
+  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
 
   return 0;
