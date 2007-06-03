@@ -16,7 +16,7 @@
     
     \section sec Description
 
-    This module collects some useful functions.
+    syx-utils.c: This module collects some useful functions.
 */
 
 static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);

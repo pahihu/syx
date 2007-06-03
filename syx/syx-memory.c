@@ -13,16 +13,17 @@ static syx_pointer _syx_empty_memory = NULL;
 
 /*! \page syx_memory Syx Memory
     
-    The objects are inserted into a whole space of static memory:
+    The objects are inserted into a whole space allocated in the heap (syx-memory.c):
 
     \code
-    static SyxObject **_syx_freed_memory[SYX_MEMORY_SIZE];
-    static SyxObject *_syx_memory[SYX_MEMORY_SIZE];
+    SyxObject *_syx_memory;
+    SyxObject **_syx_freed_memory;
     \endcode
 
-    The idea is to keep a stack containing free memory pointers. Once we free an object, we push on top of the stack the freed location. When we allocate a new object, we just pop from the stack the pointer.
+    The idea is to keep a stack containing free memory pointers. Once we free an object, we push on top of the stack of freed locations When we allocate a new SyxObject, we just pop the pointer from this stack.
 
-    \note the data field, containing SyxObject pointers, is allocated outside this memory, in the heap.
+    Take a look at syx-memory.c for more detailed informations.
+    \note the SyxObject::data field, containing SyxObject pointers, is allocated outside this memory.
 */
 
 void

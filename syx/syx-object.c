@@ -6,22 +6,12 @@
 #include "syx-scheduler.h"
 
 /*! \page syx_object Syx Object
- 
-  \section sec Description
- 
-  This is the structure of an object:
-
-  \code
-  typedef struct _SyxObject SyxObject;
   
-  struct _SyxObject {
-    SyxObject *class;
-    syx_varsize size;
-    SyxObject **data;
-  };
-  \endcode
+  \section Description
+  syx-object.c: this file contains all the functions needed to work with Smalltalk objects.
   
-  The \b size field, is the number of elements contained in the \b data field.
+  Objects are the core of Syx. They can represent both instances or classes.
+  \note all objects are allocated in the Syx Memory
 */
  
 SyxObject *syx_metaclass_class,
