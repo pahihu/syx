@@ -107,6 +107,7 @@ syx_parser_parse (SyxParser *self, GError **error)
 						      (SyxObject **) self->bytecode->code->data);
   SYX_METHOD_LITERALS(self->method) = syx_array_new (self->bytecode->literals->len,
 						     (SyxObject **) self->bytecode->literals->pdata);
+
   SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->argument_names->len);
   SYX_METHOD_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->temporary_names->len);
   SYX_METHOD_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);

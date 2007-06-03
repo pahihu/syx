@@ -12,20 +12,15 @@
 #include "syx-lexer.h"
 #include "syx-scheduler.h"
 
-G_BEGIN_DECLS
+static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);
+static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
 
 /* A cold parser */
 
 #define IS_EXLMARK(token) (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
 
-GQuark
-syx_parser_error_quark (void)
-{
-  return g_quark_from_static_string ("syx-parser-error-quark");
-}
-
 static syx_bool
-parse_class (SyxLexer *lexer, GError **error)
+_syx_cold_parse_class (SyxLexer *lexer)
 {
   SyxToken token = syx_lexer_get_last_token (lexer);
   SyxObject *superclass, *subclass;
@@ -111,11 +106,8 @@ parse_class (SyxLexer *lexer, GError **error)
   token = syx_lexer_next_token (lexer);
   if (!IS_EXLMARK (token))
     {
-      if (error)
-	*error = g_error_new (SYX_PARSER_ERROR,
-			      SYX_PARSER_ERROR_SYNTAX,
-			      "Class definition must terminate with an exlamation mark");
       syx_token_free (token);
+      g_error ("Class definition must terminate with an exlamation mark");
       return FALSE;
     }
   syx_token_free (token);
@@ -162,13 +154,13 @@ parse_class (SyxLexer *lexer, GError **error)
 }
 
 static syx_bool
-parse_methods (SyxLexer *lexer, GError **error)
+_syx_cold_parse_methods (SyxLexer *lexer)
 {
   SyxToken token;
   SyxObject *class;
   SyxParser *parser;
   SyxLexer *method_lexer;
-  syx_symbol category;
+  //syx_symbol category;
   syx_string chunk;
   syx_symbol *instance_variables;
 
@@ -203,6 +195,11 @@ parse_methods (SyxLexer *lexer, GError **error)
     return FALSE;
   syx_token_free (token);
 
+  if (SYX_IS_NIL (SYX_CLASS_METHODS (class)))
+    {
+      SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
+    }
+
   while (TRUE)
     {
       chunk = syx_lexer_next_chunk (lexer);
@@ -227,20 +224,18 @@ parse_methods (SyxLexer *lexer, GError **error)
 }
 
 syx_bool
-syx_cold_parse (SyxLexer *lexer, GError **error)
+syx_cold_parse (SyxLexer *lexer)
 {
   SyxToken token;
   syx_bool parseOk = TRUE;
-
-  *error = NULL;
 
   token = syx_lexer_next_token (lexer);
   while (parseOk && token.type != SYX_TOKEN_END)
     {
       if (IS_EXLMARK (token))
-	parseOk = parse_methods (lexer, error);
+	parseOk = _syx_cold_parse_methods (lexer);
       else
-	parseOk = parse_class (lexer, error);
+	parseOk = _syx_cold_parse_class (lexer);
 
       syx_token_free (token);
       token = syx_lexer_next_token (lexer);
@@ -251,14 +246,14 @@ syx_cold_parse (SyxLexer *lexer, GError **error)
 }
 
 syx_bool
-syx_cold_file_in (syx_symbol filename, GError **error)
+syx_cold_file_in (syx_symbol filename)
 {
   SyxLexer *lexer;
   GMappedFile *file;
   g_return_val_if_fail (g_file_test (filename,
 				     (G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)), FALSE);
 
-  file = g_mapped_file_new (filename, FALSE, error);
+  file = g_mapped_file_new (filename, FALSE, NULL);
   if (!file)
     return FALSE;
 
@@ -269,7 +264,7 @@ syx_cold_file_in (syx_symbol filename, GError **error)
       return FALSE;
     }
 
-  if (!syx_cold_parse (lexer, error))
+  if (!syx_cold_parse (lexer))
     {
       syx_lexer_free (lexer, FALSE);
       g_mapped_file_free (file);
@@ -307,5 +302,3 @@ syx_semaphore_wait (SyxObject *semaphore)
   syx_process_set_suspended (SYX_OBJECT_DATASYX_PROCESS_SUSPEND (process));
   g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process);*/
 }
-
-G_END_DECLS

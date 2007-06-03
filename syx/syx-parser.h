@@ -1,5 +1,5 @@
-#ifndef _SYX_PARSER_H
-#define _SYX_PARSER_H
+#ifndef SYX_PARSER_H
+#define SYX_PARSER_H
 
 #include <glib.h>
 #include "syx-types.h"
@@ -7,11 +7,9 @@
 #include "syx-lexer.h"
 #include "syx-bytecode.h"
 
-G_BEGIN_DECLS
+typedef struct SyxParser SyxParser;
 
-typedef struct _SyxParser SyxParser;
-
-struct _SyxParser {
+struct SyxParser {
   SyxLexer *lexer;
   SyxObject *method;
   SyxParser *parent_parser;
@@ -30,6 +28,4 @@ SyxParser *syx_parser_new (SyxLexer *lexer, SyxObject *method, syx_symbol *insta
 void syx_parser_free (SyxParser *parser, syx_bool free_segment);
 syx_bool syx_parser_parse (SyxParser *parser, GError **error);
 
-G_END_DECLS
-
-#endif /* _SYX_PARSER_H */
+#endif /* SYX_PARSER_H */

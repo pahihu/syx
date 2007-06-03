@@ -70,7 +70,7 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   *str++ = lastChar;
 
-  while ((lastChar = syx_lexer_forward (self)) && g_ascii_isalnum (lastChar))
+  while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))
     *str++ = lastChar;
 
   if (lastChar == ':')
@@ -91,7 +91,7 @@ static void
 _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
   syx_int32 intres = lastChar - '0';
-  while ((lastChar = syx_lexer_forward (self)) && g_ascii_isdigit (lastChar))
+  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
     intres = (intres * 10) + (lastChar - '0');
   syx_lexer_push_back (self);
 
@@ -113,7 +113,7 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_char sstr[256] = {0};;
   syx_string str = sstr;
 
-  while ((lastChar = syx_lexer_forward (self)) && g_ascii_isalnum (lastChar))
+  while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))
     *str++ = lastChar;
   syx_lexer_push_back (self);
   

@@ -6,7 +6,6 @@ main (int argc, char *argv[])
 {
   SyxLexer *lexer;
   SyxObject *temp;
-  GError *error;
   GTimer *timer;
 
   syx_init ("..");
@@ -29,12 +28,12 @@ main (int argc, char *argv[])
   
   temp = syx_globals_at ("Object");
   lexer = syx_lexer_new ("nil subclass: #Object instanceVariableNames: ''!");
-  assert (syx_cold_parse (lexer, &error) == TRUE);
+  assert (syx_cold_parse (lexer) == TRUE);
   assert (syx_globals_at ("Object") == temp);
   syx_lexer_free (lexer, FALSE);
 
   lexer = syx_lexer_new ("!Object methodsFor: 'test'! testMethod ^nil! !");
-  assert (syx_cold_parse (lexer, &error) == TRUE);
+  assert (syx_cold_parse (lexer) == TRUE);
   syx_lexer_free (lexer, FALSE);
 
   g_timer_stop (timer);

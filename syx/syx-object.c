@@ -5,8 +5,6 @@
 #include "syx-types.h"
 #include "syx-scheduler.h"
 
-G_BEGIN_DECLS
-
 /* References to the classes used by the VM */
 
 SyxObject *syx_metaclass_class,
@@ -100,7 +98,6 @@ syx_metaclass_new (SyxObject *supermetaclass)
   SyxObject *metaclass = syx_object_new (syx_metaclass_class);
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
-  SYX_CLASS_METHODS(metaclass) = syx_dictionary_new (50);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
   return metaclass;
 }
@@ -112,7 +109,6 @@ syx_class_new (SyxObject *superclass)
   SyxObject *class = syx_object_new (metaclass);
   SYX_CLASS_SUPERCLASS(class) = superclass;
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
-  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   return class;
 }
@@ -249,6 +245,7 @@ syx_method_context_new (SyxObject *parent, SyxObject *method, SyxObject *receive
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method)));
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
+  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (method)));
 
   return object;
@@ -265,7 +262,6 @@ syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *receiver,
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = arguments;
 
-
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (block)));
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (block)));
@@ -280,7 +276,7 @@ syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *receiver,
 SyxObject *
 syx_object_new (SyxObject *class)
 {
-  SyxObject *object = syx_memory_alloc (sizeof (SyxObject));
+  SyxObject *object = syx_memory_alloc ();
   
   object->class = class;
   object->size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
@@ -292,7 +288,7 @@ syx_object_new (SyxObject *class)
 SyxObject *
 syx_object_new_size (SyxObject *class, syx_varsize size)
 {
-  SyxObject *object = syx_memory_alloc (sizeof (SyxObject));
+  SyxObject *object = syx_memory_alloc ();
   
   object->class = class;
   object->size = size;
@@ -304,7 +300,7 @@ syx_object_new_size (SyxObject *class, syx_varsize size)
 SyxObject *
 syx_object_new_data (SyxObject *class, syx_varsize size, syx_pointer data)
 {
-  SyxObject *object = syx_memory_alloc (sizeof (SyxObject));
+  SyxObject *object = syx_memory_alloc ();
   
   object->class = class;
   object->size = size;
@@ -353,4 +349,21 @@ syx_class_get_all_instance_variables (SyxObject *class)
   return ret_names;
 }
 
-G_END_DECLS
+SyxObject *
+syx_class_lookup_method (SyxObject *class, syx_symbol selector)
+{
+  SyxObject *cur;
+  SyxObject *method;
+
+  for (cur=class; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
+    {
+      if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
+	continue;
+
+      method = syx_dictionary_at_symbol (SYX_CLASS_METHODS (cur), selector);
+      if (!SYX_IS_NIL (method))
+	return method;
+    }
+
+  return SYX_NIL;
+}

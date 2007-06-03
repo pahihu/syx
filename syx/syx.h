@@ -1,8 +1,6 @@
 #ifndef SYX_H
 #define SYX_H
 
-#include <glib.h>
-
 #include "syx-enums.h"
 #include "syx-types.h"
 #include "syx-object.h"

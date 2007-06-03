@@ -6,14 +6,12 @@
 #include "syx-object.h"
 #include "syx-enums.h"
 
-G_BEGIN_DECLS
-
 #define SYX_FUNC_BYTECODE(name,arg)		\
   inline void syx_bytecode_ ## name (SyxBytecode *bytecode, arg)
 
-typedef struct _SyxBytecode SyxBytecode;
+typedef struct SyxBytecode SyxBytecode;
 
-struct _SyxBytecode {
+struct SyxBytecode {
   GByteArray *code;
   GPtrArray *literals;
   syx_int32 stack_size;
@@ -40,7 +38,5 @@ SYX_FUNC_BYTECODE (assign_temporary, syx_uint8 temporary_index);
 SYX_FUNC_BYTECODE (assign_instance, syx_uint8 instance_index);
 SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index);
 inline void syx_bytecode_pop_top (SyxBytecode *bytecode);
-
-G_END_DECLS
 
 #endif /* _SYX_BYTECODE_H */

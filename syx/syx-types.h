@@ -1,11 +1,8 @@
-#ifndef _SYX_TYPES_H
-#define _SYX_TYPES_H
+#ifndef SYX_TYPES_H
+#define SYX_TYPES_H
 
-#include <glib.h>
 #include <bits/wordsize.h>
 #include "syx-enums.h"
-
-G_BEGIN_DECLS
 
 #if __WORDSIZE == 64
 #define SYX_TYPE_POINTER_BITS ((syx_nint)3 << 62)
@@ -17,8 +14,8 @@ G_BEGIN_DECLS
 #define SYX_TYPE_CHARACTER_BITS ((syx_nint)1 << 30)
 #endif
 
-#define SYX_POINTER(n) ((syx_pointer)(long)(n))
-#define SYX_SMALL_INTEGER(ptr) ((syx_int32)((syx_nint)(ptr) & ~SYX_TYPE_SMALL_INTEGER_BITS))
+#define SYX_POINTER(n) ((syx_pointer)(syx_nint)(n))
+#define SYX_SMALL_INTEGER(ptr) ((syx_int32)(((syx_nint)ptr << 1) >> 1))
 #define SYX_CHARACTER(ptr) ((syx_int8)(syx_nint)(ptr))
 
 #define SYX_NIL ((syx_pointer) 0)
@@ -36,6 +33,11 @@ G_BEGIN_DECLS
 #define syx_small_integer_new(n) ((syx_pointer)(((syx_nint)n) | SYX_TYPE_SMALL_INTEGER_BITS))
 #define syx_character_new(n) ((syx_pointer)((((syx_nint)n) & ~SYX_TYPE_POINTER_BITS) | SYX_TYPE_CHARACTER_BITS))
 #define syx_boolean_new(cond) ((cond) ? SYX_TRUE : SYX_FALSE)
+
+#if !defined FALSE || !defined TRUE
+#define FALSE 0
+#define TRUE 1
+#endif
 
 typedef unsigned char syx_bool;
 
@@ -65,6 +67,4 @@ typedef unsigned int syx_varsize;
 
 typedef void * syx_pointer;
 
-G_END_DECLS
-
-#endif /* _SYX_TYPES_H */
+#endif /* SYX_TYPES_H */

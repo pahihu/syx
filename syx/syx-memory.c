@@ -1,11 +1,10 @@
 #include <assert.h>
 #include <unistd.h>
+#include <glib.h>
 #include "syx-object.h"
 #include "syx-memory.h"
 
-G_BEGIN_DECLS
-
-static SyxObject *_syx_memory;
+static SyxObject *_syx_memory = NULL;
 static syx_int32 _syx_registered_objects = 0;
 syx_pointer _syx_empty_memory = NULL;
 
@@ -98,5 +97,3 @@ syx_freev (syx_pointer *ptrv)
     }
   syx_free (ptrv);
 }
-
-G_END_DECLS

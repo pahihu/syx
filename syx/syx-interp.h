@@ -1,17 +1,14 @@
-#ifndef _SYX_INTERP_H
-#define _SYX_INTERP_H
+#ifndef SYX_INTERP_H
+#define SYX_INTERP_H
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 
-G_BEGIN_DECLS
-
 /* Execution state of a Process */
 
-typedef struct _SyxExecState SyxExecState;
+typedef struct SyxExecState SyxExecState;
 
-struct _SyxExecState
+struct SyxExecState
 {
   SyxObject *process;
   SyxObject *context;
@@ -29,6 +26,11 @@ struct _SyxExecState
   SyxObject *message_arguments;
 };
 
+#define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
+void syx_exec_state_fetch (SyxExecState *es, SyxObject *process);
+inline void syx_exec_state_save (SyxExecState *es);
+void syx_exec_state_free (SyxExecState *es);
+
 /* Primitives */
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es);
@@ -36,9 +38,9 @@ typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es);
   syx_bool								\
   name (SyxExecState *es)
 
-typedef struct _SyxPrimitiveEntry SyxPrimitiveEntry;
+typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;
 
-struct _SyxPrimitiveEntry {
+struct SyxPrimitiveEntry {
   syx_symbol name;
   SyxPrimitiveFunc func;
 };
@@ -53,16 +55,14 @@ typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint8 argument);
   syx_bool					\
   name (SyxExecState *es, syx_uint8 argument)
 
-#define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
-void syx_exec_state_fetch (SyxExecState *es, SyxObject *process);
-void syx_exec_state_save (SyxExecState *es);
+inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxObject *context);
+inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxObject *context);
+inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
+						     syx_bool requested_return, SyxObject *requested_return_context);
 
-syx_bool syx_interp_swap_context (SyxExecState *es, SyxObject *context);
-syx_bool syx_interp_enter_context (SyxExecState *es, SyxObject *context);
-syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
-					      syx_bool requested_return, SyxObject *requested_return_context);
-
-void syx_interp_stack_push (SyxObject *context, SyxObject *instance);
+inline void syx_interp_stack_push (SyxExecState *es, SyxObject *object);
+inline SyxObject *syx_interp_stack_pop (SyxExecState *es);
+inline SyxObject *syx_interp_stack_peek (SyxExecState *es);
 
 /* Process execution */
 
@@ -86,6 +86,4 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super);
 SYX_FUNC_INTERPRETER (syx_interp_do_primitive);
 SYX_FUNC_INTERPRETER (syx_interp_do_special);
 
-G_END_DECLS
-
-#endif /* _SYX_INTERP_H */
+#endif /* SYX_INTERP_H */

@@ -1,11 +1,9 @@
-#ifndef _SYX_SCHEDULER_H
-#define _SYX_SCHEDULER_H
+#ifndef SYX_SCHEDULER_H
+#define SYX_SCHEDULER_H
 
 #include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
-
-G_BEGIN_DECLS
 
 extern SyxObject *syx_processor;
 extern SyxObject **_syx_processor_active_process;
@@ -22,6 +20,4 @@ syx_uint32 syx_scheduler_add_source (GSource *source);
 #define syx_processor_byteslice (*_syx_processor_byteslice)
 #define syx_processor_active_process (*_syx_processor_active_process)
 
-G_END_DECLS
-
-#endif
+#endif /* SYX_SCHEDULER_H */

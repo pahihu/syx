@@ -4,13 +4,11 @@
 #include "syx-types.h"
 #include "syx-enums.h"
 
-G_BEGIN_DECLS
-
 /* Token */
 
-typedef struct _SyxToken SyxToken;
+typedef struct SyxToken SyxToken;
 
-struct _SyxToken {
+struct SyxToken {
   SyxTokenType type;
   union
   {
@@ -24,9 +22,9 @@ void syx_token_free (SyxToken token);
 
 /* Lexer */
 
-typedef struct _SyxLexer SyxLexer;
+typedef struct SyxLexer SyxLexer;
 
-struct _SyxLexer {
+struct SyxLexer {
   syx_symbol text;
   SyxToken last_token;
   syx_char last_char;
@@ -45,7 +43,5 @@ SyxToken syx_lexer_next_token (SyxLexer *lexer);
 syx_char *syx_lexer_next_chunk (SyxLexer *lexer);
 SyxToken syx_lexer_get_last_token (SyxLexer *lexer);
 syx_char syx_lexer_get_last_char (SyxLexer *lexer);
-
-G_END_DECLS
 
 #endif

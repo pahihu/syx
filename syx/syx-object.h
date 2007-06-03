@@ -1,13 +1,10 @@
-#ifndef _SYX_OBJECT_H
-#define _SYX_OBJECT_H
+#ifndef SYX_OBJECT_H
+#define SYX_OBJECT_H
 
-#include <glib.h>
 #include <string.h>
 #include "syx-types.h"
 #include "syx-memory.h"
 #include "syx-enums.h"
-
-G_BEGIN_DECLS
 
 #define SYX_OBJECT(ptr) ((SyxObject *)(ptr))
 #define SYX_OBJECT_SYMBOL(object) ((syx_symbol)(object)->data)
@@ -67,6 +64,7 @@ inline void syx_object_set_class (SyxObject *object, SyxObject *class);
 
 syx_symbol *syx_class_get_all_instance_variables (SyxObject *class);
 syx_bool syx_class_is_superclass_of (SyxObject *class, SyxObject *subclass);
+SyxObject *syx_class_lookup_method (SyxObject *class, syx_symbol selector);
 
 SyxObject *syx_dictionary_at_const (SyxObject *dict, SyxObject *key);
 SyxObject *syx_dictionary_at_symbol (SyxObject *dict, syx_symbol key);
@@ -137,8 +135,4 @@ inline SyxObject *syx_process_new (SyxObject *context);
 #define SYX_PROCESS_SCHEDULER_ACTIVE_PROCESS(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_SCHEDULER_ACTIVE_PROCESS])
 #define SYX_PROCESS_SCHEDULER_BYTESLICE(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_SCHEDULER_BYTESLICE])
 
-#define syx_class_lookup_method(class,selector) (syx_dictionary_at_symbol (SYX_CLASS_METHODS (class), selector))
-
-G_END_DECLS
-
-#endif /* _SYX_OBJECT_H */
+#endif /* SYX_OBJECT_H */

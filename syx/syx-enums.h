@@ -1,10 +1,6 @@
 #ifndef SYX_ENUMS_H
 #define SYX_ENUMS_H
 
-#include <glib-object.h>
-
-G_BEGIN_DECLS
-
 typedef enum
   {
     SYX_TYPE_POINTER,
@@ -146,6 +142,4 @@ typedef enum
     SYX_PARSER_ERROR_SYNTAX,
   } SyxParserError;
 
-G_END_DECLS
-
-#endif
+#endif /* SYX_ENUMS_H */

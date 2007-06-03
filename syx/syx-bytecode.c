@@ -7,8 +7,6 @@
 #include "syx-bytecode.h"
 #include "syx-memory.h"
 
-G_BEGIN_DECLS
-
 SyxBytecode *
 syx_bytecode_new (void)
 {
@@ -18,6 +16,7 @@ syx_bytecode_new (void)
 
   bytecode->code = g_byte_array_new ();
   bytecode->literals = g_ptr_array_new ();
+  bytecode->stack_size = 0;
 
   return bytecode;
 }
@@ -149,5 +148,3 @@ syx_bytecode_pop_top (SyxBytecode *bytecode)
 {
   syx_bytecode_do_special (bytecode, SYX_BYTECODE_POP_TOP);
 }
-
-G_END_DECLS

@@ -1,8 +1,6 @@
 #ifndef SYX_JIT_H
 #define SYX_JIT_H
 
-G_BEGIN_DECLS
-
 #include "syx-class.h"
 #include "syx-basic-types.h"
 
@@ -23,13 +21,11 @@ typedef gboolean (* SyxJitFunc) (SyxMethod *method, jit_function_t func, guint8 
 #define SYX_JIT_USE_RECEIVER jit_value_t receiver = jit_value_get_param (func, 2);
 #define SYX_JIT_USE_CLASS jit_value_t class = jit_value_get_param (func, 3);
 
-#endif
+#endif /* HAVE_JIT */
 
 void syx_jit_init ();
 void syx_jit_free ();
 gboolean syx_jit_compile (SyxMethod *method);
 long int syx_jit_execute (SyxMethod *method, SyxProcess *process);
 
-G_END_DECLS
-
-#endif
+#endif /* SYX_JIT_H */

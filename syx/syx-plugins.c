@@ -6,8 +6,6 @@
 #include "syx-init.h"
 #include "syx-plugins.h"
 
-G_BEGIN_DECLS
-
 static GSList *plugins = NULL;
 
 SyxPlugin *

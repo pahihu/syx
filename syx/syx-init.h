@@ -1,11 +1,8 @@
 #ifndef SYX_INIT_H
 #define SYX_INIT_H
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
-
-G_BEGIN_DECLS
 
 void syx_init (syx_symbol root_path);
 void syx_build_basic (void);
@@ -16,7 +13,5 @@ syx_bool syx_set_root_path (syx_symbol root_path);
 
 #define syx_globals_at(name) (syx_dictionary_at_symbol (syx_globals, (syx_symbol)(name)))
 #define syx_globals_at_put(symbol,value) (syx_dictionary_at_const_put (syx_globals, symbol, (value)))
-
-G_END_DECLS
 
 #endif

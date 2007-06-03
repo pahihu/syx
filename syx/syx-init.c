@@ -8,10 +8,7 @@
 #include "syx-scheduler.h"
 #include "syx-object.h"
 
-G_BEGIN_DECLS
-
 static syx_bool syx_initialized = FALSE;
-static GHashTable *globals;
 static syx_symbol syx_root_path;
 
 static void file_in_basic (void);
@@ -37,10 +34,9 @@ static void
 file_in_basic_decl (void)
 {
   syx_string full_filename;
-  GError *error = NULL;
 
   full_filename = syx_find_file ("st", "kernel", "initialDecl.st");
-  syx_cold_file_in (full_filename, &error);
+  syx_cold_file_in (full_filename);
   g_free (full_filename);
 }
 
@@ -67,12 +63,11 @@ file_in_basic (void)
     "Console.st",
     NULL
   };
-  GError *error = NULL;
 
   for (filename = kernel_filenames; *filename; filename++)
     {
       full_filename = syx_find_file ("st", "kernel", *filename);
-      syx_cold_file_in (full_filename, &error);
+      syx_cold_file_in (full_filename);
       g_free (full_filename);
     }
 }
@@ -184,8 +179,6 @@ syx_init (syx_symbol root_path)
 
   syx_memory_init ();
   
-  globals = g_hash_table_new (g_str_hash, g_str_equal);
-
   syx_initialized = TRUE;
 }
 
@@ -204,5 +197,3 @@ syx_set_root_path (syx_symbol root_path)
   syx_root_path = root_path;
   return TRUE;
 }
-
-G_END_DECLS

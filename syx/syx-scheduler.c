@@ -8,8 +8,6 @@
 #include "syx-scheduler.h"
 #include "syx-interp.h"
 
-G_BEGIN_DECLS
-
 static SyxObject *first_process;
 static GMainLoop *main_loop = NULL;
 
@@ -137,6 +135,3 @@ syx_scheduler_add_source (GSource *source)
   GMainContext *context = g_main_loop_get_context (main_loop);
   return g_source_attach (source, context);
 }
-
-
-G_END_DECLS

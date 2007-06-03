@@ -16,23 +16,43 @@
 
 static syx_uint8 _syx_interp_get_next_byte (SyxExecState *es);
 
-#define syx_interp_stack_push(es, ptr) (es->stack[es->sp++] = ptr)
-#define syx_interp_stack_pop(es) (es->stack[es->sp-- - 1])
-#define syx_interp_stack_peek(es) (es->stack[es->sp-1])
+inline void
+syx_interp_stack_push (SyxExecState *es, SyxObject *object)
+{
+#ifdef SYX_DEBUG_CONTEXT_STACK
+  g_debug ("CONTEXT STACK - Push %p\n", object);
+#endif
+  es->stack[es->sp++] = object;
+}
 
-syx_bool
+inline SyxObject *
+syx_interp_stack_pop (SyxExecState *es)
+{
+#ifdef SYX_DEBUG_CONTEXT_STACK
+  g_debug ("CONTEXT STACK - Pop %p\n", es->stack[es->sp - 1]);
+#endif
+  return es->stack[--es->sp];
+}
+
+inline SyxObject *
+syx_interp_stack_peek (SyxExecState *es)
+{
+  return es->stack[es->sp - 1];
+}
+
+inline syx_bool
 syx_interp_swap_context (SyxExecState *es, SyxObject *context)
 {
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Swap context %p with new %p\n", es->context, context);
 #endif
-  SYX_METHOD_CONTEXT_IP(es->context) = syx_small_integer_new (es->ip);
-  SYX_METHOD_CONTEXT_SP(es->context) = syx_small_integer_new (es->sp);
-  SYX_PROCESS_CONTEXT(es->process) = es->context = context;
+  es->context = context;
+  syx_exec_state_save (es);
+  syx_exec_state_fetch (es, es->process);
   return !SYX_IS_NIL (context);
 }
 
-syx_bool
+inline syx_bool
 syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool requested_return, SyxObject *requested_return_context)
 {
   SyxObject *return_context = requested_return ? requested_return_context : SYX_METHOD_CONTEXT_PARENT (es->context);
@@ -42,17 +62,17 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
-  if (!syx_interp_swap_context (es, return_context))
+  if (syx_interp_swap_context (es, return_context))
     {
       syx_interp_stack_push (es, return_object);
-      return FALSE;
+      return TRUE;
     }
 
   syx_scheduler_remove_process (es->process); /* The process have no contexts anymore */
-  return TRUE;
+  return FALSE;
 }
 
-syx_bool
+inline syx_bool
 syx_interp_enter_context (SyxExecState *es, SyxObject *context)
 {
 #ifdef SYX_DEBUG_CONTEXT
@@ -63,30 +83,48 @@ syx_interp_enter_context (SyxExecState *es, SyxObject *context)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Push instance at %d\n", argument);
+#endif
   syx_interp_stack_push (es, SYX_OBJECT_DATA(es->receiver)[argument]);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 {
-  syx_interp_stack_push (es, es->arguments[argument]);
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Push argument at %d\n", argument);
+#endif
+  if (argument == 0)
+    syx_interp_stack_push (es, es->receiver);
+  else
+    syx_interp_stack_push (es, es->arguments[argument - 1]);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_temporary)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Push temporary at %d\n", argument);
+#endif
   syx_interp_stack_push (es, es->temporaries[argument]);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_literal)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Push literal at %d\n", argument);
+#endif
   syx_interp_stack_push (es, es->literals[argument]);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Push constant %d\n", argument);
+#endif
   if (argument < SYX_BYTECODE_CONST_CONTEXT)
     syx_interp_stack_push (es, SYX_POINTER(argument));
   else if (argument == SYX_BYTECODE_CONST_CONTEXT)
@@ -133,12 +171,18 @@ SYX_FUNC_INTERPRETER (syx_interp_push_array)
 
 SYX_FUNC_INTERPRETER (syx_interp_assign_instance)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Assign instance at %d\n", argument);
+#endif
   SYX_OBJECT_DATA(es->receiver)[argument] = syx_interp_stack_peek (es);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
 {
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Assign temporary at %d\n", argument);
+#endif
   es->temporaries[argument] = syx_interp_stack_peek (es);
   return TRUE;
 }
@@ -151,9 +195,9 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   g_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
-  es->message_arguments = syx_array_new_size (argument);
-  for (i=argument - 1; i >= 0; i--)
-    SYX_OBJECT_DATA(es->message_arguments)[i] = syx_interp_stack_pop (es);
+  es->message_arguments = syx_array_new_size (argument + 1);
+  for (i=argument; i > 0; i--)
+    SYX_OBJECT_DATA(es->message_arguments)[i-1] = syx_interp_stack_pop (es);
 
   es->message_receiver = syx_interp_stack_pop (es);
 
@@ -169,12 +213,10 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    g_error ("%s doesn't respond to #%s\n",
-	     SYX_OBJECT_SYMBOL (SYX_CLASS_NAME(class)),
-	     selector);
+    g_error ("Class at %p doesn't respond to #%s\n", class, selector);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send message %s\n", selector);
+  g_debug ("BYTECODE - Send message #%s\n", selector);
 #endif
 
   context = syx_method_context_new (es->context, method, es->message_receiver, es->message_arguments);
@@ -196,7 +238,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
 	     selector);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send message %s\n", selector);
+  g_debug ("BYTECODE - Send message #%s to super\n", selector);
 #endif
 
   context = syx_method_context_new (es->context, method, es->message_receiver, es->message_arguments);
@@ -253,6 +295,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	  return_context = SYX_BLOCK_CONTEXT_RETURN_CONTEXT (es->context);
 	  requested_return = TRUE;
 	}
+
       return syx_interp_leave_context_and_answer (es, returned_object, requested_return, return_context);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
     case SYX_BYTECODE_BRANCH_IF_FALSE:
@@ -299,7 +342,7 @@ static syx_uint8
 _syx_interp_get_next_byte (SyxExecState *es)
 {
 #ifdef SYX_DEBUG_TRACE_IP
-  g_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %d\n", es->context.addr, es->ip, es->bytecodes[es->ip++]);
+  g_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", es->context, es->ip, es->bytecodes[es->ip]);
 #endif
 
   return SYX_SMALL_INTEGER (es->bytecodes[es->ip++]);
@@ -367,6 +410,9 @@ syx_exec_state_fetch (SyxExecState *es, SyxObject *process)
   SyxObject *method;
   es->process = process;
   es->context = SYX_PROCESS_CONTEXT (process);
+  if (SYX_IS_NIL (es->context))
+    return;
+
   method = SYX_METHOD_CONTEXT_METHOD (es->context);
 
   es->receiver = SYX_METHOD_CONTEXT_RECEIVER (es->context);
@@ -374,16 +420,29 @@ syx_exec_state_fetch (SyxExecState *es, SyxObject *process)
   es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
   es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
   es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
-  es->bytecodes = SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
+  es->bytecodes = (syx_uint8 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
   es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method));
   es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
   es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
   es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
 }
 
-void
+inline void
 syx_exec_state_save (SyxExecState *es)
 {
+  SyxObject *context = SYX_PROCESS_CONTEXT (es->process);
+  if (context)
+    {
+      SYX_METHOD_CONTEXT_IP(context) = syx_small_integer_new (es->ip);
+      SYX_METHOD_CONTEXT_SP(context) = syx_small_integer_new (es->sp);
+    }
+  SYX_PROCESS_CONTEXT(es->process) = es->context;
+}
+
+inline void
+syx_exec_state_free (SyxExecState *es)
+{
+  syx_free (es);
 }
 
 void
@@ -419,9 +478,9 @@ syx_process_execute_blocking (SyxObject *process)
     {
       byte = _syx_interp_get_next_byte (es);
       if (!_syx_interp_execute_byte (es, byte))
-	{
-	  syx_exec_state_save (es);
-	  return;
-	}
+	break;
     }
+
+  syx_exec_state_save (es);
+  syx_exec_state_free (es);
 }

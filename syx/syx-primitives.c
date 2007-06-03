@@ -2,6 +2,7 @@
   #include <config.h>
 #endif
 
+#include <stdio.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-scheduler.h"
@@ -9,10 +10,6 @@
 #include "syx-lexer.h"
 #include "syx-interp.h"
 #include "syx-utils.h"
-
-#include <glib/gprintf.h>
-
-G_BEGIN_DECLS
 
 #define SYX_PRIM_RETURN(object)						\
   (syx_interp_leave_context_and_answer (es, (object), FALSE, SYX_NIL)); \
@@ -154,13 +151,13 @@ SYX_FUNC_PRIMITIVE (Symbol_print)
 
 SYX_FUNC_PRIMITIVE (String_print)
 {
-  g_print ("%s\n", SYX_OBJECT_SYMBOL(es->receiver));
+  printf ("%s\n", SYX_OBJECT_SYMBOL(es->receiver));
   SYX_PRIM_RETURN (es->receiver);
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_print)
 {
-  g_printf ("%d\n", SYX_SMALL_INTEGER(es->receiver));
+  printf ("%d\n", SYX_SMALL_INTEGER(es->receiver));
   SYX_PRIM_RETURN (es->receiver);
 }
 
