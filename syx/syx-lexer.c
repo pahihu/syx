@@ -17,19 +17,24 @@ static void _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char l
 static syx_bool _syx_char_is_closing (syx_char c);
 static syx_bool _syx_char_is_single_binary (syx_char c);
 
-/**
- * syx_lexer_new
- * @text: a string
- *
- * This function parses a Glade XML interface file to a GladeInterface
- * object (which is libglade's internal representation of the
- * interface data).
- *
- * Generally, user code won't need to call this function.  Instead, it
- * should go through the GladeXML interfaces.
- *
- * Returns: a SyxLexer to be used for parsing code
- */
+/*!
+  \page syx_lexer Syx Lexer
+
+  syx_lexer_new
+  @text: a string
+ 
+  \section sec Description
+
+  This function parses a Glade XML interface file to a GladeInterface
+  object (which is libglade's internal representation of the
+  interface data).
+
+  Generally, user code won't need to call this function.  Instead, it
+  should go through the GladeXML interfaces.
+ 
+  \b Returns: a SyxLexer to be used for parsing code
+*/
+
 SyxLexer *
 syx_lexer_new (syx_symbol text)
 {

@@ -5,7 +5,12 @@
 #include "syx-types.h"
 #include "syx-scheduler.h"
 
-/* References to the classes used by the VM */
+/*! \page syx_object Syx Object
+ 
+ \section sec Description
+
+ References to the classes used by the VM
+*/
 
 SyxObject *syx_metaclass_class,
 

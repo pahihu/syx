@@ -300,5 +300,24 @@ syx_semaphore_wait (SyxObject *semaphore)
 
   process = syx_scheduler_get_active_process ();
   syx_process_set_suspended (SYX_OBJECT_DATASYX_PROCESS_SUSPEND (process));
-  g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process);*/
+  g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
+}
+
+#ifdef WINDOWS
+        #define SEPARATOR '\\'
+#else
+        #define SEPARATOR '/'
+#endif
+
+char
+*syx_path_join (char *path1, char *path2)
+{
+  char *new_path = malloc (strlen (path1) + strlen (path2));
+  
+  if (path2[0] == SEPARATOR)
+    sprintf (new_path, "%s", path2);
+  else
+    sprintf (new_path, "%s%s", path1, path2);
+   
+  return new_path;
 }
