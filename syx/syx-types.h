@@ -4,6 +4,24 @@
 #include <bits/wordsize.h>
 #include "syx-enums.h"
 
+/*! \page syx_types Syx Types
+  
+  \section numbers_and_constants Numbers and Constants
+  
+  The pointer to objects can also represent other kind of objects:
+  
+    - \b Pointers (00) have the two least bits set to 0, the other 30 bits is the pointer.
+    - \b Small \b integers (10) have the least bit set to 1, the other 31 bits is the signed integer.
+    - \b Characters (01) have the second least bit set to 1, and the least to 0, first 8 bits are the characters.
+    - \b nil is 0
+    - \b true is 1
+    - \b false is 2
+    
+  This method allows us to avoid allocating unuseful memory. For instance, small integers, characters and constants don't have other \b data to hold.
+  
+  \b syx_object_get_class() will return the right class for these special objects.
+*/
+
 #if __WORDSIZE == 64
 #define SYX_TYPE_POINTER_BITS ((syx_nint)3 << 62)
 #define SYX_TYPE_SMALL_INTEGER_BITS ((syx_nint)1 << 63)

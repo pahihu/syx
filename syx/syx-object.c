@@ -7,11 +7,23 @@
 
 /*! \page syx_object Syx Object
  
- \section sec Description
+  \section sec Description
+ 
+  This is the structure of an object:
 
- References to the classes used by the VM
+  \code
+  typedef struct _SyxObject SyxObject;
+  
+  struct _SyxObject {
+    SyxObject *class;
+    syx_varsize size;
+    SyxObject **data;
+  };
+  \endcode
+  
+  The \b size field, is the number of elements contained in the \b data field.
 */
-
+ 
 SyxObject *syx_metaclass_class,
 
   *syx_undefined_object_class,

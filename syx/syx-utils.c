@@ -303,6 +303,12 @@ syx_semaphore_wait (SyxObject *semaphore)
   g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
 }
 
+#ifdef WINDOWS
+  #define SEPARATOR '\\'
+#else
+  #define SEPARATOR '/'
+#endif
+
 syx_string
 syx_path_join (syx_symbol path1, syx_symbol path2)
 {
