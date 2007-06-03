@@ -12,6 +12,13 @@
 #include "syx-lexer.h"
 #include "syx-scheduler.h"
 
+/*! \page syx_utils Syx Utils
+    
+    \section sec Description
+
+    This module collects some useful functions.
+*/
+
 static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);
 static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
 
@@ -308,6 +315,20 @@ syx_semaphore_wait (SyxObject *semaphore)
 #else
   #define SEPARATOR '/'
 #endif
+
+/*! \par syx_path_join
+    
+    Join two or more pathname components, inserting the path separator as needed.\n
+    This method is platform indipendent:
+
+    \code
+    #ifdef WINDOWS
+      #define SEPARATOR '\\'
+    #else
+      #define SEPARATOR '/'
+    #endif
+    \endcode
+*/
 
 syx_string
 syx_path_join (syx_symbol path1, syx_symbol path2)

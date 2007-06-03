@@ -10,7 +10,19 @@ static syx_size _syx_freed_memory_top = 0;
 static syx_size _syx_registered_objects = 0;
 syx_pointer _syx_empty_memory = NULL;
 
-/* Memory */
+/*! \page syx_memory Syx Memory
+    
+    The objects are inserted into a whole space of static memory:
+
+    \code
+    static SyxObject **_syx_freed_memory[SYX_MEMORY_SIZE];
+    static SyxObject *_syx_memory[SYX_MEMORY_SIZE];
+    \endcode
+
+    The idea is to keep a stack containing free memory pointers. Once we free an object, we push on top of the stack the freed location. When we allocate a new object, we just pop from the stack the pointer.
+
+    \note the data field, containing SyxObject pointers, is allocated outside this memory, in the heap.
+*/
 
 void
 syx_memory_init (void)
