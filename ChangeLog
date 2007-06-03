@@ -1,5 +1,8 @@
 2007-06-03  Luca Bruno  <lethalman88@gmail.com>
 
+	* Added a TODO file
+	* syx-utils.c (syx_path_join): some stylistic fixes
+
 	* Added Doxygen documentation
 
 	* syx-types.h: defining TRUE and FALSE booleans when not defined (e.g. when not including glib.h)

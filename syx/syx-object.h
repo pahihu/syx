@@ -15,9 +15,9 @@
 
 /* Object */
 
-typedef struct _SyxObject SyxObject;
+typedef struct SyxObject SyxObject;
 
-struct _SyxObject
+struct SyxObject
 {
   SyxObject *class; // please use syx_object_get_class ()
   syx_varsize size;

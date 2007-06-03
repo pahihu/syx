@@ -1,4 +1,3 @@
-
 #ifdef HAVE_CONFIG_H
   #include <config.h>
 #endif
@@ -303,21 +302,17 @@ syx_semaphore_wait (SyxObject *semaphore)
   g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
 }
 
-#ifdef WINDOWS
-        #define SEPARATOR '\\'
-#else
-        #define SEPARATOR '/'
-#endif
-
-char
-*syx_path_join (char *path1, char *path2)
+syx_string
+syx_path_join (syx_symbol path1, syx_symbol path2)
 {
-  char *new_path = malloc (strlen (path1) + strlen (path2));
-  
-  if (path2[0] == SEPARATOR)
-    sprintf (new_path, "%s", path2);
-  else
-    sprintf (new_path, "%s%s", path1, path2);
-   
+  syx_string new_path = syx_calloc (strlen (path1) + strlen (path2), sizeof (syx_char));
+  if (!path1)
+    return path2;
+  else if (!path2)
+    return path1;
+  else if (!path1 && !path2)
+    return NULL;
+
+  sprintf (new_path, "%s%c%s", path1, SYX_PATH_SEPARATOR, path2);
   return new_path;
 }
