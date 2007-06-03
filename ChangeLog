@@ -1,5 +1,7 @@
 2007-06-03  Luca Bruno  <lethalman88@gmail.com>
 
+	* Added Doxygen documentation
+
 	* syx-types.h: defining TRUE and FALSE booleans when not defined (e.g. when not including glib.h)
 	* syx-types.h (SYX_SMALL_INTEGER): use double shifting instead of AND/INVERT
 	* syx-object.c (syx_class_lookup_method): added function and removed the issued macro
