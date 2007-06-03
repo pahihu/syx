@@ -1,0 +1,10 @@
+Major:
+- Parse arguments/temporaries differently than the previous release. Now the scope must be united in 1 method context, for speed matters
+- Implement coalesced hash tables with consistent hash functions
+
+Minor:
+- Allocate commonly used classes, such as syx_array_class, syx_dictionary_class, etc., in the memory
+- Add --enable-debug and --enable-optimization
+
+Documentation:
+- Undocument symbols beginning with _ and static variables/functions
