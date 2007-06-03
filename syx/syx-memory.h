@@ -11,6 +11,8 @@
 
 void syx_memory_init (void);
 syx_pointer syx_memory_alloc (void);
+inline void syx_memory_free (syx_pointer ptr);
+inline syx_pointer syx_memory_get_heap (void);
 
 inline syx_pointer syx_malloc (syx_size size);
 inline syx_pointer syx_malloc0 (syx_size size);

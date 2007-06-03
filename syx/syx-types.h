@@ -63,7 +63,7 @@ typedef long long int syx_int64;
 typedef unsigned long long int syx_uint64;
 
 typedef long syx_size;
-typedef unsigned int syx_varsize;
+typedef syx_int32 syx_varsize;
 
 typedef void * syx_pointer;
 

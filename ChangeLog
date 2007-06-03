@@ -1,5 +1,13 @@
 2007-06-03  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx-object.c (SyxObject): added is_static, has_refs and is_marked bitfields to use for garbage collection with relative macro accesses
+	* syx-types.h (syx_varsize): small integers can hold only signed ints
+	* syx-memory.c (syx_memory_get_heap): added function
+	* syx-memory.c (syx_memory_free): added function
+	* syx-gc.c, syx-gc.h: new files for mark and sweep garbage collection
+	* syx-utils.c (syx_path_join): fixed possible memory leaks
+	Calls to syx_object_new* have been fixed
+
 	* Added a TODO file
 	* syx-utils.c (syx_path_join): some stylistic fixes
 

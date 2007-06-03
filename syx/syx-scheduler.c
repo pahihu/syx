@@ -57,7 +57,7 @@ _syx_scheduler_loop (syx_pointer data)
 void
 syx_scheduler_init (void)
 {
-  syx_processor = syx_object_new (syx_processor_scheduler_class);
+  syx_processor = syx_object_new (syx_processor_scheduler_class, TRUE, TRUE);
   _syx_processor_active_process = &SYX_PROCESS_SCHEDULER_ACTIVE_PROCESS(syx_processor);
   _syx_processor_byteslice = &SYX_PROCESS_SCHEDULER_BYTESLICE(syx_processor);
 }

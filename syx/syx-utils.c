@@ -2,6 +2,7 @@
   #include <config.h>
 #endif
 
+#include <stdio.h>
 #include <string.h>
 #include "syx-types.h"
 #include "syx-object.h"
@@ -305,11 +306,12 @@ syx_semaphore_wait (SyxObject *semaphore)
 syx_string
 syx_path_join (syx_symbol path1, syx_symbol path2)
 {
-  syx_string new_path = syx_calloc (strlen (path1) + strlen (path2), sizeof (syx_char));
+  syx_string new_path = syx_calloc (strlen (path1) + strlen (path2) + 2, sizeof (syx_char));
+
   if (!path1)
-    return path2;
+    return strdup (path2);
   else if (!path2)
-    return path1;
+    return strdup (path1);
   else if (!path1 && !path2)
     return NULL;
 

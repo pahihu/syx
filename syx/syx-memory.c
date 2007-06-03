@@ -5,7 +5,9 @@
 #include "syx-memory.h"
 
 static SyxObject *_syx_memory = NULL;
-static syx_int32 _syx_registered_objects = 0;
+static SyxObject **_syx_freed_memory = NULL;
+static syx_size _syx_freed_memory_top = 0;
+static syx_size _syx_registered_objects = 0;
 syx_pointer _syx_empty_memory = NULL;
 
 /* Memory */
@@ -18,6 +20,7 @@ syx_memory_init (void)
     return;
 
   _syx_memory = syx_calloc (SYX_MEMORY_SIZE, sizeof (SyxObject));
+  _syx_freed_memory = syx_calloc (SYX_MEMORY_SIZE, sizeof (SyxObject *));
   _syx_empty_memory = syx_malloc (getpagesize ());
   initialized = TRUE;
 }
@@ -30,10 +33,24 @@ syx_memory_alloc (void)
   if (_syx_registered_objects == SYX_MEMORY_SIZE - 1)
     g_error ("object memory is full\n");
 
-  ptr = _syx_memory + _syx_registered_objects++;
-  assert (SYX_IS_POINTER (ptr));
+  if (_syx_freed_memory_top == 0)
+    ptr = _syx_memory + _syx_registered_objects++;
+  else
+    ptr = _syx_freed_memory[--_syx_freed_memory_top];
 
   return ptr;
+}
+
+inline void
+syx_memory_free (syx_pointer ptr)
+{
+  _syx_freed_memory[_syx_freed_memory_top++] = ptr;
+}
+
+inline syx_pointer
+syx_memory_get_heap (void)
+{
+  return _syx_memory;
 }
 
 inline syx_pointer

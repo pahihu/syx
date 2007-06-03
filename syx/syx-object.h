@@ -12,6 +12,9 @@
 #define SYX_OBJECT_BYTE_ARRAY(ptr) ((syx_int8 *)(object)->data)
 #define SYX_OBJECT_SIZE(object) ((object)->size)
 #define SYX_OBJECT_DATA(object) ((object)->data)
+#define SYX_OBJECT_IS_STATIC(object) ((object)->is_static)
+#define SYX_OBJECT_HAS_REFS(object) ((object)->has_refs)
+#define SYX_OBJECT_IS_MARKED(object) ((object)->is_marked)
 
 /* Object */
 
@@ -20,6 +23,9 @@ typedef struct SyxObject SyxObject;
 struct SyxObject
 {
   SyxObject *class; // please use syx_object_get_class ()
+  syx_bool is_static : 1;
+  syx_bool has_refs : 1;
+  syx_bool is_marked : 1;
   syx_varsize size;
   SyxObject **data;
 };
@@ -53,9 +59,9 @@ extern SyxObject *syx_metaclass_class,
   *syx_symbols,
   *syx_globals;
 
-SyxObject *syx_object_new (SyxObject *class);
-SyxObject *syx_object_new_size (SyxObject *class, syx_varsize size);
-SyxObject *syx_object_new_data (SyxObject *class, syx_varsize size, syx_pointer data);
+SyxObject *syx_object_new (SyxObject *class, syx_bool is_static, syx_bool has_refs);
+SyxObject *syx_object_new_size (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size);
+SyxObject *syx_object_new_data (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size, syx_pointer data);
 void syx_object_grow_by (SyxObject *object, syx_varsize size);
 syx_int32 syx_object_get_variable_index (SyxObject *self, syx_symbol name);
 inline syx_nint syx_object_hash (SyxObject *ptr);
@@ -81,8 +87,8 @@ inline SyxObject *syx_string_new (syx_symbol string);
 inline SyxObject *syx_link_new (SyxObject *key, SyxObject *value);
 inline SyxObject *syx_dictionary_new (syx_varsize size);
 inline SyxObject *syx_block_closure_new (SyxObject *block);
-#define syx_method_new() (syx_object_new (syx_compiled_method_class))
-#define syx_block_new() (syx_object_new (syx_compiled_block_class))
+#define syx_method_new() (syx_object_new (syx_compiled_method_class, FALSE, TRUE))
+#define syx_block_new() (syx_object_new (syx_compiled_block_class, FALSE, TRUE))
 inline SyxObject *syx_method_context_new (SyxObject *parent, SyxObject *method, SyxObject *receiver, SyxObject *arguments);
 inline SyxObject *syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *receiver, SyxObject *arguments,
 					 SyxObject *return_context);
