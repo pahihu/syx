@@ -296,7 +296,6 @@ syx_object_new (SyxObject *class, syx_bool is_static, syx_bool has_refs)
   SyxObject *object = syx_memory_alloc ();
   
   object->class = class;
-  object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
   object->data = object->size ? syx_calloc (object->size, sizeof (SyxObject *)) : NULL;
@@ -310,7 +309,6 @@ syx_object_new_size (SyxObject *class, syx_bool is_static, syx_bool has_refs, sy
   SyxObject *object = syx_memory_alloc ();
   
   object->class = class;
-  object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = size;
   object->data = size ? syx_calloc (size, sizeof (SyxObject *)) : NULL;
@@ -322,14 +320,20 @@ SyxObject *
 syx_object_new_data (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size, syx_pointer data)
 {
   SyxObject *object = syx_memory_alloc ();
-  
+
   object->class = class;
-  object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = size;
   object->data = (SyxObject **) data;
 
   return object;
+}
+
+inline void
+syx_object_free (SyxObject *object)
+{
+  syx_free (SYX_OBJECT_DATA (object));
+  syx_memory_free (object);
 }
 
 syx_bool

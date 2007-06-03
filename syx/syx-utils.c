@@ -309,39 +309,3 @@ syx_semaphore_wait (SyxObject *semaphore)
   syx_process_set_suspended (SYX_OBJECT_DATASYX_PROCESS_SUSPEND (process));
   g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
 }
-
-#ifdef WINDOWS
-  #define SEPARATOR '\\'
-#else
-  #define SEPARATOR '/'
-#endif
-
-/*! \par syx_path_join
-    
-    Join two or more pathname components, inserting the path separator as needed.\n
-    This method is platform indipendent:
-
-    \code
-    #ifdef WINDOWS
-      #define SEPARATOR '\\'
-    #else
-      #define SEPARATOR '/'
-    #endif
-    \endcode
-*/
-
-syx_string
-syx_path_join (syx_symbol path1, syx_symbol path2)
-{
-  syx_string new_path = syx_calloc (strlen (path1) + strlen (path2) + 2, sizeof (syx_char));
-
-  if (!path1)
-    return strdup (path2);
-  else if (!path2)
-    return strdup (path1);
-  else if (!path1 && !path2)
-    return NULL;
-
-  sprintf (new_path, "%s%c%s", path1, SYX_PATH_SEPARATOR, path2);
-  return new_path;
-}

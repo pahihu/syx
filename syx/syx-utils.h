@@ -16,6 +16,4 @@ void syx_semaphore_wait (SyxObject *semaphore);
         #define SYX_PATH_SEPARATOR '/'
 #endif
 
-syx_string syx_path_join (syx_symbol path1, syx_symbol path2);
-
 #endif /* SYX_UTILS_H */

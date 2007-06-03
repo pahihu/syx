@@ -2,14 +2,14 @@
   #include <config.h>
 #endif
 
+#include <stdio.h>
 #include "syx-types.h"
 #include "syx-init.h"
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-object.h"
 
-static syx_bool syx_initialized = FALSE;
-static syx_symbol syx_root_path;
+static syx_symbol _syx_root_path;
 
 static void file_in_basic (void);
 syx_string find_file (syx_symbol package, syx_symbol filename);
@@ -18,12 +18,21 @@ syx_string
 syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 {
   syx_string full_path;
-  g_return_val_if_fail (domain != NULL, NULL);
-  g_return_val_if_fail (package != NULL, NULL);
-  full_path = g_build_filename (syx_root_path, domain, package, filename, NULL);
+
+  if (!domain || !package || !filename)
+    return NULL;
+
+  full_path = syx_calloc (strlen (_syx_root_path) + strlen (domain) + strlen (package) + strlen (filename) + 4, sizeof (syx_char));
+
+  sprintf (full_path, "%s%c%s%c%s%c%s",
+	   _syx_root_path, SYX_PATH_SEPARATOR,
+	   domain, SYX_PATH_SEPARATOR,
+	   package, SYX_PATH_SEPARATOR,
+	   filename);
+
   if (!g_file_test (full_path, G_FILE_TEST_EXISTS))
     {
-      g_free (full_path);
+      syx_free (full_path);
       return NULL;
     }
 
@@ -37,7 +46,7 @@ file_in_basic_decl (void)
 
   full_filename = syx_find_file ("st", "kernel", "initialDecl.st");
   syx_cold_file_in (full_filename);
-  g_free (full_filename);
+  syx_free (full_filename);
 }
 
 static void
@@ -68,7 +77,7 @@ file_in_basic (void)
     {
       full_filename = syx_find_file ("st", "kernel", *filename);
       syx_cold_file_in (full_filename);
-      g_free (full_filename);
+      syx_free (full_filename);
     }
 }
 
@@ -176,27 +185,27 @@ syx_init_basic_streams (void)
 void
 syx_init (syx_symbol root_path)
 {
-  g_return_if_fail (syx_initialized == FALSE);
-  g_return_if_fail (root_path != NULL);
-  g_return_if_fail (syx_set_root_path (root_path));
+  static syx_bool initialized = FALSE;
+  if (initialized || !root_path || !syx_set_root_path (root_path))
+    return;
 
   syx_memory_init ();
   
-  syx_initialized = TRUE;
+  initialized = TRUE;
 }
 
 syx_symbol 
 syx_get_root_path (void)
 {
-  return syx_root_path;
+  return _syx_root_path;
 }
 
 syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
-  g_return_val_if_fail (g_file_test (root_path,
-				     (G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)),
-			FALSE);
-  syx_root_path = root_path;
+  if (!g_file_test (root_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
+    return FALSE;
+
+  _syx_root_path = root_path;
   return TRUE;
 }

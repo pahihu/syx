@@ -62,6 +62,7 @@ extern SyxObject *syx_metaclass_class,
 SyxObject *syx_object_new (SyxObject *class, syx_bool is_static, syx_bool has_refs);
 SyxObject *syx_object_new_size (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size);
 SyxObject *syx_object_new_data (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size, syx_pointer data);
+void syx_object_free (SyxObject *object);
 void syx_object_grow_by (SyxObject *object, syx_varsize size);
 syx_int32 syx_object_get_variable_index (SyxObject *self, syx_symbol name);
 inline syx_nint syx_object_hash (SyxObject *ptr);

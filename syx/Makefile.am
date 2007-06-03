@@ -17,7 +17,6 @@ libsyx_0_1_la_SOURCES	= 	\
 	syx-memory.c		\
 	syx-primitives.c	\
 	syx-interp.c		\
-	syx-gc.c		\
 	syx-plugins.c
 
 libsyx_0_1_la_LIBADD	= $(BASE_DEPENDENCIES_LIBS) $(LIBJIT_LIBS)
@@ -35,7 +34,6 @@ syxinclude_HEADERS	= 	\
 	syx-scheduler.h		\
 	syx-memory.h		\
 	syx-interp.h		\
-	syx-gc.h		\
 	syx-plugins.h
 
 bin_PROGRAMS		= syx

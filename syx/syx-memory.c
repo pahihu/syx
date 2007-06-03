@@ -6,9 +6,10 @@
 
 static SyxObject *_syx_memory = NULL;
 static SyxObject **_syx_freed_memory = NULL;
+static syx_size _syx_memory_size = 10000;
+static syx_size _syx_memory_top = 0;
 static syx_size _syx_freed_memory_top = 0;
-static syx_size _syx_registered_objects = 0;
-syx_pointer _syx_empty_memory = NULL;
+static syx_pointer _syx_empty_memory = NULL;
 
 /*! \page syx_memory Syx Memory
     
@@ -31,8 +32,8 @@ syx_memory_init (void)
   if (initialized)
     return;
 
-  _syx_memory = syx_calloc (SYX_MEMORY_SIZE, sizeof (SyxObject));
-  _syx_freed_memory = syx_calloc (SYX_MEMORY_SIZE, sizeof (SyxObject *));
+  _syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
+  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject *));
   _syx_empty_memory = syx_malloc (getpagesize ());
   initialized = TRUE;
 }
@@ -42,11 +43,11 @@ syx_memory_alloc (void)
 {
   syx_pointer ptr;
 
-  if (_syx_registered_objects == SYX_MEMORY_SIZE - 1)
-    g_error ("object memory is full\n");
+  if (_syx_memory_top >= _syx_memory_size - 1)
+    g_error ("object memory heap is full\n");
 
   if (_syx_freed_memory_top == 0)
-    ptr = _syx_memory + _syx_registered_objects++;
+    ptr = _syx_memory + _syx_memory_top++;
   else
     ptr = _syx_freed_memory[--_syx_freed_memory_top];
 
@@ -64,6 +65,54 @@ syx_memory_get_heap (void)
 {
   return _syx_memory;
 }
+
+inline syx_size
+syx_memory_get_heap_size (void)
+{
+  return _syx_memory_size;
+}
+
+
+
+static void
+_syx_memory_gc_mark (SyxObject *object)
+{
+  syx_varsize i;
+
+  if (object->is_marked)
+    return;
+
+  SYX_OBJECT_IS_MARKED(object) = TRUE;
+  if (SYX_OBJECT_HAS_REFS (object))
+    {
+      for (i=0; i < SYX_OBJECT_SIZE (object); i++)
+	_syx_memory_gc_mark (SYX_OBJECT_DATA(object)[i]);
+    }
+}
+
+static void
+_syx_memory_gc_sweep ()
+{
+  syx_size i;
+  SyxObject *object = _syx_memory;
+
+  for (i=0; i < _syx_memory_size; i++, object++)
+    {
+      if (SYX_OBJECT_IS_STATIC(object) || SYX_OBJECT_IS_MARKED(object))
+	SYX_OBJECT_IS_MARKED(object) = FALSE;
+      else
+	syx_object_free (object);
+    }
+}
+
+inline void
+syx_memory_gc (void)
+{
+  _syx_memory_gc_mark (syx_globals);
+  _syx_memory_gc_sweep ();
+}
+
+
 
 inline syx_pointer
 syx_malloc (syx_size size)
