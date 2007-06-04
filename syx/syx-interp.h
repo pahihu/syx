@@ -57,8 +57,7 @@ typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint8 argument);
 
 inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxObject *context);
 inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxObject *context);
-inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
-						     syx_bool requested_return, SyxObject *requested_return_context);
+inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool use_return_context);
 
 inline void syx_interp_stack_push (SyxExecState *es, SyxObject *object);
 inline SyxObject *syx_interp_stack_pop (SyxExecState *es);

@@ -43,7 +43,7 @@
 #define SYX_IS_NIL(ptr) ((ptr) == SYX_NIL)
 #define SYX_IS_TRUE(ptr) ((ptr) == SYX_TRUE)
 #define SYX_IS_FALSE(ptr) ((ptr) == SYX_FALSE)
-#define SYX_IS_POINTER(ptr) (((syx_nint)ptr & SYX_TYPE_POINTER_BITS) == 0)
+#define SYX_IS_POINTER(ptr) ((syx_nint)(ptr) > 2 && ((syx_nint)(ptr) & SYX_TYPE_POINTER_BITS) == 0)
 #define SYX_IS_BOOLEAN(ptr) (SYX_IS_TRUE(ptr) || SYX_IS_FALSE(ptr))
 #define SYX_IS_SMALL_INTEGER(ptr) ((syx_nint)ptr & SYX_TYPE_SMALL_INTEGER_BITS)
 #define SYX_IS_CHARACTER(ptr) (((syx_nint)ptr & SYX_TYPE_POINTER) == SYX_TYPE_CHARACTER_BITS)

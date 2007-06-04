@@ -169,7 +169,6 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   SyxLexer *method_lexer;
   //syx_symbol category;
   syx_string chunk;
-  syx_symbol *instance_variables;
 
   token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_NAME_CONST)
@@ -214,10 +213,8 @@ _syx_cold_parse_methods (SyxLexer *lexer)
       if (!method_lexer)
 	break;
       
-      instance_variables = syx_class_get_all_instance_variables (class);
       parser = syx_parser_new (method_lexer, syx_method_new (),
-			       instance_variables,
-			       FALSE, NULL);
+			       syx_class_get_all_instance_variables (class));
       syx_parser_parse (parser, NULL);
 
       syx_dictionary_at_const_put (SYX_CLASS_METHODS(class),

@@ -58,8 +58,8 @@ void
 syx_scheduler_init (void)
 {
   syx_processor = syx_object_new (syx_processor_scheduler_class, TRUE, TRUE);
-  _syx_processor_active_process = &SYX_PROCESS_SCHEDULER_ACTIVE_PROCESS(syx_processor);
-  _syx_processor_byteslice = &SYX_PROCESS_SCHEDULER_BYTESLICE(syx_processor);
+  _syx_processor_active_process = &SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(syx_processor);
+  _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
 }
 
 void

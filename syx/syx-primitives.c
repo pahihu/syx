@@ -12,24 +12,16 @@
 #include "syx-utils.h"
 
 #define SYX_PRIM_RETURN(object)						\
-  (syx_interp_leave_context_and_answer (es, (object), FALSE, SYX_NIL)); \
+  syx_interp_leave_context_and_answer (es, (object), FALSE);			\
   return TRUE
 
-static SyxObject *_syx_block_context_new_from_closure (SyxExecState *es, SyxObject *arguments)
+inline SyxObject *
+_syx_block_context_new_from_closure (SyxExecState *es, SyxObject *arguments)
 {
-  SyxObject *return_context;
-  SyxObject *def_context = SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (es->receiver);
-  
-  if (syx_object_get_class (def_context) == syx_block_context_class)
-    return_context = SYX_BLOCK_CONTEXT_RETURN_CONTEXT (def_context);
-  else
-    return_context = SYX_METHOD_CONTEXT_PARENT (def_context);
-
   return syx_block_context_new (SYX_METHOD_CONTEXT_PARENT (es->context),
 				SYX_BLOCK_CLOSURE_BLOCK (es->receiver),
-				SYX_METHOD_CONTEXT_RECEIVER (def_context),
 				arguments,
-				return_context);
+				SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->receiver));
 }
 
 SYX_FUNC_PRIMITIVE (Behavior_new)
@@ -136,7 +128,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SyxObject *proc;
 
   ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
-  SYX_BLOCK_CONTEXT_RETURN_CONTEXT (ctx) = SYX_NIL;
+  SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = SYX_NIL;
   proc = syx_process_new (ctx);
 
   SYX_PRIM_RETURN (proc);
@@ -173,7 +165,8 @@ SYX_FUNC_PRIMITIVE (Context_swapWith)
 
 SYX_FUNC_PRIMITIVE (Context_returnTo_andAnswer)
 {
-  return syx_interp_leave_context_and_answer (es, es->arguments[1], TRUE, es->arguments[0]);
+  SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) = es->arguments[0];
+  return syx_interp_leave_context_and_answer (es, es->arguments[1], TRUE);
 }
 
 SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
@@ -384,59 +377,47 @@ SYX_FUNC_PRIMITIVE (String_compile)
 SYX_FUNC_PRIMITIVE (SmallInteger_plus)
 {
   syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
+  first = SYX_SMALL_INTEGER(es->receiver);
+  second = SYX_SMALL_INTEGER(es->arguments[0]);
   SYX_PRIM_RETURN (syx_small_integer_new (first + second));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 {
   syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
+  first = SYX_SMALL_INTEGER(es->receiver);
+  second = SYX_SMALL_INTEGER(es->arguments[0]);
   SYX_PRIM_RETURN (syx_small_integer_new (first - second));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_lt)
 {
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
-  SYX_PRIM_RETURN (syx_boolean_new (first < second));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver < es->arguments[0]));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_gt)
 {
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
-  SYX_PRIM_RETURN (syx_boolean_new (first > second));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver > es->arguments[0]));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_le)
 {
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
-  SYX_PRIM_RETURN (syx_boolean_new (first <= second));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver <= es->arguments[0]));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ge)
 {
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->arguments[0]);
-  second = SYX_SMALL_INTEGER(es->arguments[1]);
-  SYX_PRIM_RETURN (syx_boolean_new (first >= second));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver >= es->arguments[0]));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->arguments[0] == es->arguments[1]));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver == es->arguments[0]));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->arguments[0] == es->arguments[1]));
+  SYX_PRIM_RETURN (syx_boolean_new (es->receiver == es->arguments[0]));
 }
 
 #define MAX_PRIMITIVES 42

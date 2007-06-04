@@ -104,6 +104,7 @@ syx_build_basic (void)
   syx_string_class = _syx_create_class (SYX_DATA_STRING_ALL);
   syx_small_integer_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_character_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
+  syx_byte_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_link_class = _syx_create_class (SYX_DATA_LINK_ALL);
   syx_dictionary_class = _syx_create_class (SYX_DATA_DICTIONARY_ALL);
@@ -134,12 +135,12 @@ syx_build_basic (void)
   SETUP_CLASS ("String", syx_string_class, Object);
   SETUP_CLASS ("SmallInteger", syx_small_integer_class, Object);
   SETUP_CLASS ("Character", syx_character_class, Object);
+  SETUP_CLASS ("ByteArray", syx_byte_array_class, Object);
   SETUP_CLASS ("Array", syx_array_class, Object);
   SETUP_CLASS ("Link", syx_link_class, Object);
   SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
   file_in_basic_decl ();
 
-  syx_array_class = syx_globals_at ("Array");
   syx_compiled_method_class = syx_globals_at ("CompiledMethod");
   syx_compiled_block_class = syx_globals_at ("CompiledBlock");
   syx_block_closure_class = syx_globals_at ("BlockClosure");

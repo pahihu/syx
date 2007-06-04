@@ -3,6 +3,7 @@
 #include <glib.h>
 #include "syx-object.h"
 #include "syx-memory.h"
+#include "syx-scheduler.h"
 
 static SyxObject *_syx_memory = NULL;
 static SyxObject **_syx_freed_memory = NULL;
@@ -44,8 +45,12 @@ syx_memory_alloc (void)
 {
   syx_pointer ptr;
 
-  if (_syx_memory_top >= _syx_memory_size - 1)
-    g_error ("object memory heap is full\n");
+  if (_syx_memory_top >= _syx_memory_size - 1 && _syx_freed_memory_top == 0)
+    {
+      syx_memory_gc ();
+      if (_syx_memory_top >= _syx_memory_size - 1 && _syx_freed_memory_top == 0)
+	g_error ("object memory heap is full\n");
+    }
 
   if (_syx_freed_memory_top == 0)
     ptr = _syx_memory + _syx_memory_top++;
@@ -75,12 +80,11 @@ syx_memory_get_heap_size (void)
 
 
 
-static void
+inline void
 _syx_memory_gc_mark (SyxObject *object)
 {
   syx_varsize i;
-
-  if (object->is_marked)
+  if (!SYX_IS_POINTER (object) || SYX_OBJECT_IS_MARKED(object))
     return;
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;
@@ -106,9 +110,13 @@ _syx_memory_gc_sweep ()
     }
 }
 
+/*!
+  Calls the Syx garbage collector
+ */
 inline void
 syx_memory_gc (void)
 {
+  puts ("Called garbage collector");
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
 }

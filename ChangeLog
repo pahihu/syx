@@ -1,3 +1,22 @@
+2007-06-04  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx-interp.c (syx_interp_leave_context_and_answer): removed an argument because the return context has been inserted into method contexts
+	* syx-interp.c (syx_interp_send_message): fixed message arguments array creation
+	* syx-object.c (syx_byte_array_*): added
+	* syx-object.c (syx_*_context_new): copy arguments to the context arguments stack
+	* syx-object.h (SYX_METHOD_CONTEXT_RETURN_CONTEXT): moved from block contexts for speed matters
+	* syx-object.h (SYX_BLOCK_ARGUMENTS_TOP): holds the index to the arguments stack
+	* syx-object.h (SYX_PROCESSOR_SCHEDULER_*): old mistake SYX_PROCESS_SCHEDULER
+	* syx-primitives.c (SmallInteger_*): bug fix
+	* syx-parser.c (_syx_parser_parse_block): now operate on the same parser instead of creating a new one, to share arguments and temporaries
+	* syx-parser.c (syx_parser_new): removed last two arguments, not needed anymore because of shared scopes
+	* syx-parser.c (syx_parser_parse): store bytecodes as a ByteArray
+	* syx-parser.c (_syx_parser_find_*): return -1 instead of 0 since syx_varsize now is not unsigned anymore
+	* syx-parser.h (SyxParserScope, SyxParserScopeStack): added to share arguments and temporaries between methods and nested blocks
+	* syx-memory.c (syx_memory_alloc): call syx_memory_gc once the heap is full
+	* syx-types.h (SYX_IS_POINTER): fixed
+	* syx-init.c (syx_build_basic): added syx_byte_array_class
+
 2007-06-03  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx-memory.c (syx_memory_gc): added a basic implementation of a mark and sweep garbage collector

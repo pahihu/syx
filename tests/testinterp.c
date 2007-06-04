@@ -16,7 +16,7 @@ inline SyxObject
 
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
-  parser = syx_parser_new (lexer, method, NULL, FALSE, NULL);		
+  parser = syx_parser_new (lexer, method, NULL);
   assert (syx_parser_parse (parser, &error) == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
@@ -70,7 +70,7 @@ main (int argc, char *argv[])
   puts ("- Test nested blocks with arguments");
   ret_obj = _interpret ("method ^[ :s | [ :s | s ] value: 321] value: 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
-
+  
   puts ("- Another text for nested blocks and arguments");
   ret_obj = _interpret ("method ^[ :s | [ s] value] value: 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);

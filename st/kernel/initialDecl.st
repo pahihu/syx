@@ -41,13 +41,13 @@ SequenceableCollection subclass: #OrderedCollection
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries'!
+       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries returnContext'!
 
 ContextPart subclass: #MethodContext
 	    instanceVariableNames: ''!
 
 ContextPart subclass: #BlockContext
-	    instanceVariableNames: 'outerContext returnContext handledException handlerBlock'!
+	    instanceVariableNames: 'outerContext handledException handlerBlock'!
 
 Object subclass: #Process
        instanceVariableNames: 'context suspended returnedObject next scheduled'!
@@ -59,7 +59,7 @@ CompiledCode subclass: #CompiledMethod
 	     instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize'!
 
 CompiledMethod subclass: #CompiledBlock
-	     instanceVariableNames: ''!
+	     instanceVariableNames: 'argumentsTop'!
 
 Object subclass: #BlockClosure
        instanceVariableNames: 'block definedContext'!

@@ -53,12 +53,12 @@ syx_interp_swap_context (SyxExecState *es, SyxObject *context)
 }
 
 inline syx_bool
-syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool requested_return, SyxObject *requested_return_context)
+syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool use_return_context)
 {
-  SyxObject *return_context = requested_return ? requested_return_context : SYX_METHOD_CONTEXT_PARENT (es->context);
-
+  SyxObject *return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Requested return context: %p (requested? %d). Push object: %p\n", requested_return_context, requested_return, return_object);
+  g_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
+	   return_object, use_return_context);
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
@@ -195,9 +195,9 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   g_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
-  es->message_arguments = syx_array_new_size (argument + 1);
-  for (i=argument; i > 0; i--)
-    SYX_OBJECT_DATA(es->message_arguments)[i-1] = syx_interp_stack_pop (es);
+  es->message_arguments = syx_array_new_size (argument);
+  for (i=argument - 1; i >= 0; i--)
+    SYX_OBJECT_DATA(es->message_arguments)[i] = syx_interp_stack_pop (es);
 
   es->message_receiver = syx_interp_stack_pop (es);
 
@@ -233,9 +233,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   method = syx_class_lookup_method (class, selector);
 
   if (SYX_IS_NIL (method))
-    g_error ("%s doesn't respond to #%s\n",
-	     SYX_OBJECT_SYMBOL (SYX_CLASS_NAME (class)),
-	     selector);
+    g_error ("Superclass at %p doesn't respond to #%s\n", class, selector);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Send message #%s to super\n", selector);
@@ -262,8 +260,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_primitive)
 
 SYX_FUNC_INTERPRETER (syx_interp_do_special)
 {
-  SyxObject *returned_object, *return_context=SYX_NIL;
-  syx_bool requested_return = FALSE;
+  SyxObject *returned_object;
   SyxObject *condition;
   syx_uint8 jump;
 
@@ -284,19 +281,13 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       else
 	returned_object = es->receiver;
 
-      return syx_interp_leave_context_and_answer (es, returned_object, FALSE, SYX_NIL);
+      return syx_interp_leave_context_and_answer (es, returned_object, FALSE);
     case SYX_BYTECODE_STACK_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
       g_debug ("BYTECODE - Stack return\n");
 #endif
       returned_object = syx_interp_stack_pop (es);
-      if (syx_object_get_class (es->context) == syx_block_context_class)
-	{
-	  return_context = SYX_BLOCK_CONTEXT_RETURN_CONTEXT (es->context);
-	  requested_return = TRUE;
-	}
-
-      return syx_interp_leave_context_and_answer (es, returned_object, requested_return, return_context);
+      return syx_interp_leave_context_and_answer (es, returned_object, TRUE);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
     case SYX_BYTECODE_BRANCH_IF_FALSE:
 #ifdef SYX_DEBUG_BYTECODE
@@ -463,6 +454,9 @@ syx_process_execute_scheduled (SyxObject *process)
 	  return;
 	}
     }
+
+  syx_exec_state_save (es);
+  syx_exec_state_free (es);
 }
 
 void
@@ -470,7 +464,7 @@ syx_process_execute_blocking (SyxObject *process)
 {
   syx_uint8 byte;
   SyxExecState *es;
-
+  syx_processor_active_process = process; // this is a bad fix, will change it later
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
 

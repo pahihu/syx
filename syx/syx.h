@@ -11,7 +11,6 @@
 #include "syx-utils.h"
 #include "syx-interp.h"
 #include "syx-scheduler.h"
-#include "syx-gc.h"
 #include "syx-plugins.h"
 
 #endif

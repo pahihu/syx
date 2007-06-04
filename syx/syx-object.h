@@ -42,6 +42,7 @@ extern SyxObject *syx_metaclass_class,
 
   *syx_symbol_class,
   *syx_string_class,
+  *syx_byte_array_class,
   *syx_array_class,
 
   *syx_link_class,
@@ -81,6 +82,8 @@ void syx_dictionary_at_const_put (SyxObject *dict, SyxObject *key, SyxObject *va
 
 inline SyxObject *syx_metaclass_new (SyxObject *supermetaclass);
 inline SyxObject *syx_class_new (SyxObject *superclass);
+inline SyxObject *syx_byte_array_new (syx_varsize size, syx_pointer data);
+inline SyxObject *syx_byte_array_new_size (syx_varsize size);
 inline SyxObject *syx_array_new (syx_varsize size, syx_pointer data);
 inline SyxObject *syx_array_new_size (syx_varsize size);
 inline SyxObject *syx_symbol_new (syx_symbol symbol);
@@ -91,8 +94,7 @@ inline SyxObject *syx_block_closure_new (SyxObject *block);
 #define syx_method_new() (syx_object_new (syx_compiled_method_class, FALSE, TRUE))
 #define syx_block_new() (syx_object_new (syx_compiled_block_class, FALSE, TRUE))
 inline SyxObject *syx_method_context_new (SyxObject *parent, SyxObject *method, SyxObject *receiver, SyxObject *arguments);
-inline SyxObject *syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *receiver, SyxObject *arguments,
-					 SyxObject *return_context);
+inline SyxObject *syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *arguments, SyxObject *outer_context);
 inline SyxObject *syx_process_new (SyxObject *context);
 
 /* Accessors */
@@ -116,6 +118,8 @@ inline SyxObject *syx_process_new (SyxObject *context);
 #define SYX_METHOD_TEMPORARIES_COUNT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_TEMPORARIES_COUNT])
 #define SYX_METHOD_STACK_SIZE(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_STACK_SIZE])
 
+#define SYX_BLOCK_ARGUMENTS_TOP(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_ARGUMENTS_TOP])
+
 #define SYX_BLOCK_CLOSURE_BLOCK(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CLOSURE_BLOCK])
 #define SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CLOSURE_DEFINED_CONTEXT])
 
@@ -127,9 +131,9 @@ inline SyxObject *syx_process_new (SyxObject *context);
 #define SYX_METHOD_CONTEXT_RECEIVER(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_CONTEXT_RECEIVER])
 #define SYX_METHOD_CONTEXT_ARGUMENTS(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_CONTEXT_ARGUMENTS])
 #define SYX_METHOD_CONTEXT_TEMPORARIES(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_CONTEXT_TEMPORARIES])
+#define SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_METHOD_CONTEXT_RETURN_CONTEXT])
 
 #define SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CONTEXT_OUTER_CONTEXT])
-#define SYX_BLOCK_CONTEXT_RETURN_CONTEXT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CONTEXT_RETURN_CONTEXT])
 #define SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CONTEXT_HANDLED_EXCEPTION])
 #define SYX_BLOCK_CONTEXT_HANDLER_BLOCK(object) (SYX_OBJECT_DATA(object)[SYX_DATA_BLOCK_CONTEXT_HANDLER_BLOCK])
 
@@ -139,7 +143,7 @@ inline SyxObject *syx_process_new (SyxObject *context);
 #define SYX_PROCESS_NEXT(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_NEXT])
 #define SYX_PROCESS_SCHEDULED(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_SCHEDULED])
 
-#define SYX_PROCESS_SCHEDULER_ACTIVE_PROCESS(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_SCHEDULER_ACTIVE_PROCESS])
-#define SYX_PROCESS_SCHEDULER_BYTESLICE(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESS_SCHEDULER_BYTESLICE])
+#define SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESSOR_SCHEDULER_ACTIVE_PROCESS])
+#define SYX_PROCESSOR_SCHEDULER_BYTESLICE(object) (SYX_OBJECT_DATA(object)[SYX_DATA_PROCESSOR_SCHEDULER_BYTESLICE])
 
 #endif /* SYX_OBJECT_H */
