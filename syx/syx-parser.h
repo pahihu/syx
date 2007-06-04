@@ -25,7 +25,7 @@ typedef struct SyxParser SyxParser;
 struct SyxParser
 {
   SyxLexer *lexer;
-  SyxObject *method;
+  SyxOop method;
   GPtrArray *temporary_names;
   GPtrArray *argument_names;
   syx_symbol *instance_names;
@@ -38,7 +38,7 @@ struct SyxParser
   syx_bool in_block;
 };
 
-SyxParser *syx_parser_new (SyxLexer *lexer, SyxObject *method, syx_symbol *instance_names);
+SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names);
 void syx_parser_free (SyxParser *parser, syx_bool free_segment);
 syx_bool syx_parser_parse (SyxParser *parser, GError **error);
 

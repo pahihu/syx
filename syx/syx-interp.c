@@ -7,6 +7,7 @@
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-init.h"
+#include "syx-memory.h"
 
 //#define SYX_DEBUG_CONTEXT
 //#define SYX_DEBUG_CONTEXT_STACK
@@ -17,7 +18,7 @@
 static syx_uint8 _syx_interp_get_next_byte (SyxExecState *es);
 
 inline void
-syx_interp_stack_push (SyxExecState *es, SyxObject *object)
+syx_interp_stack_push (SyxExecState *es, SyxOop object)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
   g_debug ("CONTEXT STACK - Push %p\n", object);
@@ -25,7 +26,7 @@ syx_interp_stack_push (SyxExecState *es, SyxObject *object)
   es->stack[es->sp++] = object;
 }
 
-inline SyxObject *
+inline SyxOop 
 syx_interp_stack_pop (SyxExecState *es)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
@@ -34,14 +35,14 @@ syx_interp_stack_pop (SyxExecState *es)
   return es->stack[--es->sp];
 }
 
-inline SyxObject *
+inline SyxOop 
 syx_interp_stack_peek (SyxExecState *es)
 {
   return es->stack[es->sp - 1];
 }
 
 inline syx_bool
-syx_interp_swap_context (SyxExecState *es, SyxObject *context)
+syx_interp_swap_context (SyxExecState *es, SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Swap context %p with new %p\n", es->context, context);
@@ -53,9 +54,9 @@ syx_interp_swap_context (SyxExecState *es, SyxObject *context)
 }
 
 inline syx_bool
-syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool use_return_context)
+syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx_bool use_return_context)
 {
-  SyxObject *return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
+  SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
 	   return_object, use_return_context);
@@ -73,7 +74,7 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object,
 }
 
 inline syx_bool
-syx_interp_enter_context (SyxExecState *es, SyxObject *context)
+syx_interp_enter_context (SyxExecState *es, SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Enter context\n");
@@ -122,11 +123,15 @@ SYX_FUNC_INTERPRETER (syx_interp_push_literal)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 {
+  SyxOop constant;
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Push constant %d\n", argument);
 #endif
   if (argument < SYX_BYTECODE_CONST_CONTEXT)
-    syx_interp_stack_push (es, SYX_POINTER(argument));
+    {
+      constant.idx = argument;
+      syx_interp_stack_push (es, constant);
+    }
   else if (argument == SYX_BYTECODE_CONST_CONTEXT)
     syx_interp_stack_push (es, es->context);
   else
@@ -138,7 +143,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 SYX_FUNC_INTERPRETER (syx_interp_push_global)
 {
   syx_symbol symbol;
-  SyxObject *object;
+  SyxOop object;
 
   symbol = SYX_OBJECT_SYMBOL (es->literals[argument]);
   object = syx_globals_at (symbol);
@@ -153,7 +158,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_global)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_array)
 {
-  SyxObject *array;
+  SyxOop array;
   syx_uint8 i;
 
   array = syx_array_new_size (argument);
@@ -207,7 +212,7 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   syx_symbol selector;
-  SyxObject *class, *method, *context;
+  SyxOop class, method, context;
 
   selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
   class = syx_object_get_class (es->message_receiver);
@@ -226,7 +231,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   syx_symbol selector;
-  SyxObject *class, *method, *context;
+  SyxOop class, method, context;
 
   selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
   class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver));
@@ -260,8 +265,8 @@ SYX_FUNC_INTERPRETER (syx_interp_do_primitive)
 
 SYX_FUNC_INTERPRETER (syx_interp_do_special)
 {
-  SyxObject *returned_object;
-  SyxObject *condition;
+  SyxOop returned_object;
+  SyxOop condition;
   syx_uint8 jump;
 
   switch (argument)
@@ -276,7 +281,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #ifdef SYX_DEBUG_BYTECODE
       g_debug ("BYTECODE - Self return\n");
 #endif
-      if (syx_object_get_class (es->context) == syx_block_context_class)
+      if (SYX_OOP_EQ (syx_object_get_class (es->context), syx_block_context_class))
 	returned_object = syx_interp_stack_pop (es);
       else
 	returned_object = es->receiver;
@@ -336,7 +341,7 @@ _syx_interp_get_next_byte (SyxExecState *es)
   g_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", es->context, es->ip, es->bytecodes[es->ip]);
 #endif
 
-  return SYX_SMALL_INTEGER (es->bytecodes[es->ip++]);
+  return es->bytecodes[es->ip++];
 }
 
 static syx_bool
@@ -396,9 +401,9 @@ _syx_interp_execute_byte (SyxExecState *es, syx_uint8 byte)
 }
 
 void
-syx_exec_state_fetch (SyxExecState *es, SyxObject *process)
+syx_exec_state_fetch (SyxExecState *es, SyxOop process)
 {
-  SyxObject *method;
+  SyxOop method;
   es->process = process;
   es->context = SYX_PROCESS_CONTEXT (process);
   if (SYX_IS_NIL (es->context))
@@ -421,8 +426,8 @@ syx_exec_state_fetch (SyxExecState *es, SyxObject *process)
 inline void
 syx_exec_state_save (SyxExecState *es)
 {
-  SyxObject *context = SYX_PROCESS_CONTEXT (es->process);
-  if (context)
+  SyxOop context = SYX_PROCESS_CONTEXT (es->process);
+  if (!SYX_IS_NIL (context))
     {
       SYX_METHOD_CONTEXT_IP(context) = syx_small_integer_new (es->ip);
       SYX_METHOD_CONTEXT_SP(context) = syx_small_integer_new (es->sp);
@@ -437,7 +442,7 @@ syx_exec_state_free (SyxExecState *es)
 }
 
 void
-syx_process_execute_scheduled (SyxObject *process)
+syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint8 byte;
   SyxExecState *es;
@@ -460,7 +465,7 @@ syx_process_execute_scheduled (SyxObject *process)
 }
 
 void
-syx_process_execute_blocking (SyxObject *process)
+syx_process_execute_blocking (SyxOop process)
 {
   syx_uint8 byte;
   SyxExecState *es;

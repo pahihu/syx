@@ -7,8 +7,8 @@
 syx_bool syx_cold_parse (SyxLexer *lexer);
 syx_bool syx_cold_file_in (syx_symbol filename);
 
-syx_bool syx_semaphore_signal (SyxObject *semaphore);
-void syx_semaphore_wait (SyxObject *semaphore);
+syx_bool syx_semaphore_signal (SyxOop semaphore);
+void syx_semaphore_wait (SyxOop semaphore);
 
 #ifdef WINDOWS
         #define SYX_PATH_SEPARATOR '\\'

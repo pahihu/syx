@@ -1,5 +1,8 @@
 2007-06-04  Luca Bruno  <lethalman88@gmail.com>
 
+	* configure.ac: removed -pedantic since we use bitfields that are a GCC extension
+	* Everything has been refactored using SyxOop instead of working on raw pointers. This can be slower but allows all platforms (32bit or 64bit) to access the memory by indexes
+
 	* syx-interp.c (syx_interp_leave_context_and_answer): removed an argument because the return context has been inserted into method contexts
 	* syx-interp.c (syx_interp_send_message): fixed message arguments array creation
 	* syx-object.c (syx_byte_array_*): added

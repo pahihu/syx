@@ -7,18 +7,19 @@
 #include "syx-enums.h"
 #include "syx-scheduler.h"
 #include "syx-interp.h"
+#include "syx-memory.h"
 
-static SyxObject *first_process;
+static SyxOop first_process;
 static GMainLoop *main_loop = NULL;
 
-SyxObject *syx_processor;
-SyxObject **_syx_processor_active_process;
-SyxObject **_syx_processor_byteslice;
+SyxOop syx_processor;
+SyxOop *_syx_processor_active_process;
+SyxOop *_syx_processor_byteslice;
 
-static SyxObject *
+static SyxOop 
 _syx_scheduler_find_next_process ()
 {
-  SyxObject *process;
+  SyxOop process;
 
   // no processes have been scheduled
   if (SYX_IS_NIL (first_process))
@@ -89,10 +90,11 @@ syx_scheduler_quit (void)
 }
 
 void
-syx_scheduler_add_process (SyxObject *process)
+syx_scheduler_add_process (SyxOop process)
 {
-  SyxObject *inter_process;
-  g_return_if_fail (SYX_IS_POINTER (process));
+  SyxOop inter_process;
+  if (!SYX_IS_OBJECT (process))
+    return;
 
   if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))
     {
@@ -109,18 +111,18 @@ syx_scheduler_add_process (SyxObject *process)
 }
 
 void
-syx_scheduler_remove_process (SyxObject *process)
+syx_scheduler_remove_process (SyxOop process)
 {
-  SyxObject *inter_process;
+  SyxOop inter_process;
 
-  if (process == first_process)
+  if (SYX_OOP_EQ (process, first_process))
     {
       first_process = SYX_PROCESS_NEXT(process);
       return;
     }
 
   inter_process=first_process;
-  while (!SYX_IS_NIL(inter_process) && (inter_process=SYX_PROCESS_NEXT(inter_process)) != process);
+  while (!SYX_IS_NIL(inter_process) && SYX_OOP_NE((inter_process=SYX_PROCESS_NEXT(inter_process)), process));
 
   // process has not been scheduled
   if (SYX_IS_NIL (inter_process))

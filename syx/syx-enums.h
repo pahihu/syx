@@ -3,7 +3,7 @@
 
 typedef enum
   {
-    SYX_TYPE_POINTER,
+    SYX_TYPE_OBJECT,
     SYX_TYPE_SMALL_INTEGER,
     SYX_TYPE_CHARACTER
   } SyxType;

@@ -7,7 +7,7 @@ main (int argc, char *argv[])
 {
   SyxParser *parser;
   SyxLexer *lexer;
-  SyxObject *method, *context, *process;
+  SyxOop method, context, process;
   GError *error = NULL;
   GTimer *timer;
 

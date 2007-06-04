@@ -6,11 +6,15 @@
 #include "syx-object.h"
 #include "syx-types.h"
 
+extern SyxObject *syx_memory;
+
+inline SyxOop SYX_POINTER_TO_OOP (syx_pointer ptr);
+#define SYX_OOP_TO_POINTER(oop) (syx_memory + ((oop).idx))
+
 void syx_memory_init (void);
-syx_pointer syx_memory_alloc (void);
-inline void syx_memory_free (syx_pointer ptr);
-inline syx_pointer syx_memory_get_heap (void);
-inline syx_size syx_memory_get_heap_size (void);
+SyxOop syx_memory_alloc (void);
+inline void syx_memory_free (SyxOop oop);
+inline syx_size syx_memory_get_size (void);
 inline void syx_memory_gc (void);
 
 inline syx_pointer syx_malloc (syx_size size);

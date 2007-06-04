@@ -5,8 +5,8 @@
 #include "syx-memory.h"
 #include "syx-scheduler.h"
 
-static SyxObject *_syx_memory = NULL;
-static SyxObject **_syx_freed_memory = NULL;
+SyxObject *syx_memory;
+static SyxOop *_syx_freed_memory = NULL;
 static syx_size _syx_memory_size = 10000;
 static syx_size _syx_memory_top = 0;
 static syx_size _syx_freed_memory_top = 0;
@@ -34,16 +34,20 @@ syx_memory_init (void)
   if (initialized)
     return;
 
-  _syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
-  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject *));
+  syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
+  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
   _syx_empty_memory = syx_malloc (getpagesize ());
+
+  syx_nil = syx_memory_alloc ();
+  syx_true = syx_memory_alloc ();
+  syx_false = syx_memory_alloc ();
   initialized = TRUE;
 }
 
-syx_pointer
+SyxOop
 syx_memory_alloc (void)
 {
-  syx_pointer ptr;
+  SyxOop oop;
 
   if (_syx_memory_top >= _syx_memory_size - 1 && _syx_freed_memory_top == 0)
     {
@@ -53,38 +57,38 @@ syx_memory_alloc (void)
     }
 
   if (_syx_freed_memory_top == 0)
-    ptr = _syx_memory + _syx_memory_top++;
+    oop.idx = _syx_memory_top++;
   else
-    ptr = _syx_freed_memory[--_syx_freed_memory_top];
+    oop = _syx_freed_memory[--_syx_freed_memory_top];
 
-  return ptr;
+  assert (oop.c.type == SYX_TYPE_OBJECT);
+  return oop;
 }
 
 inline void
-syx_memory_free (syx_pointer ptr)
+syx_memory_free (SyxOop oop)
 {
-  _syx_freed_memory[_syx_freed_memory_top++] = ptr;
+  _syx_freed_memory[_syx_freed_memory_top++] = oop;
 }
 
-inline syx_pointer
-syx_memory_get_heap (void)
-{
-  return _syx_memory;
-}
 
 inline syx_size
-syx_memory_get_heap_size (void)
+syx_memory_get_size (void)
 {
   return _syx_memory_size;
 }
 
-
+inline SyxOop
+SYX_POINTER_TO_OOP (syx_pointer ptr)
+{
+  return syx_small_integer_new ((syx_nint)ptr - (syx_nint)syx_memory);
+}
 
 inline void
-_syx_memory_gc_mark (SyxObject *object)
+_syx_memory_gc_mark (SyxOop object)
 {
   syx_varsize i;
-  if (!SYX_IS_POINTER (object) || SYX_OBJECT_IS_MARKED(object))
+  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object))
     return;
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;
@@ -99,14 +103,14 @@ static void
 _syx_memory_gc_sweep ()
 {
   syx_size i;
-  SyxObject *object = _syx_memory;
+  SyxObject *object = syx_memory;
 
   for (i=0; i < _syx_memory_size; i++, object++)
     {
-      if (SYX_OBJECT_IS_STATIC(object) || SYX_OBJECT_IS_MARKED(object))
-	SYX_OBJECT_IS_MARKED(object) = FALSE;
+      if (object->is_static || object->is_marked)
+	object->is_marked = FALSE;
       else
-	syx_object_free (object);
+	syx_object_free (SYX_POINTER_TO_OOP (object));
     }
 }
 

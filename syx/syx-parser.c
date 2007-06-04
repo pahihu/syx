@@ -31,7 +31,7 @@ static void _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_nam
 static void _syx_parser_parse_block (SyxParser *self);
 static syx_varsize _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool do_pop);
 static void _syx_parser_parse_array (SyxParser *self);
-static SyxObject *_syx_parser_parse_literal_array (SyxParser *self);
+static SyxOop _syx_parser_parse_literal_array (SyxParser *self);
 
 static void _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver);
 static syx_bool _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver);
@@ -39,10 +39,10 @@ static syx_bool _syx_parser_do_binary_continuation (SyxParser *self, syx_bool su
 static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
 
 SyxParser *
-syx_parser_new (SyxLexer *lexer, SyxObject *method, syx_symbol *instance_names)
+syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
 {
   SyxParser *self;
-  if (!lexer || !SYX_IS_POINTER (method))
+  if (!lexer || !SYX_IS_OBJECT (method))
     return NULL;
   
   self = syx_malloc (sizeof (SyxParser));
@@ -105,10 +105,10 @@ syx_parser_parse (SyxParser *self, GError **error)
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
 
-  SYX_METHOD_BYTECODES(self->method) = syx_byte_array_new (self->bytecode->code->len,
-							   self->bytecode->code->data);
-  SYX_METHOD_LITERALS(self->method) = syx_array_new (self->bytecode->literals->len,
-						     (SyxObject **) self->bytecode->literals->pdata);
+  SYX_METHOD_BYTECODES(self->method) = syx_byte_array_new_ref (self->bytecode->code_top,
+							   self->bytecode->code);
+  SYX_METHOD_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
+							 self->bytecode->literals);
 
   SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->argument_names->len);
   SYX_METHOD_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->temporary_names->len);
@@ -478,7 +478,7 @@ static void
 save_duplicate_index (SyxParser *self)
 {
   glong *last_index = (glong *)g_trash_stack_peek (&self->duplicate_indexes);
-  last_index[1] = self->bytecode->code->len;
+  last_index[1] = self->bytecode->code_top;
 }
 
 static syx_varsize
@@ -490,7 +490,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
 
   syx_bytecode_do_special (self->bytecode, branch_type);
   syx_bytecode_gen_code (self->bytecode, 0);
-  jump = self->bytecode->code->len - 1;
+  jump = self->bytecode->code_top - 1;
 
   if (do_pop)
     syx_bytecode_pop_top (self->bytecode);
@@ -515,7 +515,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
     }
 
   self->in_block = block_state;
-  self->bytecode->code->data[jump] = self->bytecode->code->len;
+  self->bytecode->code[jump] = self->bytecode->code_top;
   return jump;
 }
 
@@ -548,7 +548,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      token = syx_lexer_next_token (self->lexer);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump
-	      self->bytecode->code->data[jump] = 0;
+	      self->bytecode->code[jump] = 0;
 	    }
 
 	  return FALSE;
@@ -566,7 +566,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      token = syx_lexer_next_token (self->lexer);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump
-	      self->bytecode->code->data[jump] = 0;
+	      self->bytecode->code[jump] = 0;
 	    }
 
 	  return FALSE;
@@ -575,14 +575,14 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	{
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
-	  loopJump = self->bytecode->code->len;
+	  loopJump = self->bytecode->code_top;
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_DUPLICATE);
 	  syx_bytecode_gen_message (self->bytecode, FALSE, 0, syx_symbol_new ("value"));
 	  conditionJump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
 	  syx_bytecode_pop_top (self->bytecode);
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
 	  syx_bytecode_gen_code (self->bytecode, loopJump);
-	  self->bytecode->code->data[conditionJump] = self->bytecode->code->len;
+	  self->bytecode->code[conditionJump] = self->bytecode->code_top;
 	  syx_bytecode_pop_top (self->bytecode);
 
 	  return FALSE;
@@ -613,7 +613,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 static syx_bool
 _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
 {
-  SyxObject *selector;
+  SyxOop selector;
   SyxToken token;
   syx_bool super_term;
 
@@ -663,8 +663,8 @@ _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx
 static void
 _syx_parser_parse_block (SyxParser *self)
 {
-  SyxObject *closure;
-  SyxObject *old_method = self->method;
+  SyxOop closure;
+  SyxOop old_method = self->method;
   SyxBytecode *old_bytecode = self->bytecode;
   syx_bool block_state = self->in_block;
   syx_token_free (syx_lexer_get_last_token (self->lexer));
@@ -706,10 +706,11 @@ _syx_parser_parse_array (SyxParser *self)
   syx_bytecode_push_array (self->bytecode, num_elements);
 }
 
-static SyxObject *
+static SyxOop 
 _syx_parser_parse_literal_array (SyxParser *self)
 {
-  GPtrArray *elements = g_ptr_array_new ();
+  SyxOop elements[256];
+  syx_varsize top = 0;
   SyxToken token;
 
   token = syx_lexer_next_token (self->lexer);
@@ -718,24 +719,24 @@ _syx_parser_parse_literal_array (SyxParser *self)
       switch (token.type)
 	{
 	case SYX_TOKEN_ARRAY_BEGIN:
-	  g_ptr_array_add (elements, _syx_parser_parse_literal_array (self));
+	  elements[top++] = _syx_parser_parse_literal_array (self);
 	  break;
 	case SYX_TOKEN_INT_CONST:
-	  g_ptr_array_add (elements, syx_small_integer_new (token.value.integer));
+	  elements[top++] = syx_small_integer_new (token.value.integer);
 	  break;
 	case SYX_TOKEN_BINARY:
 	  if (!strcmp (token.value.string, "("))
 	    {
-	      g_ptr_array_add (elements, _syx_parser_parse_literal_array (self));
+	      elements[top++] = _syx_parser_parse_literal_array (self);
 	      break;
 	    }
 	case SYX_TOKEN_NAME_CONST:
 	case SYX_TOKEN_NAME_COLON:
 	case SYX_TOKEN_SYM_CONST:
-	  g_ptr_array_add (elements, syx_symbol_new (token.value.string));
+	  elements[top++] = syx_symbol_new (token.value.string);
 	  break;
 	case SYX_TOKEN_STR_CONST:
-	  g_ptr_array_add (elements, syx_string_new (token.value.string));
+	  elements[top++] = syx_string_new (token.value.string);
 	  break;
 	default:
 	  g_error ("illegal text in literal array\n");
@@ -745,7 +746,7 @@ _syx_parser_parse_literal_array (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
     }
 
-  return syx_array_new (elements->len, elements->pdata);
+  return syx_array_new_ref (top, elements);
 }
 
 static void

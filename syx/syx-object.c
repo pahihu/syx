@@ -14,58 +14,52 @@
   \note all objects are allocated in the Syx Memory
 */
  
-SyxObject *syx_metaclass_class,
+SyxOop syx_nil,
+  syx_true,
+  syx_false,
 
-  *syx_undefined_object_class,
-  *syx_true_class,
-  *syx_false_class,
-  *syx_small_integer_class,
-  *syx_character_class,
+  syx_metaclass_class,
+  syx_undefined_object_class,
+  syx_true_class,
+  syx_false_class,
+  syx_small_integer_class,
+  syx_character_class,
 
-  *syx_symbol_class,
-  *syx_string_class,
-  *syx_byte_array_class,
-  *syx_array_class,
+  syx_symbol_class,
+  syx_string_class,
+  syx_byte_array_class,
+  syx_array_class,
 
-  *syx_link_class,
-  *syx_dictionary_class,
+  syx_link_class,
+  syx_dictionary_class,
 
-  *syx_compiled_method_class,
-  *syx_compiled_block_class,
-  *syx_block_closure_class,
+  syx_compiled_method_class,
+  syx_compiled_block_class,
+  syx_block_closure_class,
 
-  *syx_method_context_class,
-  *syx_block_context_class,
-  *syx_process_class,
-  *syx_processor_scheduler_class,
+  syx_method_context_class,
+  syx_block_context_class,
+  syx_process_class,
+  syx_processor_scheduler_class,
 
-  *syx_symbols,
-  *syx_globals;
+  syx_symbols,
+  syx_globals;
 
 /* Inlines */
 
 inline void
-syx_object_grow_by (SyxObject *object, syx_varsize size)
+syx_object_grow_by (SyxOop object, syx_varsize size)
 {
   SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object), SYX_OBJECT_SIZE(object) + size);
 }
 
-inline SyxObject *
-syx_object_get_class (SyxObject *object)
+inline SyxOop 
+syx_object_get_class (SyxOop object)
 {
   /* ordered by usage */
   
-  if (SYX_IS_POINTER(object))
-    return object->class;
-
-  if (SYX_IS_NIL(object))
-    return syx_undefined_object_class;
-
-  if (SYX_IS_TRUE(object))
-    return syx_true_class;
-
-  if (SYX_IS_FALSE(object))
-    return syx_false_class;
+  if (SYX_IS_OBJECT(object))
+    return SYX_OBJECT(object)->class;
 
   if (SYX_IS_SMALL_INTEGER(object))
     return syx_small_integer_class;
@@ -73,135 +67,159 @@ syx_object_get_class (SyxObject *object)
   if (SYX_IS_CHARACTER(object))
     return syx_character_class;
     
-  return SYX_NIL;
+  /* it's a constant */
+  return SYX_OBJECT(object)->class;
 }
 
 inline void
-syx_object_set_class (SyxObject *object, SyxObject *val)
+syx_object_set_class (SyxOop object, SyxOop val)
 {
-  if (!SYX_IS_POINTER(object))
+  if (!SYX_IS_OBJECT(object))
     return;
 
-  object->class = val;
+  SYX_OBJECT(object)->class = val;
 }
 
-inline syx_nint
-syx_object_hash (SyxObject *object)
+inline syx_int32
+syx_object_hash (SyxOop object)
 {
-  if (SYX_IS_POINTER (object))
-    return (syx_nint) object;
-  else if (SYX_IS_SMALL_INTEGER (object))
+  if (SYX_IS_SMALL_INTEGER (object))
     return SYX_SMALL_INTEGER (object);
   else if (SYX_IS_CHARACTER (object))
     return SYX_CHARACTER (object);
 
-  return 0;
+  return object.idx;
 }
 
 /* Builders */
 
-inline SyxObject *
-syx_metaclass_new (SyxObject *supermetaclass)
+inline SyxOop 
+syx_metaclass_new (SyxOop supermetaclass)
 {
-  SyxObject *metaclass = syx_object_new (syx_metaclass_class, TRUE, TRUE);
+  SyxOop metaclass = syx_object_new (syx_metaclass_class, TRUE, TRUE);
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
   return metaclass;
 }
 
-inline SyxObject *
-syx_class_new (SyxObject *superclass)
+inline SyxOop 
+syx_class_new (SyxOop superclass)
 {
-  SyxObject *metaclass = syx_metaclass_new (syx_object_get_class (superclass));
-  SyxObject *class = syx_object_new (metaclass, TRUE, TRUE);
+  SyxOop metaclass = syx_metaclass_new (syx_object_get_class (superclass));
+  SyxOop class = syx_object_new (metaclass, TRUE, TRUE);
   SYX_CLASS_SUPERCLASS(class) = superclass;
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   return class;
 }
 
-inline SyxObject *
-syx_byte_array_new (syx_varsize size, syx_pointer data)
+inline SyxOop 
+syx_byte_array_new (syx_varsize size, syx_uint8 *data)
 {
-  return syx_object_new_data (syx_byte_array_class, FALSE, FALSE, size, data);
+  return syx_object_new_data (syx_byte_array_class, FALSE, FALSE, size, (SyxOop *)data);
 }
 
-inline SyxObject *
+inline SyxOop 
 syx_byte_array_new_size (syx_varsize size)
 {
-  return syx_object_new_size (syx_byte_array_class, FALSE, FALSE, size);
+  SyxOop oop = syx_memory_alloc ();
+  SyxObject *object = SYX_OBJECT (oop);
+  
+  object->class = syx_byte_array_class;
+  object->is_static = FALSE;
+  object->has_refs = FALSE;
+  object->size = size;
+  object->data = syx_calloc (size, sizeof (syx_uint8));
+
+  return oop;
 }
 
-inline SyxObject *
-syx_array_new (syx_varsize size, syx_pointer data)
+inline SyxOop
+syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
+{
+  SyxOop oop = syx_byte_array_new_size (size);
+  memcpy (SYX_OBJECT_DATA (oop), data, size * sizeof (syx_uint8));
+  return oop;
+}
+
+inline SyxOop 
+syx_array_new (syx_varsize size, SyxOop *data)
 {
   return syx_object_new_data (syx_array_class, FALSE, TRUE, size, data);
 }
 
-inline SyxObject *
+inline SyxOop 
 syx_array_new_size (syx_varsize size)
 {
   return syx_object_new_size (syx_array_class, FALSE, TRUE, size);
 }
 
-inline SyxObject *
+inline SyxOop
+syx_array_new_ref (syx_varsize size, SyxOop *data)
+{
+  SyxOop oop = syx_array_new_size (size);
+  memcpy (SYX_OBJECT_DATA(oop), data, size * sizeof (SyxOop));
+  return oop;
+}
+
+inline SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
-  SyxObject *object = syx_dictionary_at_symbol (syx_symbols, symbol);
+  SyxOop object = syx_dictionary_at_symbol (syx_symbols, symbol);
   if (SYX_IS_NIL (object))
     {
-      object = syx_object_new_data (syx_symbol_class, FALSE, FALSE, strlen (symbol), strdup (symbol));
+      object = syx_object_new_data (syx_symbol_class, FALSE, FALSE, strlen (symbol), (SyxOop *)strdup (symbol));
       syx_dictionary_at_const_put (syx_symbols, object, object);
     }
 
   return object;
 }
 
-inline SyxObject *
+inline SyxOop 
 syx_string_new (syx_symbol string)
 {
-  return syx_object_new_data (syx_string_class, FALSE, FALSE, strlen (string), strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, FALSE, strlen (string), (SyxOop *)strdup (string));
 }
 
-inline SyxObject *
-syx_link_new (SyxObject *key, SyxObject *value)
+inline SyxOop 
+syx_link_new (SyxOop key, SyxOop value)
 {
-  SyxObject *object = syx_object_new (syx_link_class, FALSE, TRUE);
+  SyxOop object = syx_object_new (syx_link_class, FALSE, TRUE);
   SYX_LINK_KEY(object) = key;
   SYX_LINK_VALUE(object) = value;
   return object;
 }
 
-SyxObject *
+SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
-  SyxObject *object = syx_object_new (syx_dictionary_class, FALSE, TRUE);
+  SyxOop object = syx_object_new (syx_dictionary_class, FALSE, TRUE);
   SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2);
   return object;
 }
 
-SyxObject *
-syx_dictionary_at_const (SyxObject *dict, SyxObject *key)
+SyxOop 
+syx_dictionary_at_const (SyxOop dict, SyxOop key)
 {
-  SyxObject *table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
   for (i=0; i < size; i+=2)
     {
-      if (SYX_OBJECT_DATA(table)[i] == key)
+      if (SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
   return SYX_NIL;
 }
 
-SyxObject *
-syx_dictionary_at_symbol (SyxObject *dict, syx_symbol key)
+SyxOop 
+syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
-  SyxObject *table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxObject *entry;
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
@@ -216,15 +234,15 @@ syx_dictionary_at_symbol (SyxObject *dict, syx_symbol key)
 }
 
 void
-syx_dictionary_at_const_put (SyxObject *dict, SyxObject *key, SyxObject *value)
+syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
 {
-  SyxObject *table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
   for (i=0; i < size; i+=2)
     {
-      if (SYX_IS_NIL (SYX_OBJECT_DATA(table)[i]) || SYX_OBJECT_DATA(table)[i] == key)
+      if (SYX_IS_NIL (SYX_OBJECT_DATA(table)[i]) || SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
 	{
 	  SYX_OBJECT_DATA(table)[i] = key;
 	  SYX_OBJECT_DATA(table)[i+1] = value;
@@ -232,39 +250,39 @@ syx_dictionary_at_const_put (SyxObject *dict, SyxObject *key, SyxObject *value)
 	}
     }
 
-  printf("Not enough space for dictionary %p\n", SYX_POINTER (dict));
+  printf("Not enough space for dictionary %d\n", dict.idx);
 }
 
-inline SyxObject *
-syx_block_closure_new (SyxObject *block)
+inline SyxOop 
+syx_block_closure_new (SyxOop block)
 {
-  SyxObject *object = syx_object_new (syx_block_closure_class, FALSE, TRUE);
+  SyxOop object = syx_object_new (syx_block_closure_class, FALSE, TRUE);
   SYX_BLOCK_CLOSURE_BLOCK(object) = block;
   return object;
 }
 
-inline SyxObject *
-syx_process_new (SyxObject *context)
+inline SyxOop 
+syx_process_new (SyxOop context)
 {
-  SyxObject *object = syx_object_new (syx_process_class, FALSE, TRUE);
+  SyxOop object = syx_object_new (syx_process_class, FALSE, TRUE);
   SYX_PROCESS_CONTEXT(object) = context;
   SYX_PROCESS_SUSPENDED(object) = SYX_TRUE;
   syx_scheduler_add_process (object);
   return object;
 }
 
-inline SyxObject *
-syx_method_context_new (SyxObject *parent, SyxObject *method, SyxObject *receiver, SyxObject *arguments)
+inline SyxOop 
+syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
-  SyxObject *object = syx_object_new (syx_method_context_class, FALSE, TRUE);
-  SyxObject *ctx_args;
+  SyxOop object = syx_object_new (syx_method_context_class, FALSE, TRUE);
+  SyxOop ctx_args;
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
   SYX_METHOD_CONTEXT_METHOD(object) = method;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method)));
-  memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxObject *));
+  memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method)));
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
@@ -276,11 +294,11 @@ syx_method_context_new (SyxObject *parent, SyxObject *method, SyxObject *receive
   return object;
 }
 
-inline SyxObject *
-syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *arguments, SyxObject *outer_context)
+inline SyxOop 
+syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
-  SyxObject *object = syx_object_new (syx_block_context_class, FALSE, TRUE);
-  SyxObject *ctx_args;
+  SyxOop object = syx_object_new (syx_block_context_class, FALSE, TRUE);
+  SyxOop ctx_args;
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
   SYX_METHOD_CONTEXT_METHOD(object) = block;
@@ -288,7 +306,7 @@ syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *arguments
 
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
   memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
-	  SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxObject *));
+	  SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
@@ -302,74 +320,95 @@ syx_block_context_new (SyxObject *parent, SyxObject *block, SyxObject *arguments
 
 /* Object */
 
-SyxObject *
-syx_object_new (SyxObject *class, syx_bool is_static, syx_bool has_refs)
+SyxOop 
+syx_object_new (SyxOop class, syx_bool is_static, syx_bool has_refs)
 {
-  SyxObject *object = syx_memory_alloc ();
+  SyxOop oop = syx_memory_alloc ();
+  SyxObject *object = SYX_OBJECT (oop);
   
   object->class = class;
   object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
-  object->data = object->size ? syx_calloc (object->size, sizeof (SyxObject *)) : NULL;
+  object->data = object->size ? syx_calloc (object->size, sizeof (SyxObject)) : NULL;
 
-  return object;
+  return oop;
 }
 
-SyxObject *
-syx_object_new_size (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size)
+SyxOop 
+syx_object_new_size (SyxOop class, syx_bool is_static, syx_bool has_refs, syx_varsize size)
 {
-  SyxObject *object = syx_memory_alloc ();
+  SyxOop oop = syx_memory_alloc ();
+  SyxObject *object = SYX_OBJECT (oop);
   
   object->class = class;
   object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = size;
-  object->data = size ? syx_calloc (size, sizeof (SyxObject *)) : NULL;
+  object->data = size ? syx_calloc (size, sizeof (SyxOop )) : NULL;
 
-  return object;
+  return oop;
 }
 
-SyxObject *
-syx_object_new_data (SyxObject *class, syx_bool is_static, syx_bool has_refs, syx_varsize size, syx_pointer data)
+SyxOop 
+syx_object_new_data (SyxOop class, syx_bool is_static, syx_bool has_refs, syx_varsize size, SyxOop *data)
 {
-  SyxObject *object = syx_memory_alloc ();
+  SyxOop oop = syx_memory_alloc ();
+  SyxObject *object = SYX_OBJECT (oop);
 
   object->class = class;
   object->is_static = is_static;
   object->has_refs = has_refs;
   object->size = size;
-  object->data = (SyxObject **) data;
+  object->data = data;
 
-  return object;
+  return oop;
 }
 
 inline void
-syx_object_free (SyxObject *object)
+syx_object_free (SyxOop object)
 {
   syx_free (SYX_OBJECT_DATA (object));
   syx_memory_free (object);
 }
 
-syx_bool
-syx_class_is_superclass_of (SyxObject *class, SyxObject *subclass)
+inline SyxOop
+syx_small_integer_new (syx_int32 num)
 {
-  if (class == subclass)
+  SyxOop oop;
+  oop.idx = num;
+  oop.i.type = SYX_TYPE_SMALL_INTEGER;
+  return oop;
+}
+
+inline SyxOop
+syx_character_new (syx_uint8 ch)
+{
+  SyxOop oop;
+  oop.idx = ch;
+  oop.c.type = SYX_TYPE_CHARACTER;
+  return oop;
+}
+
+syx_bool
+syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
+{
+  if (SYX_OOP_EQ (class, subclass))
     return FALSE;
 
-  SyxObject *cur = SYX_CLASS_SUPERCLASS (subclass);
+  SyxOop cur = SYX_CLASS_SUPERCLASS (subclass);
 
-  for (; !SYX_IS_NIL (cur) && cur != class; cur=SYX_CLASS_SUPERCLASS(cur));
+  for (; !SYX_IS_NIL (cur) && SYX_OOP_NE(cur, class); cur=SYX_CLASS_SUPERCLASS(cur));
 
   return !SYX_IS_NIL (cur);
 }
 
 syx_symbol *
-syx_class_get_all_instance_variables (SyxObject *class)
+syx_class_get_all_instance_variables (SyxOop class)
 {
   syx_symbol names[256];
   syx_symbol *ret_names = NULL;
-  SyxObject *inst_vars;
+  SyxOop inst_vars;
   syx_varsize i, size, tot_size;
 
   for (tot_size=0; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS (class))
@@ -391,11 +430,11 @@ syx_class_get_all_instance_variables (SyxObject *class)
   return ret_names;
 }
 
-SyxObject *
-syx_class_lookup_method (SyxObject *class, syx_symbol selector)
+SyxOop 
+syx_class_lookup_method (SyxOop class, syx_symbol selector)
 {
-  SyxObject *cur;
-  SyxObject *method;
+  SyxOop cur;
+  SyxOop method;
 
   for (cur=class; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {

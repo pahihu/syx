@@ -37,7 +37,7 @@ PKG_CHECK_MODULES(BASE_DEPENDENCIES,
 	[glib-2.0 >= glib_required_version
 	gmodule-2.0 >= gmodule_required_version])
 
-CFLAGS="$CFLAGS -Wall -pedantic -g -O2"
+CFLAGS="$CFLAGS -Wall -g -O2"
 
 AC_OUTPUT([
 Makefile

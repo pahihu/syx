@@ -9,8 +9,9 @@
 #include "syx-parser.h"
 #include "syx-bytecode.h"
 #include "syx-utils.h"
+#include "syx-memory.h"
 #include "syx-interp.h"
 #include "syx-scheduler.h"
 #include "syx-plugins.h"
 
-#endif
+#endif /* SYX_H */

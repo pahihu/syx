@@ -10,13 +10,14 @@
 #include "syx-lexer.h"
 #include "syx-interp.h"
 #include "syx-utils.h"
+#include "syx-memory.h"
 
 #define SYX_PRIM_RETURN(object)						\
-  syx_interp_leave_context_and_answer (es, (object), FALSE);			\
+  syx_interp_leave_context_and_answer (es, (object), FALSE);		\
   return TRUE
 
-inline SyxObject *
-_syx_block_context_new_from_closure (SyxExecState *es, SyxObject *arguments)
+inline SyxOop 
+_syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
   return syx_block_context_new (SYX_METHOD_CONTEXT_PARENT (es->context),
 				SYX_BLOCK_CLOSURE_BLOCK (es->receiver),
@@ -50,7 +51,7 @@ SYX_FUNC_PRIMITIVE (Object_at)
 SYX_FUNC_PRIMITIVE (Object_at_put)
 {
   syx_varsize index;
-  SyxObject *ptr;
+  SyxOop ptr;
 
   index = SYX_SMALL_INTEGER(es->arguments[0]);
   ptr = es->arguments[1];
@@ -76,7 +77,7 @@ SYX_FUNC_PRIMITIVE (Object_size)
 
 SYX_FUNC_PRIMITIVE (Object_identityEqual)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver == es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OOP_EQ (es->receiver, es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (Object_hash)
@@ -91,14 +92,14 @@ SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
-  SyxObject *ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
+  SyxOop ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
   return syx_interp_enter_context (es, ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
 {
-  SyxObject *args;
-  SyxObject *ctx;
+  SyxOop args;
+  SyxOop ctx;
 
   args = syx_array_new_size (1);
   SYX_OBJECT_DATA(args)[0] = es->arguments[0];
@@ -108,13 +109,13 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 {
-  SyxObject *ctx = _syx_block_context_new_from_closure (es, es->arguments[0]);
+  SyxOop ctx = _syx_block_context_new_from_closure (es, es->arguments[0]);
   return syx_interp_enter_context (es, ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
 {
-  SyxObject *ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
+  SyxOop ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
 
   SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx) = es->arguments[0];
   SYX_BLOCK_CONTEXT_HANDLER_BLOCK (ctx) = es->arguments[1];
@@ -124,8 +125,8 @@ SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 {
-  SyxObject *ctx;
-  SyxObject *proc;
+  SyxOop ctx;
+  SyxOop proc;
 
   ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
   SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = SYX_NIL;
@@ -171,17 +172,17 @@ SYX_FUNC_PRIMITIVE (Context_returnTo_andAnswer)
 
 SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
 {
-  SyxObject *eClass;
-  SyxObject *hClass;
-  SyxObject *ctx = SYX_METHOD_CONTEXT_PARENT (es->context);
+  SyxOop eClass;
+  SyxOop hClass;
+  SyxOop ctx = SYX_METHOD_CONTEXT_PARENT (es->context);
 
   eClass = syx_object_get_class (es->receiver);
   while (!SYX_IS_NIL (ctx))
     {
-      if (syx_object_get_class (ctx) == syx_block_context_class)
+      if (SYX_OOP_EQ (syx_object_get_class (ctx), syx_block_context_class))
 	{
 	  hClass = SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx);
-	  if (eClass == hClass || syx_class_is_superclass_of (hClass, eClass))
+	  if (SYX_OOP_EQ (eClass, hClass) || syx_class_is_superclass_of (hClass, eClass))
 	    SYX_PRIM_RETURN (ctx);
 	}
 
@@ -219,14 +220,14 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 static gboolean
 _channel_watcher (GIOChannel *channel, GIOCondition condition, syx_pointer data)
 {
-  /*  SyxObject *semaphore = SYX_POINTER(data);
+  /*  SyxOop semaphore = SYX_POINTER(data);
       syx_semaphore_signal (semaphore);*/
   return FALSE;
 }
 
 SYX_FUNC_PRIMITIVE (FileStream_new)
 {
-  /*  SyxObject *filestream;
+  /*  SyxOop filestream;
   GIOChannel *channel;
   syx_int32 fd;
 
@@ -243,7 +244,7 @@ SYX_FUNC_PRIMITIVE (FileStream_new)
 
 SYX_FUNC_PRIMITIVE (FileStream_newFile)
 {
-  /*  SyxObject *filestream;
+  /*  SyxOop filestream;
   GIOChannel *channel;
   gchar *filename;
   gchar *mode;
@@ -269,7 +270,7 @@ SYX_FUNC_PRIMITIVE (FileStream_addWatchForInput)
 {
   /*  GIOChannel *channel;
   GSource *source;
-  SyxObject *semaphore;
+  SyxOop semaphore;
   g_return_val_if_fail (arguments->len > 0, NULL);
 
   semaphore = arguments->pdata[0];
@@ -299,7 +300,7 @@ SYX_FUNC_PRIMITIVE (FileStream_addWatchForOutput)
 {
   /*  GIOChannel *channel;
   GSource *source;
-  SyxObject *semaphore;
+  SyxOop semaphore;
   g_return_val_if_fail (arguments->len > 0, NULL);
 
   semaphore = arguments->pdata[0];
@@ -392,32 +393,32 @@ SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_lt)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver < es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) < SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_gt)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver > es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) > SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_le)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver <= es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) <= SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ge)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver >= es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) >= SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver == es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) == SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (es->receiver == es->arguments[0]));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->receiver) == SYX_SMALL_INTEGER (es->arguments[0])));
 }
 
 #define MAX_PRIMITIVES 42

@@ -8,6 +8,7 @@
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-object.h"
+#include "syx-memory.h"
 
 static syx_symbol _syx_root_path;
 
@@ -81,9 +82,9 @@ file_in_basic (void)
     }
 }
 
-inline SyxObject *_syx_create_class (syx_varsize instanceSize)
+inline SyxOop _syx_create_class (syx_varsize instanceSize)
 {
-  SyxObject *object = syx_object_new_size (SYX_NIL, TRUE, FALSE, SYX_DATA_CLASS_ALL);
+  SyxOop object = syx_object_new_size (SYX_NIL, TRUE, FALSE, SYX_DATA_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
@@ -91,7 +92,7 @@ inline SyxObject *_syx_create_class (syx_varsize instanceSize)
 void
 syx_build_basic (void)
 {
-  SyxObject *Object, *Behavior, *Class;
+  SyxOop Object, Behavior, Class;
 
 #define CREATE_CLASS(instanceSize)		\
   SYX_CLASS_INSTANCE_SIZE(class) = syx_small_integer_new (instanceSize)
@@ -150,10 +151,11 @@ syx_build_basic (void)
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   file_in_basic ();
 
-  syx_undefined_object_class = syx_globals_at ("UndefinedObject");
-  syx_true_class = syx_globals_at ("True");
-  syx_false_class = syx_globals_at ("False");
   syx_link_class = syx_globals_at ("Link");
+
+  syx_object_set_class (syx_nil, syx_globals_at ("UndefinedObject"));
+  syx_object_set_class (syx_true, syx_globals_at ("True"));
+  syx_object_set_class (syx_false, syx_globals_at ("False"));
 
   syx_scheduler_init ();
   syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);

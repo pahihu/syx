@@ -4,7 +4,7 @@
 int
 main (int argc, char *argv[])
 {
-  SyxObject *obj, *instobj;
+  SyxOop obj, instobj;
   GTimer *timer;
 
   syx_init ("..");
@@ -27,18 +27,18 @@ main (int argc, char *argv[])
   assert (SYX_IS_NIL (obj));
 
   obj = syx_object_get_class (instobj);
-  assert (syx_object_get_class (obj) == syx_globals_at ("Metaclass"));
-  assert (syx_object_get_class (syx_object_get_class (syx_object_get_class (obj))) == syx_globals_at ("Metaclass"));
+  assert (SYX_OOP_EQ (syx_object_get_class (obj), syx_globals_at ("Metaclass")));
+  assert (SYX_OOP_EQ (syx_object_get_class (syx_object_get_class (syx_object_get_class (obj))), syx_globals_at ("Metaclass")));
   obj = SYX_CLASS_SUPERCLASS (obj);
-  assert (obj == syx_object_get_class (SYX_CLASS_SUPERCLASS (instobj)));
+  assert (SYX_OOP_EQ (obj, syx_object_get_class (SYX_CLASS_SUPERCLASS (instobj))));
   obj = SYX_CLASS_SUPERCLASS (obj);
-  assert (obj == syx_globals_at ("Class"));
+  assert (SYX_OOP_EQ (obj, syx_globals_at ("Class")));
   obj = SYX_CLASS_SUPERCLASS (obj);
-  assert (obj == syx_globals_at ("Behavior"));
+  assert (SYX_OOP_EQ (obj, syx_globals_at ("Behavior")));
   obj = SYX_CLASS_SUPERCLASS (obj);
-  assert (obj == syx_globals_at ("Object"));
+  assert (SYX_OOP_EQ (obj, syx_globals_at ("Object")));
   obj = SYX_CLASS_SUPERCLASS (obj);
-  assert (obj == SYX_NIL);
+  assert (SYX_IS_NIL (obj));
 
   obj = syx_string_new ("string");
   assert (!strcmp (SYX_OBJECT_SYMBOL (obj), "string"));

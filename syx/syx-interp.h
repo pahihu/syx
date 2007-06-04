@@ -10,24 +10,24 @@ typedef struct SyxExecState SyxExecState;
 
 struct SyxExecState
 {
-  SyxObject *process;
-  SyxObject *context;
-  SyxObject *receiver;
-  SyxObject **arguments;
-  SyxObject **temporaries;
-  SyxObject **stack;
-  SyxObject **literals;
+  SyxOop process;
+  SyxOop context;
+  SyxOop receiver;
+  SyxOop *arguments;
+  SyxOop *temporaries;
+  SyxOop *stack;
+  SyxOop *literals;
   syx_uint8 *bytecodes;
   syx_int32 bytecodes_count;
   syx_int32 byteslice;
   syx_int32 ip, sp;
 
-  SyxObject *message_receiver;
-  SyxObject *message_arguments;
+  SyxOop message_receiver;
+  SyxOop message_arguments;
 };
 
 #define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
-void syx_exec_state_fetch (SyxExecState *es, SyxObject *process);
+void syx_exec_state_fetch (SyxExecState *es, SyxOop process);
 inline void syx_exec_state_save (SyxExecState *es);
 void syx_exec_state_free (SyxExecState *es);
 
@@ -55,18 +55,18 @@ typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint8 argument);
   syx_bool					\
   name (SyxExecState *es, syx_uint8 argument)
 
-inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxObject *context);
-inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxObject *context);
-inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxObject *return_object, syx_bool use_return_context);
+inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxOop context);
+inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxOop context);
+inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx_bool use_return_context);
 
-inline void syx_interp_stack_push (SyxExecState *es, SyxObject *object);
-inline SyxObject *syx_interp_stack_pop (SyxExecState *es);
-inline SyxObject *syx_interp_stack_peek (SyxExecState *es);
+inline void syx_interp_stack_push (SyxExecState *es, SyxOop object);
+inline SyxOop syx_interp_stack_pop (SyxExecState *es);
+inline SyxOop syx_interp_stack_peek (SyxExecState *es);
 
 /* Process execution */
 
-void syx_process_execute_scheduled (SyxObject *process);
-void syx_process_execute_blocking (SyxObject *process);
+void syx_process_execute_scheduled (SyxOop process);
+void syx_process_execute_blocking (SyxOop process);
 
 /* Interpreter functions */
 

@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include "../syx/syx.h"
 
-inline SyxObject 
-*_interpret (syx_symbol text)
+SyxOop
+_interpret (syx_symbol text)
 {
   SyxParser *parser;
   SyxLexer *lexer;
-  SyxObject *method, *context, *process;
+  SyxOop method, context, process;
   GError *error = NULL;
   static GTimer *timer = NULL;
 
@@ -34,7 +34,7 @@ inline SyxObject
 int
 main (int argc, char *argv[])
 {
-  SyxObject *ret_obj;
+  SyxOop ret_obj;
 
   syx_init ("..");
   syx_build_basic ();
@@ -45,7 +45,7 @@ main (int argc, char *argv[])
 
   puts ("- Test single messages");
   ret_obj = _interpret ("method ^Object class class hash");
-  assert (syx_metaclass_class == ret_obj);
+  assert (syx_metaclass_class.idx == SYX_SMALL_INTEGER (ret_obj));
 
   puts ("- Test evaluating a simple block");
   ret_obj = _interpret ("method ^[321] value");
