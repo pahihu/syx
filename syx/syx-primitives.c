@@ -27,13 +27,13 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 
 SYX_FUNC_PRIMITIVE (Behavior_new)
 {
-  SYX_PRIM_RETURN (syx_object_new (es->receiver, FALSE, TRUE));
+  SYX_PRIM_RETURN (syx_object_new (es->receiver, TRUE));
 }
 
 SYX_FUNC_PRIMITIVE (Behavior_basicNew)
 {
   syx_varsize size = SYX_SMALL_INTEGER (es->arguments[0]);
-  SYX_PRIM_RETURN(syx_object_new_size (es->receiver, FALSE, TRUE, size));
+  SYX_PRIM_RETURN(syx_object_new_size (es->receiver, TRUE, size));
 }
 
 SYX_FUNC_PRIMITIVE (Object_class)

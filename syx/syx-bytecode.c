@@ -27,15 +27,15 @@ syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment)
 }
 
 void
-syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint8 low)
+syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
-  if (low >= 16)
+  if (low > 0xFF)
     {
       syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_EXTENDED, high);
       syx_bytecode_gen_code (bytecode, low);
     }
   else
-    syx_bytecode_gen_code (bytecode, high * 16 + low);
+    syx_bytecode_gen_code (bytecode, high * 256 + low);
 }
 
 void
@@ -53,7 +53,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 syx_uint32
 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 {
-  syx_uint8 i;
+  syx_uint16 i;
   for (i=0; i < bytecode->literals_top; i++)
     {
       if (SYX_OOP_EQ (bytecode->literals[i], literal))
@@ -64,7 +64,7 @@ syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
   return bytecode->literals_top - 1;
 }
 
-SYX_FUNC_BYTECODE (gen_code, syx_uint8 value)
+SYX_FUNC_BYTECODE (gen_code, syx_uint16 value)
 {
   bytecode->code[bytecode->code_top++] = value;
 }
@@ -74,19 +74,19 @@ SYX_FUNC_BYTECODE (do_special, SyxBytecodeSpecial special)
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_DO_SPECIAL, special);
 }
 
-SYX_FUNC_BYTECODE (push_array, syx_uint8 num_elements)
+SYX_FUNC_BYTECODE (push_array, syx_uint16 num_elements)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_ARRAY, num_elements);
   bytecode->stack_size++;
 }
 
-SYX_FUNC_BYTECODE (push_argument, syx_uint8 argument_index)
+SYX_FUNC_BYTECODE (push_argument, syx_uint16 argument_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_ARGUMENT, argument_index);
   bytecode->stack_size++;
 }
 
-SYX_FUNC_BYTECODE (push_temporary, syx_uint8 temporary_index)
+SYX_FUNC_BYTECODE (push_temporary, syx_uint16 temporary_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_TEMPORARY, temporary_index);
   bytecode->stack_size++;
@@ -105,7 +105,7 @@ SYX_FUNC_BYTECODE (push_block_closure, SyxOop closure)
   syx_bytecode_do_special (bytecode, SYX_BYTECODE_SET_DEFINED_CONTEXT);
 }
 
-SYX_FUNC_BYTECODE (push_instance, syx_uint8 instance_index)
+SYX_FUNC_BYTECODE (push_instance, syx_uint16 instance_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_INSTANCE, instance_index);
   bytecode->stack_size++;
@@ -124,20 +124,20 @@ SYX_FUNC_BYTECODE (push_global, SyxOop symbol)
   bytecode->stack_size++;
 }
 
-SYX_FUNC_BYTECODE (assign_temporary, syx_uint8 temporary_index)
+SYX_FUNC_BYTECODE (assign_temporary, syx_uint16 temporary_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_TEMPORARY, temporary_index);
 }
 
-SYX_FUNC_BYTECODE (assign_instance, syx_uint8 instance_index)
+SYX_FUNC_BYTECODE (assign_instance, syx_uint16 instance_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_INSTANCE, instance_index);
 }
 
 SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
 {
-  syx_uint8 instruction = SYX_BYTECODE_DO_SPECIAL * 16 + SYX_BYTECODE_DUPLICATE;
-  memmove (bytecode->code + index + 1, bytecode->code + index, 255 - index);
+  syx_uint8 instruction = SYX_BYTECODE_DO_SPECIAL * 256 + SYX_BYTECODE_DUPLICATE;
+  memmove (bytecode->code + index + 1, bytecode->code + index, 0xFFFF - index);
   bytecode->code[index] = instruction;
 }
 

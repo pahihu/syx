@@ -17,7 +17,7 @@ struct SyxExecState
   SyxOop *temporaries;
   SyxOop *stack;
   SyxOop *literals;
-  syx_uint8 *bytecodes;
+  syx_uint16 *bytecodes;
   syx_int32 bytecodes_count;
   syx_int32 byteslice;
   syx_int32 ip, sp;

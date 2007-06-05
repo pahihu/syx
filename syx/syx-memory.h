@@ -16,6 +16,8 @@ SyxOop syx_memory_alloc (void);
 inline void syx_memory_free (SyxOop oop);
 inline syx_size syx_memory_get_size (void);
 inline void syx_memory_gc (void);
+inline void syx_memory_gc_begin (void);
+inline void syx_memory_gc_end (void);
 
 inline syx_pointer syx_malloc (syx_size size);
 inline syx_pointer syx_malloc0 (syx_size size);

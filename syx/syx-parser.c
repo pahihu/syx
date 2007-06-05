@@ -105,8 +105,8 @@ syx_parser_parse (SyxParser *self, GError **error)
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
 
-  SYX_METHOD_BYTECODES(self->method) = syx_byte_array_new_ref (self->bytecode->code_top,
-							   self->bytecode->code);
+  SYX_METHOD_BYTECODES(self->method) = syx_byte_array_new_ref (self->bytecode->code_top * sizeof (syx_uint16),
+							       (syx_uint8 *)self->bytecode->code);
   SYX_METHOD_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
 							 self->bytecode->literals);
 
@@ -484,7 +484,7 @@ save_duplicate_index (SyxParser *self)
 static syx_varsize
 _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool do_pop)
 {
-  syx_varsize jump;
+  syx_uint16 jump;
   syx_bool block_state;
   SyxToken token;
 
@@ -526,7 +526,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
   GString *selector;
   syx_int8 num_args;
   syx_bool super_term;
-  syx_varsize jump, conditionJump, loopJump;
+  syx_uint16 jump, conditionJump, loopJump;
 
   super_receiver = _syx_parser_do_binary_continuation (self, super_receiver, TRUE);
 

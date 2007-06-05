@@ -14,7 +14,6 @@
 #define SYX_OBJECT_BYTE_ARRAY(ptr) ((syx_int8 *)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_SIZE(oop) (SYX_OBJECT(oop)->size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
-#define SYX_OBJECT_IS_STATIC(oop) (SYX_OBJECT(oop)->is_static)
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
 
@@ -36,7 +35,6 @@ typedef struct SyxObject SyxObject;
 struct SyxObject
 {
   SyxOop class; // please use syx_object_get_class ()
-  syx_bool is_static : 1;
   syx_bool has_refs : 1;
   syx_bool is_marked : 1;
   syx_varsize size;
@@ -76,9 +74,9 @@ extern SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
-SyxOop syx_object_new (SyxOop class, syx_bool is_static, syx_bool has_refs);
-SyxOop syx_object_new_size (SyxOop class, syx_bool is_static, syx_bool has_refs, syx_varsize size);
-SyxOop syx_object_new_data (SyxOop class, syx_bool is_static, syx_bool has_refs, syx_varsize size, SyxOop *data);
+SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
+SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
+SyxOop syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data);
 void syx_object_free (SyxOop oop);
 void syx_object_grow_by (SyxOop oop, syx_varsize size);
 syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
@@ -113,8 +111,8 @@ inline SyxOop syx_string_new (syx_symbol string);
 inline SyxOop syx_link_new (SyxOop key, SyxOop value);
 inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
-#define syx_method_new() (syx_object_new (syx_compiled_method_class, FALSE, TRUE))
-#define syx_block_new() (syx_object_new (syx_compiled_block_class, FALSE, TRUE))
+#define syx_method_new() (syx_object_new (syx_compiled_method_class, TRUE))
+#define syx_block_new() (syx_object_new (syx_compiled_block_class, TRUE))
 inline SyxOop syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
 inline SyxOop syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
 inline SyxOop syx_process_new (SyxOop context);

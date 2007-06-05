@@ -1,3 +1,13 @@
+2007-06-05  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx-object.c: removed is_static field not needed at the moment
+	All parts have been updated
+	* syx-init.c (_syx_create_class): changed from FALSE to TRUE the value to be put in has_refs (was a bad mistake)
+	* syx-memory.c (syx_memory_gc): added some debugging informations
+	* syx-memory.c (syx_memory_gc_begin, syx_memory_gc_end): added for creating GC transactions
+	* syx-bytecode.c (syx_bytecode_gen_instruction): generate 16 bit-wide instructions
+	All calls to it and the interpreter have been updated
+
 2007-06-04  Luca Bruno  <lethalman88@gmail.com>
 
 	* configure.ac: removed -pedantic since we use bitfields that are a GCC extension

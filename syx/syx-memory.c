@@ -12,6 +12,11 @@ static syx_size _syx_memory_top = 0;
 static syx_size _syx_freed_memory_top = 0;
 static syx_pointer _syx_empty_memory = NULL;
 
+// Holds temporary objects that must not be freed during a transaction
+static SyxOop _syx_memory_gc_trans[256];
+static syx_int8 _syx_memory_gc_trans_top = 0;
+static syx_bool _syx_memory_gc_trans_running = FALSE;
+
 /*! \page syx_memory Syx Memory
     
     The objects are inserted into a whole space allocated in the heap (syx-memory.c):
@@ -26,6 +31,8 @@ static syx_pointer _syx_empty_memory = NULL;
     Take a look at syx-memory.c for more detailed informations.
     \note the SyxObject::data field, containing SyxObject pointers, is allocated outside this memory.
 */
+
+#define DEBUG_GC
 
 void
 syx_memory_init (void)
@@ -61,7 +68,13 @@ syx_memory_alloc (void)
   else
     oop = _syx_freed_memory[--_syx_freed_memory_top];
 
-  assert (oop.c.type == SYX_TYPE_OBJECT);
+  /* Prevent the object from being collected */
+  if (_syx_memory_gc_trans_running)
+    {
+      SYX_OBJECT_IS_MARKED(oop) = TRUE;
+      _syx_memory_gc_trans[(syx_int32) _syx_memory_gc_trans_top++] = oop;
+    }
+
   return oop;
 }
 
@@ -81,7 +94,10 @@ syx_memory_get_size (void)
 inline SyxOop
 SYX_POINTER_TO_OOP (syx_pointer ptr)
 {
-  return syx_small_integer_new ((syx_nint)ptr - (syx_nint)syx_memory);
+  SyxOop oop;
+  oop.idx = ((syx_nint)ptr - (syx_nint)syx_memory) / sizeof (SyxObject);
+  oop.c.type = SYX_TYPE_OBJECT;
+  return oop;
 }
 
 inline void
@@ -92,6 +108,9 @@ _syx_memory_gc_mark (SyxOop object)
     return;
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;
+
+  _syx_memory_gc_mark (SYX_OBJECT(object)->class);
+
   if (SYX_OBJECT_HAS_REFS (object))
     {
       for (i=0; i < SYX_OBJECT_SIZE (object); i++)
@@ -104,13 +123,17 @@ _syx_memory_gc_sweep ()
 {
   syx_size i;
   SyxObject *object = syx_memory;
+  SyxOop oop;
 
   for (i=0; i < _syx_memory_size; i++, object++)
     {
-      if (object->is_static || object->is_marked)
+      if (object->is_marked)
 	object->is_marked = FALSE;
       else
-	syx_object_free (SYX_POINTER_TO_OOP (object));
+	{
+	  oop.idx = i;
+	  syx_object_free (oop);
+	}
     }
 }
 
@@ -120,12 +143,45 @@ _syx_memory_gc_sweep ()
 inline void
 syx_memory_gc (void)
 {
-  puts ("Called garbage collector");
+#ifdef DEBUG_GC
+  syx_size old_top = _syx_freed_memory_top;
+  syx_size reclaimed;
+#endif
+
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
+
+#ifdef DEBUG_GC
+  reclaimed = _syx_freed_memory_top - old_top;
+  printf("GC: reclaimed %ld (%d%%) objects over %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
+#endif
 }
 
+/*!
+  Begins a garbage collection transaction.
+  In this transaction, all objects being allocated must not be freed.
+  The transaction can hold up to 255 objects.
+*/
+inline void
+syx_memory_gc_begin (void)
+{
+  _syx_memory_gc_trans_running = TRUE;
+}
 
+/*!
+  Release a transaction started with syx_memory_gc_begin
+*/
+inline void
+syx_memory_gc_end (void)
+{
+  syx_int32 i;
+
+  for (i=0; i < _syx_memory_gc_trans_top; i++)
+    SYX_OBJECT_IS_MARKED(_syx_memory_gc_trans[i]) = FALSE;
+
+  _syx_memory_gc_trans_top = 0;
+  _syx_memory_gc_trans_running = FALSE;
+}
 
 inline syx_pointer
 syx_malloc (syx_size size)

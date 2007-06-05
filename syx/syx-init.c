@@ -84,7 +84,7 @@ file_in_basic (void)
 
 inline SyxOop _syx_create_class (syx_varsize instanceSize)
 {
-  SyxOop object = syx_object_new_size (SYX_NIL, TRUE, FALSE, SYX_DATA_CLASS_ALL);
+  SyxOop object = syx_object_new_size (SYX_NIL, TRUE, SYX_DATA_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
@@ -112,9 +112,7 @@ syx_build_basic (void)
   syx_metaclass_class = _syx_create_class (SYX_DATA_CLASS_ALL);
 
   syx_globals = syx_dictionary_new (100);
-  SYX_OBJECT_IS_STATIC(syx_globals) = TRUE;
   syx_symbols = syx_dictionary_new (1000);
-  SYX_OBJECT_IS_STATIC(syx_globals) = TRUE;
 
 #define SETUP_CLASS(name, class, superclass)				\
   syx_object_set_class (class, syx_metaclass_new (syx_object_get_class (superclass))); \

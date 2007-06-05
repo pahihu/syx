@@ -5,6 +5,8 @@ Major:
 
 Minor:
 - Add --enable-debug and --enable-optimization
+- Create a SConstruct file for Scons
+- Add a logging and error reporting system
 
 Documentation:
 - Just document :)

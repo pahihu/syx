@@ -15,7 +15,7 @@
 //#define SYX_DEBUG_TRACE_IP
 //#define SYX_DEBUG_BYTECODE_PROFILE
 
-static syx_uint8 _syx_interp_get_next_byte (SyxExecState *es);
+static syx_uint16 _syx_interp_get_next_byte (SyxExecState *es);
 
 inline void
 syx_interp_stack_push (SyxExecState *es, SyxOop object)
@@ -159,7 +159,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_global)
 SYX_FUNC_INTERPRETER (syx_interp_push_array)
 {
   SyxOop array;
-  syx_uint8 i;
+  syx_uint16 i;
 
   array = syx_array_new_size (argument);
   for (i=1; i <= argument; i++)
@@ -267,7 +267,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 {
   SyxOop returned_object;
   SyxOop condition;
-  syx_uint8 jump;
+  syx_uint16 jump;
 
   switch (argument)
     {
@@ -334,7 +334,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 
 #define _syx_interp_should_yield(es) (es->ip >= es->bytecodes_count || es->byteslice <= 0)
 
-static syx_uint8
+static syx_uint16
 _syx_interp_get_next_byte (SyxExecState *es)
 {
 #ifdef SYX_DEBUG_TRACE_IP
@@ -345,9 +345,9 @@ _syx_interp_get_next_byte (SyxExecState *es)
 }
 
 static syx_bool
-_syx_interp_execute_byte (SyxExecState *es, syx_uint8 byte)
+_syx_interp_execute_byte (SyxExecState *es, syx_uint16 byte)
 {
-  syx_uint8 command, argument;
+  syx_uint16 command, argument;
   static SyxInterpreterFunc handlers[] =
     {
       syx_interp_push_instance,
@@ -371,8 +371,8 @@ _syx_interp_execute_byte (SyxExecState *es, syx_uint8 byte)
   SyxInterpreterFunc handler;
   syx_bool res;
 
-  command = byte >> 4;
-  argument = byte & 0x0F;
+  command = byte >> 8;
+  argument = byte & 0xFF;
 
   if (command == SYX_BYTECODE_EXTENDED)
     {
@@ -416,8 +416,8 @@ syx_exec_state_fetch (SyxExecState *es, SyxOop process)
   es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
   es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
   es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
-  es->bytecodes = (syx_uint8 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
-  es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method));
+  es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
+  es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
   es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
   es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
   es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
@@ -444,7 +444,7 @@ syx_exec_state_free (SyxExecState *es)
 void
 syx_process_execute_scheduled (SyxOop process)
 {
-  syx_uint8 byte;
+  syx_uint16 byte;
   SyxExecState *es;
   
   es = syx_exec_state_new ();
@@ -467,8 +467,9 @@ syx_process_execute_scheduled (SyxOop process)
 void
 syx_process_execute_blocking (SyxOop process)
 {
-  syx_uint8 byte;
+  syx_uint16 byte;
   SyxExecState *es;
+
   syx_processor_active_process = process; // this is a bad fix, will change it later
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
