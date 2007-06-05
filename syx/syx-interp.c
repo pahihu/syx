@@ -8,6 +8,7 @@
 #include "syx-scheduler.h"
 #include "syx-init.h"
 #include "syx-memory.h"
+#include "syx-bytecode.h"
 
 //#define SYX_DEBUG_CONTEXT
 //#define SYX_DEBUG_CONTEXT_STACK
@@ -248,6 +249,91 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   return syx_interp_enter_context (es, context);
 }
 
+SYX_FUNC_INTERPRETER (syx_interp_send_unary)
+{
+  SyxOop class, method, context, receiver;
+  
+  receiver = syx_interp_stack_pop (es);
+
+  switch (argument)
+    {
+    case 0: // isNil
+      syx_interp_stack_push (es, syx_boolean_new (SYX_IS_NIL (receiver)));
+      return TRUE;
+    case 1: // notNil
+      syx_interp_stack_push (es, syx_boolean_new (!SYX_IS_NIL (receiver)));
+      return TRUE;
+    }
+  
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
+
+  if (SYX_IS_NIL (method))
+    g_error ("Class at %p doesn't respond to known unary #%s\n", class, syx_bytecode_unary_messages[argument]);
+
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
+#endif
+
+  context = syx_method_context_new (es->context, method, receiver, syx_array_new_size (0));
+  return syx_interp_enter_context (es, context);
+}
+
+SYX_FUNC_INTERPRETER (syx_interp_send_binary)
+{
+  SyxOop class, method, context, receiver, first_argument, arguments;
+
+  first_argument = syx_interp_stack_pop (es);
+  receiver = syx_interp_stack_pop (es);
+
+  if (argument < 8 && SYX_IS_SMALL_INTEGER(receiver) && SYX_IS_SMALL_INTEGER(first_argument))
+    {
+      switch (argument)
+	{
+	case 0: // +
+	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(receiver) + SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 1: // -
+	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(receiver) - SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 2: // <
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) < SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 3: // >
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) > SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 4: // <=
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) <= SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 5: // >=
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) >= SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 6: // =
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) == SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	case 7: // ~=
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) != SYX_SMALL_INTEGER(first_argument)));
+	  return TRUE;
+	}
+    }
+
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, syx_bytecode_binary_messages[argument]);
+
+  if (SYX_IS_NIL (method))
+    g_error ("Class at %p doesn't respond to known binary #%s\n", class, syx_bytecode_unary_messages[argument]);
+
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_unary_messages[argument]);
+#endif
+
+  arguments = syx_array_new_size (1);
+  SYX_OBJECT_DATA(arguments)[0] = first_argument;
+
+  context = syx_method_context_new (es->context, method, receiver, arguments);
+  return syx_interp_enter_context (es, context);
+}
+
 SYX_FUNC_INTERPRETER (syx_interp_do_primitive)
 {
   SyxPrimitiveEntry *prim_entry;
@@ -364,6 +450,8 @@ _syx_interp_execute_byte (SyxExecState *es, syx_uint16 byte)
       syx_interp_mark_arguments,
       syx_interp_send_message,
       syx_interp_send_super,
+      syx_interp_send_unary,
+      syx_interp_send_binary,
 
       syx_interp_do_primitive,
       syx_interp_do_special

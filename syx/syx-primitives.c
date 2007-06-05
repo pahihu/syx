@@ -424,6 +424,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 #define MAX_PRIMITIVES 42
 
 static SyxPrimitiveEntry primitive_entries[] = {
+  /* Common for objects */
   { "Object_class", Object_class },
   { "Behavior_new", Behavior_new },
   { "Behavior_basicNew", Behavior_basicNew },
@@ -475,10 +476,11 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+
   { NULL }
 };
 
-SyxPrimitiveEntry *
+inline SyxPrimitiveEntry *
 syx_primitive_get_entry (syx_int32 index)
 {
   if (index < MAX_PRIMITIVES)

@@ -511,7 +511,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
   else
     {
       _syx_parser_do_binary_continuation (self, _syx_parser_parse_term (self), FALSE);
-      syx_bytecode_gen_message (self->bytecode, FALSE, 0, syx_symbol_new ("value"));
+      syx_bytecode_gen_message (self->bytecode, FALSE, 0, "value");
     }
 
   self->in_block = block_state;
@@ -577,7 +577,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  token = syx_lexer_next_token (self->lexer);
 	  loopJump = self->bytecode->code_top;
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_DUPLICATE);
-	  syx_bytecode_gen_message (self->bytecode, FALSE, 0, syx_symbol_new ("value"));
+	  syx_bytecode_gen_message (self->bytecode, FALSE, 0, "value");
 	  conditionJump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
 	  syx_bytecode_pop_top (self->bytecode);
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
@@ -603,7 +603,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  token = syx_lexer_get_last_token (self->lexer);
 	}
 
-      syx_bytecode_gen_message (self->bytecode, super_receiver, num_args, syx_symbol_new (selector->str));
+      syx_bytecode_gen_message (self->bytecode, super_receiver, num_args, selector->str);
       g_string_free (selector, TRUE);
       return FALSE;
     }
@@ -613,7 +613,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 static syx_bool
 _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade)
 {
-  SyxOop selector;
+  syx_string selector;
   SyxToken token;
   syx_bool super_term;
 
@@ -622,7 +622,7 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
   token = syx_lexer_get_last_token (self->lexer);
   while (token.type == SYX_TOKEN_BINARY)
     {
-      selector = syx_symbol_new (token.value.string);
+      selector = strdup (token.value.string);
       
       if (do_cascade)
 	save_duplicate_index (self);
@@ -634,6 +634,7 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
       token = syx_lexer_get_last_token (self->lexer);
 
       syx_bytecode_gen_message (self->bytecode, super_receiver, 1, selector);
+      syx_free (selector);
     }
 
   return super_receiver;
@@ -650,7 +651,7 @@ _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx
 	save_duplicate_index (self);
 
       syx_bytecode_gen_message (self->bytecode, super_receiver,
-				0, syx_symbol_new (token.value.string));
+				0, token.value.string);
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);

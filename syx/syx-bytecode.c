@@ -26,6 +26,11 @@ syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment)
   syx_free (bytecode);
 }
 
+syx_symbol syx_bytecode_unary_messages[] = {"isNil", "notNil", "value", "new", "class", "superclass", "print", "printString",
+					    "unity", NULL};
+syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "=", "~=", "at:", "do:", "value:", "valueWithArguments:",
+					     "new:", "to:", "basicAt:", NULL};
+
 void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
@@ -39,15 +44,38 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
 }
 
 void
-syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, SyxOop selector)
+syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
+  syx_size i;
+
+  if (!to_super)
+    {
+      for (i=0; syx_bytecode_unary_messages[i]; i++)
+	{
+	  if (!strcmp (syx_bytecode_unary_messages[i], selector))
+	    {
+	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_UNARY, i);
+	      return;
+	    }
+	}
+
+      for (i=0; syx_bytecode_binary_messages[i]; i++)
+	{
+	  if (!strcmp (syx_bytecode_binary_messages[i], selector))
+	    {
+	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_BINARY, i);
+	      return;
+	    }
+	} 
+    }
+
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_MARK_ARGUMENTS, argument_count);
   if (to_super)
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_SUPER,
-				  syx_bytecode_gen_literal (bytecode, selector));
+				  syx_bytecode_gen_literal (bytecode, syx_symbol_new (selector)));
   else
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_MESSAGE,
-				  syx_bytecode_gen_literal (bytecode, selector));
+				  syx_bytecode_gen_literal (bytecode, syx_symbol_new (selector)));
 }
 
 syx_uint32

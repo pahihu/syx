@@ -1,5 +1,10 @@
 2007-06-05  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx-bytecode.c (syx_bytecode_unary_messages, syx_bytecode_binary_messages): used to avoid memory allocation for well known symbol literals
+	* syx-bytecode.c (syx_bytecode_gen_message): finds any occurrence of the given message into known symbols
+	All calls have been updated
+	* syx-interp.c (syx_interp_send_unary, syx_interp_send_binary): handles and send a common message
+
 	* syx-object.c: removed is_static field not needed at the moment
 	All parts have been updated
 	* syx-init.c (_syx_create_class): changed from FALSE to TRUE the value to be put in has_refs (was a bad mistake)

@@ -6,6 +6,9 @@
 #include "syx-object.h"
 #include "syx-enums.h"
 
+extern syx_symbol syx_bytecode_unary_messages[];
+extern syx_symbol syx_bytecode_binary_messages[];
+
 #define SYX_FUNC_BYTECODE(name,arg)		\
   inline void syx_bytecode_ ## name (SyxBytecode *bytecode, arg)
 
@@ -23,7 +26,7 @@ inline SyxBytecode *syx_bytecode_new (void);
 inline void syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment);
 
 void syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low);
-void syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, SyxOop selector);
+void syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector);
 syx_uint32 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal);
 
 SYX_FUNC_BYTECODE (gen_code, syx_uint16 value);

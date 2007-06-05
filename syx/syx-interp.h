@@ -45,7 +45,7 @@ struct SyxPrimitiveEntry {
   SyxPrimitiveFunc func;
 };
 
-SyxPrimitiveEntry *syx_primitive_get_entry (syx_int32 index);
+inline SyxPrimitiveEntry *syx_primitive_get_entry (syx_int32 index);
 syx_int32 syx_primitive_get_index (syx_symbol name);
 
 /* Interpreter */
@@ -77,11 +77,16 @@ SYX_FUNC_INTERPRETER (syx_interp_push_literal);
 SYX_FUNC_INTERPRETER (syx_interp_push_constant);
 SYX_FUNC_INTERPRETER (syx_interp_push_global);
 SYX_FUNC_INTERPRETER (syx_interp_push_array);
+
 SYX_FUNC_INTERPRETER (syx_interp_assign_instance);
 SYX_FUNC_INTERPRETER (syx_interp_assign_temporary);
+
 SYX_FUNC_INTERPRETER (syx_interp_mark_arguments);
 SYX_FUNC_INTERPRETER (syx_interp_send_message);
 SYX_FUNC_INTERPRETER (syx_interp_send_super);
+SYX_FUNC_INTERPRETER (syx_interp_send_unary);
+SYX_FUNC_INTERPRETER (syx_interp_send_binary);
+
 SYX_FUNC_INTERPRETER (syx_interp_do_primitive);
 SYX_FUNC_INTERPRETER (syx_interp_do_special);
 
