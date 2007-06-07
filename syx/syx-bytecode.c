@@ -34,13 +34,13 @@ syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "="
 void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
-  if (low > 0xFF)
+  if (low > SYX_BYTECODE_ARGUMENT_MAX)
     {
       syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_EXTENDED, high);
       syx_bytecode_gen_code (bytecode, low);
     }
   else
-    syx_bytecode_gen_code (bytecode, high * 256 + low);
+    syx_bytecode_gen_code (bytecode, (high << SYX_BYTECODE_ARGUMENT_BITS) + low);
 }
 
 void
@@ -164,8 +164,8 @@ SYX_FUNC_BYTECODE (assign_instance, syx_uint16 instance_index)
 
 SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
 {
-  syx_uint8 instruction = SYX_BYTECODE_DO_SPECIAL * 256 + SYX_BYTECODE_DUPLICATE;
-  memmove (bytecode->code + index + 1, bytecode->code + index, 0xFFFF - index);
+  syx_uint8 instruction = (SYX_BYTECODE_DO_SPECIAL << SYX_BYTECODE_ARGUMENT_BITS) + SYX_BYTECODE_DUPLICATE;
+  memmove (bytecode->code + index + 1, bytecode->code + index, SYX_BYTECODE_MAX - index);
   bytecode->code[index] = instruction;
 }
 

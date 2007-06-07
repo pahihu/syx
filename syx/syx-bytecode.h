@@ -4,7 +4,21 @@
 #include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
-#include "syx-enums.h"
+
+/*!
+  Binary representation of a bytecode. Command is b while the argument is k.
+  
+  bbbbbkkk kkkkkkkk
+*/
+
+#define SYX_BYTECODE_BITS 16
+#define SYX_BYTECODE_MAX ((1 << SYX_BYTECODE_BITS) - 1)
+#define SYX_BYTECODE_COMMAND_BITS 5
+#define SYX_BYTECODE_COMMAND_MAX ((1 << SYX_BYTECODE_COMMAND_BITS) - 1)
+#define SYX_BYTECODE_COMMAND_MASK (SYX_BYTECODE_COMMAND_MAX << (SYX_BYTECODE_BITS - SYX_BYTECODE_COMMAND_BITS))
+#define SYX_BYTECODE_ARGUMENT_BITS (SYX_BYTECODE_BITS - SYX_BYTECODE_COMMAND_BITS)
+#define SYX_BYTECODE_ARGUMENT_MAX ((1 << SYX_BYTECODE_ARGUMENT_BITS) - 1)
+#define SYX_BYTECODE_ARGUMENT_MASK (SYX_BYTECODE_ARGUMENT_MAX)
 
 extern syx_symbol syx_bytecode_unary_messages[];
 extern syx_symbol syx_bytecode_binary_messages[];
@@ -15,9 +29,9 @@ extern syx_symbol syx_bytecode_binary_messages[];
 typedef struct SyxBytecode SyxBytecode;
 
 struct SyxBytecode {
-  syx_uint16 code[0x10000];
+  syx_uint16 code[SYX_BYTECODE_MAX + 1];
   syx_uint16 code_top;
-  SyxOop literals[0x10000];
+  SyxOop literals[SYX_BYTECODE_MAX + 1];
   syx_uint16 literals_top;
   syx_int32 stack_size;
 };

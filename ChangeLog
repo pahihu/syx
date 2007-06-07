@@ -1,3 +1,10 @@
+2007-06-07  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx-primitives.c (BlockContext_asContext, BlockContext_valueWithArguments): copy the array to avoid memory leaks
+	* syx-object.h (SYX_METHOD_PRIMITIVE): added
+	* syx-interp.c, syx-parser.c: removed do_primitive bytecode to
+	inline primitive calls
+
 2007-06-05  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx-bytecode.c (syx_bytecode_unary_messages, syx_bytecode_binary_messages): used to avoid memory allocation for well known symbol literals

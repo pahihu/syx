@@ -7,7 +7,7 @@
 
 SyxObject *syx_memory;
 static SyxOop *_syx_freed_memory = NULL;
-static syx_size _syx_memory_size = 10000;
+static syx_size _syx_memory_size = 100000;
 static syx_size _syx_memory_top = 0;
 static syx_size _syx_freed_memory_top = 0;
 static syx_pointer _syx_empty_memory = NULL;

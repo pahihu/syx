@@ -104,8 +104,8 @@ main (int argc, char *argv[])
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
   puts ("- Test loops");
-  ret_obj = _interpret ("method | var | var := 0. 1 to: 500 do: [:i | var := i]. ^var");
-  assert (SYX_SMALL_INTEGER(ret_obj) == 500);
+  ret_obj = _interpret ("method | var | var := 0. 1 to: 10000 do: [:i | var := i]. ^var");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 10000);
 
   return 0;
 }

@@ -97,6 +97,7 @@ syx_parser_parse (SyxParser *self, GError **error)
 
   _syx_parser_parse_message_pattern (self);
 
+  SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-1);
   if (!self->in_block)
     _syx_parser_parse_primitive (self);
 
@@ -313,7 +314,7 @@ _syx_parser_parse_primitive (SyxParser *self)
     g_error ("expected >");
   syx_token_free (token);
 
-  syx_bytecode_gen_instruction (self->bytecode, SYX_BYTECODE_DO_PRIMITIVE, prim_index);
+  SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
   
   syx_lexer_next_token (self->lexer);
   return;

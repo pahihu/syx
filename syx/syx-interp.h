@@ -23,7 +23,8 @@ struct SyxExecState
   syx_int32 ip, sp;
 
   SyxOop message_receiver;
-  SyxOop message_arguments;
+  SyxOop *message_arguments;
+  syx_varsize message_arguments_count;
 };
 
 #define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
@@ -32,6 +33,8 @@ inline void syx_exec_state_save (SyxExecState *es);
 void syx_exec_state_free (SyxExecState *es);
 
 /* Primitives */
+
+#define SYX_PRIMITIVES_MAX 42
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -50,10 +53,10 @@ syx_int32 syx_primitive_get_index (syx_symbol name);
 
 /* Interpreter */
 
-typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint8 argument);
+typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint16 argument);
 #define SYX_FUNC_INTERPRETER(name)		\
   syx_bool					\
-  name (SyxExecState *es, syx_uint8 argument)
+  name (SyxExecState *es, syx_uint16 argument)
 
 inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxOop context);
 inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxOop context);
@@ -62,6 +65,7 @@ inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop re
 inline void syx_interp_stack_push (SyxExecState *es, SyxOop object);
 inline SyxOop syx_interp_stack_pop (SyxExecState *es);
 inline SyxOop syx_interp_stack_peek (SyxExecState *es);
+inline syx_bool syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive);
 
 /* Process execution */
 
@@ -87,7 +91,6 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super);
 SYX_FUNC_INTERPRETER (syx_interp_send_unary);
 SYX_FUNC_INTERPRETER (syx_interp_send_binary);
 
-SYX_FUNC_INTERPRETER (syx_interp_do_primitive);
 SYX_FUNC_INTERPRETER (syx_interp_do_special);
 
 #endif /* SYX_INTERP_H */

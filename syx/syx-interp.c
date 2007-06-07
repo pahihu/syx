@@ -83,6 +83,20 @@ syx_interp_enter_context (SyxExecState *es, SyxOop context)
   return syx_interp_swap_context (es, context);
 }
 
+inline syx_bool
+syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive)
+{
+  SyxPrimitiveEntry *prim_entry;
+
+  prim_entry = syx_primitive_get_entry (primitive);
+
+#ifdef SYX_DEBUG_BYTECODE
+  g_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
+#endif
+
+  return prim_entry->func (es);
+}
+
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
 #ifdef SYX_DEBUG_BYTECODE
@@ -201,9 +215,10 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   g_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
-  es->message_arguments = syx_array_new_size (argument);
+  es->message_arguments_count = argument;
+  es->message_arguments = syx_calloc (argument, sizeof (SyxOop));
   for (i=argument - 1; i >= 0; i--)
-    SYX_OBJECT_DATA(es->message_arguments)[i] = syx_interp_stack_pop (es);
+    es->message_arguments[i] = syx_interp_stack_pop (es);
 
   es->message_receiver = syx_interp_stack_pop (es);
 
@@ -213,7 +228,9 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   syx_symbol selector;
+  syx_bool res;
   SyxOop class, method, context;
+  syx_int16 primitive;
 
   selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
   class = syx_object_get_class (es->message_receiver);
@@ -225,14 +242,25 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   g_debug ("BYTECODE - Send message #%s\n", selector);
 #endif
 
-  context = syx_method_context_new (es->context, method, es->message_receiver, es->message_arguments);
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    {
+      res = syx_interp_call_primitive (es, primitive);
+      syx_free (es->message_arguments);
+      return res;
+    }
+
+  context = syx_method_context_new (es->context, method, es->message_receiver,
+				    syx_array_new (es->message_arguments_count, es->message_arguments));
   return syx_interp_enter_context (es, context);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   syx_symbol selector;
+  syx_bool res;
   SyxOop class, method, context;
+  syx_int16 primitive;
 
   selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
   class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver));
@@ -245,27 +273,37 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   g_debug ("BYTECODE - Send message #%s to super\n", selector);
 #endif
 
-  context = syx_method_context_new (es->context, method, es->message_receiver, es->message_arguments);
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    {
+      res = syx_interp_call_primitive (es, primitive);
+      syx_free (es->message_arguments);
+      return res;
+    }
+
+  context = syx_method_context_new (es->context, method, es->message_receiver,
+				    syx_array_new (es->message_arguments_count, es->message_arguments));
   return syx_interp_enter_context (es, context);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 {
-  SyxOop class, method, context, receiver;
+  SyxOop class, method, context;
+  syx_int32 primitive;
   
-  receiver = syx_interp_stack_pop (es);
+  es->message_receiver = syx_interp_stack_pop (es);
 
   switch (argument)
     {
     case 0: // isNil
-      syx_interp_stack_push (es, syx_boolean_new (SYX_IS_NIL (receiver)));
+      syx_interp_stack_push (es, syx_boolean_new (SYX_IS_NIL (es->message_receiver)));
       return TRUE;
     case 1: // notNil
-      syx_interp_stack_push (es, syx_boolean_new (!SYX_IS_NIL (receiver)));
+      syx_interp_stack_push (es, syx_boolean_new (!SYX_IS_NIL (es->message_receiver)));
       return TRUE;
     }
   
-  class = syx_object_get_class (receiver);
+  class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
 
   if (SYX_IS_NIL (method))
@@ -275,49 +313,54 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   g_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
 #endif
 
-  context = syx_method_context_new (es->context, method, receiver, syx_array_new_size (0));
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    return syx_interp_call_primitive (es, primitive);
+
+  context = syx_method_context_new (es->context, method, es->message_receiver, syx_array_new_size (0));
   return syx_interp_enter_context (es, context);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
-  SyxOop class, method, context, receiver, first_argument, arguments;
+  SyxOop class, method, context, first_argument, arguments;
+  syx_int16 primitive;
 
   first_argument = syx_interp_stack_pop (es);
-  receiver = syx_interp_stack_pop (es);
+  es->message_receiver = syx_interp_stack_pop (es);
 
-  if (argument < 8 && SYX_IS_SMALL_INTEGER(receiver) && SYX_IS_SMALL_INTEGER(first_argument))
+  if (argument < 8 && SYX_IS_SMALL_INTEGER(es->message_receiver) && SYX_IS_SMALL_INTEGER(first_argument))
     {
       switch (argument)
 	{
 	case 0: // +
-	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(receiver) + SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(es->message_receiver) + SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 1: // -
-	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(receiver) - SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_small_integer_new (SYX_SMALL_INTEGER(es->message_receiver) - SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 2: // <
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) < SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) < SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 3: // >
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) > SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) > SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 4: // <=
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) <= SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) <= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 5: // >=
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) >= SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) >= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 6: // =
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) == SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) == SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	case 7: // ~=
-	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(receiver) != SYX_SMALL_INTEGER(first_argument)));
+	  syx_interp_stack_push (es, syx_boolean_new (SYX_SMALL_INTEGER(es->message_receiver) != SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	}
     }
 
-  class = syx_object_get_class (receiver);
+  class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_binary_messages[argument]);
 
   if (SYX_IS_NIL (method))
@@ -327,26 +370,18 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_unary_messages[argument]);
 #endif
 
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    {
+      es->message_arguments = &first_argument;
+      return syx_interp_call_primitive (es, primitive);
+    }
+
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = first_argument;
 
-  context = syx_method_context_new (es->context, method, receiver, arguments);
+  context = syx_method_context_new (es->context, method, es->message_receiver, arguments);
   return syx_interp_enter_context (es, context);
-}
-
-SYX_FUNC_INTERPRETER (syx_interp_do_primitive)
-{
-  SyxPrimitiveEntry *prim_entry;
-
-  prim_entry = syx_primitive_get_entry (argument);
-  if (!prim_entry)
-    g_error ("can't find primitive number %d\n", argument);
-
-#ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Do primitive %d (%s)\n", argument, prim_entry->name);
-#endif
-
-  return prim_entry->func (es);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_do_special)
@@ -453,23 +488,19 @@ _syx_interp_execute_byte (SyxExecState *es, syx_uint16 byte)
       syx_interp_send_unary,
       syx_interp_send_binary,
 
-      syx_interp_do_primitive,
       syx_interp_do_special
     };
   SyxInterpreterFunc handler;
   syx_bool res;
 
-  command = byte >> 8;
-  argument = byte & 0xFF;
+  command = (byte & SYX_BYTECODE_COMMAND_MASK) >> SYX_BYTECODE_ARGUMENT_BITS;
+  argument = byte & SYX_BYTECODE_ARGUMENT_MASK;
 
   if (command == SYX_BYTECODE_EXTENDED)
     {
       command = argument;
       argument = _syx_interp_get_next_byte (es);
     }
-
-  if (command > SYX_BYTECODE_EXTENDED)
-    g_error ("unsupported bytecode: %d\n", command);
 
   handler = handlers[command];
 

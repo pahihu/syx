@@ -53,10 +53,10 @@ Object subclass: #Process
        instanceVariableNames: 'context suspended returnedObject next scheduled'!
 
 OrderedCollection subclass: #CompiledCode
-		  instanceVariableNames: ''!
+		  instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize'!
+	     instanceVariableNames: ''!
 
 CompiledMethod subclass: #CompiledBlock
 	     instanceVariableNames: 'argumentsTop'!
