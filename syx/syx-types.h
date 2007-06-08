@@ -57,7 +57,7 @@ union SyxOop
   struct
   {
     syx_int32 value : 31;
-    SyxType type : 1;
+    syx_bool type : 1;
   } i;
 
   syx_int32 idx;

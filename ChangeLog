@@ -1,4 +1,17 @@
+2007-06-08  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx-primitives.c (BlockClosure_newProcess): ovverride parent context with nil
+
 2007-06-07  Luca Bruno  <lethalman88@gmail.com>
+	    
+	* syx-scheduler.c, syx-interp.c: fixed the process scheduler
+	
+	* syx-interp.c (syx_interp_do_primitive): removed
+	* syx-interp.c (syx_interp_call_primitive): added
+	* syx-primitives.c (SYX_PRIM_FAIL): added
+	* syx-primitives.c (SyxPrimitiveFunc): added the method containing the primitive call as argument
+	* syx-scheduler.c (syx_processor_first_process): added
+	Added as instance variable
 
 	* syx-primitives.c (BlockContext_asContext, BlockContext_valueWithArguments): copy the array to avoid memory leaks
 	* syx-object.h (SYX_METHOD_PRIMITIVE): added

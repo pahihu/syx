@@ -108,7 +108,7 @@ _syx_lexer_token_character (SyxLexer *self, SyxToken *token, syx_char lastChar)
 static void
 _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_char sstr[256] = {0};;
+  syx_char sstr[256] = {0};
   syx_string str = sstr;
 
   while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))

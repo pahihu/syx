@@ -78,7 +78,7 @@ Exception subclass: #Error
 "Management"
 
 Object subclass: #ProcessorScheduler
-       instanceVariableNames: 'byteslice activeProcess'!
+       instanceVariableNames: 'byteslice firstProcess activeProcess'!
 
 Object subclass: #ObjectMemory
        instanceVariableNames: ''!

@@ -10,11 +10,11 @@
 #include "syx-memory.h"
 #include "syx-bytecode.h"
 
-//#define SYX_DEBUG_CONTEXT
-//#define SYX_DEBUG_CONTEXT_STACK
-//#define SYX_DEBUG_BYTECODE
-//#define SYX_DEBUG_TRACE_IP
-//#define SYX_DEBUG_BYTECODE_PROFILE
+/* #define SYX_DEBUG_CONTEXT */
+/* #define SYX_DEBUG_CONTEXT_STACK */
+/* #define SYX_DEBUG_BYTECODE */
+/* #define SYX_DEBUG_TRACE_IP */
+/* #define SYX_DEBUG_BYTECODE_PROFILE */
 
 static syx_uint16 _syx_interp_get_next_byte (SyxExecState *es);
 
@@ -46,7 +46,7 @@ inline syx_bool
 syx_interp_swap_context (SyxExecState *es, SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Swap context %p with new %p\n", es->context, context);
+  g_debug ("CONTEXT - Swap context %p with new %p\n", SYX_OOP_CAST_POINTER (es->context), SYX_OOP_CAST_POINTER (context));
 #endif
   es->context = context;
   syx_exec_state_save (es);
@@ -60,7 +60,7 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx
   SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
-	   return_object, use_return_context);
+	   SYX_OOP_CAST_POINTER (return_object), use_return_context);
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
@@ -80,12 +80,20 @@ syx_interp_enter_context (SyxExecState *es, SyxOop context)
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Enter context\n");
 #endif
+
+  es->byteslice--; // incremented by "mark arguments" bytecode
   return syx_interp_swap_context (es, context);
 }
 
 inline syx_bool
-syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive)
+syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive, SyxOop method)
 {
+  // yield
+  if (primitive == 0)
+    {
+      syx_interp_stack_push (es, es->receiver);
+      return FALSE;
+    }
   SyxPrimitiveEntry *prim_entry;
 
   prim_entry = syx_primitive_get_entry (primitive);
@@ -94,7 +102,7 @@ syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive)
   g_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
 #endif
 
-  return prim_entry->func (es);
+  return prim_entry->func (es, method);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
@@ -221,6 +229,7 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
     es->message_arguments[i] = syx_interp_stack_pop (es);
 
   es->message_receiver = syx_interp_stack_pop (es);
+  es->byteslice++; // be sure we send the message
 
   return TRUE;
 }
@@ -236,7 +245,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    g_error ("Class at %p doesn't respond to #%s\n", class, selector);
+    g_error ("Class at %p doesn't respond to #%s\n", SYX_OOP_CAST_POINTER (class), selector);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Send message #%s\n", selector);
@@ -245,7 +254,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     {
-      res = syx_interp_call_primitive (es, primitive);
+      res = syx_interp_call_primitive (es, primitive, method);
       syx_free (es->message_arguments);
       return res;
     }
@@ -267,7 +276,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   method = syx_class_lookup_method (class, selector);
 
   if (SYX_IS_NIL (method))
-    g_error ("Superclass at %p doesn't respond to #%s\n", class, selector);
+    g_error ("Superclass at %p doesn't respond to #%s\n", SYX_OOP_CAST_POINTER (class), selector);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Send message #%s to super\n", selector);
@@ -276,7 +285,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     {
-      res = syx_interp_call_primitive (es, primitive);
+      res = syx_interp_call_primitive (es, primitive, method);
       syx_free (es->message_arguments);
       return res;
     }
@@ -307,7 +316,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
 
   if (SYX_IS_NIL (method))
-    g_error ("Class at %p doesn't respond to known unary #%s\n", class, syx_bytecode_unary_messages[argument]);
+    g_error ("Class at %p doesn't respond to known unary #%s\n", SYX_OOP_CAST_POINTER (class), syx_bytecode_unary_messages[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
@@ -315,7 +324,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-    return syx_interp_call_primitive (es, primitive);
+    return syx_interp_call_primitive (es, primitive, method);
 
   context = syx_method_context_new (es->context, method, es->message_receiver, syx_array_new_size (0));
   return syx_interp_enter_context (es, context);
@@ -364,7 +373,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   method = syx_class_lookup_method (class, syx_bytecode_binary_messages[argument]);
 
   if (SYX_IS_NIL (method))
-    g_error ("Class at %p doesn't respond to known binary #%s\n", class, syx_bytecode_unary_messages[argument]);
+    g_error ("Class at %p doesn't respond to known binary #%s\n", SYX_OOP_CAST_POINTER (class), syx_bytecode_unary_messages[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_unary_messages[argument]);
@@ -374,7 +383,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     {
       es->message_arguments = &first_argument;
-      return syx_interp_call_primitive (es, primitive);
+      return syx_interp_call_primitive (es, primitive, method);
     }
 
   arguments = syx_array_new_size (1);
@@ -452,8 +461,6 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 
   return TRUE;
 }
-
-#define _syx_interp_should_yield(es) (es->ip >= es->bytecodes_count || es->byteslice <= 0)
 
 static syx_uint16
 _syx_interp_get_next_byte (SyxExecState *es)
@@ -569,14 +576,12 @@ syx_process_execute_scheduled (SyxOop process)
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
 
-  while (!_syx_interp_should_yield (es))
+  while (es->ip < es->bytecodes_count && es->byteslice >= 0)
     {
       byte = _syx_interp_get_next_byte (es);
       if (!_syx_interp_execute_byte (es, byte))
-	{
-	  syx_exec_state_save (es);
-	  return;
-	}
+	break;
+      es->byteslice--;
     }
 
   syx_exec_state_save (es);
@@ -589,7 +594,6 @@ syx_process_execute_blocking (SyxOop process)
   syx_uint16 byte;
   SyxExecState *es;
 
-  syx_processor_active_process = process; // this is a bad fix, will change it later
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
 

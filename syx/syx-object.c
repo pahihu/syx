@@ -268,6 +268,7 @@ syx_process_new (SyxOop context)
   SyxOop object = syx_object_new (syx_process_class,  TRUE);
   SYX_PROCESS_CONTEXT(object) = context;
   SYX_PROCESS_SUSPENDED(object) = SYX_TRUE;
+  SYX_PROCESS_SCHEDULED(object) = SYX_FALSE;
   syx_scheduler_add_process (object);
   return object;
 }

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "syx-types.h"
 #include "syx-object.h"
+#include "syx-enums.h"
 #include "syx-scheduler.h"
 #include "syx-parser.h"
 #include "syx-lexer.h"
@@ -16,6 +17,12 @@
   syx_interp_stack_push (es, object);					\
   return TRUE
 
+#define SYX_PRIM_FAIL							\
+  syx_interp_enter_context (es,						\
+			    syx_method_context_new (es->context, method, es->message_receiver, \
+						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
+  return FALSE
+
 inline SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
@@ -23,6 +30,12 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 				SYX_BLOCK_CLOSURE_BLOCK (es->message_receiver),
 				arguments,
 				SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
+}
+
+SYX_FUNC_PRIMITIVE (Processor_yield)
+{
+  syx_interp_stack_push (es, es->receiver);
+  return FALSE;
 }
 
 SYX_FUNC_PRIMITIVE (Behavior_new)
@@ -133,6 +146,8 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SyxOop proc;
 
   ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
+  SYX_METHOD_CONTEXT_PARENT (ctx) = SYX_NIL;
+
   SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = SYX_NIL;
   proc = syx_process_new (ctx);
 
@@ -221,13 +236,13 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 
 /* File streams */
 
-static gboolean
-_channel_watcher (GIOChannel *channel, GIOCondition condition, syx_pointer data)
-{
-  /*  SyxOop semaphore = SYX_POINTER(data);
-      syx_semaphore_signal (semaphore);*/
-  return FALSE;
-}
+/* static gboolean */
+/* _channel_watcher (GIOChannel *channel, GIOCondition condition, syx_pointer data) */
+/* { */
+/*   /\*  SyxOop semaphore = SYX_POINTER(data); */
+/*       syx_semaphore_signal (semaphore);*\/ */
+/*   return FALSE; */
+/* } */
 
 SYX_FUNC_PRIMITIVE (FileStream_new)
 {
@@ -426,6 +441,8 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 }
 
 static SyxPrimitiveEntry primitive_entries[] = {
+  { "Processor_yield", Processor_yield },
+
   /* Common for objects */
   { "Object_class", Object_class },
   { "Behavior_new", Behavior_new },

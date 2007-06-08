@@ -20,12 +20,12 @@ context: aContext
 
 suspend
 	suspended := true.
-	self isActive ifTrue: [self yield]
+	self isActive ifTrue: [Processor yield]
 !
 
 resume
 	suspended := false.
-	self isActive ifFalse: [Processor activeProcess yield]
+	self isActive ifFalse: [Processor yield]
 !
 
 terminate

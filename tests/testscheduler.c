@@ -20,8 +20,7 @@ main (int argc, char *argv[])
   parser = syx_parser_new (lexer, method, NULL);			\
   assert (syx_parser_parse (parser, &error) == TRUE);			\
   context = syx_method_context_new (SYX_NIL, method, SYX_NIL, syx_array_new (0, NULL)); \
-  process = syx_process_new (context);					\
-  syx_scheduler_add_process (process);
+  process = syx_process_new (context)
 
   timer = g_timer_new ();
 
@@ -32,7 +31,8 @@ main (int argc, char *argv[])
 	     "['Process 1' print. 'Process 1' print.'Process 1' print.'Process 1' print.'Process 1' print. 'Process 1' print] fork."\
 	     "['Process 2' print. 'Process 2' print.'Process 2' print.'Process 2' print.'Process 2' print. 'Process 2' print] fork."\
 	     "['Process 3' print. 'Process 3' print.'Process 3' print.'Process 3' print.'Process 3' print. 'Process 3' print] fork");
-  //  g_assert (g_slist_length (syx_scheduler_get_processes ()) == 3);
+
+  SYX_PROCESS_SUSPENDED(process) = SYX_FALSE;
 
   g_timer_start (timer);
   syx_scheduler_run ();

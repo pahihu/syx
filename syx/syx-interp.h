@@ -34,12 +34,12 @@ void syx_exec_state_free (SyxExecState *es);
 
 /* Primitives */
 
-#define SYX_PRIMITIVES_MAX 42
+#define SYX_PRIMITIVES_MAX 43
 
-typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es);
+typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
   syx_bool								\
-  name (SyxExecState *es)
+  name (SyxExecState *es, SyxOop method)
 
 typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;
 
@@ -65,7 +65,7 @@ inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop re
 inline void syx_interp_stack_push (SyxExecState *es, SyxOop object);
 inline SyxOop syx_interp_stack_pop (SyxExecState *es);
 inline SyxOop syx_interp_stack_peek (SyxExecState *es);
-inline syx_bool syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive);
+inline syx_bool syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive, SyxOop method);
 
 /* Process execution */
 

@@ -2,6 +2,7 @@ Major:
 - Implement coalesced hash tables with consistent hash functions
 - Garbage collector
 - Create an image format and implement it
+- Replace GMainLoop with a new loop system
 
 Minor:
 - Add --enable-debug and --enable-optimization

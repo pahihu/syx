@@ -156,8 +156,6 @@ syx_build_basic (void)
   syx_object_set_class (syx_false, syx_globals_at ("False"));
 
   syx_scheduler_init ();
-  syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);
-  
 }
 /*
 void

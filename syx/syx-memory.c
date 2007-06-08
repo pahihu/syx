@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <glib.h>
+#include <stdio.h>
 #include "syx-object.h"
 #include "syx-memory.h"
 #include "syx-scheduler.h"
@@ -153,7 +154,7 @@ syx_memory_gc (void)
 
 #ifdef DEBUG_GC
   reclaimed = _syx_freed_memory_top - old_top;
-  printf("GC: reclaimed %ld (%d%%) objects over %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
+  printf("GC: reclaimed %ld (%ld%%) objects over %ld\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
 #endif
 }
 
