@@ -46,7 +46,7 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
 void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
-  syx_size i;
+  syx_int16 i;
 
   if (!to_super)
     {

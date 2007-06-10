@@ -13,6 +13,7 @@ TESTS = 			\
 	testcoldparser		\
 	testinstances		\
 	testparser		\
+	testimage		\
 	testinterp		\
 	testscheduler		\
 	testplugin
@@ -22,6 +23,7 @@ noinst_PROGRAMS =		\
 	testcoldparser		\
 	testinstances		\
 	testparser		\
+	testimage		\
 	testinterp		\
 	testscheduler		\
 	testplugin
@@ -32,6 +34,7 @@ testinstances_DEPENDENCIES = $(TEST_DEPS)
 testparser_DEPENDENCIES = $(TEST_DEPS)
 testinterp_DEPENDENCIES = $(TEST_DEPS)
 testscheduler_DEPENDENCIES = $(TEST_DEPS)
+testimage_DEPENDENCIES = $(TEST_DEPS)
 testplugin_DEPENDENCIES = $(TEST_DEPS)
 
 testlexer_LDADD = $(LDADDS)
@@ -40,6 +43,7 @@ testinstances_LDADD = $(LDADDS)
 testparser_LDADD = $(LDADDS)
 testinterp_LDADD = $(LDADDS)
 testscheduler_LDADD = $(LDADDS)
+testimage_LDADD = $(LDADDS)
 testplugin_LDADD = $(LDADDS)
 
 testlexer_SOURCES = testlexer.c
@@ -48,4 +52,5 @@ testinstances_SOURCES = testinstances.c
 testparser_SOURCES = testparser.c
 testinterp_SOURCES = testinterp.c
 testscheduler_SOURCES = testscheduler.c
+testimage_SOURCES = testimage.c
 testplugin_SOURCES = testplugin.c

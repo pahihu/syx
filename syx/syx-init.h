@@ -4,8 +4,15 @@
 #include "syx-types.h"
 #include "syx-object.h"
 
+#define SYX_INIT_MEMORY_SIZE 100000
+
 void syx_init (syx_symbol root_path);
+void syx_quit (void);
 void syx_build_basic (void);
+void syx_fetch_basic (void);
+
+syx_bool syx_save_image (syx_symbol path);
+syx_bool syx_load_image (syx_symbol path);
 
 syx_string syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename);
 syx_symbol syx_get_root_path (void);

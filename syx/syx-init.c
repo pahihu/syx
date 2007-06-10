@@ -12,8 +12,8 @@
 
 static syx_symbol _syx_root_path;
 
-static void file_in_basic (void);
-syx_string find_file (syx_symbol package, syx_symbol filename);
+static void _syx_file_in_basic (void);
+static void _syx_file_in_basic_decl (void);
 
 syx_string 
 syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
@@ -41,7 +41,7 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 }
 
 static void
-file_in_basic_decl (void)
+_syx_file_in_basic_decl (void)
 {
   syx_string full_filename;
 
@@ -51,7 +51,7 @@ file_in_basic_decl (void)
 }
 
 static void
-file_in_basic (void)
+_syx_file_in_basic (void)
 {
   syx_symbol *filename;
   syx_string full_filename;
@@ -94,8 +94,13 @@ syx_build_basic (void)
 {
   SyxOop Object, Behavior, Class;
 
-#define CREATE_CLASS(instanceSize)		\
-  SYX_CLASS_INSTANCE_SIZE(class) = syx_small_integer_new (instanceSize)
+  syx_memory_clear ();
+  syx_memory_init (SYX_INIT_MEMORY_SIZE);
+
+  /* allocate constants */
+  syx_nil = syx_memory_alloc ();
+  syx_true = syx_memory_alloc ();
+  syx_false = syx_memory_alloc ();
 
   /* create raw instances of basic classes */
   Object = _syx_create_class (SYX_DATA_OBJECT_ALL);
@@ -138,7 +143,31 @@ syx_build_basic (void)
   SETUP_CLASS ("Array", syx_array_class, Object);
   SETUP_CLASS ("Link", syx_link_class, Object);
   SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
-  file_in_basic_decl ();
+
+  _syx_file_in_basic_decl ();
+
+  syx_fetch_basic ();
+  _syx_file_in_basic ();
+
+  syx_scheduler_init ();
+}
+
+void
+syx_fetch_basic (void)
+{
+  syx_nil.idx = 0;
+  syx_true.idx = 1;
+  syx_false.idx = 2;
+
+  syx_metaclass_class = syx_globals_at ("Metaclass");
+  syx_symbol_class = syx_globals_at ("Symbol");
+  syx_string_class = syx_globals_at ("String");
+  syx_small_integer_class = syx_globals_at ("SmallInteger");
+  syx_character_class = syx_globals_at ("Character");
+  syx_byte_array_class = syx_globals_at ("ByteArray");
+  syx_array_class = syx_globals_at ("Array");
+  syx_link_class = syx_globals_at ("Link");
+  syx_dictionary_class = syx_globals_at ("Dictionary");
 
   syx_compiled_method_class = syx_globals_at ("CompiledMethod");
   syx_compiled_block_class = syx_globals_at ("CompiledBlock");
@@ -147,16 +176,13 @@ syx_build_basic (void)
   syx_block_context_class = syx_globals_at ("BlockContext");
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
-  file_in_basic ();
-
   syx_link_class = syx_globals_at ("Link");
 
   syx_object_set_class (syx_nil, syx_globals_at ("UndefinedObject"));
   syx_object_set_class (syx_true, syx_globals_at ("True"));
   syx_object_set_class (syx_false, syx_globals_at ("False"));
-
-  syx_scheduler_init ();
 }
+
 /*
 void
 syx_init_basic_streams (void)
@@ -188,9 +214,13 @@ syx_init (syx_symbol root_path)
   if (initialized || !root_path || !syx_set_root_path (root_path))
     return;
 
-  syx_memory_init ();
-  
   initialized = TRUE;
+}
+
+void
+syx_quit (void)
+{
+  syx_memory_clear ();
 }
 
 syx_symbol 

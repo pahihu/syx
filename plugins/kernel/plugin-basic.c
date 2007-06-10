@@ -9,4 +9,5 @@ syxvm_new (GSList *arguments, GError **error)
 
   instance = syx_instance_new_class (class);
   return instance;*/
+  return NULL;
 }

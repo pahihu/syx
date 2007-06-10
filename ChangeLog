@@ -1,3 +1,19 @@
+2007-06-10  Luca Bruno  <lethalman88@gmail.com>
+
+	* tests/testimage.c: added
+
+	* syx/syx-interp.c: use transactions when creating new method contexts
+
+	* syx/syx-memory.c (syx_memory_clear): added, do the inverse of syx_memory_init
+	(syx_memory_free_all): added, free all objects except nil, true and false
+	(syx_memory_save_image): added
+	(syx_memory_load_image): added
+	(syx_memory_init): now specify how many objects must be allocated in the heap
+
+	* syx/syx-init.c (syx_build_basic): splitted to own only image building process
+	(syx_quit): added
+	(syx_fetch_basic): added by splitting syx_build_basic. This function will be used also when loading the image
+
 2007-06-08  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx-primitives.c (BlockClosure_newProcess): ovverride parent context with nil

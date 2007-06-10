@@ -37,7 +37,7 @@ main (int argc, char *argv[])
   SyxOop ret_obj;
 
   syx_init ("..");
-  syx_build_basic ();
+  syx_memory_load_image ("test.sim");
 
   puts ("- Test assignment");
   ret_obj = _interpret ("method | a | ^a := 123");

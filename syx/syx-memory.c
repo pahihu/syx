@@ -6,12 +6,13 @@
 #include "syx-memory.h"
 #include "syx-scheduler.h"
 
+static syx_varsize _syx_memory_size;
 SyxObject *syx_memory;
-static SyxOop *_syx_freed_memory = NULL;
-static syx_size _syx_memory_size = 100000;
-static syx_size _syx_memory_top = 0;
-static syx_size _syx_freed_memory_top = 0;
-static syx_pointer _syx_empty_memory = NULL;
+static SyxOop *_syx_freed_memory;
+static syx_varsize _syx_memory_top = 0;
+static syx_varsize _syx_freed_memory_top = 0;
+
+static syx_bool _syx_memory_initialized = FALSE;
 
 // Holds temporary objects that must not be freed during a transaction
 static SyxOop _syx_memory_gc_trans[256];
@@ -36,20 +37,38 @@ static syx_bool _syx_memory_gc_trans_running = FALSE;
 #define DEBUG_GC
 
 void
-syx_memory_init (void)
+syx_memory_init (syx_varsize mem_size)
 {
-  static syx_bool initialized = FALSE;
-  if (initialized)
+  if (_syx_memory_initialized)
     return;
 
-  syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
-  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
-  _syx_empty_memory = syx_malloc (getpagesize ());
+  _syx_memory_size = mem_size;
 
-  syx_nil = syx_memory_alloc ();
-  syx_true = syx_memory_alloc ();
-  syx_false = syx_memory_alloc ();
-  initialized = TRUE;
+  syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
+  bzero (syx_memory, sizeof (SyxObject) * _syx_memory_size);
+  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
+
+  _syx_memory_initialized = TRUE;
+}
+
+void
+syx_memory_clear (void)
+{
+  if (!_syx_memory_initialized)
+    return;
+
+  syx_varsize i;
+  SyxObject *object = syx_memory;
+
+  for (i=0; i < _syx_memory_size; i++, object++)
+    {
+      if (object->data)
+	syx_free (object->data);
+    }
+
+  syx_free (syx_memory);
+  syx_free (_syx_freed_memory);
+  _syx_memory_initialized = FALSE;
 }
 
 SyxOop
@@ -82,11 +101,29 @@ syx_memory_alloc (void)
 inline void
 syx_memory_free (SyxOop oop)
 {
+  bzero (syx_memory + oop.idx, sizeof (SyxObject));
   _syx_freed_memory[_syx_freed_memory_top++] = oop;
 }
 
+inline void
+syx_memory_free_all (void)
+{
+  syx_varsize i;
+  SyxObject *object = syx_memory;
 
-inline syx_size
+  // skip nil, true and false constants
+  for (i=3; i < _syx_memory_size; i++, object++)
+    {
+      if (object)
+	syx_free (object->data);
+    }
+
+  bzero (syx_memory, sizeof(SyxObject) * _syx_memory_size);
+  _syx_freed_memory_top = 0;
+  _syx_memory_top = 3;
+}
+
+inline syx_varsize
 syx_memory_get_size (void)
 {
   return _syx_memory_size;
@@ -105,7 +142,7 @@ inline void
 _syx_memory_gc_mark (SyxOop object)
 {
   syx_varsize i;
-  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object))
+  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
     return;
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;
@@ -122,12 +159,15 @@ _syx_memory_gc_mark (SyxOop object)
 static void
 _syx_memory_gc_sweep ()
 {
-  syx_size i;
+  syx_varsize i;
   SyxObject *object = syx_memory;
   SyxOop oop;
 
   for (i=0; i < _syx_memory_size; i++, object++)
     {
+      if (SYX_IS_NIL(object->class))
+	continue;
+
       if (object->is_marked)
 	object->is_marked = FALSE;
       else
@@ -145,16 +185,18 @@ inline void
 syx_memory_gc (void)
 {
 #ifdef DEBUG_GC
-  syx_size old_top = _syx_freed_memory_top;
-  syx_size reclaimed;
+  syx_varsize old_top = _syx_freed_memory_top;
+  syx_varsize reclaimed;
 #endif
 
+  SYX_OBJECT_IS_MARKED(syx_symbols) = TRUE;
+  SYX_OBJECT_IS_MARKED(SYX_DICTIONARY_HASH_TABLE(syx_symbols)) = TRUE;
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
 
 #ifdef DEBUG_GC
   reclaimed = _syx_freed_memory_top - old_top;
-  printf("GC: reclaimed %ld (%ld%%) objects over %ld\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
+  printf("GC: reclaimed %d (%d%%) objects over %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
 #endif
 }
 
@@ -177,6 +219,9 @@ syx_memory_gc_end (void)
 {
   syx_int32 i;
 
+  if (!_syx_memory_gc_trans_running)
+    return;
+
   for (i=0; i < _syx_memory_gc_trans_top; i++)
     SYX_OBJECT_IS_MARKED(_syx_memory_gc_trans[i]) = FALSE;
 
@@ -185,7 +230,7 @@ syx_memory_gc_end (void)
 }
 
 inline syx_pointer
-syx_malloc (syx_size size)
+syx_malloc (syx_varsize size)
 {
   syx_pointer ptr;
 
@@ -197,7 +242,7 @@ syx_malloc (syx_size size)
 }
 
 inline syx_pointer
-syx_malloc0 (syx_size size)
+syx_malloc0 (syx_varsize size)
 {
   syx_pointer ptr;
 
@@ -210,7 +255,7 @@ syx_malloc0 (syx_size size)
 }
 
 inline syx_pointer
-syx_calloc (syx_size elements, syx_size element_size)
+syx_calloc (syx_varsize elements, syx_varsize element_size)
 {
   syx_pointer ptr;
 
@@ -222,7 +267,7 @@ syx_calloc (syx_size elements, syx_size element_size)
 }
 
 inline syx_pointer
-syx_realloc (syx_pointer ptr, syx_size size)
+syx_realloc (syx_pointer ptr, syx_varsize size)
 {
   syx_pointer nptr;
 
@@ -239,9 +284,109 @@ syx_freev (syx_pointer *ptrv)
   syx_pointer *ptrv_p = ptrv;
 
   while (*ptrv_p)
-    {
-      syx_free (*ptrv_p);
-      ptrv_p++;
-    }
+    syx_free (*ptrv_p++);
+
   syx_free (ptrv);
+}
+
+syx_bool
+syx_memory_save_image (syx_symbol path)
+{
+  SyxObject *object;
+  syx_varsize i;
+  FILE *image;
+  if (!path)
+    return FALSE;
+
+  object = syx_memory;
+  image = fopen (path, "wb");
+  if (!image)
+    return FALSE;
+  
+  fwrite (&_syx_memory_size, sizeof (syx_varsize), 1, image);
+  fwrite (&_syx_memory_top, sizeof (syx_varsize), 1, image);
+  fwrite (&_syx_freed_memory_top, sizeof (syx_varsize), 1, image);
+  fwrite (_syx_freed_memory, sizeof (SyxOop), _syx_freed_memory_top, image);
+  fwrite (&syx_globals.idx, sizeof (syx_int32), 1, image);
+  fwrite (&syx_symbols.idx, sizeof (syx_int32), 1, image);
+
+  syx_memory_gc ();
+
+  for (i=0; i < _syx_memory_size; i++, object++)
+    {
+      if (SYX_IS_NIL (object->class))
+	continue;
+
+      fwrite (&i, sizeof (syx_int32), 1, image);
+      fwrite (&object->class.idx, sizeof (syx_int32), 1, image);
+      fputc (object->has_refs, image);
+      fwrite (&object->size, sizeof (syx_varsize), 1, image);
+
+      if (object->size > 0)
+	{
+	  if (object->has_refs)
+	    fwrite (object->data, sizeof (SyxOop), object->size, image);
+	  else
+	    fwrite (object->data, sizeof (syx_int8), object->size, image);
+	}
+    }
+
+  return TRUE;
+}
+
+syx_bool
+syx_memory_load_image (syx_symbol path)
+{
+  SyxObject *object;
+  syx_int32 index;
+  FILE *image;
+  syx_varsize mem_size;
+
+  if (!path)
+    return FALSE;
+
+  image = fopen (path, "rb");
+  if (!image)
+    return FALSE;
+
+  fread (&mem_size, sizeof (syx_varsize), 1, image);
+  syx_memory_init (mem_size);
+
+  fread (&_syx_memory_top, sizeof (syx_varsize), 1, image);
+  fread (&_syx_freed_memory_top, sizeof (syx_varsize), 1, image);
+  fread (_syx_freed_memory, sizeof (SyxOop), _syx_freed_memory_top, image);
+  fread (&syx_globals.idx, sizeof (syx_int32), 1, image);
+  fread (&syx_symbols.idx, sizeof (syx_int32), 1, image);
+
+  object = syx_memory;
+
+  while (!feof (image))
+    {
+      fread (&index, sizeof (syx_int32), 1, image);
+      object = syx_memory + index;
+
+      fread (&object->class.idx, sizeof (syx_int32), 1, image);
+      object->has_refs = fgetc (image);
+      fread (&object->size, sizeof (syx_varsize), 1, image);
+      
+      if (object->size > 0)
+	{
+	  if (object->has_refs)
+	    {
+	      object->data = syx_calloc (object->size, sizeof (SyxOop));
+	      fread (object->data, sizeof (SyxOop), object->size, image);
+	    }
+	  else
+	    {
+	      object->data = syx_calloc (object->size, sizeof (syx_int8));
+	      fread (object->data, sizeof (syx_int8), object->size, image);
+	    }
+	}
+	
+    }
+
+  syx_fetch_basic ();
+  syx_scheduler_init ();
+
+  return TRUE;
 }

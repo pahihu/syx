@@ -259,8 +259,10 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
       return res;
     }
 
+  syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver,
 				    syx_array_new (es->message_arguments_count, es->message_arguments));
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, context);
 }
 
@@ -290,8 +292,10 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
       return res;
     }
 
+  syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver,
 				    syx_array_new (es->message_arguments_count, es->message_arguments));
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, context);
 }
 
@@ -326,7 +330,9 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (es, primitive, method);
 
+  syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver, syx_array_new_size (0));
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, context);
 }
 
@@ -386,10 +392,14 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
       return syx_interp_call_primitive (es, primitive, method);
     }
 
+  syx_memory_gc_begin ();
+
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = first_argument;
 
   context = syx_method_context_new (es->context, method, es->message_receiver, arguments);
+
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, context);
 }
 
@@ -430,8 +440,8 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       condition = syx_interp_stack_pop (es);
       jump = _syx_interp_get_next_byte (es);
-      // Check for jump to the other conditional branch
 
+      // Check for jump to the other conditional branch
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))
 	{
 	  syx_interp_stack_push (es, SYX_NIL);

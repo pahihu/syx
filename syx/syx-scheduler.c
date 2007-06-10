@@ -77,7 +77,7 @@ syx_scheduler_run (void)
 
   if (running)
     return;
- 
+
   /*  context = g_main_context_new ();
   main_loop = g_main_loop_new (context, FALSE);
 
