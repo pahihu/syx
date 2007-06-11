@@ -2,7 +2,12 @@
   #include <config.h>
 #endif
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"
@@ -107,7 +112,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
+  syx_memory_gc_begin ();
   SyxOop ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, ctx);
 }
 
@@ -116,9 +123,11 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   SyxOop args;
   SyxOop ctx;
 
+  syx_memory_gc_begin ();
   args = syx_array_new_size (1);
   SYX_OBJECT_DATA(args)[0] = es->message_arguments[0];
   ctx = _syx_block_context_new_from_closure (es, args);
+  syx_memory_gc_end ();
   return syx_interp_enter_context (es, ctx);
 }
   
@@ -146,9 +155,8 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SyxOop proc;
 
   ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
-  SYX_METHOD_CONTEXT_PARENT (ctx) = SYX_NIL;
-
-  SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = SYX_NIL;
+  SYX_METHOD_CONTEXT_PARENT (ctx) = syx_nil;
+  SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = syx_nil;
   proc = syx_process_new (ctx);
 
   SYX_PRIM_RETURN (proc);
@@ -173,17 +181,17 @@ SYX_FUNC_PRIMITIVE (SmallInteger_print)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
-SYX_FUNC_PRIMITIVE (Context_enter)
+SYX_FUNC_PRIMITIVE (Processor_enter)
 {
   return syx_interp_enter_context (es, es->message_arguments[0]);
 }
 
-SYX_FUNC_PRIMITIVE (Context_swapWith)
+SYX_FUNC_PRIMITIVE (Processor_swapWith)
 {
   return syx_interp_swap_context (es, es->message_arguments[0]);
 }
 
-SYX_FUNC_PRIMITIVE (Context_returnTo_andAnswer)
+SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
 {
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) = es->message_arguments[0];
   return syx_interp_leave_context_and_answer (es, es->message_arguments[1], TRUE);
@@ -208,7 +216,7 @@ SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
       ctx = SYX_METHOD_CONTEXT_PARENT (ctx);
     }
 
-  SYX_PRIM_RETURN (SYX_NIL);
+  SYX_PRIM_RETURN (syx_nil);
 }
 
 SYX_FUNC_PRIMITIVE (Character_new)
@@ -236,139 +244,74 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 
 /* File streams */
 
-/* static gboolean */
-/* _channel_watcher (GIOChannel *channel, GIOCondition condition, syx_pointer data) */
-/* { */
-/*   /\*  SyxOop semaphore = SYX_POINTER(data); */
-/*       syx_semaphore_signal (semaphore);*\/ */
-/*   return FALSE; */
-/* } */
-
-SYX_FUNC_PRIMITIVE (FileStream_new)
+SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 {
-  /*  SyxOop filestream;
-  GIOChannel *channel;
-  syx_int32 fd;
+  syx_int32 fd = SYX_SMALL_INTEGER (es->arguments[1]);
+  syx_int32 ret = 0;
 
-  fd = SYX_SMALL_INTEGER(SYX_PRIM_ARG(0));
-  channel = g_io_channel_unix_new (fd);
-  if (!channel)
-    return SYX_FALSE;
+  switch (SYX_SMALL_INTEGER (es->arguments[0]))
+    {
+    case 0: // open
+      {
+	syx_symbol mode = SYX_OBJECT_SYMBOL (es->arguments[1]);
+	syx_int32 flags = 0;
 
-    filestream = syx_class_create_instance (SYX_CLASS (receiver));
-    filestream->data = channel;*/
+	if (!strcmp (mode, "r"))
+	  flags |= O_RDONLY;
+	else if (!strcmp (mode, "w"))
+	  flags |= O_WRONLY;
+	else if (!strcmp (mode, "r+"))
+	  flags |= O_RDWR;
+	else
+	  g_error ("mh? %s\n", mode);
+	
+	ret = open (SYX_OBJECT_SYMBOL(es->arguments[0]), flags);
+      }
+      break;
 
-  SYX_PRIM_RETURN (es->message_receiver);
-}
+    case 1: // close
+      ret = close (fd);
+      break;
+      
+    case 2: // nextPut:
+      {
+	syx_char c = SYX_CHARACTER (es->arguments[2]);
+	ret = write (fd, &c, 1);
+      }
+      break;
 
-SYX_FUNC_PRIMITIVE (FileStream_newFile)
-{
-  /*  SyxOop filestream;
-  GIOChannel *channel;
-  gchar *filename;
-  gchar *mode;
-  g_return_val_if_fail (arguments->len == 2, NULL);
+    case 3: // nextPutAll:
+      ret = write (fd, SYX_OBJECT_SYMBOL (es->arguments[2]), SYX_OBJECT_SIZE (es->arguments[2]));
+      break;
 
-  filename = syx_string_fetch (arguments->pdata[0]);
-  mode = syx_string_fetch (arguments->pdata[1]);
+    case 4: // flush
+      ret = fsync (fd);
+      break;
 
-  channel = g_io_channel_new_file (filename, mode, NULL);
-  if (!channel)
-    return NULL;
+    case 5: // next
+      {
+	syx_char c;
+	read (fd, &c, 1);
+	SYX_PRIM_RETURN (syx_character_new (c));
+      }
+      break;
 
-  g_free (filename);
-  g_free (mode);
+    case 6: // nextAll:
+      {
+	syx_int32 count = SYX_SMALL_INTEGER (es->arguments[2]);
+	syx_string s = syx_alloca (count);
+	count = read (fd, s, count);
+	SyxOop string = syx_string_new (strndup (s, count));
+	SYX_PRIM_RETURN (string);
+      }
+      break;
 
-  filestream = syx_class_create_instance (SYX_CLASS (receiver));
-  filestream->data = channel;*/
+    default: // unknown
+      g_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->arguments[0]));
 
-  SYX_PRIM_RETURN (es->message_receiver);
-}
+    }
 
-SYX_FUNC_PRIMITIVE (FileStream_addWatchForInput)
-{
-  /*  GIOChannel *channel;
-  GSource *source;
-  SyxOop semaphore;
-  g_return_val_if_fail (arguments->len > 0, NULL);
-
-  semaphore = arguments->pdata[0];
-  if (!semaphore)
-    return NULL;
-
-  channel = SYX_OBJECT(receiver)->data;
-  source = g_io_create_watch (channel, G_IO_IN);
-  g_source_set_callback (source, (GSourceFunc)_channel_watcher, semaphore, NULL);
-  syx_scheduler_add_source (source);*/
-  
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (FileStream_readChar)
-{
-  /*  GIOChannel *channel;
-  gchar c;
-
-  channel = SYX_OBJECT(receiver)->data;
-  g_io_channel_read_chars (channel, &c, 1, NULL, NULL);*/
-
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (FileStream_addWatchForOutput)
-{
-  /*  GIOChannel *channel;
-  GSource *source;
-  SyxOop semaphore;
-  g_return_val_if_fail (arguments->len > 0, NULL);
-
-  semaphore = arguments->pdata[0];
-  if (!semaphore)
-    return NULL;
-
-  channel = SYX_OBJECT(receiver)->data;
-  if (!channel)
-    return NULL;
-
-  source = g_io_create_watch (channel, G_IO_OUT);
-  g_source_set_callback (source, (GSourceFunc)_channel_watcher, semaphore, NULL);
-  syx_scheduler_add_source (source);*/
-  
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (FileStream_writeChar)
-{
-  /*  GIOChannel *channel;
-  gchar c;
-  g_return_val_if_fail (arguments->len > 0, NULL);
-
-  c = SYX_CHARACTER(arguments->pdata[0])->value;
-  channel = SYX_OBJECT(receiver)->data;
-  g_io_channel_write_chars (channel, &c, 1, NULL, NULL);*/
-
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (FileStream_shutdown)
-{
-  /*  GIOChannel *channel;
-  g_return_val_if_fail (arguments->len > 0, NULL);
-
-  channel = SYX_OBJECT(receiver)->data;
-  g_io_channel_shutdown (channel, arguments->pdata[0] == SYX_TRUE, NULL);*/
-
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (FileStream_flush)
-{
-  /*  GIOChannel *channel;
-
-  channel = SYX_OBJECT(receiver)->data;
-  g_io_channel_flush (channel, NULL);*/
-
-  SYX_PRIM_RETURN (es->message_receiver);
+  SYX_PRIM_RETURN (syx_small_integer_new (ret));
 }
 
 SYX_FUNC_PRIMITIVE (String_compile)
@@ -464,10 +407,10 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "String_print", String_print },
   { "SmallInteger_print", SmallInteger_print },
 
-  /* Contexts */
-  { "Context_enter", Context_enter },
-  { "Context_swapWith", Context_swapWith },
-  { "Context_returnTo_andAnswer", Context_returnTo_andAnswer },
+  /* Interpreter */
+  { "Processor_enter", Processor_enter },
+  { "Processor_swapWith", Processor_swapWith },
+  { "Processor_leaveTo_andAnswer", Processor_leaveTo_andAnswer },
 
   { "Signal_findHandlerContext", Signal_findHandlerContext },
   { "Character_new", Character_new },
@@ -477,14 +420,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "String_compile", String_compile },
 
   /* File streams */
-  { "FileStream_new", FileStream_new },
-  { "FileStream_newFile", FileStream_newFile },
-  { "FileStream_addWatchForInput", FileStream_addWatchForInput },
-  { "FileStream_readChar", FileStream_readChar },
-  { "FileStream_addWatchForOutput", FileStream_addWatchForOutput },
-  { "FileStream_writeChar", FileStream_writeChar },
-  { "FileStream_shutdown", FileStream_shutdown },
-  { "FileStream_flush", FileStream_flush },
+  { "FileStream_fileOp", FileStream_fileOp },
 
   /* Small integers */
   { "SmallInteger_plus", SmallInteger_plus },

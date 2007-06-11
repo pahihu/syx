@@ -101,7 +101,7 @@ ReadWriteStream subclass: #ByteStream
 		instanceVariableNames: ''!
 
 ByteStream subclass: #FileStream
-	   instanceVariableNames: 'fd name'!
+	   instanceVariableNames: 'fd name filePtr'!
 
 "Basic data types"
 
@@ -141,10 +141,13 @@ LookupKey subclass: #Association
 	  instanceVariableNames: ''!
 
 LookupKey subclass: #Link
-       instanceVariableNames: 'next'!
+	  instanceVariableNames: 'next'!
 
 Object subclass: #Dictionary
        instanceVariableNames: 'hashTable'!
+
+Dictionary subclass: #SystemDictionary
+	   instanceVariableNames: ''!
 
 "Gtk"
 

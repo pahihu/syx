@@ -22,7 +22,7 @@ inline void
 syx_interp_stack_push (SyxExecState *es, SyxOop object)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  g_debug ("CONTEXT STACK - Push %p\n", object);
+  g_debug ("CONTEXT STACK - Push %p (sp = %d)\n", object, es->sp);
 #endif
   es->stack[es->sp++] = object;
 }
@@ -31,7 +31,7 @@ inline SyxOop
 syx_interp_stack_pop (SyxExecState *es)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  g_debug ("CONTEXT STACK - Pop %p\n", es->stack[es->sp - 1]);
+  g_debug ("CONTEXT STACK - Pop %p (sp = %d)\n", es->stack[es->sp - 1], es->sp - 1);
 #endif
   return es->stack[--es->sp];
 }
@@ -60,7 +60,7 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx
   SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
   g_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
-	   SYX_OOP_CAST_POINTER (return_object), use_return_context);
+	   return_object, use_return_context);
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
@@ -119,6 +119,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Push argument at %d\n", argument);
 #endif
+
   if (argument == 0)
     syx_interp_stack_push (es, es->receiver);
   else
@@ -169,11 +170,12 @@ SYX_FUNC_INTERPRETER (syx_interp_push_global)
   SyxOop object;
 
   symbol = SYX_OBJECT_SYMBOL (es->literals[argument]);
-  object = syx_globals_at (symbol);
 
 #ifdef SYX_DEBUG_BYTECODE
   g_debug ("BYTECODE - Push global: '%s'\n", symbol);
 #endif
+
+  object = syx_globals_at (symbol);
 
   syx_interp_stack_push (es, object);
   return TRUE;
@@ -315,7 +317,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
       syx_interp_stack_push (es, syx_boolean_new (!SYX_IS_NIL (es->message_receiver)));
       return TRUE;
     }
-  
+
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
 
@@ -333,6 +335,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver, syx_array_new_size (0));
   syx_memory_gc_end ();
+
   return syx_interp_enter_context (es, context);
 }
 
@@ -444,7 +447,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       // Check for jump to the other conditional branch
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))
 	{
-	  syx_interp_stack_push (es, SYX_NIL);
+	  syx_interp_stack_push (es, syx_nil);
 	  es->ip = jump;
 	}
       return TRUE;
@@ -585,6 +588,12 @@ syx_process_execute_scheduled (SyxOop process)
   
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
+  if (SYX_IS_NIL (es->context))
+    {
+      syx_scheduler_remove_process (process);
+      syx_exec_state_free (es);
+      return;
+    }
 
   while (es->ip < es->bytecodes_count && es->byteslice >= 0)
     {
@@ -606,7 +615,14 @@ syx_process_execute_blocking (SyxOop process)
 
   es = syx_exec_state_new ();
   syx_exec_state_fetch (es, process);
+  if (SYX_IS_NIL (es->context))
+    {
+      syx_scheduler_remove_process (process);
+      syx_exec_state_free (es);
+      return;
+    }
 
+  syx_processor_active_process = process;
   while (es->ip < es->bytecodes_count)
     {
       byte = _syx_interp_get_next_byte (es);

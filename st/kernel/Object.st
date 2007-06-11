@@ -7,13 +7,11 @@ initialize
 !Object methodsFor: 'basic'!
 
 at: anIndex
-    <primitive: 'Object_at'>
-	self primitiveFailed
+    self shouldNotImplement
 !
 
 at: anIndex put: anObject
-    <primitive: 'Object_at_put'>
-	self primitiveFailed
+    self shouldNotImplement
 !
 
 basicAt: anIndex

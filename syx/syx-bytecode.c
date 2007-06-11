@@ -167,6 +167,7 @@ SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
   syx_uint16 instruction = (SYX_BYTECODE_DO_SPECIAL << SYX_BYTECODE_ARGUMENT_BITS) + SYX_BYTECODE_DUPLICATE;
   memmove (bytecode->code + index + 1, bytecode->code + index, SYX_BYTECODE_MAX - index);
   bytecode->code[index] = instruction;
+  bytecode->code_top++;
 }
 
 inline void

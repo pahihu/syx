@@ -48,18 +48,9 @@ _syx_cold_parse_class (SyxLexer *lexer)
     }
 
   if (!strcmp (token.value.string, "nil"))
-    superclass = SYX_NIL;
+    superclass = syx_nil;
   else
-    {
-      superclass = syx_globals_at (token.value.string);
-
-      if (SYX_IS_NIL (superclass))
-	{
-	  g_error ("Unknown class: %s", token.value.string);
-	  syx_token_free (token);
-	  return FALSE;
-	}
-    }
+    superclass = syx_globals_at (token.value.string);
   
   token = syx_lexer_next_token (lexer);
   if (!(token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "subclass:")))
@@ -80,7 +71,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   subclass_name = strdup (token.value.string);
   syx_token_free (token);
-  subclass = syx_globals_at (subclass_name);
+  subclass = syx_globals_at_if_absent (subclass_name, syx_nil);
 
   if (strcmp (subclass_name, "Object"))
     {
@@ -213,7 +204,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
       method_lexer = syx_lexer_new (chunk);
       if (!method_lexer)
 	break;
-      
+
       parser = syx_parser_new (method_lexer, syx_method_new (),
 			       syx_class_get_all_instance_variables (class));
       syx_parser_parse (parser, NULL);
@@ -306,4 +297,47 @@ syx_semaphore_wait (SyxOop semaphore)
   process = syx_scheduler_get_active_process ();
   syx_process_set_suspended (SYX_OBJECT_DATASYX_PROCESS_SUSPEND (process));
   g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
+}
+
+/* Utilities to interact with Smalltalk */
+
+inline SyxOop
+syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
+{
+  SyxOop context;
+  SyxOop class;
+  SyxOop method;
+
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, selector);
+  if (SYX_IS_NIL (method))
+    g_error ("Unable to lookup method #%s in class %d\n", selector, class.idx);
+
+  syx_memory_gc_begin ();
+  context = syx_method_context_new (parent_context, method, receiver, syx_array_new_size (0));
+  syx_memory_gc_end ();
+
+  return context;
+}
+
+inline SyxOop
+syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
+{
+  SyxOop context;
+  SyxOop class;
+  SyxOop method;
+  SyxOop arguments;
+
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, selector);
+  if (SYX_IS_NIL (method))
+    return syx_nil;
+
+  syx_memory_gc_begin ();
+  arguments = syx_array_new_size (1);
+  SYX_OBJECT_DATA(arguments)[0] = argument;
+  context = syx_method_context_new (parent_context, method, receiver, arguments);
+  syx_memory_gc_end ();
+
+  return context;
 }

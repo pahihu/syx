@@ -1,5 +1,9 @@
 !UndefinedObject methodsFor: 'printing'!
 
+print
+    ^'nil' print
+!
+
 printString
     ^'nil'
 ! !

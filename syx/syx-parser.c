@@ -52,11 +52,11 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
   self->in_block = FALSE;
 
   self->bytecode = syx_bytecode_new ();
-  self->temporary_names = g_ptr_array_new ();
-  self->argument_names = g_ptr_array_new ();
+  self->temporary_names_top = 0;
+  self->argument_names_top = 0;
   self->instance_names = instance_names;
 
-  self->duplicate_indexes = NULL;
+  self->duplicate_indexes_top = 0;
   self->argument_scopes.top = 0;
   self->temporary_scopes.top = 0;
 
@@ -69,12 +69,10 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
   syx_size i;
   syx_bytecode_free (self->bytecode, FALSE);
 
-  for (i=0; i < self->temporary_names->len; i++)
-    syx_free (self->temporary_names->pdata[i]);
-  for (i=0; i < self->argument_names->len; i++)
-    syx_free (self->argument_names->pdata[i]);
-  g_ptr_array_free (self->temporary_names, TRUE);
-  g_ptr_array_free (self->argument_names, TRUE);
+  for (i=0; i < self->temporary_names_top; i++)
+    syx_free (self->temporary_names[i]);
+  for (i=0; i < self->argument_names_top; i++)
+    syx_free (self->argument_names[i]);
 
   if (free_segment)
     {
@@ -111,8 +109,8 @@ syx_parser_parse (SyxParser *self, GError **error)
   SYX_METHOD_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
 							 self->bytecode->literals);
 
-  SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->argument_names->len);
-  SYX_METHOD_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->temporary_names->len);
+  SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->argument_names_top);
+  SYX_METHOD_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->temporary_names_top);
   SYX_METHOD_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);
 
   if (self->in_block)
@@ -134,7 +132,7 @@ _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
       scope = self->temporary_scopes.stack[scope_index];
       for (i=scope.start; i < scope.end; i++)
 	{
-	  if (!strcmp (self->temporary_names->pdata[i], name))
+	  if (!strcmp (self->temporary_names[i], name))
 	    return i;
 	}
     }
@@ -155,7 +153,7 @@ _syx_parser_find_argument_name (SyxParser *self, syx_symbol name)
       scope = self->argument_scopes.stack[scope_index];
       for (i=scope.start; i < scope.end; i++)
 	{
-	  if (!strcmp (self->argument_names->pdata[i], name))
+	  if (!strcmp (self->argument_names[i], name))
 	    return i;
 	}
     }
@@ -256,7 +254,7 @@ _syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
       syx_bytecode_push_argument (self->bytecode, pos + 1);
       return FALSE;    
     }
-  
+
   pos = _syx_parser_find_temporary_name (self, name);
   if (pos >= 0)
     {
@@ -324,7 +322,7 @@ static void
 _syx_parser_parse_temporaries (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  SyxParserScope scope = {self->temporary_names->len, self->temporary_names->len};
+  SyxParserScope scope = {self->temporary_names_top, self->temporary_names_top};
 
   if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|"))
     {
@@ -332,8 +330,7 @@ _syx_parser_parse_temporaries (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
       while (token.type == SYX_TOKEN_NAME_CONST)
 	{
-	  g_ptr_array_add (self->temporary_names,
-			   token.value.string);
+	  self->temporary_names[self->temporary_names_top++] = token.value.string;
 	  scope.end++;
 	  token = syx_lexer_next_token (self->lexer);
 	}
@@ -456,15 +453,14 @@ static void
 _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
 {
   SyxToken token;
-  syx_varsize index[2] = {0, 0};
+  self->duplicate_indexes_top++;
 
-  g_trash_stack_push (&self->duplicate_indexes, &index);
   super_receiver = _syx_parser_do_key_continuation (self, super_receiver);
   
   token = syx_lexer_get_last_token (self->lexer);
   while (token.type == SYX_TOKEN_CLOSING && token.value.character == ';')
     {
-      syx_bytecode_duplicate_at (self->bytecode, ((glong *)g_trash_stack_peek (&self->duplicate_indexes))[1]);
+      syx_bytecode_duplicate_at (self->bytecode, self->duplicate_indexes[self->duplicate_indexes_top - 1]);
       syx_bytecode_pop_top (self->bytecode);
       syx_token_free (token);
       token = syx_lexer_next_token (self->lexer);
@@ -472,14 +468,7 @@ _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
       token = syx_lexer_get_last_token (self->lexer);
     }
 
-  (void) g_trash_stack_pop (&self->duplicate_indexes);
-}
-
-static void
-save_duplicate_index (SyxParser *self)
-{
-  glong *last_index = (glong *)g_trash_stack_peek (&self->duplicate_indexes);
-  last_index[1] = self->bytecode->code_top;
+  self->duplicate_indexes_top--;
 }
 
 static syx_varsize
@@ -524,7 +513,7 @@ static syx_bool
 _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 {
   SyxToken token;
-  GString *selector;
+  syx_char selector[256];
   syx_int8 num_args;
   syx_bool super_term;
   syx_uint16 jump, conditionJump, loopJump;
@@ -534,22 +523,33 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
   token = syx_lexer_get_last_token (self->lexer);
   if (token.type == SYX_TOKEN_NAME_COLON)
     {
-      save_duplicate_index (self);
+      self->duplicate_indexes[self->duplicate_indexes_top - 1] = self->bytecode->code_top;
       
       if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifTrue:"))
 	{
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
-	  _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
+	  jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
 
 	  token = syx_lexer_get_last_token (self->lexer);
 	  if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifFalse:"))
 	    {
 	      syx_token_free (token);
 	      token = syx_lexer_next_token (self->lexer);
+	      
+	      // skip ifFalse: block if condition is true
+	      syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
+	      syx_bytecode_gen_code (self->bytecode, 0);
+	      conditionJump = self->bytecode->code_top - 1;
+
+	      // jump here if condition is false
+	      self->bytecode->code[jump] = self->bytecode->code_top;
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
-	      // We don't need any jump
+	      // We don't need any jump after ifFalse:
 	      self->bytecode->code[jump] = 0;
+
+	      // jump here if condition was true
+	      self->bytecode->code[conditionJump] = self->bytecode->code_top;
 	    }
 
 	  return FALSE;
@@ -558,16 +558,27 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	{
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
-	  _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_FALSE, FALSE);
+	  jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_FALSE, FALSE);
 
 	  token = syx_lexer_get_last_token (self->lexer);
 	  if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifTrue:"))
 	    {
 	      syx_token_free (token);
 	      token = syx_lexer_next_token (self->lexer);
+
+	      // skip ifTrue: block if condition is false
+	      syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
+	      syx_bytecode_gen_code (self->bytecode, 0);
+	      conditionJump = self->bytecode->code_top - 1;
+
+	      // jump here if condition is true
+	      self->bytecode->code[jump] = self->bytecode->code_top;
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
-	      // We don't need any jump
+	      // We don't need any jump after ifFalse:
 	      self->bytecode->code[jump] = 0;
+
+	      // jump here if condition was false
+	      self->bytecode->code[conditionJump] = self->bytecode->code_top;
 	    }
 
 	  return FALSE;
@@ -589,11 +600,10 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  return FALSE;
 	}
 
-      selector = g_string_new (NULL);
       num_args = 0;
       while (token.type == SYX_TOKEN_NAME_COLON)
 	{
-	  g_string_append (selector, token.value.string);
+	  strcat (selector, token.value.string);
 	  num_args++;
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
@@ -604,8 +614,8 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  token = syx_lexer_get_last_token (self->lexer);
 	}
 
-      syx_bytecode_gen_message (self->bytecode, super_receiver, num_args, selector->str);
-      g_string_free (selector, TRUE);
+      syx_bytecode_gen_message (self->bytecode, super_receiver, num_args, selector);
+
       return FALSE;
     }
   return super_receiver;
@@ -626,7 +636,7 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
       selector = strdup (token.value.string);
       
       if (do_cascade)
-	save_duplicate_index (self);
+	self->duplicate_indexes[self->duplicate_indexes_top - 1] = self->bytecode->code_top;
 
       syx_token_free (token);
       token = syx_lexer_next_token (self->lexer);
@@ -649,7 +659,7 @@ _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx
   while (token.type == SYX_TOKEN_NAME_CONST)
     {
       if (do_cascade)
-	save_duplicate_index (self);
+	self->duplicate_indexes[self->duplicate_indexes_top - 1] = self->bytecode->code_top;
 
       syx_bytecode_gen_message (self->bytecode, super_receiver,
 				0, token.value.string);
@@ -755,8 +765,8 @@ static void
 _syx_parser_parse_method_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  GString *selector;
-  SyxParserScope scope = {self->argument_names->len, self->argument_names->len};
+  syx_char selector[256];
+  SyxParserScope scope = {self->argument_names_top, self->argument_names_top};
 
   switch (token.type)
     {
@@ -773,29 +783,27 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
       if (!token.type == SYX_TOKEN_NAME_CONST)
 	g_error ("Expected name constant for argument name\n");
-      g_ptr_array_add (self->argument_names, token.value.string);
+      self->argument_names[self->argument_names_top++] = token.value.string;
       scope.end++;
 
       syx_lexer_next_token (self->lexer);
       break;
     case SYX_TOKEN_NAME_COLON:
-      selector = g_string_new (NULL);
       while (token.type == SYX_TOKEN_NAME_COLON)
 	{
-	  g_string_append (selector, token.value.string);
+	  strcat (selector, token.value.string);
 	  syx_token_free (token);
 
 	  token = syx_lexer_next_token (self->lexer);
 	  if (token.type != SYX_TOKEN_NAME_CONST)
 	    g_error ("Expected name constant for argument name\n");
-	  g_ptr_array_add (self->argument_names, token.value.string);
+	  self->argument_names[self->argument_names_top++] = token.value.string;
 	  scope.end++;
 
 	  token = syx_lexer_next_token (self->lexer);
 	}
 
-      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector->str);
-      g_string_free (selector, TRUE);
+      SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector);
       break;
     default:
       g_error ("Invalid message pattern\n");
@@ -808,7 +816,7 @@ static void
 _syx_parser_parse_block_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  SyxParserScope scope = {self->argument_names->len, self->argument_names->len};
+  SyxParserScope scope = {self->argument_names_top, self->argument_names_top};
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":")))
     {
@@ -821,7 +829,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
       syx_token_free (token);
       token = syx_lexer_next_token (self->lexer);
       g_assert (token.type == SYX_TOKEN_NAME_CONST);
-      g_ptr_array_add (self->argument_names, token.value.string);
+      self->argument_names[self->argument_names_top++] = token.value.string;
       scope.end++;
 
       token = syx_lexer_next_token (self->lexer);

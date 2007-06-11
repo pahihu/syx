@@ -9,6 +9,7 @@
 #include "syx-scheduler.h"
 #include "syx-object.h"
 #include "syx-memory.h"
+#include "syx-interp.h"
 
 static syx_symbol _syx_root_path;
 
@@ -70,6 +71,7 @@ _syx_file_in_basic (void)
     "CompiledMethod.st",
     "LookupKey.st", "Association.st",
     "Stream.st", "FileStream.st",
+    "SystemDictionary.st",
     "Console.st",
     NULL
   };
@@ -84,7 +86,7 @@ _syx_file_in_basic (void)
 
 inline SyxOop _syx_create_class (syx_varsize instanceSize)
 {
-  SyxOop object = syx_object_new_size (SYX_NIL, TRUE, SYX_DATA_CLASS_ALL);
+  SyxOop object = syx_object_new_size (syx_nil, TRUE, SYX_DATA_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
@@ -118,6 +120,7 @@ syx_build_basic (void)
 
   syx_globals = syx_dictionary_new (100);
   syx_symbols = syx_dictionary_new (1000);
+  syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
 #define SETUP_CLASS(name, class, superclass)				\
   syx_object_set_class (class, syx_metaclass_new (syx_object_get_class (superclass))); \
@@ -127,7 +130,7 @@ syx_build_basic (void)
   syx_globals_at_put (SYX_CLASS_NAME(class), class)
 
   syx_object_set_class (Object, syx_metaclass_new (Class));
-  SYX_CLASS_SUPERCLASS(Object) = SYX_NIL;
+  SYX_CLASS_SUPERCLASS(Object) = syx_nil;
   SYX_CLASS_NAME(Object) = syx_symbol_new ("Object");
   SYX_CLASS_METHODS(Object) = syx_dictionary_new (50);
   syx_globals_at_put (SYX_CLASS_NAME(Object), Object);
@@ -143,13 +146,15 @@ syx_build_basic (void)
   SETUP_CLASS ("Array", syx_array_class, Object);
   SETUP_CLASS ("Link", syx_link_class, Object);
   SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
-
   _syx_file_in_basic_decl ();
+
+  syx_object_set_class (syx_globals, syx_globals_at ("SystemDictionary"));
+  SYX_OBJECT(syx_nil)->class = syx_globals_at ("UndefinedObject");
+  SYX_OBJECT(syx_true)->class = syx_globals_at ("True");
+  SYX_OBJECT(syx_false)->class = syx_globals_at ("False");
 
   syx_fetch_basic ();
   _syx_file_in_basic ();
-
-  syx_scheduler_init ();
 }
 
 void
@@ -177,35 +182,7 @@ syx_fetch_basic (void)
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
-
-  syx_object_set_class (syx_nil, syx_globals_at ("UndefinedObject"));
-  syx_object_set_class (syx_true, syx_globals_at ("True"));
-  syx_object_set_class (syx_false, syx_globals_at ("False"));
 }
-
-/*
-void
-syx_init_basic_streams (void)
-{
-  SyxClass *FileStream;
-  SyxInstance *fs;
-  GIOChannel *channel;
-
-  FileStream = syx_globals_lookup ("FileStream");
-  if (!FileStream)
-    g_error ("Missing FileStream class\n");
-
-  channel = g_io_channel_unix_new (0);
-  fs = syx_class_create_instance (FileStream);
-  SYX_OBJECT(fs)->data = channel;
-  syx_globals_replace ("stdin", fs);
-
-  channel = g_io_channel_unix_new (1);
-  fs = syx_class_create_instance (FileStream);
-  SYX_OBJECT(fs)->data = channel;
-  syx_globals_replace ("stdout", fs);
-}
-*/
 
 void
 syx_init (syx_symbol root_path)
@@ -215,6 +192,16 @@ syx_init (syx_symbol root_path)
     return;
 
   initialized = TRUE;
+}
+
+void
+syx_init_system (void)
+{
+  SyxOop context;
+
+  syx_scheduler_init ();
+  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
+  syx_process_execute_blocking (syx_process_new (context));
 }
 
 void

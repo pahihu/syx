@@ -2,6 +2,7 @@
   #include <config.h>
 #endif
 
+#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"
@@ -10,7 +11,7 @@
 #include "syx-memory.h"
 #include "syx-init.h"
 
-//#define DEBUG_PROCESS_SWITCH
+/* #define DEBUG_PROCESS_SWITCH */
 
 static GMainLoop *main_loop = NULL;
 
@@ -26,7 +27,7 @@ _syx_scheduler_find_next_process ()
 
   // no processes have been scheduled
   if (SYX_IS_NIL (syx_processor_first_process))
-    return SYX_NIL;
+    return syx_nil;
 
   if (SYX_IS_NIL (syx_processor_active_process))
     syx_processor_active_process = syx_processor_first_process;
@@ -37,7 +38,7 @@ _syx_scheduler_find_next_process ()
 	{
 	  process = syx_processor_first_process;
 	  if (SYX_IS_NIL (process))
-	    return SYX_NIL;
+	    return syx_nil;
 	}
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
@@ -52,7 +53,7 @@ syx_scheduler_init (void)
   if (initialized)
     return;
 
-  syx_processor = syx_globals_at ("Processor");
+  syx_processor = syx_globals_at_if_absent ("Processor", syx_nil);
   if (SYX_IS_NIL (syx_processor))
     {
       syx_processor = syx_object_new (syx_processor_scheduler_class, TRUE);
@@ -94,7 +95,7 @@ syx_scheduler_run (void)
   while (!SYX_IS_NIL (syx_processor_first_process))
     {  
 #ifdef DEBUG_PROCESS_SWITCH
-      printf("SCHEDULER - Switch process with %p\n", syx_processor_active_process);
+      g_debug ("SCHEDULER - Switch process with %d\n", syx_processor_active_process.idx);
 #endif
 
       syx_process_execute_scheduled (syx_processor_active_process);
@@ -129,7 +130,7 @@ syx_scheduler_add_process (SyxOop process)
 	  SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
 	  SYX_PROCESS_NEXT(syx_processor_active_process) = process;
 	}
-      SYX_PROCESS_SCHEDULED(process) = SYX_TRUE;
+      SYX_PROCESS_SCHEDULED(process) = syx_true;
     }
 }
 
@@ -140,7 +141,7 @@ syx_scheduler_remove_process (SyxOop process)
 
   if (SYX_OOP_EQ (process, syx_processor_first_process))
     {
-      SYX_PROCESS_SCHEDULED(process) = SYX_FALSE;
+      SYX_PROCESS_SCHEDULED(process) = syx_false;
       syx_processor_first_process = SYX_PROCESS_NEXT(process);
       return;
     }
@@ -151,7 +152,7 @@ syx_scheduler_remove_process (SyxOop process)
       if (SYX_OOP_EQ (inter_process, process))
 	{
 	  SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
-	  SYX_PROCESS_SCHEDULED(process) = SYX_FALSE;
+	  SYX_PROCESS_SCHEDULED(process) = syx_false;
 	  return;
 	}
     }

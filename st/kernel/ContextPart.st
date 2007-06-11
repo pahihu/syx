@@ -2,7 +2,9 @@
 
 on: aMethod parent: aContext arguments: anArray
     ^self new
-	parent: aContext;
+	method: aMethod
+	parent: aContext
+	arguments: anArray;
 	yourself
 ! !
 
@@ -12,29 +14,33 @@ initialize
 
 ! !
 
-!ContextPart methodsFor: 'execution'!
-
-enter: aContext
-    <primitive: 'Context_enter'>
-	^self primitiveFailed
-!
-
-swapWith: aContext
-    <primitive: 'Context_swapWith'>
-	^self primitiveFailed
-!
-
-returnTo: aContext andAnswer: anObject
-    <primitive: 'Context_returnTo_andAnswer'>
-	^self primitiveFailed
-! !
-
 !ContextPart methodsFor: 'accessing'!
 
-parent
-    ^parent
+method
+    ^method
+!
+
+method: aMethod parent: aContext arguments: anArray
+    "if method is set then this context has been initialized"
+    method notNil ifTrue: [^self].
+
+    method := aMethod.
+    parent := aContext.
+    arguments := anArray, (Array new: method argumentsCount - anArray size).
+    temporaries := Array new: method temporariesCount.
+    ip := sp := 0.
+    stack := Array new: method stackSize.
+    returnContext := parent.
+!
+
+receiver
+    ^receiver
 !
 
 parent: aContext
     parent := aContext
+!
+
+parent
+    ^parent
 ! !

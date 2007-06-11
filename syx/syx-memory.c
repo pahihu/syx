@@ -40,12 +40,16 @@ void
 syx_memory_init (syx_varsize mem_size)
 {
   if (_syx_memory_initialized)
-    return;
+    {
+      if (mem_size > _syx_memory_size)
+	syx_realloc (syx_memory, sizeof (SyxObject) * mem_size);
+
+      return;
+    }
 
   _syx_memory_size = mem_size;
 
   syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
-  bzero (syx_memory, sizeof (SyxObject) * _syx_memory_size);
   _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
 
   _syx_memory_initialized = TRUE;
@@ -160,10 +164,11 @@ static void
 _syx_memory_gc_sweep ()
 {
   syx_varsize i;
-  SyxObject *object = syx_memory;
+  SyxObject *object = syx_memory + 3; // skip constants
   SyxOop oop;
 
-  for (i=0; i < _syx_memory_size; i++, object++)
+  // skip constants
+  for (i=3; i < _syx_memory_size; i++, object++)
     {
       if (SYX_IS_NIL(object->class))
 	continue;
@@ -312,6 +317,7 @@ syx_memory_save_image (syx_symbol path)
 
   syx_memory_gc ();
 
+
   for (i=0; i < _syx_memory_size; i++, object++)
     {
       if (SYX_IS_NIL (object->class))
@@ -330,6 +336,8 @@ syx_memory_save_image (syx_symbol path)
 	    fwrite (object->data, sizeof (syx_int8), object->size, image);
 	}
     }
+
+  fclose (image);
 
   return TRUE;
 }
@@ -358,8 +366,6 @@ syx_memory_load_image (syx_symbol path)
   fread (&syx_globals.idx, sizeof (syx_int32), 1, image);
   fread (&syx_symbols.idx, sizeof (syx_int32), 1, image);
 
-  object = syx_memory;
-
   while (!feof (image))
     {
       fread (&index, sizeof (syx_int32), 1, image);
@@ -373,11 +379,17 @@ syx_memory_load_image (syx_symbol path)
 	{
 	  if (object->has_refs)
 	    {
+	      if (object->data)
+		syx_free (object->data);
+
 	      object->data = syx_calloc (object->size, sizeof (SyxOop));
 	      fread (object->data, sizeof (SyxOop), object->size, image);
 	    }
 	  else
 	    {
+	      if (object->data)
+		syx_free (object->data);
+
 	      object->data = syx_calloc (object->size, sizeof (syx_int8));
 	      fread (object->data, sizeof (syx_int8), object->size, image);
 	    }
@@ -385,8 +397,9 @@ syx_memory_load_image (syx_symbol path)
 	
     }
 
+  fclose (image);
+
   syx_fetch_basic ();
-  syx_scheduler_init ();
 
   return TRUE;
 }

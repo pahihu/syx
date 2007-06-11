@@ -34,7 +34,7 @@ void syx_exec_state_free (SyxExecState *es);
 
 /* Primitives */
 
-#define SYX_PRIMITIVES_MAX 43
+#define SYX_PRIMITIVES_MAX 36
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\

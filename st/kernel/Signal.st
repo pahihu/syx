@@ -13,11 +13,14 @@ findHandlerContext
 !
 
 signal
+    "Raises a signal. If it's not handled, debug the process"
     signalerContext := thisContext.
     handlerContext := self findHandlerContext.
     handlerContext isNil
-	ifTrue: ['Unhandled exception... process is being debugged?' print.
-		 signalerContext parent parent parent method selector print]
+	ifTrue: ['Unhandled exception... process is going to be terminated' print.
+		 signalerContext parent parent receiver class name print.
+		 signalerContext parent parent method selector print.
+		 Processor activeProcess terminate]
 	ifFalse: [self return: (handlerContext handlerBlock value: self)]
 !
 
@@ -27,11 +30,11 @@ pass
 !
 
 resume
-    thisContext swapWith: signalerContext parent
+    Processor swapWith: signalerContext parent
 !
 
 return: anObject
-    thisContext returnTo: handlerContext parent andAnswer: anObject
+    Processor leaveTo: handlerContext parent andAnswer: anObject
 !
 
 return

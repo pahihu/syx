@@ -11,9 +11,9 @@ LDADDS =                                                                \
 TESTS = 			\
 	testlexer		\
 	testcoldparser		\
+	testimage		\
 	testinstances		\
 	testparser		\
-	testimage		\
 	testinterp		\
 	testscheduler		\
 	testplugin

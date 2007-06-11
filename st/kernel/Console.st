@@ -1,3 +1,9 @@
+!Console class methodsFor: 'instance creation'!
+
+run
+    ^self new run
+! !
+
 !Console methodsFor: 'running'!
 
 nextChunk
@@ -15,6 +21,7 @@ run
     | chunk method context |
     [
 	[
+	'asd' print.
 	    stdout nextPutAll: '> '; flush.
 	    chunk := self nextChunk.
 	    method := ('goDoIt ^[', chunk, '] value') compile.

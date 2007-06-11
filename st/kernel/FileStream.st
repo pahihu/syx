@@ -3,22 +3,22 @@
 new
     self shouldNotImplement
 !
-
+    
 on: aFD
-    ^self fromFD: anInteger
-!
-
-fromFD: anInteger
-    <primitive: 'FileStream_new'>
-	self primitiveFailed
+    ^self basicNew fd: aFD
 !
 
 open: aFilename
-    ^self open: aFilename for: self readWrite
+    ^self basicNew fd: (self fileOp: 0 with: aFilename with: self readWrite)
 !
 
 open: aFilename for: aMode
-    <primitive: 'FileStream_newFile'>
+    ^self basicNew fd: (self fileOp: 0 with: aFilename with: aMode)
+!
+
+fileOp: anInteger with: anArgument with: anotherArgument
+    "Returns a file descriptor"
+    <primitive: 'FileStream_fileOp'>
 	self primitiveFailed
 !
 
@@ -34,66 +34,50 @@ readWrite
     ^'r+'
 ! !
 
+!FileStream methodsFor: 'accessing'!
+
+fd: aFD
+    fd := aFD
+!
+
+fd
+    ^fd
+! !
+
+!FileStream methodsFor: 'primitives'!
+
+fileOp: anInteger on: aFD
+    <primitive: 'FileStream_fileOp'>
+	self primitiveFailed
+!
+
+fileOp: anInteger on: aFD with: anArgument
+    <primitive: 'FileStream_fileOp'>
+	self primitiveFailed
+! !
+
 !FileStream methodsFor: 'basic'!
 
 close
-    self shutdown: true
-!
-
-shutdown: aBoolean
-    <primitive: 'FileStream_shutdown'>
-	self primitiveFailed
-!
-
-primAddWatchForInput: aSemaphore
-    <primitive: 'FileStream_addWatchForInput'>
-	self primitiveFailed
-!
-
-primAddWatchForOutput: aSemaphore
-    <primitive: 'FileStream_addWatchForOutput'>
-	self primitiveFailed
-!
-
-waitForInput
-    | sem |
-    sem := Semaphore new.
-    self primAddWatchForInput: sem.
-    sem wait.
-!
-
-waitForOutput
-    | sem |
-    sem := Semaphore new.
-    self primAddWatchForOutput: sem.
-    sem wait.
-!
-
-readChar
-    <primitive: 'FileStream_readChar'>
-	self primitiveFailed
-!
-
-writeChar: aCharacter
-    <primitive: 'FileStream_writeChar'>
-	self primitiveFailed
-!
-
-flush
-    <primitive: 'FileStream_flush'>
-	self primitiveFailed
-!
-
-next
-    self waitForInput.
-    ^self readChar
+    self fileOp: 1 on: aFD
 !
 
 nextPut: aCharacter
-    self waitForOutput.
-    self writeChar: aCharacter
+    self fileOp: 2 on: aFD with: aCharacter
 !
 
-name
-    ^name
+nextPutAll: aString
+    self fileOp: 3 on: aFD with: aString
+!
+
+flush
+    self fileOp: 4 on: aFD
+!
+
+next
+    ^self fileOp: 5 on: aFD
+!
+
+nextAll: numBytes
+    ^self fileOp: 6 on: aFD
 ! !

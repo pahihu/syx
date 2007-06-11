@@ -64,6 +64,7 @@ syx_plugin_load (const gchar *name, GError **error)
   plugins = g_slist_append (plugins, plugin);
 
   return plugin;*/
+  return NULL;
 }
 
 GSList *

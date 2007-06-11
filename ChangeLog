@@ -1,4 +1,46 @@
+2007-06-11  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (syx_memory_init): realloc only if memory must be larger
+	(syx_memory_load_image): if we load an image over another one, be sure we free the previous data
+
+	* syx/main.c (main): something new to try out
+
+	* syx/syx-init.c (syx_build_basic): SYX_IS_OBJECT returns FALSE if it's a constant, so we have to set the class ourselves
+	(syx_init_basic_streams): removed
+	(syx_init_system): added, initialize the system from Smalltalk itself
+
+	* syx/syx-interp.c (syx_process_execute_blocking): don't schedule process if has no context to enter
+	(syx_process_execute_scheduled): same
+
+	* syx/syx-utils.c (syx_send_unary_message): added
+	(syx_send_binary_message): added
+
+	* syx/syx-parser.c (_syx_parser_parse_method_message_pattern): removed GString dependency to use a stack'd array
+	(_syx_parser_do_key_continuation): same
+
+	* syx/syx-parser.h (struct SyxParser): removed GTrashStack dependency
+
+	* syx/syx-primitives.c (FileStream_fileOp): added and removed others
+
+	* syx/syx-memory.h (syx_alloca): added
+	
+	* syx/syx-object.h (SYX_NIL, SYX_TRUE, SYX_FALSE): removed
+
+	* syx/syx-bytecode.c (syx_bytecode_duplicate_at): fixed
+
 2007-06-10  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-init.h (syx_globals_at_if_absent): added
+
+	* syx/syx-object.c (syx_dictionary_at_const_if_absent): added
+	(syx_dictionary_at_symbol_if_absent): added
+	(syx_dictionary_at_symbol): raise an error if the key has not been found
+	(syx_dictionary_at_const): same
+
+	* syx/syx-parser.h (struct SyxParser): removed GPtrArrays and added regular stacks for temporary and argument names
+
+	* syx/syx-object.c (syx_symbol_new): increase size to hold '\0'
+	(syx_string_new): increase size to hold '\0'
 
 	* tests/testimage.c: added
 

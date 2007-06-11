@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <syx/syx.h>
 
 /*! \mainpage Smalltalk YX
@@ -17,7 +18,30 @@
 
 int main()
 {
-  syx_init ("..");
-  syx_build_basic ();
+  SyxOop context;
+  SyxOop process;
 
+  syx_init ("..");
+  if (!syx_memory_load_image ("default.sim"))
+    {
+      syx_build_basic ();
+      syx_memory_save_image ("default.sim");
+    }
+
+  if (!syx_memory_load_image ("default.sim"))
+    {
+      puts ("Unable to read default.sim");
+      exit (-1);
+    }
+
+  syx_init_system ();
+
+  /*  context = syx_send_unary_message (syx_nil, syx_globals_at ("Console"), "run");
+  process = syx_process_new (context);
+  SYX_PROCESS_SUSPENDED(process) = syx_false;
+
+  syx_scheduler_add_process (process);
+  syx_scheduler_run ();*/
+
+  syx_quit ();
 }

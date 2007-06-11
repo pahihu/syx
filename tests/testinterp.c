@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "../syx/syx.h"
 
+static GTimer *timer = NULL; 
+
 SyxOop
 _interpret (syx_symbol text)
 {
@@ -9,7 +11,6 @@ _interpret (syx_symbol text)
   SyxLexer *lexer;
   SyxOop method, context, process;
   GError *error = NULL;
-  static GTimer *timer = NULL;
 
   if (!timer)
     timer = g_timer_new ();
@@ -20,7 +21,7 @@ _interpret (syx_symbol text)
   assert (syx_parser_parse (parser, &error) == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
-  context = syx_method_context_new (SYX_NIL, method, SYX_NIL, syx_array_new (0, NULL));
+  context = syx_method_context_new (syx_nil, method, syx_nil, syx_array_new (0, NULL));
   process = syx_process_new (context);
 
   g_timer_start (timer);
@@ -38,6 +39,7 @@ main (int argc, char *argv[])
 
   syx_init ("..");
   syx_memory_load_image ("test.sim");
+  syx_scheduler_init ();
 
   puts ("- Test assignment");
   ret_obj = _interpret ("method | a | ^a := 123");
@@ -75,13 +77,21 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method ^[ :s | [ s] value] value: 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
 
-  puts ("- Test ifTrue");
+  puts ("- Test ifTrue:");
   ret_obj = _interpret ("method | var | var := 123. var = 321 ifTrue: [^false]. var = 123 ifTrue: [^true]");
   assert (SYX_IS_TRUE (ret_obj));
 
-  puts ("- Test ifFalse");
+  puts ("- Test ifTrue:ifFalse:");
   ret_obj = _interpret ("method ^false ifTrue: [ 123 ] ifFalse: [ 321 ]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
+
+  puts ("- Test ifTrue:ifFalse: again");
+  ret_obj = _interpret ("method ^true ifTrue: [ 123 ] ifFalse: [ 321 ]");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 123);
+
+  puts ("- Test ifFalse:ifTrue:");
+  ret_obj = _interpret ("method ^true ifTrue: [ 123 = 321 ifFalse: [^333] ifTrue: [^222] ] ifFalse: [^false]");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 333);
 
   puts ("- Test temporaries in optimized blocks");
   ret_obj = _interpret ("method | tmp | tmp := 123. true ifTrue: [ | tmp | tmp := 321 ]. ^tmp");
@@ -104,8 +114,12 @@ main (int argc, char *argv[])
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
   puts ("- Test loops");
-  ret_obj = _interpret ("method | var | var := 0. 1 to: 10000 do: [:i | var := i]. ^var");
+  ret_obj = _interpret ("method | var | 1 to: 10000 do: [:i | var := i]. ^var");
   assert (SYX_SMALL_INTEGER(ret_obj) == 10000);
+
+  syx_quit ();
+
+  g_timer_destroy (timer);
 
   return 0;
 }

@@ -17,10 +17,6 @@
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
 
-#define SYX_NIL syx_nil
-#define SYX_TRUE syx_true
-#define SYX_FALSE syx_false
-
 #define SYX_IS_NIL(oop) ((oop).idx == 0)
 #define SYX_IS_TRUE(oop) ((oop).idx == 1)
 #define SYX_IS_FALSE(oop) ((oop).idx == 2)
@@ -84,7 +80,7 @@ inline syx_int32 syx_object_hash (SyxOop ptr);
 inline SyxOop syx_object_get_class (SyxOop oop);
 inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
-#define syx_boolean_new(cond) ((cond) ? SYX_TRUE : SYX_FALSE)
+#define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
 inline SyxOop syx_small_integer_new (syx_int32 num);
 inline SyxOop syx_character_new (syx_uint8 ch);
 
@@ -94,6 +90,8 @@ SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
 
 SyxOop syx_dictionary_at_const (SyxOop dict, SyxOop key);
 SyxOop syx_dictionary_at_symbol (SyxOop dict, syx_symbol key);
+SyxOop syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object);
+SyxOop syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
 void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
 
 /* Builders */

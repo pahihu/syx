@@ -19,17 +19,19 @@ context: aContext
 !
 
 suspend
-	suspended := true.
-	self isActive ifTrue: [Processor yield]
+    suspended := true.
+    self isActive ifTrue: [Processor yield]
 !
 
 resume
-	suspended := false.
-	self isActive ifFalse: [Processor yield]
+    suspended := false.
+    self isActive ifFalse: [Processor yield]
 !
 
 terminate
-    thisContext leaveTo: nil andAnswer: nil
+    self isActive
+	ifTrue: [ Processor leaveTo: nil andAnswer: nil]
+	ifFalse: [ context := nil ]
 ! !
 
 !Process methodsFor: 'testing'!

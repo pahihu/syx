@@ -8,7 +8,8 @@ main (int argc, char *argv[])
   GTimer *timer;
 
   syx_init ("..");
-  syx_build_basic ();
+  syx_memory_load_image ("test.sim");
+
   timer = g_timer_new ();
 
   g_timer_start (timer);

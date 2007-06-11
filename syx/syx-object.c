@@ -167,10 +167,10 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 inline SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
-  SyxOop object = syx_dictionary_at_symbol (syx_symbols, symbol);
+  SyxOop object = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
   if (SYX_IS_NIL (object))
     {
-      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol), (SyxOop *)strdup (symbol));
+      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
       syx_dictionary_at_const_put (syx_symbols, object, object);
     }
 
@@ -180,7 +180,7 @@ syx_symbol_new (syx_symbol symbol)
 inline SyxOop 
 syx_string_new (syx_symbol string)
 {
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string), (SyxOop *)strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
 }
 
 inline SyxOop 
@@ -213,7 +213,25 @@ syx_dictionary_at_const (SyxOop dict, SyxOop key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
-  return SYX_NIL;
+  g_error ("unable to lookup constant %d in dictionary %d\n", key.idx, dict.idx);
+
+  return syx_nil;
+}
+
+SyxOop 
+syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object)
+{
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
+  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize i;
+
+  for (i=0; i < size; i+=2)
+    {
+      if (SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
+	return SYX_OBJECT_DATA(table)[i+1];
+    }
+  
+  return object;
 }
 
 SyxOop 
@@ -230,8 +248,28 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
       if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
 	return SYX_OBJECT_DATA(table)[i+1];
     }
+
+  g_error ("unable to lookup symbol '%s' in dictionary %d\n", key, dict.idx);
   
-  return SYX_NIL;
+  return syx_nil;
+}
+
+SyxOop 
+syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
+{
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop entry;
+  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize i;
+
+  for (i=0; i < size; i+=2)
+    {
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return SYX_OBJECT_DATA(table)[i+1];
+    }
+
+  return object;
 }
 
 void
@@ -267,8 +305,8 @@ syx_process_new (SyxOop context)
 {
   SyxOop object = syx_object_new (syx_process_class,  TRUE);
   SYX_PROCESS_CONTEXT(object) = context;
-  SYX_PROCESS_SUSPENDED(object) = SYX_TRUE;
-  SYX_PROCESS_SCHEDULED(object) = SYX_FALSE;
+  SYX_PROCESS_SUSPENDED(object) = syx_true;
+  SYX_PROCESS_SCHEDULED(object) = syx_false;
   syx_scheduler_add_process (object);
   return object;
 }
@@ -448,10 +486,10 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
 	continue;
 
-      method = syx_dictionary_at_symbol (SYX_CLASS_METHODS (cur), selector);
+      method = syx_dictionary_at_symbol_if_absent (SYX_CLASS_METHODS (cur), selector, syx_nil);
       if (!SYX_IS_NIL (method))
 	return method;
     }
 
-  return SYX_NIL;
+  return syx_nil;
 }
