@@ -513,7 +513,7 @@ static syx_bool
 _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 {
   SyxToken token;
-  syx_char selector[256];
+  syx_char selector[256] = {0};
   syx_int8 num_args;
   syx_bool super_term;
   syx_uint16 jump, conditionJump, loopJump;
@@ -765,7 +765,7 @@ static void
 _syx_parser_parse_method_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  syx_char selector[256];
+  syx_char selector[256] = {0};
   SyxParserScope scope = {self->argument_names_top, self->argument_names_top};
 
   switch (token.type)
