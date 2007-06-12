@@ -47,6 +47,10 @@ first
     ^self at: 1
 !
 
+last
+    ^self at: self size
+!
+
 size
     "Answer how many objects we include"
     | count |

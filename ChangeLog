@@ -1,3 +1,24 @@
+2007-06-12  Luca Bruno  <lethalman88@gmail.com>
+
+	* Everything we need to let the Console work men
+
+	* syx/syx-utils.c (_syx_cold_parse_class): if superclass changed, we must update the metaclass too
+
+	* syx/syx-lexer.c (_syx_lexer_token_symbol): fixed, now includes colons
+
+	* tests/*: removed all memory leaks
+	
+	* st/kernel/Number.st (to:by:do:): added because needed by dictionary hash tables
+
+	* st/kernel/False.st (or:): added
+
+	* st/kernel/True.st (or:): added
+
+	* st/kernel/Dictionary.st: added
+
+	* syx/syx-primitives.c (syx_primitive_at_put): fixed index
+	(syx_primitive_at): fixed index
+
 2007-06-11  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (syx_memory_init): realloc only if memory must be larger
@@ -7,7 +28,7 @@
 
 	* syx/syx-init.c (syx_build_basic): SYX_IS_OBJECT returns FALSE if it's a constant, so we have to set the class ourselves
 	(syx_init_basic_streams): removed
-	(syx_init_system): added, initialize the system from Smalltalk itself
+	(syx_init_system): added, initialize the system from within Smalltalk itself
 
 	* syx/syx-interp.c (syx_process_execute_blocking): don't schedule process if has no context to enter
 	(syx_process_execute_scheduled): same

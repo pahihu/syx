@@ -2,22 +2,22 @@
 
 yield
     <primitive: 'Processor_yield'>
-	^self primitiveFailed
+	self primitiveFailed
 !
 
 enter: aContext
     <primitive: 'Processor_enter'>
-	^self primitiveFailed
+	self primitiveFailed
 !
 
 swapWith: aContext
     <primitive: 'Processor_swapWith'>
-	^self primitiveFailed
+	self primitiveFailed
 !
 
 leaveTo: aContext andAnswer: anObject
     <primitive: 'Processor_leaveTo_andAnswer'>
-	^self primitiveFailed
+	self primitiveFailed
 ! !
 
 !ProcessorScheduler methodsFor: 'accessing'!

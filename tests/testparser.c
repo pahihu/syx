@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "../syx/syx.h"
 
 int
@@ -17,7 +18,9 @@ main (int argc, char *argv[])
 #define PARSE(text) lexer = syx_lexer_new (text);			\
   method = syx_method_new ();						\
   parser = syx_parser_new (lexer, method, NULL);			\
-  syx_parser_parse (parser, NULL)
+  syx_parser_parse (parser, NULL);					\
+  syx_parser_free (parser, FALSE);					\
+  syx_lexer_free (lexer, FALSE);
 
 #define SELECTOR_EQ(expected) (!strcmp (SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(method)), expected))
 #define NUM_ARGS (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method)))
@@ -49,8 +52,10 @@ main (int argc, char *argv[])
   PARSE ("meth 1, 2, 3 test. (1, 2, 3) test");
 
   g_timer_stop (timer);
-  g_print("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
+  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
+
+  syx_quit ();
   
   return 0;
 }

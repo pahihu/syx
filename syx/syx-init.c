@@ -62,7 +62,7 @@ _syx_file_in_basic (void)
     "Number.st", "SmallInteger.st",
     "Object.st", "UndefinedObject.st",
     "Collection.st", "Array.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
-    "Character.st", "String.st",
+    "Character.st", "ByteArray.st", "String.st",
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",
     "True.st", "False.st",
@@ -71,7 +71,8 @@ _syx_file_in_basic (void)
     "CompiledMethod.st",
     "LookupKey.st", "Association.st",
     "Stream.st", "FileStream.st",
-    "SystemDictionary.st",
+    "TextCollector.st",
+    "Dictionary.st", "SystemDictionary.st",
     "Console.st",
     NULL
   };
@@ -95,6 +96,7 @@ void
 syx_build_basic (void)
 {
   SyxOop Object, Behavior, Class;
+  SyxOop context;
 
   syx_memory_clear ();
   syx_memory_init (SYX_INIT_MEMORY_SIZE);
@@ -155,6 +157,10 @@ syx_build_basic (void)
 
   syx_fetch_basic ();
   _syx_file_in_basic ();
+
+  syx_scheduler_init ();
+  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
+  syx_process_execute_blocking (syx_process_new (context));
 }
 
 void
@@ -182,6 +188,8 @@ syx_fetch_basic (void)
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
+
+  syx_scheduler_init ();
 }
 
 void
@@ -192,16 +200,6 @@ syx_init (syx_symbol root_path)
     return;
 
   initialized = TRUE;
-}
-
-void
-syx_init_system (void)
-{
-  SyxOop context;
-
-  syx_scheduler_init ();
-  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
-  syx_process_execute_blocking (syx_process_new (context));
 }
 
 void

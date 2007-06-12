@@ -11,7 +11,7 @@
 
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
-#define SYX_OBJECT_BYTE_ARRAY(ptr) ((syx_int8 *)(SYX_OBJECT(oop)->data))
+#define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_SIZE(oop) (SYX_OBJECT(oop)->size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
@@ -21,7 +21,7 @@
 #define SYX_IS_TRUE(oop) ((oop).idx == 1)
 #define SYX_IS_FALSE(oop) ((oop).idx == 2)
 #define SYX_IS_OBJECT(oop) ((oop).c.type == SYX_TYPE_OBJECT && (oop).idx > 2)
-#define SYX_IS_SMALL_INTEGER(oop) ((oop).i.type == SYX_TYPE_SMALL_INTEGER)
+#define SYX_IS_SMALL_INTEGER(oop) ((oop).i.type == 1)
 #define SYX_IS_CHARACTER(oop) ((oop).c.type == SYX_TYPE_CHARACTER)
 
 /* Oop */

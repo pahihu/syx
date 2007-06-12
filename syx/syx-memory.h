@@ -19,7 +19,7 @@ SyxOop syx_memory_alloc (void);
 inline void syx_memory_free (SyxOop oop);
 inline void syx_memory_free_all (void);
 inline syx_varsize syx_memory_get_size (void);
-inline void syx_memory_gc (void);
+void syx_memory_gc (void);
 inline void syx_memory_gc_begin (void);
 inline void syx_memory_gc_end (void);
 

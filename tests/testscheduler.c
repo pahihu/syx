@@ -28,9 +28,9 @@ main (int argc, char *argv[])
   timer = g_timer_new ();
 
   INTERPRET ("method"\
-	     "['Process 1' print. 'Process 1' print.'Process 1' print.'Process 1' print.'Process 1' print. 'Process 1' print] fork."\
-	     "['Process 2' print. 'Process 2' print.'Process 2' print.'Process 2' print.'Process 2' print. 'Process 2' print] fork."\
-	     "['Process 3' print. 'Process 3' print.'Process 3' print.'Process 3' print.'Process 3' print. 'Process 3' print] fork");
+	     "['Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl] fork."\
+	     "['Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl] fork."\
+	     "['Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl] fork");
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 

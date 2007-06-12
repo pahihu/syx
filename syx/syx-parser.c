@@ -740,15 +740,18 @@ _syx_parser_parse_literal_array (SyxParser *self)
 	  if (!strcmp (token.value.string, "("))
 	    {
 	      elements[top++] = _syx_parser_parse_literal_array (self);
+	      syx_token_free (token);
 	      break;
 	    }
 	case SYX_TOKEN_NAME_CONST:
 	case SYX_TOKEN_NAME_COLON:
 	case SYX_TOKEN_SYM_CONST:
 	  elements[top++] = syx_symbol_new (token.value.string);
+	  syx_token_free (token);
 	  break;
 	case SYX_TOKEN_STR_CONST:
 	  elements[top++] = syx_string_new (token.value.string);
+	  syx_token_free (token);
 	  break;
 	default:
 	  g_error ("illegal text in literal array\n");

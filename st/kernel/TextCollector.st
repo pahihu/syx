@@ -12,7 +12,7 @@ message: receiverToSelectorAssociation
     "Answer a new instance of the receiver, that uses the message identified
      by anAssociation to perform write operations.  anAssociation's
      key is the receiver, while its value is the selector."
-    ^self new message: receiverToSelectorAssociation; yourself
+    ^self basicNew message: receiverToSelectorAssociation; yourself
 ! !
 
 !TextCollector methodsFor: 'set up'!
@@ -45,16 +45,17 @@ nextPut: aCharacter
 
 nextPutAll: aString
     "Write aString to the Transcript"
-    self primNextPutAll: aString.  
+    receiver nextPutAll: aString
+    "self primNextPutAll: aString.  "
 !
 
 show: aString
     "Write aString to the Transcript"
-    self primNextPutAll: aString
+    self nextPutAll: aString
 !
 
 showCr: aString
-    self primNextPutAll: aString; cr
+    self nextPutAll: aString; cr
 ! !
 
 !TextCollector methodsFor: 'private'!
@@ -63,5 +64,5 @@ primNextPutAll: aString
     "Private - Forward the writing request to the actual object
      receiver perform: selector with: aString"
 
-    stdout nextPutAll: aString
+     nextPutAll: aString
 ! !

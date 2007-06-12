@@ -296,7 +296,9 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
 
   syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver,
-				    syx_array_new (es->message_arguments_count, es->message_arguments));
+				    es->message_arguments_count
+				    ? syx_array_new (es->message_arguments_count, es->message_arguments)
+				    : syx_nil);
   syx_memory_gc_end ();
   return syx_interp_enter_context (es, context);
 }
@@ -333,7 +335,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
     return syx_interp_call_primitive (es, primitive, method);
 
   syx_memory_gc_begin ();
-  context = syx_method_context_new (es->context, method, es->message_receiver, syx_array_new_size (0));
+  context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
   syx_memory_gc_end ();
 
   return syx_interp_enter_context (es, context);

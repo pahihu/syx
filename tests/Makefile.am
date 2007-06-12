@@ -10,8 +10,8 @@ LDADDS =                                                                \
 
 TESTS = 			\
 	testlexer		\
-	testcoldparser		\
 	testimage		\
+	testcoldparser		\
 	testinstances		\
 	testparser		\
 	testinterp		\

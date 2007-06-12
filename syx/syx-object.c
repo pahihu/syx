@@ -170,7 +170,7 @@ syx_symbol_new (syx_symbol symbol)
   SyxOop object = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
   if (SYX_IS_NIL (object))
     {
-      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
+      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol), (SyxOop *)strdup (symbol));
       syx_dictionary_at_const_put (syx_symbols, object, object);
     }
 
@@ -180,7 +180,7 @@ syx_symbol_new (syx_symbol symbol)
 inline SyxOop 
 syx_string_new (syx_symbol string)
 {
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string), (SyxOop *)strdup (string));
 }
 
 inline SyxOop 
@@ -311,6 +311,9 @@ syx_process_new (SyxOop context)
   return object;
 }
 
+/*!
+  Try to do the same of ContextPart>>on:parent:receiver:arguments:
+*/
 inline SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
@@ -318,15 +321,23 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 
   SyxOop object = syx_object_new (syx_method_context_class, TRUE);
   SyxOop ctx_args;
+  syx_int32 arguments_count, temporaries_count;
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
   SYX_METHOD_CONTEXT_METHOD(object) = method;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
-  SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method)));
-  memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+  arguments_count = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method));
+  if (arguments_count > 0)
+    SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (arguments_count);
 
-  SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method)));
+  if (!SYX_IS_NIL (arguments))
+    memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+
+  temporaries_count = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method));
+  if (temporaries_count > 0)
+    SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (temporaries_count);
+
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (method)));
@@ -351,8 +362,9 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
 
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
-  memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
-	  SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+  if (!SYX_IS_NIL (arguments))
+    memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
+	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
@@ -422,7 +434,7 @@ syx_small_integer_new (syx_int32 num)
 {
   SyxOop oop;
   oop.idx = num;
-  oop.i.type = SYX_TYPE_SMALL_INTEGER;
+  oop.i.type = 1;
   return oop;
 }
 

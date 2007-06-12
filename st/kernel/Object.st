@@ -29,9 +29,14 @@ size
 	self primitiveFailed
 !
 
+basicSize
+    <primitive: 'Object_size'>
+	self primitiveFailed
+!
+
 hash
-    ^self
-"    <primitive: 'Object_hash' module: 'Kernel'>"
+    <primitive: 'Object_hash'>
+	self primitiveFailed
 ! !
 
 !Object methodsFor: 'testing'!

@@ -4,5 +4,6 @@ initializeSystem
     self
 	at: #stdin put: (FileStream on: 0);
 	at: #stdout put: (FileStream on: 1);
-	at: #stderr put: (FileStream on: 2).
+	at: #stderr put: (FileStream on: 2);
+	at: #Transcript put: (TextCollector message: stdout -> #nextPutAll:)
 ! !

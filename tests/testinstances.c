@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "../syx/syx.h"
 
 int
@@ -45,9 +46,10 @@ main (int argc, char *argv[])
   assert (!strcmp (SYX_OBJECT_SYMBOL (obj), "string"));
 
   g_timer_stop (timer);
+  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
 
-  g_print("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
+  syx_quit ();
 
   return 0;
 }

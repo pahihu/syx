@@ -7,6 +7,10 @@ key: aKey value: aValue
 
 !Association methodsFor: 'accessing'!
 
+key
+    ^key
+!
+
 value: aValue
     "Set the association's value to aValue"
     value := aValue

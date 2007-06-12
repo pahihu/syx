@@ -11,22 +11,21 @@ nextChunk
     chunk := String new.
     [
 	| next |
-	next := stdin next.
-	next = $! ifTrue: [^chunk].
-	next ifNotNil: [chunk := chunk, next asString]
+	next := stdin nextAll: 1024.
+	chunk := chunk, next.
+	(chunk at: chunk size - 1) = $!
+            ifTrue: [chunk at: chunk size - 1 put: $.. ^chunk].
+	'>> ' print
     ] repeat
 !
 
 run
-    | chunk method context |
     [
 	[
-	'asd' print.
-	    stdout nextPutAll: '> '; flush.
+	    | chunk method context |
+            '> ' print.
 	    chunk := self nextChunk.
-	    method := ('goDoIt ^[', chunk, '] value') compile.
-	    context := MethodContext on: method parent: thisContext arguments: {nil}.
-	    (thisContext enter: context) printNl
-	] on: PrimitiveFailed do: [:ex | ]
+	    ('^[', chunk, '] value') doIt printNl.
+	] on: PrimitiveFailed do: [ :ex | 'a primitive failed' ]
     ] repeat
 ! !

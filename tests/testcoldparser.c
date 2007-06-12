@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 #include "../syx/syx.h"
 
 int
@@ -9,7 +10,7 @@ main (int argc, char *argv[])
   GTimer *timer;
 
   syx_init ("..");
-  syx_build_basic ();
+  syx_memory_load_image ("test.sim");
   timer = g_timer_new ();
 
   g_timer_start (timer);
@@ -37,8 +38,10 @@ main (int argc, char *argv[])
   syx_lexer_free (lexer, FALSE);
 
   g_timer_stop (timer);
-  g_print("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
+  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
+
+  syx_quit ();
 
   return 0;
 }

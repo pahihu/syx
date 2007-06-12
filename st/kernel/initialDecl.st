@@ -106,7 +106,7 @@ ByteStream subclass: #FileStream
 "Basic data types"
 
 ByteArray subclass: #String
-	       instanceVariableNames: ''!
+	  instanceVariableNames: ''!
 
 Object subclass: #Symbol
        instanceVariableNames: ''!

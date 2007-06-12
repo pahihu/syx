@@ -186,22 +186,15 @@ _syx_memory_gc_sweep ()
 /*!
   Calls the Syx garbage collector
  */
-inline void
+void
 syx_memory_gc (void)
 {
-#ifdef DEBUG_GC
-  syx_varsize old_top = _syx_freed_memory_top;
-  syx_varsize reclaimed;
-#endif
-
-  SYX_OBJECT_IS_MARKED(syx_symbols) = TRUE;
-  SYX_OBJECT_IS_MARKED(SYX_DICTIONARY_HASH_TABLE(syx_symbols)) = TRUE;
+  _syx_memory_gc_mark (syx_symbols);
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
 
 #ifdef DEBUG_GC
-  reclaimed = _syx_freed_memory_top - old_top;
-  printf("GC: reclaimed %d (%d%%) objects over %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_memory_size);
+  printf("GC: reclaimed %d (%d%%) objects over %d\n", _syx_freed_memory_top, _syx_freed_memory_top * 100 / _syx_memory_size, _syx_memory_size);
 #endif
 }
 
@@ -390,7 +383,7 @@ syx_memory_load_image (syx_symbol path)
 	      if (object->data)
 		syx_free (object->data);
 
-	      object->data = syx_calloc (object->size, sizeof (syx_int8));
+	      object->data = syx_calloc (object->size + 1, sizeof (syx_int8));
 	      fread (object->data, sizeof (syx_int8), object->size, image);
 	    }
 	}

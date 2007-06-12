@@ -1,17 +1,8 @@
 !Symbol methodsFor: 'accessing'!
-"
-value
-    <primitive: 'globalValue' module: 'Kernel'>
-	self primitiveFailed
-!
 
 asString
-    <primitive: 'symbolToString' module: 'Kernel'>
+    <primitive: 'Symbol_asString'>
 	self primitiveFailed
-!
-"
-print
-    <primitive: 'Symbol_print'>
 !
 
 printString

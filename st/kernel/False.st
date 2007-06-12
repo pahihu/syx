@@ -12,6 +12,10 @@ ifFalse: falseBlock
     ^falseBlock value
 !
 
+or: aBlock
+    ^aBlock value
+!
+
 not
     ^true
 !

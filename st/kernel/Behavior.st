@@ -25,12 +25,12 @@ new
 !
 
 basicNew: anInteger
-    <primitive: 'Behavior_basicNew'>
+    <primitive: 'Behavior_newColon'>
 	^self primitiveFailed
 !
 
 new: anInteger
-    <primitive: 'Behavior_basicNew'>
+    <primitive: 'Behavior_newColon'>
 	^self primitiveFailed
 ! !
 

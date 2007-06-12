@@ -1,9 +1,10 @@
-!String methodsFor: 'primitives'!
+!String class methodsFor: 'instance creation'!
 
-print
-    <primitive: 'String_print'>
-	self primitiveFailed
-!
+new: anIndex
+    ^self basicNew: anIndex
+! !
+
+!String methodsFor: 'primitives'!
 
 printString
     ^self
@@ -12,12 +13,22 @@ printString
 compile
     <primitive: 'String_compile'>
 	self primitiveFailed
-!
+! !
 
-"= anObject
-    <primitive: 'valueEqual' module: 'Kernel'>
-	self primitiveFailed
-!" !
+!String methodsFor: 'utilities'!
+
+doIt
+    | method context |
+    method := ('goDoIt ', self) compile.
+    context := MethodContext on: method parent: thisContext receiver: nil arguments: nil.
+    ^Processor enter: context
+! !
+
+!String methodsFor: 'converting'!
+
+asString
+    ^self
+! !
 
 !String methodsFor: 'testing'!
 

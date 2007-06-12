@@ -59,25 +59,25 @@ fileOp: anInteger on: aFD with: anArgument
 !FileStream methodsFor: 'basic'!
 
 close
-    self fileOp: 1 on: aFD
+    self fileOp: 1 on: fd
 !
 
 nextPut: aCharacter
-    self fileOp: 2 on: aFD with: aCharacter
+    self fileOp: 2 on: fd with: aCharacter
 !
 
 nextPutAll: aString
-    self fileOp: 3 on: aFD with: aString
+    self fileOp: 3 on: fd with: aString
 !
 
 flush
-    self fileOp: 4 on: aFD
+    self fileOp: 4 on: fd
 !
 
 next
-    ^self fileOp: 5 on: aFD
+    ^self fileOp: 5 on: fd
 !
 
 nextAll: numBytes
-    ^self fileOp: 6 on: aFD
+    ^self fileOp: 6 on: fd with: numBytes
 ! !

@@ -80,7 +80,11 @@ _syx_cold_parse_class (SyxLexer *lexer)
       else
 	{
 	  existing_class = TRUE;
-	  SYX_CLASS_SUPERCLASS(subclass) = superclass;
+	  if (SYX_OOP_NE (SYX_CLASS_SUPERCLASS(subclass), superclass))
+	    {
+	      SYX_CLASS_SUPERCLASS(subclass) = superclass;
+	      SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass)) = syx_object_get_class (superclass);
+	    }
 	}
     }
 

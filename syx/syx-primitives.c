@@ -48,10 +48,18 @@ SYX_FUNC_PRIMITIVE (Behavior_new)
   SYX_PRIM_RETURN (syx_object_new (es->message_receiver, TRUE));
 }
 
-SYX_FUNC_PRIMITIVE (Behavior_basicNew)
+SYX_FUNC_PRIMITIVE (Behavior_newColon)
 {
   syx_varsize size = SYX_SMALL_INTEGER (es->message_arguments[0]);
   SYX_PRIM_RETURN(syx_object_new_size (es->message_receiver, TRUE, size));
+}
+
+SYX_FUNC_PRIMITIVE (ByteArray_newColon)
+{
+  syx_varsize size = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  SYX_PRIM_RETURN(syx_object_new_data (es->message_receiver, FALSE,
+				       size,
+				       syx_calloc (size, sizeof (syx_int8))));
 }
 
 SYX_FUNC_PRIMITIVE (Object_class)
@@ -62,20 +70,20 @@ SYX_FUNC_PRIMITIVE (Object_class)
 SYX_FUNC_PRIMITIVE (Object_at)
 {
   syx_varsize index;
-  index = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
   SYX_PRIM_RETURN(SYX_OBJECT_DATA(es->message_receiver)[index]);
 }
 
 SYX_FUNC_PRIMITIVE (Object_at_put)
 {
   syx_varsize index;
-  SyxOop ptr;
+  SyxOop object;
 
-  index = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  ptr = es->message_arguments[1];
-  SYX_OBJECT_DATA(es->message_receiver)[index] = ptr;
+  index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  object = es->message_arguments[1];
+  SYX_OBJECT_DATA(es->message_receiver)[index] = object;
 
-  SYX_PRIM_RETURN (ptr);
+  SYX_PRIM_RETURN (object);
 }
 
 SYX_FUNC_PRIMITIVE (Object_grow_by)
@@ -102,6 +110,28 @@ SYX_FUNC_PRIMITIVE (Object_hash)
 {
   SYX_PRIM_RETURN (syx_small_integer_new (syx_object_hash (es->message_receiver)));
 }
+
+
+
+SYX_FUNC_PRIMITIVE (ByteArray_at)
+{
+  syx_varsize index;
+
+  index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  SYX_PRIM_RETURN(syx_character_new (SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index]));
+}
+
+SYX_FUNC_PRIMITIVE (ByteArray_at_put)
+{
+  syx_varsize index;
+  SyxOop oop = es->message_arguments[1];
+
+  index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index] = SYX_CHARACTER (oop);
+  SYX_PRIM_RETURN (oop);
+}
+
+
 
 SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 {
@@ -163,10 +193,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 }
 
 /* These printing function are used ONLY for tests */
-SYX_FUNC_PRIMITIVE (Symbol_print)
+SYX_FUNC_PRIMITIVE (Symbol_asString)
 {
-  printf ("%s\n", SYX_OBJECT_STRING(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
+  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
 }
 
 SYX_FUNC_PRIMITIVE (String_print)
@@ -209,7 +238,7 @@ SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
       if (SYX_OOP_EQ (syx_object_get_class (ctx), syx_block_context_class))
 	{
 	  hClass = SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx);
-	  if (SYX_OOP_EQ (eClass, hClass) || syx_class_is_superclass_of (hClass, eClass))
+	  if (!SYX_IS_NIL (hClass) && (SYX_OOP_EQ (eClass, hClass) || syx_class_is_superclass_of (hClass, eClass)))
 	    SYX_PRIM_RETURN (ctx);
 	}
 
@@ -221,6 +250,8 @@ SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
 
 SYX_FUNC_PRIMITIVE (Character_new)
 {
+  SyxOop c = syx_character_new (20);
+  if (SYX_IS_SMALL_INTEGER (c)) g_error("asd");
   SYX_PRIM_RETURN (syx_character_new (SYX_SMALL_INTEGER (es->message_arguments[0])));
 }
 
@@ -246,14 +277,14 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 
 SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 {
-  syx_int32 fd = SYX_SMALL_INTEGER (es->arguments[1]);
+  syx_int32 fd = SYX_SMALL_INTEGER (es->message_arguments[1]);
   syx_int32 ret = 0;
 
-  switch (SYX_SMALL_INTEGER (es->arguments[0]))
+  switch (SYX_SMALL_INTEGER (es->message_arguments[0]))
     {
     case 0: // open
       {
-	syx_symbol mode = SYX_OBJECT_SYMBOL (es->arguments[1]);
+	syx_symbol mode = SYX_OBJECT_SYMBOL (es->message_arguments[1]);
 	syx_int32 flags = 0;
 
 	if (!strcmp (mode, "r"))
@@ -265,7 +296,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	else
 	  g_error ("mh? %s\n", mode);
 	
-	ret = open (SYX_OBJECT_SYMBOL(es->arguments[0]), flags);
+	ret = open (SYX_OBJECT_SYMBOL(es->message_arguments[0]), flags);
       }
       break;
 
@@ -275,13 +306,14 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       
     case 2: // nextPut:
       {
-	syx_char c = SYX_CHARACTER (es->arguments[2]);
+	syx_char c = SYX_CHARACTER (es->message_arguments[2]);
 	ret = write (fd, &c, 1);
       }
       break;
 
     case 3: // nextPutAll:
-      ret = write (fd, SYX_OBJECT_SYMBOL (es->arguments[2]), SYX_OBJECT_SIZE (es->arguments[2]));
+      ret = write (fd, SYX_OBJECT_SYMBOL (es->message_arguments[2]),
+		   SYX_OBJECT_SIZE (es->message_arguments[2]));
       break;
 
     case 4: // flush
@@ -298,16 +330,20 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 6: // nextAll:
       {
-	syx_int32 count = SYX_SMALL_INTEGER (es->arguments[2]);
+	syx_int32 count = SYX_SMALL_INTEGER (es->message_arguments[2]);
 	syx_string s = syx_alloca (count);
+	SyxOop string;
+
 	count = read (fd, s, count);
-	SyxOop string = syx_string_new (strndup (s, count));
+	s[count] = '\0';
+
+	string = syx_string_new (s);
 	SYX_PRIM_RETURN (string);
       }
       break;
 
     default: // unknown
-      g_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->arguments[0]));
+      g_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->message_arguments[0]));
 
     }
 
@@ -316,23 +352,27 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
 SYX_FUNC_PRIMITIVE (String_compile)
 {
-  /*  SyxLexer *lexer;
+  SyxLexer *lexer;
   SyxParser *parser;
-  SyxMethod *method;
-  gchar *chunk;
+  SyxOop meth;
 
-  chunk = syx_string_fetch (receiver);
-  if (!chunk)
-    return NULL;
+  lexer = syx_lexer_new (SYX_OBJECT_SYMBOL (es->message_receiver));
+  if (!lexer)
+    {
+      SYX_PRIM_RETURN (syx_nil);
+    }
 
-  lexer = syx_lexer_new (chunk);
-  method = syx_method_new ();
-  parser = syx_parser_new (lexer, method, NULL, FALSE, NULL);
-
+  meth = syx_method_new ();
+  parser = syx_parser_new (lexer, meth, NULL);
   if (!syx_parser_parse (parser, NULL))
-  return NULL;*/
+    {
+      SYX_PRIM_FAIL;
+    }
 
-  SYX_PRIM_RETURN (es->message_receiver);
+  syx_lexer_free (lexer, FALSE);
+  syx_parser_free (parser, FALSE);
+
+  SYX_PRIM_RETURN (meth);
 }
 
 /* Small integers */
@@ -389,12 +429,17 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Common for objects */
   { "Object_class", Object_class },
   { "Behavior_new", Behavior_new },
-  { "Behavior_basicNew", Behavior_basicNew },
+  { "Behavior_newColon", Behavior_newColon },
   { "Object_at", Object_at },
   { "Object_at_put", Object_at_put },
   { "Object_size", Object_size },
   { "Object_identityEqual", Object_identityEqual },
   { "Object_hash", Object_hash },
+
+  /* Byte arrays */
+  { "ByteArray_newColon", ByteArray_newColon },
+  { "ByteArray_at", ByteArray_at },
+  { "ByteArray_at_put", ByteArray_at_put },
 
   { "BlockClosure_asContext", BlockClosure_asContext },
   { "BlockClosure_value", BlockClosure_value },
@@ -403,7 +448,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "BlockClosure_on_do", BlockClosure_on_do },
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
-  { "Symbol_print", Symbol_print },
+  { "Symbol_asString", Symbol_asString },
   { "String_print", String_print },
   { "SmallInteger_print", SmallInteger_print },
 
