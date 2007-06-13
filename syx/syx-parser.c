@@ -2,6 +2,7 @@
   #include <config.h>
 #endif
 
+#include <assert.h>
 #include <string.h>
 #include "syx-types.h"
 #include "syx-object.h"
@@ -844,7 +845,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
     {
       syx_token_free (token);
       token = syx_lexer_next_token (self->lexer);
-      g_assert (token.type == SYX_TOKEN_NAME_CONST);
+      assert (token.type == SYX_TOKEN_NAME_CONST);
       self->_argument_names[self->_argument_names_top++] = token.value.string;
       scope.end++;
 

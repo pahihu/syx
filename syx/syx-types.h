@@ -1,12 +1,15 @@
 #ifndef SYX_TYPES_H
 #define SYX_TYPES_H
 
-#include <bits/wordsize.h>
+#include <stdio.h>
 #include "syx-enums.h"
 
 /*! \page syx_types Syx Types
   Contains various C data types definition, including SyxOop
 */
+
+#define GError void *
+#define g_error printf
 
 #define SYX_OOP_EQ(oop1, oop2) (oop1.idx == oop2.idx)
 #define SYX_OOP_NE(oop1, oop2) (oop1.idx != oop2.idx)

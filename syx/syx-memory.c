@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <unistd.h>
-#include <glib.h>
 #include <stdio.h>
+#include <string.h>
 #include "syx-object.h"
 #include "syx-memory.h"
 #include "syx-scheduler.h"
@@ -121,7 +121,7 @@ syx_memory_alloc (void)
 inline void
 syx_memory_free (SyxOop oop)
 {
-  bzero (syx_memory + oop.idx, sizeof (SyxObject));
+  memset (syx_memory + oop.idx, '\0', sizeof (SyxObject));
   _syx_freed_memory[_syx_freed_memory_top++] = oop;
 }
 
@@ -375,7 +375,7 @@ syx_malloc0 (syx_varsize size)
   if (!ptr)
     g_error ("out of memory");
 
-  bzero (ptr, size);
+  memset (ptr, '\0', size);
   return ptr;
 }
 

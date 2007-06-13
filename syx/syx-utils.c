@@ -4,6 +4,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-init.h"
@@ -257,30 +261,44 @@ syx_bool
 syx_cold_file_in (syx_symbol filename)
 {
   SyxLexer *lexer;
-  GMappedFile *file;
-  g_return_val_if_fail (g_file_test (filename,
-				     (G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)), FALSE);
-
-  file = g_mapped_file_new (filename, FALSE, NULL);
-  if (!file)
-    return FALSE;
-
-  lexer = syx_lexer_new (g_mapped_file_get_contents (file));
+  syx_string buffer;
+  syx_int32 fd, count;
+  struct stat statbuf;
+   
+  if ((fd = open (filename, O_RDONLY)) < 0)
+     {
+	g_error ("can't open %s\n", filename);
+	return FALSE;
+     }
+   
+  if ((fstat (fd, &statbuf)) < 0)
+     {
+	g_error ("cazz stat %s\n", filename);
+	return FALSE;
+     }
+   
+  buffer = syx_malloc (statbuf.st_size + 1);
+  count = read (fd, buffer, statbuf.st_size);
+  buffer[count - 1] = '\0';
+   
+  close (fd);
+   
+  lexer = syx_lexer_new (buffer);
   if (!lexer)
     {
-      g_mapped_file_free (file);
+      printf ("lexer %s\n", buffer);
+      syx_free (buffer);
       return FALSE;
     }
 
   if (!syx_cold_parse (lexer))
     {
-      syx_lexer_free (lexer, FALSE);
-      g_mapped_file_free (file);
+      printf ("parser %s\n", buffer);
+      syx_lexer_free (lexer, TRUE);
       return FALSE;
     }
 
-  syx_lexer_free (lexer, FALSE);
-  g_mapped_file_free (file);
+  syx_lexer_free (lexer, TRUE);
   return TRUE;
 }
 

@@ -1,7 +1,6 @@
 #ifndef SYX_SCHEDULER_H
 #define SYX_SCHEDULER_H
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 

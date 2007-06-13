@@ -1,7 +1,6 @@
 #ifndef _SYX_BYTECODE_H
 #define _SYX_BYTECODE_H
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 

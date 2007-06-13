@@ -1,7 +1,6 @@
 #ifndef SYX_MEMORY_H
 #define SYX_MEMORY_H
 
-#include <alloca.h>
 #include <stdlib.h>
 #include <string.h>
 #include "syx-object.h"
@@ -33,7 +32,6 @@ inline syx_pointer syx_malloc0 (syx_varsize size);
 inline syx_pointer syx_calloc (syx_varsize elements, syx_varsize element_size);
 inline syx_pointer syx_realloc (syx_pointer ptr, syx_varsize size);
 #define syx_free free
-#define syx_alloca alloca
 void syx_freev (syx_pointer *ptrv);
 
 #endif /* SYX_MEMORY_H */

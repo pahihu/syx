@@ -2,7 +2,6 @@
   #include <config.h>
 #endif
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"

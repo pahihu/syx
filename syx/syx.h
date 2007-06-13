@@ -12,6 +12,5 @@
 #include "syx-memory.h"
 #include "syx-interp.h"
 #include "syx-scheduler.h"
-#include "syx-plugins.h"
 
 #endif /* SYX_H */

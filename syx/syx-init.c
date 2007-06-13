@@ -2,6 +2,7 @@
   #include <config.h>
 #endif
 
+#include <unistd.h>
 #include <stdio.h>
 #include "syx-types.h"
 #include "syx-init.h"
@@ -38,7 +39,7 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 	   package, SYX_PATH_SEPARATOR,
 	   filename);
 
-  if (!g_file_test (full_path, G_FILE_TEST_EXISTS))
+  if (access (full_path, F_OK) < 0)
     {
       syx_free (full_path);
       return NULL;
@@ -255,8 +256,8 @@ syx_get_root_path (void)
 syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
-  if (!g_file_test (root_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
-    return FALSE;
+  if (access (root_path, R_OK | W_OK) < 0)
+     return FALSE;
 
   _syx_root_path = root_path;
   return TRUE;

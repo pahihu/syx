@@ -1,7 +1,6 @@
 #ifndef SYX_PARSER_H
 #define SYX_PARSER_H
 
-#include <glib.h>
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-lexer.h"

@@ -345,7 +345,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 4: // flush
-      ret = fsync (fd);
+//      ret = fsync (fd);
       break;
 
     case 5: // next
@@ -359,7 +359,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     case 6: // nextAll:
       {
 	syx_int32 count = SYX_SMALL_INTEGER (es->message_arguments[2]);
-	syx_string s = syx_alloca (count);
+	syx_char s[count];
 	SyxOop string;
 
 	count = read (fd, s, count);
@@ -527,7 +527,7 @@ syx_primitive_get_index (syx_symbol name)
 
   for (i=0; i < SYX_PRIMITIVES_MAX; i++)
     {
-      if (!g_strcasecmp (primitive_entries[i].name, name))
+      if (!strcmp (primitive_entries[i].name, name))
 	return i;
     }
 
