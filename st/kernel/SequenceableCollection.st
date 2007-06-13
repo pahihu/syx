@@ -1,3 +1,14 @@
+!SequenceableCollection methodsFor: 'concatenating'!
+
+, aSequenceableCollection
+    "Answer a new instance of an ArrayedCollection containing all the elements
+     in the receiver, followed by all the elements in aSequenceableCollection"
+    ^(self copyEmpty: self size + aSequenceableCollection size)
+	replaceFrom: 1 with: self;
+	replaceFrom: self size + 1 with: aSequenceableCollection;
+	yourself
+! !
+
 !SequenceableCollection methodsFor: 'replacing items'!
 
 replaceFrom: start with: replacementCollection

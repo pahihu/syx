@@ -39,11 +39,13 @@ with: element1 with: element2
 !ArrayedCollection methodsFor: 'basic'!
 
 at: anIndex
-    ^self basicAt: anIndex
+    <primitive: 'Object_at'>
+	self primitiveFailed
 !
 
 at: anIndex put: anObject
-    ^self basicAt: anIndex put: anObject
+    <primitive: 'Object_at_put'>
+	self primitiveFailed
 !
 
 size
@@ -54,11 +56,8 @@ add: anObject
     self shouldNotImplement
 !
 
-, aSequenceableCollection
-    "Answer a new instance of an ArrayedCollection containing all the elements
-     in the receiver, followed by all the elements in aSequenceableCollection"
-    ^(self copyEmpty: self size + aSequenceableCollection size)
-	replaceFrom: 1 with: self;
-	replaceFrom: self size + 1 with: aSequenceableCollection;
-	yourself
+replaceFrom: start with: replacementCollection
+    <primitive: 'ArrayedCollection_replaceFromWith'>
+
+    ^super replaceFrom: start with: replacementCollection
 ! !

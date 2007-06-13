@@ -10,6 +10,8 @@
 
 #define SYX_OOP_EQ(oop1, oop2) (oop1.idx == oop2.idx)
 #define SYX_OOP_NE(oop1, oop2) (oop1.idx != oop2.idx)
+
+//! Cast the index of a SyxOop to a native pointer type
 #define SYX_OOP_CAST_POINTER(oop) ((syx_pointer)(syx_nint)oop.idx)
 
 #if !defined FALSE || !defined TRUE

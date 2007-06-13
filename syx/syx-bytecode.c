@@ -7,6 +7,10 @@
 #include "syx-bytecode.h"
 #include "syx-memory.h"
 
+//! Creates a new bytecode holder
+/*!
+  \return A SyxBytecode instance
+*/
 inline SyxBytecode *
 syx_bytecode_new (void)
 {
@@ -20,17 +24,39 @@ syx_bytecode_new (void)
   return bytecode;
 }
 
+//! Frees the memory allocated for a SyxBytecode by syx_bytecode_new
+/*!
+  \param bytecode the SyxBytecode to be freed
+*/
 inline void
-syx_bytecode_free (SyxBytecode *bytecode, syx_bool free_segment)
+syx_bytecode_free (SyxBytecode *bytecode)
 {
   syx_free (bytecode);
 }
 
+/*!
+  Contains common unary messages avoiding them to be inserted into method literals.
+*/
 syx_symbol syx_bytecode_unary_messages[] = {"isNil", "notNil", "value", "new", "class", "superclass", "print", "printString",
 					    "unity", NULL};
+
+/*!
+  Same as syx_bytecode_unary_messages but contains binary messages and keyword messages with a single argument
+*/
 syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "=", "~=", "at:", "do:", "value:", "valueWithArguments:",
 					     "new:", "to:", "basicAt:", NULL};
 
+//! Manually generate an instruction
+/*!
+  This function creates an instruction and insert it into the code array.
+  If the low argument is higher than the max value, then generate a SYX_BYTECODE_EXTENDED instruction
+  with the command as argument. The low argument is put to the next code slot.
+
+  Look at SYX_BYTECODE_ARGUMENT_BITS and SYX_BYTECODE_ARGUMENT_MAX for more informations.
+
+  \param high a SyxBytecodeCommand value
+  \param low an arbitrary number identifying an argument
+*/
 void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
@@ -43,6 +69,17 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
     syx_bytecode_gen_code (bytecode, (high << SYX_BYTECODE_ARGUMENT_BITS) + low);
 }
 
+//! Generate a message instruction
+/*!
+  If the message shouldn't be sent to super and the selector is known to be a common unary or binary message,
+  send SYX_BYTECODE_SEND_UNARY or SYX_BYTECODE_SEND_BINARY with its relative index into syx_bytecode_unary_messages or syx_bytecode_binary_messages.
+
+  If it's a non-specific message, then specify the number of arguments with the SYX_BYTECODE_MARK_ARGUMENTS instruction and generate a SYX_BYTECODE_SEND_MESSAGE or SYX_BYTECODE_SEND_SUPER instruction.
+
+  \param to_super TRUE if the message must be sent to the superclass
+  \param argument_count the number of arguments the message requires
+  \param selector a message pattern
+*/
 void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
@@ -78,6 +115,13 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 				  syx_bytecode_gen_literal (bytecode, syx_symbol_new (selector)));
 }
 
+//! Generate a literal
+/*!
+  Insert the given literal into the literals array if it's not already there.
+
+  \param literal an object
+  \return The position of literal into the literals array
+*/
 syx_uint32
 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 {

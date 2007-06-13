@@ -10,14 +10,16 @@
 
 extern SyxObject *syx_memory;
 
+//! Obtain a SyxOop from the effective memory pointer
 inline SyxOop SYX_POINTER_TO_OOP (syx_pointer ptr);
+
+//! Get the effective memory address of a SyxOop
 #define SYX_OOP_TO_POINTER(oop) (syx_memory + ((oop).idx))
 
 void syx_memory_init (syx_varsize size);
 void syx_memory_clear (void);
 SyxOop syx_memory_alloc (void);
 inline void syx_memory_free (SyxOop oop);
-inline void syx_memory_free_all (void);
 inline syx_varsize syx_memory_get_size (void);
 void syx_memory_gc (void);
 inline void syx_memory_gc_begin (void);

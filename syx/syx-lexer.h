@@ -29,9 +29,8 @@ struct SyxLexer {
   SyxToken last_token;
   syx_char last_char;
 
-  /* <private> */
-  syx_symbol current_text;
-  syx_char pushed_back;
+  syx_symbol _current_text;
+  syx_char _pushed_back;
 };
 
 SyxLexer *syx_lexer_new (syx_symbol text);

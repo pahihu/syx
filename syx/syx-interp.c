@@ -17,7 +17,9 @@
 /* #define SYX_DEBUG_BYTECODE_PROFILE */
 
 static syx_uint16 _syx_interp_get_next_byte (SyxExecState *es);
+static syx_bool _syx_interp_execute_byte (SyxExecState *es, syx_uint16 byte);
 
+//! Push an object into the stack
 inline void
 syx_interp_stack_push (SyxExecState *es, SyxOop object)
 {
@@ -27,6 +29,7 @@ syx_interp_stack_push (SyxExecState *es, SyxOop object)
   es->stack[es->sp++] = object;
 }
 
+//! Pop an object from the stack
 inline SyxOop 
 syx_interp_stack_pop (SyxExecState *es)
 {
@@ -36,12 +39,17 @@ syx_interp_stack_pop (SyxExecState *es)
   return es->stack[--es->sp];
 }
 
+//! Peek the last object pushed into the stack
 inline SyxOop 
 syx_interp_stack_peek (SyxExecState *es)
 {
   return es->stack[es->sp - 1];
 }
 
+//! Changes the current context with another context
+/*!
+  \return FALSE if the context was syx_nil
+*/
 inline syx_bool
 syx_interp_swap_context (SyxExecState *es, SyxOop context)
 {
@@ -54,6 +62,16 @@ syx_interp_swap_context (SyxExecState *es, SyxOop context)
   return !SYX_IS_NIL (context);
 }
 
+//! Leaves the current context and push an object into the returning context
+/*!
+  Obtain the returning context from the returnContext variable of the context if use_return_context is specified, otherwise use the parent context.
+  Then sets the returned object variable of the process to the specified object.
+  Finally swap the context with the new one: syx_interp_swap_context returns TRUE, then push return_object into the new context, else remove the process from being scheduled.
+
+  \param return_object the object to be pushed into the returning context
+  \param use_return_context TRUE to get the returning context from returnContext variable, FALSE to use the parent context
+  \return FALSE if the context was syx_nil and the process is removed from being scheduled
+*/
 inline syx_bool
 syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx_bool use_return_context)
 {
@@ -74,6 +92,10 @@ syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx
   return FALSE;
 }
 
+//! Enters a new context
+/*!
+  \return FALSE if the context was syx_nil
+*/
 inline syx_bool
 syx_interp_enter_context (SyxExecState *es, SyxOop context)
 {
@@ -85,6 +107,11 @@ syx_interp_enter_context (SyxExecState *es, SyxOop context)
   return syx_interp_swap_context (es, context);
 }
 
+//! Calls a primitive
+/*
+  \param primitive the primitive index
+  \param method the method in which the primitive is defined
+*/
 inline syx_bool
 syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive, SyxOop method)
 {
@@ -104,6 +131,110 @@ syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive, SyxOop method)
 
   return prim_entry->func (es, method);
 }
+
+//! Fetch the execution state of a Process
+void
+syx_exec_state_fetch (SyxExecState *es, SyxOop process)
+{
+  SyxOop method;
+  es->process = process;
+  es->context = SYX_PROCESS_CONTEXT (process);
+  if (SYX_IS_NIL (es->context))
+    return;
+
+  method = SYX_METHOD_CONTEXT_METHOD (es->context);
+
+  es->receiver = SYX_METHOD_CONTEXT_RECEIVER (es->context);
+  es->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_ARGUMENTS (es->context));
+  es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
+  es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
+  es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
+  es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
+  es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
+  es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
+  es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
+  es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
+}
+
+//! Save the current execution state
+inline void
+syx_exec_state_save (SyxExecState *es)
+{
+  SyxOop context = SYX_PROCESS_CONTEXT (es->process);
+  if (!SYX_IS_NIL (context))
+    {
+      SYX_METHOD_CONTEXT_IP(context) = syx_small_integer_new (es->ip);
+      SYX_METHOD_CONTEXT_SP(context) = syx_small_integer_new (es->sp);
+    }
+  SYX_PROCESS_CONTEXT(es->process) = es->context;
+}
+
+//! Frees the SyxExecState
+inline void
+syx_exec_state_free (SyxExecState *es)
+{
+  syx_free (es);
+}
+
+//! Executes the given process and returnes once the byteslice is reached
+/*!
+  This function automatically fetch the state of the Process, saves and frees it once it terminated its running time
+*/
+void
+syx_process_execute_scheduled (SyxOop process)
+{
+  syx_uint16 byte;
+  SyxExecState *es;
+  
+  es = syx_exec_state_new ();
+  syx_exec_state_fetch (es, process);
+  if (SYX_IS_NIL (es->context))
+    {
+      syx_scheduler_remove_process (process);
+      syx_exec_state_free (es);
+      return;
+    }
+
+  while (es->ip < es->bytecodes_count && es->byteslice >= 0)
+    {
+      byte = _syx_interp_get_next_byte (es);
+      if (!_syx_interp_execute_byte (es, byte))
+	break;
+      es->byteslice--;
+    }
+
+  syx_exec_state_save (es);
+  syx_exec_state_free (es);
+}
+
+//! Same as syx_process_execute_scheduled but does not take care about the byteslice counter
+void
+syx_process_execute_blocking (SyxOop process)
+{
+  syx_uint16 byte;
+  SyxExecState *es;
+
+  es = syx_exec_state_new ();
+  syx_exec_state_fetch (es, process);
+  if (SYX_IS_NIL (es->context))
+    {
+      syx_scheduler_remove_process (process);
+      syx_exec_state_free (es);
+      return;
+    }
+
+  syx_processor_active_process = process;
+  while (es->ip < es->bytecodes_count)
+    {
+      byte = _syx_interp_get_next_byte (es);
+      if (!_syx_interp_execute_byte (es, byte))
+	break;
+    }
+
+  syx_exec_state_save (es);
+  syx_exec_state_free (es);
+}
+
 
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
@@ -261,10 +392,16 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
       return res;
     }
 
-  syx_memory_gc_begin ();
-  context = syx_method_context_new (es->context, method, es->message_receiver,
-				    syx_array_new (es->message_arguments_count, es->message_arguments));
-  syx_memory_gc_end ();
+  if (es->message_arguments_count > 0)
+    {
+      syx_memory_gc_begin ();
+      context = syx_method_context_new (es->context, method, es->message_receiver,
+					syx_array_new (es->message_arguments_count, es->message_arguments));
+      syx_memory_gc_end ();
+    }
+  else
+    context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
+
   return syx_interp_enter_context (es, context);
 }
 
@@ -294,12 +431,16 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
       return res;
     }
 
-  syx_memory_gc_begin ();
-  context = syx_method_context_new (es->context, method, es->message_receiver,
-				    es->message_arguments_count
-				    ? syx_array_new (es->message_arguments_count, es->message_arguments)
-				    : syx_nil);
-  syx_memory_gc_end ();
+  if (es->message_arguments_count > 0)
+    {
+      syx_memory_gc_begin ();
+      context = syx_method_context_new (es->context, method, es->message_receiver,
+					syx_array_new (es->message_arguments_count, es->message_arguments));
+      syx_memory_gc_end ();
+    }
+  else
+    context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
+
   return syx_interp_enter_context (es, context);
 }
 
@@ -387,7 +528,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     g_error ("Class at %p doesn't respond to known binary #%s\n", SYX_OOP_CAST_POINTER (class), syx_bytecode_unary_messages[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_unary_messages[argument]);
+  g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_binary_messages[argument]);
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
@@ -539,99 +680,4 @@ _syx_interp_execute_byte (SyxExecState *es, syx_uint16 byte)
 #endif
   
   return res;
-}
-
-void
-syx_exec_state_fetch (SyxExecState *es, SyxOop process)
-{
-  SyxOop method;
-  es->process = process;
-  es->context = SYX_PROCESS_CONTEXT (process);
-  if (SYX_IS_NIL (es->context))
-    return;
-
-  method = SYX_METHOD_CONTEXT_METHOD (es->context);
-
-  es->receiver = SYX_METHOD_CONTEXT_RECEIVER (es->context);
-  es->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_ARGUMENTS (es->context));
-  es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
-  es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
-  es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
-  es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
-  es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
-  es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
-  es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
-  es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
-}
-
-inline void
-syx_exec_state_save (SyxExecState *es)
-{
-  SyxOop context = SYX_PROCESS_CONTEXT (es->process);
-  if (!SYX_IS_NIL (context))
-    {
-      SYX_METHOD_CONTEXT_IP(context) = syx_small_integer_new (es->ip);
-      SYX_METHOD_CONTEXT_SP(context) = syx_small_integer_new (es->sp);
-    }
-  SYX_PROCESS_CONTEXT(es->process) = es->context;
-}
-
-inline void
-syx_exec_state_free (SyxExecState *es)
-{
-  syx_free (es);
-}
-
-void
-syx_process_execute_scheduled (SyxOop process)
-{
-  syx_uint16 byte;
-  SyxExecState *es;
-  
-  es = syx_exec_state_new ();
-  syx_exec_state_fetch (es, process);
-  if (SYX_IS_NIL (es->context))
-    {
-      syx_scheduler_remove_process (process);
-      syx_exec_state_free (es);
-      return;
-    }
-
-  while (es->ip < es->bytecodes_count && es->byteslice >= 0)
-    {
-      byte = _syx_interp_get_next_byte (es);
-      if (!_syx_interp_execute_byte (es, byte))
-	break;
-      es->byteslice--;
-    }
-
-  syx_exec_state_save (es);
-  syx_exec_state_free (es);
-}
-
-void
-syx_process_execute_blocking (SyxOop process)
-{
-  syx_uint16 byte;
-  SyxExecState *es;
-
-  es = syx_exec_state_new ();
-  syx_exec_state_fetch (es, process);
-  if (SYX_IS_NIL (es->context))
-    {
-      syx_scheduler_remove_process (process);
-      syx_exec_state_free (es);
-      return;
-    }
-
-  syx_processor_active_process = process;
-  while (es->ip < es->bytecodes_count)
-    {
-      byte = _syx_interp_get_next_byte (es);
-      if (!_syx_interp_execute_byte (es, byte))
-	break;
-    }
-
-  syx_exec_state_save (es);
-  syx_exec_state_free (es);
 }

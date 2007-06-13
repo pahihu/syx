@@ -23,7 +23,7 @@ static syx_bool _syx_char_is_single_binary (syx_char c);
   Take look at syx-lexer.c for more detailed informations.
 */
 
-//! Creates a new lexer
+//! Creates a new lexer to parse the code
 /*!
   \param text the code
   \return A new SyxLexer
@@ -37,13 +37,17 @@ syx_lexer_new (syx_symbol text)
 
   self = syx_malloc (sizeof (SyxLexer));
 
-  self->text = self->current_text = text;
-  self->pushed_back = -1;
+  self->text = self->_current_text = text;
+  self->_pushed_back = -1;
   self->last_char = -1;
 
   return self;
 }
 
+//! Frees the memory allocated by syx_lexer_new
+/*!
+  \param free_text TRUE frees the text
+*/
 void
 syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
 {
@@ -53,6 +57,11 @@ syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
   syx_free (lexer);
 }
 
+//! Frees the memory allocated for a SyxToken
+/*!
+  The only way the token can be freed is only when it holds a string.
+  In that case, the string is freed
+*/
 void
 syx_token_free (SyxToken token)
 {
@@ -173,18 +182,19 @@ _syx_char_is_binary_second (syx_char c)
   return !(isalnum (c) || isspace (c) || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
 }
 
+//! Get the next character or 0
 syx_char
 syx_lexer_forward (SyxLexer *lexer)
 {
   syx_char cc;
 
-  if (lexer->pushed_back != -1)
+  if (lexer->_pushed_back != -1)
     {
-      cc = lexer->pushed_back;
-      lexer->pushed_back = -1;
+      cc = lexer->_pushed_back;
+      lexer->_pushed_back = -1;
     }
-  else if (*(lexer->current_text))
-    cc = *(lexer->current_text++);
+  else if (*(lexer->_current_text))
+    cc = *(lexer->_current_text++);
   else
     cc = '\0';
 
@@ -192,13 +202,15 @@ syx_lexer_forward (SyxLexer *lexer)
   return cc;
 }
 
+//! Move backward the text pointer
 inline syx_char
 syx_lexer_push_back (SyxLexer *lexer)
 {
-  lexer->pushed_back = syx_lexer_get_last_char (lexer);
-  return lexer->pushed_back;
+  lexer->_pushed_back = syx_lexer_get_last_char (lexer);
+  return lexer->_pushed_back;
 }
 
+//! Returns the next token parsed by the lexer
 SyxToken
 syx_lexer_next_token (SyxLexer *lexer)
 {
@@ -268,6 +280,10 @@ syx_lexer_next_token (SyxLexer *lexer)
   return token;
 }
 
+//! Get the next chunk of code separated ending with an exlamation mark (!)
+/*!
+  \return A string containing the chunk without the exlamation mark. It must be freed once it's not needed anymore
+*/
 syx_string
 syx_lexer_next_chunk (SyxLexer *lexer)
 {
@@ -275,7 +291,7 @@ syx_lexer_next_chunk (SyxLexer *lexer)
   syx_symbol start_text;
   syx_string chunk;
 
-  start_text = lexer->current_text;
+  start_text = lexer->_current_text;
   token = syx_lexer_next_token (lexer);
 
   if ((token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!")) || token.type == SYX_TOKEN_END)
@@ -293,16 +309,18 @@ syx_lexer_next_chunk (SyxLexer *lexer)
 
   syx_token_free (token);
 
-  chunk = strndup (start_text, lexer->current_text - start_text - 1);
+  chunk = strndup (start_text, lexer->_current_text - start_text - 1);
   return chunk;
 }
 
+//! Returns the last token returned by syx_lexer_next_token
 SyxToken
 syx_lexer_get_last_token (SyxLexer *lexer)
 {
   return lexer->last_token;
 }
 
+//! Returns the last character returned by syx_lexer_forward
 syx_char
 syx_lexer_get_last_char (SyxLexer *lexer)
 {

@@ -27,20 +27,22 @@ struct SyxParser
   SyxLexer *lexer;
   SyxOop method;
   SyxBytecode *bytecode;
-  syx_bool in_block;
-
-  syx_int16 duplicate_indexes[256];
-  syx_int32 duplicate_indexes_top;
-
-  syx_string temporary_names[256];
-  syx_int32 temporary_names_top;
-  SyxParserScopeStack temporary_scopes;
-
-  syx_string argument_names[256];
-  SyxParserScopeStack argument_scopes;
-  syx_int32 argument_names_top;
-
   syx_symbol *instance_names;
+
+  /* private */
+
+  syx_bool _in_block;
+
+  syx_int16 _duplicate_indexes[256];
+  syx_int32 _duplicate_indexes_top;
+
+  syx_string _temporary_names[256];
+  syx_int32 _temporary_names_top;
+  SyxParserScopeStack _temporary_scopes;
+
+  syx_string _argument_names[256];
+  SyxParserScopeStack _argument_scopes;
+  syx_int32 _argument_names_top;
 };
 
 SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names);

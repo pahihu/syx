@@ -47,12 +47,19 @@ SyxOop syx_nil,
 
 /* Inlines */
 
+//! Grows SyxObject::data by a given size
 inline void
 syx_object_grow_by (SyxOop object, syx_varsize size)
 {
-  SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object), SYX_OBJECT_SIZE(object) + size);
+  SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
+					 (SYX_OBJECT_SIZE(object) + size) * sizeof (SyxOop));
 }
 
+//! Get the class of an object
+/*!
+  \param object can be an SyxOop
+  \return For small integers return SmallInteger and for characters the Character class
+*/
 inline SyxOop 
 syx_object_get_class (SyxOop object)
 {
@@ -71,15 +78,20 @@ syx_object_get_class (SyxOop object)
   return SYX_OBJECT(object)->class;
 }
 
+//! Set the class of an object
+/*!
+  If the object is a constant, a small integer or a character, no operation is done
+*/
 inline void
-syx_object_set_class (SyxOop object, SyxOop val)
+syx_object_set_class (SyxOop object, SyxOop class)
 {
   if (!SYX_IS_OBJECT(object))
     return;
 
-  SYX_OBJECT(object)->class = val;
+  SYX_OBJECT(object)->class = class;
 }
 
+//! Returns the hash of an object
 inline syx_int32
 syx_object_hash (SyxOop object)
 {
@@ -91,8 +103,14 @@ syx_object_hash (SyxOop object)
   return object.idx;
 }
 
-/* Builders */
+/* Contructors */
 
+//! Creates a new metaclass
+/*!
+  The metaclass will be an instance of the Metaclass class. Instance size is inherited by superclass
+
+  \param supermetaclass the superclass of the new metaclass
+*/
 inline SyxOop 
 syx_metaclass_new (SyxOop supermetaclass)
 {
@@ -105,6 +123,13 @@ syx_metaclass_new (SyxOop supermetaclass)
   return metaclass;
 }
 
+//! Creates a new class
+/*!
+  This function automatically creates the metaclass for the new class with syx_metaclass_new.
+  The new class is an instance of the metaclass.
+
+  \param superclass the superclass of the new class
+*/
 inline SyxOop 
 syx_class_new (SyxOop superclass)
 {
@@ -116,12 +141,18 @@ syx_class_new (SyxOop superclass)
   return class;
 }
 
+//! Creates a new ByteArray instance
+/*!
+  \param size the number of elements
+  \param data already initialized data for the byte array
+*/
 inline SyxOop 
 syx_byte_array_new (syx_varsize size, syx_uint8 *data)
 {
   return syx_object_new_data (syx_byte_array_class, FALSE, size, (SyxOop *)data);
 }
 
+//! Creates a new ByteArray instance with the given size
 inline SyxOop 
 syx_byte_array_new_size (syx_varsize size)
 {
@@ -136,6 +167,7 @@ syx_byte_array_new_size (syx_varsize size)
   return oop;
 }
 
+//! Like syx_byte_array_new but duplicates the data
 inline SyxOop
 syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
 {
@@ -144,18 +176,25 @@ syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
   return oop;
 }
 
+//! Creates a new Array instance
+/*!
+  \param size the number of elements
+  \param data already initialized data for the array
+*/
 inline SyxOop 
 syx_array_new (syx_varsize size, SyxOop *data)
 {
   return syx_object_new_data (syx_array_class, TRUE, size, data);
 }
 
+//! Creates a sized Array
 inline SyxOop 
 syx_array_new_size (syx_varsize size)
 {
   return syx_object_new_size (syx_array_class, TRUE, size);
 }
 
+//! Like syx_byte_array_new but duplicates the data
 inline SyxOop
 syx_array_new_ref (syx_varsize size, SyxOop *data)
 {
@@ -164,6 +203,11 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
   return oop;
 }
 
+//! Returns a Symbol instance
+/*!
+  Lookups into syx_symbols dictionary to check the existance of the symbol, otherwise create a new one and insert it into the dictionary.
+  \param symbol a plain constant string
+*/
 inline SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
@@ -177,12 +221,15 @@ syx_symbol_new (syx_symbol symbol)
   return object;
 }
 
+
+//! Returns a new String instance
 inline SyxOop 
 syx_string_new (syx_symbol string)
 {
   return syx_object_new_data (syx_string_class, FALSE, strlen (string), (SyxOop *)strdup (string));
 }
 
+//! Creates a new link key -> value
 inline SyxOop 
 syx_link_new (SyxOop key, SyxOop value)
 {
@@ -192,6 +239,10 @@ syx_link_new (SyxOop key, SyxOop value)
   return object;
 }
 
+//! Creates a new dictionary and its hash table
+/*!
+  The effective size of the hash table is size * 2
+*/
 SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
@@ -200,6 +251,7 @@ syx_dictionary_new (syx_varsize size)
   return object;
 }
 
+//! Lookup a key by oop index in the dictionary. Raise an error if not found
 SyxOop 
 syx_dictionary_at_const (SyxOop dict, SyxOop key)
 {
@@ -218,6 +270,11 @@ syx_dictionary_at_const (SyxOop dict, SyxOop key)
   return syx_nil;
 }
 
+//! Lookup a key by oop index in the dictionary. Return the given object if not found
+/*
+  \param object the object to return if the key is not found
+  \return The lookup'd value or object if not found
+*/
 SyxOop 
 syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object)
 {
@@ -234,6 +291,10 @@ syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object)
   return object;
 }
 
+//! Lookup a key by symbol in the dictionary. Raise an error if not found
+/*
+  Take care the dictionary MUST contain only key symbols
+*/
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
@@ -254,6 +315,10 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
   return syx_nil;
 }
 
+//! Lookup a key by symbol in the dictionary. Return the given object if not found
+/*
+  Take care the dictionary MUST contain only key symbols
+*/
 SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
@@ -272,6 +337,7 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
   return object;
 }
 
+//! Insert key -> value in the dictionary
 void
 syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
 {
@@ -292,6 +358,10 @@ syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
   printf("Not enough space for dictionary %d\n", dict.idx);
 }
 
+//! Create a new BlockClosure
+/*!
+  \param block a CompiledBlock
+*/
 inline SyxOop 
 syx_block_closure_new (SyxOop block)
 {
@@ -300,6 +370,10 @@ syx_block_closure_new (SyxOop block)
   return object;
 }
 
+//! Create a new suspended Process and schedule it
+/*!
+  \param context a MethodContext or BlockContext
+*/
 inline SyxOop 
 syx_process_new (SyxOop context)
 {
@@ -311,8 +385,12 @@ syx_process_new (SyxOop context)
   return object;
 }
 
+//! Create a new MethodContext
 /*!
-  Try to do the same of ContextPart>>on:parent:receiver:arguments:
+  \param parent the parent context
+  \param method a CompiledMethod
+  \param receiver an Object receiving the message
+  \param arguments the arguments passed to the message
 */
 inline SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
@@ -349,6 +427,10 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   return object;
 }
 
+//! Same as syx_method_context_new but for BlockContexts
+/*!
+  \param outer_context a MethodContext or BlockContext for a nested block
+*/
 inline SyxOop 
 syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
@@ -380,6 +462,11 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 
 /* Object */
 
+//! Create a new object
+/*!
+  \param class the class of the new instance
+  \param has_refs specify if the object holds other object references or not
+*/
 SyxOop 
 syx_object_new (SyxOop class, syx_bool has_refs)
 {
@@ -422,6 +509,7 @@ syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *
   return oop;
 }
 
+//! Frees all the memory used by the object
 inline void
 syx_object_free (SyxOop object)
 {
@@ -429,6 +517,7 @@ syx_object_free (SyxOop object)
   syx_memory_free (object);
 }
 
+//! Create a new SmallInteger. This is not allocated in the memory
 inline SyxOop
 syx_small_integer_new (syx_int32 num)
 {
@@ -438,6 +527,7 @@ syx_small_integer_new (syx_int32 num)
   return oop;
 }
 
+//! Create a new Character. This is not allocated in the memory
 inline SyxOop
 syx_character_new (syx_uint8 ch)
 {
@@ -447,6 +537,12 @@ syx_character_new (syx_uint8 ch)
   return oop;
 }
 
+//! Check if a class is a superclass of another one
+/*!
+  \param class a class
+  \param class a class that should be a subclass of the former
+  \return TRUE if the first is a superclass of the second
+*/
 syx_bool
 syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
 {
@@ -460,6 +556,10 @@ syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
   return !SYX_IS_NIL (cur);
 }
 
+//! Get a list of all instance variables defined in a class
+/*!
+  \return a syx_symbol list or syx_nil. The list must be freed once unused
+*/
 syx_symbol *
 syx_class_get_all_instance_variables (SyxOop class)
 {
@@ -487,6 +587,10 @@ syx_class_get_all_instance_variables (SyxOop class)
   return ret_names;
 }
 
+//! Returns a method in a class having a given selector
+/*!
+  \return syx_nil if no method has been found
+*/
 SyxOop 
 syx_class_lookup_method (SyxOop class, syx_symbol selector)
 {

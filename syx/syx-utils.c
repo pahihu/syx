@@ -25,7 +25,7 @@ static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
 
 /* A cold parser */
 
-#define IS_EXLMARK(token) (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
+#define _IS_EXL_MARK(token) (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
 
 static syx_bool
 _syx_cold_parse_class (SyxLexer *lexer)
@@ -107,7 +107,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   inst_vars_lexer = syx_lexer_new (token.value.string);
 
   token = syx_lexer_next_token (lexer);
-  if (!IS_EXLMARK (token))
+  if (!_IS_EXL_MARK (token))
     {
       syx_token_free (token);
       g_error ("Class definition must terminate with an exlamation mark");
@@ -193,7 +193,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
-  if (!IS_EXLMARK (token))
+  if (!_IS_EXL_MARK (token))
     return FALSE;
   syx_token_free (token);
 
@@ -223,6 +223,10 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   return TRUE;
 }
 
+//! Parse simple declarations like classes and methods
+/*!
+  \return TRUE if no error has occurred
+*/
 syx_bool
 syx_cold_parse (SyxLexer *lexer)
 {
@@ -232,7 +236,7 @@ syx_cold_parse (SyxLexer *lexer)
   token = syx_lexer_next_token (lexer);
   while (parseOk && token.type != SYX_TOKEN_END)
     {
-      if (IS_EXLMARK (token))
+      if (_IS_EXL_MARK (token))
 	parseOk = _syx_cold_parse_methods (lexer);
       else
 	parseOk = _syx_cold_parse_class (lexer);
@@ -245,6 +249,10 @@ syx_cold_parse (SyxLexer *lexer)
   return parseOk;
 }
 
+//! Parse a declaration file
+/*!
+  \return TRUE if no error has occurred
+*/
 syx_bool
 syx_cold_file_in (syx_symbol filename)
 {
@@ -305,6 +313,7 @@ syx_semaphore_wait (SyxOop semaphore)
 
 /* Utilities to interact with Smalltalk */
 
+//! Create a MethodContext for a unary message ready to enter a Process
 inline SyxOop
 syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
@@ -317,13 +326,11 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   if (SYX_IS_NIL (method))
     g_error ("Unable to lookup method #%s in class %d\n", selector, class.idx);
 
-  syx_memory_gc_begin ();
-  context = syx_method_context_new (parent_context, method, receiver, syx_array_new_size (0));
-  syx_memory_gc_end ();
-
+  context = syx_method_context_new (parent_context, method, receiver, syx_nil);
   return context;
 }
 
+//! Create a MethodContext for a binary message ready to enter a Process
 inline SyxOop
 syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {

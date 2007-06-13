@@ -16,10 +16,14 @@ void syx_scheduler_quit (void);
 
 void syx_scheduler_add_process (SyxOop process);
 void syx_scheduler_remove_process (SyxOop process);
-syx_uint32 syx_scheduler_add_source (GSource *source);
 
+//! Get the first process in the process linked list
 #define syx_processor_first_process (*_syx_processor_first_process)
+
+//! Get the byteslice
 #define syx_processor_byteslice (*_syx_processor_byteslice)
+
+//! Get the active process running on
 #define syx_processor_active_process (*_syx_processor_active_process)
 
 #endif /* SYX_SCHEDULER_H */

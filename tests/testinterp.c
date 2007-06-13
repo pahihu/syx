@@ -21,7 +21,7 @@ _interpret (syx_symbol text)
   assert (syx_parser_parse (parser, &error) == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
-  context = syx_method_context_new (syx_nil, method, syx_nil, syx_array_new (0, NULL));
+  context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);
   process = syx_process_new (context);
 
   g_timer_start (timer);

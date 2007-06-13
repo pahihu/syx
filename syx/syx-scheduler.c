@@ -13,8 +13,6 @@
 
 /* #define DEBUG_PROCESS_SWITCH */
 
-static GMainLoop *main_loop = NULL;
-
 SyxOop syx_processor;
 SyxOop *_syx_processor_first_process;
 SyxOop *_syx_processor_active_process;
@@ -46,6 +44,10 @@ _syx_scheduler_find_next_process ()
     }
 }
 
+//! Initialize the scheduler
+/*!
+  If absent, create a ProcessorScheduler instance named Processor and insert it into the Smalltalk dictionary.
+*/
 void
 syx_scheduler_init (void)
 {
@@ -68,26 +70,15 @@ syx_scheduler_init (void)
   initialized = TRUE;
 }
 
+//! Run the scheduler in blocking mode. Exits once no Process is scheduled
 void
 syx_scheduler_run (void)
 {
   syx_bool running = FALSE;
-  /*  GSource *idle;
-  GMainContext *context;
-  g_return_if_fail (main_loop == NULL || !g_main_loop_is_running (main_loop));*/
 
   if (running)
     return;
 
-  /*  context = g_main_context_new ();
-  main_loop = g_main_loop_new (context, FALSE);
-
-  idle = g_idle_source_new ();
-  g_source_set_callback (idle, _syx_scheduler_loop, NULL, NULL);
-  g_source_set_priority (idle, G_PRIORITY_HIGH_IDLE);
-  g_source_attach (idle, context);
-
-  g_main_loop_run (main_loop);*/
 
   running = TRUE;
 
@@ -105,14 +96,15 @@ syx_scheduler_run (void)
   running = FALSE;
 }
 
+//! Stop the scheduler
 void
 syx_scheduler_quit (void)
 {
-  g_return_if_fail (g_main_loop_is_running (main_loop));
-
-  g_main_loop_quit (main_loop);
+  syx_processor_first_process = syx_nil;
+  syx_processor_active_process = syx_nil;
 }
 
+//! Adds a Process to be scheduled
 void
 syx_scheduler_add_process (SyxOop process)
 {
@@ -134,6 +126,7 @@ syx_scheduler_add_process (SyxOop process)
     }
 }
 
+//! Remove a Process from being scheduled
 void
 syx_scheduler_remove_process (SyxOop process)
 {
@@ -158,9 +151,3 @@ syx_scheduler_remove_process (SyxOop process)
     }
 }
 
-guint
-syx_scheduler_add_source (GSource *source)
-{
-  GMainContext *context = g_main_loop_get_context (main_loop);
-  return g_source_attach (source, context);
-}

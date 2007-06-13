@@ -22,7 +22,7 @@ main (int argc, char *argv[])
   assert (syx_parser_parse (parser, &error) == TRUE);			\
   syx_lexer_free (lexer, FALSE);					\
   syx_parser_free (parser, FALSE);					\
-  context = syx_method_context_new (syx_nil, method, syx_nil, syx_array_new (0, NULL)); \
+  context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \
   process = syx_process_new (context)
 
   timer = g_timer_new ();

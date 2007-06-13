@@ -22,11 +22,14 @@ struct SyxExecState
   syx_int32 byteslice;
   syx_int32 ip, sp;
 
+  //! Holds the receiver of a new message
   SyxOop message_receiver;
+  //! Holds the arguments of a new message
   SyxOop *message_arguments;
   syx_varsize message_arguments_count;
 };
 
+//! Creates a new empty execution state
 #define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
 void syx_exec_state_fetch (SyxExecState *es, SyxOop process);
 inline void syx_exec_state_save (SyxExecState *es);
@@ -34,7 +37,8 @@ void syx_exec_state_free (SyxExecState *es);
 
 /* Primitives */
 
-#define SYX_PRIMITIVES_MAX 39
+//! The number of primitives
+#define SYX_PRIMITIVES_MAX 40
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -48,7 +52,10 @@ struct SyxPrimitiveEntry {
   SyxPrimitiveFunc func;
 };
 
+//! Returns the entry of a primitive at a given index
 inline SyxPrimitiveEntry *syx_primitive_get_entry (syx_int32 index);
+
+//! Returns the index of a primitive having a specific name
 syx_int32 syx_primitive_get_index (syx_symbol name);
 
 /* Interpreter */

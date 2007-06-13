@@ -30,10 +30,19 @@ typedef struct SyxObject SyxObject;
 
 struct SyxObject
 {
-  SyxOop class; // please use syx_object_get_class ()
+  //! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop
+  SyxOop class;
+  
+  //! Specify if this object contains references to other objects
   syx_bool has_refs : 1;
+
+  //! Used to mark the object by the garbage collector
   syx_bool is_marked : 1;
+
+  //! The number elements held by the object
   syx_varsize size;
+
+  //! A list of SyxOop. It can be used also to hold syx_uint8 for ByteArrays
   SyxOop *data;
 };
 
@@ -80,6 +89,7 @@ inline syx_int32 syx_object_hash (SyxOop ptr);
 inline SyxOop syx_object_get_class (SyxOop oop);
 inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
+//! Evaluate syx_true or syx_false depending on the given condition
 #define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
 inline SyxOop syx_small_integer_new (syx_int32 num);
 inline SyxOop syx_character_new (syx_uint8 ch);
@@ -109,8 +119,13 @@ inline SyxOop syx_string_new (syx_symbol string);
 inline SyxOop syx_link_new (SyxOop key, SyxOop value);
 inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
+
+//! Create a new raw CompiledMethod
 #define syx_method_new() (syx_object_new (syx_compiled_method_class, TRUE))
+
+//! Create a new raw CompiledBlock
 #define syx_block_new() (syx_object_new (syx_compiled_block_class, TRUE))
+
 inline SyxOop syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
 inline SyxOop syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
 inline SyxOop syx_process_new (SyxOop context);

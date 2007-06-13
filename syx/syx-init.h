@@ -4,25 +4,25 @@
 #include "syx-types.h"
 #include "syx-object.h"
 
+//! Default initial memory size
 #define SYX_INIT_MEMORY_SIZE 10000
 
 void syx_init (syx_symbol root_path);
 void syx_quit (void);
 void syx_build_basic (void);
 void syx_fetch_basic (void);
-void syx_init_system (void);
-
-syx_bool syx_save_image (syx_symbol path);
-syx_bool syx_load_image (syx_symbol path);
 
 syx_string syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename);
 syx_symbol syx_get_root_path (void);
 syx_bool syx_set_root_path (syx_symbol root_path);
 
+//! Looks up a symbol from the Smalltalk dictionary. Raises an error if not found
 #define syx_globals_at(name) (syx_dictionary_at_symbol (syx_globals, (syx_symbol)(name)))
+//! Looks up a symbol from the Smalltalk dictionary and return a given SyxOop if not found
 #define syx_globals_at_if_absent(name,object) (syx_dictionary_at_symbol_if_absent (syx_globals,	\
 										   (syx_symbol)(name), \
 										   object))
+//! Insert a SyxOop into the Smalltalk dictionary
 #define syx_globals_at_put(symbol,value) (syx_dictionary_at_const_put (syx_globals, (symbol), (value)))
 
-#endif
+#endif /* SYX_INIT_H */

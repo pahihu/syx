@@ -1,13 +1,20 @@
 #ifndef SYX_ENUMS_H
 #define SYX_ENUMS_H
 
+//! The type of SyxOop contained in SyxOop::c::type
 typedef enum
   {
+    //! This means SyxOop indexes an object into the syx memory
     SYX_TYPE_OBJECT,
     SYX_TYPE_CHARACTER,
     SYX_TYPE_SMALL_INTEGER
   } SyxType;
 
+//! Indexes of known instance variables
+/*!
+  Each known class has default instance variables used by the VM that are mandatory.
+  These indexes are used to facilitate the access these variables and are contained in SyxObject::data
+*/
 typedef enum
   {
     SYX_DATA_OBJECT_ALL,
@@ -80,6 +87,7 @@ typedef enum
 
   } SyxVariables;
 
+//! The type of the token in SyxToken::type
 typedef enum
   {
     SYX_TOKEN_END,
@@ -96,6 +104,7 @@ typedef enum
     SYX_TOKEN_BINARY,
   } SyxTokenType;
 
+//! List of commands of a bytecode in SyxBytecode::code
 typedef enum
   {
     SYX_BYTECODE_PUSH_INSTANCE,
@@ -120,6 +129,7 @@ typedef enum
     SYX_BYTECODE_EXTENDED = 0x1F
   } SyxBytecodeCommand;
 
+//! Special commands performed by the command SYX_BYTECODE_DO_SPECIAL
 typedef enum
   {
     SYX_BYTECODE_POP_TOP,
@@ -132,11 +142,14 @@ typedef enum
     SYX_BYTECODE_SET_DEFINED_CONTEXT,
   } SyxBytecodeSpecial;
 
+//! Constants pushed by SYX_BYTECODE_PUSH_CONSTANT
 typedef enum
   {
     SYX_BYTECODE_CONST_NIL,
     SYX_BYTECODE_CONST_TRUE,
     SYX_BYTECODE_CONST_FALSE,
+
+    //! This constant is resolved at runtime by the interpreter
     SYX_BYTECODE_CONST_CONTEXT,
   } SyxBytecodeConstant;
 

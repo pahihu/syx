@@ -15,7 +15,13 @@ static syx_symbol _syx_root_path;
 
 static void _syx_file_in_basic (void);
 static void _syx_file_in_basic_decl (void);
+static SyxOop _syx_create_class (syx_varsize instanceSize);
 
+//! Creates a file path inside the Syx environment
+/*!
+  For example if you want a Smalltalk file of a package, specify the domain "st", the package name
+  and the file name.
+*/
 syx_string 
 syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 {
@@ -85,13 +91,23 @@ _syx_file_in_basic (void)
     }
 }
 
-inline SyxOop _syx_create_class (syx_varsize instanceSize)
+static SyxOop
+_syx_create_class (syx_varsize instanceSize)
 {
   SyxOop object = syx_object_new_size (syx_nil, TRUE, SYX_DATA_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
 
+//! Builds a basic running image from scratch
+/*!
+  This functions first reinitialize the memory with the size defined in SYX_INIT_MEMORY_SIZE.
+  After, creates the 3 common constants syx_nil, syx_true and syx_false.
+  Then creates all the classes needed by the VM, the Smalltalk dictionary and a dictionary containing all the symbols.
+  Sets up the basic object hierarchy and insert each class into Smalltalk.
+  Ends up this process by fileing in the basic declarations from initialDecl.st and the other *.st files, and calls syx_fetch_basic to fetch all classes in the VM.
+  Finally, prepares the environment by running a blocking Process that calls Smalltalk>>initializeSystem and initialize everything else from within Smalltalk itself.
+*/  
 void
 syx_build_basic (void)
 {
@@ -124,7 +140,7 @@ syx_build_basic (void)
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
-#define SETUP_CLASS(name, class, superclass)				\
+#define _SETUP_CLASS(name, class, superclass)				\
   syx_object_set_class (class, syx_metaclass_new (syx_object_get_class (superclass))); \
   SYX_CLASS_SUPERCLASS(class) = superclass;				\
   SYX_CLASS_NAME(class) = syx_symbol_new (name);			\
@@ -137,17 +153,17 @@ syx_build_basic (void)
   SYX_CLASS_METHODS(Object) = syx_dictionary_new (50);
   syx_globals_at_put (SYX_CLASS_NAME(Object), Object);
 
-  SETUP_CLASS ("Behavior", Behavior, Object);
-  SETUP_CLASS ("Class", Class, Behavior);
-  SETUP_CLASS ("Metaclass", syx_metaclass_class, Behavior);
-  SETUP_CLASS ("Symbol", syx_symbol_class, Object);
-  SETUP_CLASS ("String", syx_string_class, Object);
-  SETUP_CLASS ("SmallInteger", syx_small_integer_class, Object);
-  SETUP_CLASS ("Character", syx_character_class, Object);
-  SETUP_CLASS ("ByteArray", syx_byte_array_class, Object);
-  SETUP_CLASS ("Array", syx_array_class, Object);
-  SETUP_CLASS ("Link", syx_link_class, Object);
-  SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
+  _SETUP_CLASS ("Behavior", Behavior, Object);
+  _SETUP_CLASS ("Class", Class, Behavior);
+  _SETUP_CLASS ("Metaclass", syx_metaclass_class, Behavior);
+  _SETUP_CLASS ("Symbol", syx_symbol_class, Object);
+  _SETUP_CLASS ("String", syx_string_class, Object);
+  _SETUP_CLASS ("SmallInteger", syx_small_integer_class, Object);
+  _SETUP_CLASS ("Character", syx_character_class, Object);
+  _SETUP_CLASS ("ByteArray", syx_byte_array_class, Object);
+  _SETUP_CLASS ("Array", syx_array_class, Object);
+  _SETUP_CLASS ("Link", syx_link_class, Object);
+  _SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
   _syx_file_in_basic_decl ();
 
   syx_object_set_class (syx_globals, syx_globals_at ("SystemDictionary"));
@@ -158,11 +174,16 @@ syx_build_basic (void)
   syx_fetch_basic ();
   _syx_file_in_basic ();
 
-  syx_scheduler_init ();
   context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
   syx_process_execute_blocking (syx_process_new (context));
 }
 
+//! Fetch all the things needed by the VM to run accordly to the image
+/*!
+  Sets up syx_nil, syx_true and syx_false constants.
+  Lookup all classes from the Smalltalk dictionary and insert them into the VM.
+  Finally initialize the scheduler
+*/
 void
 syx_fetch_basic (void)
 {
@@ -192,6 +213,10 @@ syx_fetch_basic (void)
   syx_scheduler_init ();
 }
 
+//! Setup the basic external environment of Syx
+/*!
+  \param root_path the root directory of Syx
+*/
 void
 syx_init (syx_symbol root_path)
 {
@@ -202,18 +227,31 @@ syx_init (syx_symbol root_path)
   initialized = TRUE;
 }
 
+//! Finalize Syx
+/*!
+  Run special tasks to finalize the Syx process, such as clearing all the allocated memory
+*/
 void
 syx_quit (void)
 {
   syx_memory_clear ();
 }
 
+//! Returns the root directory of Syx
+/*!
+  \return a constant string containing the path of the root directory
+*/
 syx_symbol 
 syx_get_root_path (void)
 {
   return _syx_root_path;
 }
 
+//! Sets the root directory of Syx
+/*!
+  \param root_path the new path
+  \return TRUE if the path was existing and a valid directory
+*/
 syx_bool
 syx_set_root_path (syx_symbol root_path)
 {

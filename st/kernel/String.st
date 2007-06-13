@@ -1,9 +1,3 @@
-!String class methodsFor: 'instance creation'!
-
-new: anIndex
-    ^self basicNew: anIndex
-! !
-
 !String methodsFor: 'primitives'!
 
 printString

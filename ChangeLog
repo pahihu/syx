@@ -1,3 +1,25 @@
+2007-06-13  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-interp.c (syx_interp_send_message): if the message is unary don't create an empty array
+	(syx_interp_send_super): same
+	(syx_interp_send_unary): same
+
+	* syx/syx-parser.h (struct SyxParser): renamed with starting _
+
+	* syx/syx-scheduler.c (syx_scheduler_quit): fixed for now
+
+	* Everything has been documented for Doxygen
+	
+	* syx/syx-scheduler.c (syx_scheduler_quit): rewrote after GMainLoop has been removed
+
+	* syx/syx-bytecode.c (syx_bytecode_free): free_segment is not needed anymore
+
+	* syx/syx-primitives.c (ArrayedCollection_replaceFromWith): added
+
+	* syx/syx-memory.c (syx_memory_alloc): removed _syx_memory_top
+	(syx_memory_init): removed _syx_memory_top and fill _syx_freed_memory_top. Realloc _syx_freed_memory too
+	(syx_memory_free_all): removed, we can use syx_memory_clear
+
 2007-06-12  Luca Bruno  <lethalman88@gmail.com>
 
 	* Everything we need to let the Console work men

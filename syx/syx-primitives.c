@@ -111,7 +111,35 @@ SYX_FUNC_PRIMITIVE (Object_hash)
   SYX_PRIM_RETURN (syx_small_integer_new (syx_object_hash (es->message_receiver)));
 }
 
+SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromWith)
+{
+  syx_varsize start = SYX_SMALL_INTEGER (es->message_arguments[0]) - 1;
+  SyxOop coll = es->message_arguments[1];
+  syx_varsize end = SYX_OBJECT_SIZE (coll);
+  syx_varsize i;
 
+  // distinguish between arrays and bytearrays
+  if (SYX_OBJECT_HAS_REFS (es->message_receiver))
+    {
+      if (SYX_OBJECT_HAS_REFS (coll))
+	memcpy (SYX_OBJECT_DATA (es->message_receiver) + start, SYX_OBJECT_DATA (coll), end * sizeof (SyxOop));
+      else
+	{
+	  for (i=start; i < end; i++)
+	    SYX_OBJECT_DATA(es->message_receiver)[i] = syx_character_new (SYX_OBJECT_BYTE_ARRAY(coll)[i]);
+	}
+    }
+  else
+    {
+      if (!SYX_OBJECT_HAS_REFS (coll))
+	memcpy (SYX_OBJECT_BYTE_ARRAY (es->message_receiver) + start,
+		SYX_OBJECT_BYTE_ARRAY (coll), end * sizeof (syx_int8));
+      else
+	g_error ("can't copy from an array to a bytearray");
+    }
+
+  SYX_PRIM_RETURN (es->message_receiver);
+}
 
 SYX_FUNC_PRIMITIVE (ByteArray_at)
 {
@@ -435,6 +463,9 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_size", Object_size },
   { "Object_identityEqual", Object_identityEqual },
   { "Object_hash", Object_hash },
+
+  /* Arrayed collections */
+  { "ArrayedCollection_replaceFromWith", ArrayedCollection_replaceFromWith },
 
   /* Byte arrays */
   { "ByteArray_newColon", ByteArray_newColon },
