@@ -33,10 +33,14 @@ if env['PLATFORM'] == 'posix':
 env['tools'] = ['default', 'mingw']
    
 # Custimize the help message
-env.Help ("""
-     Type: 'scons' to build Syx.
-     	   'scons install' to install Syx.
-	   """ + opts.GenerateHelpText (env))
+env.Help (opts.GenerateHelpText (env) + """
+     Type: 'scons'               to build Syx.
+     	   'scons release=yes'   to build with high optimization
+	                         and no debugging informations.
+           'scons test'          to test Syx.
+           'scons doc'           to create reference documentation (requires Doxygen).
+     	   'scons install'       to install Syx.
+	   """)
 
 # Configuration
 conf = Configure (env, config_h='config.h')

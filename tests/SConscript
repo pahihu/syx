@@ -40,6 +40,7 @@ def builder_test_summary (env, target, source):
         print 'All %d tests passed.' % total
     else:
         print '%d of %d tests failed.' % (failed, total)
-    
-t = env.Command ('tests.out', targets, builder_test_summary)
-env.Alias ('test', t)
+
+action = env.Action (builder_test_summary, lambda *args, **kwargs: '')
+summary = env.Command ('tests.out', targets, action)
+env.Alias ('test', summary)
