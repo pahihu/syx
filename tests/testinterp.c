@@ -1,8 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
+#include <time.h>
 #include "../syx/syx.h"
-
-static GTimer *timer = NULL; 
 
 SyxOop
 _interpret (syx_symbol text)
@@ -11,9 +10,7 @@ _interpret (syx_symbol text)
   SyxLexer *lexer;
   SyxOop method, context, process;
   GError *error = NULL;
-
-  if (!timer)
-    timer = g_timer_new ();
+  clock_t start, end;
 
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
@@ -24,10 +21,10 @@ _interpret (syx_symbol text)
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);
   process = syx_process_new (context);
 
-  g_timer_start (timer);
+  start = clock ();
   syx_process_execute_blocking (process);
-  g_timer_stop (timer);
-  printf ("Time elapsed: %f\n\n", g_timer_elapsed (timer, NULL));
+  end = clock ();
+  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
 
   return SYX_PROCESS_RETURNED_OBJECT(process);
 }
@@ -37,7 +34,7 @@ main (int argc, char *argv[])
 {
   SyxOop ret_obj;
 
-  syx_init ("..");
+  syx_init (".");
   syx_memory_load_image ("test.sim");
   syx_scheduler_init ();
 
@@ -118,8 +115,6 @@ main (int argc, char *argv[])
   assert (SYX_SMALL_INTEGER(ret_obj) == 1000);
 
   syx_quit ();
-
-  g_timer_destroy (timer);
 
   return 0;
 }

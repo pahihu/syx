@@ -7,7 +7,7 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
   SyxToken token;
 
-  syx_init ("..");
+  syx_init (".");
 
   lexer = syx_lexer_new ("nameconst 123 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
 

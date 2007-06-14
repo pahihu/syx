@@ -1,0 +1,18 @@
+Import ('env')
+
+# Build the shared library
+
+lib_objects = env.SharedObject (Split ("""
+	    syx-bytecode.c syx-init.c syx-interp.c
+	    syx-lexer.c syx-memory.c syx-object.c syx-parser.c
+	    syx-primitives.c syx-scheduler.c syx-utils.c
+	    """))
+lib_shared = env.SharedLibrary (target='libsyx', source=lib_objects)
+
+# Build the executable
+
+prog_objects = env.Object (Split ("""
+	     main.c
+	     """))
+prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
+Default ([lib_shared, prog])

@@ -1,30 +1,27 @@
 #include <assert.h>
 #include <stdio.h>
+#include <time.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
-  GTimer *timer;
+  clock_t start, end;
 
-  syx_init ("..");
+  syx_init (".");
   syx_build_basic ();
 
-  timer = g_timer_new ();
-
   puts ("- Test saving image");
-  g_timer_start (timer);
+  start = clock ();
   assert (syx_memory_save_image ("test.sim") == TRUE);
-  g_timer_stop (timer);
-  printf ("Time elapsed: %f\n\n", g_timer_elapsed (timer, NULL));
+  end = clock ();
+  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
 
   puts ("- Test loading image");
-  g_timer_start (timer);
+  start = clock ();
   assert (syx_memory_load_image ("test.sim") == TRUE);
-  g_timer_stop (timer);
-  printf ("Time elapsed: %f\n\n", g_timer_elapsed (timer, NULL));
-
-  g_timer_destroy (timer);
+  end = clock ();
+  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
 
   syx_quit ();
 

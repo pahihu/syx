@@ -1,19 +1,18 @@
 #include <assert.h>
 #include <stdio.h>
+#include <time.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   SyxOop obj, instobj;
-  GTimer *timer;
+  clock_t start, end;
 
-  syx_init ("..");
+  syx_init (".");
   syx_memory_load_image ("test.sim");
 
-  timer = g_timer_new ();
-
-  g_timer_start (timer);
+  start = clock ();
 
   obj = syx_character_new ('c');
   assert (SYX_CHARACTER(obj) == 'c');
@@ -45,10 +44,9 @@ main (int argc, char *argv[])
   obj = syx_string_new ("string");
   assert (!strcmp (SYX_OBJECT_SYMBOL (obj), "string"));
 
-  g_timer_stop (timer);
-  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
+  end = clock ();
+  printf ("Time elapsed: %f\n", ((double) (start - end)) / CLOCKS_PER_SEC);
 
-  g_timer_destroy (timer);
   syx_quit ();
 
   return 0;

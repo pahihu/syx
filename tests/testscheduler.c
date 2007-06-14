@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <time.h>
 #include "../syx/syx.h"
 
 int
@@ -9,9 +10,9 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
   SyxOop method, context, process;
   GError *error = NULL;
-  GTimer *timer;
+  clock_t start, end;
 
-  syx_init ("..");
+  syx_init (".");
   syx_memory_load_image ("test.sim");
   syx_scheduler_init ();
 
@@ -25,8 +26,6 @@ main (int argc, char *argv[])
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \
   process = syx_process_new (context)
 
-  timer = g_timer_new ();
-
   INTERPRET ("method"\
 	     "['Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl] fork."\
 	     "['Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl] fork."\
@@ -34,12 +33,10 @@ main (int argc, char *argv[])
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 
-  g_timer_start (timer);
+  start = clock ();
   syx_scheduler_run ();
-  g_timer_stop (timer);
-
-  printf ("Time elapsed: %f\n", g_timer_elapsed (timer, NULL));
-  g_timer_destroy (timer);
+  end = clock ();
+  printf ("Time elapsed: %f\n", ((double) (start - end)) / CLOCKS_PER_SEC);
 
   syx_quit ();
 
