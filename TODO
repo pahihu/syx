@@ -1,14 +1,6 @@
 Major:
 - Implement coalesced hash tables with consistent hash functions
-- Garbage collector
-- Create an image format and implement it
-- Replace GMainLoop with a new loop system
+- Method caching
 
 Minor:
-- Add --enable-debug and --enable-optimization
-- Create a SConstruct file for Scons
-- Add a logging and error reporting system
-
-Documentation:
-- Just document :)
-- Undocument symbols beginning with _ and static variables/functions
+- Create a working timer for tests

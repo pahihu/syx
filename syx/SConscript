@@ -5,9 +5,9 @@ Import ('env')
 lib_objects = env.SharedObject (Split ("""
 	    syx-bytecode.c syx-init.c syx-interp.c
 	    syx-lexer.c syx-memory.c syx-object.c syx-parser.c
-	    syx-primitives.c syx-scheduler.c syx-utils.c
+	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
 	    """))
-lib_shared = env.SharedLibrary (target='libsyx', source=lib_objects)
+lib_shared = env.SharedLibrary (target='syx', source=lib_objects)
 
 # Build the executable
 

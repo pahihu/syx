@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "syx-types.h"
+#include "syx-error.h"
 #include "syx-init.h"
 #include "syx-utils.h"
 #include "syx-scheduler.h"
@@ -39,8 +40,9 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 	   package, SYX_PATH_SEPARATOR,
 	   filename);
 
-  if (access (full_path, F_OK) < 0)
+  if (access (full_path, R_OK) < 0)
     {
+      syx_error ("Can't open file %s\n", full_path);
       syx_free (full_path);
       return NULL;
     }
@@ -67,7 +69,7 @@ _syx_file_in_basic (void)
     "Behavior.st",
     "Symbol.st",
     "Number.st", "SmallInteger.st",
-    "Object.st", "UndefinedObject.st",
+    "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "Array.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
     "ContextPart.st", "BlockContext.st",
@@ -235,6 +237,7 @@ syx_init (syx_symbol root_path)
 void
 syx_quit (void)
 {
+  syx_exec_state_free ();
   syx_memory_clear ();
 }
 

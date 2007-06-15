@@ -1,6 +1,14 @@
 #ifndef SYX_MEMORY_H
 #define SYX_MEMORY_H
 
+#ifdef HAVE_CONFIG_H
+  #include <config.h>
+#endif
+
+#ifdef HAVE_STRNDUP
+  #define _GNU_SOURCE
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include "syx-object.h"
@@ -33,5 +41,13 @@ inline syx_pointer syx_calloc (syx_varsize elements, syx_varsize element_size);
 inline syx_pointer syx_realloc (syx_pointer ptr, syx_varsize size);
 #define syx_free free
 void syx_freev (syx_pointer *ptrv);
+
+#ifndef HAVE_STRNDUP
+  inline syx_string strndup (syx_string src, syx_size n);
+#endif
+
+#ifndef HAVE_MEMDUP
+  inline syx_pointer memdup (syx_pointer src, syx_size n);
+#endif
 
 #endif /* SYX_MEMORY_H */

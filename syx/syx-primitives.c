@@ -2,12 +2,11 @@
   #include <config.h>
 #endif
 
-#define _GNU_SOURCE
-
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include "syx-error.h"
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"
@@ -19,12 +18,11 @@
 #include "syx-memory.h"
 
 #define SYX_PRIM_RETURN(object)						\
-  syx_interp_stack_push (es, object);					\
+  syx_interp_stack_push (object);					\
   return TRUE
 
 #define SYX_PRIM_FAIL							\
-  syx_interp_enter_context (es,						\
-			    syx_method_context_new (es->context, method, es->message_receiver, \
+  syx_interp_enter_context (syx_method_context_new (es->context, method, es->message_receiver, \
 						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
   return FALSE
 
@@ -39,7 +37,7 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 
 SYX_FUNC_PRIMITIVE (Processor_yield)
 {
-  syx_interp_stack_push (es, es->receiver);
+  syx_interp_stack_push (es->message_receiver);
   return FALSE;
 }
 
@@ -135,7 +133,7 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromWith)
 	memcpy (SYX_OBJECT_BYTE_ARRAY (es->message_receiver) + start,
 		SYX_OBJECT_BYTE_ARRAY (coll), end * sizeof (syx_int8));
       else
-	g_error ("can't copy from an array to a bytearray");
+	syx_error ("can't copy from an array to a bytearray");
     }
 
   SYX_PRIM_RETURN (es->message_receiver);
@@ -173,7 +171,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_value)
   syx_memory_gc_begin ();
   SyxOop ctx = _syx_block_context_new_from_closure (es, syx_array_new_size (0));
   syx_memory_gc_end ();
-  return syx_interp_enter_context (es, ctx);
+  return syx_interp_enter_context (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
@@ -186,7 +184,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   SYX_OBJECT_DATA(args)[0] = es->message_arguments[0];
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
-  return syx_interp_enter_context (es, ctx);
+  return syx_interp_enter_context (ctx);
 }
   
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
@@ -194,7 +192,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
   SyxOop args, ctx;
   args = syx_array_new_ref (SYX_OBJECT_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
-  return syx_interp_enter_context (es, ctx);
+  return syx_interp_enter_context (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
@@ -204,7 +202,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
   SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx) = es->message_arguments[0];
   SYX_BLOCK_CONTEXT_HANDLER_BLOCK (ctx) = es->message_arguments[1];
 
-  return syx_interp_enter_context (es, ctx);
+  return syx_interp_enter_context (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
@@ -223,13 +221,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 /* These printing function are used ONLY for tests */
 SYX_FUNC_PRIMITIVE (Symbol_asString)
 {
-  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
-}
-
-SYX_FUNC_PRIMITIVE (String_print)
-{
-  printf ("%s\n", SYX_OBJECT_SYMBOL(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
+  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_STRING (es->message_receiver)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_print)
@@ -240,18 +232,18 @@ SYX_FUNC_PRIMITIVE (SmallInteger_print)
 
 SYX_FUNC_PRIMITIVE (Processor_enter)
 {
-  return syx_interp_enter_context (es, es->message_arguments[0]);
+  return syx_interp_enter_context (es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_swapWith)
 {
-  return syx_interp_swap_context (es, es->message_arguments[0]);
+  return syx_interp_swap_context (es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
 {
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) = es->message_arguments[0];
-  return syx_interp_leave_context_and_answer (es, es->message_arguments[1], TRUE);
+  return syx_interp_leave_context_and_answer (es->message_arguments[1], TRUE);
 }
 
 SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
@@ -278,8 +270,6 @@ SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
 
 SYX_FUNC_PRIMITIVE (Character_new)
 {
-  SyxOop c = syx_character_new (20);
-  if (SYX_IS_SMALL_INTEGER (c)) g_error("asd");
   SYX_PRIM_RETURN (syx_character_new (SYX_SMALL_INTEGER (es->message_arguments[0])));
 }
 
@@ -315,16 +305,19 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	syx_symbol mode = SYX_OBJECT_SYMBOL (es->message_arguments[1]);
 	syx_int32 flags = 0;
 
-	if (!strcmp (mode, "r"))
-	  flags |= O_RDONLY;
-	else if (!strcmp (mode, "w"))
+	if (*mode == 'r')
+	  {
+	    if (mode[1] == '+')
+	      flags |= O_RDWR;
+	    else
+	      flags |= O_RDONLY;
+	  }
+	else if (*mode == 'w')
 	  flags |= O_WRONLY;
-	else if (!strcmp (mode, "r+"))
-	  flags |= O_RDWR;
 	else
-	  g_error ("mh? %s\n", mode);
+	  syx_error ("mh? %s\n", mode);
 	
-	ret = open (SYX_OBJECT_SYMBOL(es->message_arguments[0]), flags);
+	ret = open (SYX_OBJECT_STRING (es->message_arguments[0]), flags);
       }
       break;
 
@@ -340,8 +333,8 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 3: // nextPutAll:
-      ret = write (fd, SYX_OBJECT_SYMBOL (es->message_arguments[2]),
-		   SYX_OBJECT_SIZE (es->message_arguments[2]));
+      ret = write (fd, SYX_OBJECT_STRING (es->message_arguments[2]),
+		   SYX_OBJECT_SIZE (es->message_arguments[2]) - 1);
       break;
 
     case 4: // flush
@@ -371,7 +364,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     default: // unknown
-      g_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->message_arguments[0]));
+      syx_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->message_arguments[0]));
 
     }
 
@@ -384,7 +377,7 @@ SYX_FUNC_PRIMITIVE (String_compile)
   SyxParser *parser;
   SyxOop meth;
 
-  lexer = syx_lexer_new (SYX_OBJECT_SYMBOL (es->message_receiver));
+  lexer = syx_lexer_new (SYX_OBJECT_STRING (es->message_receiver));
   if (!lexer)
     {
       SYX_PRIM_RETURN (syx_nil);
@@ -392,8 +385,9 @@ SYX_FUNC_PRIMITIVE (String_compile)
 
   meth = syx_method_new ();
   parser = syx_parser_new (lexer, meth, NULL);
-  if (!syx_parser_parse (parser, NULL))
+  if (!syx_parser_parse (parser))
     {
+      syx_parser_free (parser, TRUE);
       SYX_PRIM_FAIL;
     }
 
@@ -451,6 +445,26 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
   SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) == SYX_SMALL_INTEGER (es->message_arguments[0])));
 }
 
+SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
+{
+  syx_memory_save_image (SYX_OBJECT_STRING (es->message_arguments[0]));
+
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
+SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
+{
+  syx_memory_gc ();
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
+SYX_FUNC_PRIMITIVE (Smalltalk_quit)
+{
+  syx_int32 status = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  syx_quit ();
+  exit (status);
+}
+
 static SyxPrimitiveEntry primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -480,7 +494,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
   { "Symbol_asString", Symbol_asString },
-  { "String_print", String_print },
   { "SmallInteger_print", SmallInteger_print },
 
   /* Interpreter */
@@ -507,6 +520,13 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+
+  /* Object memory */
+  { "ObjectMemory_snapshot", ObjectMemory_snapshot },
+  { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
+
+  /* Smalltalk environment */
+  { "Smalltalk_quit", Smalltalk_quit },
 
   { NULL }
 };

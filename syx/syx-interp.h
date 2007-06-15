@@ -31,14 +31,14 @@ struct SyxExecState
 
 //! Creates a new empty execution state
 #define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
-void syx_exec_state_fetch (SyxExecState *es, SyxOop process);
-inline void syx_exec_state_save (SyxExecState *es);
-void syx_exec_state_free (SyxExecState *es);
+void syx_exec_state_fetch (SyxOop process);
+inline void syx_exec_state_save (void);
+void syx_exec_state_free (void);
 
 /* Primitives */
 
 //! The number of primitives
-#define SYX_PRIMITIVES_MAX 40
+#define SYX_PRIMITIVES_MAX 42
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -60,19 +60,19 @@ syx_int32 syx_primitive_get_index (syx_symbol name);
 
 /* Interpreter */
 
-typedef syx_bool (* SyxInterpreterFunc) (SyxExecState *es, syx_uint16 argument);
+typedef syx_bool (* SyxInterpreterFunc) (syx_uint16 argument);
 #define SYX_FUNC_INTERPRETER(name)		\
   syx_bool					\
-  name (SyxExecState *es, syx_uint16 argument)
+  name (syx_uint16 argument)
 
-inline syx_bool syx_interp_swap_context (SyxExecState *es, SyxOop context);
-inline syx_bool syx_interp_enter_context (SyxExecState *es, SyxOop context);
-inline syx_bool syx_interp_leave_context_and_answer (SyxExecState *es, SyxOop return_object, syx_bool use_return_context);
+inline syx_bool syx_interp_swap_context (SyxOop context);
+inline syx_bool syx_interp_enter_context (SyxOop context);
+inline syx_bool syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_context);
 
-inline void syx_interp_stack_push (SyxExecState *es, SyxOop object);
-inline SyxOop syx_interp_stack_pop (SyxExecState *es);
-inline SyxOop syx_interp_stack_peek (SyxExecState *es);
-inline syx_bool syx_interp_call_primitive (SyxExecState *es, syx_int16 primitive, SyxOop method);
+inline void syx_interp_stack_push (SyxOop object);
+inline SyxOop syx_interp_stack_pop (void);
+inline SyxOop syx_interp_stack_peek (void);
+inline syx_bool syx_interp_call_primitive (syx_int16 primitive, SyxOop method);
 
 /* Process execution */
 

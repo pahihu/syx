@@ -10,7 +10,9 @@
 #include "syx-memory.h"
 #include "syx-init.h"
 
-/* #define DEBUG_PROCESS_SWITCH */
+#ifdef SYX_DEBUG_FULL
+#define SYX_DEBUG_PROCESS_SWITCH
+#endif
 
 SyxOop syx_processor;
 SyxOop *_syx_processor_first_process;
@@ -84,7 +86,7 @@ syx_scheduler_run (void)
   syx_processor_active_process = _syx_scheduler_find_next_process ();
   while (!SYX_IS_NIL (syx_processor_first_process))
     {  
-#ifdef DEBUG_PROCESS_SWITCH
+#ifdef SYX_DEBUG_PROCESS_SWITCH
       g_debug ("SCHEDULER - Switch process with %d\n", syx_processor_active_process.idx);
 #endif
 

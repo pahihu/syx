@@ -10,6 +10,7 @@
 #include "syx-bytecode.h"
 #include "syx-utils.h"
 #include "syx-memory.h"
+#include "syx-error.h"
 #include "syx-interp.h"
 #include "syx-scheduler.h"
 

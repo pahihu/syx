@@ -40,7 +40,7 @@ cr
 !
 
 nextPut: aCharacter
-    self nextPutAll: aCharacter asString
+    receiver nextPut: aCharacter
 !
 
 nextPutAll: aString

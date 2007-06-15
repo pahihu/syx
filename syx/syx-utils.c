@@ -11,6 +11,7 @@
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-init.h"
+#include "syx-error.h"
 #include "syx-utils.h"
 #include "syx-parser.h"
 #include "syx-lexer.h"
@@ -46,7 +47,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   if (token.type != SYX_TOKEN_NAME_CONST)
     {
-      g_error ("Expected a name constant");
+      syx_error ("Expected a name constant");
       syx_token_free (token);
       return FALSE;
     }
@@ -60,7 +61,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (!(token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "subclass:")))
     {
       syx_token_free (token);
-      g_error ("Expected #subclass:");
+      syx_error ("Expected #subclass:");
       return FALSE;
     }
   syx_token_free (token);
@@ -69,7 +70,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_SYM_CONST)
     {
       syx_token_free (token);
-      g_error ("Expected a symbol constant");
+      syx_error ("Expected a symbol constant");
       return FALSE;
     }
 
@@ -96,7 +97,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_NAME_COLON)
     {
       syx_token_free (token);
-      g_error ("Expected #instanceVariableNames:");
+      syx_error ("Expected #instanceVariableNames:");
       return FALSE;
     }
   syx_token_free (token);
@@ -105,7 +106,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_STR_CONST)
     {
       syx_token_free (token);
-      g_error ("Expected a string as argument for #instanceVariableNames:");
+      syx_error ("Expected a string as argument for #instanceVariableNames:");
       return FALSE;
     }
   inst_vars_lexer = syx_lexer_new (token.value.string);
@@ -114,7 +115,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (!_IS_EXL_MARK (token))
     {
       syx_token_free (token);
-      g_error ("Class definition must terminate with an exlamation mark");
+      syx_error ("Class definition must terminate with an exlamation mark");
       return FALSE;
     }
   syx_token_free (token);
@@ -134,7 +135,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
       if (token.type != SYX_TOKEN_NAME_CONST)
 	{
 	  syx_token_free (token);
-	  g_error ("Expected names for instance variables\n");
+	  syx_error ("Expected names for instance variables\n");
 	}
 
       inst_vars_raw[inst_vars_size] = syx_symbol_new (token.value.string);
@@ -215,7 +216,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
 
       parser = syx_parser_new (method_lexer, syx_method_new (),
 			       syx_class_get_all_instance_variables (class));
-      syx_parser_parse (parser, NULL);
+      syx_parser_parse (parser);
 
       syx_dictionary_at_const_put (SYX_CLASS_METHODS(class),
 				   SYX_METHOD_SELECTOR(parser->method),
@@ -267,13 +268,13 @@ syx_cold_file_in (syx_symbol filename)
    
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
-	g_error ("can't open %s\n", filename);
+	syx_error ("can't open %s\n", filename);
 	return FALSE;
      }
    
   if ((fstat (fd, &statbuf)) < 0)
      {
-	g_error ("cazz stat %s\n", filename);
+	syx_error ("cazz stat %s\n", filename);
 	return FALSE;
      }
    
@@ -342,7 +343,7 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   class = syx_object_get_class (receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    g_error ("Unable to lookup method #%s in class %d\n", selector, class.idx);
+    syx_error ("Unable to lookup method #%s in class %d\n", selector, class.idx);
 
   context = syx_method_context_new (parent_context, method, receiver, syx_nil);
   return context;

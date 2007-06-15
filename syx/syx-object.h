@@ -77,7 +77,10 @@ extern SyxOop syx_nil,
   syx_processor_scheduler_class,
 
   syx_symbols,
-  syx_globals;
+  syx_globals,
+
+  syx_interpreter_error_class,
+  syx_message_not_understood_class;
 
 SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
 SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);

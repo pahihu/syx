@@ -46,6 +46,6 @@ struct SyxParser
 
 SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names);
 void syx_parser_free (SyxParser *parser, syx_bool free_segment);
-syx_bool syx_parser_parse (SyxParser *parser, GError **error);
+syx_bool syx_parser_parse (SyxParser *parser);
 
 #endif /* SYX_PARSER_H */

@@ -1,3 +1,9 @@
+!String class methodsFor: 'instance creation'!
+
+new: anIndex
+    ^super new: anIndex + 1
+! !
+
 !String methodsFor: 'primitives'!
 
 printString
@@ -7,6 +13,12 @@ printString
 compile
     <primitive: 'String_compile'>
 	self primitiveFailed
+! !
+
+!String methodsFor: 'basic'!
+
+size
+    ^self basicSize - 1
 ! !
 
 !String methodsFor: 'utilities'!

@@ -17,7 +17,7 @@ main (int argc, char *argv[])
 #define PARSE(text) lexer = syx_lexer_new (text);			\
   method = syx_method_new ();						\
   parser = syx_parser_new (lexer, method, NULL);			\
-  syx_parser_parse (parser, NULL);					\
+  syx_parser_parse (parser);						\
   syx_parser_free (parser, FALSE);					\
   syx_lexer_free (lexer, FALSE);
 

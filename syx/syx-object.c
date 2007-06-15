@@ -1,9 +1,11 @@
-#include <stdio.h>
-#include "syx-object.h"
 #include "syx-memory.h"
+#include "syx-object.h"
+#include "syx-error.h"
 #include "syx-enums.h"
 #include "syx-types.h"
 #include "syx-scheduler.h"
+
+#include <stdio.h>
 
 /*! \page syx_object Syx Object
   
@@ -43,7 +45,10 @@ SyxOop syx_nil,
   syx_processor_scheduler_class,
 
   syx_symbols,
-  syx_globals;
+  syx_globals,
+
+  syx_interpreter_error_class,
+  syx_message_not_understood_class;
 
 /* Inlines */
 
@@ -214,7 +219,7 @@ syx_symbol_new (syx_symbol symbol)
   SyxOop object = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
   if (SYX_IS_NIL (object))
     {
-      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol), (SyxOop *)strdup (symbol));
+      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
       syx_dictionary_at_const_put (syx_symbols, object, object);
     }
 
@@ -226,7 +231,7 @@ syx_symbol_new (syx_symbol symbol)
 inline SyxOop 
 syx_string_new (syx_symbol string)
 {
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string), (SyxOop *)strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
 }
 
 //! Creates a new link key -> value
@@ -265,7 +270,7 @@ syx_dictionary_at_const (SyxOop dict, SyxOop key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
-  g_error ("unable to lookup constant %d in dictionary %d\n", key.idx, dict.idx);
+  syx_error ("unable to lookup constant %d in dictionary %d\n", key.idx, dict.idx);
 
   return syx_nil;
 }
@@ -310,7 +315,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
 
-  g_error ("unable to lookup symbol '%s' in dictionary %d\n", key, dict.idx);
+  syx_error ("unable to lookup symbol '%s' in dictionary %d\n", key, dict.idx);
   
   return syx_nil;
 }

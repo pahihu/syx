@@ -38,4 +38,6 @@ int main()
   syx_memory_save_image ("default.sim");
 
   syx_quit ();
+
+  return 0;
 }

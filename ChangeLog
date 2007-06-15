@@ -1,3 +1,26 @@
+2007-06-15  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (syx_memory_load_image): do not add extra byte for strings
+	(strndup): added if missing in other environments
+	(memdup): same
+
+	* SConstruct: added various options and organized for a better debugging
+
+	* syx/syx-object.c (syx_string_new): add 1 to the size to hold NULL char
+	(syx_symbol_new): same
+
+	* syx/syx-interp.c (syx_interp_mark_arguments): do not alloc if not arguments are given
+	Do not pass the execution state trough parameters, instead keep it global.
+	This would produce a better C/Smalltalk interface
+
+	* st/kernel/ObjectMemory.st: adjusted
+	
+	* st/kernel/SystemDictionary.st (quit:): added with relative primitive
+
+	* syx/syx-error.c: added
+	
+	* st/kernel/String.st (size): subtract 1 whith is the NULL char
+
 2007-06-14  Luca Bruno  <lethalman88@gmail.com>
 
 	* Removed Glib dependency

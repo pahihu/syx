@@ -4,6 +4,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include "syx-error.h"
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-memory.h"
@@ -99,7 +100,7 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
   \return TRUE if parsing was successful, otherwise FALSE
 */
 syx_bool
-syx_parser_parse (SyxParser *self, GError **error)
+syx_parser_parse (SyxParser *self)
 {
   SyxToken token;
 
@@ -234,7 +235,7 @@ _syx_parser_parse_term (SyxParser *self)
 	  _syx_parser_parse_expression (self);
 	  token = syx_lexer_get_last_token (self->lexer);
 	  if (! (token.type == SYX_TOKEN_CLOSING && token.value.character == ')'))
-	    g_error ("Expected ) after sub expression");
+	    syx_error ("Expected ) after sub expression");
 	}
       else if (!strcmp (token.value.string, "["))
 	_syx_parser_parse_block (self);
@@ -242,7 +243,10 @@ _syx_parser_parse_term (SyxParser *self)
 	_syx_parser_parse_array (self);
       break;
     default:
-      g_error ("Invalid expression start\n");
+      if (token.type == SYX_TOKEN_END)
+	syx_error ("End of input unexpected")
+      else
+	syx_error ("Invalid expression start of type %d\n", token.type)
     }
 
   syx_lexer_next_token (self->lexer);
@@ -309,21 +313,21 @@ _syx_parser_parse_primitive (SyxParser *self)
 
   token = syx_lexer_next_token (self->lexer);
   if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "primitive:")))
-    g_error ("expected primitive:");
+    syx_error ("expected primitive:");
   syx_token_free (token);
 
   token = syx_lexer_next_token (self->lexer);
   if (token.type != SYX_TOKEN_STR_CONST)
-    g_error ("expected a string containing the primitive to be called\n");
+    syx_error ("expected a string containing the primitive to be called\n");
 
   prim_index = syx_primitive_get_index (token.value.string);
   if (prim_index < 0)
-    g_error ("unknown primitive named %s\n", token.value.string);
+    syx_error ("unknown primitive named %s\n", token.value.string);
   syx_token_free (token);
 
   token = syx_lexer_next_token (self->lexer);
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-    g_error ("expected >");
+    syx_error ("expected >");
   syx_token_free (token);
 
   SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
@@ -349,7 +353,7 @@ _syx_parser_parse_temporaries (SyxParser *self)
 	  token = syx_lexer_next_token (self->lexer);
 	}
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-	g_error ("Temporary list not terminated by bar");
+	syx_error ("Temporary list not terminated by bar");
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
@@ -387,7 +391,7 @@ _syx_parser_parse_body (SyxParser *self)
     }
 
   if (self->_in_block && !closed_brace)
-    g_error ("Expected ] after block body\n");
+    syx_error ("Expected ] after block body\n");
 }
 
 static void
@@ -460,7 +464,7 @@ _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
       return;
     }
   
-  g_error ("unassignable variable named: %s\n", assign_name);
+  syx_error ("unassignable variable named: %s\n", assign_name);
 }
 
 static void
@@ -477,7 +481,7 @@ _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
       syx_bytecode_duplicate_at (self->bytecode, self->_duplicate_indexes[self->_duplicate_indexes_top - 1]);
       syx_bytecode_pop_top (self->bytecode);
       syx_token_free (token);
-      token = syx_lexer_next_token (self->lexer);
+      syx_lexer_next_token (self->lexer);
       _syx_parser_do_key_continuation (self, super_receiver);
       token = syx_lexer_get_last_token (self->lexer);
     }
@@ -506,7 +510,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
   if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "["))
     {
       syx_token_free (token);
-      token = syx_lexer_next_token (self->lexer);
+      syx_lexer_next_token (self->lexer);
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
       self->_temporary_scopes.top--;
@@ -620,7 +624,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  strcat (selector, token.value.string);
 	  num_args++;
 	  syx_token_free (token);
-	  token = syx_lexer_next_token (self->lexer);
+	  syx_lexer_next_token (self->lexer);
 
 	  super_term = _syx_parser_parse_term (self);
 	  _syx_parser_do_binary_continuation (self, super_term, FALSE);
@@ -653,7 +657,7 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
 	self->_duplicate_indexes[self->_duplicate_indexes_top - 1] = self->bytecode->code_top;
 
       syx_token_free (token);
-      token = syx_lexer_next_token (self->lexer);
+      syx_lexer_next_token (self->lexer);
       super_term = _syx_parser_parse_term (self);
       _syx_parser_do_unary_continuation (self, super_term, FALSE);
       token = syx_lexer_get_last_token (self->lexer);
@@ -699,7 +703,7 @@ _syx_parser_parse_block (SyxParser *self)
   self->bytecode = syx_bytecode_new ();
   self->_in_block = TRUE;
 
-  syx_parser_parse (self, NULL);
+  syx_parser_parse (self);
 
   closure = syx_block_closure_new (self->method);
   self->method = old_method;
@@ -768,7 +772,7 @@ _syx_parser_parse_literal_array (SyxParser *self)
 	  syx_token_free (token);
 	  break;
 	default:
-	  g_error ("illegal text in literal array\n");
+	  syx_error ("illegal text in literal array\n");
 	  break;
 	}
 
@@ -799,7 +803,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (!token.type == SYX_TOKEN_NAME_CONST)
-	g_error ("Expected name constant for argument name\n");
+	syx_error ("Expected name constant for argument name\n");
       self->_argument_names[self->_argument_names_top++] = token.value.string;
       scope.end++;
 
@@ -813,7 +817,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
 
 	  token = syx_lexer_next_token (self->lexer);
 	  if (token.type != SYX_TOKEN_NAME_CONST)
-	    g_error ("Expected name constant for argument name\n");
+	    syx_error ("Expected name constant for argument name\n");
 	  self->_argument_names[self->_argument_names_top++] = token.value.string;
 	  scope.end++;
 
@@ -823,7 +827,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector);
       break;
     default:
-      g_error ("Invalid message pattern\n");
+      syx_error ("Invalid message pattern\n");
     }
 
   self->_argument_scopes.stack[(syx_int32) self->_argument_scopes.top++] = scope;
@@ -853,7 +857,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
     }
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-    g_error ("Expected | after block message pattern");
+    syx_error ("Expected | after block message pattern");
 
   syx_token_free (token);
   syx_lexer_next_token (self->lexer);

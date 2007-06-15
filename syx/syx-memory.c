@@ -1,10 +1,19 @@
+#ifdef HAVE_CONFIG_H
+  #include <config.h>
+#endif
+
 #include <assert.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include "syx-object.h"
 #include "syx-memory.h"
+#include "syx-error.h"
 #include "syx-scheduler.h"
+
+#ifdef SYX_DEBUG_WARNING
+#define SYX_DEBUG_GC
+#endif
 
 static syx_varsize _syx_memory_size;
 SyxObject *syx_memory;
@@ -35,8 +44,6 @@ static void _syx_memory_gc_sweep ();
     Take a look at syx-memory.c for more detailed informations.
     \note the SyxObject::data field, containing SyxObject pointers, is allocated outside this memory.
 */
-
-/* #define DEBUG_GC */
 
 //! Initialize or realloc the memory according to the given size
 void
@@ -99,7 +106,7 @@ syx_memory_alloc (void)
     {
       syx_memory_gc ();
       if (_syx_freed_memory_top == 0)
-	g_error ("object memory heap is really full\n");
+	syx_error ("object memory heap is really full\n");
     }
 
   oop = _syx_freed_memory[--_syx_freed_memory_top];
@@ -108,7 +115,7 @@ syx_memory_alloc (void)
   if (_syx_memory_gc_trans_running)
     {
       if (_syx_memory_gc_trans_top == 0x100)
-	g_error ("transactions can hold up to 256 objects");
+	syx_error ("transactions can hold up to 256 objects");
 
       SYX_OBJECT_IS_MARKED(oop) = TRUE;
       _syx_memory_gc_trans[_syx_memory_gc_trans_top++] = oop;
@@ -140,7 +147,7 @@ syx_memory_gc (void)
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
 
-#ifdef DEBUG_GC
+#ifdef SYX_DEBUG_GC
   printf("GC: reclaimed %d (%d%%) objects over %d\n", _syx_freed_memory_top, _syx_freed_memory_top * 100 / _syx_memory_size, _syx_memory_size);
 #endif
 }
@@ -198,7 +205,6 @@ syx_memory_save_image (syx_symbol path)
   fwrite (&syx_symbols.idx, sizeof (syx_int32), 1, image);
 
   syx_memory_gc ();
-
 
   for (i=0; i < _syx_memory_size; i++, object++)
     {
@@ -276,7 +282,7 @@ syx_memory_load_image (syx_symbol path)
 	      if (object->data)
 		syx_free (object->data);
 
-	      object->data = syx_calloc (object->size + 1, sizeof (syx_int8));
+	      object->data = syx_calloc (object->size, sizeof (syx_int8));
 	      fread (object->data, sizeof (syx_int8), object->size, image);
 	    }
 	}
@@ -361,7 +367,7 @@ syx_malloc (syx_varsize size)
 
   ptr = malloc (size);
   if (!ptr)
-    g_error ("out of memory");
+    syx_error ("out of memory");
 
   return ptr;
 }
@@ -373,7 +379,7 @@ syx_malloc0 (syx_varsize size)
 
   ptr = malloc (size);
   if (!ptr)
-    g_error ("out of memory");
+    syx_error ("out of memory");
 
   memset (ptr, '\0', size);
   return ptr;
@@ -386,7 +392,7 @@ syx_calloc (syx_varsize elements, syx_varsize element_size)
 
   ptr = calloc (elements, element_size);
   if (!ptr)
-    g_error ("out of memory");
+    syx_error ("out of memory");
 
   return ptr;
 }
@@ -398,7 +404,33 @@ syx_realloc (syx_pointer ptr, syx_varsize size)
 
   nptr = realloc (ptr, size);
   if (!nptr)
-    g_error ("out of memory");
+    syx_error ("out of memory");
 
   return nptr;
 }
+
+#ifndef HAVE_STRNDUP
+
+inline syx_string
+strndup (syx_string src, syx_size n)
+{
+  syx_string ret = syx_malloc (n + 1);
+  memcpy (ret, src, n);
+  ret[n] = '\0';
+  return ret;
+}
+
+#endif /* HAVE_STRNDUP */
+
+
+#ifndef HAVE_MEMDUP
+
+inline syx_pointer
+memdup (syx_pointer src, syx_size n)
+{
+  syx_pointer dest = syx_malloc (n);
+  memcpy (dest, src, n);
+  return dest;
+}
+
+#endif /* HAVE_MEMDUP */

@@ -1,7 +1,12 @@
 !ObjectMemory class methodsFor: 'image'!
 
+garbageCollect
+    <primitive: 'ObjectMemory_garbageCollect'>
+	self primitiveFailed
+!
+
 snapshot: aFilename
-    <primitive: 'snapshot' module: 'Kernel'>
+    <primitive: 'ObjectMemory_snapshot'>
 	self primitiveFailed
 !
 

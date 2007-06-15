@@ -9,7 +9,6 @@ main (int argc, char *argv[])
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
-  GError *error = NULL;
   clock_t start, end;
 
   syx_init (".");
@@ -20,7 +19,7 @@ main (int argc, char *argv[])
   lexer = syx_lexer_new (text);						\
   method = syx_method_new ();						\
   parser = syx_parser_new (lexer, method, NULL);			\
-  assert (syx_parser_parse (parser, &error) == TRUE);			\
+  assert (syx_parser_parse (parser) == TRUE);				\
   syx_lexer_free (lexer, FALSE);					\
   syx_parser_free (parser, FALSE);					\
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \

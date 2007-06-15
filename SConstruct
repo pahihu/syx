@@ -22,7 +22,10 @@ opts.AddOptions (
    PathOption('includedir',
               'Installation prefix for C header files', 
               '$prefix/include', []),
-   BoolOption ('release', 'do a release build', 'no'))
+   EnumOption ('debug', """Debug output and symbols""", 'normal',
+               allowed_values=('no', 'normal', 'warning', 'full'),
+               ignorecase=True))
+
 env = Environment (options=opts)
 
 # My 64bit LFS keep its toolchain in /tools64 and set LD_LIBRARY_PATH for tests
@@ -35,8 +38,10 @@ env['tools'] = ['default', 'mingw']
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
      Type: 'scons'               to build Syx.
-     	   'scons release=yes'   to build with high optimization
-	                         and no debugging informations.
+     	   'scons debug=no'      release build with high optimization.
+           'scons debug=normal'  add debug symbols (default).
+           'scons debug=warning' normal debug plus warning messages.
+           'scons debug=full'    trace the entire execution stack of Smalltalk.
            'scons test'          to test Syx.
            'scons doc'           to create reference documentation (requires Doxygen).
      	   'scons install'       to install Syx.
@@ -49,14 +54,23 @@ for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h',
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
 
+for f in ['strndup', 'memdup']:
+   conf.CheckFunc (f)
+
 conf.Finish ()
 
 # Flags
 env.MergeFlags ('-I.. -L#syx')
-if not env['release']:
-   env.MergeFlags ('-g -O')
-else:
+if env['debug'] == 'no':
    env.MergeFlags ('-O3')
+elif env['debug'] == 'normal':
+   env.MergeFlags ('-g -O')
+elif env['debug'] == 'warning':
+   env.MergeFlags ('-g -O -DSYX_DEBUG_WARNING')
+elif env['debug'] == 'full':
+   env.MergeFlags ('-g -O -DSYX_DEBUG_WARNING -DSYX_DEBUG_FULL')
+
+env.MergeFlags ('-Wall -DHAVE_CONFIG_H')
 
 # Test builder
 def builder_test (target, source, env):

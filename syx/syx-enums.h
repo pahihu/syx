@@ -153,4 +153,15 @@ typedef enum
     SYX_BYTECODE_CONST_CONTEXT,
   } SyxBytecodeConstant;
 
+
+//! Type of signals emitted in the Smalltalk environment
+/*!
+  Each type is relative to a class defined in syx-error.c
+*/
+typedef enum
+  {
+    SYX_ERROR_INTERP,
+    SYX_ERROR_NOT_UNDERSTOOD,
+  } SyxSignalInternal;
+
 #endif /* SYX_ENUMS_H */

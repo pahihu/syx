@@ -311,10 +311,7 @@ syx_lexer_next_chunk (SyxLexer *lexer)
   syx_token_free (token);
 
   length = lexer->_current_text - start_text;
-  chunk = syx_malloc (length);
-  memcpy (chunk, start_text, length - 1);
-  chunk[length - 1] = '\0';
-
+  chunk = strndup (start_text, length - 1);
   return chunk;
 }
 
