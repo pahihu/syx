@@ -2,12 +2,12 @@
   #include <config.h>
 #endif
 
-#define _GNU_SOURCE
+#include "syx-memory.h"
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 #include "syx-types.h"
 #include "syx-lexer.h"
-#include "syx-memory.h"
 
 static void _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar);
 static void _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar);
@@ -97,13 +97,41 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 static void
 _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_int32 intres = lastChar - '0';
-  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
-    intres = (intres * 10) + (lastChar - '0');
-  syx_lexer_push_back (self);
+  syx_char float_s[256] = {0};
+  syx_int32 float_st = 0;
+  syx_int32 intres = 0;
+
+  do
+    {
+      intres = (intres * 10) + (lastChar - '0');
+      float_s[float_st++] = lastChar;
+    } while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
   token->value.integer = intres;
   token->type = SYX_TOKEN_INT_CONST;
+
+  // a float?
+  if (lastChar == '.')
+    {
+      if ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
+	{
+	  float_s[float_st++] = '.';
+	  do
+	    float_s[float_st++] = lastChar;
+	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
+
+	  syx_lexer_push_back (self);
+	  token->type = SYX_TOKEN_FLOAT_CONST;
+	  token->value.floating = atof (float_s);
+	}
+      else
+	{
+	  self->_pushed_back = -1;
+	  self->_current_text -= 2;
+	}
+    }
+  else
+    syx_lexer_push_back (self);
 }
 
 static void

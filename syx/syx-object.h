@@ -9,6 +9,7 @@
 #define SYX_SMALL_INTEGER(oop) (oop.i.value)
 #define SYX_CHARACTER(oop) (oop.c.value)
 
+#define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT_DATA (oop))))
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
@@ -58,6 +59,7 @@ extern SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
+  syx_float_class,
 
   syx_symbol_class,
   syx_string_class,
@@ -96,6 +98,7 @@ inline void syx_object_set_class (SyxOop oop, SyxOop class);
 #define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
 inline SyxOop syx_small_integer_new (syx_int32 num);
 inline SyxOop syx_character_new (syx_uint8 ch);
+inline SyxOop syx_float_new (syx_double floating);
 
 syx_symbol *syx_class_get_all_instance_variables (SyxOop class);
 syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);

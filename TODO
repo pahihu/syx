@@ -1,6 +1,12 @@
 Major:
-- Implement coalesced hash tables with consistent hash functions
-- Method caching
+- Complete the lexer
+- Number coercing and printing
+- C and Smalltalk side tracebacks
+- System signal handling
 
 Minor:
 - Create a working timer for tests
+
+Later:
+- Implement coalesced hash tables with consistent hash functions
+- Method caching

@@ -230,6 +230,16 @@ SYX_FUNC_PRIMITIVE (SmallInteger_print)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (Float_print)
+{
+  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
+
+
+/* Processor */
+
 SYX_FUNC_PRIMITIVE (Processor_enter)
 {
   return syx_interp_enter_context (es->message_arguments[0]);
@@ -442,8 +452,62 @@ SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) == SYX_SMALL_INTEGER (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) != SYX_SMALL_INTEGER (es->message_arguments[0])));
 }
+
+
+
+/* Floats */
+
+SYX_FUNC_PRIMITIVE (Float_plus)
+{
+  syx_double first, second;
+  first = SYX_OBJECT_FLOAT(es->message_receiver);
+  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  SYX_PRIM_RETURN (syx_float_new (first + second));
+}
+
+SYX_FUNC_PRIMITIVE (Float_minus)
+{
+  syx_double first, second;
+  first = SYX_OBJECT_FLOAT(es->message_receiver);
+  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  SYX_PRIM_RETURN (syx_float_new (first - second));
+}
+
+SYX_FUNC_PRIMITIVE (Float_lt)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) < SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+SYX_FUNC_PRIMITIVE (Float_gt)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) > SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+SYX_FUNC_PRIMITIVE (Float_le)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) <= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+SYX_FUNC_PRIMITIVE (Float_ge)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) >= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+SYX_FUNC_PRIMITIVE (Float_eq)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) == SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+SYX_FUNC_PRIMITIVE (Float_ne)
+{
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) != SYX_OBJECT_FLOAT (es->message_arguments[0])));
+}
+
+
+/* Object memory and Smalltalk */
+
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
@@ -495,6 +559,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
 
   { "Symbol_asString", Symbol_asString },
   { "SmallInteger_print", SmallInteger_print },
+  { "Float_print", Float_print },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },
@@ -520,6 +585,16 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+
+  /* Floats */
+  { "Float_plus", Float_plus },
+  { "Float_minus", Float_minus },
+  { "Float_lt", Float_lt },
+  { "Float_gt", Float_gt },
+  { "Float_le", Float_le },
+  { "Float_ge", Float_ge },
+  { "Float_eq", Float_eq },
+  { "Float_ne", Float_ne },
 
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },

@@ -123,6 +123,9 @@ Magnitude subclass: #Number
 Number subclass: #SmallInteger
        instanceVariableNames: ''!
 
+Number subclass: #Float
+       instanceVariableNames: ''!
+
 Object subclass: #Boolean
        instanceVariableNames: ''!
 

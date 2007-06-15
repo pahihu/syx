@@ -14,11 +14,17 @@ main (int argc, char *argv[])
 
   start = clock ();
 
+  obj = syx_small_integer_new (123);
+  assert (SYX_SMALL_INTEGER(obj) == 123);
+
   obj = syx_character_new ('c');
   assert (SYX_CHARACTER(obj) == 'c');
 
   obj = syx_symbol_new ("symbol");
   assert (!strcmp (SYX_OBJECT_SYMBOL(obj), "symbol"));
+
+  obj = syx_float_new (123.321);
+  assert (SYX_OBJECT_FLOAT(obj) == 123.321);
 
   // Now test basic inheritance between classes and metaclasses
   instobj = syx_globals_at ("Signal");

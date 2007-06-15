@@ -215,6 +215,10 @@ _syx_parser_parse_term (SyxParser *self)
       syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (token.value.integer));
       syx_token_free (token);
       break;
+    case SYX_TOKEN_FLOAT_CONST:
+      syx_bytecode_push_literal (self->bytecode, syx_float_new (token.value.floating));
+      syx_token_free (token);
+      break;
     case SYX_TOKEN_SYM_CONST:
       syx_bytecode_push_literal (self->bytecode, syx_symbol_new (token.value.string));
       syx_token_free (token);
@@ -246,7 +250,7 @@ _syx_parser_parse_term (SyxParser *self)
       if (token.type == SYX_TOKEN_END)
 	syx_error ("End of input unexpected")
       else
-	syx_error ("Invalid expression start of type %d\n", token.type)
+	syx_error ("Invalid expression start %s\n", token.value.string)
     }
 
   syx_lexer_next_token (self->lexer);

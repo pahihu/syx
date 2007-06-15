@@ -68,7 +68,7 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st",
     "Symbol.st",
-    "Number.st", "SmallInteger.st",
+    "Number.st", "SmallInteger.st", "Float.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "Array.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
@@ -198,6 +198,7 @@ syx_fetch_basic (void)
   syx_symbol_class = syx_globals_at ("Symbol");
   syx_string_class = syx_globals_at ("String");
   syx_small_integer_class = syx_globals_at ("SmallInteger");
+  syx_float_class = syx_globals_at ("Float");
   syx_character_class = syx_globals_at ("Character");
   syx_byte_array_class = syx_globals_at ("ByteArray");
   syx_array_class = syx_globals_at ("Array");

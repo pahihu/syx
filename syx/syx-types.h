@@ -45,6 +45,8 @@ typedef unsigned long long int syx_uint64;
 typedef long syx_size;
 typedef syx_int32 syx_varsize;
 
+typedef double syx_double;
+
 typedef void * syx_pointer;
 
 typedef union SyxOop SyxOop;

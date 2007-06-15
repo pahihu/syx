@@ -41,6 +41,10 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method | a | ^a := 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
 
+  puts ("- Test floats");
+  ret_obj = _interpret ("method | a | a := 123.321. ^a + 2.2");
+  assert (SYX_OBJECT_FLOAT(ret_obj) == 125.521);
+
   puts ("- Test single messages");
   ret_obj = _interpret ("method ^Object class class hash");
   assert (syx_metaclass_class.idx == SYX_SMALL_INTEGER (ret_obj));

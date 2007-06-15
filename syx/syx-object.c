@@ -26,6 +26,7 @@ SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
+  syx_float_class,
 
   syx_symbol_class,
   syx_string_class,
@@ -540,6 +541,15 @@ syx_character_new (syx_uint8 ch)
   oop.idx = ch;
   oop.c.type = SYX_TYPE_CHARACTER;
   return oop;
+}
+
+//! Create a new Float
+inline SyxOop
+syx_float_new (syx_double floating)
+{
+  syx_double *fdata = syx_malloc (sizeof (syx_double));
+  *fdata = floating;
+  return syx_object_new_data (syx_float_class, FALSE, sizeof (syx_double), (SyxOop *)fdata);
 }
 
 //! Check if a class is a superclass of another one
