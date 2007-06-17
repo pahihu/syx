@@ -35,8 +35,6 @@ int main()
 
   syx_scheduler_run ();
 
-  syx_memory_save_image ("default.sim");
-
   syx_quit ();
 
   return 0;

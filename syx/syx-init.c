@@ -214,6 +214,10 @@ syx_fetch_basic (void)
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
 
+  syx_vm_error_class = syx_globals_at ("VMError");
+  syx_message_not_understood_class = syx_globals_at ("MessageNotUnderstood");
+
+  syx_error_init ();
   syx_scheduler_init ();
 }
 
@@ -240,6 +244,7 @@ syx_quit (void)
 {
   syx_exec_state_free ();
   syx_memory_clear ();
+  syx_error_clear ();
 }
 
 //! Returns the root directory of Syx

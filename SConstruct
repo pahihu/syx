@@ -50,9 +50,22 @@ env.Help (opts.GenerateHelpText (env) + """
 # Configuration
 conf = Configure (env, config_h='config.h')
 
-for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h', 'sys/types.h']:
+print 'Mandatory headers...'
+
+for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
+          'sys/types.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
+      env.Exit (-1)
+
+print
+print 'Optional headers...'
+
+for h in ['stdarg.h']:
+   conf.CheckCHeader (h)
+
+print
+print 'Optional functions...'
 
 for f in ['strndup', 'memdup']:
    conf.CheckFunc (f)

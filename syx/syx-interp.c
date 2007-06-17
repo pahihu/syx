@@ -30,7 +30,7 @@ inline void
 syx_interp_stack_push (SyxOop object)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  g_debug ("CONTEXT STACK - Push %p (sp = %d)\n", object, es->sp);
+  syx_debug ("CONTEXT STACK - Push %x (sp = %d)\n", object.idx, es->sp);
 #endif
   es->stack[es->sp++] = object;
 }
@@ -40,7 +40,7 @@ inline SyxOop
 syx_interp_stack_pop (void)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  g_debug ("CONTEXT STACK - Pop %p (sp = %d)\n", es->stack[es->sp - 1], es->sp - 1);
+  syx_debug ("CONTEXT STACK - Pop %x (sp = %d)\n", es->stack[es->sp - 1].idx, es->sp - 1);
 #endif
   return es->stack[--es->sp];
 }
@@ -60,7 +60,7 @@ inline syx_bool
 syx_interp_swap_context (SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Swap context %p with new %p\n", SYX_OOP_CAST_POINTER (es->context), SYX_OOP_CAST_POINTER (context));
+  syx_debug ("CONTEXT - Swap context %d with new %d\n", es->context.idx, context.idx);
 #endif
   es->context = context;
   syx_exec_state_save ();
@@ -83,8 +83,8 @@ syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_c
 {
   SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
-	   return_object, use_return_context);
+  syx_debug ("CONTEXT - Leave context and answer: %x use return context: %d\n",
+	     return_object.idx, use_return_context);
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
@@ -106,7 +106,7 @@ inline syx_bool
 syx_interp_enter_context (SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
-  g_debug ("CONTEXT - Enter context\n");
+  syx_debug ("CONTEXT - Enter context\n");
 #endif
 
   es->byteslice--; // incremented by "mark arguments" bytecode
@@ -132,10 +132,26 @@ syx_interp_call_primitive (syx_int16 primitive, SyxOop method)
   prim_entry = syx_primitive_get_entry (primitive);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
+  syx_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
 #endif
 
   return prim_entry->func (es, method);
+}
+
+//! Get the current context being executed
+inline SyxOop
+syx_interp_get_current_context (void)
+{
+  return es->context;
+}
+
+//! Create a new execution state to link the interpreter and the active process
+inline SyxExecState *
+syx_exec_state_new (void)
+{
+  SyxExecState *ret = syx_malloc (sizeof (SyxExecState));
+  ret->message_arguments = NULL;
+  return ret;
 }
 
 //! Fetch the execution state of a Process
@@ -250,7 +266,7 @@ syx_process_execute_blocking (SyxOop process)
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push instance at %d\n", argument);
+  syx_debug ("BYTECODE - Push instance at %d\n", argument);
 #endif
   syx_interp_stack_push (SYX_OBJECT_DATA(es->receiver)[argument]);
   return TRUE;
@@ -259,7 +275,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push argument at %d\n", argument);
+  syx_debug ("BYTECODE - Push argument at %d\n", argument);
 #endif
 
   if (argument == 0)
@@ -272,7 +288,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 SYX_FUNC_INTERPRETER (syx_interp_push_temporary)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push temporary at %d\n", argument);
+  syx_debug ("BYTECODE - Push temporary at %d\n", argument);
 #endif
   syx_interp_stack_push (es->temporaries[argument]);
   return TRUE;
@@ -281,7 +297,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_temporary)
 SYX_FUNC_INTERPRETER (syx_interp_push_literal)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push literal at %d\n", argument);
+  syx_debug ("BYTECODE - Push literal at %d\n", argument);
 #endif
   syx_interp_stack_push (es->literals[argument]);
   return TRUE;
@@ -291,7 +307,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 {
   SyxOop constant;
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push constant %d\n", argument);
+  syx_debug ("BYTECODE - Push constant %d\n", argument);
 #endif
   if (argument < SYX_BYTECODE_CONST_CONTEXT)
     {
@@ -301,7 +317,10 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
   else if (argument == SYX_BYTECODE_CONST_CONTEXT)
     syx_interp_stack_push (es->context);
   else
-    syx_signal (SYX_ERROR_INTERP, syx_small_integer_new (__LINE__), syx_small_integer_new (argument));
+    {
+      syx_signal (SYX_ERROR_INTERP, 2, syx_small_integer_new (__LINE__), syx_small_integer_new (argument));
+      return FALSE;
+    }
   
   return TRUE;
 }
@@ -314,7 +333,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_global)
   symbol = SYX_OBJECT_SYMBOL (es->literals[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push global: '%s'\n", symbol);
+  syx_debug ("BYTECODE - Push global: '%s'\n", symbol);
 #endif
 
   object = syx_globals_at (symbol);
@@ -333,7 +352,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_array)
     SYX_OBJECT_DATA(array)[argument - i] = syx_interp_stack_pop ();
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Push array of elements: %d\n", argument);
+  syx_debug ("BYTECODE - Push array of elements: %d\n", argument);
 #endif
 
   syx_interp_stack_push (array);
@@ -344,7 +363,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_array)
 SYX_FUNC_INTERPRETER (syx_interp_assign_instance)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Assign instance at %d\n", argument);
+  syx_debug ("BYTECODE - Assign instance at %d\n", argument);
 #endif
   SYX_OBJECT_DATA(es->receiver)[argument] = syx_interp_stack_peek ();
   return TRUE;
@@ -353,7 +372,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_instance)
 SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
 {
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Assign temporary at %d\n", argument);
+  syx_debug ("BYTECODE - Assign temporary at %d\n", argument);
 #endif
   es->temporaries[argument] = syx_interp_stack_peek ();
   return TRUE;
@@ -364,10 +383,14 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   syx_varsize i;
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
+  syx_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
   es->message_arguments_count = argument;
+
+  if (es->message_arguments)
+    syx_free (es->message_arguments);
+
   if (argument > 0)
     {
       es->message_arguments = syx_calloc (argument, sizeof (SyxOop));
@@ -386,7 +409,6 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   syx_symbol selector;
-  syx_bool res;
   SyxOop class, method, context;
   syx_int16 primitive;
 
@@ -396,32 +418,25 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 
   if (SYX_IS_NIL (method))
     {
-      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, es->message_receiver, es->literals[argument]);
+      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
       return FALSE;
     }
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send message #%s\n", selector);
+  syx_debug ("BYTECODE - Send message #%s\n", selector);
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-    {
-      res = syx_interp_call_primitive (primitive, method);
-      if (es->message_arguments)
-	{
-	  syx_free (es->message_arguments);
-	  es->message_arguments = NULL;
-	}
-      return res;
-    }
+    return syx_interp_call_primitive (primitive, method);
 
-  if (es->message_arguments)
+  if (es->message_arguments_count > 0)
     {
       syx_memory_gc_begin ();
       context = syx_method_context_new (es->context, method, es->message_receiver,
 					syx_array_new (es->message_arguments_count, es->message_arguments));
       syx_memory_gc_end ();
+      es->message_arguments = NULL;
     }
   else
     context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
@@ -432,7 +447,6 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   syx_symbol selector;
-  syx_bool res;
   SyxOop class, method, context;
   syx_int16 primitive;
 
@@ -441,30 +455,26 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   method = syx_class_lookup_method (class, selector);
 
   if (SYX_IS_NIL (method))
-    syx_signal (SYX_ERROR_NOT_UNDERSTOOD, es->message_receiver, es->literals[argument]);
+    {
+      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
+      return FALSE;
+    }
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send message #%s to super\n", selector);
+  syx_debug ("BYTECODE - Send message #%s to super\n", selector);
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-    {
-      res = syx_interp_call_primitive (primitive, method);
-      if (es->message_arguments)
-	{
-	  syx_free (es->message_arguments);
-	  es->message_arguments = NULL;
-	}
-      return res;
-    }
+    return syx_interp_call_primitive (primitive, method);
 
-  if (es->message_arguments)
+  if (es->message_arguments_count > 0)
     {
       syx_memory_gc_begin ();
       context = syx_method_context_new (es->context, method, es->message_receiver,
 					syx_array_new (es->message_arguments_count, es->message_arguments));
       syx_memory_gc_end ();
+      es->message_arguments = NULL;
     }
   else
     context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
@@ -492,11 +502,13 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
   if (SYX_IS_NIL (method))
-    syx_signal (SYX_ERROR_NOT_UNDERSTOOD, es->message_receiver,
-		syx_bytecode_unary_messages[argument]);
+    {
+      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
+      return FALSE;
+    }
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
+  syx_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
@@ -551,16 +563,21 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_binary_messages[argument]);
   if (SYX_IS_NIL (method))
-    syx_signal (SYX_ERROR_NOT_UNDERSTOOD, es->message_receiver,
-		syx_bytecode_binary_messages[argument]);
+    {
+      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
+      return FALSE;
+    }
 
 #ifdef SYX_DEBUG_BYTECODE
-  g_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_binary_messages[argument]);
+  syx_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_binary_messages[argument]);
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     {
+      if (es->message_arguments)
+	syx_free (es->message_arguments);
+
       es->message_arguments = &first_argument;
       ret = syx_interp_call_primitive (primitive, method);
       es->message_arguments = NULL;
@@ -588,13 +605,13 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
     {
     case SYX_BYTECODE_POP_TOP:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Pop top\n");
+      syx_debug ("BYTECODE - Pop top\n");
 #endif
       es->sp--;
       return TRUE;
     case SYX_BYTECODE_SELF_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Self return\n");
+      syx_debug ("BYTECODE - Self return\n");
 #endif
       if (SYX_OOP_EQ (syx_object_get_class (es->context), syx_block_context_class))
 	returned_object = syx_interp_stack_pop ();
@@ -604,14 +621,14 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       return syx_interp_leave_context_and_answer (returned_object, FALSE);
     case SYX_BYTECODE_STACK_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Stack return\n");
+      syx_debug ("BYTECODE - Stack return\n");
 #endif
       returned_object = syx_interp_stack_pop ();
       return syx_interp_leave_context_and_answer (returned_object, TRUE);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
     case SYX_BYTECODE_BRANCH_IF_FALSE:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Conditional\n");
+      syx_debug ("BYTECODE - Conditional\n");
 #endif
       condition = syx_interp_stack_pop ();
       jump = _syx_interp_get_next_byte ();
@@ -625,7 +642,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       return TRUE;
     case SYX_BYTECODE_BRANCH:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Branch\n");
+      syx_debug ("BYTECODE - Branch\n");
 #endif
       jump = _syx_interp_get_next_byte ();
       if (jump)
@@ -633,7 +650,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       return TRUE;
     case SYX_BYTECODE_DUPLICATE:
 #ifdef SYX_DEBUG_BYTECODE
-      g_debug ("BYTECODE - Duplicate\n");
+      syx_debug ("BYTECODE - Duplicate\n");
 #endif
       syx_interp_stack_push (syx_interp_stack_peek ());
       return TRUE;
@@ -641,7 +658,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(syx_interp_stack_peek ()) = es->context;
       return TRUE;
     default:
-      syx_signal (SYX_ERROR_INTERP, syx_small_integer_new (__LINE__), syx_small_integer_new (argument));
+      syx_signal (SYX_ERROR_INTERP, 0);
       return FALSE;
     }
 
@@ -652,7 +669,7 @@ static syx_uint16
 _syx_interp_get_next_byte (void)
 {
 #ifdef SYX_DEBUG_TRACE_IP
-  g_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", es->context, es->ip, es->bytecodes[es->ip]);
+  syx_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", es->context, es->ip, es->bytecodes[es->ip]);
 #endif
 
   return es->bytecodes[es->ip++];
@@ -705,7 +722,7 @@ _syx_interp_execute_byte (syx_uint16 byte)
 
 #ifdef SYX_DEBUG_BYTECODE_PROFILE
   g_timer_stop (timer);
-  g_debug("BYTECODE PROFILE - Command %d with arguments %d: %fs\n", command, argument, g_timer_elapsed (timer, NULL));
+  syx_debug("BYTECODE PROFILE - Command %d with arguments %d: %fs\n", command, argument, g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
 #endif
   

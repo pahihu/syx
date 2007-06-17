@@ -17,9 +17,9 @@ signal
     signalerContext := thisContext.
     handlerContext := self findHandlerContext.
     handlerContext isNil
-	ifTrue: ['Unhandled exception... process is going to be terminated' print.
-		 signalerContext parent parent receiver class name print.
-		 signalerContext parent parent method selector print.
+	ifTrue: ['Unhandled exception... process is going to be terminated' printNl.
+		 signalerContext parent parent receiver class name printNl.
+		 signalerContext parent parent method selector printNl.
 		 Processor activeProcess terminate]
 	ifFalse: [self return: (handlerContext handlerBlock value: self)]
 !

@@ -269,13 +269,13 @@ SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
 	{
 	  hClass = SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx);
 	  if (!SYX_IS_NIL (hClass) && (SYX_OOP_EQ (eClass, hClass) || syx_class_is_superclass_of (hClass, eClass)))
-	    SYX_PRIM_RETURN (ctx);
+	    break;
 	}
 
       ctx = SYX_METHOD_CONTEXT_PARENT (ctx);
     }
 
-  SYX_PRIM_RETURN (syx_nil);
+  SYX_PRIM_RETURN (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (Character_new)
@@ -522,6 +522,11 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (ObjectMemory_indexOf)
+{
+  SYX_PRIM_RETURN (syx_small_integer_new (es->message_receiver.idx));
+}
+
 SYX_FUNC_PRIMITIVE (Smalltalk_quit)
 {
   syx_int32 status = SYX_SMALL_INTEGER (es->message_arguments[0]);
@@ -599,6 +604,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },
   { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
+  { "ObjectMemory_indexOf", ObjectMemory_indexOf },
 
   /* Smalltalk environment */
   { "Smalltalk_quit", Smalltalk_quit },

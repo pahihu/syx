@@ -64,16 +64,6 @@ CompiledMethod subclass: #CompiledBlock
 Object subclass: #BlockClosure
        instanceVariableNames: 'block definedContext'!
 
-"Exceptions"
-
-Object subclass: #Signal
-       instanceVariableNames: 'handlerContext signalerContext'!
-
-Signal subclass: #Exception
-       instanceVariableNames: ''!
-
-Exception subclass: #Error
-	  instanceVariableNames: 'description'!
 
 "Management"
 
@@ -170,3 +160,41 @@ GObject subclass: #GtkWindow
 
 Object subclass: #Console
        instanceVariableNames: ''!
+
+
+"Exceptions"
+
+Object subclass: #Signal
+       instanceVariableNames: 'handlerContext signalerContext'!
+
+Signal subclass: #Exception
+       instanceVariableNames: ''!
+
+Exception subclass: #Error
+	  instanceVariableNames: ''!
+
+Error subclass: #NotImplemented
+      instanceVariableNames: ''!
+
+Error subclass: #VMError
+      instanceVariableNames: ''!
+
+Error subclass: #Halt
+      instanceVariableNames: ''!
+
+VMError subclass: #PrimitiveFailed
+	instanceVariableNames: ''!
+
+Halt subclass: #MessageNotUnderstood
+     instanceVariableNames: ''!
+
+NotImplemented subclass: #NotYetImplemented
+	       instanceVariableNames: ''!
+
+
+NotImplemented subclass: #ShouldNotImplement
+	       instanceVariableNames: ''!
+
+
+ShouldNotImplement subclass: #SubclassResponsibility
+		   instanceVariableNames: ''!

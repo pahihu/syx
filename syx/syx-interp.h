@@ -30,7 +30,7 @@ struct SyxExecState
 };
 
 //! Creates a new empty execution state
-#define syx_exec_state_new() ((SyxExecState *)syx_malloc (sizeof (SyxExecState)))
+inline SyxExecState *syx_exec_state_new (void);
 void syx_exec_state_fetch (SyxOop process);
 inline void syx_exec_state_save (void);
 void syx_exec_state_free (void);
@@ -38,7 +38,7 @@ void syx_exec_state_free (void);
 /* Primitives */
 
 //! The number of primitives
-#define SYX_PRIMITIVES_MAX 51
+#define SYX_PRIMITIVES_MAX 52
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -73,6 +73,8 @@ inline void syx_interp_stack_push (SyxOop object);
 inline SyxOop syx_interp_stack_pop (void);
 inline SyxOop syx_interp_stack_peek (void);
 inline syx_bool syx_interp_call_primitive (syx_int16 primitive, SyxOop method);
+
+inline SyxOop syx_interp_get_current_context (void);
 
 /* Process execution */
 

@@ -48,7 +48,7 @@ SyxOop syx_nil,
   syx_symbols,
   syx_globals,
 
-  syx_interpreter_error_class,
+  syx_vm_error_class,
   syx_message_not_understood_class;
 
 /* Inlines */

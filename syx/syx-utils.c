@@ -2,12 +2,7 @@
   #include <config.h>
 #endif
 
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include "syx-memory.h"
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-init.h"
@@ -17,6 +12,17 @@
 #include "syx-lexer.h"
 #include "syx-scheduler.h"
 #include "syx-memory.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef HAVE_STDARG_H
+  #include <stdarg.h>
+#endif
 
 /*! \page syx_utils Syx Utils
     
@@ -367,6 +373,42 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = argument;
   context = syx_method_context_new (parent_context, method, receiver, arguments);
+  syx_memory_gc_end ();
+
+  return context;
+}
+
+//! Create a MethodContext for an arbitrary message ready to enter a Process
+/*!
+  \param num_args number of variadic SyxOop arguments
+*/
+SyxOop
+syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
+{
+  va_list ap;
+  syx_varsize i;
+  SyxOop context;
+  SyxOop class;
+  SyxOop method;
+  SyxOop arguments;
+
+  if (num_args == 0)
+    return syx_send_unary_message (parent_context, receiver, selector);
+
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, selector);
+  if (SYX_IS_NIL (method))
+    return syx_nil;
+
+  syx_memory_gc_begin ();
+
+  arguments = syx_array_new_size (num_args);
+  va_start (ap, num_args);
+  for (i=0; i < num_args; i++)
+    SYX_OBJECT_DATA(arguments)[i] = va_arg (ap, SyxOop);
+
+  context = syx_method_context_new (parent_context, method, receiver, arguments);
+
   syx_memory_gc_end ();
 
   return context;

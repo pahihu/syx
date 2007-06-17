@@ -133,3 +133,8 @@ yourself
     "Answer the receiver"
     ^self
 ! !
+
+!Object methodsFor: 'inspecting'!
+
+briefInspect
+    

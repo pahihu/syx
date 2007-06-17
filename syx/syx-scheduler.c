@@ -6,6 +6,7 @@
 #include "syx-object.h"
 #include "syx-enums.h"
 #include "syx-scheduler.h"
+#include "syx-error.h"
 #include "syx-interp.h"
 #include "syx-memory.h"
 #include "syx-init.h"
@@ -87,7 +88,7 @@ syx_scheduler_run (void)
   while (!SYX_IS_NIL (syx_processor_first_process))
     {  
 #ifdef SYX_DEBUG_PROCESS_SWITCH
-      g_debug ("SCHEDULER - Switch process with %d\n", syx_processor_active_process.idx);
+      syx_debug ("SCHEDULER - Switch process with %d\n", syx_processor_active_process.idx);
 #endif
 
       syx_process_execute_scheduled (syx_processor_active_process);
