@@ -1,3 +1,15 @@
+!MethodContext methodsFor: 'testing'!
+
+isMethodContext
+    ^true
+! !
+
+!BlockContext methodsFor: 'testing'!
+
+isMethodContext
+    ^false
+! !
+
 !ContextPart class methodsFor: 'instance creation'!
 
 on: aMethod parent: aContext receiver: anObject arguments: anArray
@@ -16,6 +28,22 @@ initialize
 ! !
 
 !ContextPart methodsFor: 'accessing'!
+
+traceback
+    | context |
+    context := self.
+    [ context notNil ]
+	whileTrue: [
+	    context isMethodContext
+		ifTrue: [
+		    (context receiver class name asString, '>>', context method selector asString) printNl.
+			].
+	    context := context parent
+	    ]
+
+isMethodContext
+    self subclassResponsibility
+!
 
 method
     ^method

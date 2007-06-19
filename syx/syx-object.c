@@ -26,7 +26,7 @@ SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
-  syx_float_class,
+  syx_small_float_class,
 
   syx_symbol_class,
   syx_string_class,
@@ -53,6 +53,26 @@ SyxOop syx_nil,
 
 /* Inlines */
 
+//! Returns a SmallFloat embedded in a SyxOop
+inline syx_float
+SYX_SMALL_FLOAT (SyxOop oop)
+{
+  SyxOop doop = oop;
+  syx_float *p = (syx_float *)&doop;
+  doop >>= 2;
+  return *p;
+}
+
+//! Create an OOP containing a single floating number
+inline SyxOop
+syx_small_float_new (syx_float fnum)
+{
+  SyxOop *o = (SyxOop *)&fnum;
+  SyxOop oop = *o;
+  oop = (oop << 2) + SYX_TYPE_SMALL_FLOAT;
+  return oop;
+}
+
 //! Grows SyxObject::data by a given size
 inline void
 syx_object_grow_by (SyxOop object, syx_varsize size)
@@ -69,19 +89,24 @@ syx_object_grow_by (SyxOop object, syx_varsize size)
 inline SyxOop 
 syx_object_get_class (SyxOop object)
 {
-  /* ordered by usage */
-  
-  if (SYX_IS_OBJECT(object))
+  /* ordered by usage */ 
+
+  if (SYX_IS_POINTER(object))
     return SYX_OBJECT(object)->class;
 
   if (SYX_IS_SMALL_INTEGER(object))
     return syx_small_integer_class;
 
+  if (SYX_IS_NIL(object))
+    return syx_undefined_object_class;
+  
   if (SYX_IS_CHARACTER(object))
     return syx_character_class;
+
+  if (SYX_IS_SMALL_FLOAT(object))
+    return syx_small_float_class;
     
-  /* it's a constant */
-  return SYX_OBJECT(object)->class;
+  syx_error ("unknown object");
 }
 
 //! Set the class of an object
@@ -91,7 +116,7 @@ syx_object_get_class (SyxOop object)
 inline void
 syx_object_set_class (SyxOop object, SyxOop class)
 {
-  if (!SYX_IS_OBJECT(object))
+  if (!SYX_IS_POINTER(object))
     return;
 
   SYX_OBJECT(object)->class = class;
@@ -106,7 +131,7 @@ syx_object_hash (SyxOop object)
   else if (SYX_IS_CHARACTER (object))
     return SYX_CHARACTER (object);
 
-  return object.idx;
+  return SYX_SMALL_INTEGER (object);
 }
 
 /* Contructors */
@@ -271,7 +296,7 @@ syx_dictionary_at_const (SyxOop dict, SyxOop key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
-  syx_error ("unable to lookup constant %d in dictionary %d\n", key.idx, dict.idx);
+  syx_error ("unable to lookup constant %p in dictionary %p\n", SYX_OBJECT(key), SYX_OBJECT(dict));
 
   return syx_nil;
 }
@@ -316,7 +341,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
 
-  syx_error ("unable to lookup symbol '%s' in dictionary %d\n", key, dict.idx);
+  syx_error ("unable to lookup symbol '%s' in dictionary %p\n", key, SYX_OBJECT(dict));
   
   return syx_nil;
 }
@@ -361,7 +386,7 @@ syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
 	}
     }
 
-  printf("Not enough space for dictionary %d\n", dict.idx);
+  printf("Not enough space for dictionary %p\n", SYX_OBJECT(dict));
 }
 
 //! Create a new BlockClosure
@@ -413,10 +438,12 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 
   arguments_count = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method));
   if (arguments_count > 0)
-    SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (arguments_count);
-
-  if (!SYX_IS_NIL (arguments))
-    memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+    {
+      SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (arguments_count);
+      
+      if (!SYX_IS_NIL (arguments))
+	memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+    }
 
   temporaries_count = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method));
   if (temporaries_count > 0)
@@ -450,7 +477,7 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
 
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
-  if (!SYX_IS_NIL (arguments))
+  if (!SYX_IS_NIL(ctx_args) && !SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
 	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
 
@@ -521,35 +548,6 @@ syx_object_free (SyxOop object)
 {
   syx_free (SYX_OBJECT_DATA (object));
   syx_memory_free (object);
-}
-
-//! Create a new SmallInteger. This is not allocated in the memory
-inline SyxOop
-syx_small_integer_new (syx_int32 num)
-{
-  SyxOop oop;
-  oop.idx = num;
-  oop.i.type = 1;
-  return oop;
-}
-
-//! Create a new Character. This is not allocated in the memory
-inline SyxOop
-syx_character_new (syx_uint8 ch)
-{
-  SyxOop oop;
-  oop.idx = ch;
-  oop.c.type = SYX_TYPE_CHARACTER;
-  return oop;
-}
-
-//! Create a new Float
-inline SyxOop
-syx_float_new (syx_double floating)
-{
-  syx_double *fdata = syx_malloc (sizeof (syx_double));
-  *fdata = floating;
-  return syx_object_new_data (syx_float_class, FALSE, sizeof (syx_double), (SyxOop *)fdata);
 }
 
 //! Check if a class is a superclass of another one

@@ -27,8 +27,14 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 #define syx_error(args...)			\
   {						\
-    printf (args);				\
-    exit (-1);					\
+    fprintf (stderr, args);			\
+    exit (EXIT_FAILURE);			\
+  }
+
+#define syx_perror(args...)			\
+  {						\
+    perror (args);				\
+    exit (EXIT_FAILURE);			\
   }
 
 #define syx_debug(args...)			\

@@ -232,7 +232,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_print)
 
 SYX_FUNC_PRIMITIVE (Float_print)
 {
-  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
+  printf ("%f\n", SYX_SMALL_FLOAT(es->message_receiver));
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
@@ -457,52 +457,52 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 
 
 
-/* Floats */
+/* SmallFloats */
 
-SYX_FUNC_PRIMITIVE (Float_plus)
+SYX_FUNC_PRIMITIVE (SmallFloat_plus)
+{
+  syx_float first, second;
+  first = SYX_SMALL_FLOAT(es->message_receiver);
+  second = SYX_SMALL_FLOAT(es->message_arguments[0]);
+  SYX_PRIM_RETURN (syx_small_float_new (first + second));
+}
+
+SYX_FUNC_PRIMITIVE (SmallFloat_minus)
 {
   syx_double first, second;
-  first = SYX_OBJECT_FLOAT(es->message_receiver);
-  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_float_new (first + second));
+  first = (syx_double)SYX_SMALL_FLOAT(es->message_receiver);
+  second = (syx_double)SYX_SMALL_FLOAT(es->message_arguments[0]);
+  SYX_PRIM_RETURN (syx_small_float_new ((syx_float)(first - second)));
 }
 
-SYX_FUNC_PRIMITIVE (Float_minus)
+SYX_FUNC_PRIMITIVE (SmallFloat_lt)
 {
-  syx_double first, second;
-  first = SYX_OBJECT_FLOAT(es->message_receiver);
-  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_float_new (first - second));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) < SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Float_lt)
+SYX_FUNC_PRIMITIVE (SmallFloat_gt)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) < SYX_OBJECT_FLOAT (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) > SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Float_gt)
+SYX_FUNC_PRIMITIVE (SmallFloat_le)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) > SYX_OBJECT_FLOAT (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) <= SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Float_le)
+SYX_FUNC_PRIMITIVE (SmallFloat_ge)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) <= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) >= SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Float_ge)
+SYX_FUNC_PRIMITIVE (SmallFloat_eq)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) >= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) == SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Float_eq)
+SYX_FUNC_PRIMITIVE (SmallFloat_ne)
 {
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) == SYX_OBJECT_FLOAT (es->message_arguments[0])));
-}
-
-SYX_FUNC_PRIMITIVE (Float_ne)
-{
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) != SYX_OBJECT_FLOAT (es->message_arguments[0])));
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_FLOAT (es->message_receiver) != SYX_SMALL_FLOAT (es->message_arguments[0])));
 }
 
 
@@ -511,20 +511,19 @@ SYX_FUNC_PRIMITIVE (Float_ne)
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
-  syx_memory_save_image (SYX_OBJECT_STRING (es->message_arguments[0]));
+  // save the current execution state
+  syx_interp_stack_push (es->message_receiver);
+  syx_exec_state_save ();
 
-  SYX_PRIM_RETURN (es->message_receiver);
+  syx_memory_save_image (SYX_OBJECT_STRING (es->message_arguments[0]));
+  
+  return FALSE;
 }
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
 {
   syx_memory_gc ();
   SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (ObjectMemory_indexOf)
-{
-  SYX_PRIM_RETURN (syx_small_integer_new (es->message_receiver.idx));
 }
 
 SYX_FUNC_PRIMITIVE (Smalltalk_quit)
@@ -591,20 +590,19 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
 
-  /* Floats */
-  { "Float_plus", Float_plus },
-  { "Float_minus", Float_minus },
-  { "Float_lt", Float_lt },
-  { "Float_gt", Float_gt },
-  { "Float_le", Float_le },
-  { "Float_ge", Float_ge },
-  { "Float_eq", Float_eq },
-  { "Float_ne", Float_ne },
+  /* SmallFloats */
+  { "SmallFloat_plus", SmallFloat_plus },
+  { "SmallFloat_minus", SmallFloat_minus },
+  { "SmallFloat_lt", SmallFloat_lt },
+  { "SmallFloat_gt", SmallFloat_gt },
+  { "SmallFloat_le", SmallFloat_le },
+  { "SmallFloat_ge", SmallFloat_ge },
+  { "SmallFloat_eq", SmallFloat_eq },
+  { "SmallFloat_ne", SmallFloat_ne },
 
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },
   { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
-  { "ObjectMemory_indexOf", ObjectMemory_indexOf },
 
   /* Smalltalk environment */
   { "Smalltalk_quit", Smalltalk_quit },

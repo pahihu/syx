@@ -22,8 +22,9 @@ opts.AddOptions (
    PathOption('includedir',
               'Installation prefix for C header files', 
               '$prefix/include', []),
+   BoolOption ('attach', """Attach a debugger for test failures""", False),              
    EnumOption ('debug', """Debug output and symbols""", 'normal',
-               allowed_values=('no', 'normal', 'warning', 'full'),
+               allowed_values=('no', 'normal', 'info', 'full'),
                ignorecase=True))
 
 env = Environment (options=opts)
@@ -40,9 +41,12 @@ env.Help (opts.GenerateHelpText (env) + """
      Type: 'scons'               to build Syx.
      	   'scons debug=no'      release build with high optimization.
            'scons debug=normal'  add debug symbols (default).
-           'scons debug=warning' normal debug plus warning messages.
+           'scons debug=info' 	 display more messages.
            'scons debug=full'    trace the entire execution stack of Smalltalk.
            'scons test'          to test Syx.
+	   'scons test attach=yes'
+	   	       		 to test Syx and attach a debugger if the
+				 test failures
            'scons doc'           to create reference documentation (requires Doxygen).
      	   'scons install'       to install Syx.
 	   """)
@@ -53,7 +57,7 @@ conf = Configure (env, config_h='config.h')
 print 'Mandatory headers...'
 
 for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
-          'sys/types.h']:
+          'sys/types.h', 'errno.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
       env.Exit (-1)
@@ -63,6 +67,14 @@ print 'Optional headers...'
 
 for h in ['stdarg.h']:
    conf.CheckCHeader (h)
+
+print
+print 'Mandatory functions...'
+
+for f in ['strtol', 'strtof', 'strtod']:
+   if not conf.CheckFunc (f):
+      print "Can't build Syx without %s function!" % f
+      env.Exit (-1)
 
 print
 print 'Optional functions...'
@@ -78,10 +90,10 @@ if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
    env.MergeFlags ('-g -O')
-elif env['debug'] == 'warning':
-   env.MergeFlags ('-g -O -DSYX_DEBUG_WARNING')
+elif env['debug'] == 'info':
+   env.MergeFlags ('-g -O -DSYX_DEBUG_INFO')
 elif env['debug'] == 'full':
-   env.MergeFlags ('-g -O -DSYX_DEBUG_WARNING -DSYX_DEBUG_FULL')
+   env.MergeFlags ('-g -O -DSYX_DEBUG_INFO -DSYX_DEBUG_FULL')
 
 env.MergeFlags ('-Wall -DHAVE_CONFIG_H')
 
@@ -97,6 +109,9 @@ def builder_test (target, source, env):
    else:
       print 'FAIL: %s' % relapp
       f.write ('FAILED')
+      if env['attach']:
+          app = 'gdb '+app
+          env.Execute (app)
    f.close ()
 
 action = env.Action (builder_test, lambda *args, **kwargs: '')

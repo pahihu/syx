@@ -349,7 +349,7 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   class = syx_object_get_class (receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %d\n", selector, class.idx);
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
   context = syx_method_context_new (parent_context, method, receiver, syx_nil);
   return context;

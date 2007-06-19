@@ -46,7 +46,7 @@ Object subclass: #ContextPart
 ContextPart subclass: #MethodContext
 	    instanceVariableNames: ''!
 
-ContextPart subclass: #BlockContext
+MethodContext subclass: #BlockContext
 	    instanceVariableNames: 'outerContext handledException handlerBlock'!
 
 Object subclass: #Process
@@ -113,7 +113,7 @@ Magnitude subclass: #Number
 Number subclass: #SmallInteger
        instanceVariableNames: ''!
 
-Number subclass: #Float
+Number subclass: #SmallFloat
        instanceVariableNames: ''!
 
 Object subclass: #Boolean

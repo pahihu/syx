@@ -49,7 +49,7 @@ SyxParser *
 syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
 {
   SyxParser *self;
-  if (!lexer || !SYX_IS_OBJECT (method))
+  if (!lexer || !SYX_IS_POINTER (method))
     return NULL;
   
   self = syx_malloc (sizeof (SyxParser));
@@ -216,7 +216,7 @@ _syx_parser_parse_term (SyxParser *self)
       syx_token_free (token);
       break;
     case SYX_TOKEN_FLOAT_CONST:
-      syx_bytecode_push_literal (self->bytecode, syx_float_new (token.value.floating));
+      syx_bytecode_push_literal (self->bytecode, syx_small_float_new (token.value.floating));
       syx_token_free (token);
       break;
     case SYX_TOKEN_SYM_CONST:
@@ -245,7 +245,21 @@ _syx_parser_parse_term (SyxParser *self)
 	_syx_parser_parse_block (self);
       else if (!strcmp (token.value.string, "{"))
 	_syx_parser_parse_array (self);
+      else if (!strcmp (token.value.string, "-"))
+	{
+	  syx_token_free (token);
+	  token = syx_lexer_next_token (self->lexer);
+	  if (token.type == SYX_TOKEN_INT_CONST)
+	    syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (-token.value.integer));
+	  else if (token.type == SYX_TOKEN_FLOAT_CONST)
+	    syx_bytecode_push_literal (self->bytecode, syx_small_float_new (-token.value.floating));
+	  else
+	    syx_error ("Negation not followed by number");
+
+	  syx_token_free (token);
+	}
       break;
+
     default:
       if (token.type == SYX_TOKEN_END)
 	syx_error ("End of input unexpected")

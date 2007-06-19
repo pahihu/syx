@@ -30,7 +30,7 @@ inline void
 syx_interp_stack_push (SyxOop object)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  syx_debug ("CONTEXT STACK - Push %x (sp = %d)\n", object.idx, es->sp);
+  syx_debug ("CONTEXT STACK - Push %p (sp = %d)\n", SYX_OBJECT(object), es->sp);
 #endif
   es->stack[es->sp++] = object;
 }
@@ -40,7 +40,7 @@ inline SyxOop
 syx_interp_stack_pop (void)
 {
 #ifdef SYX_DEBUG_CONTEXT_STACK
-  syx_debug ("CONTEXT STACK - Pop %x (sp = %d)\n", es->stack[es->sp - 1].idx, es->sp - 1);
+  syx_debug ("CONTEXT STACK - Pop %p (sp = %d)\n", SYX_OBJECT(es->stack[es->sp - 1]), es->sp - 1);
 #endif
   return es->stack[--es->sp];
 }
@@ -60,7 +60,7 @@ inline syx_bool
 syx_interp_swap_context (SyxOop context)
 {
 #ifdef SYX_DEBUG_CONTEXT
-  syx_debug ("CONTEXT - Swap context %d with new %d\n", es->context.idx, context.idx);
+  syx_debug ("CONTEXT - Swap context %p with new %p\n", SYX_OBJECT(es->context), SYX_OBJECT(context));
 #endif
   es->context = context;
   syx_exec_state_save ();
@@ -83,8 +83,8 @@ syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_c
 {
   SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
 #ifdef SYX_DEBUG_CONTEXT
-  syx_debug ("CONTEXT - Leave context and answer: %x use return context: %d\n",
-	     return_object.idx, use_return_context);
+  syx_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
+	     SYX_OBJECT(return_object), use_return_context);
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
@@ -167,8 +167,12 @@ syx_exec_state_fetch (SyxOop process)
   method = SYX_METHOD_CONTEXT_METHOD (es->context);
 
   es->receiver = SYX_METHOD_CONTEXT_RECEIVER (es->context);
-  es->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_ARGUMENTS (es->context));
-  es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
+  if (!SYX_IS_NIL (SYX_METHOD_CONTEXT_ARGUMENTS (es->context)))
+    es->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_ARGUMENTS (es->context));
+
+  if (!SYX_IS_NIL (SYX_METHOD_CONTEXT_TEMPORARIES (es->context)))
+    es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
+
   es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
   es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
   es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
@@ -213,15 +217,15 @@ void
 syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint16 byte;
-  
-  es = syx_exec_state_new ();
-  syx_exec_state_fetch (process);
-  if (SYX_IS_NIL (es->context))
+
+  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
     {
       syx_scheduler_remove_process (process);
-      syx_exec_state_free ();
       return;
     }
+
+  es = syx_exec_state_new ();
+  syx_exec_state_fetch (process);
 
   while (es->ip < es->bytecodes_count && es->byteslice >= 0)
     {
@@ -305,19 +309,24 @@ SYX_FUNC_INTERPRETER (syx_interp_push_literal)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 {
-  SyxOop constant;
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push constant %d\n", argument);
 #endif
-  if (argument < SYX_BYTECODE_CONST_CONTEXT)
+  switch (argument)
     {
-      constant.idx = argument;
-      syx_interp_stack_push (constant);
-    }
-  else if (argument == SYX_BYTECODE_CONST_CONTEXT)
-    syx_interp_stack_push (es->context);
-  else
-    {
+    case SYX_BYTECODE_CONST_NIL:
+      syx_interp_stack_push (syx_nil);
+      break;
+    case SYX_BYTECODE_CONST_TRUE:
+      syx_interp_stack_push (syx_true);
+      break;
+    case SYX_BYTECODE_CONST_FALSE:
+      syx_interp_stack_push (syx_false);
+      break;
+    case SYX_BYTECODE_CONST_CONTEXT:
+      syx_interp_stack_push (es->context);
+      break;
+    default:
       syx_signal (SYX_ERROR_INTERP, 2, syx_small_integer_new (__LINE__), syx_small_integer_new (argument));
       return FALSE;
     }

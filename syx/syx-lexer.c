@@ -2,10 +2,13 @@
   #include <config.h>
 #endif
 
+#define _ISOC99_SOURCE
 #include "syx-memory.h"
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
+#include "syx-error.h"
 #include "syx-types.h"
 #include "syx-lexer.h"
 
@@ -97,32 +100,70 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 static void
 _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_char float_s[256] = {0};
-  syx_int32 float_st = 0;
-  syx_int32 intres = 0;
+  syx_char s[256] = {0};
+  syx_int32 stop = 0;
+  syx_nint radix = 10;
 
   do
-    {
-      intres = (intres * 10) + (lastChar - '0');
-      float_s[float_st++] = lastChar;
-    } while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
+    s[stop++] = lastChar;
+  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
-  token->value.integer = intres;
+  errno = 0;
+  token->value.integer = strtol (s, (char **)NULL, 10);
+  if (errno)
+    syx_perror ("lexer: strtol");
+
   token->type = SYX_TOKEN_INT_CONST;
+
+  // a radix?
+  if (tolower (lastChar) == 'r')
+    {
+      radix = token->value.integer;
+      stop = 0;
+      while ((lastChar = syx_lexer_forward (self)) && isxdigit (lastChar))
+	s[stop++] = lastChar;
+
+      if (stop == 0)
+	{
+	  syx_lexer_push_back (self);
+	  return;
+	}
+
+      s[stop] = '\0';
+
+      errno = 0;
+      token->value.integer = strtol (s, (char **)NULL, radix);
+      if (errno)
+	syx_perror ("lexer: strtol radix");
+      
+      token->type = SYX_TOKEN_INT_CONST;
+    }
 
   // a float?
   if (lastChar == '.')
     {
       if ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
 	{
-	  float_s[float_st++] = '.';
+	  s[stop++] = '.';
 	  do
-	    float_s[float_st++] = lastChar;
+	    s[stop++] = lastChar;
 	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
 	  syx_lexer_push_back (self);
+
+	  errno = 0;
 	  token->type = SYX_TOKEN_FLOAT_CONST;
-	  token->value.floating = atof (float_s);
+	  token->value.floating = strtof (s, (char **)NULL);
+
+	  if (errno == ERANGE)
+	    {
+	      errno = 0;
+	      token->type = SYX_TOKEN_DOUBLE_CONST;
+	      token->value.dfloating = strtod (s, (char **)NULL);
+	      
+	      if (errno)
+		syx_perror ("lexer: strtof");
+	    }
 	}
       else
 	{

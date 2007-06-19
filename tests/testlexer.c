@@ -9,7 +9,7 @@ main (int argc, char *argv[])
 
   syx_init (".");
 
-  lexer = syx_lexer_new ("nameconst 123 123.321 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
+  lexer = syx_lexer_new ("nameconst 123 16r123 123.321 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
 
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_NAME_CONST);
@@ -22,8 +22,12 @@ main (int argc, char *argv[])
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
+  assert (token.type == SYX_TOKEN_INT_CONST);
+  assert (token.value.integer == 0x123);
+
+  token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_FLOAT_CONST);
-  assert (token.value.floating == 123.321);
+  assert (token.value.floating == (float)123.321);
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);

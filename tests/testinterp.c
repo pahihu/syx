@@ -38,17 +38,18 @@ main (int argc, char *argv[])
   syx_scheduler_init ();
 
   puts ("- Test assignment");
-  ret_obj = _interpret ("method | a | ^a := 123");
-  assert (SYX_SMALL_INTEGER(ret_obj) == 123);
-
+  ret_obj = _interpret ("method | a | ^a := -123 + 16r2AE + -2r100");
+  assert (SYX_SMALL_INTEGER(ret_obj) == -123 + 0x2AE + -4);
+  /*
   puts ("- Test floats");
   ret_obj = _interpret ("method | a | a := 123.321. ^a + 2.2");
-  assert (SYX_OBJECT_FLOAT(ret_obj) == 125.521);
+  printf("%f %f\n", SYX_SMALL_FLOAT(ret_obj), (float)125.521);
+  assert (SYX_SMALL_FLOAT(ret_obj) == (float)125.521);
 
   puts ("- Test single messages");
   ret_obj = _interpret ("method ^Object class class hash");
-  assert (syx_metaclass_class.idx == SYX_SMALL_INTEGER (ret_obj));
-
+  assert (syx_metaclass_class == SYX_SMALL_INTEGER (ret_obj));
+  */
   puts ("- Test evaluating a simple block");
   ret_obj = _interpret ("method ^[321] value");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);

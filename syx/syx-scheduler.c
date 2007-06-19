@@ -88,7 +88,7 @@ syx_scheduler_run (void)
   while (!SYX_IS_NIL (syx_processor_first_process))
     {  
 #ifdef SYX_DEBUG_PROCESS_SWITCH
-      syx_debug ("SCHEDULER - Switch process with %d\n", syx_processor_active_process.idx);
+      syx_debug ("SCHEDULER - Switch process with %p\n", SYX_OBJECT(syx_processor_active_process));
 #endif
 
       syx_process_execute_scheduled (syx_processor_active_process);
@@ -111,7 +111,7 @@ void
 syx_scheduler_add_process (SyxOop process)
 {
   SyxOop inter_process;
-  if (!SYX_IS_OBJECT (process))
+  if (!SYX_IS_POINTER (process))
     return;
 
   if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))

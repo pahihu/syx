@@ -68,7 +68,7 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st",
     "Symbol.st",
-    "Number.st", "SmallInteger.st", "Float.st",
+    "Number.st", "SmallInteger.st", "SmallFloat.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "Array.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
@@ -190,15 +190,16 @@ syx_build_basic (void)
 void
 syx_fetch_basic (void)
 {
-  syx_nil.idx = 0;
-  syx_true.idx = 1;
-  syx_false.idx = 2;
+  syx_nil = (SyxOop)(syx_memory);
+  syx_true = (SyxOop)(syx_memory + 1);
+  syx_false = (SyxOop)(syx_memory + 2);
 
   syx_metaclass_class = syx_globals_at ("Metaclass");
+  syx_undefined_object_class = syx_globals_at ("UndefinedObject");
   syx_symbol_class = syx_globals_at ("Symbol");
   syx_string_class = syx_globals_at ("String");
   syx_small_integer_class = syx_globals_at ("SmallInteger");
-  syx_float_class = syx_globals_at ("Float");
+  syx_small_float_class = syx_globals_at ("SmallFloat");
   syx_character_class = syx_globals_at ("Character");
   syx_byte_array_class = syx_globals_at ("ByteArray");
   syx_array_class = syx_globals_at ("Array");
