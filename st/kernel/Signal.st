@@ -18,9 +18,14 @@ signal
     handlerContext := self findHandlerContext.
     handlerContext isNil
 	ifTrue: ['Unhandled exception... process is going to be terminated' printNl.
-		 signalerContext traceback.
+		 self debug.
 		 Processor activeProcess terminate]
 	ifFalse: [self return: (handlerContext handlerBlock value: self)]
+!
+
+debug
+    [ signalerContext traceback ]
+	on: Signal do: [ :ex | 'Unable to debug' printNl ]
 !
 
 pass

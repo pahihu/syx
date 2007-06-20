@@ -13,7 +13,7 @@ Behavior subclass: #Class
 	 instanceVariableNames: ''!
 
 Behavior subclass: #Metaclass
-	 instanceVariableNames: ''!
+	 instanceVariableNames: 'instanceClass'!
 
 "Collections"
 
@@ -68,7 +68,7 @@ Object subclass: #BlockClosure
 "Management"
 
 Object subclass: #ProcessorScheduler
-       instanceVariableNames: 'byteslice firstProcess activeProcess'!
+       instanceVariableNames: 'processByteslice firstProcess activeProcess'!
 
 Object subclass: #ObjectMemory
        instanceVariableNames: ''!
@@ -198,3 +198,12 @@ NotImplemented subclass: #ShouldNotImplement
 
 ShouldNotImplement subclass: #SubclassResponsibility
 		   instanceVariableNames: ''!
+
+Error subclass: #InvalidValue
+      instanceVariableNames: ''!
+
+InvalidValue subclass: #InvalidArgument
+	     instanceVariableNames: ''!
+
+InvalidArgument subclass: #NotFound
+		instanceVariableNames: ''!

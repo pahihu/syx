@@ -26,6 +26,6 @@ run
             '> ' print.
 	    chunk := self nextChunk.
 	    ('^[', chunk, '] value') doIt printNl.
-	] on: PrimitiveFailed do: [ :ex | 'a primitive failed' ]
+	] on: Signal do: [ :ex | ex debug ]
     ] repeat
 ! !

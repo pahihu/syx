@@ -3,6 +3,7 @@
 #endif
 
 #include "syx-memory.h"
+#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-init.h"

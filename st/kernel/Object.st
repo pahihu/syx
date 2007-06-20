@@ -86,7 +86,7 @@ printNl
 !
 
 printString
-    ^self class name
+    ^'a ', self class name asString
 ! !
 
 !Object methodsFor: 'signaling'!

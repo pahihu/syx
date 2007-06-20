@@ -27,7 +27,7 @@ initialize
 
 ! !
 
-!ContextPart methodsFor: 'accessing'!
+!ContextPart methodsFor: 'debugging'!
 
 traceback
     | context |
@@ -36,14 +36,20 @@ traceback
 	whileTrue: [
 	    context isMethodContext
 		ifTrue: [
-		    (context receiver class name asString, '>>', context method selector asString) printNl.
+		    (context receiver class printString, '>>', context method selector asString) printNl.
 			].
 	    context := context parent
 	    ]
+! !
+
+
+!ContextPart methodsFor: 'accessing'!
 
 isMethodContext
     self subclassResponsibility
-!
+! !
+
+!ContextPart methodsFor: 'debugging'!
 
 method
     ^method

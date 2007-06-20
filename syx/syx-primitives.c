@@ -343,8 +343,11 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 3: // nextPutAll:
-      ret = write (fd, SYX_OBJECT_STRING (es->message_arguments[2]),
-		   SYX_OBJECT_SIZE (es->message_arguments[2]) - 1);
+      if (!SYX_IS_NIL (es->message_arguments[2]))
+	ret = write (fd, SYX_OBJECT_STRING (es->message_arguments[2]),
+		     SYX_OBJECT_SIZE (es->message_arguments[2]) - 1);
+      else
+	ret = 0;
       break;
 
     case 4: // flush

@@ -1,7 +1,9 @@
 #include "syx-memory.h"
 #include "syx-object.h"
+#include "syx-interp.h"
 #include "syx-error.h"
 #include "syx-enums.h"
+#include "syx-utils.h"
 #include "syx-types.h"
 #include "syx-scheduler.h"
 
@@ -46,10 +48,7 @@ SyxOop syx_nil,
   syx_processor_scheduler_class,
 
   syx_symbols,
-  syx_globals,
-
-  syx_vm_error_class,
-  syx_message_not_understood_class;
+  syx_globals;
 
 /* Inlines */
 
@@ -169,6 +168,7 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_SUPERCLASS(class) = superclass;
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
+  SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
   return class;
 }
 
@@ -296,7 +296,7 @@ syx_dictionary_at_const (SyxOop dict, SyxOop key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
   
-  syx_error ("unable to lookup constant %p in dictionary %p\n", SYX_OBJECT(key), SYX_OBJECT(dict));
+  syx_signal (SYX_ERROR_NOT_FOUND, 0);
 
   return syx_nil;
 }
@@ -341,7 +341,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 	return SYX_OBJECT_DATA(table)[i+1];
     }
 
-  syx_error ("unable to lookup symbol '%s' in dictionary %p\n", key, SYX_OBJECT(dict));
+  syx_signal (SYX_ERROR_NOT_FOUND, 0);
   
   return syx_nil;
 }

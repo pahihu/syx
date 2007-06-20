@@ -16,10 +16,14 @@ SyxErrorType _syx_error_entries_top;
 void
 syx_error_init (void)
 {
+  
+
   _syx_error_entries_top = 0;
-  assert (syx_error_register ("interpreter", syx_vm_error_class) == SYX_ERROR_INTERP);
+  assert (syx_error_register ("interpreter", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
   assert (syx_error_register ("message not understood",
-			      syx_message_not_understood_class) == SYX_ERROR_NOT_UNDERSTOOD);
+			      syx_globals_at ("MessageNotUnderstood")) == SYX_ERROR_NOT_UNDERSTOOD);
+  assert (syx_error_register ("not found",
+			      syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
 }
 
 //! Clear all memory allocated to by the error reporting system

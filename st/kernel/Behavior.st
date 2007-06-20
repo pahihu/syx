@@ -9,7 +9,7 @@ superclass
 !
 
 printString
-    ^self name
+    ^self name asString
 ! !
 
 !Behavior methodsFor: 'instance creation'!

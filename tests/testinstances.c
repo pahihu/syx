@@ -36,6 +36,7 @@ main (int argc, char *argv[])
   obj = syx_object_get_class (instobj);
   assert (SYX_OOP_EQ (syx_object_get_class (obj), syx_globals_at ("Metaclass")));
   assert (SYX_OOP_EQ (syx_object_get_class (syx_object_get_class (syx_object_get_class (obj))), syx_globals_at ("Metaclass")));
+  assert (SYX_OOP_EQ (instobj, SYX_METACLASS_INSTANCE_CLASS (obj)));
   obj = SYX_CLASS_SUPERCLASS (obj);
   assert (SYX_OOP_EQ (obj, syx_object_get_class (SYX_CLASS_SUPERCLASS (instobj))));
   obj = SYX_CLASS_SUPERCLASS (obj);

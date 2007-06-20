@@ -57,12 +57,3 @@ show: aString
 showCr: aString
     self nextPutAll: aString; cr
 ! !
-
-!TextCollector methodsFor: 'private'!
-
-primNextPutAll: aString  
-    "Private - Forward the writing request to the actual object
-     receiver perform: selector with: aString"
-
-     nextPutAll: aString
-! !

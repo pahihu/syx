@@ -76,10 +76,7 @@ extern SyxOop syx_nil,
   syx_processor_scheduler_class,
 
   syx_symbols,
-  syx_globals,
-
-  syx_vm_error_class,
-  syx_message_not_understood_class;
+  syx_globals;
 
 SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
 SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
@@ -134,6 +131,8 @@ inline SyxOop syx_process_new (SyxOop context);
 #define SYX_CLASS_INSTANCE_VARIABLES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_VARIABLES])
 #define SYX_CLASS_INSTANCE_SIZE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_SIZE])
 #define SYX_CLASS_METHODS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_METHODS])
+
+#define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METACLASS_INSTANCE_CLASS])
 
 #define SYX_LINK_KEY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_KEY])
 #define SYX_LINK_VALUE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_VALUE])

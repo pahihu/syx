@@ -97,6 +97,9 @@ elif env['debug'] == 'full':
 
 env.MergeFlags ('-Wall -DHAVE_CONFIG_H')
 
+if env['PLATFORM'] == 'win32':
+   env.MergeFlags ('-DWINDOWS')
+
 # Test builder
 def builder_test (target, source, env):
    print
@@ -120,8 +123,8 @@ env.Append(BUILDERS = { 'Test' : builder })
 
 # Doc builder
 
-env.Alias ('doc', env.Command ('doxygen.log', 'Doxyfile',
-                               'doxygen $SOURCES > $TARGET'))
+env.Alias ('doc', env.Command ('doxygen.out', 'Doxyfile',
+                               'doxygen $SOURCES'))
 
 # Build
 env.SConscript (dirs=['syx', 'tests'], exports=['env'])

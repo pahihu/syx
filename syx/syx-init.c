@@ -66,7 +66,7 @@ _syx_file_in_basic (void)
   syx_symbol *filename;
   syx_string full_filename;
   static syx_symbol kernel_filenames[] = {
-    "Behavior.st",
+    "Behavior.st", "Metaclass.st",
     "Symbol.st",
     "Number.st", "SmallInteger.st", "SmallFloat.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
@@ -75,7 +75,8 @@ _syx_file_in_basic (void)
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",
     "True.st", "False.st",
-    "Signal.st", "Exceptions.st", "AnsiExceptions.st",
+    "Signal.st",
+    //"Exceptions.st", "AnsiExceptions.st",
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
     "LookupKey.st", "Association.st",
@@ -137,7 +138,7 @@ syx_build_basic (void)
   syx_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_link_class = _syx_create_class (SYX_DATA_LINK_ALL);
   syx_dictionary_class = _syx_create_class (SYX_DATA_DICTIONARY_ALL);
-  syx_metaclass_class = _syx_create_class (SYX_DATA_CLASS_ALL);
+  syx_metaclass_class = _syx_create_class (SYX_DATA_METACLASS_ALL);
 
   syx_globals = syx_dictionary_new (100);
   syx_symbols = syx_dictionary_new (1000);
@@ -145,6 +146,7 @@ syx_build_basic (void)
 
 #define _SETUP_CLASS(name, class, superclass)				\
   syx_object_set_class (class, syx_metaclass_new (syx_object_get_class (superclass))); \
+  SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (class)) = class;	\
   SYX_CLASS_SUPERCLASS(class) = superclass;				\
   SYX_CLASS_NAME(class) = syx_symbol_new (name);			\
   SYX_CLASS_METHODS(class) = syx_dictionary_new (50);			\
@@ -214,9 +216,6 @@ syx_fetch_basic (void)
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
-
-  syx_vm_error_class = syx_globals_at ("VMError");
-  syx_message_not_understood_class = syx_globals_at ("MessageNotUnderstood");
 
   syx_error_init ();
   syx_scheduler_init ();
