@@ -9,9 +9,8 @@
 */
 
 #define SYX_IS_POINTER(oop) ((oop) && ((oop) & 3) == SYX_TYPE_POINTER)
-#define SYX_IS_SMALL_INTEGER(oop) (((oop) & 3) == SYX_TYPE_SMALL_INTEGER)
+#define SYX_IS_SMALL_INTEGER(oop) (((oop) & 1) == SYX_TYPE_SMALL_INTEGER)
 #define SYX_IS_CHARACTER(oop) (((oop) & 3) == SYX_TYPE_CHARACTER)
-#define SYX_IS_SMALL_FLOAT(oop) (((oop) & 3) == SYX_TYPE_SMALL_FLOAT)
 
 #define SYX_OOP_EQ(oop1, oop2) ((oop1) == (oop2))
 #define SYX_OOP_NE(oop1, oop2) ((oop1) != (oop2))
@@ -50,8 +49,6 @@ typedef unsigned long long int syx_uint64;
 typedef long syx_size;
 typedef syx_int32 syx_varsize;
 
-typedef float syx_float;
-
 typedef double syx_double;
 
 typedef void * syx_pointer;
@@ -62,10 +59,12 @@ typedef syx_nint SyxOop;
 //! Basic instance types
 //! Evaluate syx_true or syx_false depending on the given condition
 #define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
-#define syx_small_integer_new(num) (((SyxOop)(num) << 2) + SYX_TYPE_SMALL_INTEGER)
+#define syx_small_integer_new(num) (((SyxOop)(num) << 1) + SYX_TYPE_SMALL_INTEGER)
 #define syx_character_new(ch) (((SyxOop)(ch) << 2) + SYX_TYPE_CHARACTER)
-inline SyxOop syx_small_float_new(syx_float fnum);
 
+//! Basic conversions
+#define SYX_SMALL_INTEGER(oop) ((syx_int32)((syx_nint)(oop) >> 1))
+#define SYX_CHARACTER(oop) ((syx_int8)((syx_nint)(oop) >> 2))
 
 
 #endif /* SYX_TYPES_H */

@@ -40,8 +40,4 @@ void syx_freev (syx_pointer *ptrv);
   inline syx_string strndup (syx_string src, syx_size n);
 #endif
 
-#ifndef HAVE_MEMDUP
-  inline syx_pointer memdup (syx_pointer src, syx_size n);
-#endif
-
 #endif /* SYX_MEMORY_H */

@@ -1,27 +1,27 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
-  clock_t start, end;
+  struct timeval start, end;
 
   syx_init (".");
   syx_build_basic ();
 
   puts ("- Test saving image");
-  start = clock ();
+  gettimeofday (&start, NULL);
   assert (syx_memory_save_image ("test.sim") == TRUE);
-  end = clock ();
-  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
 
   puts ("- Test loading image");
-  start = clock ();
+  gettimeofday (&start, NULL);
   assert (syx_memory_load_image ("test.sim") == TRUE);
-  end = clock ();
-  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
 
   syx_quit ();
 

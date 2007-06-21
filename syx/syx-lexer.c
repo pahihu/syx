@@ -151,19 +151,8 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
 	  syx_lexer_push_back (self);
 
-	  errno = 0;
 	  token->type = SYX_TOKEN_FLOAT_CONST;
-	  token->value.floating = strtof (s, (char **)NULL);
-
-	  if (errno == ERANGE)
-	    {
-	      errno = 0;
-	      token->type = SYX_TOKEN_DOUBLE_CONST;
-	      token->value.dfloating = strtod (s, (char **)NULL);
-	      
-	      if (errno)
-		syx_perror ("lexer: strtof");
-	    }
+	  token->value.floating = strtod (s, (char **)NULL);
 	}
       else
 	{

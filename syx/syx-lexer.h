@@ -13,8 +13,7 @@ struct SyxToken {
   union
   {
     syx_int32 integer;
-    syx_float floating;
-    syx_double dfloating;
+    syx_double floating;
     syx_char character;
     syx_string string;
   } value;

@@ -39,17 +39,17 @@ env['tools'] = ['default', 'mingw']
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
      Type: 'scons'               to build Syx.
-     	   'scons debug=no'      release build with high optimization.
+           'scons debug=no'      release build with high optimization.
            'scons debug=normal'  add debug symbols (default).
            'scons debug=info' 	 display more messages.
            'scons debug=full'    trace the entire execution stack of Smalltalk.
            'scons test'          to test Syx.
-	   'scons test attach=yes'
-	   	       		 to test Syx and attach a debugger if the
-				 test failures
+           'scons test attach=yes'
+                                 to test Syx and attach a debugger if the
+                                 test failures
            'scons doc'           to create reference documentation (requires Doxygen).
-     	   'scons install'       to install Syx.
-	   """)
+           'scons install'       to install Syx.
+     """)
 
 # Configuration
 conf = Configure (env, config_h='config.h')
@@ -71,7 +71,7 @@ for h in ['stdarg.h']:
 print
 print 'Mandatory functions...'
 
-for f in ['strtol', 'strtof', 'strtod']:
+for f in ['strtol', 'strtof', 'strtod', 'gettimeofday']:
    if not conf.CheckFunc (f):
       print "Can't build Syx without %s function!" % f
       env.Exit (-1)
@@ -79,7 +79,7 @@ for f in ['strtol', 'strtof', 'strtod']:
 print
 print 'Optional functions...'
 
-for f in ['strndup', 'memdup']:
+for f in ['strndup', 'LoadLibrary']:
    conf.CheckFunc (f)
 
 conf.Finish ()

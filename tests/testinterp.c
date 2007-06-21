@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 SyxOop
@@ -9,7 +9,7 @@ _interpret (syx_symbol text)
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
-  clock_t start, end;
+  struct timeval start, end;
 
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
@@ -20,10 +20,10 @@ _interpret (syx_symbol text)
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);
   process = syx_process_new (context);
 
-  start = clock ();
+  gettimeofday (&start, NULL);
   syx_process_execute_blocking (process);
-  end = clock ();
-  printf ("Time elapsed: %f\n\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
 
   return SYX_PROCESS_RETURNED_OBJECT(process);
 }
@@ -40,12 +40,12 @@ main (int argc, char *argv[])
   puts ("- Test assignment");
   ret_obj = _interpret ("method | a | ^a := -123 + 16r2AE + -2r100");
   assert (SYX_SMALL_INTEGER(ret_obj) == -123 + 0x2AE + -4);
-  /*
+
   puts ("- Test floats");
   ret_obj = _interpret ("method | a | a := 123.321. ^a + 2.2");
-  printf("%f %f\n", SYX_SMALL_FLOAT(ret_obj), (float)125.521);
-  assert (SYX_SMALL_FLOAT(ret_obj) == (float)125.521);
+  assert (SYX_OBJECT_FLOAT(ret_obj) == 125.521);
 
+  /*
   puts ("- Test single messages");
   ret_obj = _interpret ("method ^Object class class hash");
   assert (syx_metaclass_class == SYX_SMALL_INTEGER (ret_obj));
@@ -115,7 +115,7 @@ main (int argc, char *argv[])
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
   puts ("- Test loops");
-  ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'asd' print]. ^var");
+  ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");
   assert (SYX_SMALL_INTEGER(ret_obj) == 1000);
 
   syx_quit ();

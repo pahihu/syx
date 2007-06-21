@@ -27,7 +27,7 @@ main (int argc, char *argv[])
 
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_FLOAT_CONST);
-  assert (token.value.floating == (float)123.321);
+  assert (token.value.floating == 123.321);
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);

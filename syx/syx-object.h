@@ -6,10 +6,7 @@
 #include "syx-enums.h"
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
-#define SYX_SMALL_INTEGER(oop) ((syx_int32)((syx_nint)(oop) >> 2))
-#define SYX_CHARACTER(oop) ((syx_int8)((syx_nint)(oop) >> 2))
-inline syx_float SYX_SMALL_FLOAT(SyxOop oop);
-
+#define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
@@ -56,8 +53,8 @@ extern SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
-  syx_small_float_class,
 
+  syx_float_class,
   syx_symbol_class,
   syx_string_class,
   syx_byte_array_class,
@@ -102,6 +99,7 @@ void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
 
 inline SyxOop syx_metaclass_new (SyxOop supermetaclass);
 inline SyxOop syx_class_new (SyxOop superclass);
+inline SyxOop syx_float_new (syx_double floating);
 inline SyxOop syx_byte_array_new (syx_varsize size, syx_uint8 *data);
 inline SyxOop syx_byte_array_new_size (syx_varsize size);
 inline SyxOop syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data);

@@ -5,7 +5,7 @@ Major:
 - System signal handling
 
 Minor:
-- Create a working timer for tests
+- Create an installer for windows
 
 Later:
 - Implement coalesced hash tables with consistent hash functions

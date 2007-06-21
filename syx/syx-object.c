@@ -28,8 +28,8 @@ SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
-  syx_small_float_class,
 
+  syx_float_class,
   syx_symbol_class,
   syx_string_class,
   syx_byte_array_class,
@@ -51,26 +51,6 @@ SyxOop syx_nil,
   syx_globals;
 
 /* Inlines */
-
-//! Returns a SmallFloat embedded in a SyxOop
-inline syx_float
-SYX_SMALL_FLOAT (SyxOop oop)
-{
-  SyxOop doop = oop;
-  syx_float *p = (syx_float *)&doop;
-  doop >>= 2;
-  return *p;
-}
-
-//! Create an OOP containing a single floating number
-inline SyxOop
-syx_small_float_new (syx_float fnum)
-{
-  SyxOop *o = (SyxOop *)&fnum;
-  SyxOop oop = *o;
-  oop = (oop << 2) + SYX_TYPE_SMALL_FLOAT;
-  return oop;
-}
 
 //! Grows SyxObject::data by a given size
 inline void
@@ -102,9 +82,6 @@ syx_object_get_class (SyxOop object)
   if (SYX_IS_CHARACTER(object))
     return syx_character_class;
 
-  if (SYX_IS_SMALL_FLOAT(object))
-    return syx_small_float_class;
-    
   syx_error ("unknown object");
 }
 
@@ -145,8 +122,6 @@ inline SyxOop
 syx_metaclass_new (SyxOop supermetaclass)
 {
   SyxOop metaclass = syx_object_new (syx_metaclass_class, TRUE);
-  
-
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
@@ -172,6 +147,15 @@ syx_class_new (SyxOop superclass)
   return class;
 }
 
+//! Create a Float object
+inline SyxOop
+syx_float_new (syx_double floating)
+{
+  SyxOop oop = syx_object_new_size (syx_float_class, FALSE, sizeof (syx_double));
+  SYX_OBJECT_FLOAT(oop) = floating;
+  return oop;
+}
+
 //! Creates a new ByteArray instance
 /*!
   \param size the number of elements
@@ -187,15 +171,7 @@ syx_byte_array_new (syx_varsize size, syx_uint8 *data)
 inline SyxOop 
 syx_byte_array_new_size (syx_varsize size)
 {
-  SyxOop oop = syx_memory_alloc ();
-  SyxObject *object = SYX_OBJECT (oop);
-  
-  object->class = syx_byte_array_class;
-  object->has_refs = FALSE;
-  object->size = size;
-  object->data = syx_calloc (size, sizeof (syx_uint8));
-
-  return oop;
+  return syx_object_new_size (syx_byte_array_class, FALSE, size);
 }
 
 //! Like syx_byte_array_new but duplicates the data
@@ -523,7 +499,11 @@ syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
   object->class = class;
   object->has_refs = has_refs;
   object->size = size;
-  object->data = size ? syx_calloc (size, sizeof (SyxOop )) : NULL;
+  if (size > 0)
+    object->data = (has_refs
+		    ? syx_calloc (size, sizeof (SyxOop))
+		    : syx_calloc (size, sizeof (syx_int8)));
+
 
   return oop;
 }

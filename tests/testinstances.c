@@ -1,18 +1,18 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   SyxOop obj, instobj;
-  clock_t start, end;
+  struct timeval start, end;
 
   syx_init (".");
   syx_memory_load_image ("test.sim");
 
-  start = clock ();
+  gettimeofday (&start, NULL);
 
   obj = syx_small_integer_new (123);
   assert (SYX_SMALL_INTEGER(obj) == 123);
@@ -23,8 +23,8 @@ main (int argc, char *argv[])
   obj = syx_symbol_new ("symbol");
   assert (!strcmp (SYX_OBJECT_SYMBOL(obj), "symbol"));
 
-  obj = syx_small_float_new (123.321);
-  assert (SYX_SMALL_FLOAT(obj) == (float)123.321);
+  obj = syx_float_new (123.321);
+  assert (SYX_OBJECT_FLOAT(obj) == 123.321);
 
   // Now test basic inheritance between classes and metaclasses
   instobj = syx_globals_at ("Signal");
@@ -51,8 +51,8 @@ main (int argc, char *argv[])
   obj = syx_string_new ("string");
   assert (!strcmp (SYX_OBJECT_SYMBOL (obj), "string"));
 
-  end = clock ();
-  printf ("Time elapsed: %f\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
 
   syx_quit ();
 

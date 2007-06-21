@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 int
@@ -9,7 +9,7 @@ main (int argc, char *argv[])
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
-  clock_t start, end;
+  struct timeval start, end;
 
   syx_init (".");
   syx_memory_load_image ("test.sim");
@@ -32,10 +32,10 @@ main (int argc, char *argv[])
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 
-  start = clock ();
+  gettimeofday (&start, NULL);
   syx_scheduler_run ();
-  end = clock ();
-  printf ("Time elapsed: %f\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
 
   syx_quit ();
 

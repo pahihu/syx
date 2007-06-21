@@ -500,16 +500,3 @@ strndup (syx_string src, syx_size n)
 }
 
 #endif /* HAVE_STRNDUP */
-
-
-#ifndef HAVE_MEMDUP
-
-inline syx_pointer
-memdup (syx_pointer src, syx_size n)
-{
-  syx_pointer dest = syx_malloc (n);
-  memcpy (dest, src, n);
-  return dest;
-}
-
-#endif /* HAVE_MEMDUP */

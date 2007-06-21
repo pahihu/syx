@@ -8,7 +8,6 @@ typedef enum
     SYX_TYPE_POINTER,
     SYX_TYPE_SMALL_INTEGER,
     SYX_TYPE_CHARACTER,
-    SYX_TYPE_SMALL_FLOAT,
   } SyxType;
 
 //! Indexes of known instance variables
@@ -98,7 +97,6 @@ typedef enum
     SYX_TOKEN_INT_CONST,
     SYX_TOKEN_CHAR_CONST,
     SYX_TOKEN_FLOAT_CONST,
-    SYX_TOKEN_DOUBLE_CONST,
     SYX_TOKEN_CLOSING,
     SYX_TOKEN_ARRAY_BEGIN,
 

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 int
@@ -8,12 +8,12 @@ main (int argc, char *argv[])
 {
   SyxLexer *lexer;
   SyxOop temp;
-  clock_t start, end;
+  struct timeval start, end;
 
   syx_init (".");
   syx_memory_load_image ("test.sim");
 
-  start = clock ();
+  gettimeofday (&start, NULL);
 
   /*  lexer = syx_lexer_new ("undefined subclass: #Object!");
   assert (syx_cold_parse (lexer, &error) == FALSE);
@@ -37,8 +37,8 @@ main (int argc, char *argv[])
   assert (syx_cold_parse (lexer) == TRUE);
   syx_lexer_free (lexer, FALSE);
 
-  end = clock ();
-  printf ("Time elapsed: %f\n", ((double) (start - end)));
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
 
   syx_quit ();
 

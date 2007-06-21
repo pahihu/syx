@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "../syx/syx.h"
 
 int
@@ -9,7 +9,7 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
   SyxOop method;
   SyxParser *parser;
-  clock_t start, end;
+  struct timeval start, end;
   
   syx_init (".");
   syx_memory_load_image ("test.sim");
@@ -25,7 +25,7 @@ main (int argc, char *argv[])
 #define NUM_ARGS (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method)))
 #define NUM_TEMPS (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method)))
 
-  start = clock ();
+  gettimeofday (&start, NULL);
 
   PARSE ("unary");
   assert (SELECTOR_EQ ("unary"));
@@ -50,8 +50,8 @@ main (int argc, char *argv[])
 
   PARSE ("meth 1, 2, 3 test. (1, 2, 3) test");
 
-  end = clock ();
-  printf ("Time elapsed: %f\n", ((double) (start - end)) / CLOCKS_PER_SEC);
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
 
   syx_quit ();
   

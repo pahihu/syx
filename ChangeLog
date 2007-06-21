@@ -1,3 +1,11 @@
+2007-06-21  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-object.c (syx_object_new_size): alloc for byte size if object has no references
+
+	* Use timeval to benchmark the tests
+
+	* Removed SmallFloats and added only Floats. Therefore, SmallIntegers are again 31 bit wide
+
 2007-06-19  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (syx_memory_load_image): fixed
