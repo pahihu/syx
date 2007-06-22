@@ -1,0 +1,16 @@
+import os
+
+Import ('penv')
+
+env = penv.Clone ()
+if env['PLATFORM'] == 'posix':
+    env.ParseConfig ("pkg-config glib-2.0 gobject-2.0 gthread-2.0 gtk+-2.0 --libs --cflags")
+else:
+    for path in os.environ['PATH'].split(';'):
+        if 'GTK' in path:
+            env['LIBPATH'].append (path)
+    env.MergeFlags ("-lsyx -lglib-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0 -lgobject-2.0-0")
+
+lib_objects = env.SharedObject (Split ("plugin-init.c"))
+lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
+Default (lib_shared)
