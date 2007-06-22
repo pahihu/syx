@@ -1,0 +1,7 @@
+Import ('env')
+
+prog_objects = env.Object (Split ("""
+	     main.c
+	     """))
+prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
+Default (prog)

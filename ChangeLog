@@ -1,5 +1,12 @@
 2007-06-22  Luca Bruno  <lethalman88@gmail.com>
 
+	* Doxyfile (LATEX_OUTPUT): added
+	(OUTPUT): moved to build directory
+
+	* Separated executable binaries from libraries by adding directory src
+	
+	* Now the build process is done in a separate directory named 'build'
+
 	* Fixed scheduled processes
 
 	* Added plugins support

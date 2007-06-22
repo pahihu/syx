@@ -1,12 +1,12 @@
 !Gtk class methodsFor: 'main loop'!
 
 main
-    <cCall: 'syx_gtk_main' plugin: 'gtk'>
+    <cCall: 'Gtk_main' plugin: 'gtk'>
 	self primitiveFailed
 !
 
 mainQuit
-    <cCall: 'syx_gtk_main_quit' plugin: 'gtk'>
+    <cCall: 'Gtk_mainQuit' plugin: 'gtk'>
 	self primitiveFailed
 ! !
 
@@ -29,7 +29,7 @@ handler: aPointer
 !GtkWindow class methodsFor: 'instance creation'!
 
 primNew
-    <cCall: 'syx_gtk_window_new' plugin: 'gtk'>
+    <cCall: 'GtkWindow_new' plugin: 'gtk'>
 	self primitiveFailed
 !
 
@@ -40,7 +40,7 @@ new
 !GtkWidget methodsFor: 'gtk'!
 
 showAll
-    <cCall: 'syx_gtk_widget_show_all' plugin: 'gtk'>
+    <cCall: 'GtkWidget_showAll' plugin: 'gtk'>
 	self primitiveFailed
 ! !
 

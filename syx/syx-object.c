@@ -28,6 +28,7 @@ SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
+  syx_cpointer_class,
 
   syx_float_class,
   syx_symbol_class,
@@ -70,7 +71,7 @@ syx_object_get_class (SyxOop object)
 {
   /* ordered by usage */ 
 
-  if (SYX_IS_POINTER(object))
+  if (SYX_IS_OBJECT(object))
     return SYX_OBJECT(object)->class;
 
   if (SYX_IS_SMALL_INTEGER(object))
@@ -82,6 +83,9 @@ syx_object_get_class (SyxOop object)
   if (SYX_IS_CHARACTER(object))
     return syx_character_class;
 
+  if (SYX_IS_CPOINTER(object))
+    return syx_cpointer_class;
+
   syx_error ("unknown object");
 }
 
@@ -92,7 +96,7 @@ syx_object_get_class (SyxOop object)
 inline void
 syx_object_set_class (SyxOop object, SyxOop class)
 {
-  if (!SYX_IS_POINTER(object))
+  if (!SYX_IS_OBJECT(object))
     return;
 
   SYX_OBJECT(object)->class = class;

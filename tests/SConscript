@@ -1,9 +1,9 @@
 Import ('env')
 
 if env['PLATFORM'] == 'posix':
-   env.AppendENVPath ('LD_LIBRARY_PATH', 'syx')
+   env.AppendENVPath ('LD_LIBRARY_PATH', 'build/lib')
 else:
-   env.AppendENVPath ('PATH', 'syx') # for windows
+   env.AppendENVPath ('PATH', 'build/lib') # for windows
 
 targets = []
 deptarget = None

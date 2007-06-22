@@ -15,7 +15,7 @@
 #define SYX_DEBUG_GC
 #endif
 
-static syx_int32 _syx_memory_size;
+syx_int32 _syx_memory_size;
 SyxObject *syx_memory;
 static SyxOop *_syx_freed_memory;
 static syx_int32 _syx_freed_memory_top;
@@ -195,7 +195,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
   for (i=0; i < n; i++)
     {
       oop = oops[i];
-      if (SYX_IS_POINTER (oop))
+      if (SYX_IS_OBJECT (oop))
 	{
 	  idx = (oop - (SyxOop)syx_memory) / sizeof (SyxObject);
 
@@ -407,7 +407,7 @@ inline void
 _syx_memory_gc_mark (SyxOop object)
 {
   syx_int32 i;
-  if (!SYX_IS_POINTER (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
+  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
     return;
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;

@@ -2,6 +2,7 @@ Major:
 - Complete the lexer
 - Number coercing and printing
 - System signal handling
+- Use non-block I/O
 
 Minor:
 - Create an installer for windows

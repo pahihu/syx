@@ -111,7 +111,7 @@ void
 syx_scheduler_add_process (SyxOop process)
 {
   SyxOop inter_process;
-  if (!SYX_IS_POINTER (process))
+  if (!SYX_IS_OBJECT (process))
     return;
 
   if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))

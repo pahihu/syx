@@ -100,7 +100,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-I#. -L#syx')
+env.MergeFlags ('-I#.')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
@@ -138,14 +138,27 @@ env.Append(BUILDERS = { 'Test' : builder })
 
 # Doc builder
 
-env.Alias ('doc', env.Command ('doxygen.out', 'Doxyfile',
+env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
                                'doxygen $SOURCES'))
+env.Clean ('doc', 'build/doc')
 
 # Build
-dirs = ['syx', 'tests']
-if env['plugins']:
-   dirs.append ('plugins')
-env.SConscript (dirs=dirs, exports=['env'])
+
+env.MergeFlags ('-L#build/lib')
+env.BuildDir ('build/lib', 'syx', False)
+env.SConscript (dirs=['build/lib'], exports=['env'])
+env.BuildDir ('build/bin', 'src', False)
+env.SConscript (dirs=['build/bin'], exports=['env'])
+
+env.BuildDir ('build/plugins', 'plugins', False)
+env.SConscript (dirs=['build/plugins'], exports=['env'])
+
+cmd = env.Command ('build/st', 'st',
+                   Copy ('$TARGET', '$SOURCE'))
+Default (cmd)
+env.Clean (cmd, 'build/st')
+
+env.SConscript (dirs=['tests'], exports=['env'])
 
 # Command aliases
 env.Alias ('install', [env['includedir'],

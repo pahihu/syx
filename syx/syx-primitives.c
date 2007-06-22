@@ -8,6 +8,7 @@
 #include <string.h>
 #include "syx-error.h"
 #include "syx-types.h"
+#include "syx-plugins.h"
 #include "syx-object.h"
 #include "syx-enums.h"
 #include "syx-scheduler.h"
@@ -543,6 +544,18 @@ SYX_FUNC_PRIMITIVE (Smalltalk_quit)
   exit (status);
 }
 
+SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
+{
+  syx_symbol name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_load (name)));
+}
+
+SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
+{
+  syx_symbol name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
+}
+
 static SyxPrimitiveEntry primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -616,6 +629,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
 
   /* Smalltalk environment */
   { "Smalltalk_quit", Smalltalk_quit },
+  { "Smalltalk_loadPlugin", Smalltalk_loadPlugin },
+  { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
 
   { NULL }
 };

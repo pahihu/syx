@@ -47,7 +47,7 @@ inline void syx_exec_state_free (void);
   return FALSE
 
 //! The number of primitives
-#define SYX_PRIMITIVES_MAX 51
+#define SYX_PRIMITIVES_MAX 53
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\

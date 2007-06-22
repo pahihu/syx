@@ -110,6 +110,9 @@ Magnitude subclass: #Character
 Magnitude subclass: #Number
 	  instanceVariableNames: ''!
 
+Magnitude subclass: #CPointer
+	  instanceVariableNames: ''!
+
 Number subclass: #SmallInteger
        instanceVariableNames: ''!
 

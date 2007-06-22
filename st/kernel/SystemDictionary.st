@@ -17,3 +17,15 @@ initializeSystem
 	at: #Transcript put: (TextCollector message: stdout -> #nextPutAll:);
 	at: #ImageFileName put: 'default.sim'
 ! !
+
+!SystemDictionary methodsFor: 'plugins'!
+
+loadPlugin: name
+    <primitive: 'Smalltalk_loadPlugin'>
+	self primitiveFailed
+!
+
+unloadPlugin: name
+    <primitive: 'Smalltalk_unloadPlugin'>
+	self primitiveFailed
+! !

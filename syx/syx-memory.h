@@ -16,6 +16,7 @@
 #include "syx-init.h"
 
 extern SyxObject *syx_memory;
+extern syx_int32 _syx_memory_size;
 
 void syx_memory_init (syx_int32 size);
 void syx_memory_clear (void);

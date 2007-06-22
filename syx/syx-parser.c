@@ -49,7 +49,7 @@ SyxParser *
 syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
 {
   SyxParser *self;
-  if (!lexer || !SYX_IS_POINTER (method))
+  if (!lexer || !SYX_IS_OBJECT (method))
     return NULL;
   
   self = syx_malloc (sizeof (SyxParser));

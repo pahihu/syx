@@ -12,12 +12,19 @@
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_SIZE(oop) (SYX_OBJECT(oop)->size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
+#define SYX_OBJECT_CPOINTER(oop) ((syx_pointer)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
 
 #define SYX_IS_NIL(oop) ((oop) == 0 || (oop) == syx_nil)
 #define SYX_IS_TRUE(oop) ((oop) == syx_true)
 #define SYX_IS_FALSE(oop) ((oop) == syx_false)
+#define SYX_IS_OBJECT(oop) (SYX_IS_POINTER(oop) &&		\
+			    (oop) >= (SyxOop)syx_memory &&	\
+			    (oop) <= (SyxOop)(syx_memory + _syx_memory_size - 1))
+#define SYX_IS_CPOINTER(oop) (SYX_IS_POINTER(oop) &&			\
+			      ((oop) < (SyxOop)syx_memory ||		\
+			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
 /* Oop */
 
@@ -53,6 +60,7 @@ extern SyxOop syx_nil,
   syx_false_class,
   syx_small_integer_class,
   syx_character_class,
+  syx_cpointer_class,
 
   syx_float_class,
   syx_symbol_class,

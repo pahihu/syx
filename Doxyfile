@@ -6,8 +6,8 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = Syx
 PROJECT_NUMBER         = 0.1
-OUTPUT_DIRECTORY       = docs
-CREATE_SUBDIRS         = YES
+OUTPUT_DIRECTORY       = build/doc
+CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
@@ -114,11 +114,11 @@ GENERATE_HTML          = YES
 HTML_OUTPUT            = html/
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = 
-HTML_FOOTER            = docs/html/extras/footer.html
+HTML_FOOTER            = doc/html/extras/footer.html
 HTML_STYLESHEET        = 
 HTML_ALIGN_MEMBERS     = YES
-GENERATE_HTMLHELP      = NO
-CHM_FILE               = 
+GENERATE_HTMLHELP      = YES
+CHM_FILE               = syx.chm
 HHC_LOCATION           = 
 GENERATE_CHI           = NO
 BINARY_TOC             = NO
@@ -130,8 +130,8 @@ TREEVIEW_WIDTH         = 250
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-GENERATE_LATEX         = NO
-LATEX_OUTPUT           = 
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex/
 LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex
 COMPACT_LATEX          = NO
@@ -139,7 +139,7 @@ PAPER_TYPE             = a4wide
 EXTRA_PACKAGES         = 
 LATEX_HEADER           = 
 PDF_HYPERLINKS         = YES
-USE_PDFLATEX           = NO
+USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
 LATEX_HIDE_INDICES     = NO
 #---------------------------------------------------------------------------
