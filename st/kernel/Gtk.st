@@ -1,36 +1,46 @@
 !Gtk class methodsFor: 'main loop'!
 
-mainIterationDo: aBoolean
-    <primitive: 'GtkMainIterationDo' module: 'Gtk'>
-	^self primitiveFailed
+main
+    <cCall: 'syx_gtk_main' plugin: 'gtk'>
+	self primitiveFailed
 !
 
-main
-    [ self mainIterationDo: true ] repeat
+mainQuit
+    <cCall: 'syx_gtk_main_quit' plugin: 'gtk'>
+	self primitiveFailed
 ! !
 
-!GtkButton class methodsFor: 'instance creation'!
+!GObject class methodsFor: 'instance creation'!
 
 new
-    <primitive: 'GtkButtonNew' module: 'Gtk'>
-	self primitiveFailed
+    ^self subclassResponsibility
 !
 
-newWithLabel: aString
-    <primitive: 'GtkButtonNew' module: 'Gtk'>
-	self primitiveFailed
+handler: aPointer
+    ^self basicNew handler: aPointer
+! !
+
+!GObject methodsFor: 'initialize-release'!
+
+handler: aPointer
+    handler := aPointer
 ! !
 
 !GtkWindow class methodsFor: 'instance creation'!
 
-new
-    <primitive: 'GtkWindowNew' module: 'Gtk'>
+primNew
+    <cCall: 'syx_gtk_window_new' plugin: 'gtk'>
 	self primitiveFailed
+!
+
+new
+    ^self handler: self primNew
 ! !
 
-!GtkWindow methodsFor: 'calls'!
+!GtkWidget methodsFor: 'gtk'!
 
 showAll
-    <primitive: 'GtkWindowShowAll' module: 'Gtk'>
+    <cCall: 'syx_gtk_widget_show_all' plugin: 'gtk'>
 	self primitiveFailed
 ! !
+

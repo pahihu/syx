@@ -33,6 +33,8 @@ int main()
       syx_scheduler_add_process (process);
     }
 
+  syx_plugin_load ("gtk");
+
   syx_scheduler_run ();
 
   syx_quit ();

@@ -11,8 +11,10 @@ lib_objects = libenv.SharedObject (Split ("""
 	    syx-bytecode.c syx-init.c syx-interp.c
 	    syx-lexer.c syx-memory.c syx-object.c syx-parser.c
 	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
+            syx-plugins.c
 	    """))
 lib_shared = libenv.SharedLibrary (target='syx', source=lib_objects)
+Default (lib_shared)
 
 # Build the executable
 
@@ -20,4 +22,4 @@ prog_objects = env.Object (Split ("""
 	     main.c
 	     """))
 prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
-Default ([lib_shared, prog])
+Default (prog)

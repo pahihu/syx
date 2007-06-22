@@ -1,7 +1,6 @@
 Major:
 - Complete the lexer
 - Number coercing and printing
-- C and Smalltalk side tracebacks
 - System signal handling
 
 Minor:

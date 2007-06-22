@@ -22,10 +22,13 @@ opts.AddOptions (
    PathOption('includedir',
               'Installation prefix for C header files', 
               '$prefix/include', []),
+   BoolOption ('plugins', """Build with plugins support""", True),
    BoolOption ('attach', """Attach a debugger for test failures""", False),              
    EnumOption ('debug', """Debug output and symbols""", 'normal',
                allowed_values=('no', 'normal', 'info', 'full'),
-               ignorecase=True))
+               ignorecase=True),
+
+   BoolOption ('GTK', """Build the syx-gtk plugin""", True))
 
 env = Environment (options=opts)
 
@@ -39,6 +42,7 @@ env['tools'] = ['default', 'mingw']
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
      Type: 'scons'               to build Syx.
+           'scons plugins=no'    build without plugins support
            'scons debug=no'      release build with high optimization.
            'scons debug=normal'  add debug symbols (default).
            'scons debug=info' 	 display more messages.
@@ -60,13 +64,16 @@ for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h',
           'sys/types.h', 'errno.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
-      env.Exit (-1)
+      env.Exit (1)
 
 print
 print 'Optional headers...'
 
 for h in ['stdarg.h']:
    conf.CheckCHeader (h)
+   
+if env['PLATFORM'] == 'win32':
+   have_windows_h = conf.CheckCHeader ('windows.h')
 
 print
 print 'Mandatory functions...'
@@ -74,18 +81,26 @@ print 'Mandatory functions...'
 for f in ['strtol', 'strtof', 'strtod', 'gettimeofday']:
    if not conf.CheckFunc (f):
       print "Can't build Syx without %s function!" % f
-      env.Exit (-1)
+      env.Exit (1)
 
 print
 print 'Optional functions...'
 
-for f in ['strndup', 'LoadLibrary']:
+for f in ['strndup']:
    conf.CheckFunc (f)
+
+print
+if env['plugins']:
+    if (env['PLATFORM'] == 'win32' and have_windows_h) or conf.CheckLibWithHeader ('dl', 'dlfcn.h', 'c', 'dlopen(0, 0);'):
+        env.MergeFlags ('-DWITH_PLUGINS')
+    else:
+        print 'WARNING: building without plugins support'
+        env['plugins'] = False
 
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-I.. -L#syx')
+env.MergeFlags ('-I#. -L#syx')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
@@ -127,7 +142,10 @@ env.Alias ('doc', env.Command ('doxygen.out', 'Doxyfile',
                                'doxygen $SOURCES'))
 
 # Build
-env.SConscript (dirs=['syx', 'tests'], exports=['env'])
+dirs = ['syx', 'tests']
+if env['plugins']:
+   dirs.append ('plugins')
+env.SConscript (dirs=dirs, exports=['env'])
 
 # Command aliases
 env.Alias ('install', [env['includedir'],

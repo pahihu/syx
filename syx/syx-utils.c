@@ -25,6 +25,14 @@
   #include <stdarg.h>
 #endif
 
+#ifdef HAVE_WINDOWS_H
+  #include <windows.h>
+#endif
+
+#ifdef HAVE_LIBDL
+  #include <dlfcn.h>
+#endif
+
 /*! \page syx_utils Syx Utils
     
     \section sec Description

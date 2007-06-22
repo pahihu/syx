@@ -330,27 +330,67 @@ _syx_parser_parse_primitive (SyxParser *self)
   syx_token_free (token);
 
   token = syx_lexer_next_token (self->lexer);
-  if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "primitive:")))
-    syx_error ("expected primitive:");
-  syx_token_free (token);
+  if (token.type != SYX_TOKEN_NAME_COLON)
+    syx_error ("expected name colon");
 
-  token = syx_lexer_next_token (self->lexer);
-  if (token.type != SYX_TOKEN_STR_CONST)
-    syx_error ("expected a string containing the primitive to be called\n");
+  if (!strcmp (token.value.string, "primitive:"))
+    {
+      syx_token_free (token);
 
-  prim_index = syx_primitive_get_index (token.value.string);
-  if (prim_index < 0)
-    syx_error ("unknown primitive named %s\n", token.value.string);
-  syx_token_free (token);
+      token = syx_lexer_next_token (self->lexer);
+      if (token.type != SYX_TOKEN_STR_CONST)
+	syx_error ("expected a string containing the primitive to be called\n");
+      
+      prim_index = syx_primitive_get_index (token.value.string);
+      if (prim_index < 0)
+	syx_error ("unknown primitive named %s\n", token.value.string);
+      syx_token_free (token);
+      
+      token = syx_lexer_next_token (self->lexer);
+      if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
+	syx_error ("expected >");
+      syx_token_free (token);
+      
+      SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
+      
+      syx_lexer_next_token (self->lexer);
+    }
+  else if (!strcmp (token.value.string, "cCall:"))
+    {
+      syx_token_free (token);
+      
+      token = syx_lexer_next_token (self->lexer);
 
-  token = syx_lexer_next_token (self->lexer);
-  if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-    syx_error ("expected >");
-  syx_token_free (token);
+      if (token.type != SYX_TOKEN_STR_CONST)
+	syx_error ("expected a string containing the primitive to be called\n");
 
-  SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
-  
-  syx_lexer_next_token (self->lexer);
+      syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
+      if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "plugin:")))
+	syx_error ("expected plugin:");
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
+      if (token.type != SYX_TOKEN_STR_CONST)
+	syx_error ("expected a string containin the plugin name\n");
+
+      syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
+      syx_token_free (token);
+
+      token = syx_lexer_next_token (self->lexer);
+      if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
+	syx_error ("expected >");
+      syx_token_free (token);
+
+      syx_lexer_next_token (self->lexer);
+
+      SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (-2);
+    }
+  else
+    syx_error ("expected primitive or cCall");
+
   return;
 }
 

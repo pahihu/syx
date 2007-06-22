@@ -2,73 +2,290 @@
   #include <config.h>
 #endif
 
-#include "syx-init.h"
+#include "syx-memory.h"
+#include "syx-types.h"
+#include "syx-platform.h"
 #include "syx-plugins.h"
+#include "syx-error.h"
 
-static GSList *plugins = NULL;
+#ifdef WITH_PLUGINS
 
-SyxPlugin *
-syx_plugin_copy (const SyxPlugin *plugin)
+#ifdef HAVE_LIBDL
+  #include <dlfcn.h>
+#endif
+
+#ifdef HAVE_WINDOWS_H
+  #include <windows.h>
+#endif
+
+#endif /* WITH_PLUGINS */
+
+static SyxPluginEntry *_syx_plugins = NULL;
+static syx_int32 _syx_plugins_top = 0;
+
+//! Load a dynamic library and return its handle
+/*!
+  \param location the location of the library
+  \return A pointer to the handle or NULL
+*/
+syx_pointer
+syx_library_open (syx_symbol location)
 {
-  return (SyxPlugin *)plugin;
+  syx_pointer ret = NULL;
+
+#ifdef WITH_PLUGINS
+
+  if (!location)
+    return NULL;
+
+#ifndef HAVE_LIBDL
+  ret = LoadLibrary (location);
+#else
+  ret = dlopen (location, RTLD_NOW);
+  if (!ret)
+    puts (dlerror ());
+#endif /* HAVE_LIBDL */
+
+#endif /* WITH_PLUGINS */
+
+  return ret;
 }
 
+//! Resolve a symbol in a library
+/*!
+  \param handle the handle returned by syx_library_open
+  \param name the symbol name
+  \return A pointer to the symbol or NULL
+*/
+syx_pointer
+syx_library_symbol (syx_pointer handle, syx_symbol name)
+{
+  syx_pointer ret = NULL;
+
+#ifdef WITH_PLUGINS
+
+  if (!handle || !name)
+    return NULL;
+
+#ifndef HAVE_LIBDL
+  ret = GetProcAddress (handle, name);
+#else
+  ret = dlsym (handle, name);
+#endif /* HAVE_LIBDL */
+
+#endif /* WITH_PLUGINS */
+
+  return ret;
+}
+
+//! Close a library handle
+/*!
+  \param handle the handle retruedn by syx_library_open
+  \return FALSE if the handle exists but can't be closed
+*/
+syx_bool
+syx_library_close (syx_pointer handle)
+{
+#ifdef WITH_PLUGINS
+  
+  if (!handle)
+    return TRUE;
+
+#ifndef HAVE_LIBDL
+  FreeLibrary (handle);
+  return TRUE;
+#else
+  if (dlclose (handle) == 0)
+    return TRUE;
+  else
+    return FALSE;
+#endif /* HAVE_LIBDL */
+
+#endif /* WITH_PLUGINS */
+
+  return TRUE;
+}
+
+//! Open a dynamic library and initialize the plugin
+/*!
+  \param name the name of the plugin
+  \return A pointer to the plugin handle or NULL
+*/
+syx_pointer
+syx_plugin_load (syx_symbol name)
+{
+  syx_pointer handle = NULL;
+   
+#ifdef WITH_PLUGINS
+  syx_string location;
+  syx_string namext;
+  SyxPluginInitializeFunc func;
+  SyxPluginEntry *entry;
+
+  if (!name)
+    return NULL;
+
+  namext = syx_malloc (strlen (name) + 15);
+  memset (namext, '\0', strlen (name) + 15);
+
+  // use syx-name.dll instead of libsyx-name.dll on Windows
+#ifndef WINDOWS
+  strcpy (namext, "lib");
+#endif
+
+  strcat (namext, "syx-");
+  strcat (namext, name);
+
+#ifdef WINDOWS
+  strcat (namext, ".dll");
+#else
+  strcat (namext, ".so");
+#endif /* WINDOWS */
+
+  location = syx_find_file ("plugins", name, namext);
+  syx_free (namext);
+
+#ifdef SYX_DEBUG_INFO
+  syx_debug ("Loading plugin %s at %s\n", name, location);
+#endif
+
+  if (!location)
+    return NULL;
+   
+  handle = syx_library_open (location);
+  syx_free (location);
+  if (!handle)
+    return NULL;
+
+  func = syx_library_symbol (handle, "syx_plugin_initialize");
+  if (!func)
+    return NULL;
+
+  if (!func ())
+    return NULL;
+
+  _syx_plugins = syx_realloc (_syx_plugins, ++_syx_plugins_top * sizeof (SyxPluginEntry));
+  entry = _syx_plugins + _syx_plugins_top - 1;
+  entry->name = strdup (name);
+  entry->handle = handle;
+
+#endif /* WITH_PLUGINS */
+
+  return handle;
+}
+
+
+
+//! Close the library handle and finalize the plugin
+/*!
+  This function finalize the plugin but it's not sure it closes the library handler.
+
+  \param handler the plugin handler
+  \return FALSE if the handler exists but can't be closed
+*/
+syx_bool
+syx_plugin_unload (syx_symbol plugin)
+{
+#ifdef WITH_PLUGINS
+  SyxPluginEntry *entry;
+  SyxPluginFinalizeFunc func;
+  syx_bool ret;
+
+  if (!plugin)
+    return TRUE;
+
+#ifdef SYX_DEBUG_INFO
+  syx_debug ("Unloading plugin %s\n", plugin);
+#endif
+
+  for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
+    {
+      if (!strcmp (entry->name, plugin))
+	{
+	  func = syx_library_symbol (entry->handle, "syx_plugin_finalize");
+	  if (!func)
+	    return FALSE;
+
+	  func ();
+
+	  ret = syx_library_close (entry->handle);
+	  entry->name = entry->handle = NULL;
+
+	  return ret;
+	}
+    }
+
+#endif /* WITH_PLUGINS */
+
+  return TRUE;
+}
+
+//! Finalize all plugins
+/*!
+  This function is usually called internally and user programs don't need to call this manually.
+*/
 void
-syx_plugin_free (SyxPlugin *plugin)
+syx_plugin_finalize (void)
 {
-  g_module_close (plugin->module);
-  g_free (plugin);
-}  
+#ifdef WITH_PLUGINS
+  SyxPluginEntry *entry;
+  SyxPluginFinalizeFunc func;
 
-SyxPlugin *
-syx_plugin_new (const gchar *name, gboolean is_permanent, gpointer *plugin_data)
-{
-  SyxPlugin *plugin = g_new0 (SyxPlugin, 1);
-  plugin->module = NULL;
-  plugin->name = name;
-  plugin->filename = NULL;
-  plugin->is_permanent = is_permanent;
-  plugin->plugin_data = plugin_data;
-  return plugin;
+  for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
+    {
+      func = syx_library_symbol (entry->handle, "syx_plugin_finalize");
+      if (!func)
+	return;
+
+      func ();
+
+      syx_library_close (entry->handle);
+    }
+
+  syx_free (_syx_plugins);
+  _syx_plugins_top = 0;
+
+#endif /* WITH_PLUGINS */
+
 }
 
-SyxPlugin *
-syx_plugin_load (const gchar *name, GError **error)
+//! Calls a function of a plugin from the interpreter
+/*!
+  \param plugin the name of the plugin
+  \param func the name of the function
+  \param es the execution state
+  \param method method to call if the primitive fails
+  \return FALSE to yield the process
+*/
+syx_bool
+syx_plugin_call (SyxExecState *es, SyxOop method)
 {
-  /*  GModule *module;
-  SyxPlugin *plugin;
-  PluginInitFunc plugin_init_func;
-  gchar *filename;
-  g_return_val_if_fail (g_module_supported (), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+#ifdef WITH_PLUGINS
+  SyxPluginEntry *entry;
+  SyxPrimitiveFunc fp;
+  SyxOop *literals;
+  syx_symbol plugin;
+  syx_symbol func;
 
-  filename = g_build_filename (syx_get_root_path (), "plugins", name, g_strconcat (name, ".la", NULL), NULL);
+  literals = SYX_OBJECT_DATA(SYX_METHOD_LITERALS(method));
+  plugin = SYX_OBJECT_SYMBOL(literals[1]);
+  func = SYX_OBJECT_SYMBOL(literals[0]);
 
-  module = g_module_open (filename, G_MODULE_BIND_MASK);
-  if (!module)
-    g_error (g_module_error ());
+  for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
+    {
+      if (!strcmp (entry->name, plugin))
+	{
+	  fp = syx_library_symbol (entry->handle, func);
+	  if (!fp)
+	    {
+	      SYX_PRIM_FAIL;
+	    }
 
-  g_free (filename);
+	  return fp (es, method);
+	}
+    }
 
-  if (!g_module_symbol (module, "plugin_init", (gpointer)&plugin_init_func))
-    g_error (g_module_error ());
+#endif /* WITH_PLUGINS */
 
-  plugin = plugin_init_func ();
-  g_return_val_if_fail (plugin != NULL, NULL);
-  if (plugin->is_permanent)
-    g_module_make_resident (module);
-
-  plugin->module = module;
-  plugin->filename = filename;
-
-  plugins = g_slist_append (plugins, plugin);
-
-  return plugin;*/
-  return NULL;
-}
-
-GSList *
-syx_get_loaded_plugins (void)
-{
-  return plugins;
+  SYX_PRIM_FAIL;
 }

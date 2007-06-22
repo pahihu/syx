@@ -1,3 +1,11 @@
+2007-06-22  Luca Bruno  <lethalman88@gmail.com>
+
+	* Fixed scheduled processes
+
+	* Added plugins support
+	
+	* Added a basic Gtk plugin for test
+
 2007-06-21  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-object.c (syx_object_new_size): alloc for byte size if object has no references

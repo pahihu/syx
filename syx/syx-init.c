@@ -2,10 +2,12 @@
   #include <config.h>
 #endif
 
+#include "syx-memory.h"
 #include <unistd.h>
 #include <stdio.h>
 #include "syx-types.h"
 #include "syx-error.h"
+#include "syx-plugins.h"
 #include "syx-init.h"
 #include "syx-utils.h"
 #include "syx-scheduler.h"
@@ -42,7 +44,7 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 
   if (access (full_path, R_OK) < 0)
     {
-      syx_error ("Can't open file %s\n", full_path);
+      syx_debug ("Can't open file %s\n", full_path);
       syx_free (full_path);
       return NULL;
     }
@@ -84,6 +86,7 @@ _syx_file_in_basic (void)
     "TextCollector.st",
     "Dictionary.st", "SystemDictionary.st",
     "Console.st",
+    "Gtk.st",
     NULL
   };
 
@@ -218,6 +221,7 @@ syx_fetch_basic (void)
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
 
+  syx_interp_init ();
   syx_error_init ();
   syx_scheduler_init ();
 }
@@ -243,7 +247,8 @@ syx_init (syx_symbol root_path)
 void
 syx_quit (void)
 {
-  syx_exec_state_free ();
+  syx_interp_quit ();
+  syx_plugin_finalize ();
   syx_memory_clear ();
   syx_error_clear ();
 }

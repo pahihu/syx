@@ -1,30 +1,30 @@
 #ifndef SYX_PLUGINS_H
 #define SYX_PLUGINS_H
 
-#include <glib.h>
-#include <glib-object.h>
-#include <gmodule.h>
+#include "syx-interp.h"
 
-#define SYX_TYPE_PLUGIN (syx_plugin_get_type ())
+typedef struct SyxPluginEntry SyxPluginEntry;
 
-typedef struct SyxPlugin SyxPlugin;
-
-struct SyxPlugin {
-  GModule *module;
-  const gchar *name;
-  const gchar *filename;
-  gboolean is_permanent;
-
-  gpointer *plugin_data;
+struct SyxPluginEntry
+{
+  syx_symbol name;
+  syx_pointer handle;
 };
 
-typedef SyxPlugin* (* PluginInitFunc) (void);
+/* Dealing with dynamic libraries */
 
-SyxPlugin *syx_plugin_copy (const SyxPlugin *plugin);
-void syx_plugin_free (SyxPlugin *plugin);
-GType syx_plugin_get_type (void);
-SyxPlugin *syx_plugin_new (const gchar *name, gboolean is_permanent, gpointer *plugin_data);
-SyxPlugin *syx_plugin_load (const gchar *name, GError **error);
-GSList *syx_get_loaded_plugins (void);
+syx_pointer syx_library_open (syx_symbol location);
+syx_pointer syx_library_symbol (syx_pointer handle, syx_symbol name);
+syx_bool syx_library_close (syx_pointer handle);
 
-#endif
+/* Managing plugins */
+
+typedef syx_bool (* SyxPluginInitializeFunc) (void);
+typedef void (* SyxPluginFinalizeFunc) (void);
+
+void syx_plugin_finalize (void);
+syx_pointer syx_plugin_load (syx_symbol name);
+syx_bool syx_plugin_unload (syx_symbol name);
+syx_bool syx_plugin_call (SyxExecState *es, SyxOop method);
+
+#endif /* SYX_PLUGINS_H */

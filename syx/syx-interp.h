@@ -31,11 +31,20 @@ struct SyxExecState
 
 //! Creates a new empty execution state
 inline SyxExecState *syx_exec_state_new (void);
-void syx_exec_state_fetch (SyxOop process);
+void syx_exec_state_fetch (void);
 inline void syx_exec_state_save (void);
-void syx_exec_state_free (void);
+inline void syx_exec_state_free (void);
 
 /* Primitives */
+
+#define SYX_PRIM_RETURN(object)						\
+  syx_interp_stack_push (object);					\
+  return TRUE
+
+#define SYX_PRIM_FAIL							\
+  syx_interp_enter_context (syx_method_context_new (es->context, method, es->message_receiver, \
+						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
+  return FALSE
 
 //! The number of primitives
 #define SYX_PRIMITIVES_MAX 51
@@ -64,6 +73,9 @@ typedef syx_bool (* SyxInterpreterFunc) (syx_uint16 argument);
 #define SYX_FUNC_INTERPRETER(name)		\
   syx_bool					\
   name (syx_uint16 argument)
+
+inline void syx_interp_init (void);
+inline void syx_interp_quit (void);
 
 inline syx_bool syx_interp_swap_context (SyxOop context);
 inline syx_bool syx_interp_enter_context (SyxOop context);

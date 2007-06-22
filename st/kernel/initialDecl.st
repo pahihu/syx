@@ -148,13 +148,13 @@ Object subclass: #Gtk
        instanceVariableNames: ''!
 
 Object subclass: #GObject
-       instanceVariableNames: ''!
+       instanceVariableNames: 'handler'!
 
-GObject subclass: #GtkButton
+GObject subclass: #GtkWidget
 	instanceVariableNames: ''!
 
-GObject subclass: #GtkWindow
-	instanceVariableNames: ''!
+GtkWidget subclass: #GtkWindow
+	  instanceVariableNames: ''!
 
 "Console"
 

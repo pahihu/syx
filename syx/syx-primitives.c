@@ -17,15 +17,6 @@
 #include "syx-utils.h"
 #include "syx-memory.h"
 
-#define SYX_PRIM_RETURN(object)						\
-  syx_interp_stack_push (object);					\
-  return TRUE
-
-#define SYX_PRIM_FAIL							\
-  syx_interp_enter_context (syx_method_context_new (es->context, method, es->message_receiver, \
-						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
-  return FALSE
-
 inline SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
@@ -69,6 +60,10 @@ SYX_FUNC_PRIMITIVE (Object_at)
 {
   syx_varsize index;
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  if (index < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
   SYX_PRIM_RETURN(SYX_OBJECT_DATA(es->message_receiver)[index]);
 }
 
@@ -78,6 +73,10 @@ SYX_FUNC_PRIMITIVE (Object_at_put)
   SyxOop object;
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  if (index < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
   object = es->message_arguments[1];
   SYX_OBJECT_DATA(es->message_receiver)[index] = object;
 
@@ -144,6 +143,10 @@ SYX_FUNC_PRIMITIVE (ByteArray_at)
   syx_varsize index;
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  if (index < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
   SYX_PRIM_RETURN(syx_character_new (SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index]));
 }
 
@@ -153,6 +156,10 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
   SyxOop oop = es->message_arguments[1];
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
+  if (index < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
   SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index] = SYX_CHARACTER (oop);
   SYX_PRIM_RETURN (oop);
 }

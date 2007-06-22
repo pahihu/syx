@@ -7,6 +7,7 @@
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-init.h"
+#include "syx-plugins.h"
 #include "syx-memory.h"
 #include "syx-bytecode.h"
 #include "syx-error.h"
@@ -64,7 +65,7 @@ syx_interp_swap_context (SyxOop context)
 #endif
   es->context = context;
   syx_exec_state_save ();
-  syx_exec_state_fetch (es->process);
+  syx_exec_state_fetch ();
   return !SYX_IS_NIL (context);
 }
 
@@ -156,11 +157,10 @@ syx_exec_state_new (void)
 
 //! Fetch the execution state of a Process
 void
-syx_exec_state_fetch (SyxOop process)
+syx_exec_state_fetch (void)
 {
   SyxOop method;
-  es->process = process;
-  es->context = SYX_PROCESS_CONTEXT (process);
+  es->context = SYX_PROCESS_CONTEXT (es->process);
   if (SYX_IS_NIL (es->context))
     return;
 
@@ -177,9 +177,21 @@ syx_exec_state_fetch (SyxOop process)
   es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
   es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
   es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
-  es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
   es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
   es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
+}
+
+inline void
+syx_interp_init (void)
+{
+  if (!es)
+    es = syx_exec_state_new ();
+}
+
+inline void
+syx_interp_quit (void)
+{
+  syx_exec_state_free ();
 }
 
 //! Save the current execution state
@@ -224,8 +236,9 @@ syx_process_execute_scheduled (SyxOop process)
       return;
     }
 
-  es = syx_exec_state_new ();
-  syx_exec_state_fetch (process);
+  es->process = process;
+  syx_exec_state_fetch ();
+  es->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
 
   while (es->ip < es->bytecodes_count && es->byteslice >= 0)
     {
@@ -236,7 +249,6 @@ syx_process_execute_scheduled (SyxOop process)
     }
 
   syx_exec_state_save ();
-  syx_exec_state_free ();
 }
 
 //! Same as syx_process_execute_scheduled but does not take care about the byteslice counter
@@ -245,15 +257,14 @@ syx_process_execute_blocking (SyxOop process)
 {
   syx_uint16 byte;
 
-  es = syx_exec_state_new ();
-  syx_exec_state_fetch (process);
-  if (SYX_IS_NIL (es->context))
+  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
     {
       syx_scheduler_remove_process (process);
-      syx_exec_state_free ();
       return;
     }
 
+  es->process = process;
+  syx_exec_state_fetch ();
   syx_processor_active_process = process;
   while (es->ip < es->bytecodes_count)
     {
@@ -263,7 +274,6 @@ syx_process_execute_blocking (SyxOop process)
     }
 
   syx_exec_state_save ();
-  syx_exec_state_free ();
 }
 
 
@@ -438,6 +448,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, method);
 
   if (es->message_arguments_count > 0)
     {
@@ -476,6 +488,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, method);
 
   if (es->message_arguments_count > 0)
     {
@@ -521,8 +535,11 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, method);
 
   context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
 
@@ -533,7 +550,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
   SyxOop class, method, context, first_argument, arguments;
   syx_int16 primitive;
-  syx_bool ret;
+  syx_bool ret = FALSE;
 
   first_argument = syx_interp_stack_pop ();
   es->message_receiver = syx_interp_stack_pop ();
@@ -582,13 +599,16 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
-  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+  if (primitive != -1)
     {
       if (es->message_arguments)
 	syx_free (es->message_arguments);
 
       es->message_arguments = &first_argument;
-      ret = syx_interp_call_primitive (primitive, method);
+      if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+	ret = syx_interp_call_primitive (primitive, method);
+      else if (primitive == -2)
+	ret = syx_plugin_call (es, method);
       es->message_arguments = NULL;
       return ret;
     }

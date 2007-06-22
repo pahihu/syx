@@ -1,0 +1,13 @@
+Import ('env')
+
+penv = env.Clone ()
+    
+if penv['PLATFORM'] == 'win32':
+    penv.MergeFlags ('-DBUILD_DLL')
+     
+dirs = []
+
+if penv['GTK']:
+    dirs.append ('gtk')
+
+SConscript (dirs=dirs, exports=['penv'])

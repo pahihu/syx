@@ -7,6 +7,7 @@
 #include "syx-init.h"
 #include "syx-lexer.h"
 #include "syx-parser.h"
+#include "syx-plugins.h"
 #include "syx-bytecode.h"
 #include "syx-utils.h"
 #include "syx-memory.h"
