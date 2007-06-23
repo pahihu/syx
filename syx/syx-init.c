@@ -44,7 +44,9 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 
   if (access (full_path, R_OK) < 0)
     {
+#ifdef SYX_DEBUG_INFO
       syx_debug ("Can't open file %s\n", full_path);
+#endif
       syx_free (full_path);
       return NULL;
     }

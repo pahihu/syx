@@ -1,5 +1,12 @@
-#include <stdio.h>
+#ifdef HAVE_CONFIG_H
+  #include "config.h"
+#endif
+
 #include <syx/syx.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 /*! \mainpage Smalltalk YX
     
@@ -16,13 +23,95 @@
         - Small
 */
 
-int main()
+static syx_string
+_find_image_path (syx_symbol root_path)
+{
+  syx_string path;
+
+  // first look at the environment
+  path = getenv ("SYX_IMAGE_PATH");
+  if (path)
+    return path;
+
+  // look in the working directory
+  if (access ("default.sim", R_OK))
+    return "default.sim";
+
+  // look in the root directory
+  path = syx_malloc (strlen (root_path) + 12);
+  sprintf (path, "%s%c%s", root_path, SYX_PATH_SEPARATOR, "default.sim");
+  if (access (path, R_OK))
+    return path;
+
+  syx_free (path);
+
+  // return the default path defined by the installation
+  return SYX_IMAGE_PATH_S;
+}
+
+static void
+_getopt_do (int argc, char **argv)
 {
   SyxOop context;
   SyxOop process;
 
-  syx_init ("..");
-  if (!syx_memory_load_image ("default.sim"))
+  syx_char c;
+  int opt_idx;
+  syx_string root_path = NULL;
+  syx_string image_path = NULL;
+  syx_bool scratch = FALSE;
+  static struct option long_options[] = {
+    {"root", 1, 0, 0},
+    {"image", 1, 0, 0},
+    {"scratch", 0, 0, 0},
+    {0, 0, 0, 0}
+  };
+
+  while (TRUE)
+    {
+      c = getopt_long (argc, argv, "r:i:s",
+		       long_options, &opt_idx);
+      if (c == -1)
+	break;
+
+      switch (c)
+	{
+	case 0:
+	  switch (opt_idx)
+	    {
+	    case 0:
+	      root_path = strdup (optarg);
+	      break;
+	    case 1:
+	      image_path = strdup (optarg);
+	      break;
+	    case 2:
+	      syx_build_basic ();
+	      scratch = TRUE;
+	      break;
+	    }
+
+	case 'r':
+	  root_path = strdup (optarg);
+	  break;
+	case 'i':
+	  image_path = strdup (optarg);
+	  break;
+	case 's':
+	  syx_build_basic ();
+	  scratch = TRUE;
+	}
+    }
+
+  if (!root_path)
+    root_path = SYX_ROOT_PATH_S;
+
+  if (!image_path)
+    image_path = _find_image_path (root_path);
+
+  syx_init (root_path);
+
+  if (scratch)
     {
       syx_build_basic ();
 
@@ -31,8 +120,18 @@ int main()
       SYX_PROCESS_SUSPENDED(process) = syx_false;
       
       syx_scheduler_add_process (process);
-    }
 
+      syx_memory_save_image (image_path);
+    }
+  else
+    syx_memory_load_image (image_path);
+
+}
+
+int main(int argc, char **argv)
+{
+  _getopt_do (argc, argv);
+  
   syx_scheduler_run ();
 
   syx_quit ();

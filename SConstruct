@@ -15,7 +15,10 @@ opts.AddOptions (
               '$exec_prefix/bin', []),
    PathOption('datadir',
               'Installation prefix for read-only architecture-independent data', 
-              '$prefix/share', []),
+              '$prefix/share/syx', []),
+   PathOption('imagedir',
+              'Installation path for the binary image',
+              '$datadir/default.sim', []),
    PathOption('libdir',
               'Installation prefix for object code libraries', 
               '$exec_prefix/lib', []),
@@ -62,7 +65,7 @@ conf = Configure (env, config_h='config.h')
 print 'Mandatory headers...'
 
 for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
-          'sys/types.h', 'errno.h']:
+          'sys/types.h', 'errno.h', 'getopt.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
       env.Exit (1)
@@ -79,7 +82,7 @@ if env['PLATFORM'] == 'win32':
 print
 print 'Mandatory functions...'
 
-for f in ['strtol', 'strtof', 'strtod', 'gettimeofday']:
+for f in ['strtol', 'strtof', 'strtod', 'gettimeofday', 'getopt']:
    if not conf.CheckFunc (f):
       print "Can't build Syx without %s function!" % f
       env.Exit (1)
@@ -101,7 +104,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-I#.')
+env.MergeFlags ('-I#. -DSYX_ROOT_PATH="$datadir" -DSYX_IMAGE_PATH="$imagedir"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':

@@ -1,6 +1,11 @@
 #ifndef SYX_PLATFORM_H
 #define SYX_PLATFORM_H
 
+#define SYX_STRINGIFY(s) #s
+
+#define SYX_IMAGE_PATH_S "" SYX_STRINGIFY(SYX_IMAGE_PATH)
+#define SYX_ROOT_PATH_S "" SYX_STRINGIFY(SYX_ROOT_PATH)
+
 /* Some platform specific informations */
 
 #ifdef WINDOWS

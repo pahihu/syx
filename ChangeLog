@@ -1,5 +1,7 @@
 2007-06-23  Luca Bruno  <lethalman88@gmail.com>
 
+	* src/main.c: added getopt
+
 	* Added readline plugin
 
 	* syx/syx-lexer.c (_syx_lexer_token_number): added exponent for floats
