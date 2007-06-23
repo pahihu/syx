@@ -109,11 +109,11 @@ SYX_FUNC_PRIMITIVE (Object_hash)
   SYX_PRIM_RETURN (syx_small_integer_new (syx_object_hash (es->message_receiver)));
 }
 
-SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromWith)
+SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
 {
   syx_varsize start = SYX_SMALL_INTEGER (es->message_arguments[0]) - 1;
-  SyxOop coll = es->message_arguments[1];
-  syx_varsize end = SYX_OBJECT_SIZE (coll);
+  SyxOop coll = es->message_arguments[2];
+  syx_varsize end = SYX_SMALL_INTEGER(es->message_arguments[1]);
   syx_varsize i;
 
   // distinguish between arrays and bytearrays
@@ -570,7 +570,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_hash", Object_hash },
 
   /* Arrayed collections */
-  { "ArrayedCollection_replaceFromWith", ArrayedCollection_replaceFromWith },
+  { "ArrayedCollection_replaceFromToWith", ArrayedCollection_replaceFromToWith },
 
   /* Byte arrays */
   { "ByteArray_newColon", ByteArray_newColon },

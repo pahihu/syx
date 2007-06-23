@@ -1,21 +1,47 @@
 !Console class methodsFor: 'instance creation'!
 
 run
-    ^self new run
+    ^self basicNew initialize run
 ! !
 
 !Console methodsFor: 'running'!
+
+initialize
+    hasReadline := Smalltalk loadPlugin: 'readline'
+!
+
+primReadline: aString
+    <cCall: 'Readline_readline' plugin: 'readline'>
+	self primitiveFailed
+!
+
+primAddHistory: aString
+    <cCall: 'Readline_addHistory' plugin: 'readline'>
+	self primitiveFailed
+!
+
+nextLine
+    | line |
+    hasReadline
+	ifTrue: [ line := self primReadline: '> '.
+		  self primAddHistory: line ]
+	ifFalse: [ '> ' print.
+		   line := stdin nextAll: 1024.
+		   line := line copyFrom: 1 to: line size - 1 ].
+    ^line
+!
 
 nextChunk
     | chunk |
     chunk := String new.
     [
 	| next |
-	next := stdin nextAll: 1024.
+	next := self nextLine.
 	chunk := chunk, next.
-	(chunk at: chunk size - 1) = $!
-            ifTrue: [chunk at: chunk size - 1 put: $.. ^chunk].
-	'>> ' print
+	chunk size > 1
+	    ifTrue: [
+		(chunk at: chunk size) = $!
+                     ifTrue: [^chunk copyFrom: 1 to: chunk size - 1] ]
     ] repeat
 !
 
@@ -23,7 +49,6 @@ run
     [
 	[
 	    | chunk method context |
-            '> ' print.
 	    chunk := self nextChunk.
 	    ('^[', chunk, '] value') doIt printNl.
 	] on: Signal do: [ :ex | ex debug ]

@@ -71,6 +71,8 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
   ret = GetProcAddress (handle, name);
 #else
   ret = dlsym (handle, name);
+  if (!ret)
+    puts (dlerror ());
 #endif /* HAVE_LIBDL */
 
 #endif /* WITH_PLUGINS */

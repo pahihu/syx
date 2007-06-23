@@ -103,6 +103,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_char s[256] = {0};
   syx_int32 stop = 0;
   syx_nint radix = 10;
+  syx_bool sign = FALSE;
 
   do
     s[stop++] = lastChar;
@@ -149,8 +150,6 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	    s[stop++] = lastChar;
 	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
-	  syx_lexer_push_back (self);
-
 	  token->type = SYX_TOKEN_FLOAT_CONST;
 	  token->value.floating = strtod (s, (char **)NULL);
 	}
@@ -158,6 +157,36 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	{
 	  self->_pushed_back = -1;
 	  self->_current_text -= 2;
+	}
+    }
+
+  // float e?
+  if (lastChar == 'e')
+    {
+      if ((lastChar = syx_lexer_forward (self)) == '-')
+	{
+	  sign = TRUE;
+	  lastChar = syx_lexer_forward (self);
+	}
+
+      if (lastChar && isdigit (lastChar))
+	{
+	  s[stop++] = 'e';
+	  if (sign) s[stop++] = '-';
+	  do
+	    s[stop++] = lastChar;
+	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
+
+	  syx_lexer_push_back (self);
+	  token->type = SYX_TOKEN_FLOAT_CONST;
+	  token->value.floating = strtod (s, (char **)NULL);
+	}
+      else
+	{
+	  self->_pushed_back = -1;
+	  self->_current_text--;
+	  if (sign) self->_current_text--;
+	  self->_current_text--;
 	}
     }
   else

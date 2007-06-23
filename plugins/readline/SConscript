@@ -1,0 +1,15 @@
+import os
+
+Import ('penv')
+
+env = penv.Clone ()
+if env['PLATFORM'] != 'win32':
+   conf = Configure (env, config_h='config.h')
+   if not conf.CheckLibWithHeader ('curses', 'curses.h', 'c', 'tgetnum(NULL);'):
+       print "WARNING: missing 'curses' library for readline plugin"
+   elif not conf.CheckLibWithHeader ('readline', ['stdio.h', 'curses.h', 'term.h', 'readline/readline.h', 'readline/history.h'], 'c', 'add_history("testline");'):
+       print 'WARNING: building without readline plugin'
+   else:
+       lib_objects = env.SharedObject (Split ("plugin-init.c"))
+       lib_shared = env.SharedLibrary (target='syx-readline', source=lib_objects)
+       Default (lib_shared)

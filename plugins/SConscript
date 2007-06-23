@@ -9,5 +9,7 @@ dirs = []
 
 if penv['GTK']:
     dirs.append ('gtk')
+if penv['READLINE']:
+    dirs.append ('readline')
 
 SConscript (dirs=dirs, exports=['penv'])

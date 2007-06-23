@@ -56,8 +56,15 @@ add: anObject
     self shouldNotImplement
 !
 
-replaceFrom: start with: replacementCollection
-    <primitive: 'ArrayedCollection_replaceFromWith'>
+copyFrom: start to: stop
+    stop < start ifTrue: [^self copyEmpty: 0].
+    ^(self copyEmpty: stop)
+	replaceFrom: start to: stop with: self;
+	yourself
+!
 
-    ^super replaceFrom: start with: replacementCollection
+replaceFrom: start to: stop with: replacementCollection
+    <primitive: 'ArrayedCollection_replaceFromToWith'>
+
+    ^super replaceFrom: start to: stop with: replacementCollection
 ! !

@@ -1,3 +1,9 @@
+2007-06-23  Luca Bruno  <lethalman88@gmail.com>
+
+	* Added readline plugin
+
+	* syx/syx-lexer.c (_syx_lexer_token_number): added exponent for floats
+
 2007-06-22  Luca Bruno  <lethalman88@gmail.com>
 
 	* Doxyfile (LATEX_OUTPUT): added

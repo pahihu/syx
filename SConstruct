@@ -28,7 +28,8 @@ opts.AddOptions (
                allowed_values=('no', 'normal', 'info', 'full'),
                ignorecase=True),
 
-   BoolOption ('GTK', """Build the syx-gtk plugin""", True))
+   BoolOption ('GTK', """Build the syx-gtk plugin""", True),
+   BoolOption ('READLINE', """Build the syx-readline plugin""", True))
 
 env = Environment (options=opts)
 
@@ -147,6 +148,7 @@ env.Clean ('doc', 'build/doc')
 env.MergeFlags ('-L#build/lib')
 env.BuildDir ('build/lib', 'syx', False)
 env.SConscript (dirs=['build/lib'], exports=['env'])
+
 env.BuildDir ('build/bin', 'src', False)
 env.SConscript (dirs=['build/bin'], exports=['env'])
 

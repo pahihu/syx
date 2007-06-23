@@ -162,8 +162,7 @@ GtkWidget subclass: #GtkWindow
 "Console"
 
 Object subclass: #Console
-       instanceVariableNames: ''!
-
+       instanceVariableNames: 'hasReadline'!
 
 "Exceptions"
 
