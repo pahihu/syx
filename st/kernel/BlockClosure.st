@@ -34,19 +34,17 @@ ensure: aBlock
 
 valueWithArguments: anArray
     <primitive: 'BlockClosure_valueWithArguments'>
-    | ctx |
-    ctx := self asContext: anArray.
-    ^thisContext enter: ctx
+	self primitiveFailed
 !
 
 value
     <primitive: 'BlockClosure_value'>
-    ^self valueWithArguments: #()
+	self primitiveFailed
 !
 
 value: anObject
     <primitive: 'BlockClosure_valueWith'>
-    ^self valueWithArguments: {anObject}
+	self primitiveFailed
 ! !
 
 !BlockClosure methodsFor: 'accessing'!

@@ -1,5 +1,18 @@
 2007-06-24  Luca Bruno  <lethalman88@gmail.com>
 
+	* SConstruct (install): remove Smalltalk files when uninstalling
+
+	* syx/syx-object.c (syx_symbol_new): return nil if NULL is supplied
+	(syx_string_new): idem
+
+	* syx/syx-primitives.c (BlockClosure_asContext): fixed GC transaction
+	(BlockClosure_valueWithArguments): idem
+	(BlockClosure_newProcess): idem
+	(BlockClosure_value): use nil instead of an empty array
+	(BlockClosure_on_do): idem
+
+	* syx/syx-interp.h (SYX_PRIM_ARGS): added to assert the number of arguments
+
 	* Added install target
 	
 	* syx/syx-plugins.c (syx_plugin_call): load the plugin not loaded yet

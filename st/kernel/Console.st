@@ -24,6 +24,9 @@ nextLine
     | line |
     hasReadline
 	ifTrue: [ line := self primReadline: '> '.
+		  "received EOF"
+		  line isNil
+		      ifTrue: [ 'EOF' printNl. Smalltalk quit ].
 		  self primAddHistory: line ]
 	ifFalse: [ '> ' print.
 		   line := stdin nextAll: 1024.

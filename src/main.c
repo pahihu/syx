@@ -42,10 +42,7 @@ _find_image_path (syx_symbol root_path)
     {
       path = syx_malloc (strlen (root_path) + 12);
       sprintf (path, "%s%c%s", root_path, SYX_PATH_SEPARATOR, "default.sim");
-      if (!access (path, R_OK))
-	return path;
-
-      syx_free (path);
+      return path;
     }
 
   // return the default path defined by the installation

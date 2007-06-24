@@ -4,12 +4,18 @@
 
 SYX_FUNC_PRIMITIVE(Readline_readline)
 {
+  SYX_PRIM_ARGS(1);
   char *s = readline (SYX_OBJECT_STRING(es->message_arguments[0]));
   SYX_PRIM_RETURN(syx_string_new (s));
 }
 
 SYX_FUNC_PRIMITIVE(Readline_addHistory)
 {
+  SYX_PRIM_ARGS(1);
+  if (SYX_IS_NIL (es->message_arguments[0]))
+    {
+      SYX_PRIM_RETURN(es->message_receiver);
+    }
   add_history (SYX_OBJECT_STRING(es->message_arguments[0]));
   SYX_PRIM_RETURN(es->message_receiver);
 }

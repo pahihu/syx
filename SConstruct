@@ -160,7 +160,8 @@ env.SConscript (dirs=['tests'], exports=['env'])
 
 # Install data
 
-env.Install (env['datadir'], '#st')
+target = env.Install (env['datadir'], '#st')
+env.Clean (target, os.path.join(env['datadir'], 'st'))
 
 # Command aliases
 env.Alias ('install', [env['includedir'],
