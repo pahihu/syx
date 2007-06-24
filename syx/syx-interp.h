@@ -46,6 +46,12 @@ inline void syx_exec_state_free (void);
 						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
   return FALSE
 
+#define SYX_PRIM_ARGS(count)			\
+  if (count > es->message_arguments_count)	\
+    {						\
+      SYX_PRIM_FAIL;				\
+    }
+
 //! The number of primitives
 #define SYX_PRIMITIVES_MAX 53
 

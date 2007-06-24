@@ -605,6 +605,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 	syx_free (es->message_arguments);
 
       es->message_arguments = &first_argument;
+      es->message_arguments_count = 1;
       if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
 	ret = syx_interp_call_primitive (primitive, method);
       else if (primitive == -2)

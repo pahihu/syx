@@ -222,6 +222,9 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 inline SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
+  if (!symbol)
+    return syx_nil;
+
   SyxOop object = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
   if (SYX_IS_NIL (object))
     {
@@ -237,6 +240,9 @@ syx_symbol_new (syx_symbol symbol)
 inline SyxOop 
 syx_string_new (syx_symbol string)
 {
+  if (!string)
+    return syx_nil;
+
   return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
 }
 
