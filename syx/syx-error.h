@@ -28,8 +28,15 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 #define syx_error(args...)			\
   {						\
+    fprintf (stderr, "ERROR: ");		\
     fprintf (stderr, args);			\
     exit (EXIT_FAILURE);			\
+  }
+
+#define syx_warning(args...)			\
+  {						\
+    fprintf (stderr, "WARNING: ");		\
+    fprintf (stderr, args);			\
   }
 
 #define syx_perror(args...)			\

@@ -5,3 +5,6 @@ prog_objects = env.Object (Split ("""
 	     """))
 prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
 Default (prog)
+
+env.Install (env['bindir'], prog)
+env.Alias ('install', env['bindir'])

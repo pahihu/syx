@@ -13,3 +13,7 @@ if env['PLATFORM'] != 'win32':
        lib_objects = env.SharedObject (Split ("plugin-init.c"))
        lib_shared = env.SharedLibrary (target='syx-readline', source=lib_objects)
        Default (lib_shared)
+       
+       instdir = os.path.join (env['datadir'], 'plugins', 'readline')
+       env.Install (instdir, lib_shared)
+       env.Alias ('install', instdir)

@@ -34,19 +34,22 @@ _find_image_path (syx_symbol root_path)
     return path;
 
   // look in the working directory
-  if (access ("default.sim", R_OK))
+  if (!access ("default.sim", R_OK))
     return "default.sim";
 
   // look in the root directory
-  path = syx_malloc (strlen (root_path) + 12);
-  sprintf (path, "%s%c%s", root_path, SYX_PATH_SEPARATOR, "default.sim");
-  if (access (path, R_OK))
-    return path;
+  if (root_path)
+    {
+      path = syx_malloc (strlen (root_path) + 12);
+      sprintf (path, "%s%c%s", root_path, SYX_PATH_SEPARATOR, "default.sim");
+      if (!access (path, R_OK))
+	return path;
 
-  syx_free (path);
+      syx_free (path);
+    }
 
   // return the default path defined by the installation
-  return SYX_IMAGE_PATH_S;
+  return SYX_IMAGE_PATH;
 }
 
 static void
@@ -86,7 +89,6 @@ _getopt_do (int argc, char **argv)
 	      image_path = strdup (optarg);
 	      break;
 	    case 2:
-	      syx_build_basic ();
 	      scratch = TRUE;
 	      break;
 	    }
@@ -98,18 +100,18 @@ _getopt_do (int argc, char **argv)
 	  image_path = strdup (optarg);
 	  break;
 	case 's':
-	  syx_build_basic ();
 	  scratch = TRUE;
 	}
     }
 
-  if (!root_path)
-    root_path = SYX_ROOT_PATH_S;
-
   if (!image_path)
     image_path = _find_image_path (root_path);
 
-  syx_init (root_path);
+  if (!root_path)
+    root_path = SYX_ROOT_PATH;
+
+  if (!syx_init (root_path))
+    syx_error ("Couldn't initialize Syx for root %s\n", root_path);
 
   if (scratch)
     {
@@ -121,11 +123,16 @@ _getopt_do (int argc, char **argv)
       
       syx_scheduler_add_process (process);
 
-      syx_memory_save_image (image_path);
+      if (!syx_memory_save_image (image_path))
+	syx_warning ("Can't save the image at %s\n", image_path);
     }
   else
-    syx_memory_load_image (image_path);
+    {
+      if (!syx_memory_load_image (image_path))
+	syx_error ("Image not found at %s\n", image_path);
+    }
 
+  syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (image_path));
 }
 
 int main(int argc, char **argv)

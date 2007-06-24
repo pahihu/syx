@@ -211,6 +211,7 @@ syx_plugin_unload (syx_symbol plugin)
 	  func ();
 
 	  ret = syx_library_close (entry->handle);
+	  syx_free (entry->name);
 	  entry->name = entry->handle = NULL;
 
 	  return ret;
@@ -242,6 +243,7 @@ syx_plugin_finalize (void)
       func ();
 
       syx_library_close (entry->handle);
+      syx_free (entry->name);
     }
 
   syx_free (_syx_plugins);
@@ -251,8 +253,10 @@ syx_plugin_finalize (void)
 
 }
 
-//! Calls a function of a plugin from the interpreter
+//! Calls a function of a plugin from within the interpreter
 /*!
+  If the plugin is not loaded yet, then load the plugin and call the requested primitive.
+
   \param plugin the name of the plugin
   \param func the name of the function
   \param es the execution state
@@ -268,6 +272,7 @@ syx_plugin_call (SyxExecState *es, SyxOop method)
   SyxOop *literals;
   syx_symbol plugin;
   syx_symbol func;
+  syx_pointer handle;
 
   literals = SYX_OBJECT_DATA(SYX_METHOD_LITERALS(method));
   plugin = SYX_OBJECT_SYMBOL(literals[1]);
@@ -286,6 +291,22 @@ syx_plugin_call (SyxExecState *es, SyxOop method)
 	  return fp (es, method);
 	}
     }
+
+  // try loading the plugin if not loaded yet
+  handle = syx_plugin_load (plugin);
+  if (!handle)
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  // call the primitive now
+  fp = syx_library_symbol (handle, func);
+  if (!fp)
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  return fp (es, method);
 
 #endif /* WITH_PLUGINS */
 

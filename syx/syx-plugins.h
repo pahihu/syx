@@ -7,7 +7,7 @@ typedef struct SyxPluginEntry SyxPluginEntry;
 
 struct SyxPluginEntry
 {
-  syx_symbol name;
+  syx_string name;
   syx_pointer handle;
 };
 

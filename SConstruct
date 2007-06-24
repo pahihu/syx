@@ -104,7 +104,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-I#. -DSYX_ROOT_PATH="$datadir" -DSYX_IMAGE_PATH="$imagedir"')
+env.MergeFlags ('-Wall -DHAVE_CONFIG_H -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagedir"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
@@ -113,8 +113,6 @@ elif env['debug'] == 'info':
    env.MergeFlags ('-g -O -DSYX_DEBUG_INFO')
 elif env['debug'] == 'full':
    env.MergeFlags ('-g -O -DSYX_DEBUG_INFO -DSYX_DEBUG_FULL')
-
-env.MergeFlags ('-Wall -DHAVE_CONFIG_H')
 
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DWINDOWS')
@@ -158,12 +156,11 @@ env.SConscript (dirs=['build/bin'], exports=['env'])
 env.BuildDir ('build/plugins', 'plugins', False)
 env.SConscript (dirs=['build/plugins'], exports=['env'])
 
-cmd = env.Command ('build/st', 'st',
-                   Copy ('$TARGET', '$SOURCE'))
-Default (cmd)
-env.Clean (cmd, 'build/st')
-
 env.SConscript (dirs=['tests'], exports=['env'])
+
+# Install data
+
+env.Install (env['datadir'], '#st')
 
 # Command aliases
 env.Alias ('install', [env['includedir'],

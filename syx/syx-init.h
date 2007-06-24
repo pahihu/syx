@@ -7,7 +7,7 @@
 //! Default initial memory size
 #define SYX_INIT_MEMORY_SIZE 10000
 
-void syx_init (syx_symbol root_path);
+syx_bool syx_init (syx_symbol root_path);
 void syx_quit (void);
 void syx_build_basic (void);
 void syx_fetch_basic (void);

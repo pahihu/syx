@@ -232,14 +232,15 @@ syx_fetch_basic (void)
 /*!
   \param root_path the root directory of Syx
 */
-void
+syx_bool
 syx_init (syx_symbol root_path)
 {
   static syx_bool initialized = FALSE;
   if (initialized || !root_path || !syx_set_root_path (root_path))
-    return;
+    return FALSE;
 
   initialized = TRUE;
+  return TRUE;
 }
 
 //! Finalize Syx
@@ -273,7 +274,7 @@ syx_get_root_path (void)
 syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
-  if (access (root_path, R_OK | W_OK) < 0)
+  if (access (root_path, R_OK) < 0)
      return FALSE;
 
   _syx_root_path = root_path;

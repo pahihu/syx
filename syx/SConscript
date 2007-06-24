@@ -15,3 +15,6 @@ lib_objects = libenv.SharedObject (Split ("""
 	    """))
 lib_shared = libenv.SharedLibrary (target='syx', source=lib_objects)
 Default (lib_shared)
+
+env.Install (env['libdir'], lib_shared)
+env.Alias ('install', env['libdir'])

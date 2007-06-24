@@ -1,3 +1,13 @@
+2007-06-24  Luca Bruno  <lethalman88@gmail.com>
+
+	* Added install target
+	
+	* syx/syx-plugins.c (syx_plugin_call): load the plugin not loaded yet
+
+	* syx/syx-error.h (syx_warning): added
+
+	* src/main.c (_getopt_do): added error checks
+
 2007-06-23  Luca Bruno  <lethalman88@gmail.com>
 
 	* src/main.c: added getopt

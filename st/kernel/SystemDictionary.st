@@ -14,8 +14,7 @@ initializeSystem
 	at: #stdin put: (FileStream on: 0);
 	at: #stdout put: (FileStream on: 1);
 	at: #stderr put: (FileStream on: 2);
-	at: #Transcript put: (TextCollector message: stdout -> #nextPutAll:);
-	at: #ImageFileName put: 'default.sim'
+	at: #Transcript put: (TextCollector message: stdout -> #nextPutAll:)
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!
