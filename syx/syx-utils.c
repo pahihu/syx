@@ -7,6 +7,7 @@
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-init.h"
+#include "syx-scheduler.h"
 #include "syx-error.h"
 #include "syx-utils.h"
 #include "syx-parser.h"
@@ -42,6 +43,7 @@
 
 static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);
 static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
+static syx_uint8 _syx_sem_lock = 0;
 
 /* A cold parser */
 
@@ -318,31 +320,64 @@ syx_cold_file_in (syx_symbol filename)
   return TRUE;
 }
 
-syx_bool
+//! Send a signal to a Semaphore to wake up waiting processes
+/*!
+  The function is thread-safe
+*/
+void
 syx_semaphore_signal (SyxOop semaphore)
 {
-  /*  SyxOop *signals;
+  // wait
+  while (_syx_sem_lock != 0);
+  // acquire
+  _syx_sem_lock++;
 
-  signals = &(SYX_OBJECT_DATA(semaphore)[SYX_SEMAPHORE_SIGNALS]);
-  *signals.i.value++;
+  SyxOop signals;
+  SyxOop list;
+  syx_int32 i=0;
 
-  while (*signals.i.value > 0 && SYX_OBJECT_SIZE (semaphore) > 0)
+  list = SYX_SEMAPHORE_LIST(semaphore);
+  signals = SYX_SMALL_INTEGER (SYX_SEMAPHORE_SIGNALS(semaphore));
+  signals++;
+
+  while (signals > 0 && SYX_OBJECT_SIZE (list) > 0)
     {
-      syx_process_set_suspended (SYX_OBJECT_DATA(semaphore)[0]);
-      *signals.i.value--;
+      SYX_PROCESS_SUSPENDED (SYX_OBJECT_DATA(list)[i]) = syx_false;
+      signals--;
+      i++;
     }
-  */
-    return TRUE;
+
+  // create a new array without signaled processes
+  SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_SIZE(list) - i,
+						     SYX_OBJECT_DATA(list) + i);
+  SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
+
+  // release
+  _syx_sem_lock--;
 }
 
+//! Put the active process in waiting state until semaphore is signaled
+/*!
+  The function is thread-safe
+*/
 void
 syx_semaphore_wait (SyxOop semaphore)
 {
-  /*  SyxOop process;
+  // wait
+  while (_syx_sem_lock != 0);
+  // acquire
+  _syx_sem_lock++;
 
-  process = syx_scheduler_get_active_process ();
-  syx_process_set_suspended (SYX_OBJECT_DATASYX_PROCESS_SUSPEND (process));
-  g_ptr_array_add (SYX_COLLECTION(semaphore)->array, process); */
+  SyxOop process;
+  SyxOop list = SYX_SEMAPHORE_LIST (semaphore);
+  
+  process = syx_processor_active_process;
+  SYX_PROCESS_SUSPENDED (process) = syx_true;
+  syx_object_grow_by (list, 1);
+  SYX_OBJECT_DATA(list)[SYX_OBJECT_SIZE(list) - 1] = process;
+
+  // release
+  _syx_sem_lock--;
 }
 
 /* Utilities to interact with Smalltalk */

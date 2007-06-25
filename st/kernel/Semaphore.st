@@ -2,7 +2,7 @@
 
 new
     "Answer a new semaphore"
-    ^super new initialize
+    ^super basicNew initialize
 !
 
 forMutualExclusion
@@ -25,13 +25,18 @@ critical: aBlock
 !Semaphore methodsFor: 'initialize-release'! 
 
 initialize
-    signals := 0
+    signals := 0.
+    waitingProcesses := Array new
 ! !
 
 !Semaphore methodsFor: 'accessing'!
 
+waitingProcesses
+    ^waitingProcesses
+!
+
 signals
-    ^signals
+    ^signals - waitingProcesses size
 ! !
 
 !Semaphore methodsFor: 'basic'!

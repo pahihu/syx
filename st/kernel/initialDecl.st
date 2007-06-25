@@ -32,9 +32,6 @@ ArrayedCollection subclass: #Array
 ArrayedCollection subclass: #ByteArray
 		  instanceVariableNames: ''!
 
-Array subclass: #Semaphore
-      instanceVariableNames: 'signals'!
-
 SequenceableCollection subclass: #OrderedCollection
 		       instanceVariableNames: ''!
 
@@ -51,6 +48,9 @@ MethodContext subclass: #BlockContext
 
 Object subclass: #Process
        instanceVariableNames: 'context suspended returnedObject next scheduled'!
+
+Object subclass: #Semaphore
+      instanceVariableNames: 'waitingProcesses signals'!
 
 OrderedCollection subclass: #CompiledCode
 		  instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'!

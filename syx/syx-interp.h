@@ -37,15 +37,23 @@ inline void syx_exec_state_free (void);
 
 /* Primitives */
 
+//! Back to the interpreter and push object into the stack
 #define SYX_PRIM_RETURN(object)						\
   syx_interp_stack_push (object);					\
   return TRUE
 
+//! Same as SYX_PRIM_RETURN but the process yield the control
+#define SYX_PRIM_YIELD(object)			\
+  syx_interp_stack_push (object);		\
+  return FALSE
+
+//! Enter the method which contains the primitive call
 #define SYX_PRIM_FAIL							\
   syx_interp_enter_context (syx_method_context_new (es->context, method, es->message_receiver, \
 						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
   return FALSE
 
+//! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails
 #define SYX_PRIM_ARGS(count)			\
   if (count > es->message_arguments_count)	\
     {						\

@@ -25,10 +25,27 @@ main (int argc, char *argv[])
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \
   process = syx_process_new (context)
 
+  puts ("- Test processes");
   INTERPRET ("method"\
 	     "['Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl] fork."\
 	     "['Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl.'Process 2' printNl] fork."\
 	     "['Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl.'Process 3' printNl] fork");
+
+  SYX_PROCESS_SUSPENDED(process) = syx_false;
+
+  gettimeofday (&start, NULL);
+  syx_scheduler_run ();
+  gettimeofday (&end, NULL);
+  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+
+  puts ("- Test semaphores");
+  INTERPRET ("method"\
+	     "| s |"\
+	     "s := Semaphore new."\
+	     "[ 1 to: 5 do: [ s wait. 'Process 1' printNl. s signal ] ] fork."\
+	     "[ 1 to: 5 do: [ s wait. 'Process 2' printNl. s signal ] ] fork."\
+	     "[ 1 to: 5 do: [ s wait. 'Process 3' printNl. s signal ] ] fork."\
+	     "s signal");
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 

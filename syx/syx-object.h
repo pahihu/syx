@@ -87,7 +87,8 @@ SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
 SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
 SyxOop syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data);
 void syx_object_free (SyxOop oop);
-void syx_object_grow_by (SyxOop oop, syx_varsize size);
+void syx_object_resize (SyxOop oop, syx_varsize size);
+#define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_SIZE(oop)+size))
 syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
 inline syx_int32 syx_object_hash (SyxOop ptr);
 inline SyxOop syx_object_get_class (SyxOop oop);
@@ -182,5 +183,8 @@ inline SyxOop syx_process_new (SyxOop context);
 #define SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_ACTIVE_PROCESS])
 #define SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_FIRST_PROCESS])
 #define SYX_PROCESSOR_SCHEDULER_BYTESLICE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_BYTESLICE])
+
+#define SYX_SEMAPHORE_LIST(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_SEMAPHORE_LIST])
+#define SYX_SEMAPHORE_SIGNALS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_SEMAPHORE_SIGNALS])
 
 #endif /* SYX_OBJECT_H */

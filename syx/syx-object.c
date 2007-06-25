@@ -53,12 +53,21 @@ SyxOop syx_nil,
 
 /* Inlines */
 
-//! Grows SyxObject::data by a given size
+//! Resize SyxObject::data to the given size, being careful of object indexables and byte indexables
+/*!
+  If the new size is lesser than the current, the data at the end of the array will be lost
+*/
 inline void
-syx_object_grow_by (SyxOop object, syx_varsize size)
+syx_object_resize (SyxOop object, syx_varsize size)
 {
-  SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
-					 (SYX_OBJECT_SIZE(object) + size) * sizeof (SyxOop));
+  if (SYX_OBJECT_HAS_REFS (object))
+    SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
+					   size * sizeof (SyxOop));
+  else
+    SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
+					   size * sizeof (syx_int8));
+
+  SYX_OBJECT_SIZE(object) = size;
 }
 
 //! Get the class of an object

@@ -1,3 +1,22 @@
+2007-06-26  Luca Bruno  <lethalman88@gmail.com>
+
+	* tests/testscheduler.c (main): added semaphores test
+
+2007-06-25  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/initialDecl.st (Semaphore): be fixed containing an array of waiting processes
+
+	* syx/syx-object.h (SYX_SEMAPHORE_LIST): added
+	(SYX_SEMAPHORE_SIGNALS): added
+
+	* syx/syx-utils.c (syx_semaphore_wait): readded
+	(syx_semaphore_signal): readded
+
+	* syx/syx-object.c (syx_object_grow_by): changed to a macro
+	(syx_object_resize): added
+
+	* INSTALL: changed to reflect the Syx building system
+
 2007-06-24  Luca Bruno  <lethalman88@gmail.com>
 
 	* SConstruct (install): remove Smalltalk files when uninstalling

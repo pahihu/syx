@@ -8,7 +8,7 @@
 syx_bool syx_cold_parse (SyxLexer *lexer);
 syx_bool syx_cold_file_in (syx_symbol filename);
 
-syx_bool syx_semaphore_signal (SyxOop semaphore);
+void syx_semaphore_signal (SyxOop semaphore);
 void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */

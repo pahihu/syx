@@ -4,9 +4,7 @@ Major:
 - System signal handling
 - Use non-block I/O
 
-Minor:
-- Create an installer for windows
-
 Later:
 - Implement coalesced hash tables with consistent hash functions
 - Method caching
+- Cover all GNU Smalltalk tests and benchmarks

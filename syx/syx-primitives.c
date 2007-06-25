@@ -27,10 +27,10 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 				SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
 }
 
+/* This method is inline in syx_interp_call_primitive */
 SYX_FUNC_PRIMITIVE (Processor_yield)
 {
-  syx_interp_stack_push (es->message_receiver);
-  return FALSE;
+  SYX_PRIM_YIELD (es->message_receiver);
 }
 
 SYX_FUNC_PRIMITIVE (Behavior_new)
@@ -322,18 +322,16 @@ SYX_FUNC_PRIMITIVE (Character_value)
 }
 
 
-/* Need a remake */
-
 SYX_FUNC_PRIMITIVE (Semaphore_signal)
 {
   syx_semaphore_signal (es->message_receiver);
-  SYX_PRIM_RETURN (es->message_receiver);
+  SYX_PRIM_YIELD (es->message_receiver);
 }
 
 SYX_FUNC_PRIMITIVE (Semaphore_wait)
 {
   syx_semaphore_wait (es->message_receiver);
-  SYX_PRIM_RETURN (es->message_receiver);
+  SYX_PRIM_YIELD (es->message_receiver);
 }
 
 
