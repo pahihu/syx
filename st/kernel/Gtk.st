@@ -13,17 +13,23 @@ mainQuit
 !GObject class methodsFor: 'instance creation'!
 
 new
-    ^self subclassResponsibility
+    self subclassResponsibility
 !
 
-handler: aPointer
-    ^self basicNew handler: aPointer
+handle: aPointer
+    ^self basicNew handle: aPointer
 ! !
 
 !GObject methodsFor: 'initialize-release'!
 
-handler: aPointer
-    handler := aPointer
+handle: aPointer
+    handle := aPointer
+! !
+
+!GObject methodsFor: 'accessing'!
+
+handle
+    ^handle
 ! !
 
 !GtkWindow class methodsFor: 'instance creation'!
@@ -34,7 +40,7 @@ primNew
 !
 
 new
-    ^self handler: self primNew
+    ^self handle: self primNew
 ! !
 
 !GtkWidget methodsFor: 'gtk'!

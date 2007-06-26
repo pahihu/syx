@@ -252,6 +252,7 @@ syx_quit (void)
 {
   syx_interp_quit ();
   syx_plugin_finalize ();
+  syx_scheduler_quit ();
   syx_memory_clear ();
   syx_error_clear ();
 }

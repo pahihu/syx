@@ -151,7 +151,7 @@ Object subclass: #Gtk
        instanceVariableNames: ''!
 
 Object subclass: #GObject
-       instanceVariableNames: 'handler'!
+       instanceVariableNames: 'handle'!
 
 GObject subclass: #GtkWidget
 	instanceVariableNames: ''!
@@ -162,7 +162,7 @@ GtkWidget subclass: #GtkWindow
 "Console"
 
 Object subclass: #Console
-       instanceVariableNames: 'hasReadline'!
+       instanceVariableNames: 'haveReadline'!
 
 "Exceptions"
 

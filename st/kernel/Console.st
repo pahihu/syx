@@ -1,14 +1,10 @@
 !Console class methodsFor: 'instance creation'!
 
 run
-    ^self basicNew initialize run
+    ^self new run
 ! !
 
 !Console methodsFor: 'running'!
-
-initialize
-    hasReadline := Smalltalk loadPlugin: 'readline'
-!
 
 primReadline: aString
     <cCall: 'Readline_readline' plugin: 'readline'>
@@ -22,14 +18,17 @@ primAddHistory: aString
 
 nextLine
     | line |
-    hasReadline
+    "This works only with sockets on Windows"
+"    Semaphore new waitForRead: stdin fd."
+    haveReadline
 	ifTrue: [ line := self primReadline: '> '.
-		  "received EOF"
 		  line isNil
 		      ifTrue: [ 'EOF' printNl. Smalltalk quit ].
 		  self primAddHistory: line ]
 	ifFalse: [ '> ' print.
-		   line := stdin nextAll: 1024.
+	           line := stdin nextAll: 1024.
+		   line isNil
+		       ifTrue: [ 'EOF' printNl. Smalltalk quit].
 		   line := line copyFrom: 1 to: line size - 1 ].
     ^line
 !
@@ -49,6 +48,7 @@ nextChunk
 !
 
 run
+    haveReadline := Smalltalk loadPlugin: 'readline'.
     [
 	[
 	    | chunk method context |

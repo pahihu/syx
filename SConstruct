@@ -2,29 +2,42 @@ import os
 
 EnsurePythonVersion (2,2)
 
+env = Environment ()
+
 opts = Options()
+
+if env['PLATFORM'] == 'win32':
+   opts.AddOptions (PathOption('prefix',
+                              'Installation prefix',
+                              'C:\\\\Programmi\\\\Syx', []))
+   env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
+   env['imagepath'] = '$prefix\default.sim'
+   env['includedir'] = '$prefix\include'
+else:
+   opts.AddOptions (
+      PathOption('prefix', 
+                 'Installation prefix', 
+                 '/usr/local', []),
+      PathOption('exec_prefix',
+                 'Installation prefix for executables and object code libraries',
+                 '$prefix', []),
+      PathOption('bindir', 
+                 'Installation prefix for user executables', 
+                 '$exec_prefix/bin', []),
+      PathOption('datadir',
+                 'Installation prefix for packages',
+                 '$prefix/share/syx', []),
+      PathOption('imagepath',
+                 'Installation path for the default binary image',
+                 '$datadir/default.sim', []),
+      PathOption('libdir',
+                 'Installation prefix for object code libraries', 
+                 '$exec_prefix/lib', []),
+      PathOption('includedir',
+                 'Installation prefix for C header files', 
+                 '$prefix/include', []))
+
 opts.AddOptions (
-   PathOption('prefix', 
-              'Installation prefix', 
-              '/usr/local', []),
-   PathOption('exec_prefix',
-              'Installation prefix for executables and object code libraries',
-              '$prefix', []),
-   PathOption('bindir', 
-              'Installation prefix for user executables', 
-              '$exec_prefix/bin', []),
-   PathOption('datadir',
-              'Installation prefix for read-only architecture-independent data', 
-              '$prefix/share/syx', []),
-   PathOption('imagedir',
-              'Installation path for the binary image',
-              '$datadir/default.sim', []),
-   PathOption('libdir',
-              'Installation prefix for object code libraries', 
-              '$exec_prefix/lib', []),
-   PathOption('includedir',
-              'Installation prefix for C header files', 
-              '$prefix/include', []),
    BoolOption ('plugins', """Build with plugins support""", True),
    BoolOption ('attach', """Attach a debugger for test failures""", False),              
    EnumOption ('debug', """Debug output and symbols""", 'normal',
@@ -34,7 +47,7 @@ opts.AddOptions (
    BoolOption ('GTK', """Build the syx-gtk plugin""", True),
    BoolOption ('READLINE', """Build the syx-readline plugin""", True))
 
-env = Environment (options=opts)
+opts.Update (env)
 
 # My 64bit LFS keep its toolchain in /tools64 and set LD_LIBRARY_PATH for tests
 if env['PLATFORM'] == 'posix':
@@ -87,6 +100,15 @@ for f in ['strtol', 'strtof', 'strtod', 'gettimeofday', 'getopt']:
       print "Can't build Syx without %s function!" % f
       env.Exit (1)
 
+if env['PLATFORM'] == 'win32':
+   if not conf.CheckLibWithHeader ('wsock32', 'winsock2.h', 'c', 'select(0, NULL, NULL, NULL, NULL);'):
+      print "Can't build Syx without select function!"
+      env.Exit (1)
+else:
+   if not conf.CheckFunc ('select'):
+      print "Can't build Syx without select function!"
+      env.Exit (1)
+
 print
 print 'Optional functions...'
 
@@ -104,11 +126,11 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-Wall -DHAVE_CONFIG_H -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagedir"')
+env.MergeFlags ('-Wall -DHAVE_CONFIG_H -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
-   env.MergeFlags ('-g -O')
+   env.MergeFlags ('-g -O2')
 elif env['debug'] == 'info':
    env.MergeFlags ('-g -O -DSYX_DEBUG_INFO')
 elif env['debug'] == 'full':
@@ -162,9 +184,4 @@ env.SConscript (dirs=['tests'], exports=['env'])
 
 target = env.Install (env['datadir'], '#st')
 env.Clean (target, os.path.join(env['datadir'], 'st'))
-
-# Command aliases
-env.Alias ('install', [env['includedir'],
-                       env['libdir'],
-                       env['bindir'],
-                       env['datadir']])
+env.Alias ('install', env['datadir'])

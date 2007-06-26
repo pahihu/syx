@@ -1,5 +1,26 @@
 2007-06-26  Luca Bruno  <lethalman88@gmail.com>
 
+	* src/main.c (_getopt_do): added option -S to quit once built the image from scratch
+
+	* src/SConscript (syx executable): create the default image once installed
+
+	* SConstruct: added win32 installation with only a single root prefix
+
+	* syx/syx-init.c (syx_quit): missed scheduler quitting
+
+	* syx/syx-primitives.c (Semaphore_waitFor): added
+
+	* syx/syx-scheduler.h (struct SyxSchedulerPoll): added
+
+	* syx/syx-scheduler.c: added syncronized I/O multi-plexing with select during scheduling
+	(syx_scheduler_poll_read_register): added
+	(syx_scheduler_poll_write_register): added
+	(syx_scheduler_quit): free allocated memory for read/write polls
+
+	* plugins/readline/plugin-init.c (Readline_readline): free returned string
+
+	* syx/SConscript (install): added includes
+
 	* tests/testscheduler.c (main): added semaphores test
 
 2007-06-25  Luca Bruno  <lethalman88@gmail.com>

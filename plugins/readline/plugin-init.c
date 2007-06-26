@@ -4,9 +4,12 @@
 
 SYX_FUNC_PRIMITIVE(Readline_readline)
 {
+  SyxOop string;
   SYX_PRIM_ARGS(1);
   char *s = readline (SYX_OBJECT_STRING(es->message_arguments[0]));
-  SYX_PRIM_RETURN(syx_string_new (s));
+  string = syx_string_new (s);
+  syx_free (s);
+  SYX_PRIM_RETURN(string);
 }
 
 SYX_FUNC_PRIMITIVE(Readline_addHistory)

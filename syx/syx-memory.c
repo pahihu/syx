@@ -155,7 +155,7 @@ syx_memory_gc (void)
 
 #ifdef SYX_DEBUG_GC
   reclaimed = _syx_freed_memory_top - old_top;
-  printf("GC: reclaimed %d (%d%%); available %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size);
+  syx_debug ("GC: reclaimed %d (%d%%); available %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size);
 #endif
 }
 
@@ -240,6 +240,9 @@ syx_memory_save_image (syx_symbol path)
   fwrite (&_syx_freed_memory_top, sizeof (syx_int32), 1, image);
   _syx_memory_write (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
   size += 4 * _syx_freed_memory_top;
+
+  _syx_scheduler_save (image);
+
   _syx_memory_write (&syx_globals, FALSE, 1, image);
   _syx_memory_write (&syx_symbols, FALSE, 1, image);
   size += 16;
@@ -342,6 +345,8 @@ syx_memory_load_image (syx_symbol path)
   fread (&_syx_freed_memory_top, sizeof (syx_int32), 1, image);
   _syx_memory_read (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
   size += 4 * _syx_freed_memory_top;
+
+  _syx_scheduler_load (image);
 
   _syx_memory_read (&syx_globals, FALSE, 1, image);
   _syx_memory_read (&syx_symbols, FALSE, 1, image);

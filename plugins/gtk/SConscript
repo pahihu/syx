@@ -10,17 +10,14 @@ if env['PLATFORM'] == 'win32':
     env.MergeFlags ("-lsyx -lglib-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0 -lgobject-2.0-0")
 else:
     try:
-
         env.ParseConfig ("pkg-config glib-2.0 gobject-2.0 gthread-2.0 gtk+-2.0 --libs --cflags")
-
-        lib_objects = env.SharedObject (Split ("plugin-init.c"))
-        lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
-        Default (lib_shared)
-        
-        instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
-        env.Install (instdir, lib_shared)
-        env.Alias ('install', instdir)
-
     except:
-
-        print "WARNING: GTK+ not found, plugin won't be built"
+    	print "WARNING: GTK+ not found, plugin won't be built"
+	
+lib_objects = env.SharedObject (Split ("plugin-init.c"))
+lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
+Default (lib_shared)
+        
+instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
+env.Install (instdir, lib_shared)
+env.Alias ('install', instdir)

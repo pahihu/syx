@@ -60,6 +60,7 @@ _getopt_do (int argc, char **argv)
   syx_string root_path = NULL;
   syx_string image_path = NULL;
   syx_bool scratch = FALSE;
+  syx_bool quit = FALSE;
   static struct option long_options[] = {
     {"root", 1, 0, 0},
     {"image", 1, 0, 0},
@@ -69,7 +70,7 @@ _getopt_do (int argc, char **argv)
 
   while (TRUE)
     {
-      c = getopt_long (argc, argv, "r:i:s",
+      c = getopt_long (argc, argv, "r:i:sS",
 		       long_options, &opt_idx);
       if (c == -1)
 	break;
@@ -88,6 +89,8 @@ _getopt_do (int argc, char **argv)
 	    case 2:
 	      scratch = TRUE;
 	      break;
+	    default:
+	      exit (EXIT_FAILURE);
 	    }
 
 	case 'r':
@@ -96,8 +99,13 @@ _getopt_do (int argc, char **argv)
 	case 'i':
 	  image_path = strdup (optarg);
 	  break;
+	case 'S':
+	  quit = TRUE;
 	case 's':
 	  scratch = TRUE;
+	  break;
+	default:
+	  exit (EXIT_FAILURE);
 	}
     }
 
@@ -122,6 +130,12 @@ _getopt_do (int argc, char **argv)
 
       if (!syx_memory_save_image (image_path))
 	syx_warning ("Can't save the image at %s\n", image_path);
+
+      if (quit)
+	{
+	  syx_quit ();
+	  exit (EXIT_SUCCESS);
+	}
     }
   else
     {

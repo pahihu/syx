@@ -304,14 +304,12 @@ syx_cold_file_in (syx_symbol filename)
   lexer = syx_lexer_new (buffer);
   if (!lexer)
     {
-      printf ("lexer %s\n", buffer);
       syx_free (buffer);
       return FALSE;
     }
 
   if (!syx_cold_parse (lexer))
     {
-      printf ("parser %s\n", buffer);
       syx_lexer_free (lexer, TRUE);
       return FALSE;
     }

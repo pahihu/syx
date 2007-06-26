@@ -1,10 +1,14 @@
 Major:
-- Use radix for floats in the lexer
-- Number coercing and printing
+- Number coercing
 - System signal handling
-- Use non-block I/O
+- Implement coalesced hash tables with consistent hash functions
+- Object printing
+- Streams
+
+Minor:
+- Use radix for floats in the lexer
+- Object inspecting
 
 Later:
-- Implement coalesced hash tables with consistent hash functions
 - Method caching
 - Cover all GNU Smalltalk tests and benchmarks

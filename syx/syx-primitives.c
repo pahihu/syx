@@ -334,7 +334,20 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
   SYX_PRIM_YIELD (es->message_receiver);
 }
 
-
+SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
+{
+  SYX_PRIM_ARGS(2);
+  syx_int32 fd = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  syx_bool t = es->message_arguments[1];
+  syx_semaphore_wait (es->message_receiver);
+  if (t == syx_true)
+    syx_scheduler_poll_write_register (fd,
+				       es->message_receiver);
+  else
+    syx_scheduler_poll_read_register (fd,
+				      es->message_receiver);
+  SYX_PRIM_YIELD (es->message_receiver);
+}
 
 /* File streams */
 
@@ -658,6 +671,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Character_value", Character_value },
   { "Semaphore_signal", Semaphore_signal },
   { "Semaphore_wait", Semaphore_wait },
+  { "Semaphore_waitFor", Semaphore_waitFor },
   { "String_compile", String_compile },
 
   /* File streams */

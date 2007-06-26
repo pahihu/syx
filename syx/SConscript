@@ -1,3 +1,4 @@
+import os
 Import ('env')
 
 libenv = env.Clone ()
@@ -18,3 +19,13 @@ Default (lib_shared)
 
 env.Install (env['libdir'], lib_shared)
 env.Alias ('install', env['libdir'])
+
+# Install includes
+
+includes = ['syx.h', 'syx-interp.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error.h',
+            'syx-lexer.h', 'syx-memory.h', 'syx-object.h', 'syx-init.h',
+            'syx-parser.h', 'syx-platform.h', 'syx-scheduler.h', 'syx-utils.h',
+            'syx-types.h', 'syx-plugins.h']
+incdir = os.path.join (env['includedir'], 'syx')
+env.Install (incdir, includes)
+env.Alias ('install', incdir)

@@ -39,7 +39,22 @@ signals
     ^signals - waitingProcesses size
 ! !
 
+!Semaphore methodsFor: 'private'!
+
+wait: aFD for: aBoolean
+    <primitive: 'Semaphore_waitFor'>
+	self primitiveFailed
+! !
+
 !Semaphore methodsFor: 'basic'!
+
+waitForRead: aFD
+    self wait: aFD for: false
+!
+
+waitForWrite: aFD
+    self wait: aFD for: true
+!
 
 signal
     <primitive: 'Semaphore_signal'>
