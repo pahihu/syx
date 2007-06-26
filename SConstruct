@@ -9,7 +9,7 @@ opts = Options()
 if env['PLATFORM'] == 'win32':
    opts.AddOptions (PathOption('prefix',
                               'Installation prefix',
-                              'C:\\\\Programmi\\\\Syx', []))
+                              'C:\\\\Syx', []))
    env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
    env['imagepath'] = '$prefix\default.sim'
    env['includedir'] = '$prefix\include'
