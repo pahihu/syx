@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-memory.h"
 #include "syx-platform.h"
 #include "syx-types.h"
@@ -18,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -38,16 +35,54 @@
     
     \section sec Description
 
-    syx-utils.c: This module collects some useful functions.
+    syx-utils.c: This module collects some useful functions like parsing class declarations and interfacing Smalltalk from C
 */
 
 static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);
 static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
+static SyxOop _syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized);
 static syx_uint8 _syx_sem_lock = 0;
 
 /* A cold parser */
 
 #define _IS_EXL_MARK(token) (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
+
+static SyxOop
+_syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized)
+{
+  SyxOop vars;
+  SyxOop vars_raw[256];
+  syx_varsize vars_size;
+  SyxToken token;
+
+  /* Fetch variable names using the lexer */
+  token = syx_lexer_next_token (lexer);
+  for (vars_size=0; token.type != SYX_TOKEN_END; vars_size++)
+    {
+      if (token.type != SYX_TOKEN_NAME_CONST)
+	{
+	  syx_token_free (token);
+	  syx_error ("Expected names for variables\n");
+	}
+
+      if (capitalized && !isupper (token.value.string[0]))
+	{
+	  syx_token_free (token);
+	  syx_error ("First letter must be uppercase");
+	}
+
+      vars_raw[vars_size] = syx_symbol_new (token.value.string);
+      syx_token_free (token);
+      token = syx_lexer_next_token (lexer);
+    }
+
+  /* Create the array */
+  vars = syx_array_new_size (vars_size);
+  /* Copy out of the stack */
+  memcpy (SYX_OBJECT_DATA (vars), vars_raw, sizeof (SyxOop ) * vars_size);
+
+  return vars;
+}
 
 static syx_bool
 _syx_cold_parse_class (SyxLexer *lexer)
@@ -57,10 +92,10 @@ _syx_cold_parse_class (SyxLexer *lexer)
   syx_string subclass_name;
   syx_bool existing_class = TRUE;
 
-  SyxLexer *inst_vars_lexer;
-  SyxOop inst_vars;
-  SyxOop inst_vars_raw[256];
-  syx_varsize inst_vars_size, super_inst_vars_size;
+  SyxOop inst_vars, class_vars;
+  SyxLexer *inst_vars_lexer, *class_vars_lexer;
+  syx_varsize super_inst_vars_size;
+  syx_int32 i;
 
   if (token.type != SYX_TOKEN_NAME_CONST)
     {
@@ -129,6 +164,24 @@ _syx_cold_parse_class (SyxLexer *lexer)
   inst_vars_lexer = syx_lexer_new (token.value.string);
 
   token = syx_lexer_next_token (lexer);
+  if (token.type != SYX_TOKEN_NAME_COLON)
+    {
+      syx_token_free (token);
+      syx_error ("Expected #classVariableNames:");
+      return FALSE;
+    }
+  syx_token_free (token);
+
+  token = syx_lexer_next_token (lexer);
+  if (token.type != SYX_TOKEN_STR_CONST)
+    {
+      syx_token_free (token);
+      syx_error ("Expected a string as argument for #classVariableNames:");
+      return FALSE;
+    }
+  class_vars_lexer = syx_lexer_new (token.value.string);
+
+  token = syx_lexer_next_token (lexer);
   if (!_IS_EXL_MARK (token))
     {
       syx_token_free (token);
@@ -145,35 +198,32 @@ _syx_cold_parse_class (SyxLexer *lexer)
     }
   syx_free (subclass_name);
 
-  /* Fetch instance variable names using another lexer instance */
-  token = syx_lexer_next_token (inst_vars_lexer);
-  for (inst_vars_size=0; token.type != SYX_TOKEN_END; inst_vars_size++)
-    {
-      if (token.type != SYX_TOKEN_NAME_CONST)
-	{
-	  syx_token_free (token);
-	  syx_error ("Expected names for instance variables\n");
-	}
-
-      inst_vars_raw[inst_vars_size] = syx_symbol_new (token.value.string);
-      syx_token_free (token);
-      token = syx_lexer_next_token (inst_vars_lexer);
-    }
+  // Parse instance variables
+  inst_vars = _syx_cold_parse_vars (inst_vars_lexer, FALSE);
   syx_lexer_free (inst_vars_lexer, TRUE);
 
-  /* Create the instanceVariables array */
-  inst_vars = syx_array_new_size (inst_vars_size);
-  /* Copy out of the stack */
-  memcpy (SYX_OBJECT_DATA (inst_vars), inst_vars_raw, sizeof (SyxOop ) * inst_vars_size);
-
-  /* Fetch superclass instanceSize */
+  // Fetch superclass instanceSize
   if (SYX_IS_NIL (superclass))
     super_inst_vars_size = 0;
   else
     super_inst_vars_size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (superclass));
 
   SYX_CLASS_INSTANCE_VARIABLES(subclass) = inst_vars;
-  SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (inst_vars_size + super_inst_vars_size);
+  SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (super_inst_vars_size
+							     + SYX_OBJECT_SIZE (inst_vars));
+
+  // Now parse class variables
+  class_vars = _syx_cold_parse_vars (class_vars_lexer, TRUE);
+  syx_lexer_free (class_vars_lexer, TRUE);
+
+  SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_SIZE (class_vars)); 
+
+  // translate from array to dictionary
+  for (i=0; i < SYX_OBJECT_SIZE(class_vars); i++)
+    syx_dictionary_at_const_put (SYX_CLASS_CLASS_VARIABLES(subclass),
+				 SYX_OBJECT_DATA(class_vars)[i], syx_nil);
+  // get rid of this
+  syx_memory_free (class_vars);
 
   return TRUE;
 }
@@ -231,8 +281,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
       if (!method_lexer)
 	break;
 
-      parser = syx_parser_new (method_lexer, syx_method_new (),
-			       syx_class_get_all_instance_variables (class));
+      parser = syx_parser_new (method_lexer, syx_method_new (), class);
       syx_parser_parse (parser);
 
       syx_dictionary_at_const_put (SYX_CLASS_METHODS(class),
@@ -409,7 +458,7 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   class = syx_object_get_class (receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    return syx_nil;
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
   syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
@@ -440,7 +489,7 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   class = syx_object_get_class (receiver);
   method = syx_class_lookup_method (class, selector);
   if (SYX_IS_NIL (method))
-    return syx_nil;
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
   syx_memory_gc_begin ();
 

@@ -1,3 +1,30 @@
+2007-06-27  Luca Bruno  <lethalman88@gmail.com>
+
+	* Fixed initializing the image path
+
+	* SConstruct (win32 options): fixed image path
+	(install): fixed st files installation
+
+	* tests/testinterp.c (main): added tests for class variables
+
+	* syx/syx-bytecode.c (syx_bytecode_push_global): renamed to push_binding_variable, so it can be used also for class variables
+	(syx_bytecode_assign_binding_variable): added
+
+	* syx/syx-parser.c (_syx_parser_parse_name_term): search for class variables
+
+	* syx/syx-utils.c (_syx_cold_parse_names): added to be reused with class variables
+	(_syx_cold_parse_class): added class variables
+
+	* syx/syx-interp.c (syx_interp_push_global): push the value of the variable binding instead of looking up the symbol each time
+	(syx_interp_push_global): renamed to push_binding_variable, to push class variables or globals
+
+	* syx/syx-init.h (syx_globals_link_at): added
+
+	* syx/syx-object.c: removed unused syx_dictionary_at_const and syx_dictionary_at_const_if_absent
+	(syx_dictionary_new): hold Associations instead of a sequence of keys and values
+	(syx_dictionary_link_at_symbol): added
+	(syx_dictionary_link_at_symbol_if_absent): added
+
 2007-06-26  Luca Bruno  <lethalman88@gmail.com>
 
 	* src/main.c (_getopt_do): added option -S to quit once built the image from scratch

@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"
@@ -219,10 +215,6 @@ _syx_scheduler_load (FILE *image)
 void
 syx_scheduler_init (void)
 {
-  static syx_bool initialized = FALSE;
-  if (initialized)
-    return;
-
   syx_processor = syx_globals_at_if_absent ("Processor", syx_nil);
   if (SYX_IS_NIL (syx_processor))
     {
@@ -237,8 +229,6 @@ syx_scheduler_init (void)
   _syx_processor_active_process = &SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(syx_processor);
   _syx_processor_first_process = &SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(syx_processor);
   _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
-
-  initialized = TRUE;
 }
 
 //! Run the scheduler in blocking mode. Exits once no Process is scheduled

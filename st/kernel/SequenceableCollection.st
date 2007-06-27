@@ -33,7 +33,7 @@ do: aBlock
 
 indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
     anIndex to: self size do: [ :index |
-        (self at: index) == anObject ifTrue: [ ^index ].
+        (self at: index) == anElement ifTrue: [ ^index ].
     ].
     ^exceptionBlock value
 ! !

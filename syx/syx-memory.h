@@ -38,7 +38,7 @@ inline syx_pointer syx_realloc (syx_pointer ptr, syx_int32 size);
 void syx_freev (syx_pointer *ptrv);
 
 #ifndef HAVE_STRNDUP
-  inline syx_string strndup (syx_string src, syx_size n);
+  inline syx_string strndup (syx_symbol src, syx_size n);
 #endif
 
 #endif /* SYX_MEMORY_H */

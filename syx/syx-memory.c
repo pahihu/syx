@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include <assert.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -226,7 +222,7 @@ syx_memory_save_image (syx_symbol path)
   SyxObject *object;
   FILE *image;
   if (!path)
-    return FALSE;
+    path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
 
   image = fopen (path, "wb");
   if (!image)
@@ -333,7 +329,12 @@ syx_memory_load_image (syx_symbol path)
   syx_int32 size = 0;
   
   if (!path)
-    return FALSE;
+    {
+      if (SYX_IS_NIL (syx_globals))
+	path = syx_get_image_path ();
+      else
+	path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
+    }
 
   image = fopen (path, "rb");
   if (!image)
@@ -496,7 +497,7 @@ syx_realloc (syx_pointer ptr, syx_int32 size)
 #ifndef HAVE_STRNDUP
 
 inline syx_string
-strndup (syx_string src, syx_size n)
+strndup (syx_symbol src, syx_size n)
 {
   syx_string ret = syx_malloc (n + 1);
   memcpy (ret, src, n);

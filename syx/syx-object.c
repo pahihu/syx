@@ -257,11 +257,12 @@ syx_string_new (syx_symbol string)
 
 //! Creates a new link key -> value
 inline SyxOop 
-syx_link_new (SyxOop key, SyxOop value)
+syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 {
   SyxOop object = syx_object_new (syx_link_class, TRUE);
-  SYX_LINK_KEY(object) = key;
-  SYX_LINK_VALUE(object) = value;
+  SYX_ASSOCIATION_KEY(object) = key;
+  SYX_ASSOCIATION_VALUE(object) = value;
+  SYX_LINK_NEXT(object) = next;
   return object;
 }
 
@@ -273,67 +274,73 @@ SyxOop
 syx_dictionary_new (syx_varsize size)
 {
   SyxOop object = syx_object_new (syx_dictionary_class, TRUE);
-  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2);
+  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size);
   return object;
 }
 
-//! Lookup a key by oop index in the dictionary. Raise an error if not found
-SyxOop 
-syx_dictionary_at_const (SyxOop dict, SyxOop key)
+//! Lookup a key by symbol in the dictionary and return a Link to bind the variable. Raise an error if not found
+/*!
+  Take care the dictionary MUST contain only key symbols
+*/
+SyxOop
+syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop link;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++)
     {
-      if (SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      link = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
+	return link;
     }
-  
-  syx_signal (SYX_ERROR_NOT_FOUND, 0);
 
+  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+  
   return syx_nil;
 }
 
-//! Lookup a key by oop index in the dictionary. Return the given object if not found
-/*
-  \param object the object to return if the key is not found
-  \return The lookup'd value or object if not found
+//! Lookup a key by symbol in the dictionary and return a Link to bind the variable. Return the given object if not found
+/*!
+  Take care the dictionary MUST contain only key symbols
 */
-SyxOop 
-syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object)
+SyxOop
+syx_dictionary_link_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
+  SyxOop link;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++)
     {
-      if (SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      link = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
+	return link;
     }
-  
+
   return object;
 }
 
 //! Lookup a key by symbol in the dictionary. Raise an error if not found
-/*
+/*!
   Take care the dictionary MUST contain only key symbols
 */
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop entry;
+  SyxOop link;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      link = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
+	return SYX_ASSOCIATION_VALUE (link);
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -349,15 +356,15 @@ SyxOop
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop entry;
+  SyxOop link;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      link = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
+	return SYX_ASSOCIATION_VALUE (link);
     }
 
   return object;
@@ -370,13 +377,20 @@ syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
+  SyxOop link;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++)
     {
-      if (SYX_IS_NIL (SYX_OBJECT_DATA(table)[i]) || SYX_OOP_EQ(SYX_OBJECT_DATA(table)[i], key))
+      link = SYX_OBJECT_DATA(table)[i];
+      if (SYX_IS_NIL (link))
 	{
-	  SYX_OBJECT_DATA(table)[i] = key;
-	  SYX_OBJECT_DATA(table)[i+1] = value;
+	  link = syx_link_new (key, value, syx_nil);
+	  SYX_OBJECT_DATA(table)[i] = link;
+	  return;
+	}
+      else if (SYX_OOP_EQ(SYX_ASSOCIATION_KEY(link), key))
+	{
+	  SYX_ASSOCIATION_VALUE(link) = value;
 	  return;
 	}
     }
@@ -568,12 +582,14 @@ syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
   return !SYX_IS_NIL (cur);
 }
 
-//! Get a list of all instance variables defined in a class
+//! Get a list of all instance variable names defined in a class
 /*!
-  \return a syx_symbol list or syx_nil. The list must be freed once unused
+  The returned list is ordered to be used by the interpreter to access the variables directly using the list index.
+
+  \return A syx_symbol list or NULL. The list must be freed once unused
 */
 syx_symbol *
-syx_class_get_all_instance_variables (SyxOop class)
+syx_class_get_all_instance_variable_names (SyxOop class)
 {
   syx_symbol names[256];
   syx_symbol *ret_names = NULL;

@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-memory.h"
 #include <unistd.h>
 #include <stdio.h>
@@ -16,6 +12,7 @@
 #include "syx-interp.h"
 
 static syx_symbol _syx_root_path;
+static syx_symbol _syx_image_path;
 
 static void _syx_file_in_basic (void);
 static void _syx_file_in_basic_decl (void);
@@ -41,15 +38,6 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 	   domain, SYX_PATH_SEPARATOR,
 	   package, SYX_PATH_SEPARATOR,
 	   filename);
-
-  if (access (full_path, R_OK) < 0)
-    {
-#ifdef SYX_DEBUG_INFO
-      syx_debug ("Can't open file %s\n", full_path);
-#endif
-      syx_free (full_path);
-      return NULL;
-    }
 
   return full_path;
 }
@@ -80,10 +68,9 @@ _syx_file_in_basic (void)
     "BlockClosure.st",
     "True.st", "False.st",
     "Signal.st",
-    //"Exceptions.st", "AnsiExceptions.st",
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
-    "LookupKey.st", "Association.st",
+    "Association.st", "Link.st",
     "Stream.st", "FileStream.st",
     "TextCollector.st",
     "Dictionary.st", "SystemDictionary.st",
@@ -103,7 +90,7 @@ _syx_file_in_basic (void)
 static SyxOop
 _syx_create_class (syx_varsize instanceSize)
 {
-  SyxOop object = syx_object_new_size (syx_nil, TRUE, SYX_DATA_CLASS_ALL);
+  SyxOop object = syx_object_new_size (syx_nil, TRUE, SYX_DATA_CLASS_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
@@ -134,7 +121,7 @@ syx_build_basic (void)
   /* create raw instances of basic classes */
   Object = _syx_create_class (SYX_DATA_OBJECT_ALL);
   Behavior = _syx_create_class (SYX_DATA_CLASS_ALL);
-  Class = _syx_create_class (SYX_DATA_CLASS_ALL);
+  Class = _syx_create_class (SYX_DATA_CLASS_CLASS_ALL);
   syx_symbol_class = _syx_create_class (SYX_DATA_SYMBOL_ALL);
   syx_string_class = _syx_create_class (SYX_DATA_STRING_ALL);
   syx_small_integer_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
@@ -154,7 +141,6 @@ syx_build_basic (void)
   SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (class)) = class;	\
   SYX_CLASS_SUPERCLASS(class) = superclass;				\
   SYX_CLASS_NAME(class) = syx_symbol_new (name);			\
-  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);			\
   syx_globals_at_put (SYX_CLASS_NAME(class), class)
 
   syx_object_set_class (Object, syx_metaclass_new (Class));
@@ -183,6 +169,16 @@ syx_build_basic (void)
   SYX_OBJECT(syx_false)->class = syx_globals_at ("False");
 
   syx_fetch_basic ();
+  
+  // these will be filled later, now we'll create a binding for method declarations
+  static char *symbols[] = {"Transcript", "stdin", "stdout", NULL};
+  char **sym;
+
+  for (sym=symbols; *sym; sym++)
+    syx_globals_at_put (syx_symbol_new (*sym), syx_nil);
+   
+  syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
+  
   _syx_file_in_basic ();
 
   context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
@@ -193,7 +189,7 @@ syx_build_basic (void)
 /*!
   Sets up syx_nil, syx_true and syx_false constants.
   Lookup all classes from the Smalltalk dictionary and insert them into the VM.
-  Finally initialize the scheduler
+  Finally initialize the interpreter, the errors system and the scheduler
 */
 void
 syx_fetch_basic (void)
@@ -228,17 +224,42 @@ syx_fetch_basic (void)
   syx_scheduler_init ();
 }
 
-//! Setup the basic external environment of Syx
+//! Setup the basic external environment of Syx, such as the root and the image path
 /*!
-  \param root_path the root directory of Syx
+  \param root_path an arbitrary root directory for Syx or NULL
 */
 syx_bool
 syx_init (syx_symbol root_path)
 {
-  static syx_bool initialized = FALSE;
-  if (initialized || !root_path || !syx_set_root_path (root_path))
+  static syx_bool initialized = FALSE;   
+  if (initialized || !syx_set_root_path (root_path))
     return FALSE;
 
+  // first look in the working directory
+  if (access ("default.sim", R_OK) == 0)
+    {
+      _syx_image_path = "default.sim";
+      goto end;
+    }
+
+  // then look in the environment
+  _syx_image_path = getenv ("SYX_IMAGE_PATH");
+  if (_syx_image_path)
+    goto end;
+
+  // look in the root directory
+  if (root_path == _syx_root_path)
+    {
+      _syx_image_path = syx_malloc (strlen (_syx_root_path) + 12);
+      sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
+      goto end;
+    }
+
+  // return the default path defined by the installation
+  _syx_image_path = SYX_IMAGE_PATH;
+
+ end:
+   
   initialized = TRUE;
   return TRUE;
 }
@@ -270,14 +291,38 @@ syx_get_root_path (void)
 //! Sets the root directory of Syx
 /*!
   \param root_path the new path
-  \return TRUE if the path was existing and a valid directory
+  \return TRUE if the path exists and is readable
 */
 syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
+  if (!root_path)
+     root_path = SYX_ROOT_PATH;
+   
   if (access (root_path, R_OK) < 0)
      return FALSE;
 
   _syx_root_path = root_path;
   return TRUE;
+}
+
+//! Sets the initial image path
+syx_bool
+syx_set_image_path (syx_symbol image_path)
+{
+  if (!image_path || access (image_path, R_OK) < 0)
+     return FALSE;
+   
+  _syx_image_path = image_path;
+  return TRUE;
+}
+
+//! Returns the initial image path
+/*!
+ This path won't be used once Syx is initialized. The image path will be obtained from the ImageFileName global
+*/
+syx_symbol
+syx_get_image_path (void)
+{
+  return _syx_image_path;
 }

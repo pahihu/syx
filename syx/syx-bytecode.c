@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-bytecode.h"
@@ -189,10 +185,10 @@ SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant)
   bytecode->stack_size++;
 }
 
-SYX_FUNC_BYTECODE (push_global, SyxOop symbol)
+SYX_FUNC_BYTECODE (push_binding_variable, SyxOop link)
 {
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_GLOBAL,
-				syx_bytecode_gen_literal (bytecode, symbol));
+  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BINDING_VARIABLE,
+				syx_bytecode_gen_literal (bytecode, link));
   bytecode->stack_size++;
 }
 
@@ -204,6 +200,12 @@ SYX_FUNC_BYTECODE (assign_temporary, syx_uint16 temporary_index)
 SYX_FUNC_BYTECODE (assign_instance, syx_uint16 instance_index)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_INSTANCE, instance_index);
+}
+
+SYX_FUNC_BYTECODE (assign_binding_variable, SyxOop link)
+{
+  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_BINDING_VARIABLE,
+				syx_bytecode_gen_literal (bytecode, link));
 }
 
 SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)

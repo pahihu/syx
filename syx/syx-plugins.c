@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-memory.h"
 #include "syx-types.h"
 #include "syx-platform.h"

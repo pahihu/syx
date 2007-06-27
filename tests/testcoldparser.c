@@ -28,9 +28,10 @@ main (int argc, char *argv[])
   assert (syx_cold_parse (lexer, &error) == FALSE);*/
   
   temp = syx_globals_at ("Object");
-  lexer = syx_lexer_new ("nil subclass: #Object instanceVariableNames: ''!");
+  lexer = syx_lexer_new ("nil subclass: #Object instanceVariableNames: 'a b' classVariableNames: 'C'!");
   assert (syx_cold_parse (lexer) == TRUE);
   assert (SYX_OOP_EQ (syx_globals_at ("Object"), temp));
+  assert (SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE(syx_globals_at("Object"))) == 2);
   syx_lexer_free (lexer, FALSE);
 
   lexer = syx_lexer_new ("!Object methodsFor: 'test'! testMethod ^nil! !");

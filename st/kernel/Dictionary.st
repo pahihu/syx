@@ -1,19 +1,29 @@
+!Dictionary class methodsFor: 'instance creation'!
+
+new
+    ^self new: 10
+! !
+
 !Dictionary methodsFor: 'accessing'!
 
 at: aKey
-    1 to: hashTable size by: 2 do: [ :i |
-	(hashTable at: i) = aKey
-	    ifTrue: [ ^hashTable at: i + 1 ]
+    1 to: hashTable size do: [ :i |
+	| link |
+	link := hashTable at: i.
+	link key = aKey
+	    ifTrue: [ link value]
 	    ]
 !
 
 at: aKey put: aValue
-    1 to: hashTable size by: 2 do: [ :i |
-	| k |
-	k := hashTable at: i.
-	(k isNil or: [ k = aKey])
+    1 to: hashTable size do: [ :i |
+	| link |
+	link := hashTable at: i.
+	link isNil
 	    ifTrue: [
-		hashTable at: i put: aKey.
-		^hashTable at: i + 1 put: aValue ]
-	    ]
+		link := Link key: aKey value: aValue.
+		^hashTable at: i put: link ]
+	link key = aKey
+	    ifTrue: [ ^link value: aValue ]
+	    ]		
 ! !

@@ -114,7 +114,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_argument);
 SYX_FUNC_INTERPRETER (syx_interp_push_temporary);
 SYX_FUNC_INTERPRETER (syx_interp_push_literal);
 SYX_FUNC_INTERPRETER (syx_interp_push_constant);
-SYX_FUNC_INTERPRETER (syx_interp_push_global);
+SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable);
 SYX_FUNC_INTERPRETER (syx_interp_push_array);
 
 SYX_FUNC_INTERPRETER (syx_interp_assign_instance);

@@ -23,32 +23,6 @@
         - Small
 */
 
-static syx_string
-_find_image_path (syx_symbol root_path)
-{
-  syx_string path;
-
-  // first look at the environment
-  path = getenv ("SYX_IMAGE_PATH");
-  if (path)
-    return path;
-
-  // look in the working directory
-  if (!access ("default.sim", R_OK))
-    return "default.sim";
-
-  // look in the root directory
-  if (root_path)
-    {
-      path = syx_malloc (strlen (root_path) + 12);
-      sprintf (path, "%s%c%s", root_path, SYX_PATH_SEPARATOR, "default.sim");
-      return path;
-    }
-
-  // return the default path defined by the installation
-  return SYX_IMAGE_PATH;
-}
-
 static void
 _getopt_do (int argc, char **argv)
 {
@@ -109,15 +83,12 @@ _getopt_do (int argc, char **argv)
 	}
     }
 
-  if (!image_path)
-    image_path = _find_image_path (root_path);
-
-  if (!root_path)
-    root_path = SYX_ROOT_PATH;
-
   if (!syx_init (root_path))
     syx_error ("Couldn't initialize Syx for root %s\n", root_path);
 
+  if (image_path)
+    syx_set_image_path (image_path);
+   
   if (scratch)
     {
       syx_build_basic ();
@@ -128,8 +99,8 @@ _getopt_do (int argc, char **argv)
       
       syx_scheduler_add_process (process);
 
-      if (!syx_memory_save_image (image_path))
-	syx_warning ("Can't save the image at %s\n", image_path);
+      if (!syx_memory_save_image (NULL))
+	syx_warning ("Can't save the image\n");
 
       if (quit)
 	{
@@ -139,8 +110,8 @@ _getopt_do (int argc, char **argv)
     }
   else
     {
-      if (!syx_memory_load_image (image_path))
-	syx_error ("Image not found at %s\n", image_path);
+      if (!syx_memory_load_image (NULL))
+	syx_error ("Image not found\n");
     }
 
   syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (image_path));

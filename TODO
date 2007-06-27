@@ -1,7 +1,8 @@
 Major:
 - Number coercing
-- System signal handling
+- Add class variables and pool dictionaries
 - Implement coalesced hash tables with consistent hash functions
+- System signal handling
 - Object printing
 - Streams
 

@@ -18,7 +18,7 @@ main (int argc, char *argv[])
 #define INTERPRET(text)							\
   lexer = syx_lexer_new (text);						\
   method = syx_method_new ();						\
-  parser = syx_parser_new (lexer, method, NULL);			\
+  parser = syx_parser_new (lexer, method, syx_undefined_object_class);	\
   assert (syx_parser_parse (parser) == TRUE);				\
   syx_lexer_free (lexer, FALSE);					\
   syx_parser_free (parser, FALSE);					\

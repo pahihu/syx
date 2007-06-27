@@ -1,4 +1,4 @@
-import os
+import os, glob
 
 EnsurePythonVersion (2,2)
 
@@ -11,8 +11,8 @@ if env['PLATFORM'] == 'win32':
                               'Installation prefix',
                               'C:\\\\Syx', []))
    env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
-   env['imagepath'] = '$prefix\default.sim'
-   env['includedir'] = '$prefix\include'
+   env['imagepath'] = '$prefix\\\\default.sim'
+   env['includedir'] = '$prefix\\\\include'
 else:
    opts.AddOptions (
       PathOption('prefix', 
@@ -126,7 +126,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-Wall -DHAVE_CONFIG_H -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -include config.h -U__STRICT_ANSI__ -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
@@ -182,6 +182,7 @@ env.SConscript (dirs=['tests'], exports=['env'])
 
 # Install data
 
-target = env.Install (env['datadir'], '#st')
-env.Clean (target, os.path.join(env['datadir'], 'st'))
-env.Alias ('install', env['datadir'])
+sources = glob.glob ('st/kernel/*.st')
+path = os.path.join (env['datadir'], 'st', 'kernel')
+target = env.Install (path, sources)
+env.Alias ('install', target)

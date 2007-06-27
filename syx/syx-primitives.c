@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -458,7 +454,7 @@ SYX_FUNC_PRIMITIVE (String_compile)
     }
 
   meth = syx_method_new ();
-  parser = syx_parser_new (lexer, meth, NULL);
+  parser = syx_parser_new (lexer, meth, syx_undefined_object_class);
   if (!syx_parser_parse (parser))
     {
       syx_parser_free (parser, TRUE);

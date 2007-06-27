@@ -94,13 +94,13 @@ inline syx_int32 syx_object_hash (SyxOop ptr);
 inline SyxOop syx_object_get_class (SyxOop oop);
 inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
-syx_symbol *syx_class_get_all_instance_variables (SyxOop class);
+syx_symbol *syx_class_get_all_instance_variable_names (SyxOop class);
 syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
 SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
 
-SyxOop syx_dictionary_at_const (SyxOop dict, SyxOop key);
+SyxOop syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key);
+SyxOop syx_dictionary_link_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
 SyxOop syx_dictionary_at_symbol (SyxOop dict, syx_symbol key);
-SyxOop syx_dictionary_at_const_if_absent (SyxOop dict, SyxOop key, SyxOop object);
 SyxOop syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
 void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
 
@@ -117,7 +117,7 @@ inline SyxOop syx_array_new_ref (syx_varsize size, SyxOop *data);
 inline SyxOop syx_array_new_size (syx_varsize size);
 inline SyxOop syx_symbol_new (syx_symbol symbol);
 inline SyxOop syx_string_new (syx_symbol string);
-inline SyxOop syx_link_new (SyxOop key, SyxOop value);
+inline SyxOop syx_link_new (SyxOop key, SyxOop value, SyxOop next);
 inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
 
@@ -141,9 +141,12 @@ inline SyxOop syx_process_new (SyxOop context);
 
 #define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METACLASS_INSTANCE_CLASS])
 
-#define SYX_LINK_KEY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_KEY])
-#define SYX_LINK_VALUE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_VALUE])
-#define SYX_LINK_NEXT_LINK(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_NEXT_LINK])
+#define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_CLASS_VARIABLES])
+
+#define SYX_ASSOCIATION_KEY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_ASSOCIATION_KEY])
+#define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_ASSOCIATION_VALUE])
+
+#define SYX_LINK_NEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_NEXT])
 
 #define SYX_DICTIONARY_HASH_TABLE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_DICTIONARY_HASH_TABLE])
 

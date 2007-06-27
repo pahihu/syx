@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include "syx-interp.h"
 #include "syx-object.h"
 #include "syx-utils.h"
@@ -344,18 +340,19 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
   return TRUE;
 }
 
-SYX_FUNC_INTERPRETER (syx_interp_push_global)
+SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable)
 {
-  syx_symbol symbol;
+  SyxOop link;
   SyxOop object;
 
-  symbol = SYX_OBJECT_SYMBOL (es->literals[argument]);
+  link = es->literals[argument];
+  object = SYX_ASSOCIATION_VALUE (link);
 
 #ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Push global: '%s'\n", symbol);
+  syx_debug ("BYTECODE - Push binding variable: '%s' -> %p\n",
+	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(symbol)),
+	     SYX_OBJECT (object));
 #endif
-
-  object = syx_globals_at (symbol);
 
   syx_interp_stack_push (object);
   return TRUE;
@@ -394,6 +391,24 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
   syx_debug ("BYTECODE - Assign temporary at %d\n", argument);
 #endif
   es->temporaries[argument] = syx_interp_stack_peek ();
+  return TRUE;
+}
+
+SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable)
+{
+  SyxOop link;
+  SyxOop value;
+
+  link = es->literals[argument];
+  value = syx_interp_stack_peek ();
+
+#ifdef SYX_DEBUG_BYTECODE
+  syx_debug ("BYTECODE - Assign binding variable '%s' -> %p\n",
+	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(link)),
+	     SYX_OBJECT (value));
+#endif
+
+  SYX_ASSOCIATION_VALUE (link) = value;
   return TRUE;
 }
 
@@ -716,11 +731,12 @@ _syx_interp_execute_byte (syx_uint16 byte)
       syx_interp_push_temporary,
       syx_interp_push_literal,
       syx_interp_push_constant,
-      syx_interp_push_global,
+      syx_interp_push_binding_variable,
       syx_interp_push_array,
 
       syx_interp_assign_instance,
       syx_interp_assign_temporary,
+      syx_interp_assign_binding_variable,
 
       syx_interp_mark_arguments,
       syx_interp_send_message,

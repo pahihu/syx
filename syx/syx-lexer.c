@@ -1,8 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
-#define _ISOC99_SOURCE
 #include "syx-memory.h"
 #include <ctype.h>
 #include <string.h>

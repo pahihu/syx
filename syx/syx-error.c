@@ -16,7 +16,9 @@ SyxErrorType _syx_error_entries_top;
 void
 syx_error_init (void)
 {
-  
+  syx_bool initialized = FALSE;
+  if (initialized)
+    syx_error_clear ();
 
   _syx_error_entries_top = 0;
   assert (syx_error_register ("interpreter", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
@@ -24,6 +26,7 @@ syx_error_init (void)
 			      syx_globals_at ("MessageNotUnderstood")) == SYX_ERROR_NOT_UNDERSTOOD);
   assert (syx_error_register ("not found",
 			      syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
+  initialized = TRUE;
 }
 
 //! Clear all memory allocated to by the error reporting system

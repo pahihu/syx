@@ -23,7 +23,7 @@ add: anObject
 
 do: aBlock
     "Enumerate each object of thonly element is anObject"
-    ^self new add: anObject; yourself
+    self subclassResponsibility
 !
  
 with: firstObject with: secondObject

@@ -13,7 +13,7 @@ _interpret (syx_symbol text)
 
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
-  parser = syx_parser_new (lexer, method, NULL);
+  parser = syx_parser_new (lexer, method, syx_undefined_object_class);
   assert (syx_parser_parse (parser) == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
@@ -32,6 +32,7 @@ int
 main (int argc, char *argv[])
 {
   SyxOop ret_obj;
+  SyxLexer *lexer;
 
   syx_init (".");
   syx_memory_load_image ("test.sim");
@@ -45,11 +46,18 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method | a | a := 123.321. ^a + 2.2");
   assert (SYX_OBJECT_FLOAT(ret_obj) == 125.521);
 
-  /*
-  puts ("- Test single messages");
-  ret_obj = _interpret ("method ^Object class class hash");
-  assert (syx_metaclass_class == SYX_SMALL_INTEGER (ret_obj));
-  */
+  puts ("- Test class variables");
+  lexer = syx_lexer_new ("Object subclass: #TestClass instanceVariableNames: '' classVariableNames: 'TestVar'!"
+			 "!TestClass class methodsFor: 'testing'!"
+			 "initialize TestVar := 123! testVar ^TestVar ! !"
+			 "!TestClass methodsFor: 'testing'!"
+			 "testVar ^TestVar ! !");
+  assert (syx_cold_parse (lexer) == TRUE);
+  syx_lexer_free (lexer, FALSE);
+
+  ret_obj = _interpret ("method TestClass initialize. ^TestClass testVar + TestClass new testVar");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 123 + 123);
+
   puts ("- Test evaluating a simple block");
   ret_obj = _interpret ("method ^[321] value");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);

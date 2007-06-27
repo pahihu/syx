@@ -1,211 +1,268 @@
 "Basic meta"
 
 nil subclass: #Object
-    instanceVariableNames: ''!
+    instanceVariableNames: ''
+    classVariableNames: ''!
 
 Object subclass: #Behavior
-       instanceVariableNames: 'name superclass instanceVariables instanceSize methodDict'!
+       instanceVariableNames: 'name superclass instanceVariables instanceSize methodDict'
+       classVariableNames: ''!
 
 Object subclass: #UndefinedObject
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Behavior subclass: #Class
-	 instanceVariableNames: ''!
+	 instanceVariableNames: 'classVariables'
+         classVariableNames: ''!
 
 Behavior subclass: #Metaclass
-	 instanceVariableNames: 'instanceClass'!
+	 instanceVariableNames: 'instanceClass'
+         classVariableNames: ''!
 
 "Collections"
 
 Object subclass: #Collection
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Collection subclass: #SequenceableCollection
-	   instanceVariableNames: ''!
+	   instanceVariableNames: ''
+           classVariableNames: ''!
 
 SequenceableCollection subclass: #ArrayedCollection
-		       instanceVariableNames: ''!
+		       instanceVariableNames: ''
+                       classVariableNames: ''!
 
 ArrayedCollection subclass: #Array
-		  instanceVariableNames: ''!
+		  instanceVariableNames: ''
+                  classVariableNames: ''!
 
 ArrayedCollection subclass: #ByteArray
-		  instanceVariableNames: ''!
+		  instanceVariableNames: ''
+                  classVariableNames: ''!
 
 SequenceableCollection subclass: #OrderedCollection
-		       instanceVariableNames: ''!
+		       instanceVariableNames: ''
+                       classVariableNames: ''!
 
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries returnContext'!
+       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries returnContext'
+       classVariableNames: ''!
 
 ContextPart subclass: #MethodContext
-	    instanceVariableNames: ''!
+	    instanceVariableNames: ''
+            classVariableNames: ''!
 
 MethodContext subclass: #BlockContext
-	    instanceVariableNames: 'outerContext handledException handlerBlock'!
+	    instanceVariableNames: 'outerContext handledException handlerBlock'
+            classVariableNames: ''!
 
 Object subclass: #Process
-       instanceVariableNames: 'context suspended returnedObject next scheduled'!
+       instanceVariableNames: 'context suspended returnedObject next scheduled'
+       classVariableNames: ''!
 
 Object subclass: #Semaphore
-      instanceVariableNames: 'waitingProcesses signals'!
+       instanceVariableNames: 'waitingProcesses signals'
+       classVariableNames: ''!
 
 OrderedCollection subclass: #CompiledCode
-		  instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'!
+		  instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'
+                  classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: ''!
+	     instanceVariableNames: ''
+             classVariableNames: ''!
 
 CompiledMethod subclass: #CompiledBlock
-	     instanceVariableNames: 'argumentsTop'!
+	       instanceVariableNames: 'argumentsTop'
+               classVariableNames: ''!
 
 Object subclass: #BlockClosure
-       instanceVariableNames: 'block definedContext'!
+       instanceVariableNames: 'block definedContext'
+       classVariableNames: ''!
 
 
 "Management"
 
 Object subclass: #ProcessorScheduler
-       instanceVariableNames: 'processByteslice firstProcess activeProcess'!
+       instanceVariableNames: 'processByteslice firstProcess activeProcess'
+       classVariableNames: ''!
 
 Object subclass: #ObjectMemory
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 "Streams"
 
 Object subclass: #Stream
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Stream subclass: #PositionableStream
-       instanceVariableNames: 'collection ptr endPtr access'!
+       instanceVariableNames: 'collection ptr endPtr access'
+       classVariableNames: ''!
 
 PositionableStream subclass: #WriteStream
-		   instanceVariableNames: ''!
+		   instanceVariableNames: ''
+                   classVariableNames: ''!
 
 WriteStream subclass: #ReadWriteStream
-	    instanceVariableNames: ''!
+	    instanceVariableNames: ''
+            classVariableNames: ''!
 
 ReadWriteStream subclass: #ByteStream
-		instanceVariableNames: ''!
+		instanceVariableNames: ''
+                classVariableNames: ''!
 
 ByteStream subclass: #FileStream
-	   instanceVariableNames: 'fd name filePtr'!
+	   instanceVariableNames: 'fd name filePtr'
+           classVariableNames: ''!
 
 "Basic data types"
 
 ByteArray subclass: #String
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 Object subclass: #Symbol
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Object subclass: #Magnitude
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Magnitude subclass: #Character
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 Magnitude subclass: #Number
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 Magnitude subclass: #CPointer
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 Number subclass: #SmallInteger
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Number subclass: #Float
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Object subclass: #Boolean
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Boolean subclass: #True
-	instanceVariableNames: ''!
+	instanceVariableNames: ''
+        classVariableNames: ''!
 
 Boolean subclass: #False
-	instanceVariableNames: ''!
+	instanceVariableNames: ''
+        classVariableNames: ''!
 
 "Dictionaries"
 
-Magnitude subclass: #LookupKey
-	  instanceVariableNames: 'key value'!
+Object subclass: #Association
+       instanceVariableNames: 'key value'
+       classVariableNames: ''!
 
-LookupKey subclass: #Association
-	  instanceVariableNames: ''!
-
-LookupKey subclass: #Link
-	  instanceVariableNames: 'next'!
+Association subclass: #Link
+	    instanceVariableNames: 'next'
+            classVariableNames: ''!
 
 Object subclass: #Dictionary
-       instanceVariableNames: 'hashTable'!
+       instanceVariableNames: 'hashTable'
+       classVariableNames: ''!
 
 Dictionary subclass: #SystemDictionary
-	   instanceVariableNames: ''!
+	   instanceVariableNames: ''
+           classVariableNames: ''!
 
 "Gtk"
 
 Object subclass: #Gtk
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Object subclass: #GObject
-       instanceVariableNames: 'handle'!
+       instanceVariableNames: 'handle'
+       classVariableNames: ''!
 
 GObject subclass: #GtkWidget
-	instanceVariableNames: ''!
+	instanceVariableNames: ''
+        classVariableNames: ''!
 
 GtkWidget subclass: #GtkWindow
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 "Console"
 
 Object subclass: #Console
-       instanceVariableNames: 'haveReadline'!
+       instanceVariableNames: 'haveReadline'
+       classVariableNames: ''!
 
 "Exceptions"
 
 Object subclass: #Signal
-       instanceVariableNames: 'handlerContext signalerContext'!
+       instanceVariableNames: 'handlerContext signalerContext'
+       classVariableNames: ''!
 
 Signal subclass: #Exception
-       instanceVariableNames: ''!
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 Exception subclass: #Error
-	  instanceVariableNames: ''!
+	  instanceVariableNames: ''
+          classVariableNames: ''!
 
 Error subclass: #NotImplemented
-      instanceVariableNames: ''!
+      instanceVariableNames: ''
+      classVariableNames: ''!
 
 Error subclass: #VMError
-      instanceVariableNames: ''!
+      instanceVariableNames: ''
+      classVariableNames: ''!
 
 Error subclass: #Halt
-      instanceVariableNames: ''!
+      instanceVariableNames: ''
+      classVariableNames: ''!
 
 VMError subclass: #PrimitiveFailed
-	instanceVariableNames: ''!
+	instanceVariableNames: ''
+        classVariableNames: ''!
 
 Halt subclass: #MessageNotUnderstood
-     instanceVariableNames: ''!
+     instanceVariableNames: ''
+     classVariableNames: ''!
 
 NotImplemented subclass: #NotYetImplemented
-	       instanceVariableNames: ''!
-
+	       instanceVariableNames: ''
+               classVariableNames: ''!
 
 NotImplemented subclass: #ShouldNotImplement
-	       instanceVariableNames: ''!
-
+	       instanceVariableNames: ''
+               classVariableNames: ''!
 
 ShouldNotImplement subclass: #SubclassResponsibility
-		   instanceVariableNames: ''!
+		   instanceVariableNames: ''
+                   classVariableNames: ''!
 
 Error subclass: #InvalidValue
-      instanceVariableNames: ''!
+      instanceVariableNames: ''
+      classVariableNames: ''!
 
 InvalidValue subclass: #InvalidArgument
-	     instanceVariableNames: ''!
+	     instanceVariableNames: ''
+             classVariableNames: ''!
 
 InvalidArgument subclass: #NotFound
-		instanceVariableNames: ''!
+		instanceVariableNames: ''
+                classVariableNames: ''!

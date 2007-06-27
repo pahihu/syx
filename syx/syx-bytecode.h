@@ -84,14 +84,17 @@ SYX_FUNC_BYTECODE (push_instance, syx_uint16 instance_index);
 //! Does SYX_BYTECODE_PUSH_CONSTANT
 SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant);
 
-//! Does SYX_BYTECODE_PUSH_GLOBAL by specifying the symbol to be resolved at runtime
-SYX_FUNC_BYTECODE (push_global, SyxOop symbol);
+//! Does SYX_BYTECODE_PUSH_BINDING_VARIABLE by specifying the Link instance of a Dictionary
+SYX_FUNC_BYTECODE (push_binding_variable, SyxOop link);
 
 //! Does SYX_BYTECODE_ASSIGN_TEMPORARY
 SYX_FUNC_BYTECODE (assign_temporary, syx_uint16 temporary_index);
 
 //! Does SYX_BYTECODE_ASSIGN_INSTANCE
 SYX_FUNC_BYTECODE (assign_instance, syx_uint16 instance_index);
+
+//! Does SYX_BYTECODE_ASSIGN_BINDING_VARIABLE
+SYX_FUNC_BYTECODE (assign_binding_variable, SyxOop link);
 
 //! Does SYX_BYTECODE_DUPLICATE at a given code array position
 /*!

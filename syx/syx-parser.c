@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
-
 #include <assert.h>
 #include <string.h>
 #include "syx-error.h"
@@ -46,7 +42,7 @@ static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool sup
   \param instance_names list of instance variable names
 */
 SyxParser *
-syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
+syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
 {
   SyxParser *self;
   if (!lexer || !SYX_IS_OBJECT (method))
@@ -56,12 +52,13 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, syx_symbol *instance_names)
 
   self->lexer = lexer;
   self->method = method;
+  self->class = class;
   self->_in_block = FALSE;
 
   self->bytecode = syx_bytecode_new ();
   self->_temporary_names_top = 0;
   self->_argument_names_top = 0;
-  self->instance_names = instance_names;
+  self->instance_names = syx_class_get_all_instance_variable_names (class);
 
   self->_duplicate_indexes_top = 0;
   self->_argument_scopes.top = 0;
@@ -196,6 +193,25 @@ _syx_parser_find_instance_name (SyxParser *self, syx_symbol name)
   return -1;
 }
 
+static SyxOop
+_syx_parser_find_class_variable_name (SyxParser *self, syx_symbol name)
+{
+  SyxOop class = self->class;
+  SyxOop link;
+
+  if (syx_object_get_class (class) == syx_metaclass_class)
+    class = SYX_METACLASS_INSTANCE_CLASS (class);
+
+  for (; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS(class))
+    {
+      link = syx_dictionary_link_at_symbol_if_absent (SYX_CLASS_CLASS_VARIABLES (class), name, syx_nil);
+      if (!SYX_IS_NIL (link))
+	return link;
+    }
+
+  return syx_nil;
+}
+
 static syx_bool
 _syx_parser_parse_term (SyxParser *self)
 {
@@ -275,12 +291,34 @@ static syx_bool
 _syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
 {
   syx_varsize pos;
+  SyxOop link;
 
   if (!strcmp (name, "self") || !strcmp (name, "super"))
     {
       syx_bytecode_push_argument (self->bytecode, 0);
       if (!strcmp (name, "super"))
 	return TRUE;
+      return FALSE;
+    }
+
+  if (!strcmp (name, "nil"))
+    {
+      syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_NIL);
+      return FALSE;
+    }
+  else if (!strcmp (name, "true"))
+    {
+      syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_TRUE);
+      return FALSE;
+    }
+  else if (!strcmp (name, "false"))
+    {
+      syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_FALSE);
+      return FALSE;
+    }
+  else if (!strcmp (name, "thisContext"))
+    {
+      syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_CONTEXT);
       return FALSE;
     }
 
@@ -305,16 +343,11 @@ _syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
       return FALSE;
     }
 
-  if (!strcmp (name, "nil"))
-    syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_NIL);
-  else if (!strcmp (name, "true"))
-    syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_TRUE);
-  else if (!strcmp (name, "false"))
-    syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_FALSE);
-  else if (!strcmp (name, "thisContext"))
-    syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_CONTEXT);
+  link = _syx_parser_find_class_variable_name (self, name);
+  if (!SYX_IS_NIL (link))
+    syx_bytecode_push_binding_variable (self->bytecode, link);
   else
-    syx_bytecode_push_global (self->bytecode, syx_symbol_new (name));
+    syx_bytecode_push_binding_variable (self->bytecode, syx_globals_link_at (name));
 
   return FALSE;
 }
@@ -505,6 +538,7 @@ static void
 _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
 {
   syx_varsize pos;
+  SyxOop link;
 
   pos = _syx_parser_find_temporary_name (self, assign_name);
   if (pos >= 0)
@@ -519,6 +553,14 @@ _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
     {
       _syx_parser_parse_expression (self);
       syx_bytecode_assign_instance (self->bytecode, pos);
+      return;
+    }
+
+  link = _syx_parser_find_class_variable_name (self, assign_name);
+  if (!SYX_IS_NIL (link))
+    {
+      _syx_parser_parse_expression (self);
+      syx_bytecode_assign_binding_variable (self->bytecode, link);
       return;
     }
   

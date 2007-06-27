@@ -1,5 +1,6 @@
 Stream subclass: #TextCollector
-       instanceVariableNames: 'semaphore receiver selector'!
+       instanceVariableNames: 'receiver selector'
+       classVariableNames: ''!
 
 
 !TextCollector class methodsFor: 'instance creation'! 
