@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #include <assert.h>
 #include <string.h>
 #include "syx-error.h"
@@ -197,16 +221,16 @@ static SyxOop
 _syx_parser_find_class_variable_name (SyxParser *self, syx_symbol name)
 {
   SyxOop class = self->class;
-  SyxOop link;
+  SyxOop binding;
 
   if (syx_object_get_class (class) == syx_metaclass_class)
     class = SYX_METACLASS_INSTANCE_CLASS (class);
 
   for (; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS(class))
     {
-      link = syx_dictionary_link_at_symbol_if_absent (SYX_CLASS_CLASS_VARIABLES (class), name, syx_nil);
-      if (!SYX_IS_NIL (link))
-	return link;
+      binding = syx_dictionary_binding_at_symbol_if_absent (SYX_CLASS_CLASS_VARIABLES (class), name, syx_nil);
+      if (!SYX_IS_NIL (binding))
+	return binding;
     }
 
   return syx_nil;
@@ -291,7 +315,7 @@ static syx_bool
 _syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
 {
   syx_varsize pos;
-  SyxOop link;
+  SyxOop binding;
 
   if (!strcmp (name, "self") || !strcmp (name, "super"))
     {
@@ -343,11 +367,12 @@ _syx_parser_parse_name_term (SyxParser *self, syx_symbol name)
       return FALSE;
     }
 
-  link = _syx_parser_find_class_variable_name (self, name);
-  if (!SYX_IS_NIL (link))
-    syx_bytecode_push_binding_variable (self->bytecode, link);
+  binding = _syx_parser_find_class_variable_name (self, name);
+  if (!SYX_IS_NIL (binding))
+    syx_bytecode_push_binding_variable (self->bytecode, binding);
   else
-    syx_bytecode_push_binding_variable (self->bytecode, syx_globals_link_at (name));
+    syx_bytecode_push_binding_variable (self->bytecode,
+					syx_dictionary_binding_at_symbol (syx_globals, name));
 
   return FALSE;
 }
@@ -538,7 +563,7 @@ static void
 _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
 {
   syx_varsize pos;
-  SyxOop link;
+  SyxOop binding;
 
   pos = _syx_parser_find_temporary_name (self, assign_name);
   if (pos >= 0)
@@ -556,11 +581,11 @@ _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
       return;
     }
 
-  link = _syx_parser_find_class_variable_name (self, assign_name);
-  if (!SYX_IS_NIL (link))
+  binding = _syx_parser_find_class_variable_name (self, assign_name);
+  if (!SYX_IS_NIL (binding))
     {
       _syx_parser_parse_expression (self);
-      syx_bytecode_assign_binding_variable (self->bytecode, link);
+      syx_bytecode_assign_binding_variable (self->bytecode, binding);
       return;
     }
   

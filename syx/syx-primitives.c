@@ -1,7 +1,28 @@
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
+#include "syx-memory.h"
 #include "syx-error.h"
 #include "syx-types.h"
 #include "syx-plugins.h"
@@ -12,7 +33,11 @@
 #include "syx-lexer.h"
 #include "syx-interp.h"
 #include "syx-utils.h"
-#include "syx-memory.h"
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 
 inline SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
@@ -23,7 +48,7 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 				SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
 }
 
-/* This method is inline in syx_interp_call_primitive */
+/* This method is inlined in syx_interp_call_primitive */
 SYX_FUNC_PRIMITIVE (Processor_yield)
 {
   SYX_PRIM_YIELD (es->message_receiver);
@@ -243,12 +268,12 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SYX_PRIM_RETURN (proc);
 }
 
-/* These printing function are used ONLY for tests */
 SYX_FUNC_PRIMITIVE (Symbol_asString)
 {
-  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_STRING (es->message_receiver)));
+  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
 }
 
+/* These printing function are used ONLY for tests */
 SYX_FUNC_PRIMITIVE (SmallInteger_print)
 {
   printf ("%d\n", SYX_SMALL_INTEGER(es->message_receiver));
@@ -473,57 +498,127 @@ SYX_FUNC_PRIMITIVE (SmallInteger_plus)
 {
   SYX_PRIM_ARGS(1);
   
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->message_receiver);
-  second = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_small_integer_new (first + second));
+  SyxOop first, second;
+  syx_int32 result;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  result = SYX_SMALL_INTEGER (first) + SYX_SMALL_INTEGER (second);
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) +
+					  SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 {
   SYX_PRIM_ARGS(1);
-  syx_int32 first, second;
-  first = SYX_SMALL_INTEGER(es->message_receiver);
-  second = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_small_integer_new (first - second));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) -
+					  SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_lt)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) < SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) <
+				    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_gt)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) > SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) >
+				    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_le)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) <= SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) <=
+				    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ge)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) >= SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) >=
+				    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) == SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (first == second));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (es->message_receiver) != SYX_SMALL_INTEGER (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (first != second));
 }
 
+SYX_FUNC_PRIMITIVE (SmallInteger_asFloat)
+{
+  syx_double n = (syx_double)SYX_SMALL_INTEGER (es->message_receiver);
+  SYX_PRIM_RETURN (syx_float_new (n));
+}
 
 
 /* Floats */
@@ -531,55 +626,121 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 SYX_FUNC_PRIMITIVE (Float_plus)
 {
   SYX_PRIM_ARGS(1);
-  syx_double first, second;
-  first = SYX_OBJECT_FLOAT(es->message_receiver);
-  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_float_new (first + second));
+  
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) +
+				  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_minus)
 {
   SYX_PRIM_ARGS(1);
-  syx_double first, second;
-  first = SYX_OBJECT_FLOAT(es->message_receiver);
-  second = SYX_OBJECT_FLOAT(es->message_arguments[0]);
-  SYX_PRIM_RETURN (syx_float_new (first - second));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) -
+				  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_lt)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) < SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) <
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_gt)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) > SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) >
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_le)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) <= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) <=
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_ge)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) >= SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) >=
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_eq)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) == SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) ==
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_ne)
 {
   SYX_PRIM_ARGS(1);
-  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (es->message_receiver) != SYX_OBJECT_FLOAT (es->message_arguments[0])));
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) !=
+				    SYX_OBJECT_FLOAT (second)));
 }
 
 
@@ -682,6 +843,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+  { "SmallInteger_asFloat", SmallInteger_asFloat },
 
   /* Floats */
   { "Float_plus", Float_plus },

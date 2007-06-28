@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #include "syx-memory.h"
 #include <unistd.h>
 #include <stdio.h>
@@ -60,9 +84,9 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st", "Metaclass.st",
     "Symbol.st",
-    "Number.st", "SmallInteger.st", "Float.st",
+    "Number.st", "SmallInteger.st", "Float.st", // "LargeInteger.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
-    "Collection.st", "Array.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
+    "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",
@@ -128,6 +152,7 @@ syx_build_basic (void)
   syx_character_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_byte_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
   syx_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
+  syx_variable_binding_class = _syx_create_class (SYX_DATA_VARIABLE_BINDING_ALL);
   syx_link_class = _syx_create_class (SYX_DATA_LINK_ALL);
   syx_dictionary_class = _syx_create_class (SYX_DATA_DICTIONARY_ALL);
   syx_metaclass_class = _syx_create_class (SYX_DATA_METACLASS_ALL);
@@ -154,11 +179,12 @@ syx_build_basic (void)
   _SETUP_CLASS ("Class", Class, Behavior);
   _SETUP_CLASS ("Metaclass", syx_metaclass_class, Behavior);
   _SETUP_CLASS ("Symbol", syx_symbol_class, Object);
-  _SETUP_CLASS ("String", syx_string_class, Object);
+  _SETUP_CLASS ("ByteArray", syx_byte_array_class, Object);
+  _SETUP_CLASS ("String", syx_string_class, syx_byte_array_class);
   _SETUP_CLASS ("SmallInteger", syx_small_integer_class, Object);
   _SETUP_CLASS ("Character", syx_character_class, Object);
-  _SETUP_CLASS ("ByteArray", syx_byte_array_class, Object);
   _SETUP_CLASS ("Array", syx_array_class, Object);
+  _SETUP_CLASS ("VariableBinding", syx_variable_binding_class, Object);
   _SETUP_CLASS ("Link", syx_link_class, Object);
   _SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
   _syx_file_in_basic_decl ();
@@ -203,10 +229,12 @@ syx_fetch_basic (void)
   syx_symbol_class = syx_globals_at ("Symbol");
   syx_string_class = syx_globals_at ("String");
   syx_small_integer_class = syx_globals_at ("SmallInteger");
+  //  syx_large_integer_class = syx_globals_at ("LargeInteger");
   syx_float_class = syx_globals_at ("Float");
   syx_character_class = syx_globals_at ("Character");
   syx_byte_array_class = syx_globals_at ("ByteArray");
   syx_array_class = syx_globals_at ("Array");
+  syx_variable_binding_class = syx_globals_at ("VariableBinding");
   syx_link_class = syx_globals_at ("Link");
   syx_dictionary_class = syx_globals_at ("Dictionary");
 

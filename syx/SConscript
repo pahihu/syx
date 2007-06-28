@@ -1,5 +1,32 @@
+#################################################################################
+#                                                                               #
+# Copyright (c) 2007 Luca Bruno                                                 #
+#                                                                               #
+# This file is part of Smalltalk YX.                                            #
+#                                                                               #
+# Permission is hereby granted, free of charge, to any person obtaining a copy  #
+# of this software and associated documentation files (the "Software"), to deal #
+# in the Software without restriction, including without limitation the rights  #
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     #
+# copies of the Software, and to permit persons to whom the Software is         #
+# furnished to do so, subject to the following conditions:                      #
+#                                                                               #
+# The above copyright notice and this permission notice shall be included in    #
+# all copies or substantial portions of the Software.                           #
+#                                                                               #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    #
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   #
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        #
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING       #
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER           #
+# DEALINGS IN THE SOFTWARE.                                                     #
+#                                                                               #
+#################################################################################
+
+
 import os
-Import ('env')
+Import ('env', 'distdir')
 
 libenv = env.Clone ()
 
@@ -8,17 +35,21 @@ if libenv['PLATFORM'] == 'win32':
 
 # Build the shared library
 
-lib_objects = libenv.SharedObject (Split ("""
+lib_sources = Split ("""
 	    syx-bytecode.c syx-init.c syx-interp.c
 	    syx-lexer.c syx-memory.c syx-object.c syx-parser.c
 	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
             syx-plugins.c
-	    """))
+	    """)
+lib_objects = libenv.SharedObject (lib_sources)
 lib_shared = libenv.SharedLibrary (target='syx', source=lib_objects)
 Default (lib_shared)
 
-env.Install (env['libdir'], lib_shared)
-env.Alias ('install', env['libdir'])
+target = env.Install (env['libdir'], lib_shared)
+env.Alias ('install', target)
+
+target = env.Install (os.path.join (distdir, 'syx'), lib_sources + ['SConscript'])
+env.Alias ('sdist', target)
 
 # Install includes
 
@@ -29,3 +60,6 @@ includes = ['syx.h', 'syx-interp.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error
 incdir = os.path.join (env['includedir'], 'syx')
 env.Install (incdir, includes)
 env.Alias ('install', incdir)
+
+target = env.Install (os.path.join (distdir, 'syx'), includes)
+env.Alias ('sdist', target)

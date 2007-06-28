@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #include "syx-interp.h"
 #include "syx-object.h"
 #include "syx-utils.h"
@@ -342,16 +366,16 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable)
 {
-  SyxOop link;
+  SyxOop binding;
   SyxOop object;
 
-  link = es->literals[argument];
-  object = SYX_ASSOCIATION_VALUE (link);
+  binding = es->literals[argument];
+  object = syx_dictionary_bind (binding);
 
 #ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Push binding variable: '%s' -> %p\n",
-	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(symbol)),
-	     SYX_OBJECT (object));
+  syx_debug ("BYTECODE - Push binding variable: '%s' -> %d\n",
+	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(binding)),
+	     SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding)));
 #endif
 
   syx_interp_stack_push (object);
@@ -396,19 +420,19 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
 
 SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable)
 {
-  SyxOop link;
+  SyxOop binding;
   SyxOop value;
 
-  link = es->literals[argument];
+  binding = es->literals[argument];
   value = syx_interp_stack_peek ();
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign binding variable '%s' -> %p\n",
-	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(link)),
+	     SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(binding)),
 	     SYX_OBJECT (value));
 #endif
 
-  SYX_ASSOCIATION_VALUE (link) = value;
+  syx_dictionary_bind_set_value (binding, value);
   return TRUE;
 }
 
@@ -442,13 +466,13 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
-  syx_symbol selector;
+  SyxOop binding;
   SyxOop class, method, context;
   syx_int16 primitive;
 
-  selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
-  class = syx_object_get_class (es->message_receiver);
-  method = syx_class_lookup_method (class, selector);
+  binding = es->literals[argument];
+  class = syx_object_get_class (es->message_receiver); 
+  method = syx_class_lookup_method_binding (class, binding);
 
   if (SYX_IS_NIL (method))
     {
@@ -457,7 +481,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
     }
 
 #ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send message #%s\n", selector);
+  syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
@@ -482,13 +506,13 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
-  syx_symbol selector;
+  SyxOop binding;
   SyxOop class, method, context;
   syx_int16 primitive;
 
-  selector = SYX_OBJECT_SYMBOL (es->literals[argument]);
-  class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver));
-  method = syx_class_lookup_method (class, selector);
+  binding = es->literals[argument];
+  class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver)); 
+  method = syx_class_lookup_method_binding (class, binding);
 
   if (SYX_IS_NIL (method))
     {
@@ -497,7 +521,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
     }
 
 #ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send message #%s to super\n", selector);
+  syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));

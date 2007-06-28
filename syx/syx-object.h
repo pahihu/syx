@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #ifndef SYX_OBJECT_H
 #define SYX_OBJECT_H
 
@@ -6,6 +30,7 @@
 #include "syx-enums.h"
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
+#define SYX_OBJECT_LARGE_INTEGER(oop) (*((syx_int64 *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
@@ -25,6 +50,10 @@
 #define SYX_IS_CPOINTER(oop) (SYX_IS_POINTER(oop) &&			\
 			      ((oop) < (SyxOop)syx_memory ||		\
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
+
+#define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
+					  SYX_OBJECT(oop)->class == syx_large_integer_class)
+#define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_float_class)
 
 /* Oop */
 
@@ -62,12 +91,14 @@ extern SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
+  syx_large_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
   syx_byte_array_class,
   syx_array_class,
 
+  syx_variable_binding_class,
   syx_link_class,
   syx_dictionary_class,
 
@@ -97,9 +128,12 @@ inline void syx_object_set_class (SyxOop oop, SyxOop class);
 syx_symbol *syx_class_get_all_instance_variable_names (SyxOop class);
 syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
 SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
+SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding);
 
-SyxOop syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key);
-SyxOop syx_dictionary_link_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
+SyxOop syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key);
+SyxOop syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
+SyxOop syx_dictionary_bind (SyxOop binding);
+void syx_dictionary_bind_set_value (SyxOop binding, SyxOop value);
 SyxOop syx_dictionary_at_symbol (SyxOop dict, syx_symbol key);
 SyxOop syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
 void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
@@ -108,6 +142,7 @@ void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
 
 inline SyxOop syx_metaclass_new (SyxOop supermetaclass);
 inline SyxOop syx_class_new (SyxOop superclass);
+inline SyxOop syx_large_integer_new (syx_int64 integer);
 inline SyxOop syx_float_new (syx_double floating);
 inline SyxOop syx_byte_array_new (syx_varsize size, syx_uint8 *data);
 inline SyxOop syx_byte_array_new_size (syx_varsize size);
@@ -117,6 +152,7 @@ inline SyxOop syx_array_new_ref (syx_varsize size, SyxOop *data);
 inline SyxOop syx_array_new_size (syx_varsize size);
 inline SyxOop syx_symbol_new (syx_symbol symbol);
 inline SyxOop syx_string_new (syx_symbol string);
+inline SyxOop syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dict);
 inline SyxOop syx_link_new (SyxOop key, SyxOop value, SyxOop next);
 inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
@@ -147,6 +183,8 @@ inline SyxOop syx_process_new (SyxOop context);
 #define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_ASSOCIATION_VALUE])
 
 #define SYX_LINK_NEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_NEXT])
+
+#define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_VARIABLE_BINDING_DICTIONARY])
 
 #define SYX_DICTIONARY_HASH_TABLE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_DICTIONARY_HASH_TABLE])
 

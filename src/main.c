@@ -1,12 +1,30 @@
-#ifdef HAVE_CONFIG_H
-  #include "config.h"
-#endif
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
 
 #include <syx/syx.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include <getopt.h>
-#include <unistd.h>
-#include <fcntl.h>
 
 /*! \mainpage Smalltalk YX
     
@@ -24,6 +42,25 @@
 */
 
 static void
+_help (void)
+{
+  printf ("This is Smalltalk YX. Usage:\n\n"
+	  "\tsyx [options]\n\n"
+	  "Options:\n\n"
+	  "  -r --root=DIR\t\tSpecify the root path of Syx\n\t\t\t(default: %s).\n\n"
+	  "  -i --image=IMAGEFILE\tLoad the image IMAGEFILE, also SYX_IMAGE_PATH=x\n"
+	  "\t\t\t(default: %s)\n\n"
+	  "  -s --scratch\t\tBuild the environment from scratch and save the image.\n"
+	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
+	  "  -v --version\t\tPrint version information and then exit.\n"
+	  "  -h --help\t\tPrint this message.\n\n"
+	  "For more information, please visit the homepage: http://code.google.com/p/syx.\n"
+	  "Report bugs to \"lethalman88@gmail.com\".\n",
+	  SYX_ROOT_PATH, SYX_IMAGE_PATH);
+  exit (EXIT_SUCCESS);
+}
+
+static void
 _getopt_do (int argc, char **argv)
 {
   SyxOop context;
@@ -39,12 +76,14 @@ _getopt_do (int argc, char **argv)
     {"root", 1, 0, 0},
     {"image", 1, 0, 0},
     {"scratch", 0, 0, 0},
+    {"version", 0, 0, 0},
+    {"help", 0, 0, 0},
     {0, 0, 0, 0}
   };
 
   while (TRUE)
     {
-      c = getopt_long (argc, argv, "r:i:sS",
+      c = getopt_long (argc, argv, "r:i:sSvh",
 		       long_options, &opt_idx);
       if (c == -1)
 	break;
@@ -63,7 +102,14 @@ _getopt_do (int argc, char **argv)
 	    case 2:
 	      scratch = TRUE;
 	      break;
+	    case 3:
+	      printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
+		      "Copyright (c) 2007 Luca Bruno\n",
+		      SYX_STRINGIFY (SYX_VERSION));
+	      exit (EXIT_SUCCESS);
+	    case 4:
 	    default:
+	      _help ();
 	      exit (EXIT_FAILURE);
 	    }
 
@@ -78,8 +124,14 @@ _getopt_do (int argc, char **argv)
 	case 's':
 	  scratch = TRUE;
 	  break;
+	case 'v':
+	  printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
+		  "Copyright (c) 2007 Luca Bruno\n",
+		  SYX_STRINGIFY (SYX_VERSION));
+	  exit (EXIT_SUCCESS);
+	case 'h':
 	default:
-	  exit (EXIT_FAILURE);
+	  _help ();
 	}
     }
 

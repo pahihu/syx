@@ -1,6 +1,30 @@
-import os, glob
+#################################################################################
+#                                                                               #
+# Copyright (c) 2007 Luca Bruno                                                 #
+#                                                                               #
+# This file is part of Smalltalk YX.                                            #
+#                                                                               #
+# Permission is hereby granted, free of charge, to any person obtaining a copy  #
+# of this software and associated documentation files (the "Software"), to deal #
+# in the Software without restriction, including without limitation the rights  #
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     #
+# copies of the Software, and to permit persons to whom the Software is         #
+# furnished to do so, subject to the following conditions:                      #
+#                                                                               #
+# The above copyright notice and this permission notice shall be included in    #
+# all copies or substantial portions of the Software.                           #
+#                                                                               #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    #
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   #
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        #
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING       #
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER           #
+# DEALINGS IN THE SOFTWARE.                                                     #
+#                                                                               #
+#################################################################################
 
-EnsurePythonVersion (2,2)
+import os, glob
 
 env = Environment ()
 
@@ -70,6 +94,7 @@ env.Help (opts.GenerateHelpText (env) + """
                                  test failures
            'scons doc'           to create reference documentation (requires Doxygen).
            'scons install'       to install Syx.
+           'scons sdist'         to create a directory with source distribution.
      """)
 
 # Configuration
@@ -126,7 +151,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -include config.h -U__STRICT_ANSI__ -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -include #config.h -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':
@@ -139,27 +164,6 @@ elif env['debug'] == 'full':
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DWINDOWS')
 
-# Test builder
-def builder_test (target, source, env):
-   print
-   app = str (source[0].path)
-   relapp = os.path.splitext (os.path.basename (str (source[0].abspath)))[0]
-   f = open(target[0].abspath, 'w')
-   if env.Execute (app) == 0:
-      print 'PASS: %s' % relapp
-      f.write ('PASSED')
-   else:
-      print 'FAIL: %s' % relapp
-      f.write ('FAILED')
-      if env['attach']:
-          app = 'gdb '+app
-          env.Execute (app)
-   f.close ()
-
-action = env.Action (builder_test, lambda *args, **kwargs: '')
-builder = env.Builder (action=action)
-env.Append(BUILDERS = { 'Test' : builder })
-
 # Doc builder
 
 env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
@@ -168,17 +172,19 @@ env.Clean ('doc', 'build/doc')
 
 # Build
 
+distdir = '#syx-0.1'
+
 env.MergeFlags ('-L#build/lib')
 env.BuildDir ('build/lib', 'syx', False)
-env.SConscript (dirs=['build/lib'], exports=['env'])
+env.SConscript (dirs=['build/lib'], exports=['env', 'distdir'])
 
 env.BuildDir ('build/bin', 'src', False)
-env.SConscript (dirs=['build/bin'], exports=['env'])
+env.SConscript (dirs=['build/bin'], exports=['env', 'distdir'])
 
 env.BuildDir ('build/plugins', 'plugins', False)
-env.SConscript (dirs=['build/plugins'], exports=['env'])
+env.SConscript (dirs=['build/plugins'], exports=['env', 'distdir'])
 
-env.SConscript (dirs=['tests'], exports=['env'])
+env.SConscript (dirs=['tests'], exports=['env', 'distdir'])
 
 # Install data
 
@@ -186,3 +192,16 @@ sources = glob.glob ('st/kernel/*.st')
 path = os.path.join (env['datadir'], 'st', 'kernel')
 target = env.Install (path, sources)
 env.Alias ('install', target)
+
+# Source distribution
+
+path = os.path.join (distdir, 'st', 'kernel')
+target = env.Install (path, sources)
+env.Alias ('sdist', target)
+
+sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile']
+target = env.Install (distdir, sources)
+env.Alias ('sdist', target)
+
+target = env.Install (os.path.join (distdir, 'doc', 'html', 'extras'), '#doc/html/extras/footer.html')
+env.Alias ('sdist', target)

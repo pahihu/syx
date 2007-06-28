@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-bytecode.h"
@@ -80,6 +104,7 @@ void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
   syx_int16 i;
+  SyxOop binding;
 
   if (!to_super)
     {
@@ -102,13 +127,14 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 	} 
     }
 
+  binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_MARK_ARGUMENTS, argument_count);
   if (to_super)
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_SUPER,
-				  syx_bytecode_gen_literal (bytecode, syx_symbol_new (selector)));
+				  syx_bytecode_gen_literal (bytecode, binding));
   else
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_MESSAGE,
-				  syx_bytecode_gen_literal (bytecode, syx_symbol_new (selector)));
+				  syx_bytecode_gen_literal (bytecode, binding));
 }
 
 //! Generate a literal

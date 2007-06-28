@@ -1,3 +1,27 @@
+/* 
+   Copyright (c) 2007 Luca Bruno
+
+   This file is part of Smalltalk YX.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   DEALINGS IN THE SOFTWARE.
+*/
+
 #include "syx-memory.h"
 #include "syx-object.h"
 #include "syx-interp.h"
@@ -30,12 +54,14 @@ SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
+  syx_large_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
   syx_byte_array_class,
   syx_array_class,
 
+  syx_variable_binding_class,
   syx_link_class,
   syx_dictionary_class,
 
@@ -231,17 +257,20 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 inline SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
+  SyxOop obj;
+
   if (!symbol)
     return syx_nil;
 
-  SyxOop object = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
-  if (SYX_IS_NIL (object))
+  obj = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
+
+  if (SYX_IS_NIL (obj))
     {
-      object = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
-      syx_dictionary_at_const_put (syx_symbols, object, object);
+      obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
+      syx_dictionary_at_const_put (syx_symbols, obj, obj);
     }
 
-  return object;
+  return obj;
 }
 
 
@@ -255,7 +284,18 @@ syx_string_new (syx_symbol string)
   return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
 }
 
-//! Creates a new link key -> value
+//! Creates a new VariableBinding key -> index on a dictionary
+inline SyxOop
+syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
+{
+  SyxOop object = syx_object_new (syx_variable_binding_class, TRUE);
+  SYX_ASSOCIATION_KEY(object) = key;
+  SYX_ASSOCIATION_VALUE(object) = syx_small_integer_new (index);
+  SYX_VARIABLE_BINDING_DICTIONARY(object) = dictionary;
+  return object;
+}
+
+//! Creates a new Link key -> value
 inline SyxOop 
 syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 {
@@ -267,9 +307,6 @@ syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 }
 
 //! Creates a new dictionary and its hash table
-/*!
-  The effective size of the hash table is size * 2
-*/
 SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
@@ -278,12 +315,14 @@ syx_dictionary_new (syx_varsize size)
   return object;
 }
 
-//! Lookup a key by symbol in the dictionary and return a Link to bind the variable. Raise an error if not found
+//! Create an association key -> index to be used as binding. Raise an error if not found
 /*!
   Take care the dictionary MUST contain only key symbols
+
+  \return An Association
 */
 SyxOop
-syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key)
+syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop link;
@@ -294,7 +333,7 @@ syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key)
     {
       link = SYX_OBJECT_DATA(table)[i];
       if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return link;
+	return syx_variable_binding_new (SYX_ASSOCIATION_KEY (link), i, dict);
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -302,12 +341,14 @@ syx_dictionary_link_at_symbol (SyxOop dict, syx_symbol key)
   return syx_nil;
 }
 
-//! Lookup a key by symbol in the dictionary and return a Link to bind the variable. Return the given object if not found
+//! Create an association key -> index to be used as binding. Return the given object if not found
 /*!
-  Take care the dictionary MUST contain only key symbols
+  Take care the dictionary MUST contain only symbol keys
+
+  \return An Association
 */
 SyxOop
-syx_dictionary_link_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
+syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop link;
@@ -318,15 +359,109 @@ syx_dictionary_link_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop obj
     {
       link = SYX_OBJECT_DATA(table)[i];
       if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return link;
+	return syx_variable_binding_new (SYX_ASSOCIATION_KEY (link), i, dict);
     }
 
   return object;
 }
 
+//! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Raise an exception if not bound
+/*!
+  The function get the dictionary entry at the index (the value of the given association) then compare the two keys. If they're equal, then return the value of the dictionary entry; if not, lookup the key and change the the index of the binding.
+
+  \return The bound Object
+*/
+SyxOop
+syx_dictionary_bind (SyxOop binding)
+{
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  SyxOop key = SYX_ASSOCIATION_KEY (binding);
+  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+
+  if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+    return SYX_ASSOCIATION_VALUE (assoc);
+
+  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+    {
+      assoc = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+	{
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
+	  return SYX_ASSOCIATION_VALUE (assoc);
+	}
+    }
+
+  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+
+  return syx_nil;
+}
+
+//! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Return the given object if not found
+/*!
+  The function get the dictionary entry at the index (the value of the given association) then compare the two keys. If they're equal, then return the value of the dictionary entry; if not, lookup the key and change the the index of the binding.
+
+  \return The bound Object
+*/
+SyxOop
+syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
+{
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  SyxOop key = SYX_ASSOCIATION_KEY (binding);
+  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+
+  if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+    return SYX_ASSOCIATION_VALUE (assoc);
+
+  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+    {
+      assoc = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+	{
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
+	  return SYX_ASSOCIATION_VALUE (assoc);
+	}
+    }
+
+  return object;
+}
+
+//! Set the object value of the binding returned by syx_dictionary_binding_at_symbol. Raise an exception if not found
+/*!
+  The function does the same thing ot syx_dictionary_bind, except that it sets the value in the Dictionary entry
+*/
+void
+syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
+{
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  SyxOop key = SYX_ASSOCIATION_KEY (binding);
+  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+
+  if (SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+    {
+      SYX_ASSOCIATION_VALUE(assoc) = value;
+      return;
+    }
+
+  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+    {
+      assoc = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+	{
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
+	  SYX_ASSOCIATION_VALUE (assoc) = value;
+	  return;
+	}
+    }
+
+  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+}
+
 //! Lookup a key by symbol in the dictionary. Raise an error if not found
 /*!
-  Take care the dictionary MUST contain only key symbols
+  Take care the dictionary MUST contain only symbol keys
 */
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
@@ -631,6 +766,30 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
 	continue;
 
       method = syx_dictionary_at_symbol_if_absent (SYX_CLASS_METHODS (cur), selector, syx_nil);
+      if (!SYX_IS_NIL (method))
+	return method;
+    }
+
+  return syx_nil;
+}
+
+//! A mix between syx_class_lookup_method and syx_dictionary_bind_if_absent
+/*!
+  \return syx_nil if no method has been found
+*/
+SyxOop 
+syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
+{
+  SyxOop cur;
+  SyxOop method;
+
+  for (cur=class; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
+    {
+      if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
+	continue;
+
+      SYX_VARIABLE_BINDING_DICTIONARY (binding) = SYX_CLASS_METHODS (cur);
+      method = syx_dictionary_bind_if_absent (binding, syx_nil);
       if (!SYX_IS_NIL (method))
 	return method;
     }

@@ -1,14 +1,66 @@
-Import ('env')
+#################################################################################
+#                                                                               #
+# Copyright (c) 2007 Luca Bruno                                                 #
+#                                                                               #
+# This file is part of Smalltalk YX.                                            #
+#                                                                               #
+# Permission is hereby granted, free of charge, to any person obtaining a copy  #
+# of this software and associated documentation files (the "Software"), to deal #
+# in the Software without restriction, including without limitation the rights  #
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     #
+# copies of the Software, and to permit persons to whom the Software is         #
+# furnished to do so, subject to the following conditions:                      #
+#                                                                               #
+# The above copyright notice and this permission notice shall be included in    #
+# all copies or substantial portions of the Software.                           #
+#                                                                               #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    #
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      #
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   #
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        #
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING       #
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER           #
+# DEALINGS IN THE SOFTWARE.                                                     #
+#                                                                               #
+#################################################################################
+
+import os
+
+Import ('env', 'distdir')
 
 if env['PLATFORM'] == 'posix':
    env.AppendENVPath ('LD_LIBRARY_PATH', 'build/lib')
 else:
    env.AppendENVPath ('PATH', 'build/lib') # for windows
 
+# Test builder
+def builder_test (target, source, env):
+   print
+   app = str (source[0].path)
+   relapp = os.path.splitext (os.path.basename (str (source[0].abspath)))[0]
+   f = open(target[0].abspath, 'w')
+   if env.Execute (app) == 0:
+      print 'PASS: %s' % relapp
+      f.write ('PASSED')
+   else:
+      print 'FAIL: %s' % relapp
+      f.write ('FAILED')
+      if env['attach']:
+          app = 'gdb '+app
+          env.Execute (app)
+   f.close ()
+
+action = env.Action (builder_test, lambda *args, **kwargs: '')
+builder = env.Builder (action=action)
+env.Append(BUILDERS = { 'Test' : builder })
+
+# Tests
+
+tests = ['testlexer', 'testimage', 'testcoldparser', 'testinstances', 'testparser', 'testinterp', 'testscheduler']
 targets = []
 deptarget = None
 
-for test in ['testlexer', 'testimage', 'testcoldparser', 'testinstances', 'testparser', 'testinterp', 'testscheduler']:
+for test in tests:
     prog = env.Program (target=test, source=test+'.c', LIBS=['syx'])
     target = test+'.passed'
     env.AlwaysBuild (target)
@@ -44,3 +96,9 @@ def builder_test_summary (env, target, source):
 action = env.Action (builder_test_summary, lambda *args, **kwargs: '')
 summary = env.Command ('tests.out', targets, action)
 env.Alias ('test', summary)
+
+# Source distribution
+
+tests = map (lambda x: x + '.c', tests)
+target = env.Install (os.path.join (distdir, 'tests'), tests + ['SConscript'])
+env.Alias ('sdist', target)
