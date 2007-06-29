@@ -26,12 +26,16 @@ DEALINGS IN THE SOFTWARE.
 
 + aNumber
      <primitive: 'SmallInteger_plus'>
-	 ^self retrySumCoercing: aNumber
+	 aNumber isSmallInteger
+	 ifTrue: [ self asLargeInteger + aNumber asLargeInteger ]
+	 ifFalse: [ ^self retrySumCoercing: aNumber ]
 !
 
 - aNumber
      <primitive: 'SmallInteger_minus'>
-	 ^self retryDiffCoercing: aNumber
+	 aNumber isSmallInteger
+	 ifTrue: [ self asLargeInteger - aNumber asLargeInteger ]
+	 ifFalse: [ ^self retryDiffCoercing: aNumber ]
 !
 
 < aNumber
@@ -82,6 +86,11 @@ asSmallInteger
 
 asFloat
     <primitive: 'SmallInteger_asFloat'>
+	self primitiveFailed
+!
+
+asLargeInteger
+    <primitive: 'SmallInteger_asLargeInteger'>
 	self primitiveFailed
 !
 

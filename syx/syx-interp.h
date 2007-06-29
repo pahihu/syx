@@ -74,7 +74,7 @@ inline void syx_exec_state_free (void);
 //! Enter the method which contains the primitive call
 #define SYX_PRIM_FAIL							\
   syx_interp_enter_context (syx_method_context_new (es->context, method, es->message_receiver, \
-						    syx_array_new (es->message_arguments_count, es->message_arguments))); \
+						    syx_array_new_ref (es->message_arguments_count, es->message_arguments))); \
   return FALSE
 
 //! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails
@@ -85,7 +85,7 @@ inline void syx_exec_state_free (void);
     }
 
 //! The number of primitives
-#define SYX_PRIMITIVES_MAX 55
+#define SYX_PRIMITIVES_MAX 71
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\

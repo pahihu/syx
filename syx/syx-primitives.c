@@ -280,6 +280,15 @@ SYX_FUNC_PRIMITIVE (SmallInteger_print)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (LargeInteger_print)
+{
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (es->message_receiver))
+    printf ("%llu\n", SYX_OBJECT_LARGE_INTEGER (es->message_receiver));
+  else
+    printf ("-%llu\n", SYX_OBJECT_LARGE_INTEGER (es->message_receiver));
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SYX_FUNC_PRIMITIVE (Float_print)
 {
   printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
@@ -499,31 +508,59 @@ SYX_FUNC_PRIMITIVE (SmallInteger_plus)
   SYX_PRIM_ARGS(1);
   
   SyxOop first, second;
-  syx_int32 result;
+  syx_int32 a, b, result;
+
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
+
+  a = SYX_SMALL_INTEGER (first);
+  b = SYX_SMALL_INTEGER (second);
+  if (SYX_SMALL_INTEGER_OVERFLOW (a, b))
+    {
+      SYX_PRIM_FAIL;
+    }
+
   result = SYX_SMALL_INTEGER (first) + SYX_SMALL_INTEGER (second);
-  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) +
-					  SYX_SMALL_INTEGER (second)));
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (result))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (result));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 {
   SYX_PRIM_ARGS(1);
-
+  
   SyxOop first, second;
+  syx_int32 a, b, result;
+
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
-  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) -
-					  SYX_SMALL_INTEGER (second)));
+
+  a = SYX_SMALL_INTEGER (first);
+  b = SYX_SMALL_INTEGER (second);
+  if (SYX_SMALL_INTEGER_OVERFLOW (a, -b))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  result = SYX_SMALL_INTEGER (first) - SYX_SMALL_INTEGER (second);
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (result))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (result));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_lt)
@@ -533,7 +570,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_lt)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -548,7 +585,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_gt)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -563,7 +600,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_le)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -578,7 +615,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ge)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -593,7 +630,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_eq)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -607,7 +644,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (first) || !SYX_IS_SMALL_INTEGER (second))
+  if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -620,6 +657,406 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asFloat)
   SYX_PRIM_RETURN (syx_float_new (n));
 }
 
+SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
+{
+  syx_int32 num = SYX_SMALL_INTEGER (es->message_receiver);
+  if (num >= 0)
+    {
+      SYX_PRIM_RETURN (syx_large_positive_integer_new ((syx_uint64) num));
+    }
+  else
+    {
+      SYX_PRIM_RETURN (syx_large_negative_integer_new ((syx_uint64) -num));
+    }
+}
+
+/* Large positive integers */
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_plus)
+{
+  SYX_PRIM_ARGS(1);
+  
+  SyxOop first, second;
+  syx_uint64 a, b, result;
+
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      a = SYX_OBJECT_LARGE_INTEGER (first);
+      b = SYX_OBJECT_LARGE_INTEGER (second);
+      if (a > b)
+	{
+	  result = a - b;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
+	    }
+	}
+      else
+	{
+	  result = b - a;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
+	    }
+	}
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_minus)
+{
+  SYX_PRIM_ARGS(1);
+  
+  SyxOop first, second;
+  syx_uint64 a, b, result;
+
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      a = SYX_OBJECT_LARGE_INTEGER (first);
+      b = SYX_OBJECT_LARGE_INTEGER (second);
+      if (a > b)
+	{
+	  result = a - b;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
+	    }
+	}
+      else
+	{
+	  result = b - a;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
+	    }
+	}
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_lt)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_gt)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_le)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_ge)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_eq)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) ==
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargePositiveInteger_ne)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) !=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+/* Large negative integers */
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_plus)
+{
+  SYX_PRIM_ARGS(1);
+  
+  SyxOop first, second;
+  syx_uint64 a, b, result;
+
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_large_negative_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      a = SYX_OBJECT_LARGE_INTEGER (first);
+      b = SYX_OBJECT_LARGE_INTEGER (second);
+      if (a > b)
+	{
+	  result = a - b;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
+	    }
+	}
+      else
+	{
+	  result = b - a;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
+	    }
+	}
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_minus)
+{
+  SYX_PRIM_ARGS(1);
+  
+  SyxOop first, second;
+  syx_uint64 a, b, result;
+
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      a = SYX_OBJECT_LARGE_INTEGER (first);
+      b = SYX_OBJECT_LARGE_INTEGER (second);
+      if (a > b)
+	{
+	  result = a - b;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
+	    }
+	}
+      else
+	{
+	  result = b - a;
+	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
+	    {
+	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
+	    }
+	  else
+	    {
+	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
+	    }
+	}
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_lt)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_gt)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_eq)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) ==
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_ne)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) !=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
 
 /* Floats */
 
@@ -630,7 +1067,7 @@ SYX_FUNC_PRIMITIVE (Float_plus)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -645,7 +1082,7 @@ SYX_FUNC_PRIMITIVE (Float_minus)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -660,7 +1097,7 @@ SYX_FUNC_PRIMITIVE (Float_lt)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -675,7 +1112,7 @@ SYX_FUNC_PRIMITIVE (Float_gt)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -690,7 +1127,7 @@ SYX_FUNC_PRIMITIVE (Float_le)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -705,7 +1142,7 @@ SYX_FUNC_PRIMITIVE (Float_ge)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -720,7 +1157,7 @@ SYX_FUNC_PRIMITIVE (Float_eq)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -735,7 +1172,7 @@ SYX_FUNC_PRIMITIVE (Float_ne)
   SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
-  if (!SYX_OBJECT_IS_FLOAT (first) || !SYX_OBJECT_IS_FLOAT (second))
+  if (!SYX_OBJECT_IS_FLOAT (second))
     {
       SYX_PRIM_FAIL;
     }
@@ -816,6 +1253,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
 
   { "Symbol_asString", Symbol_asString },
   { "SmallInteger_print", SmallInteger_print },
+  { "LargeInteger_print", LargeInteger_print },
   { "Float_print", Float_print },
 
   /* Interpreter */
@@ -844,6 +1282,25 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
   { "SmallInteger_asFloat", SmallInteger_asFloat },
+  { "SmallInteger_asLargeInteger", SmallInteger_asLargeInteger },
+
+  /* Large positive integers */
+  { "LargePositiveInteger_plus", LargePositiveInteger_plus },
+  { "LargePositiveInteger_minus", LargePositiveInteger_minus },
+  { "LargePositiveInteger_lt", LargePositiveInteger_lt },
+  { "LargePositiveInteger_gt", LargePositiveInteger_gt },
+  { "LargePositiveInteger_le", LargePositiveInteger_le },
+  { "LargePositiveInteger_ge", LargePositiveInteger_ge },
+  { "LargePositiveInteger_eq", LargePositiveInteger_eq },
+  { "LargePositiveInteger_ne", LargePositiveInteger_ne },
+
+  /* Large negative integers */
+  { "LargeNegativeInteger_plus", LargeNegativeInteger_plus },
+  { "LargeNegativeInteger_minus", LargeNegativeInteger_minus },
+  { "LargeNegativeInteger_lt", LargeNegativeInteger_lt },
+  { "LargeNegativeInteger_gt", LargeNegativeInteger_gt },
+  { "LargeNegativeInteger_eq", LargeNegativeInteger_eq },
+  { "LargeNegativeInteger_ne", LargeNegativeInteger_ne },
 
   /* Floats */
   { "Float_plus", Float_plus },

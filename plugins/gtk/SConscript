@@ -52,5 +52,5 @@ if penv['GTK']:
     env.Install (instdir, lib_shared)
     env.Alias ('install', instdir)
 
-target = env.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
-env.Alias ('sdist', target)
+target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
+penv.Alias ('sdist', target)

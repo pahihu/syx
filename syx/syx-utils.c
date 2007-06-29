@@ -247,7 +247,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
     syx_dictionary_at_const_put (SYX_CLASS_CLASS_VARIABLES(subclass),
 				 SYX_OBJECT_DATA(class_vars)[i], syx_nil);
   // get rid of this
-  syx_memory_free (class_vars);
+  syx_object_free (class_vars);
 
   return TRUE;
 }

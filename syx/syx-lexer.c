@@ -130,10 +130,17 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   errno = 0;
   token->value.integer = strtol (s, (char **)NULL, 10);
-  if (errno)
-    syx_perror ("lexer: strtol");
-
   token->type = SYX_TOKEN_INT_CONST;
+  if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
+    {
+      token->value.large_integer = strtoll (s, (char **)NULL, 10);
+      token->type = SYX_TOKEN_LARGE_INT_CONST;
+    }
+  else if (errno != 0)
+    {
+      perror ("LEXER");
+      exit (EXIT_FAILURE);
+    }
 
   // a radix?
   if (tolower (lastChar) == 'r')
@@ -153,10 +160,17 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
       errno = 0;
       token->value.integer = strtol (s, (char **)NULL, radix);
-      if (errno)
-	syx_perror ("lexer: strtol radix");
-      
       token->type = SYX_TOKEN_INT_CONST;
+      if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
+	{
+	  token->value.large_integer = strtoll (s, (char **)NULL, radix);
+	  token->type = SYX_TOKEN_LARGE_INT_CONST;
+	}
+      else if (errno != 0)
+	{
+	  perror ("LEXER");
+	  exit (EXIT_FAILURE);
+	}
     }
 
   // a float?

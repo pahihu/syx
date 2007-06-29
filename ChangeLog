@@ -1,3 +1,21 @@
+2007-06-29  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-primitives.c: added support for both positive and negative large integers
+	
+	* syx/syx-init.c (syx_quit): free initial paths
+
+	* syx/syx-interp.h (SYX_PRIM_FAIL): fixed a big memory leak. Message arguments are freed by the interpreter, we need a new reference to them
+
+	* syx/syx-interp.c (syx_process_execute_blocking): do not take care of yields
+	(syx_exec_state_fetch): reset bytecodes count to stop execution of blocking processes
+
+	* syx/syx-parser.c (_syx_parser_parse_term): support for large integers
+
+	* syx/syx-types.h (SYX_SMALL_INTEGER_CAN_EMBED): added
+	(SYX_SMALL_INTEGER_OVERFLOW): added
+
+	* syx/syx-lexer.c (_syx_lexer_token_number): added support for large integers
+
 2007-06-28  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-primitives.c (SmallInteger_asFloat): added
@@ -15,7 +33,7 @@
 
 	* syx/syx-bytecode.c (syx_bytecode_gen_message): create an unbound method reference
 
-	* syx/syx-object.c (syx_dictionary_binding_at_symbol): renamed. Return an Association of key -> index to bind variables
+	* syx/syx-object.c (syx_dictionary_binding_at_symbol): renamed. Return an Association of key -> value to bind variables
 	(syx_dictionary_binding_at_symbol_if_absent): idem
 	(syx_dictionary_bind): added
 	(syx_dictionary_bind_if_absent): added

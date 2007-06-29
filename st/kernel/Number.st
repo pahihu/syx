@@ -22,6 +22,18 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Number class methodsFor: 'instance creation'!
+
+new
+    ^self shouldNotImplement
+! !
+
+!Number methodsFor: 'testing'!
+
+isSmallInteger
+    ^false
+! !
+
 !Number methodsFor: 'arithmetic'!
 
 + aNumber

@@ -42,6 +42,10 @@
 //! Cast a SyxOop to a native pointer type
 #define SYX_OOP_CAST_POINTER(oop) ((syx_pointer) (oop))
 
+//! Limits
+#define SYX_SMALL_INTEGER_CAN_EMBED(num) ((syx_int32)(num) >= (-1 << 30) && (syx_int32)(num) < (1 << 30))
+#define SYX_SMALL_INTEGER_OVERFLOW(a,b) ((a > 0) == (b >= 0)) && ((a > 0) != ((a + b) >= 0))
+
 #if !defined FALSE || !defined TRUE
 #define FALSE 0
 #define TRUE 1

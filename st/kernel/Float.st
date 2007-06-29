@@ -22,24 +22,18 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!Float class methodsFor: 'instance creation'!
-
-new
-    self shouldNotImplement
-! !
-
 !Float methodsFor: 'coercing'!
 
 asFloat
     ^self
 !
 
-generality
-    ^50
-!
-
 unity
     ^1.0
+!
+
+generality
+    ^50
 !
 
 coerce: aNumber

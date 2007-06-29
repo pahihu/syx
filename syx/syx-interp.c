@@ -182,7 +182,11 @@ syx_exec_state_fetch (void)
   SyxOop method;
   es->context = SYX_PROCESS_CONTEXT (es->process);
   if (SYX_IS_NIL (es->context))
-    return;
+    {
+      es->ip = 0;
+      es->bytecodes_count = 0;
+      return;
+    }
 
   method = SYX_METHOD_CONTEXT_METHOD (es->context);
 
@@ -289,8 +293,7 @@ syx_process_execute_blocking (SyxOop process)
   while (es->ip < es->bytecodes_count)
     {
       byte = _syx_interp_get_next_byte ();
-      if (!_syx_interp_execute_byte (byte))
-	break;
+      _syx_interp_execute_byte (byte);
     }
 
   syx_exec_state_save ();

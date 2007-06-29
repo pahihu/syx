@@ -32,11 +32,10 @@
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-object.h"
-#include "syx-memory.h"
 #include "syx-interp.h"
 
-static syx_symbol _syx_root_path;
-static syx_symbol _syx_image_path;
+static syx_string _syx_root_path;
+static syx_string _syx_image_path;
 
 static void _syx_file_in_basic (void);
 static void _syx_file_in_basic_decl (void);
@@ -84,7 +83,8 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st", "Metaclass.st",
     "Symbol.st",
-    "Number.st", "SmallInteger.st", "Float.st", // "LargeInteger.st",
+    "Number.st", "SmallInteger.st", "Float.st",
+    "LargeInteger.st", "LargePositiveInteger.st", "LargeNegativeInteger.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
@@ -229,7 +229,8 @@ syx_fetch_basic (void)
   syx_symbol_class = syx_globals_at ("Symbol");
   syx_string_class = syx_globals_at ("String");
   syx_small_integer_class = syx_globals_at ("SmallInteger");
-  //  syx_large_integer_class = syx_globals_at ("LargeInteger");
+  syx_large_positive_integer_class = syx_globals_at ("LargePositiveInteger");
+  syx_large_negative_integer_class = syx_globals_at ("LargeNegativeInteger");
   syx_float_class = syx_globals_at ("Float");
   syx_character_class = syx_globals_at ("Character");
   syx_byte_array_class = syx_globals_at ("ByteArray");
@@ -278,9 +279,10 @@ syx_init (syx_symbol root_path)
   // look in the root directory
   if (root_path == _syx_root_path)
     {
-      _syx_image_path = syx_malloc (strlen (_syx_root_path) + 12);
+      _syx_image_path = syx_malloc (strlen (_syx_root_path) + 13);
       sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
-      goto end;
+      initialized = TRUE;
+      return TRUE;
     }
 
   // return the default path defined by the installation
@@ -288,6 +290,7 @@ syx_init (syx_symbol root_path)
 
  end:
    
+  _syx_image_path = strdup (_syx_image_path),
   initialized = TRUE;
   return TRUE;
 }
@@ -304,6 +307,9 @@ syx_quit (void)
   syx_scheduler_quit ();
   syx_memory_clear ();
   syx_error_clear ();
+
+  syx_free (_syx_image_path);
+  syx_free (_syx_root_path);
 }
 
 //! Returns the root directory of Syx
@@ -330,7 +336,7 @@ syx_set_root_path (syx_symbol root_path)
   if (access (root_path, R_OK) < 0)
      return FALSE;
 
-  _syx_root_path = root_path;
+  _syx_root_path = strdup (root_path);
   return TRUE;
 }
 
@@ -341,7 +347,10 @@ syx_set_image_path (syx_symbol image_path)
   if (!image_path || access (image_path, R_OK) < 0)
      return FALSE;
    
-  _syx_image_path = image_path;
+  if (!_syx_image_path)
+    syx_free (_syx_image_path);
+
+  _syx_image_path = strdup (image_path);
   return TRUE;
 }
 

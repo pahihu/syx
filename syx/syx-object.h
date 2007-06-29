@@ -30,14 +30,13 @@
 #include "syx-enums.h"
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
-#define SYX_OBJECT_LARGE_INTEGER(oop) (*((syx_int64 *)(SYX_OBJECT(oop)->data)))
+#define SYX_OBJECT_LARGE_INTEGER(oop) (*((syx_uint64 *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_SIZE(oop) (SYX_OBJECT(oop)->size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
-#define SYX_OBJECT_CPOINTER(oop) ((syx_pointer)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
 
@@ -51,8 +50,10 @@
 			      ((oop) < (SyxOop)syx_memory ||		\
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
-#define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
-					  SYX_OBJECT(oop)->class == syx_large_integer_class)
+#define SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
+						   SYX_OBJECT(oop)->class == syx_large_positive_integer_class)
+#define SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
+						   SYX_OBJECT(oop)->class == syx_large_negative_integer_class)
 #define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_float_class)
 
 /* Oop */
@@ -91,7 +92,8 @@ extern SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
-  syx_large_integer_class,
+  syx_large_positive_integer_class,
+  syx_large_negative_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
@@ -142,7 +144,8 @@ void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
 
 inline SyxOop syx_metaclass_new (SyxOop supermetaclass);
 inline SyxOop syx_class_new (SyxOop superclass);
-inline SyxOop syx_large_integer_new (syx_int64 integer);
+inline SyxOop syx_large_positive_integer_new (syx_uint64 integer);
+inline SyxOop syx_large_negative_integer_new (syx_uint64 integer);
 inline SyxOop syx_float_new (syx_double floating);
 inline SyxOop syx_byte_array_new (syx_varsize size, syx_uint8 *data);
 inline SyxOop syx_byte_array_new_size (syx_varsize size);

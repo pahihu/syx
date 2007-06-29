@@ -48,5 +48,5 @@ if penv['READLINE']:
           env.Alias ('install', instdir)
       conf.Finish ()
 
-target = env.Install (os.path.join (distdir, 'plugins', 'readline'), lib_sources + ['SConscript'])
-env.Alias ('sdist', target)
+target = penv.Install (os.path.join (distdir, 'plugins', 'readline'), lib_sources + ['SConscript'])
+penv.Alias ('sdist', target)

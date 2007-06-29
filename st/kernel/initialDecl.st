@@ -179,6 +179,14 @@ Number subclass: #LargeInteger
        instanceVariableNames: ''
        classVariableNames: ''!
 
+LargeInteger subclass: #LargePositiveInteger
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
+LargeInteger subclass: #LargeNegativeInteger
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
 Number subclass: #Float
        instanceVariableNames: ''
        classVariableNames: ''!

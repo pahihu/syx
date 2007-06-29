@@ -255,6 +255,11 @@ _syx_parser_parse_term (SyxParser *self)
       syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (token.value.integer));
       syx_token_free (token);
       break;
+    case SYX_TOKEN_LARGE_INT_CONST:
+      syx_bytecode_push_literal (self->bytecode,
+				 syx_large_positive_integer_new (token.value.large_integer));
+      syx_token_free (token);
+      break;
     case SYX_TOKEN_FLOAT_CONST:
       syx_bytecode_push_literal (self->bytecode, syx_float_new (token.value.floating));
       syx_token_free (token);
@@ -291,6 +296,9 @@ _syx_parser_parse_term (SyxParser *self)
 	  token = syx_lexer_next_token (self->lexer);
 	  if (token.type == SYX_TOKEN_INT_CONST)
 	    syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (-token.value.integer));
+	  else if (token.type == SYX_TOKEN_LARGE_INT_CONST)
+	    syx_bytecode_push_literal (self->bytecode,
+				       syx_large_negative_integer_new (token.value.large_integer));
 	  else if (token.type == SYX_TOKEN_FLOAT_CONST)
 	    syx_bytecode_push_literal (self->bytecode, syx_float_new (-token.value.floating));
 	  else

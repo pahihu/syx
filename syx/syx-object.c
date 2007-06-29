@@ -54,7 +54,8 @@ SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
-  syx_large_integer_class,
+  syx_large_positive_integer_class,
+  syx_large_negative_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
@@ -184,6 +185,28 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
   return class;
+}
+
+//! Create a LargePositiveInteger (a 64-bit unsigned integer)
+inline SyxOop
+syx_large_positive_integer_new (syx_uint64 num)
+{
+  SyxOop oop = syx_object_new_size (syx_large_positive_integer_class, FALSE, sizeof (syx_uint64));
+  SYX_OBJECT_LARGE_INTEGER(oop) = num;
+  return oop;
+}
+
+//! Create a LargeNegativeInteger (a 64-bit unsigned integer)
+/*!
+  The representation of a LargeNegativeInteger is the same of the positive one, except that's handled differently.
+  So take care of the class when doing operations on these numbers.
+ */
+inline SyxOop
+syx_large_negative_integer_new (syx_uint64 num)
+{
+  SyxOop oop = syx_object_new_size (syx_large_negative_integer_class, FALSE, sizeof (syx_uint64));
+  SYX_OBJECT_LARGE_INTEGER(oop) = num;
+  return oop;
 }
 
 //! Create a Float object
