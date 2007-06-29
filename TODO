@@ -1,6 +1,5 @@
 Major:
-- Number coercing
-- Add class variables and pool dictionaries
+- Add pool dictionaries
 - Implement coalesced hash tables with consistent hash functions
 - System signal handling
 - Object printing
@@ -11,5 +10,7 @@ Minor:
 - Object inspecting
 
 Later:
-- Method caching
-- Cover all GNU Smalltalk tests and benchmarks
+- Create a series of Smalltalk tests and benchmarks
+
+Very later:
+- Method inlining
