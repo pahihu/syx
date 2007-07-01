@@ -203,7 +203,6 @@ typedef enum
 typedef enum
   {
     SYX_ERROR_INTERP,
-    SYX_ERROR_NOT_UNDERSTOOD,
     SYX_ERROR_NOT_FOUND,
   } SyxSignalInternal;
 

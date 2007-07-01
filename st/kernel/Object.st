@@ -120,6 +120,10 @@ printString
 
 !Object methodsFor: 'signaling'!
 
+doesNotUnderstand: aSelector
+    MessageNotUnderstood signal
+!
+
 shouldNotImplement
     ShouldNotImplement signal
 !

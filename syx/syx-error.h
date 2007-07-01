@@ -50,6 +50,12 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 					      "signal",			\
 					      args))
 
+#define syx_signal_does_not_understand(receiver, selector)		\
+  syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (), \
+						     receiver,		\
+						     "doesNotUnderstand:", \
+						     selector))
+
 #define syx_error(args...)			\
   {						\
     fprintf (stderr, "ERROR: ");		\
