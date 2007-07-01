@@ -24,17 +24,6 @@ DEALINGS IN THE SOFTWARE.
 
 !ArrayedCollection class methodsFor: 'instance creation'!
 
-new: size withAll: aCollection
-    "Create a sized array and set all objects from the given collection"
-    ^(self new: size)
-	replaceFrom: 1 to: size with: aCollection
-!
-
-withAll: aCollection  
-    "Create a collection with the same elements of aCollection"
-    ^self new: aCollection size withAll: aCollection
-!
-
 with: anObject
     "Create a collection with a single element"
     ^(self new: 1)
@@ -48,23 +37,16 @@ with: firstObject with: secondObject
         at: 1 put: firstObject;
         at: 2 put: secondObject;
         yourself
+!
+
+withAll: aCollection
+    "Answer an arrayed collection with the same elements of aCollection"
+    ^(self new: aCollection size)
+	replaceFrom: 1 to: aCollection size with: aCollection;
+	yourself
 ! !
 
 !ArrayedCollection methodsFor: 'basic'!
-
-at: anIndex
-    <primitive: 'Object_at'>
-	self primitiveFailed
-!
-
-at: anIndex put: anObject
-    <primitive: 'Object_at_put'>
-	self primitiveFailed
-!
-
-size
-    ^self basicSize
-!
 
 add: anObject
     self shouldNotImplement

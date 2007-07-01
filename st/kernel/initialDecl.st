@@ -29,7 +29,7 @@ nil subclass: #Object
     classVariableNames: ''!
 
 Object subclass: #Behavior
-       instanceVariableNames: 'name superclass instanceVariableNames instanceSize methodDict'
+       instanceVariableNames: 'name superclass instanceVariableNames instanceSize methodDict subclasses'
        classVariableNames: ''!
 
 Object subclass: #UndefinedObject
@@ -92,9 +92,9 @@ Object subclass: #Semaphore
        instanceVariableNames: 'waitingProcesses signals'
        classVariableNames: ''!
 
-OrderedCollection subclass: #CompiledCode
-		  instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'
-                  classVariableNames: ''!
+Object subclass: #CompiledCode
+       instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'
+       classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
 	     instanceVariableNames: ''

@@ -118,10 +118,20 @@ main (int argc, char *argv[])
   puts ("- Test nested blocks with arguments");
   ret_obj = _interpret ("method ^[ :s | [ :s | s ] value: 321] value: 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
-  
+
   puts ("- Another text for nested blocks and arguments");
-  ret_obj = _interpret ("method ^[ :s | [ s] value] value: 123");
-  assert (SYX_SMALL_INTEGER(ret_obj) == 123);
+  ret_obj = _interpret ("method | b | b := [ :a | a ]."
+			"^[ :b | "
+			"   ([ :b | "
+			"      ([ :b | b value: 123 + 1 ] value: b) + 1"
+			"   ] value: b) + 1"
+			"] value: b");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 126);
+
+  puts ("- Recursive blocks");
+  ret_obj = _interpret ("method | b i | i := 0. b := [ :b | (i := i + 1) = 10 ifFalse: [ b value: b ] ]."
+			"b value: b. ^i");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 10);
 
   puts ("- Test ifTrue:");
   ret_obj = _interpret ("method | var | var := 123. var = 321 ifTrue: [^false]. var = 123 ifTrue: [^true]");

@@ -45,12 +45,6 @@ replaceFrom: startIndex to: stopIndex with: aCollection
     j := 0.
     startIndex to: (stopIndex min: aCollection size) do: [ :i |
 	self at: i put: (aCollection at: (j := j + 1)) ]
-!
-
-withAll: aCollection
-    "Replace items from 1 to receiver's size with the elements of aCollection."
-    1 to: (self size min: aCollection size) do: [ :i |
-	self at: i put: (aCollection at: i) ]
 ! !
 
 !SequenceableCollection methodsFor: 'enumerating'!
@@ -66,6 +60,20 @@ do: aBlock
 ! !
 
 !SequenceableCollection methodsFor: 'basic'!
+
+at: anIndex
+    <primitive: 'Object_at'>
+	self primitiveFailed
+!
+
+at: anIndex put: anObject
+    <primitive: 'Object_at_put'>
+	self primitiveFailed
+!
+
+size
+    ^self basicSize
+!
 
 indexOf: anElement ifAbsent: exceptionBlock
     ^self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock

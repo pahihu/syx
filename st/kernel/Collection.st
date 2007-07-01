@@ -36,12 +36,22 @@ with: anObject
 with: firstObject with: secondObject
     "Answer a collection with the two given objects"
     ^self new add: firstObject; add: secondObject; yourself
+!
+
+withAll: aCollection
+    "Create a collection whose elements are the same of aCollection"
+    ^self new addAll: aCollection
 ! !
 
 !Collection methodsFor: 'indexable fields'!
 
 add: anObject
     self subclassResponsibility
+!
+
+addAll: aCollection
+    aCollection do: [ :ea |
+	self add: ea ]
 !
 
 do: aBlock
@@ -69,4 +79,10 @@ size
 copyEmpty: newSize
     "Create the empty collection of the given size"
     ^self class new: newSize
+! !
+
+!Collection methodsFor: 'converting'!
+
+asOrderedCollection
+    ^OrderedCollection withAll: self
 ! !

@@ -1,5 +1,19 @@
 2007-07-01  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-memory.c (syx_memdup): added
+
+	* Fixed a big bug in block closures. Had to add a new bytecode to fix that
+	
+	* syx/syx-object.c (syx_object_copy): added
+
+	* syx/syx-object.h (SYX_CLASS_SUBCLASSES): added instance variable to Behavior
+
+	* syx/syx-memory.h (SYX_MEMORY_INDEX_OF): added
+
+	* syx/syx-object.c (syx_object_hash): hash of small integers and characters are the oop itself. The hash of an object is its index in the object table
+	(syx_array_remove): added
+	(syx_array_add): added
+
 	* syx/syx-error.c (syx_error_init): message not understoods are handled differently
 
 	* st/kernel/Object.st (doesNotUnderstand). added (issue #2)

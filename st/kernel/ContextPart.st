@@ -109,6 +109,10 @@ method: aMethod parent: aContext receiver: anObject arguments: anArray
     stack := Array new: method stackSize
 !
 
+arguments
+    ^arguments
+!
+
 receiver
     ^receiver
 !

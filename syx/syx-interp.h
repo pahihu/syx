@@ -85,7 +85,7 @@ inline void syx_exec_state_free (void);
     }
 
 //! The number of primitives
-#define SYX_PRIMITIVES_MAX 74
+#define SYX_PRIMITIVES_MAX 76
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -140,6 +140,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_literal);
 SYX_FUNC_INTERPRETER (syx_interp_push_constant);
 SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable);
 SYX_FUNC_INTERPRETER (syx_interp_push_array);
+SYX_FUNC_INTERPRETER (syx_interp_push_block_closure);
 
 SYX_FUNC_INTERPRETER (syx_interp_assign_instance);
 SYX_FUNC_INTERPRETER (syx_interp_assign_temporary);

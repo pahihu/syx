@@ -109,13 +109,13 @@ SYX_FUNC_PRIMITIVE (Object_at_put)
   SYX_PRIM_RETURN (object);
 }
 
-SYX_FUNC_PRIMITIVE (Object_grow_by)
+SYX_FUNC_PRIMITIVE (Object_resize)
 {
   SYX_PRIM_ARGS(1);
   syx_varsize size;
 
   size = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  syx_object_grow_by (es->message_receiver, size);
+  syx_object_resize (es->message_receiver, size);
 
   SYX_PRIM_RETURN (es->message_receiver);
 }
@@ -131,15 +131,21 @@ SYX_FUNC_PRIMITIVE (Object_identityEqual)
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OOP_EQ (es->message_receiver, es->message_arguments[0])));
 }
 
-SYX_FUNC_PRIMITIVE (Object_identifyHash)
+SYX_FUNC_PRIMITIVE (Object_identityHash)
 {
-  syx_int32 index = (syx_int32)(es->message_receiver - (SyxOop)syx_memory) / sizeof (SyxObject);
-  SYX_PRIM_RETURN (syx_small_integer_new (index));
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_MEMORY_INDEX_OF (es->message_receiver)));
 }
 
 SYX_FUNC_PRIMITIVE (Object_hash)
 {
   SYX_PRIM_RETURN (syx_small_integer_new (syx_object_hash (es->message_receiver)));
+}
+
+SYX_FUNC_PRIMITIVE (Object_equal)
+{
+  SYX_PRIM_ARGS(1);
+  SYX_PRIM_RETURN (syx_boolean_new (syx_object_hash (es->message_receiver) ==
+				    syx_object_hash (es->message_arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
@@ -1287,8 +1293,10 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_at_put", Object_at_put },
   { "Object_size", Object_size },
   { "Object_identityEqual", Object_identityEqual },
-  { "Object_identifyHash", Object_identifyHash },
+  { "Object_identityHash", Object_identityHash },
   { "Object_hash", Object_hash },
+  { "Object_equal", Object_equal },
+  { "Object_resize", Object_resize },
 
   /* Arrayed collections */
   { "ArrayedCollection_replaceFromToWith", ArrayedCollection_replaceFromToWith },

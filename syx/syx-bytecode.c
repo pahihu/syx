@@ -195,8 +195,9 @@ SYX_FUNC_BYTECODE (push_literal, SyxOop instance)
 
 SYX_FUNC_BYTECODE (push_block_closure, SyxOop closure)
 {
-  syx_bytecode_push_literal (bytecode, closure);
-  syx_bytecode_do_special (bytecode, SYX_BYTECODE_SET_DEFINED_CONTEXT);
+  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BLOCK_CLOSURE,
+				syx_bytecode_gen_literal (bytecode, closure));
+  bytecode->stack_size++;
 }
 
 SYX_FUNC_BYTECODE (push_instance, syx_uint16 instance_index)
@@ -211,10 +212,10 @@ SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant)
   bytecode->stack_size++;
 }
 
-SYX_FUNC_BYTECODE (push_binding_variable, SyxOop link)
+SYX_FUNC_BYTECODE (push_binding_variable, SyxOop assoc)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BINDING_VARIABLE,
-				syx_bytecode_gen_literal (bytecode, link));
+				syx_bytecode_gen_literal (bytecode, assoc));
   bytecode->stack_size++;
 }
 

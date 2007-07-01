@@ -42,6 +42,9 @@
 extern SyxObject *syx_memory;
 extern syx_int32 _syx_memory_size;
 
+//! Returns the index of the oop in the object table
+#define SYX_MEMORY_INDEX_OF(oop) (((oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
+
 void syx_memory_init (syx_int32 size);
 void syx_memory_clear (void);
 SyxOop syx_memory_alloc (void);
@@ -60,6 +63,7 @@ inline syx_pointer syx_calloc (syx_int32 elements, syx_int32 element_size);
 inline syx_pointer syx_realloc (syx_pointer ptr, syx_int32 size);
 #define syx_free free
 void syx_freev (syx_pointer *ptrv);
+inline syx_pointer syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size);
 
 #ifndef HAVE_STRNDUP
   inline syx_string strndup (syx_symbol src, syx_size n);

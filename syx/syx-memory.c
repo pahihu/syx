@@ -217,7 +217,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
       oop = oops[i];
       if (SYX_IS_OBJECT (oop))
 	{
-	  idx = (oop - (SyxOop)syx_memory) / sizeof (SyxObject);
+	  idx = SYX_MEMORY_INDEX_OF(oop);
 
 	  if (mark_type)
 	    fputc (1, image);
@@ -521,6 +521,18 @@ syx_realloc (syx_pointer ptr, syx_int32 size)
   nptr = realloc (ptr, size);
   if (!nptr)
     syx_error ("out of memory");
+
+  return nptr;
+}
+
+//! Return a new allocated memory which is a copy of the given one
+inline syx_pointer
+syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size)
+{
+  syx_pointer nptr;
+
+  nptr = syx_malloc (element_size * elements);
+  memcpy (nptr, ptr, element_size * elements);
 
   return nptr;
 }

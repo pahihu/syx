@@ -83,6 +83,10 @@ value: anObject
 
 !BlockClosure methodsFor: 'accessing'!
 
+definedContext
+    ^definedContext
+!
+
 definedContext: aContext
     "Set the context where the closure has been defined."
     definedContext := aContext

@@ -166,13 +166,15 @@ syx_build_basic (void)
   SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (class)) = class;	\
   SYX_CLASS_SUPERCLASS(class) = superclass;				\
   SYX_CLASS_NAME(class) = syx_symbol_new (name);			\
+  SYX_CLASS_SUBCLASSES(class) = syx_array_new (0, NULL);		\
   syx_globals_at_put (SYX_CLASS_NAME(class), class)
 
+  SYX_CLASS_SUBCLASSES(Class) = syx_array_new (0, NULL);
   syx_object_set_class (Object, syx_metaclass_new (Class));
   SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (Object)) = Object;
   SYX_CLASS_SUPERCLASS(Object) = syx_nil;
   SYX_CLASS_NAME(Object) = syx_symbol_new ("Object");
-  SYX_CLASS_METHODS(Object) = syx_dictionary_new (50);
+  SYX_CLASS_SUBCLASSES(Object) = syx_array_new (0, NULL);
   syx_globals_at_put (SYX_CLASS_NAME(Object), Object);
 
   _SETUP_CLASS ("Behavior", Behavior, Object);

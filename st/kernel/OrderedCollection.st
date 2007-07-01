@@ -1,7 +1,12 @@
 !OrderedCollection methodsFor: 'basic'!
 
+growBy: aNumber
+    self basicResize: self size + aNumber
+!
+
 add: anObject
-    ^self notYetImplemented
+    self growBy: 1.
+    self at: self size put: anObject
 !
 
 addAll: aCollection

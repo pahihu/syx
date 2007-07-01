@@ -29,6 +29,11 @@ name
     ^name
 !
 
+subclasses
+    "A list of direct subclasses of the receiver"
+    ^subclasses
+!
+
 superclass
     "Answer my superclass"
     ^superclass
@@ -63,10 +68,25 @@ new: anInteger
 
 !Behavior methodsFor: 'enumerating'!
 
+allSubclasses
+    "Answer a list of all subclasses of the receiver"
+    | ret |
+    ret := OrderedCollection new.
+    self allSubclassesDo: [ :ea |
+	ret add: ea ].
+    ^ret
+!
+
+allSubclassesDo: aBlock
+    "Call aBlock recursing trough each subclass of this class"
+    self subclasses do: [ :ea |
+	aBlock value: ea.
+	ea allSubclassesDo: aBlock ]
+!
+
 allSuperclassesDo: aBlock  
-    "Call aBlock for each superclass ot this class"
+    "Call aBlock for each superclass of this class"
     | class |
-    class := self superclass.
     [ (class := self superclass) notNil ]
 	whileTrue: [ aBlock value: class ]
 ! !

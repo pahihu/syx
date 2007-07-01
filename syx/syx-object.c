@@ -142,12 +142,11 @@ syx_object_set_class (SyxOop object, SyxOop class)
 inline syx_int32
 syx_object_hash (SyxOop object)
 {
-  if (SYX_IS_SMALL_INTEGER (object))
-    return SYX_SMALL_INTEGER (object);
-  else if (SYX_IS_CHARACTER (object))
-    return SYX_CHARACTER (object);
-
-  return SYX_SMALL_INTEGER (object);
+  if (SYX_IS_OBJECT (object))
+    return SYX_MEMORY_INDEX_OF (object);
+  // missing hash for CPointers
+    
+  return (syx_int32) object;
 }
 
 /* Contructors */
@@ -165,6 +164,9 @@ syx_metaclass_new (SyxOop supermetaclass)
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
+
+  SYX_CLASS_SUBCLASSES(metaclass) = syx_array_new (0, NULL);
+  syx_array_add (SYX_CLASS_SUBCLASSES(supermetaclass), metaclass, TRUE);
   return metaclass;
 }
 
@@ -184,6 +186,9 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
+
+  SYX_CLASS_SUBCLASSES(class) = syx_array_new (0, NULL);
+  syx_array_add (SYX_CLASS_SUBCLASSES(superclass), class, TRUE);
   return class;
 }
 
@@ -227,6 +232,56 @@ inline SyxOop
 syx_byte_array_new (syx_varsize size, syx_uint8 *data)
 {
   return syx_object_new_data (syx_byte_array_class, FALSE, size, (SyxOop *)data);
+}
+
+//! Remove an element from an Array
+/*!
+  \return TRUE if element was found and removed, else FALSE
+*/
+syx_bool
+syx_array_remove (SyxOop array, SyxOop element)
+{
+  syx_varsize i, size;
+  syx_bool found = FALSE;
+
+  size = SYX_OBJECT_SIZE (array);
+  for (i=0; i < size; i++)
+    {
+      if (found)
+	SYX_OBJECT_DATA(array)[i-1] = SYX_OBJECT_DATA(array)[i];
+
+      if (SYX_OOP_EQ (SYX_OBJECT_DATA (array)[i], element))
+	found = TRUE;
+    }
+
+  if (found)
+    syx_object_resize (array, size - 1);
+
+  return found;
+}
+
+//! Add an element to an Array
+/*!
+  \param unique TRUE if the element shouldn't be added if already present in the array
+*/
+void
+syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
+{
+  syx_varsize i, size;
+
+  size = SYX_OBJECT_SIZE (array);
+
+  if (unique)
+    {
+      for (i=0; i < size; i++)
+	{
+	  if (SYX_OOP_EQ (SYX_OBJECT_DATA(array)[i], element))
+	    return;
+	}
+    }
+
+  syx_object_grow_by (array, 1);
+  SYX_OBJECT_DATA(array)[size] = element;
 }
 
 //! Creates a new ByteArray instance with the given size
@@ -712,6 +767,28 @@ syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *
   object->has_refs = has_refs;
   object->size = size;
   object->data = data;
+
+  return oop;
+}
+
+//! Make a shallow copy of an object
+SyxOop
+syx_object_copy (SyxOop object)
+{
+  if (!SYX_IS_OBJECT (object))
+    return object;
+
+  SyxOop oop = syx_memory_alloc ();
+  SyxObject *obj1 = SYX_OBJECT (oop);
+  SyxObject *obj2 = SYX_OBJECT (object);
+
+  obj1->class = obj2->class;
+  obj1->has_refs = obj2->has_refs;
+  obj1->size = obj2->size;
+  if (obj1->has_refs)
+    obj1->data = syx_memdup (obj2->data, obj1->size, sizeof (SyxOop));
+  else
+    obj1->data = syx_memdup (obj2->data, obj1->size, sizeof (syx_int8));
 
   return oop;
 }

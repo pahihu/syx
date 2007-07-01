@@ -52,7 +52,7 @@ isSmallInteger
      self subclassResponsibility
 ! !
 
-!Number methodsFor: 'shortcuts and iterators'!
+!Number methodsFor: 'iterators'!
 
 to: stop do: aBlock
     "Do aBlock from self to stop. Pass the counter to aBlock"
@@ -61,7 +61,7 @@ to: stop do: aBlock
 
 to: stop by: step do: aBlock
     "Do aBlock from self to stop stepping by step. Pass the counter to aBlock"
-    | i |
+    | i b |
     i := self.
     [ i <= stop ]
 	whileTrue: [ aBlock value: i.

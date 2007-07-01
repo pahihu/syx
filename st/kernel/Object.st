@@ -48,6 +48,11 @@ basicAt: anIndex put: anObject
 	self primitiveFailed
 !
 
+basicResize: aSize
+    <primitive: 'Object_resize'>
+	self primitiveFailed
+!
+
 size
     <primitive: 'Object_size'>
 	self primitiveFailed
@@ -58,8 +63,8 @@ basicSize
 	self primitiveFailed
 !
 
-identifyHash
-    <primitive: 'Object_identifyHash'>
+identityHash
+    <primitive: 'Object_identityHash'>
 	self primitiveFailed
 !
 
@@ -106,7 +111,8 @@ printNl
 !
 
 = anObject
-    ^self == anObject
+    <primitive: 'Object_equal'>
+	self primitiveFailed
 !
 
 == anObject

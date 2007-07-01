@@ -119,6 +119,7 @@ extern SyxOop syx_nil,
 SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
 SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
 SyxOop syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data);
+SyxOop syx_object_copy (SyxOop object);
 void syx_object_free (SyxOop oop);
 void syx_object_resize (SyxOop oop, syx_varsize size);
 #define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_SIZE(oop)+size))
@@ -153,6 +154,8 @@ inline SyxOop syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data);
 inline SyxOop syx_array_new (syx_varsize size, SyxOop *data);
 inline SyxOop syx_array_new_ref (syx_varsize size, SyxOop *data);
 inline SyxOop syx_array_new_size (syx_varsize size);
+syx_bool syx_array_remove (SyxOop array, SyxOop element);
+void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 inline SyxOop syx_symbol_new (syx_symbol symbol);
 inline SyxOop syx_string_new (syx_symbol string);
 inline SyxOop syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dict);
@@ -177,6 +180,7 @@ inline SyxOop syx_process_new (SyxOop context);
 #define SYX_CLASS_INSTANCE_VARIABLES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_VARIABLES])
 #define SYX_CLASS_INSTANCE_SIZE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_SIZE])
 #define SYX_CLASS_METHODS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_METHODS])
+#define SYX_CLASS_SUBCLASSES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_SUBCLASSES])
 
 #define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METACLASS_INSTANCE_CLASS])
 

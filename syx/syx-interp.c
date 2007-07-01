@@ -35,7 +35,7 @@
 #ifdef SYX_DEBUG_FULL
 
 #define SYX_DEBUG_CONTEXT
-#define SYX_DEBUG_CONTEXT_STACK
+//#define SYX_DEBUG_CONTEXT_STACK
 #define SYX_DEBUG_BYTECODE
 /* #define SYX_DEBUG_TRACE_IP */
 /* #define SYX_DEBUG_BYTECODE_PROFILE */
@@ -612,6 +612,14 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   return syx_interp_enter_context (context);
 }
 
+SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
+{
+  SyxOop closure = syx_object_copy (es->literals[argument]);
+  syx_interp_stack_push (closure);
+  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(closure) = es->context;
+  return TRUE;
+}
+
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
   SyxOop class, method, context, first_argument, arguments;
@@ -755,9 +763,6 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       syx_interp_stack_push (syx_interp_stack_peek ());
       return TRUE;
-    case SYX_BYTECODE_SET_DEFINED_CONTEXT:
-      SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(syx_interp_stack_peek ()) = es->context;
-      return TRUE;
     default:
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE ------- UNKNOWN --------\n");
@@ -792,6 +797,7 @@ _syx_interp_execute_byte (syx_uint16 byte)
       syx_interp_push_constant,
       syx_interp_push_binding_variable,
       syx_interp_push_array,
+      syx_interp_push_block_closure,
 
       syx_interp_assign_instance,
       syx_interp_assign_temporary,

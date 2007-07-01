@@ -163,8 +163,16 @@ _syx_cold_parse_class (SyxLexer *lexer)
 	  existing_class = TRUE;
 	  if (SYX_OOP_NE (SYX_CLASS_SUPERCLASS(subclass), superclass))
 	    {
+	      syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS (subclass)),
+				subclass);
 	      SYX_CLASS_SUPERCLASS(subclass) = superclass;
+	      syx_array_add (SYX_CLASS_SUBCLASSES (superclass), subclass, TRUE);
+
+	      syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass))),
+				syx_object_get_class (subclass));
 	      SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass)) = syx_object_get_class (superclass);
+	      syx_array_add (SYX_CLASS_SUBCLASSES (syx_object_get_class (superclass)),
+			     syx_object_get_class (subclass), TRUE);
 	    }
 	}
     }
