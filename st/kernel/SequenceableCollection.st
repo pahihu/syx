@@ -47,7 +47,7 @@ replaceFrom: startIndex to: stopIndex with: aCollection
 	self at: i put: (aCollection at: (j := j + 1)) ]
 !
 
-atAllPut: aCollection
+withAll: aCollection
     "Replace items from 1 to receiver's size with the elements of aCollection."
     1 to: (self size min: aCollection size) do: [ :i |
 	self at: i put: (aCollection at: i) ]
