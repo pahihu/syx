@@ -28,7 +28,12 @@ import os
 Import ('env', 'distdir')
 
 prog_sources = Split ("main.c")
-prog_objects = env.Object (prog_sources)
+prog_resources = Split ("syx.ico resources.rc")
+prog_objects = [env.Object (prog_sources)]
+
+if env['PLATFORM'] == 'win32':
+    prog_objects.append (env.RES ('resources.rc'))
+    
 prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
 Default (prog)
 
@@ -44,5 +49,5 @@ env.Alias ('install', image)
 
 # Distribution
 
-target = env.Install (os.path.join (distdir, 'src'), prog_sources + ['SConscript'])
+target = env.Install (os.path.join (distdir, 'src'), prog_sources + prog_resources + ['SConscript'])
 env.Alias ('sdist', target)

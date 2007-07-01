@@ -68,6 +68,12 @@ to: stop by: step do: aBlock
                      i := i + step ]
 ! !
 
+!Number methodsFor: 'printing'!
+
+printNl
+    self print
+! !
+
 !Number methodsFor: 'coercing'!
 
 coerce: aNumber
