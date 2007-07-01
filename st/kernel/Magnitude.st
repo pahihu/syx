@@ -22,19 +22,34 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!Magnitude methodsFor: 'basic'!
+!Magnitude methodsFor: 'comparing'!
 
 < aMagnitude
-    "Answer whether the receiver is less than aMagnitude"
     self subclassResponsibility 
 !
 
 > aMagnitude
-    "Answer whether the receiver is greater than aMagnitude"
     ^aMagnitude < self
 !
 
 <= aMagnitude
-    "Answer whether the receiver is less than or equal to aMagnitude"
     ^(aMagnitude < self) not
+!
+
+>= aMagnitude
+    ^(self < aMagnitude) not
+!
+
+max: aMagnitude
+    "Answer self if greater than aMagnitude, else return aMagnitude"
+    ^self > aMagnitude
+	ifTrue: [ self ]
+	ifFalse: [ aMagnitude ]
+!
+
+min: aMagnitude
+    "Answer self if lesser than aMagnitude, else return aMagnitude"
+    ^self < aMagnitude
+	ifTrue: [ self ]
+	ifFalse: [ aMagnitude ]
 ! !

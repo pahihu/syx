@@ -25,20 +25,23 @@ DEALINGS IN THE SOFTWARE.
 !SystemDictionary methodsFor: 'initialize-release'!
 
 quit: exitStatus
+    "Quit Syx with exitStatus"
     <primitive: 'Smalltalk_quit'>
 	self primitiveFailed
 !
 
 quit
+    "Quit Syx"
     ^self quit: 0
 !
 
 initializeSystem
+    "This method is called once when creating the image"
     self
 	at: #stdin put: (FileStream on: 0);
 	at: #stdout put: (FileStream on: 1);
 	at: #stderr put: (FileStream on: 2);
-	at: #Transcript put: (TextCollector message: stdout -> #nextPutAll:)
+	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:)
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!

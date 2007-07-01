@@ -31,32 +31,25 @@ new
 !Dictionary methodsFor: 'accessing'!
 
 removeKey: aKey
-    1 to: hashTable size do: [ :i |
-        | link |
-	link := hashTable at: i.
-	link key = aKey
-	    ifTrue: [ link key: nil ]
-	    ]
+    1 to: hashTable size by: 2 do: [ :i |
+	(hashTable at: i) = aKey
+	    ifTrue: [ hashTable at: i put: nil. ^hashTable at: i + 1 put: nil ] ]
 !
 
 at: aKey
-    1 to: hashTable size do: [ :i |
-	| link |
-	link := hashTable at: i.
-	link key = aKey
-	    ifTrue: [ ^link value]
-	    ]
+    1 to: hashTable size by: 2 do: [ :i |
+	(hashTable at: i) = aKey
+	    ifTrue: [ ^hashTable at: i + 1 ] ]
 !
 
 at: aKey put: aValue
-    1 to: hashTable size do: [ :i |
-	| link |
-	link := hashTable at: i.
-	link isNil
+    1 to: hashTable size by: 2 do: [ :i |
+	| key |
+	key := hashTable at: i.
+	key = aKey
+	    ifTrue: [ ^hashTable at: i + 1 put: aValue ].
+	key isNil
 	    ifTrue: [
-		link := Link key: aKey value: aValue.
-		hashTable at: i put: link. ^aValue ]
-	link key = aKey
-	    ifTrue: [ link value: aValue. ^aValue ]
-	    ]		
+		hashTable at: i put: aKey.
+		^hashTable at: i + 1 put: aValue ] ]
 ! !

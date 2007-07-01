@@ -245,8 +245,12 @@ syx_memory_save_image (syx_symbol path)
 {
   SyxObject *object;
   FILE *image;
+
   if (!path)
     path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
+
+  if (!path)
+    return FALSE;
 
   image = fopen (path, "wb");
   if (!image)
@@ -359,6 +363,9 @@ syx_memory_load_image (syx_symbol path)
       else
 	path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
     }
+
+  if (!path)
+    return FALSE;
 
   image = fopen (path, "rb");
   if (!image)

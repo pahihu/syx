@@ -25,14 +25,17 @@ DEALINGS IN THE SOFTWARE.
 !Behavior methodsFor: 'accessing'!
 
 name
+    "Answer my name"
     ^name
 !
 
 superclass
+    "Answer my superclass"
     ^superclass
 !
 
 printString
+    "My string representation is my name itself"
     ^self name asString
 ! !
 
@@ -61,11 +64,9 @@ new: anInteger
 !Behavior methodsFor: 'enumerating'!
 
 allSuperclassesDo: aBlock  
-    "Invokes aBlock for all superclasses, both direct and indirect."
-    | class superclass |
-    class := self.
-    [ superclass := class superclass.
-      class := superclass.
-      superclass notNil ]
-	whileTrue: [ aBlock value: superclass ]
+    "Call aBlock for each superclass ot this class"
+    | class |
+    class := self superclass.
+    [ (class := self superclass) notNil ]
+	whileTrue: [ aBlock value: class ]
 ! !

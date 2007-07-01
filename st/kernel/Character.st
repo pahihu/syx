@@ -29,14 +29,17 @@ new
 !
 
 cr
+    "Answer a carriage return character"
     ^self value: 13
 !
 
 nl
+    "Answer a new line character"
     ^self value: 10
 !
 
 value: anInteger
+    "Create a character from its integer representation"
     <primitive: 'Character_new'>
 	self primitiveFailed
 ! !
@@ -44,6 +47,7 @@ value: anInteger
 !Character methodsFor: 'accessing'!
 
 value
+    "Answer the integer rapresentation of myself"
     <primitive: 'Character_value'>
 	self primitiveFailed
 ! !
@@ -63,6 +67,7 @@ asCharacter
 !
 
 asString
+    "Return a new string with a single character"
     ^String with: self
 !
 

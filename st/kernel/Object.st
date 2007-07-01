@@ -58,6 +58,11 @@ basicSize
 	self primitiveFailed
 !
 
+identifyHash
+    <primitive: 'Object_identifyHash'>
+	self primitiveFailed
+!
+
 hash
     <primitive: 'Object_hash'>
 	self primitiveFailed
@@ -134,24 +139,11 @@ primitiveFailed
 !Object methodsFor: 'syntax shortcuts'!
 
 -> anObject
-    "Creates a new instance of Association with the receiver being the key
-     and the argument becoming the value"
+    "Create a new association between myself and anObject"
     ^Association key: self value: anObject
 ! !
 
 !Object methodsFor: 'class type methods'!
-
-species 
-    "This method has no unique definition. Generally speaking, methods which
-     always return the same type usually don't use #class, but #species.
-     For example, a PositionableStream's species is the class of the collection
-     on which it is streaming (used by upTo:, upToAll:, upToEnd). Stream uses
-     species for obtaining the class of next:'s return value, Collection uses
-     it in its #copyEmpty: message, which in turn is used by all collection-re-
-     turning methods. An Interval's species is Array (used by collect:, select:
-     reject:, etc.)."
-    ^self class
-!
 
 yourself
     "Answer the receiver"
@@ -161,4 +153,5 @@ yourself
 !Object methodsFor: 'inspecting'!
 
 briefInspect
-    
+    ^self
+! !

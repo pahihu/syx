@@ -30,10 +30,19 @@ garbageCollect
 !
 
 snapshot: aFilename
-    <primitive: 'ObjectMemory_snapshot'>
-	self primitiveFailed
+    (aFilename notNil and: [ aFilename isString not ])
+	ifTrue: [ ^'Cant save the image' printNl ]
+	ifFalse: [ Smalltalk at: ImageFileName put: aFilename ].
+    self primSnapshot: aFilename
 !
 
 snapshot
     self snapshot: ImageFileName
+! !
+
+!ObjectMemory class methodsFor: 'private'!
+
+primSnapshot: aFilename
+    <primitive: 'ObjectMemory_snapshot'>
+	self primitiveFailed
 ! !

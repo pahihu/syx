@@ -36,6 +36,10 @@ ifFalse: falseBlock
     ^nil
 !
 
+and: aBlock
+    ^aBlock value
+!
+
 or: aBlock
     ^true
 !

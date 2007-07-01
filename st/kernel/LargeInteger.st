@@ -43,7 +43,7 @@ coerce: aNumber
 !LargeInteger methodsFor: 'testing'!
 
 isLargePositiveInteger
-    ^self > 0
+    ^self >= 0
 !
 
 isLargeNegativeInteger

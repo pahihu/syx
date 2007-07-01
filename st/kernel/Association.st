@@ -25,23 +25,24 @@ DEALINGS IN THE SOFTWARE.
 !Association class methodsFor: 'basic'!
 
 key: aKey value: aValue
-    "Answer a new association with the given key and value"
+    "Create an association aKey -> aValue"
     ^self new key: aKey value: aValue
 ! !
 
 !Association methodsFor: 'accessing'!
 
 key
+    "Answer the association's key"
     ^key
 !
 
 value: aValue
-    "Set the association's value to aValue"
+    "Set the value of the association to aValue"
     value := aValue
 !
 
 key: aKey value: aValue
-    "Set the association's key to aKey, and its value to aValue"
+    "Set the key and the value of the association"
     key := aKey.
     value := aValue
 !

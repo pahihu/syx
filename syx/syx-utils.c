@@ -355,7 +355,7 @@ syx_cold_file_in (syx_symbol filename)
   syx_string buffer;
   syx_int32 fd, count;
   struct stat statbuf;
-   
+  
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
 	syx_error ("can't open %s\n", filename);
@@ -364,10 +364,10 @@ syx_cold_file_in (syx_symbol filename)
    
   if ((fstat (fd, &statbuf)) < 0)
      {
-	syx_error ("cazz stat %s\n", filename);
+	syx_error ("can't obtain size of %s\n", filename);
 	return FALSE;
      }
-   
+
   buffer = syx_malloc (statbuf.st_size + 1);
   count = read (fd, buffer, statbuf.st_size);
   buffer[count - 1] = '\0';

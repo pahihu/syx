@@ -165,8 +165,6 @@ _getopt_do (int argc, char **argv)
       if (!syx_memory_load_image (NULL))
 	syx_error ("Image not found\n");
     }
-
-  syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (image_path));
 }
 
 int main(int argc, char **argv)

@@ -70,6 +70,9 @@ syx_interp_stack_pop (void)
 inline SyxOop 
 syx_interp_stack_peek (void)
 {
+#ifdef SYX_DEBUG_CONTEXT_STACK
+  syx_debug ("CONTEXT STACK - Peek %p (sp = %d)\n", SYX_OBJECT(es->stack[es->sp - 1]), es->sp - 1);
+#endif
   return es->stack[es->sp - 1];
 }
 
@@ -103,10 +106,12 @@ inline syx_bool
 syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_context)
 {
   SyxOop return_context = use_return_context ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) : SYX_METHOD_CONTEXT_PARENT(es->context);
+
 #ifdef SYX_DEBUG_CONTEXT
   syx_debug ("CONTEXT - Leave context and answer: %p use return context: %d\n",
 	     SYX_OBJECT(return_object), use_return_context);
 #endif
+
 
   SYX_PROCESS_RETURNED_OBJECT(es->process) = return_object;
   if (syx_interp_swap_context (return_context))
@@ -142,20 +147,24 @@ syx_interp_enter_context (SyxOop context)
 inline syx_bool
 syx_interp_call_primitive (syx_int16 primitive, SyxOop method)
 {
+  SyxPrimitiveEntry *prim_entry;
+
   // yield
   if (primitive == 0)
     {
-      syx_interp_stack_push (es->receiver);
+      #ifdef SYX_DEBUG_BYTECODE
+      syx_debug ("BYTECODE - Yield\n");
+      #endif
+      syx_interp_stack_push (es->message_receiver);
       return FALSE;
     }
-  SyxPrimitiveEntry *prim_entry;
-
   prim_entry = syx_primitive_get_entry (primitive);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
 #endif
 
+ 
   return prim_entry->func (es, method);
 }
 
@@ -477,15 +486,18 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   class = syx_object_get_class (es->message_receiver); 
   method = syx_class_lookup_method_binding (class, binding);
 
-  if (SYX_IS_NIL (method))
-    {
-      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
-      return FALSE;
-    }
-
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
+
+  if (SYX_IS_NIL (method))
+    {
+#ifdef SYX_DEBUG_BYTECODE
+      syx_debug ("BYTECODE - NOT UNDERSTOOD #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
+#endif
+      syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
+      return FALSE;
+    }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
@@ -517,15 +529,15 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver)); 
   method = syx_class_lookup_method_binding (class, binding);
 
+#ifdef SYX_DEBUG_BYTECODE
+  syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
+#endif
+
   if (SYX_IS_NIL (method))
     {
       syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
       return FALSE;
     }
-
-#ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
-#endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
@@ -557,24 +569,31 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   switch (argument)
     {
     case 0: // isNil
+      #ifdef SYX_DEBUG_BYTECODE
+      syx_debug ("BYTECODE - Send unary message isNil\n");
+      #endif
       syx_interp_stack_push (syx_boolean_new (SYX_IS_NIL (es->message_receiver)));
       return TRUE;
     case 1: // notNil
+      #ifdef SYX_DEBUG_BYTECODE
+      syx_debug ("BYTECODE - Send unary message notNil\n");
+      #endif
       syx_interp_stack_push (syx_boolean_new (!SYX_IS_NIL (es->message_receiver)));
       return TRUE;
     }
 
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_unary_messages[argument]);
+
+#ifdef SYX_DEBUG_BYTECODE
+  syx_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
+#endif
+
   if (SYX_IS_NIL (method))
     {
       syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
       return FALSE;
     }
-
-#ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send unary message #%s\n", syx_bytecode_unary_messages[argument]);
-#endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
 
@@ -630,15 +649,16 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 
   class = syx_object_get_class (es->message_receiver);
   method = syx_class_lookup_method (class, syx_bytecode_binary_messages[argument]);
+
+#ifdef SYX_DEBUG_BYTECODE
+  syx_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_binary_messages[argument]);
+#endif
+
   if (SYX_IS_NIL (method))
     {
       syx_signal (SYX_ERROR_NOT_UNDERSTOOD, 0);
       return FALSE;
     }
-
-#ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send binary message #%s\n", syx_bytecode_binary_messages[argument]);
-#endif
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive != -1)
@@ -730,6 +750,9 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(syx_interp_stack_peek ()) = es->context;
       return TRUE;
     default:
+#ifdef SYX_DEBUG_BYTECODE
+      syx_debug ("BYTECODE ------- UNKNOWN --------\n");
+#endif
       syx_signal (SYX_ERROR_INTERP, 0);
       return FALSE;
     }

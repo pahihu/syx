@@ -25,17 +25,42 @@ DEALINGS IN THE SOFTWARE.
 !BlockContext methodsFor: 'accessing'!
 
 handlerBlock
+    "Answer the block that handles handledException"
     ^handlerBlock
 !
 
 handlerBlock: aBlock
+    "Set the block that handles handledException"
     handlerBlock := aBlock
 !
 
 handledException: anExceptionClass
+    "Set the exception handled by handlerBlock"
     handledException := anExceptionClass
 !
 
 handledException
+    "Answer the exception handled by handlerBlock"
     ^handledException
+! !
+
+!BlockContext methodsFor: 'exception traceback'!
+
+showTraceback
+    "Shows my single traceback"
+    (self receiver class printString, '>>', self homeContext method selector asString, '[]') printNl.
+!
+
+homeContext
+    ^outerContext homeContext
+!
+
+outerContext
+    ^outerContext
+! !
+
+!BlockContext methodsFor: 'testing'!
+
+isMethodContext
+    ^false
 ! !

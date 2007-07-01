@@ -330,11 +330,14 @@ syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 }
 
 //! Creates a new dictionary and its hash table
+/*!
+  The effective size of the hash table is size * 2
+*/
 SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
   SyxOop object = syx_object_new (syx_dictionary_class, TRUE);
-  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size);
+  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2);
   return object;
 }
 
@@ -348,15 +351,15 @@ SyxOop
 syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop link;
+  SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i++)
+  for (i=0; i < size; i+=2)
     {
-      link = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return syx_variable_binding_new (SYX_ASSOCIATION_KEY (link), i, dict);
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return syx_variable_binding_new (entry, i, dict);
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -374,15 +377,15 @@ SyxOop
 syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop link;
+  SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i++)
+  for (i=0; i < size; i+=2)
     {
-      link = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return syx_variable_binding_new (SYX_ASSOCIATION_KEY (link), i, dict);
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return syx_variable_binding_new (entry, i, dict);
     }
 
   return object;
@@ -400,18 +403,18 @@ syx_dictionary_bind (SyxOop binding)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+  SyxOop entry = SYX_OBJECT_DATA(table)[i];
 
-  if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
-    return SYX_ASSOCIATION_VALUE (assoc);
+  if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
+    return SYX_OBJECT_DATA(table)[i+1];
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
     {
-      assoc = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  return SYX_ASSOCIATION_VALUE (assoc);
+	  return SYX_OBJECT_DATA(table)[i+1];
 	}
     }
 
@@ -432,18 +435,18 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+  SyxOop entry = SYX_OBJECT_DATA(table)[i];
 
-  if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
-    return SYX_ASSOCIATION_VALUE (assoc);
+  if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
+    return SYX_OBJECT_DATA(table)[i+1];
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
     {
-      assoc = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  return SYX_ASSOCIATION_VALUE (assoc);
+	  return SYX_OBJECT_DATA(table)[i+1];
 	}
     }
 
@@ -460,21 +463,21 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop assoc = SYX_OBJECT_DATA(table)[i];
+  SyxOop entry = SYX_OBJECT_DATA(table)[i];
 
-  if (SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+  if (SYX_OOP_EQ (entry, key))
     {
-      SYX_ASSOCIATION_VALUE(assoc) = value;
+      SYX_OBJECT_DATA(table)[i+1] = value;
       return;
     }
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i++)
+  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
     {
-      assoc = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (assoc) && SYX_OOP_EQ (SYX_ASSOCIATION_KEY (assoc), key))
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  SYX_ASSOCIATION_VALUE (assoc) = value;
+	  SYX_OBJECT_DATA(table)[i+1] = value;
 	  return;
 	}
     }
@@ -490,15 +493,15 @@ SyxOop
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop link;
+  SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i++)
+  for (i=0; i < size; i+=2)
     {
-      link = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return SYX_ASSOCIATION_VALUE (link);
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return SYX_OBJECT_DATA(table)[i+1];
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -514,15 +517,15 @@ SyxOop
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  SyxOop link;
+  SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
 
-  for (i=0; i < size; i++)
+  for (i=0; i < size; i+=2)
     {
-      link = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (link) && !strcmp (SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (link)), key))
-	return SYX_ASSOCIATION_VALUE (link);
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return SYX_OBJECT_DATA(table)[i+1];
     }
 
   return object;
@@ -535,20 +538,20 @@ syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
-  SyxOop link;
+  SyxOop entry;
 
-  for (i=0; i < size; i++)
+  for (i=0; i < size; i+=2)
     {
-      link = SYX_OBJECT_DATA(table)[i];
-      if (SYX_IS_NIL (link))
+      entry = SYX_OBJECT_DATA(table)[i];
+      if (SYX_IS_NIL (entry))
 	{
-	  link = syx_link_new (key, value, syx_nil);
-	  SYX_OBJECT_DATA(table)[i] = link;
+	  SYX_OBJECT_DATA(table)[i] = key;
+	  SYX_OBJECT_DATA(table)[i+1] = value;
 	  return;
 	}
-      else if (SYX_OOP_EQ(SYX_ASSOCIATION_KEY(link), key))
+      else if (SYX_OOP_EQ(entry, key))
 	{
-	  SYX_ASSOCIATION_VALUE(link) = value;
+	  SYX_OBJECT_DATA(table)[i+1] = value;
 	  return;
 	}
     }

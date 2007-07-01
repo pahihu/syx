@@ -25,17 +25,14 @@ DEALINGS IN THE SOFTWARE.
 !Stream methodsFor: 'accessing-reading'!
 
 next
-    "Return the next object in the receiver"
     self subclassResponsibility
 !
 
 
 contents
-    "Answer the whole contents of the receiver, from the next object to
-     the last"
+    "Answer the contents of the stream from current position on"
     | stream |
-
-    stream := WriteStream on: (self species new: 10).
+    stream := WriteStream on: (self collectionClass new: 10).
     self do: [ :each | stream nextPut: each ].
     ^stream contents
 ! !
@@ -58,49 +55,33 @@ nextPutAll: aCollection
 !Stream methodsFor: 'testing'!
 
 atEnd
-    "Answer whether the stream has got to an end"
+    "Return true if i'm at the end"
     self subclassResponsibility
-!
-
-isExternalStream
-    "Answer whether the receiver streams on a file or socket.
-     By default, answer false."
-    ^false
 ! !
-
 
 !Stream methodsFor: 'enumerating'!
 
 do: aBlock
-    "Evaluate aBlock once for every object in the receiver"
-    [self atEnd] whileFalse:
-        [aBlock value: self next ]
+    "Call a block for each element of the stream from the current position on, until the end."
+    [ self atEnd ] whileFalse:
+        [ aBlock value: self next ]
 
 ! !
 
 
 !Stream methodsFor: 'basic'!
 
-species
+collectionClass
+    "Answer the collection class that's used to return the contents of the stream"
     ^Array
 !
 
 nl
-    "Store a new line on the receiver"
+    "Write a new line"
     self nextPut: Character nl
 !
 
 cr 
-    "Store a cr on the receiver"
+    "Write a carriage return"
     self nextPut: Character cr
-! !
-
-!Stream methodsFor: 'providing consistent protocols'!
-
-close
-    "Do nothing. This is provided for consistency with file streams"
-!
-
-flush 
-    "Do nothing. This is provided for consistency with file streams"
 ! !

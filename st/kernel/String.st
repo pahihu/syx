@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 !String class methodsFor: 'instance creation'!
 
 new: anIndex
+    "Add 1 to anIndex to make room for NULL character"
     ^super new: anIndex + 1
 ! !
 
@@ -42,6 +43,7 @@ compile
 !String methodsFor: 'basic'!
 
 size
+    "The size is less by 1 because of the NULL character"
     ^self basicSize - 1
 ! !
 

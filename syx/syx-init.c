@@ -83,7 +83,7 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st", "Metaclass.st",
     "Symbol.st",
-    "Number.st", "SmallInteger.st", "Float.st",
+    "Magnitude.st", "Number.st", "SmallInteger.st", "Float.st",
     "LargeInteger.st", "LargePositiveInteger.st", "LargeNegativeInteger.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
@@ -203,8 +203,6 @@ syx_build_basic (void)
   for (sym=symbols; *sym; sym++)
     syx_globals_at_put (syx_symbol_new (*sym), syx_nil);
    
-  syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
-  
   _syx_file_in_basic ();
 
   context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
@@ -247,6 +245,8 @@ syx_fetch_basic (void)
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
+  
+  syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
 
   syx_interp_init ();
   syx_error_init ();

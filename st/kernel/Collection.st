@@ -29,13 +29,12 @@ new
 !
 
 with: anObject
-    "Answer a collection whose only element is anObject"
+    "Answer a collection with a single element"
     ^self new add: anObject; yourself
 !
  
 with: firstObject with: secondObject
-    "Answer a collection whose only elements are the parameters in the order
-     they were passed"
+    "Answer a collection with the two given objects"
     ^self new add: firstObject; add: secondObject; yourself
 ! !
 
@@ -46,24 +45,7 @@ add: anObject
 !
 
 do: aBlock
-    "Enumerate each object of thonly element is anObject"
-    self subclassResponsibility
-!
- 
-with: firstObject with: secondObject
-    "Answer a collection whose only elements are the parameters in the order
-     they were passed"
-    ^self new add: firstObject; add: secondObject; yourself
-! !
-
-!Collection methodsFor: 'indexable fields'!
-
-add: anObject
-    self subclassResponsibility
-!
-
-do: aBlock
-    "Enumerate each object of the receiver, passing them to aBlock"
+    "Call aBlock for each element of the collection"
     self subclassResponsibility
 !
 
@@ -76,7 +58,6 @@ last
 !
 
 size
-    "Answer how many objects we include"
     | count |
     count := 0.
     self do: [ :element | count := count + 1].
@@ -86,6 +67,6 @@ size
 !Collection methodsFor: 'copying'!
 
 copyEmpty: newSize
-    "Answer an empty copy of the receiver whose size is newSize"
-    ^self species new: newSize
+    "Create the empty collection of the given size"
+    ^self class new: newSize
 ! !

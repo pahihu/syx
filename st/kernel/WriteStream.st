@@ -25,4 +25,5 @@ DEALINGS IN THE SOFTWARE.
 !WriteStream class methodsFor: 'instance creation'!
 
 on: aCollection
-    
+    ^nil
+! !

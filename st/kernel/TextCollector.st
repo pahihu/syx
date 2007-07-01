@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 "
 
 Stream subclass: #TextCollector
-       instanceVariableNames: 'receiver selector'
+       instanceVariableNames: 'proxyReceiver proxySelector'
        classVariableNames: ''!
 
 
@@ -33,52 +33,47 @@ new
     self shouldNotImplement
 !
 
-message: receiverToSelectorAssociation
-    "Answer a new instance of the receiver, that uses the message identified
-     by anAssociation to perform write operations.  anAssociation's
-     key is the receiver, while its value is the selector."
-    ^self basicNew message: receiverToSelectorAssociation; yourself
+proxyMessage: anAssociation
+    "Specify an association of receiver -> selector, to be performed when writing to the TextCollector"
+    ^self basicNew proxyMessage: anAssociation; yourself
 ! !
 
 !TextCollector methodsFor: 'set up'!
 
-message
-    "Answer an association representing the message to be sent
-    to perform write operations.  The key is the receiver, the value is the
-    selector"
-    ^receiver -> selector
+proxyMessage
+    "Answer the receiver -> selector association being used to write to the TextCollector"
+    ^proxyReceiver -> proxySelector
 !
 
-message: receiverToSelectorAssociation
-    "Set the message to be sent to perform write operations
-     to the one represented by anAssociation.  anAssociation's key is the
-     receiver, while its value is the selector"
-    receiver := receiverToSelectorAssociation key.
-    selector := receiverToSelectorAssociation value
+proxyMessage: anAssociation
+    "Set the association receiver -> selector, to be performed when writing to the TextCollector"
+    proxyReceiver := anAssociation key.
+    proxySelector := anAssociation value
 ! !
 
 !TextCollector methodsFor: 'accessing'!
 
 cr
-    "Emit a new-line (carriage return) to the Transcript"
+    "Write a new line to the receiver"
     self nl
 !
 
 nextPut: aCharacter
-    receiver nextPut: aCharacter
+    "Write aCharacter to the receiver"
+    proxyReceiver nextPut: aCharacter
 !
 
 nextPutAll: aString
-    "Write aString to the Transcript"
-    receiver nextPutAll: aString
-    "self primNextPutAll: aString.  "
+    "Write aString to the receiver"
+    proxyReceiver nextPutAll: aString
 !
 
 show: aString
-    "Write aString to the Transcript"
+    "Write aString to the receiver"
     self nextPutAll: aString
 !
 
 showCr: aString
+    "Write aString to the receiver followed by a new line"
     self nextPutAll: aString; cr
 ! !

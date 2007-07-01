@@ -29,7 +29,7 @@ nil subclass: #Object
     classVariableNames: ''!
 
 Object subclass: #Behavior
-       instanceVariableNames: 'name superclass instanceVariables instanceSize methodDict'
+       instanceVariableNames: 'name superclass instanceVariableNames instanceSize methodDict'
        classVariableNames: ''!
 
 Object subclass: #UndefinedObject

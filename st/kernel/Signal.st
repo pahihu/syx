@@ -40,11 +40,13 @@ signal
     "Raises a signal. If it's not handled, debug the process"
     signalerContext := thisContext.
     handlerContext := self findHandlerContext.
-    handlerContext isNil
-	ifTrue: ['Unhandled exception... process is going to be terminated' printNl.
-		 self debug.
-		 Processor activeProcess terminate]
-	ifFalse: [self return: (handlerContext handlerBlock value: self)]
+    [
+	handlerContext isNil
+	    ifTrue: ['Unhandled exception... process is going to be terminated' printNl.
+		     self debug.
+		     Processor activeProcess terminate]
+	    ifFalse: [ self return: (handlerContext handlerBlock value: self) ]
+    ] on: Signal do: [ :ex | ]
 !
 
 debug
@@ -53,15 +55,18 @@ debug
 !
 
 pass
+    "Drop the exception to parent contexts"
     thisContext parent: handlerContext parent.
     self signal
 !
 
 resume
+    "Resume the context which generated the error"
     Processor swapWith: signalerContext parent
 !
 
 return: anObject
+    "Returns anObject"
     Processor leaveTo: handlerContext parent andAnswer: anObject
 !
 

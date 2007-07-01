@@ -25,8 +25,7 @@ DEALINGS IN THE SOFTWARE.
 !SequenceableCollection methodsFor: 'concatenating'!
 
 , aSequenceableCollection
-    "Answer a new instance of an ArrayedCollection containing all the elements
-     in the receiver, followed by all the elements in aSequenceableCollection"
+    "Concatenate self to aSequenceableCollection"
     ^(self copyEmpty: self size + aSequenceableCollection size)
 	replaceFrom: 1 with: self;
 	replaceFrom: self size + 1 with: aSequenceableCollection;
@@ -35,29 +34,48 @@ DEALINGS IN THE SOFTWARE.
 
 !SequenceableCollection methodsFor: 'replacing items'!
 
-replaceFrom: start with: replacementCollection
-    "Replace the items from start to stop with replacementCollection's items
-     from 1 to stop-start+1 (in unexpected order if the collection is not
-     sequenceable)."
-    | i |
-    i := start - 1.
-    replacementCollection do: [ :ea |
-	self at: (i := i + 1) put: ea
-    ]
+replaceFrom: startIndex with: aCollection
+    "Replace items from startIndex to aCollection's size with the elements of aCollection."
+    self replaceFrom: startIndex to: aCollection size with: aCollection
+!
+
+replaceFrom: startIndex to: stopIndex with: aCollection
+    "Replace items from startIndex to stopIndex with the elements of aCollection"
+    | j |
+    j := 0.
+    startIndex to: (stopIndex min: aCollection size) do: [ :i |
+	self at: i put: (aCollection at: (j := j + 1)) ]
+!
+
+atAllPut: aCollection
+    "Replace items from 1 to receiver's size with the elements of aCollection."
+    1 to: (self size min: aCollection size) do: [ :i |
+	self at: i put: (aCollection at: i) ]
 ! !
 
 !SequenceableCollection methodsFor: 'enumerating'!
 
+from: startIndex to: stopIndex do: aBlock
+    "Call aBlock for each element from startIndex to stopIndex"
+    startIndex to: stopIndex do: [ :i | aBlock value: (self at: i) ]
+!
+
 do: aBlock
-    "Evaluate aBlock for all the elements in the sequenceable collection"
-    1 to: self size do: [ :i | aBlock value: (self at: i) ].
+    "Call aBlock for each element of the collection"
+    self from: 1 to: self size do: aBlock
 ! !
 
 !SequenceableCollection methodsFor: 'basic'!
 
+indexOf: anElement ifAbsent: exceptionBlock
+    ^self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock
+!
+
 indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
-    anIndex to: self size do: [ :index |
-        (self at: index) == anElement ifTrue: [ ^index ].
+    "Answer the position of anElement in the collection.
+     Searches for it starting from the given index."
+    anIndex to: self size do: [ :i |
+        (self at: i) == anElement ifTrue: [ ^i ].
     ].
     ^exceptionBlock value
 ! !

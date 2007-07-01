@@ -36,54 +36,52 @@ isLargeNegativeInteger
 
 + aNumber
      <primitive: 'LargeNegativeInteger_plus'>
-	 ^self retrySumCoercing: aNumber
+	 ^self sumWith: aNumber
 !
 
 - aNumber
      <primitive: 'LargeNegativeInteger_minus'>
-	 ^self retryDiffCoercing: aNumber
+	 ^self differenceWith: aNumber
 !
 
 < aNumber
      <primitive: 'LargeNegativeInteger_lt'>
-	 ^self retryLesserCoercing: aNumber
+	 ^self lesserThan: aNumber
 !
 
 "Zero is held by LargePositiveIntegers"
 
 > aNumber
      <primitive: 'LargeNegativeInteger_gt'>
-	 ^self retryGreaterCoercing: aNumber
+	 ^self greaterThan: aNumber
 !
 
 <= aNumber
-     <primitive: 'LargeNegativeInteger_lt'>
-	 ^self retryLesserCoercing: aNumber
+     <primitive: 'LargeNegativeInteger_le'>
+	 ^self lesserOrEqualThan: aNumber
 !
 
 >= aNumber
-     <primitive: 'LargeNegativeInteger_gt'>
-	 ^self retryGreaterCoercing: aNumber
+     <primitive: 'LargeNegativeInteger_ge'>
+	 ^self greaterOrEqualThan: aNumber
 !
 
 = aNumber
      <primitive: 'LargeNegativeInteger_eq'>
-	 ^self retryEqualCoercing: aNumber
+	 ^self equalTo: aNumber
 !
 
 == aNumber
      <primitive: 'LargeNegativeInteger_eq'>
-	 ^self retryEqualCoercing: aNumber
+	 ^self equalTo: aNumber
 !
 
 ~= aNumber
      <primitive: 'LargeNegativeInteger_ne'>
-	 ^self retryNotEqualCoercing: aNumber
+	 ^self notEqualTo: aNumber
 !
 
 ~~ aNumber
      <primitive: 'LargeNegativeInteger_ne'>
-	 ^self retryNotEqualCoercing: aNumber
-!
-
+	 ^self notEqualTo: aNumber
 ! !

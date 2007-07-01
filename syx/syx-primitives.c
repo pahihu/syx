@@ -131,6 +131,12 @@ SYX_FUNC_PRIMITIVE (Object_identityEqual)
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OOP_EQ (es->message_receiver, es->message_arguments[0])));
 }
 
+SYX_FUNC_PRIMITIVE (Object_identifyHash)
+{
+  syx_int32 index = (syx_int32)(es->message_receiver - (SyxOop)syx_memory) / sizeof (SyxObject);
+  SYX_PRIM_RETURN (syx_small_integer_new (index));
+}
+
 SYX_FUNC_PRIMITIVE (Object_hash)
 {
   SYX_PRIM_RETURN (syx_small_integer_new (syx_object_hash (es->message_receiver)));
@@ -1018,6 +1024,46 @@ SYX_FUNC_PRIMITIVE (LargeNegativeInteger_gt)
   SYX_PRIM_FAIL;
 }
 
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_le)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_true);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
+SYX_FUNC_PRIMITIVE (LargeNegativeInteger_ge)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_false);
+    }
+  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
+    {
+      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <=
+					SYX_OBJECT_LARGE_INTEGER (second)));
+    }
+
+  SYX_PRIM_FAIL;
+}
+
 SYX_FUNC_PRIMITIVE (LargeNegativeInteger_eq)
 {
   SYX_PRIM_ARGS(1);
@@ -1186,11 +1232,18 @@ SYX_FUNC_PRIMITIVE (Float_ne)
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
+  SYX_PRIM_ARGS(1);
+
+  SyxOop filename = es->message_arguments[0];
+
   // save the current execution state
   syx_interp_stack_push (es->message_receiver);
   syx_exec_state_save ();
 
-  syx_memory_save_image (SYX_OBJECT_STRING (es->message_arguments[0]));
+  if (SYX_IS_NIL (filename))
+    syx_memory_save_image (NULL);
+  else
+    syx_memory_save_image (SYX_OBJECT_STRING (filename));
   
   return FALSE;
 }
@@ -1234,6 +1287,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_at_put", Object_at_put },
   { "Object_size", Object_size },
   { "Object_identityEqual", Object_identityEqual },
+  { "Object_identifyHash", Object_identifyHash },
   { "Object_hash", Object_hash },
 
   /* Arrayed collections */
@@ -1299,6 +1353,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "LargeNegativeInteger_minus", LargeNegativeInteger_minus },
   { "LargeNegativeInteger_lt", LargeNegativeInteger_lt },
   { "LargeNegativeInteger_gt", LargeNegativeInteger_gt },
+  { "LargeNegativeInteger_le", LargeNegativeInteger_le },
+  { "LargeNegativeInteger_ge", LargeNegativeInteger_ge },
   { "LargeNegativeInteger_eq", LargeNegativeInteger_eq },
   { "LargeNegativeInteger_ne", LargeNegativeInteger_ne },
 

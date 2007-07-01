@@ -61,5 +61,6 @@ terminate
 !Process methodsFor: 'testing'!
 
 isActive
+    "Answer if the receiver is the active process being run"
     ^self == Processor activeProcess
 ! !

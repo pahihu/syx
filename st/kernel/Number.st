@@ -55,13 +55,12 @@ isSmallInteger
 !Number methodsFor: 'shortcuts and iterators'!
 
 to: stop do: aBlock
+    "Do aBlock from self to stop. Pass the counter to aBlock"
     self to: stop by: self unity do: aBlock
 !
 
 to: stop by: step do: aBlock
-    "Evaluate aBlock for each value in the interval going from the receiver
-     to stop by 1. Compiled in-line for one-argument aBlocks without
-     temporaries, and therefore not overridable."
+    "Do aBlock from self to stop stepping by step. Pass the counter to aBlock"
     | i |
     i := self.
     [ i <= stop ]
@@ -75,49 +74,57 @@ coerce: aNumber
     ^aNumber
 !
 
-retrySumCoercing: aNumber
+sumWith: aNumber
+    "Coerce aNumber and do sum"
     self generality > aNumber generality
 	ifTrue: [ ^self + (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) + aNumber ]
 !
 
-retryDiffCoercing: aNumber
+differenceWith: aNumber
+    "Coerce aNumber and do the difference"
     self generality > aNumber generality
 	ifTrue: [ ^self - (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) - aNumber ]
 !
 
-retryLesserCoercing: aNumber
+lesserThan: aNumber
+    "Coerce aNumber and compare"
     self generality > aNumber generality
 	ifTrue: [ ^self < (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) < aNumber ]
 !
 
-retryGreaterCoercing: aNumber
+greaterThan: aNumber
+    "Coerce aNumber and compare"
     self generality > aNumber generality
 	ifTrue: [ ^self > (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) > aNumber ]
 !
 
-retryLesserEqualCoercing: aNumber
+lesserOrEqualThan: aNumber
+    "Coerce aNumber and compare"
     self generality > aNumber generality
 	ifTrue: [ ^self <= (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) <= aNumber ]
 !
 
-retryGreaterEqualCoercing: aNumber
+greaterOrEqualThan: aNumber
+    "Coerce aNumber and compare"
     self generality > aNumber generality
 	ifTrue: [ ^self >= (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) >= aNumber ]
 !
 
-retryEqualCoercing: aNumber
+equalTo: aNumber
+    "Coerce aNumber and compare equality"
     self generality > aNumber generality
 	ifTrue: [ ^self = (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) = aNumber ]
 !
 
-retryNotEqualCoercing: aNumber
+notEqualTo: aNumber
+    "Coerce aNumber and compare inequality"
     self generality > aNumber generality
 	ifTrue: [ ^self ~= (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) ~= aNumber ]

@@ -36,6 +36,10 @@ ifFalse: falseBlock
     ^falseBlock value
 !
 
+and: aBlock
+    ^false
+!
+
 or: aBlock
     ^aBlock value
 !

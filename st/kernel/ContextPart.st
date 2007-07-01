@@ -24,19 +24,23 @@ DEALINGS IN THE SOFTWARE.
 
 !MethodContext methodsFor: 'testing'!
 
+showTraceback
+    "Shows my single traceback"
+    (self receiver class printString, '>>', self method selector printString) printNl
+!
+
+homeContext
+    ^self
+!
+
 isMethodContext
     ^true
-! !
-
-!BlockContext methodsFor: 'testing'!
-
-isMethodContext
-    ^false
 ! !
 
 !ContextPart class methodsFor: 'instance creation'!
 
 on: aMethod parent: aContext receiver: anObject arguments: anArray
+    "Create a new execution context"
     ^self new
 	method: aMethod
 	parent: aContext
@@ -53,17 +57,22 @@ initialize
 
 !ContextPart methodsFor: 'debugging'!
 
+showTraceback
+    self subclassResponsibility
+!
+
+homeContext
+    self subclassResponsibility
+!
+
 traceback
+    "Recurse trough my parent contexts and show their tracebacks"
     | context |
     context := self.
     [ context notNil ]
 	whileTrue: [
-	    context isMethodContext
-		ifTrue: [
-		    (context receiver class printString, '>>', context method selector asString) printNl.
-			].
-	    context := context parent
-	    ]
+	    context showTraceback.
+	    context := context parent ]
 ! !
 
 
@@ -80,7 +89,7 @@ method
 !
 
 method: aMethod parent: aContext receiver: anObject arguments: anArray
-    "if method is set then this context has been initialized"
+    "if method is not nil then this context has been initialized"
     method notNil ifTrue: [^self].
 
     method := aMethod.

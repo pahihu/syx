@@ -25,13 +25,11 @@ DEALINGS IN THE SOFTWARE.
 !Semaphore class methodsFor: 'instance creation'!
 
 new
-    "Answer a new semaphore"
     ^super basicNew initialize
 !
 
 forMutualExclusion
-    "Answer a new semaphore with a signal on it. These semaphores are a useful
-     shortcut when you use semaphores as critical sections."
+    "Create a new Semaphore and signal it initially. This means the first time a Process waits, it's not blocked."
     ^self new
         signal;
         yourself
@@ -40,8 +38,7 @@ forMutualExclusion
 !Semaphore methodsFor: 'mutual exclusion'!
 
 critical: aBlock  
-    "Wait for the receiver to be free, execute aBlock and signal the receiver 
-     again. Return the result of evaluating aBlock."
+    "Wait the semaphore, call aBlock ensuring to signal the semaphore at the end"
     self wait.
     ^aBlock ensure: [ self signal ]
 ! !
@@ -56,10 +53,12 @@ initialize
 !Semaphore methodsFor: 'accessing'!
 
 waitingProcesses
+    "The list of process being waiting"
     ^waitingProcesses
 !
 
 signals
+    "The difference between all signals and the number of waiting processes"
     ^signals - waitingProcesses size
 ! !
 
@@ -73,10 +72,12 @@ wait: aFD for: aBoolean
 !Semaphore methodsFor: 'basic'!
 
 waitForRead: aFD
+    "Wait a file descriptor to be ready for reading"
     self wait: aFD for: false
 !
 
 waitForWrite: aFD
+    "Wait a file descriptor to be ready for writing"
     self wait: aFD for: true
 !
 
