@@ -30,15 +30,15 @@ new
 
 cr
     "Answer a carriage return character"
-    ^self value: 13
+    ^self codePoint: 13
 !
 
 nl
     "Answer a new line character"
-    ^self value: 10
+    ^self codePoint: 10
 !
 
-value: anInteger
+codePoint: anInteger
     "Create a character from its integer representation"
     <primitive: 'Character_new'>
 	self primitiveFailed
@@ -46,22 +46,23 @@ value: anInteger
 
 !Character methodsFor: 'accessing'!
 
-value
+codePoint
     "Answer the integer rapresentation of myself"
     <primitive: 'Character_value'>
 	self primitiveFailed
 ! !
 
-!Character methodsFor: 'converting'!
+!Character methodsFor: 'comparing'!
 
 = aCharacter
-     ^self value = aCharacter value
+     ^self codePoint = aCharacter codePoint
 !
 
 == aCharacter
-     ^self value = aCharacter value
-!
+     ^self codePoint = aCharacter codePoint
+! !
 
+!Character methodsFor: 'converting'!
 asCharacter
     ^self
 !

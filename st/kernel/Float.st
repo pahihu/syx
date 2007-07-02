@@ -57,52 +57,50 @@ isFloat
 
 + aNumber
      <primitive: 'Float_plus'>
-	 ^self sumWith: aNumber
+	 ^super + aNumber
 !
 
 - aNumber
      <primitive: 'Float_minus'>
-	 ^self differenceWith: aNumber
+	 ^super - aNumber
 !
 
 < aNumber
      <primitive: 'Float_lt'>
-	 ^self lesserThan: aNumber
+	 ^super < aNumber
 !
 
 > aNumber
      <primitive: 'Float_gt'>
-	 ^self greaterThan: aNumber
+	 ^super > aNumber
 !
 
 <= aNumber
      <primitive: 'Float_le'>
-	 ^self lesserOrEqualThan: aNumber
+	 ^super <= aNumber
 !
 
 >= aNumber
      <primitive: 'Float_ge'>
-	 ^self greaterOrEqualThan: aNumber
+	 ^super >= aNumber
 !
 
 = aNumber
      <primitive: 'Float_eq'>
-	 ^self equalTo: aNumber
+	 ^super = aNumber
 !
 
 == aNumber
      <primitive: 'Float_eq'>
-	 ^self equalTo: aNumber
+	 ^super == aNumber
 !
 
 ~= aNumber
      <primitive: 'Float_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~= aNumber
 !
 
 ~~ aNumber
      <primitive: 'Float_ne'>
-	 ^self notEqualTo: aNumber
-!
-
+	 ^super ~~ aNumber
 ! !

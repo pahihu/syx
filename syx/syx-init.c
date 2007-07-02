@@ -279,7 +279,7 @@ syx_init (syx_symbol root_path)
     goto end;
 
   // look in the root directory
-  if (root_path == _syx_root_path)
+  if (root_path && !strcmp (root_path, _syx_root_path))
     {
       _syx_image_path = syx_malloc (strlen (_syx_root_path) + 13);
       sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
@@ -346,7 +346,7 @@ syx_set_root_path (syx_symbol root_path)
 syx_bool
 syx_set_image_path (syx_symbol image_path)
 {
-  if (!image_path || access (image_path, R_OK) < 0)
+  if (!image_path)
      return FALSE;
    
   if (!_syx_image_path)

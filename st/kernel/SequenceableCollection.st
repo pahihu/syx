@@ -32,7 +32,24 @@ DEALINGS IN THE SOFTWARE.
 	yourself
 ! !
 
-!SequenceableCollection methodsFor: 'replacing items'!
+!SequenceableCollection methodsFor: 'copying'!
+
+copyFrom: startIndex to: stopIndex
+    "Answer a collection which is a copy of the receiver, with the elements from startIndex to stopIndex"
+    | coll |
+    coll := self copyEmpty: 0.
+    self from: startIndex to: stopIndex do: [ :ea | coll add: ea ].
+    ^coll
+!
+
+copyWith: newElement
+    "Answer a collection which is a copy of the receiver, and adds a newElement at the end"
+    | coll |
+    coll := self class withAll: self.
+    ^coll add: newElement; yourself
+! !
+
+!SequenceableCollection methodsFor: 'replacing'!
 
 replaceFrom: startIndex with: aCollection
     "Replace items from startIndex to aCollection's size with the elements of aCollection."
@@ -48,6 +65,22 @@ replaceFrom: startIndex to: stopIndex with: aCollection
 ! !
 
 !SequenceableCollection methodsFor: 'enumerating'!
+
+after: anObject
+    "Answer the object that follows anObject in the collection"
+    1 to: self size do: [ :i |
+	((self at: i) = anObject)
+	    ifTrue: [ ^self at: i + 1 ] ].
+    NotFound signal
+!
+
+before: anObject
+    "Answer the object that's before anObject in the collection"
+    1 to: self size do: [ :i |
+	((self at: i) = anObject)
+	    ifTrue: [ ^self at: i - 1 ] ].
+    NotFound signal
+!
 
 from: startIndex to: stopIndex do: aBlock
     "Call aBlock for each element from startIndex to stopIndex"
@@ -71,6 +104,11 @@ at: anIndex put: anObject
 	self primitiveFailed
 !
 
+at: anIndex ifAbsent: exceptionBlock
+    [ self at: anIndex ]
+	on: Error do: exceptionBlock
+!
+
 size
     ^self basicSize
 !
@@ -87,3 +125,4 @@ indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
     ].
     ^exceptionBlock value
 ! !
+

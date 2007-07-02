@@ -151,7 +151,11 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -include #config.h -I#. -DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -include #config.h -I#.')
+if env['PLATFORM'] == 'win32':
+   env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim"')
+else:
+   env.MergeFlags ('-DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':

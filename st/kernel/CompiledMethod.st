@@ -28,12 +28,12 @@ bytecodes
     ^bytecodes
 !
 
-argumentsCount
-    ^argumentsCount
+argumentCount
+    ^argumentCount
 !
 
-temporariesCount
-    ^temporariesCount
+temporaryCount
+    ^temporaryCount
 !
 
 stackSize

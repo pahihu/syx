@@ -28,6 +28,13 @@ initialize
     ^self
 ! !
 
+!Object methodsFor: 'copying'!
+
+copy
+    <primitive: 'Object_copy'>
+	^self
+! !
+
 !Object methodsFor: 'basic'!
 
 at: anIndex
@@ -74,6 +81,24 @@ hash
 ! !
 
 !Object methodsFor: 'testing'!
+
+isKindOf: aClass
+    "Answer true if the receiver's class is a subclass of aClass"
+    | class |
+    class := self class.
+    class = aClass
+	ifTrue: [ ^true ].
+
+    aClass allSubclassesDo: [ :ea |
+	ea = class
+	    ifTrue: [ ^true ] ].
+    ^false
+!
+
+isMemberOf: candidateClass
+    "Answer true whenever the receiver is an instance of the given class"
+    ^self class = candidateClass
+!
 
 isString
     ^false

@@ -96,14 +96,14 @@ method: aMethod parent: aContext receiver: anObject arguments: anArray
     returnContext := parent := aContext.
     receiver := anObject.
 
-    method argumentsCount > 0
-	ifTrue: [ arguments := Array new: method argumentsCount ].
+    method argumentCount > 0
+	ifTrue: [ arguments := Array new: method argumentCount ].
 
     anArray notNil
 	ifTrue: [ arguments replaceFrom: 1 with: anArray ].
 
-    method temporariesCount > 0
-	ifTrue: [ temporaries := Array new: method temporariesCount ].
+    method temporaryCount > 0
+	ifTrue: [ temporaries := Array new: method temporaryCount ].
 
     ip := sp := 0.
     stack := Array new: method stackSize

@@ -26,56 +26,56 @@ DEALINGS IN THE SOFTWARE.
 
 + aNumber
      <primitive: 'SmallInteger_plus'>
-	 aNumber isSmallInteger
-	 ifTrue: [ self asLargeInteger + aNumber asLargeInteger ]
-	 ifFalse: [ ^self sumWith: aNumber ]
+	 ^aNumber isSmallInteger
+	     ifTrue: [ self asLargeInteger + aNumber asLargeInteger ]
+	     ifFalse: [ super + aNumber ]
 !
 
 - aNumber
      <primitive: 'SmallInteger_minus'>
-	 aNumber isSmallInteger
+	 ^aNumber isSmallInteger
 	 ifTrue: [ self asLargeInteger - aNumber asLargeInteger ]
-	 ifFalse: [ ^self differenceWith: aNumber ]
+	 ifFalse: [ super - aNumber ]
 !
 
 < aNumber
      <primitive: 'SmallInteger_lt'>
-	 ^self lesserThan: aNumber
+	 ^super < aNumber
 !
 
 > aNumber
      <primitive: 'SmallInteger_gt'>
-	 ^self greaterThan: aNumber
+	 ^super > aNumber
 !
 
 <= aNumber
      <primitive: 'SmallInteger_le'>
-	 ^self lesserOrEqualThan: aNumber
+	 ^super <= aNumber
 !
 
 >= aNumber
      <primitive: 'SmallInteger_ge'>
-	 ^self greaterOrEqualThan: aNumber
+	 ^super >= aNumber
 !
 
 = aNumber
      <primitive: 'SmallInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super = aNumber
 !
 
 == aNumber
      <primitive: 'SmallInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super == aNumber
 !
 
 ~= aNumber
      <primitive: 'SmallInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~= aNumber
 !
 
 ~~ aNumber
      <primitive: 'SmallInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~~ aNumber
 ! !
 
 !SmallInteger methodsFor: 'coercing'!

@@ -81,8 +81,96 @@ copyEmpty: newSize
     ^self class new: newSize
 ! !
 
+!Collection methodsFor: 'enumerating'!
+
+collect: transformerBlock
+    "Evaluate the block for each element of the receiver.
+     The results of these evaluations are collected into a new collection"
+    | coll |
+    coll := OrderedCollection new.
+    self do: [ :ea |
+	coll add: (transformerBlock value: ea) ].
+    ^coll
+!
+
+includes: anObject
+    "Return true if the receiver contains anObject, otherwise false"
+    self do: [ :ea |
+	ea = anObject
+	    ifTrue: [ ^true ] ].
+    ^false
+!
+
+occurrencesOf: anObject
+    "Answer the number of times anObject is present in the collection"
+    | occurs |
+    occurs := 0.
+    self do: [ :ea |
+	ea = anObject
+	    ifTrue: [ occurs := occurs + 1 ] ].
+    ^occurs
+!
+
+reject: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
+    | coll |
+    coll := OrderedCollection new.
+    self do: [ :ea |
+	(discriminatorBlock value: ea)
+	    ifFalse: [ coll add: ea ] ].
+    ^coll
+!
+
+select: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
+    | coll |
+    coll := OrderedCollection new.
+    self do: [ :ea |
+	(discriminatorBlock value: ea)
+	    ifTrue: [ coll add: ea ] ].
+    ^coll
+!
+
+detect: discriminatorBlock
+    "Evaluate the block for each element of the receiver.
+     Answer the first element that caused the block to return true.
+     If no element is found, raise an exception"
+    self do: [ :ea |
+	| res |
+	res := discriminatorBlock value: ea.
+	res ifTrue: [ ^ea ] ].
+    NotFound signal
+!
+
+detect: discriminatorBlock ifNone: exceptionHandler
+    "Evaluate the block for each element of the receiver.
+     Answer the first element that caused the block to return true.
+     Evaluate exceptionHandler if any error occurs"
+    [ self detect: discriminatorBlock ]
+	on: Error do: exceptionHandler
+! !
+    
 !Collection methodsFor: 'converting'!
+
+asArray
+    ^Array withAll: self
+!
+
+asByteArray
+    ^ByteArray withAll: self
+!
 
 asOrderedCollection
     ^OrderedCollection withAll: self
 ! !
+
+!Collection methodsFor: 'testing'!
+
+isEmpty
+    ^self size = 0
+!
+
+notEmpty
+    ^self isEmpty not
+! !
+

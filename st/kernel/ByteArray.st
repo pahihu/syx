@@ -55,3 +55,16 @@ basicAt: anIndex put: aCharacter
     <primitive: 'ByteArray_at_put'>
 	self primitiveFailed
 ! !
+
+!ByteArray methodsFor: 'basic'!
+
+replaceFrom: startIndex to: stopIndex with: aCollection
+    <primitive: 'ArrayedCollection_replaceFromToWith'>
+	| element j |
+	j := 0.
+	startIndex to: (stopIndex min: aCollection size) do: [ :i |
+	    element := aCollection at: (j := j + 1).
+	    (element isCharacter or: [ element isSmallInteger & (element >= 0) & (element <= 255) ])
+		ifTrue: [ self at: i put: element ]
+		ifFalse: [ self primitiveFailed ] ]		
+! !

@@ -148,6 +148,14 @@ SYX_FUNC_PRIMITIVE (Object_equal)
 				    syx_object_hash (es->message_arguments[0])));
 }
 
+SYX_FUNC_PRIMITIVE (Object_copy)
+{
+  SYX_PRIM_RETURN (syx_object_copy (es->message_receiver));
+}
+
+
+
+
 SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
 {
   SYX_PRIM_ARGS(3);
@@ -1297,6 +1305,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_hash", Object_hash },
   { "Object_equal", Object_equal },
   { "Object_resize", Object_resize },
+  { "Object_copy", Object_copy },
 
   /* Arrayed collections */
   { "ArrayedCollection_replaceFromToWith", ArrayedCollection_replaceFromToWith },

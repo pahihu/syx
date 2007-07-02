@@ -42,7 +42,7 @@ env.Alias ('install', env['bindir'])
 
 # Create the image once installed
 
-image = env.Command (env['imagepath'], inst, '$SOURCE -S')
+image = env.Command (env['imagepath'], inst, '$SOURCE -r $datadir -S')
 env.AlwaysBuild (image)
 env.Depends (image, os.path.join(env['datadir'], 'st'))
 env.Alias ('install', image)

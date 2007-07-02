@@ -93,7 +93,7 @@ Object subclass: #Semaphore
        classVariableNames: ''!
 
 Object subclass: #CompiledCode
-       instanceVariableNames: 'selector bytecodes literals argumentsCount temporariesCount stackSize primitive'
+       instanceVariableNames: 'selector bytecodes literals argumentCount temporaryCount stackSize primitive'
        classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod

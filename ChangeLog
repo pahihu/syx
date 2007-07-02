@@ -1,3 +1,30 @@
+2007-07-02  Luca Bruno  <lethalman88@gmail.com>
+
+	== Released Syx 0.1 version ==
+
+	* SConstruct: be able to run Syx in every location on Windows using
+	  relative paths
+	
+	* st/kernel/SequenceableCollection.st (at:ifAbsent:): added
+	(after:): added
+	(before:): added
+	(copyFrom:to:): added
+	(copyWith:): 
+
+	* st/kernel/Collection.st (collect:): added
+	(includes:): added
+	(isEmpty): added
+	(detect:ifNone:): added
+	(occurrencesOf:): added
+	(reject:): added
+	(select:): 
+
+	* st/kernel/True.st,False.st (& |): added
+
+	* st/kernel/Object.st (copy): added with relative primitive Object_copy
+	(isKindOf): added
+	(isMemberOf): added
+
 2007-07-01  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (syx_memdup): added

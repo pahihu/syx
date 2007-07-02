@@ -36,50 +36,50 @@ isLargePositiveInteger
 
 + aNumber
      <primitive: 'LargePositiveInteger_plus'>
-	 ^self sumWith: aNumber
+	 ^super + aNumber
 !
 
 - aNumber
      <primitive: 'LargePositiveInteger_minus'>
-	 ^self differenceWith: aNumber
+	 ^super - aNumber
 !
 
 < aNumber
      <primitive: 'LargePositiveInteger_lt'>
-	 ^self lesserThan: aNumber
+	 ^super < aNumber
 !
 
 > aNumber
      <primitive: 'LargePositiveInteger_gt'>
-	 ^self greaterThan: aNumber
+	 ^super > aNumber
 !
 
 <= aNumber
      <primitive: 'LargePositiveInteger_le'>
-	 ^self lesserOrEqualThan: aNumber
+	 ^super <= aNumber
 !
 
 >= aNumber
      <primitive: 'LargePositiveInteger_ge'>
-	 ^self greaterOrEqualThan: aNumber
+	 ^super >= aNumber
 !
 
 = aNumber
      <primitive: 'LargePositiveInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super = aNumber
 !
 
 == aNumber
      <primitive: 'LargePositiveInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super == aNumber
 !
 
 ~= aNumber
      <primitive: 'LargePositiveInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~= aNumber
 !
 
 ~~ aNumber
      <primitive: 'LargePositiveInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~~ aNumber
 ! !

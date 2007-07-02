@@ -36,52 +36,52 @@ isLargeNegativeInteger
 
 + aNumber
      <primitive: 'LargeNegativeInteger_plus'>
-	 ^self sumWith: aNumber
+	 ^super + aNumber
 !
 
 - aNumber
      <primitive: 'LargeNegativeInteger_minus'>
-	 ^self differenceWith: aNumber
+	 ^super - aNumber
 !
 
 < aNumber
      <primitive: 'LargeNegativeInteger_lt'>
-	 ^self lesserThan: aNumber
+	 ^super < aNumber
 !
 
 "Zero is held by LargePositiveIntegers"
 
 > aNumber
      <primitive: 'LargeNegativeInteger_gt'>
-	 ^self greaterThan: aNumber
+	 ^super > aNumber
 !
 
 <= aNumber
      <primitive: 'LargeNegativeInteger_le'>
-	 ^self lesserOrEqualThan: aNumber
+	 ^super <= aNumber
 !
 
 >= aNumber
      <primitive: 'LargeNegativeInteger_ge'>
-	 ^self greaterOrEqualThan: aNumber
+	 ^super >= aNumber
 !
 
 = aNumber
      <primitive: 'LargeNegativeInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super = aNumber
 !
 
 == aNumber
      <primitive: 'LargeNegativeInteger_eq'>
-	 ^self equalTo: aNumber
+	 ^super == aNumber
 !
 
 ~= aNumber
      <primitive: 'LargeNegativeInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~= aNumber
 !
 
 ~~ aNumber
      <primitive: 'LargeNegativeInteger_ne'>
-	 ^self notEqualTo: aNumber
+	 ^super ~~ aNumber
 ! !

@@ -1,8 +1,42 @@
+02 July 2007
+-----------
+
+	Released Syx 0.1 version.
+
+	This is the first version of Syx and includes an almost
+	stable VM without memory leaks till now (we hope).
+	- Added a simple garbage collector.
+	- Covered a limited number of Smalltalk-80 standards.
+	- Image compatible with both 32-bit and 64-bit platforms.
+	- The VM works indifferently on Win32 and Posix.
+	- Use Scons as building system
+	- Interactive console from whithin Smalltalk itself
+	- Immediate SmallIntegers and Characters
+	- A basic plugin system
+	- Support for Floats and LargeIntegers
+	- Fixed operations between different numbers
+	- Easy C to Smalltalk interaction
+	- Added class variables
+	- Variable bindings for globals and class variables
+	- Added OrderedCollection
+	- Very simple method caching
+	- Still limited exceptions and tracebacks
+	- Remove Glib dependency
+	- Syncronous I/O multi-plexing trough Semaphores
+	- Use direct pointers instead of indexes for oops
+	- Organized better debugging informations
+	- Documented using Doxygen
+	- Reorganized Syx initialization
+
+(Luca Bruno)
+
+
 28 May 2007
 -----------
 
-	After i defined how the VM should become in the time, i created a google code account at: http://code.google.com/p/syx.
-	Now Syx is ufficialy opened on Internet as an open source project with MIT license.
+	After i defined how the VM should become in the time,
+	i created a google code account at: http://code.google.com/p/syx.
+	Now Syx is officially opened to Internet as an open source project under MIT license.
 	I hope to release the first 0.1 version very soon.
 
 (Luca Bruno)

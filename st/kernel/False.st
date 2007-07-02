@@ -36,6 +36,14 @@ ifFalse: falseBlock
     ^falseBlock value
 !
 
+& operand
+    ^false
+!
+
+| operand
+    ^operand
+!
+
 and: aBlock
     ^false
 !
