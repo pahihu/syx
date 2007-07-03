@@ -55,7 +55,7 @@ basicAt: anIndex put: anObject
 	self primitiveFailed
 !
 
-basicResize: aSize
+basicGrowTo: aSize
     <primitive: 'Object_resize'>
 	self primitiveFailed
 !
@@ -101,6 +101,10 @@ isMemberOf: candidateClass
 !
 
 isString
+    ^false
+!
+
+isSymbol
     ^false
 !
 

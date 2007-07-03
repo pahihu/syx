@@ -45,6 +45,14 @@ withAll: aCollection
 
 !Collection methodsFor: 'indexable fields'!
 
+growTo: anInteger
+    self basicGrowTo: anInteger
+!
+
+growBy: anInteger
+    self growTo: self size + anInteger
+!
+
 add: anObject
     self subclassResponsibility
 !
@@ -61,6 +69,18 @@ do: aBlock
 
 first
     ^self at: 1
+!
+
+second
+    ^self at: 2
+!
+
+third
+    ^self at: 3
+!
+
+fourth
+    ^self at: 4
 !
 
 last

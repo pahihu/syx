@@ -24,6 +24,12 @@ DEALINGS IN THE SOFTWARE.
 
 !SystemDictionary methodsFor: 'initialize-release'!
 
+at: aSymbol put: anObject
+    aSymbol isSymbol
+	ifFalse: [ self error ].
+    ^super at: aSymbol put: anObject
+!
+
 quit: exitStatus
     "Quit Syx with exitStatus"
     <primitive: 'Smalltalk_quit'>

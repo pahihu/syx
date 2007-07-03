@@ -30,8 +30,33 @@ new
 
 !Number methodsFor: 'testing'!
 
+isInteger
+    ^self subclassResponsibility
+!
+
+isFloat
+    ^self subclassResponsibility
+!
+
+negative
+    ^self < self zero
+!
+
+positive
+    ^self >= self zero
+!
+
+sign
+    self < self zero
+	ifTrue: [ ^-1 ].
+    self = self zero
+	ifTrue: [ ^0 ].
+    self > self zero
+	ifTrue: [ ^1 ]
+!
+
 isSmallInteger
-    ^false
+    ^self subclassResponsibility
 ! !
 
 !Number methodsFor: 'iterators'!
@@ -58,11 +83,31 @@ printNl
 
 !Number methodsFor: 'coercing'!
 
+zero
+    ^self subclassResponsibility
+!
+
 coerce: aNumber
     ^aNumber
 ! !
 
+!Number methodsFor: 'shortcuts'!
+
+between: firstNumber and: secondNumber
+    ^(self >= firstNumber) & (self <= secondNumber)
+! !
+
 !Number methodsFor: 'arithmetic'!
+
+negated
+    self ~= self zero
+	ifTrue: [ ^self zero - self ]
+!
+
+abs
+    self < self zero
+	ifTrue: [ ^self negated ]
+!
 
 + aNumber
      "Coerce aNumber and do the sum"

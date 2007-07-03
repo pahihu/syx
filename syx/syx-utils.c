@@ -462,7 +462,7 @@ syx_semaphore_wait (SyxOop semaphore)
 /* Utilities to interact with Smalltalk */
 
 //! Create a MethodContext for a unary message ready to enter a Process
-inline SyxOop
+SyxOop
 syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
@@ -479,7 +479,7 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
 }
 
 //! Create a MethodContext for a binary message ready to enter a Process
-inline SyxOop
+SyxOop
 syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;

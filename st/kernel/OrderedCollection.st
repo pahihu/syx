@@ -1,9 +1,5 @@
 !OrderedCollection methodsFor: 'basic'!
 
-growBy: aNumber
-    self basicResize: self size + aNumber
-!
-
 add: anObject
     self growBy: 1.
     self at: self size put: anObject

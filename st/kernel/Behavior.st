@@ -66,7 +66,51 @@ new: anInteger
 	^self primitiveFailed
 ! !
 
+!Behavior methodsFor: 'class creation'!
+
+subclass: classSymbol
+    ^self subclass: classSymbol instanceVariableNames: '' classVariableNames: ''
+!
+
+subclass: classSymbol instanceVariableNames: instanceVariables
+    ^self subclass: classSymbol instanceVariableNames: instanceVariables classVariableNames: ''
+!
+
+subclass: classSymbol instanceVariableNames: instanceVariables classVariableNames: classVariables
+    | metaclass class |
+    metaclass := Metaclass newSubclassOf: self class named: nil.
+    class := metaclass newSubclassOf: self named: classSymbol.
+    Smalltalk at: classSymbol put: class.
+    ^class
+! !
+
+!Behavior methodsFor: 'private'!
+
+instanceSize
+    ^instanceSize
+!
+
+newSubclassOf: aClass named: classSymbol
+    | class |
+    class := self new.
+    class initializeSubclassOf: aClass named: classSymbol.
+    ^class
+!
+
+initializeSubclassOf: aClass named: classSymbol
+    instanceSize := aClass instanceSize.
+    superclass := aClass.
+    instanceVariableNames := #().
+    subclasses := #().
+    name := classSymbol.
+    aClass addSubclass: self
+! !
+
 !Behavior methodsFor: 'enumerating'!
+
+addSubclass: aClass
+    subclasses := subclasses copyWith: aClass
+!
 
 allSubclasses
     "Answer a list of all subclasses of the receiver"

@@ -411,7 +411,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     {
     case 0: // open
       {
-	syx_symbol mode = SYX_OBJECT_SYMBOL (es->message_arguments[1]);
+	syx_symbol mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
 	syx_int32 flags = 0;
 
 	if (*mode == 'r')
@@ -426,7 +426,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	else
 	  syx_error ("mh? %s\n", mode);
 	
-	ret = open (SYX_OBJECT_STRING (es->message_arguments[0]), flags);
+	ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
       }
       break;
 
@@ -669,6 +669,51 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (first != second));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) &
+					  SYX_SMALL_INTEGER (second)));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_bitOr)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) |
+					  SYX_SMALL_INTEGER (second)));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) ^
+					  SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_asFloat)
@@ -1352,6 +1397,9 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+  { "SmallInteger_bitAnd", SmallInteger_bitAnd },
+  { "SmallInteger_bitOr", SmallInteger_bitOr },
+  { "SmallInteger_bitXor", SmallInteger_bitXor },
   { "SmallInteger_asFloat", SmallInteger_asFloat },
   { "SmallInteger_asLargeInteger", SmallInteger_asLargeInteger },
 

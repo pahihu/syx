@@ -32,3 +32,9 @@ asString
 printString
     ^self asString
 ! !
+
+!Symbol methodsFor: 'testing'!
+
+isSymbol
+    ^true
+! !

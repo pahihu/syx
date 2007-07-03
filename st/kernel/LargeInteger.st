@@ -28,8 +28,16 @@ asLargeInteger
     ^self
 !
 
+asInteger
+    ^self
+!
+
 generality
     ^20
+!
+
+zero
+    ^0 asLargeInteger
 !
 
 unity
@@ -41,6 +49,10 @@ coerce: aNumber
 ! !
 
 !LargeInteger methodsFor: 'testing'!
+
+isSmallInteger
+    ^false
+!
 
 isLargePositiveInteger
     ^self >= 0
@@ -59,4 +71,18 @@ isLargeInteger
 print
     <primitive: 'LargeInteger_print'>
 	self primitiveFailed
+! !
+
+!LargeInteger methodsFor: 'bit-wise operations'!
+
+bitAnd: aNumber
+    self notImplementedYet
+!
+
+bitOr: aNumber
+    self notImplementedYet
+!
+
+bitXor: aNumber
+    self notImplementedyet
 ! !

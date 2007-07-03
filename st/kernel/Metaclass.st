@@ -22,6 +22,15 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Metaclass methodsFor: 'class creation'!
+
+newSubclassOf: aClass named: classSymbol
+    | class |
+    class := super newSubclassOf: aClass named: classSymbol.
+    instanceClass := class.
+    ^class
+! !
+
 !Metaclass methodsFor: 'printing'!
 
 printString

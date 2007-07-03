@@ -22,29 +22,38 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!Stream methodsFor: 'accessing-reading'!
+!Stream methodsFor: 'instance creation'!
+
+new
+    ^self shouldNotImplement
+! !
+
+!Stream methodsFor: 'accessing'!
 
 next
     self subclassResponsibility
 !
 
+peek
+    self subclassResponsibility
+!
 
 contents
+    self subclassResponsibility
+!
+
+upToEnd
     "Answer the contents of the stream from current position on"
     | stream |
     stream := WriteStream on: (self collectionClass new: 10).
-    self do: [ :each | stream nextPut: each ].
+    self do: [ :ea | stream nextPut: ea ].
     ^stream contents
-! !
-
-
-!Stream methodsFor: 'accessing-writing'!   
+!
 
 nextPut: anObject   
     "Write anObject to the receiver"
     self subclassResponsibility
 !
-
 
 nextPutAll: aCollection
     "Write all the objects in aCollection to the receiver"
@@ -53,6 +62,14 @@ nextPutAll: aCollection
 ! !
 
 !Stream methodsFor: 'testing'!
+
+isPositionable
+    ^false
+!
+
+isEmpty
+    self subclassResponsibility
+!
 
 atEnd
     "Return true if i'm at the end"
@@ -68,12 +85,17 @@ do: aBlock
 
 ! !
 
-
-!Stream methodsFor: 'basic'!
+!Stream methodsFor: 'private'!
 
 collectionClass
     "Answer the collection class that's used to return the contents of the stream"
     ^Array
+! !
+
+!Stream methodsFor: 'basic'!
+
+close
+    ^self
 !
 
 nl

@@ -78,9 +78,36 @@ DEALINGS IN THE SOFTWARE.
 	 ^super ~~ aNumber
 ! !
 
+!SmallInteger methodsFor: 'bit-wise operations'!
+
+bitAnd: aNumber
+    <primitive: 'SmallInteger_bitAnd'>
+	^super bitAnd: aNumber
+!
+
+bitOr: aNumber
+    <primitive: 'SmallInteger_bitOr'>
+	^super bitOr: aNumber
+!
+
+bitXor: aNumber
+    <primitive: 'SmallInteger_bitXor'>
+	^super bitXor: aNumber
+! !
+
+!SmallInteger methodsFor: 'testing'!
+
+isLargeInteger
+    ^false
+!
+
+isSmallInteger
+    ^true
+! !
+
 !SmallInteger methodsFor: 'coercing'!
 
-asSmallInteger
+asInteger
     ^self
 !
 
@@ -97,6 +124,10 @@ asLargeInteger
 print
     <primitive: 'SmallInteger_print'>
 	self primitiveFailed
+!
+
+zero
+    ^0
 !
 
 generality

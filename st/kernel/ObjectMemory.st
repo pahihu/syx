@@ -32,7 +32,7 @@ garbageCollect
 snapshot: aFilename
     (aFilename notNil and: [ aFilename isString not ])
 	ifTrue: [ ^'Cant save the image' printNl ]
-	ifFalse: [ Smalltalk at: ImageFileName put: aFilename ].
+	ifFalse: [ Smalltalk at: #ImageFileName put: aFilename ].
     self primSnapshot: aFilename
 !
 

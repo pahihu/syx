@@ -36,6 +36,10 @@ generality
     ^50
 !
 
+zero
+    ^0.0
+!
+
 coerce: aNumber
     ^aNumber asFloat
 ! !
@@ -48,6 +52,9 @@ print
 ! !
 
 !Float methodsFor: 'testing'!
+
+isInteger
+    ^false
 
 isFloat
     ^true

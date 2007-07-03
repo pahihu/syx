@@ -39,11 +39,16 @@ with: firstObject with: secondObject
         yourself
 !
 
+new: aSize withAll: aCollection
+    "Answer an arrayed collection of the given size with the elements of aCollection"
+    ^(self new: aSize)
+	replaceFrom: 1 to: (aSize min: aCollection size) with: aCollection;
+	yourself
+!
+
 withAll: aCollection
     "Answer an arrayed collection with the same elements of aCollection"
-    ^(self new: aCollection size)
-	replaceFrom: 1 to: aCollection size with: aCollection;
-	yourself
+    ^self new: aCollection size withAll: aCollection
 ! !
 
 !ArrayedCollection methodsFor: 'basic'!
@@ -53,10 +58,21 @@ add: anObject
 !
 
 copyFrom: startIndex to: stopIndex
+    | coll i |
     stopIndex < startIndex ifTrue: [ ^self copyEmpty: 0 ].
-    ^(self copyEmpty: stopIndex)
-	replaceFrom: startIndex to: stopIndex with: self;
-	yourself
+    coll := self copyEmpty: (stopIndex - startIndex + 1).
+    i := 0.
+    self from: startIndex to: stopIndex do: [ :ea |
+	coll at: (i := i + 1) put: ea ].
+    ^coll
+!
+
+copyWith: anObject
+    "Copy the entire collection and add anObject at the end of it"
+    | coll |
+    coll := self class new: self size + 1 withAll: self.
+    coll at: coll size put: anObject.
+    ^coll
 !
 
 replaceFrom: startIndex to: stopIndex with: aCollection

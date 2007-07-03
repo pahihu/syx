@@ -668,6 +668,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
   syx_int8 num_args;
   syx_bool super_term;
   syx_uint16 jump, conditionJump, loopJump;
+  SyxBytecodeSpecial branchType;
 
   super_receiver = _syx_parser_do_binary_continuation (self, super_receiver, TRUE);
 
@@ -676,7 +677,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
     {
       self->_duplicate_indexes[self->_duplicate_indexes_top - 1] = self->bytecode->code_top;
       
-      if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifTrue:"))
+      if (!strcmp (token.value.string, "ifTrue:"))
 	{
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
@@ -705,7 +706,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 
 	  return FALSE;
 	}
-      else if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "ifFalse:"))
+      else if (!strcmp (token.value.string, "ifFalse:"))
 	{
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
@@ -734,14 +735,19 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 
 	  return FALSE;
 	}
-      else if (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "whileTrue:"))
+      else if (!strcmp (token.value.string, "whileTrue:") || !strcmp (token.value.string, "whileFalse:"))
 	{
+	  if (!strcmp (token.value.string, "whileTrue:"))
+	    branchType = SYX_BYTECODE_BRANCH_IF_TRUE;
+	  else
+	    branchType = SYX_BYTECODE_BRANCH_IF_FALSE;
+
 	  syx_token_free (token);
 	  token = syx_lexer_next_token (self->lexer);
 	  loopJump = self->bytecode->code_top;
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_DUPLICATE);
 	  syx_bytecode_gen_message (self->bytecode, FALSE, 0, "value");
-	  conditionJump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH_IF_TRUE, FALSE);
+	  conditionJump = _syx_parser_parse_optimized_block (self, branchType, FALSE);
 	  syx_bytecode_pop_top (self->bytecode);
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
 	  syx_bytecode_gen_code (self->bytecode, loopJump);

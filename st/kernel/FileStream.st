@@ -33,7 +33,7 @@ on: aFD
 !
 
 open: aFilename
-    ^self basicNew fd: (self fileOp: 0 with: aFilename with: self readWrite)
+    ^self basicNew fd: (self fileOp: 0 with: aFilename with: self read)
 !
 
 open: aFilename for: aMode

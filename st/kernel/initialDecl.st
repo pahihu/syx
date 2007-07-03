@@ -126,7 +126,7 @@ Object subclass: #Stream
        classVariableNames: ''!
 
 Stream subclass: #PositionableStream
-       instanceVariableNames: 'collection ptr endPtr access'
+       instanceVariableNames: 'collection curPos endPos'
        classVariableNames: ''!
 
 PositionableStream subclass: #WriteStream
@@ -171,13 +171,17 @@ Magnitude subclass: #CPointer
 	  instanceVariableNames: ''
           classVariableNames: ''!
 
-Number subclass: #SmallInteger
+Number subclass: #Integer
        instanceVariableNames: ''
        classVariableNames: ''!
 
-Number subclass: #LargeInteger
-       instanceVariableNames: ''
-       classVariableNames: ''!
+Integer subclass: #SmallInteger
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+Integer subclass: #LargeInteger
+	instanceVariableNames: ''
+	classVariableNames: ''!
 
 LargeInteger subclass: #LargePositiveInteger
 	     instanceVariableNames: ''
