@@ -49,8 +49,7 @@ if penv['GTK']:
     Default (lib_shared)
 
     instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
-    env.Install (instdir, lib_shared)
-    env.Alias ('install', instdir)
+    env.SyxInstall (instdir, lib_shared)
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
 penv.Alias ('sdist', target)

@@ -76,6 +76,16 @@ DEALINGS IN THE SOFTWARE.
 ~~ aNumber
      <primitive: 'SmallInteger_ne'>
 	 ^super ~~ aNumber
+!
+
+/ aNumber
+     <primitive: 'SmallInteger_div'>
+	 ^super / aNumber
+!
+
+\\ aNumber
+     <primitive: 'SmallInteger_mod'>
+	 ^super \\ aNumber
 ! !
 
 !SmallInteger methodsFor: 'bit-wise operations'!

@@ -564,11 +564,14 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 {
   SyxOop class, method, context;
   syx_int32 primitive;
-  syx_symbol selector;
+  syx_int32 index;
+  SyxOop binding;
   
   es->message_receiver = syx_interp_stack_pop ();
+  index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_KEY (es->literals[argument]));
+  binding = SYX_ASSOCIATION_VALUE (es->literals[argument]);
 
-  switch (argument)
+  switch (index)
     {
     case 0: // isNil
       #ifdef SYX_DEBUG_BYTECODE
@@ -585,8 +588,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  selector = syx_bytecode_unary_messages[argument];
-  method = syx_class_lookup_method (class, selector);  
+  method = syx_class_lookup_method_binding (class, binding);  
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send unary message #%s\n", selector);
@@ -597,7 +599,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD unary #%s\n", selector);
 #endif
-      return syx_signal_does_not_understand (es->message_receiver, syx_symbol_new (selector));
+      return syx_signal_does_not_understand (es->message_receiver, syx_nil);
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
@@ -625,14 +627,17 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   SyxOop class, method, context, first_argument, arguments;
   syx_int16 primitive;
   syx_bool ret = FALSE;
-  syx_symbol selector;
+  SyxOop binding;
+  syx_int32 index;
 
   first_argument = syx_interp_stack_pop ();
   es->message_receiver = syx_interp_stack_pop ();
+  index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_KEY (es->literals[argument]));
+  binding = SYX_ASSOCIATION_VALUE (es->literals[argument]);
 
-  if (argument < 8 && SYX_IS_SMALL_INTEGER(es->message_receiver) && SYX_IS_SMALL_INTEGER(first_argument))
+  if (index < 8 && SYX_IS_SMALL_INTEGER(es->message_receiver) && SYX_IS_SMALL_INTEGER(first_argument))
     {
-      switch (argument)
+      switch (index)
 	{
 	case 0: // +
 	  syx_interp_stack_push (syx_small_integer_new (SYX_SMALL_INTEGER(es->message_receiver) + SYX_SMALL_INTEGER(first_argument)));
@@ -662,8 +667,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  selector = syx_bytecode_binary_messages[argument];
-  method = syx_class_lookup_method (class, selector);
+  method = syx_class_lookup_method_binding (class, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send binary message #%s\n", selector);
@@ -674,7 +678,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD binary #%s\n", selector);
 #endif
-      return syx_signal_does_not_understand (es->message_receiver, syx_symbol_new (selector));
+      return syx_signal_does_not_understand (es->message_receiver, syx_nil);
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));

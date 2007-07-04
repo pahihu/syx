@@ -1,3 +1,22 @@
+2007-07-04  Luca Bruno  <lethalman88@gmail.com>
+
+	* Added bdist command to create a binary distribution
+
+	* Added method caching to unary and binary messages too
+	
+	* Implemented linear hash tables, similiar to double hash
+
+	* st/kernel/SmallInteger.st (/): added temporarly
+	(\\): added
+
+	* st/kernel/Dictionary.st (at:): use hashing
+	(at:put:): use hashing
+	(indexOf:): added
+	
+	* syx/syx-object.c (syx_string_hash): added
+	(syx_object_hash): fixed
+	(syx_dictionary_at_symbol_put): renamed
+
 2007-07-03  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/Integer.st: added

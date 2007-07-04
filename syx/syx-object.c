@@ -138,15 +138,22 @@ syx_object_set_class (SyxOop object, SyxOop class)
   SYX_OBJECT(object)->class = class;
 }
 
-//! Returns the hash of an object
+//! Answer the hash of an Object
 inline syx_int32
 syx_object_hash (SyxOop object)
 {
+  static double k = 0.618;
+  double dhash = SYX_MEMORY_INDEX_OF (object) * k;
+  syx_int32 rhash = (syx_int32)(dhash * 1000);
+
+  // distinguish between objects and embedded values
   if (SYX_IS_OBJECT (object))
-    return SYX_MEMORY_INDEX_OF (object);
-  // missing hash for CPointers
-    
-  return (syx_int32) object;
+    rhash &= ~1;
+  else
+    rhash |= 1;
+  
+  // i don't know how to hash C pointers sorry
+  return SYX_SMALL_INTEGER_EMBED (object);
 }
 
 /* Contructors */
@@ -345,7 +352,7 @@ syx_symbol_new (syx_symbol symbol)
   if (SYX_IS_NIL (obj))
     {
       obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
-      syx_dictionary_at_const_put (syx_symbols, obj, obj);
+      syx_dictionary_at_symbol_put (syx_symbols, obj, obj);
     }
 
   return obj;
@@ -360,6 +367,19 @@ syx_string_new (syx_symbol string)
     return syx_nil;
 
   return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
+}
+
+//! Returns the hash of a String
+inline syx_int32
+syx_string_hash (syx_symbol string)
+{
+  syx_int32 ret;
+  for (ret=0, string = string + 1; *string != '\0'; string++)
+    ret += *string + *(string - 1);
+
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
+    ret >>= 2;
+  return SYX_SMALL_INTEGER_EMBED (ret);
 }
 
 //! Creates a new VariableBinding key -> index on a dictionary
@@ -392,7 +412,7 @@ SyxOop
 syx_dictionary_new (syx_varsize size)
 {
   SyxOop object = syx_object_new (syx_dictionary_class, TRUE);
-  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2);
+  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2 + 3);
   return object;
 }
 
@@ -408,13 +428,25 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
-  syx_varsize i;
+  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
+  syx_uint32 h2 = pos / 4;
+  syx_uint32 i;
 
-  for (i=0; i < size; i+=2)
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos += h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return syx_variable_binding_new (entry, i, dict);
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return syx_variable_binding_new (entry, pos, dict);
+      
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -434,13 +466,24 @@ syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop 
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
-  syx_varsize i;
+  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
+  syx_uint32 h2 = pos / 4;
+  syx_uint32 i;
+  
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
 
-  for (i=0; i < size; i+=2)
+  for (i=0; i < size; i++, pos += h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return syx_variable_binding_new (entry, i, dict);
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return syx_variable_binding_new (entry, pos, dict);
     }
 
   return object;
@@ -456,20 +499,35 @@ SyxOop
 syx_dictionary_bind (SyxOop binding)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  syx_varsize size = SYX_OBJECT_SIZE (table);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[i];
+  syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  syx_uint32 h2;
+  syx_uint32 i;
 
-  if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
-    return SYX_OBJECT_DATA(table)[i+1];
+  if (SYX_OOP_EQ (entry, key))
+    return SYX_OBJECT_DATA(table)[pos+1];
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
+  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
+  h2 = pos / 4;
+
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos += h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (SYX_OOP_EQ (entry, key))
 	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  return SYX_OBJECT_DATA(table)[i+1];
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
+	  return SYX_OBJECT_DATA(table)[pos+1];
 	}
     }
 
@@ -488,20 +546,35 @@ SyxOop
 syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  syx_varsize size = SYX_OBJECT_SIZE (table);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[i];
+  syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  syx_uint32 h2;
+  syx_uint32 i;
 
-  if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
-    return SYX_OBJECT_DATA(table)[i+1];
+  if (SYX_OOP_EQ (entry, key))
+    return SYX_OBJECT_DATA(table)[pos+1];
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
+  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
+  h2 = pos / 4;
+
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos += h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (SYX_OOP_EQ (entry, key))
 	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  return SYX_OBJECT_DATA(table)[i+1];
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
+	  return SYX_OBJECT_DATA(table)[pos+1];
 	}
     }
 
@@ -516,23 +589,38 @@ void
 syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
+  syx_varsize size = SYX_OBJECT_SIZE (table);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_varsize i = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[i];
+  syx_varsize pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  syx_uint32 h2;
+  syx_uint32 i;
 
   if (SYX_OOP_EQ (entry, key))
     {
-      SYX_OBJECT_DATA(table)[i+1] = value;
+      SYX_OBJECT_DATA(table)[pos+1] = value;
       return;
     }
 
-  for (i=0; i < SYX_OBJECT_SIZE (table); i+=2)
+  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
+  h2 = pos / 4;
+
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos+=h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && SYX_OOP_EQ (entry, key))
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (SYX_OOP_EQ (entry, key))
 	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (i);
-	  SYX_OBJECT_DATA(table)[i+1] = value;
+	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
+	  SYX_OBJECT_DATA(table)[pos+1] = value;
 	  return;
 	}
     }
@@ -551,12 +639,23 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
+  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
+  syx_uint32 h2 = pos / 4;
 
-  for (i=0; i < size; i+=2)
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos+=h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return SYX_OBJECT_DATA(table)[pos+1];
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -575,12 +674,23 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
+  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
+  syx_uint32 h2 = pos / 4;
 
-  for (i=0; i < size; i+=2)
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos+=h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
-      if (!SYX_IS_NIL (entry) && !strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[i+1];
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
+      if (SYX_IS_NIL (entry))
+	break;
+      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return SYX_OBJECT_DATA(table)[pos+1];
     }
 
   return object;
@@ -588,30 +698,39 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 
 //! Insert key -> value in the dictionary
 void
-syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value)
+syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
   SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   syx_varsize size = SYX_OBJECT_SIZE (table);
   syx_varsize i;
   SyxOop entry;
+  syx_uint32 pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
+  syx_uint32 h2 = pos / 4;
 
-  for (i=0; i < size; i+=2)
+  if (!h2 || h2 == 1)
+    h2 = 2;
+  else if ((h2 % 2))
+    h2--;
+
+  for (i=0; i < size; i++, pos+=h2)
     {
-      entry = SYX_OBJECT_DATA(table)[i];
+      if (pos >= size - 1)
+	pos -= size - 1;
+      entry = SYX_OBJECT_DATA(table)[pos];
       if (SYX_IS_NIL (entry))
 	{
-	  SYX_OBJECT_DATA(table)[i] = key;
-	  SYX_OBJECT_DATA(table)[i+1] = value;
+	  SYX_OBJECT_DATA(table)[pos] = key;
+	  SYX_OBJECT_DATA(table)[pos+1] = value;
 	  return;
 	}
       else if (SYX_OOP_EQ(entry, key))
 	{
-	  SYX_OBJECT_DATA(table)[i+1] = value;
+	  SYX_OBJECT_DATA(table)[pos+1] = value;
 	  return;
 	}
     }
 
-  printf("Not enough space for dictionary %p\n", SYX_OBJECT(dict));
+  syx_error ("Not enough space for dictionary %p\n", SYX_OBJECT(dict));
 }
 
 //! Create a new BlockClosure

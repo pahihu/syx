@@ -28,6 +28,13 @@ new
     ^self new: 10
 ! !
 
+!Dictionary methodsFor: 'private'!
+
+indexFor: aHash
+    <primitive: 'Dictionary_pos'>
+	self primitiveFailed
+! !
+
 !Dictionary methodsFor: 'accessing'!
 
 removeKey: aKey
@@ -36,20 +43,40 @@ removeKey: aKey
 	    ifTrue: [ hashTable at: i put: nil. ^hashTable at: i + 1 put: nil ] ]
 !
 
+indexOf: aKey
+    | h2 pos size |
+    size := hashTable size.
+    pos := self indexFor: aKey hash.
+    h2 := pos / 4.
+
+    (h2 between: 0 and: 1)
+	ifTrue: [ h2 := 2 ].
+    (h2 \\ 2) isZero
+	ifFalse: [ h2 := h2 - 1 ].
+
+    1 to: hashTable size do: [ :i |
+	| key |
+	key := hashTable at: pos + 1.
+	key = aKey | key isNil
+	    ifTrue: [ ^pos + 1 ].
+	pos := pos + h2.
+	pos >= (size - 1)
+	    ifTrue: [ pos := pos - size - 1 ] ]
+!
+
 at: aKey
-    1 to: hashTable size by: 2 do: [ :i |
-	(hashTable at: i) = aKey
-	    ifTrue: [ ^hashTable at: i + 1 ] ]
+    | index key |
+    index := self indexOf: aKey.
+    (hashTable at: index) isNil
+	ifTrue: [ self error: 'key not found' ].
+    ^hashTable at: index + 1
 !
 
 at: aKey put: aValue
-    1 to: hashTable size by: 2 do: [ :i |
-	| key |
-	key := hashTable at: i.
-	key = aKey
-	    ifTrue: [ ^hashTable at: i + 1 put: aValue ].
-	key isNil
-	    ifTrue: [
-		hashTable at: i put: aKey.
-		^hashTable at: i + 1 put: aValue ] ]
+    | index |
+    index := self indexOf: aKey.
+    hashTable
+	at: index put: aKey;
+	at: index + 1 put: aValue.
+    ^aValue
 ! !

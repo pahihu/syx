@@ -250,7 +250,6 @@ syx_fetch_basic (void)
   syx_link_class = syx_globals_at ("Link");
   
   syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
-
   syx_interp_init ();
   syx_error_init ();
   syx_scheduler_init ();

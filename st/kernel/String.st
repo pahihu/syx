@@ -42,6 +42,11 @@ compile
 
 !String methodsFor: 'basic'!
 
+hash
+    <primitive: 'String_hash'>
+	self primitiveFailed
+!
+
 size
     "The size is less by 1 because of the NULL character"
     ^self basicSize - 1

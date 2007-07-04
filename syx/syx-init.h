@@ -50,6 +50,6 @@ syx_symbol syx_get_image_path (void);
 										   object))
 
 //! Insert a SyxOop into the Smalltalk dictionary
-#define syx_globals_at_put(symbol,value) (syx_dictionary_at_const_put (syx_globals, (symbol), (value)))
+#define syx_globals_at_put(symbol,value) (syx_dictionary_at_symbol_put (syx_globals, (symbol), (value)))
 
 #endif /* SYX_INIT_H */

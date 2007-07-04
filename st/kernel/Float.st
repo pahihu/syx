@@ -110,4 +110,8 @@ isFloat
 ~~ aNumber
      <primitive: 'Float_ne'>
 	 ^super ~~ aNumber
+!
+
+\\ aNumber
+     self notImplementedYet
 ! !

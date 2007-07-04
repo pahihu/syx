@@ -421,7 +421,7 @@ syx_memory_load_image (syx_symbol path)
 #ifdef SYX_DEBUG_INFO
   syx_debug("Read image of %d bytes\n", size);
 #endif
-  
+
   syx_fetch_basic ();
   
   return TRUE;

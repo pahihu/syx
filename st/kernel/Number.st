@@ -34,6 +34,10 @@ isInteger
     ^self subclassResponsibility
 !
 
+isZero
+    ^self = self zero
+!
+
 isFloat
     ^self subclassResponsibility
 !
@@ -49,10 +53,9 @@ positive
 sign
     self < self zero
 	ifTrue: [ ^-1 ].
-    self = self zero
-	ifTrue: [ ^0 ].
     self > self zero
-	ifTrue: [ ^1 ]
+	ifTrue: [ ^1 ].
+    ^0
 !
 
 isSmallInteger
@@ -177,6 +180,13 @@ abs
     self generality > aNumber generality
 	ifTrue: [ ^self ~~ (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) ~~ aNumber ]
+!
+
+\\ aNumber
+    "Coerce aNumber and do modulo"
+    self generality > aNumber generality
+	ifTrue: [ ^self \\ (self coerce: aNumber) ]
+	ifFalse: [ ^(aNumber coerce: self) \\ aNumber ]
 !
 
 generality

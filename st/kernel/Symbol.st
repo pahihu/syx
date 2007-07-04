@@ -22,6 +22,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Symbol methodsFor: 'basic'!
+
+hash
+    <primitive: 'String_hash'>
+	self primitiveFailed
+! !
+
 !Symbol methodsFor: 'accessing'!
 
 asString

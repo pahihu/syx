@@ -45,8 +45,7 @@ lib_objects = libenv.SharedObject (lib_sources)
 lib_shared = libenv.SharedLibrary (target='syx', source=lib_objects)
 Default (lib_shared)
 
-target = env.Install (env['libdir'], lib_shared)
-env.Alias ('install', target)
+target = env.SyxInstall (env['libdir'], lib_shared)
 
 target = env.Install (os.path.join (distdir, 'syx'), lib_sources + ['SConscript'])
 env.Alias ('sdist', target)

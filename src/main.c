@@ -105,7 +105,7 @@ _getopt_do (int argc, char **argv)
 	    case 3:
 	      printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
 		      "Copyright (c) 2007 Luca Bruno\n",
-		      SYX_STRINGIFY (SYX_VERSION));
+		      SYX_VERSION);
 	      exit (EXIT_SUCCESS);
 	    case 4:
 	    default:
@@ -127,7 +127,7 @@ _getopt_do (int argc, char **argv)
 	case 'v':
 	  printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
 		  "Copyright (c) 2007 Luca Bruno\n",
-		  SYX_STRINGIFY (SYX_VERSION));
+		  SYX_VERSION);
 	  exit (EXIT_SUCCESS);
 	case 'h':
 	default:

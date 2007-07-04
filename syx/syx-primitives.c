@@ -521,6 +521,11 @@ SYX_FUNC_PRIMITIVE (String_compile)
   SYX_PRIM_RETURN (meth);
 }
 
+SYX_FUNC_PRIMITIVE (String_hash)
+{
+  SYX_PRIM_RETURN (syx_small_integer_new (syx_string_hash (SYX_OBJECT_SYMBOL (es->message_receiver))));
+}
+
 /* Small integers */
 
 SYX_FUNC_PRIMITIVE (SmallInteger_plus)
@@ -669,6 +674,36 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (first != second));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_div)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) /
+					  SYX_SMALL_INTEGER (second)));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_mod)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) %
+					  SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
@@ -1335,6 +1370,18 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
+
+SYX_FUNC_PRIMITIVE (Dictionary_pos)
+{
+  SYX_PRIM_ARGS(1);
+  SyxOop table = SYX_DICTIONARY_HASH_TABLE (es->message_receiver);
+  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_int32 hash = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  syx_int32 pos = 2 * (hash % ((size - 1) / 2));
+
+  SYX_PRIM_RETURN (syx_small_integer_new (pos));
+}
+
 static SyxPrimitiveEntry primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1385,6 +1432,12 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Semaphore_waitFor", Semaphore_waitFor },
   { "String_compile", String_compile },
 
+  /* Strings */
+  { "String_hash", String_hash },
+
+  /* Dictionaries */
+  { "Dictionary_pos", Dictionary_pos },
+
   /* File streams */
   { "FileStream_fileOp", FileStream_fileOp },
 
@@ -1397,6 +1450,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+  { "SmallInteger_div", SmallInteger_div },
+  { "SmallInteger_mod", SmallInteger_mod },
   { "SmallInteger_bitAnd", SmallInteger_bitAnd },
   { "SmallInteger_bitOr", SmallInteger_bitOr },
   { "SmallInteger_bitXor", SmallInteger_bitXor },

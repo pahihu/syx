@@ -37,17 +37,19 @@ if env['PLATFORM'] == 'win32':
 prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
 Default (prog)
 
-inst = env.Install (env['bindir'], prog)
-env.Alias ('install', env['bindir'])
+inst = env.SyxInstall (env['bindir'], prog)
 
 # Create the image once installed
 
 image = env.Command (env['imagepath'], inst, '$SOURCE -r $datadir -S')
+env.Alias ('install', image)
 env.AlwaysBuild (image)
 env.Depends (image, os.path.join(env['datadir'], 'st'))
-env.Alias ('install', image)
 
 # Distribution
+
+image = env.Command (os.path.join (distdir, env['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
+env.Alias ('bdist', image)
 
 target = env.Install (os.path.join (distdir, 'src'), prog_sources + prog_resources + ['SConscript'])
 env.Alias ('sdist', target)

@@ -79,7 +79,7 @@ hash
     <primitive: 'Object_hash'>
 	self primitiveFailed
 ! !
-
+    
 !Object methodsFor: 'testing'!
 
 isKindOf: aClass

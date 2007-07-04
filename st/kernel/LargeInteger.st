@@ -73,6 +73,12 @@ print
 	self primitiveFailed
 ! !
 
+!LargeInteger methodsFor: 'arithmetic'!
+
+\\ aNumber
+     self notImplementedYet
+! !
+
 !LargeInteger methodsFor: 'bit-wise operations'!
 
 bitAnd: aNumber

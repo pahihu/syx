@@ -252,8 +252,8 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   // translate from array to dictionary
   for (i=0; i < SYX_OBJECT_SIZE(class_vars); i++)
-    syx_dictionary_at_const_put (SYX_CLASS_CLASS_VARIABLES(subclass),
-				 SYX_OBJECT_DATA(class_vars)[i], syx_nil);
+    syx_dictionary_at_symbol_put (SYX_CLASS_CLASS_VARIABLES(subclass),
+				  SYX_OBJECT_DATA(class_vars)[i], syx_nil);
   // get rid of this
   syx_object_free (class_vars);
 
@@ -316,9 +316,9 @@ _syx_cold_parse_methods (SyxLexer *lexer)
       parser = syx_parser_new (method_lexer, syx_method_new (), class);
       syx_parser_parse (parser);
 
-      syx_dictionary_at_const_put (SYX_CLASS_METHODS(class),
-				   SYX_METHOD_SELECTOR(parser->method),
-				   parser->method);
+      syx_dictionary_at_symbol_put (SYX_CLASS_METHODS(class),
+				    SYX_METHOD_SELECTOR(parser->method),
+				    parser->method);
 
       syx_parser_free (parser, TRUE);
     }

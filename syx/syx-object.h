@@ -124,7 +124,7 @@ void syx_object_free (SyxOop oop);
 void syx_object_resize (SyxOop oop, syx_varsize size);
 #define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_SIZE(oop)+size))
 syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
-inline syx_int32 syx_object_hash (SyxOop ptr);
+inline syx_int32 syx_object_hash (SyxOop oop);
 inline SyxOop syx_object_get_class (SyxOop oop);
 inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
@@ -139,7 +139,7 @@ SyxOop syx_dictionary_bind (SyxOop binding);
 void syx_dictionary_bind_set_value (SyxOop binding, SyxOop value);
 SyxOop syx_dictionary_at_symbol (SyxOop dict, syx_symbol key);
 SyxOop syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
-void syx_dictionary_at_const_put (SyxOop dict, SyxOop key, SyxOop value);
+void syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value);
 
 /* Builders */
 
@@ -158,6 +158,7 @@ syx_bool syx_array_remove (SyxOop array, SyxOop element);
 void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 inline SyxOop syx_symbol_new (syx_symbol symbol);
 inline SyxOop syx_string_new (syx_symbol string);
+inline syx_int32 syx_string_hash (syx_symbol string);
 inline SyxOop syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dict);
 inline SyxOop syx_link_new (SyxOop key, SyxOop value, SyxOop next);
 inline SyxOop syx_dictionary_new (syx_varsize size);

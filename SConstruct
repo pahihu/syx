@@ -174,9 +174,20 @@ env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
                                'doxygen $SOURCES'))
 env.Clean ('doc', 'build/doc')
 
-# Build
+distdir = '#syx-0.1.1'
 
-distdir = '#syx-0.1'
+# Installation
+
+def builder_syxinstall (target, sources):
+   t1 = env.Install (target, sources)
+   env.Alias ('install', t1)
+   t = env.Install (os.path.join (distdir, target), sources)
+   env.Alias ('bdist', t)
+   return t1
+
+setattr (env, 'SyxInstall', builder_syxinstall)
+
+# Build
 
 env.MergeFlags ('-L#build/lib')
 env.BuildDir ('build/lib', 'syx', False)
@@ -194,8 +205,7 @@ env.SConscript (dirs=['tests'], exports=['env', 'distdir'])
 
 sources = glob.glob ('st/kernel/*.st')
 path = os.path.join (env['datadir'], 'st', 'kernel')
-target = env.Install (path, sources)
-env.Alias ('install', target)
+env.SyxInstall (path, sources)
 
 # Source distribution
 
