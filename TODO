@@ -5,6 +5,7 @@ Major:
 - Streams
 - Fix large integers on Windows
 - Be able to run st files from command line
+- Support for big endian platforms
 
 Minor:
 - Use radix for floats in the lexer
