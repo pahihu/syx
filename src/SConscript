@@ -48,8 +48,11 @@ env.Depends (image, os.path.join(env['datadir'], 'st'))
 
 # Distribution
 
-image = env.Command (os.path.join (distdir, env['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
-env.Alias ('bdist', image)
+if env['PLATFORM'] != 'win32':
+    bimage = env.Command (os.path.join (distdir, env['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
+    env.Depends (bimage, image)
+    env.NoClean (image, bimage)
+    env.Alias ('bdist', bimage)
 
 target = env.Install (os.path.join (distdir, 'src'), prog_sources + prog_resources + ['SConscript'])
 env.Alias ('sdist', target)

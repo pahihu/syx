@@ -3,6 +3,8 @@ Major:
 - System signal handling
 - Object printing
 - Streams
+- Fix large integers on Windows
+- Be able to run st files from command line
 
 Minor:
 - Use radix for floats in the lexer
@@ -10,6 +12,7 @@ Minor:
 
 Later:
 - Create a series of Smalltalk tests and benchmarks
+- Use math libraries for Floats
 
 Very later:
 - Method inlining

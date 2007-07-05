@@ -71,7 +71,8 @@ for test in tests:
     env.Clean ('syx', target)
     env.Clean (target, target+'.passed')
 
-env.Alias ('test', targets)
+t = env.Alias ('test', targets)
+env.Clean (t, '#test.sim')
 
 def builder_test_summary (env, target, source):
     passed = 0

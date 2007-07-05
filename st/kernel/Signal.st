@@ -24,32 +24,71 @@ DEALINGS IN THE SOFTWARE.
 
 !Signal class methodsFor: 'instance creation'!
 
+signal: messageText
+    self new signal: messageText
+!
+
 signal
     self new signal
 ! !
 
 !Signal methodsFor: 'signaling'!
 
-findHandlerContext
+handlerContext
     "Finds the context which handles the exception"
-    <primitive: 'Signal_findHandlerContext'>
-	self primitiveFailed
+    | ctx |
+    handlerContext
+	ifNotNil: [ ^handlerContext ].
+
+    ctx := signalerContext parent.
+    [ ctx notNil ]
+	whileTrue: [
+	    (ctx handles: self)
+		ifTrue: [ ^handlerContext := ctx ].
+	    ctx := ctx parent ].
+    ^nil
+!
+
+isResumable
+    "Anwser if the signaler context can be resumed back"
+    ^true
+!
+
+description
+    ^'A signal has been sent.'
+!
+
+messageText
+    ^messageText
+!
+
+messageText: aMessageText
+    messageText := aMessageText
 !
 
 signal
     "Raises a signal. If it's not handled, debug the process"
     signalerContext := thisContext.
-    handlerContext := self findHandlerContext.
     [
-	handlerContext isNil
-	    ifTrue: ['Unhandled exception... process is going to be terminated' printNl.
-		     self debug.
-		     Processor activeProcess terminate]
+	self handlerContext isNil
+	    ifTrue: [ 'Unhandled exception... process is going to be terminated' printNl.
+		      self debug.
+		      Processor activeProcess terminate]
 	    ifFalse: [ self return: (handlerContext handlerBlock value: self) ]
     ] on: Signal do: [ :ex | ]
 !
 
+signal: aMessageText
+    messageText := aMessageText.
+    self signal
+!
+
 debug
+    ('= ', self description printString) printNl.
+    self messageText
+	ifNotNil: [ ('== ', self messageText printString) printNl ].
+    Transcript cr.
+    'Traceback:' printNl.
     [ signalerContext traceback ]
 	on: Signal do: [ :ex | 'Unable to debug' printNl ]
 !
@@ -57,12 +96,14 @@ debug
 pass
     "Drop the exception to parent contexts"
     thisContext parent: handlerContext parent.
+    handlerContext := nil.
     self signal
 !
 
 resume
     "Resume the context which generated the error"
-    Processor swapWith: signalerContext parent
+    self isResumable
+	ifTrue: [ Processor swapWith: signalerContext parent ]
 !
 
 return: anObject
@@ -72,4 +113,40 @@ return: anObject
 
 return
     self return: nil
+! !
+
+!Exception methodsFor: 'signaling'!
+
+description
+    ^'An exception has been raised.'
+! !
+
+!Error methodsFor: 'signaling'!
+
+description
+    ^'An error occurred during program execution.'
+! !
+
+!MessageNotUnderstood class methodsFor: 'instance creation'!
+
+message: aMessage receiver: anObject
+    ^self new
+	message: aMessage receiver: anObject;
+	signal
+! !
+
+!MessageNotUnderstood methodsFor: 'signaling'!
+
+message
+    ^message
+! 
+
+receiver
+    ^receiver
+!
+
+message: aMessage receiver: anObject
+    message := aMessage.
+    receiver := anObject.
+    self messageText: anObject class printString, ': did not understood ', aMessage printString
 ! !

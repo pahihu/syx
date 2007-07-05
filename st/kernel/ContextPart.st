@@ -29,6 +29,10 @@ showTraceback
     (self receiver class printString, '>>', self method selector printString) printNl
 !
 
+handles: anException
+    ^false
+!
+
 homeContext
     ^self
 !
@@ -49,13 +53,11 @@ on: aMethod parent: aContext receiver: anObject arguments: anArray
 	yourself
 ! !
 
-!ContextPart methodsFor: 'initialize-release'!
-
-initialize
-
-! !
-
 !ContextPart methodsFor: 'debugging'!
+
+handles: anException
+    self subclassResponsibility
+!
 
 showTraceback
     self subclassResponsibility
@@ -82,7 +84,7 @@ isMethodContext
     self subclassResponsibility
 ! !
 
-!ContextPart methodsFor: 'debugging'!
+!ContextPart methodsFor: 'accessing'!
 
 method
     ^method

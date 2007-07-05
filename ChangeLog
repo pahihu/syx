@@ -1,3 +1,26 @@
+2007-07-05  Luca Bruno  <lethalman88@gmail.com>
+
+	== Released Syx 0.1.1 version ==
+
+	* syx/syx-scheduler.c (_syx_scheduler_save): remove fd_sets from being from into the image
+	
+	* src/SConscript: fixed bdist command
+	
+	* st/kernel/Object.st (error:): added
+	(doesNotUnderstand:): fixed to complain the standard
+
+	* st/kernel/Dictionary.st (indexOf:): small but important fix
+	(new): fixed initialization
+	(initializeTable:): added
+
+	* st/kernel/Signal.st (handlerContext): added
+	(signal:): added
+	(messageText): added
+	(description): added
+	(MessageNotUnderstood>>message:receiver:): added
+
+	* syx/syx-primitives.c (Signal_findHandlerContext): removed
+
 2007-07-04  Luca Bruno  <lethalman88@gmail.com>
 
 	* Added bdist command to create a binary distribution

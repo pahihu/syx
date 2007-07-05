@@ -24,8 +24,20 @@ DEALINGS IN THE SOFTWARE.
 
 !Dictionary class methodsFor: 'instance creation'!
 
+new: size
+    ^self basicNew
+	initializeTable: size;
+	yourself
+!
+
 new
-    ^self new: 10
+    ^self new: 30
+! !
+
+!Dictionary methodsFor: 'initialize-release'!
+
+initializeTable: size
+    hashTable := Array new: size + 3
 ! !
 
 !Dictionary methodsFor: 'private'!
@@ -61,14 +73,14 @@ indexOf: aKey
 	    ifTrue: [ ^pos + 1 ].
 	pos := pos + h2.
 	pos >= (size - 1)
-	    ifTrue: [ pos := pos - size - 1 ] ]
+	    ifTrue: [ pos := pos - (size - 1) ] ]
 !
 
 at: aKey
     | index key |
     index := self indexOf: aKey.
     (hashTable at: index) isNil
-	ifTrue: [ self error: 'key not found' ].
+	ifTrue: [ NotFound signal: 'key not found' ].
     ^hashTable at: index + 1
 !
 

@@ -175,10 +175,6 @@ _syx_scheduler_save (FILE *image)
       p = p->next;
     }
   fputc (0, image);
-
-  fwrite (&_syx_scheduler_poll_rfds, sizeof (fd_set), 1, image);
-  fwrite (&_syx_scheduler_poll_wfds, sizeof (fd_set), 1, image);
-  fwrite (&_syx_scheduler_poll_nfds, sizeof (syx_int32), 1, image);
 }
 
 void
@@ -226,10 +222,6 @@ _syx_scheduler_load (FILE *image)
       if (!_syx_scheduler_poll_write)
 	_syx_scheduler_poll_write = p;
     }
-
-  fread (&_syx_scheduler_poll_rfds, sizeof (fd_set), 1, image);
-  fread (&_syx_scheduler_poll_wfds, sizeof (fd_set), 1, image);
-  fread (&_syx_scheduler_poll_nfds, sizeof (syx_int32), 1, image);
 }
 
 //! Initialize the scheduler

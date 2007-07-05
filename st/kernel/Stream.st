@@ -34,6 +34,15 @@ next
     self subclassResponsibility
 !
 
+next: amount
+    "Returns a collection with the given number of objects next in the stream"
+    | i stream |
+    stream := WriteStream on: (self collectionClass new: amount).
+    1 to: amount do: [ :i |
+	stream nextPut: self next ].
+    ^stream contents
+!
+
 peek
     self subclassResponsibility
 !

@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 at: aSymbol put: anObject
     aSymbol isSymbol
-	ifFalse: [ self error ].
+	ifFalse: [ self error: 'system dictionary may have only symbol keys' ].
     ^super at: aSymbol put: anObject
 !
 

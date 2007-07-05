@@ -338,28 +338,6 @@ SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
   return syx_interp_leave_context_and_answer (es->message_arguments[1], TRUE);
 }
 
-SYX_FUNC_PRIMITIVE (Signal_findHandlerContext)
-{
-  SyxOop eClass;
-  SyxOop hClass;
-  SyxOop ctx = SYX_METHOD_CONTEXT_PARENT (es->context);
-
-  eClass = syx_object_get_class (es->message_receiver);
-  while (!SYX_IS_NIL (ctx))
-    {
-      if (SYX_OOP_EQ (syx_object_get_class (ctx), syx_block_context_class))
-	{
-	  hClass = SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx);
-	  if (!SYX_IS_NIL (hClass) && (SYX_OOP_EQ (eClass, hClass) || syx_class_is_superclass_of (hClass, eClass)))
-	    break;
-	}
-
-      ctx = SYX_METHOD_CONTEXT_PARENT (ctx);
-    }
-
-  SYX_PRIM_RETURN (ctx);
-}
-
 SYX_FUNC_PRIMITIVE (Character_new)
 {
   SYX_PRIM_ARGS(1);
@@ -1424,7 +1402,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Processor_swapWith", Processor_swapWith },
   { "Processor_leaveTo_andAnswer", Processor_leaveTo_andAnswer },
 
-  { "Signal_findHandlerContext", Signal_findHandlerContext },
   { "Character_new", Character_new },
   { "Character_value", Character_value },
   { "Semaphore_signal", Semaphore_signal },

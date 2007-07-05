@@ -90,12 +90,14 @@ env.Help (opts.GenerateHelpText (env) + """
            'scons debug=full'    trace the entire execution stack of Smalltalk.
            'scons test'          to test Syx.
            'scons test attach=yes'
-                                 to test Syx and attach a debugger if the
-                                 test failures
+                                 to test Syx and attach a debugger if a
+                                 test fails
+
            'scons doc'           to create reference documentation (requires Doxygen).
            'scons install'       to install Syx.
            'scons sdist'         to create a directory with source distribution.
-	   'scons bdist'	 to create a directory with binary distribution.
+	   'scons bdist'	 to create a directory with binary distribution
+                                 (implies 'scons install', doesn't work under Win32).
      """)
 
 # Configuration
@@ -182,8 +184,9 @@ distdir = '#syx-0.1.1'
 def builder_syxinstall (target, sources):
    t1 = env.Install (target, sources)
    env.Alias ('install', t1)
-   t = env.Install (os.path.join (distdir, target), sources)
-   env.Alias ('bdist', t)
+   if env['PLATFORM'] != 'win32':
+      t = env.Install (os.path.join (distdir, target), sources)
+      env.Alias ('bdist', t)
    return t1
 
 setattr (env, 'SyxInstall', builder_syxinstall)

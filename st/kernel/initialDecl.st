@@ -256,7 +256,7 @@ Object subclass: #Console
 "Exceptions"
 
 Object subclass: #Signal
-       instanceVariableNames: 'handlerContext signalerContext'
+       instanceVariableNames: 'handlerContext signalerContext messageText'
        classVariableNames: ''!
 
 Signal subclass: #Exception
@@ -284,7 +284,7 @@ VMError subclass: #PrimitiveFailed
         classVariableNames: ''!
 
 Halt subclass: #MessageNotUnderstood
-     instanceVariableNames: ''
+     instanceVariableNames: 'message receiver'
      classVariableNames: ''!
 
 NotImplemented subclass: #NotYetImplemented

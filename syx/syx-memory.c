@@ -256,20 +256,16 @@ syx_memory_save_image (syx_symbol path)
   if (!image)
     return FALSE;
 
-  syx_int32 size = 0;
-
   syx_memory_gc ();
 
   fwrite (&_syx_memory_size, sizeof (syx_int32), 1, image);
   fwrite (&_syx_freed_memory_top, sizeof (syx_int32), 1, image);
   _syx_memory_write (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
-  size += 4 * _syx_freed_memory_top;
 
   _syx_scheduler_save (image);
 
   _syx_memory_write (&syx_globals, FALSE, 1, image);
   _syx_memory_write (&syx_symbols, FALSE, 1, image);
-  size += 16;
 
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
@@ -281,28 +277,16 @@ syx_memory_save_image (syx_symbol path)
       fputc (object->has_refs, image);
       fwrite (&object->size, sizeof (syx_varsize), 1, image);
 
-      size += 13;
-
       if (object->size > 0)
 	{
 	  if (object->has_refs)
-	    {
-	      _syx_memory_write (object->data, TRUE, object->size, image);
-	      size += 5 * object->size;
-	    }
+	    _syx_memory_write (object->data, TRUE, object->size, image);
 	  else
-	    {
-	      fwrite (object->data, sizeof (syx_int8), object->size, image);
-	      size += object->size;
-	    }
+	    fwrite (object->data, sizeof (syx_int8), object->size, image);
 	}
     }
 
   fclose (image);
-
-#ifdef SYX_DEBUG_INFO
-  syx_debug("Wrote image of %d bytes\n", size);
-#endif
 
   return TRUE;
 }
@@ -335,7 +319,7 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	  if (!fread (&oop, sizeof (syx_int32), 1, image))
 	    return FALSE;
 	}
-      
+
       oops[i] = oop;
     }  
 
@@ -354,7 +338,6 @@ syx_memory_load_image (syx_symbol path)
   SyxObject *object;
   FILE *image;
   syx_int32 mem_size;
-  syx_int32 size = 0;
   
   if (!path)
     {
@@ -373,17 +356,14 @@ syx_memory_load_image (syx_symbol path)
 
   fread (&mem_size, sizeof (syx_int32), 1, image);
   syx_memory_init (mem_size);
-  
+
   fread (&_syx_freed_memory_top, sizeof (syx_int32), 1, image);
   _syx_memory_read (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
-  size += 4 * _syx_freed_memory_top;
 
   _syx_scheduler_load (image);
 
   _syx_memory_read (&syx_globals, FALSE, 1, image);
   _syx_memory_read (&syx_symbols, FALSE, 1, image);
-
-  size += 16;
 
   while (!feof (image))
     {
@@ -394,8 +374,6 @@ syx_memory_load_image (syx_symbol path)
       object->has_refs = fgetc (image);
       fread (&object->size, sizeof (syx_varsize), 1, image);
 
-      size += 13;
-
       if (object->size > 0)
 	{
 	  if (object->data)
@@ -405,22 +383,16 @@ syx_memory_load_image (syx_symbol path)
 	    {
 	      object->data = syx_calloc (object->size, sizeof (SyxOop));
 	      _syx_memory_read (object->data, TRUE, object->size, image);
-	      size += 5 * object->size;
 	    }
 	  else
 	    {
 	      object->data = syx_calloc (object->size, sizeof (syx_int8));
 	      fread (object->data, sizeof (syx_int8), object->size, image);
-	      size += object->size;
 	    }
 	}
     }
   
   fclose (image);
-
-#ifdef SYX_DEBUG_INFO
-  syx_debug("Read image of %d bytes\n", size);
-#endif
 
   syx_fetch_basic ();
   

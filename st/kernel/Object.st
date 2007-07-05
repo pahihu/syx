@@ -85,6 +85,8 @@ hash
 isKindOf: aClass
     "Answer true if the receiver's class is a subclass of aClass"
     | class |
+    aClass
+	ifNil: [ ^false ].
     class := self class.
     class = aClass
 	ifTrue: [ ^true ].
@@ -155,8 +157,13 @@ printString
 
 !Object methodsFor: 'signaling'!
 
-doesNotUnderstand: aSelector
-    MessageNotUnderstood signal
+error: messageText
+    Error signal: messageText
+!
+
+doesNotUnderstand: aMessage
+    MessageNotUnderstood
+	message: aMessage receiver: self
 !
 
 shouldNotImplement

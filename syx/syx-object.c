@@ -142,16 +142,10 @@ syx_object_set_class (SyxOop object, SyxOop class)
 inline syx_int32
 syx_object_hash (SyxOop object)
 {
-  static double k = 0.618;
-  double dhash = SYX_MEMORY_INDEX_OF (object) * k;
-  syx_int32 rhash = (syx_int32)(dhash * 1000);
-
   // distinguish between objects and embedded values
   if (SYX_IS_OBJECT (object))
-    rhash &= ~1;
-  else
-    rhash |= 1;
-  
+    return SYX_MEMORY_INDEX_OF (object);
+
   // i don't know how to hash C pointers sorry
   return SYX_SMALL_INTEGER_EMBED (object);
 }

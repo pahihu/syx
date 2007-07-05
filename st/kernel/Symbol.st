@@ -37,7 +37,7 @@ asString
 !
 
 printString
-    ^self asString
+    ^'#', self asString
 ! !
 
 !Symbol methodsFor: 'testing'!

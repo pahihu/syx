@@ -46,6 +46,10 @@ handledException
 
 !BlockContext methodsFor: 'exception traceback'!
 
+handles: anException
+    ^anException isKindOf: handledException
+!
+
 showTraceback
     "Shows my single traceback"
     (self receiver class printString, '>>', self homeContext method selector asString, '[]') printNl.
