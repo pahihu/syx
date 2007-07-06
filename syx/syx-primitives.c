@@ -56,7 +56,7 @@ SYX_FUNC_PRIMITIVE (Processor_yield)
 
 SYX_FUNC_PRIMITIVE (Behavior_new)
 {
-  SYX_PRIM_RETURN (syx_object_new (es->message_receiver, TRUE));
+  SYX_PRIM_RETURN (syx_object_new (es->message_receiver));
 }
 
 SYX_FUNC_PRIMITIVE (Behavior_newColon)
@@ -85,7 +85,7 @@ SYX_FUNC_PRIMITIVE (Object_at)
   SYX_PRIM_ARGS(1);
   syx_varsize index;
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
-  if (index < 0 || index >= SYX_OBJECT_SIZE(es->message_receiver))
+  if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
       SYX_PRIM_FAIL;
     }
@@ -99,7 +99,7 @@ SYX_FUNC_PRIMITIVE (Object_at_put)
   SyxOop object;
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
-  if (index < 0 || index >= SYX_OBJECT_SIZE(es->message_receiver))
+  if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
       SYX_PRIM_FAIL;
     }
@@ -122,7 +122,7 @@ SYX_FUNC_PRIMITIVE (Object_resize)
 
 SYX_FUNC_PRIMITIVE (Object_size)
 {
-  SYX_PRIM_RETURN (syx_small_integer_new (SYX_OBJECT_SIZE (es->message_receiver)));
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_OBJECT_DATA_SIZE (es->message_receiver)));
 }
 
 SYX_FUNC_PRIMITIVE (Object_identityEqual)
@@ -195,7 +195,7 @@ SYX_FUNC_PRIMITIVE (ByteArray_at)
   syx_varsize index;
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
-  if (index < 0 || index >= SYX_OBJECT_SIZE(es->message_receiver))
+  if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
       SYX_PRIM_FAIL;
     }
@@ -209,7 +209,7 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
   SyxOop oop = es->message_arguments[1];
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
-  if (index < 0 || index >= SYX_OBJECT_SIZE(es->message_receiver))
+  if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
       SYX_PRIM_FAIL;
     }
@@ -225,7 +225,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
   SyxOop args;
   SyxOop ctx;
   syx_memory_gc_begin ();
-  args = syx_array_new_ref (SYX_OBJECT_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
+  args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
   SYX_PRIM_RETURN (ctx);
@@ -256,7 +256,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
   SYX_PRIM_ARGS(1);
   SyxOop args, ctx;
   syx_memory_gc_begin ();
-  args = syx_array_new_ref (SYX_OBJECT_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
+  args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
   return syx_interp_enter_context (ctx);
@@ -288,9 +288,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SYX_PRIM_RETURN (proc);
 }
 
-SYX_FUNC_PRIMITIVE (Symbol_asString)
+SYX_FUNC_PRIMITIVE (String_asSymbol)
 {
-  SYX_PRIM_RETURN (syx_string_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
+  SYX_PRIM_RETURN (syx_symbol_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
 }
 
 /* These printing function are used ONLY for tests */
@@ -425,7 +425,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
       if (!SYX_IS_NIL (es->message_arguments[2]))
 	ret = write (fd, SYX_OBJECT_STRING (es->message_arguments[2]),
-		     SYX_OBJECT_SIZE (es->message_arguments[2]) - 1);
+		     SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
       else
 	ret = 0;
       break;
@@ -666,6 +666,21 @@ SYX_FUNC_PRIMITIVE (SmallInteger_div)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) /
+					  SYX_SMALL_INTEGER (second)));
+}
+
+SYX_FUNC_PRIMITIVE (SmallInteger_mul)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) *
 					  SYX_SMALL_INTEGER (second)));
 }
 
@@ -1348,18 +1363,6 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
-
-SYX_FUNC_PRIMITIVE (Dictionary_pos)
-{
-  SYX_PRIM_ARGS(1);
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (es->message_receiver);
-  syx_varsize size = SYX_OBJECT_SIZE (table);
-  syx_int32 hash = SYX_SMALL_INTEGER (es->message_arguments[0]);
-  syx_int32 pos = 2 * (hash % ((size - 1) / 2));
-
-  SYX_PRIM_RETURN (syx_small_integer_new (pos));
-}
-
 static SyxPrimitiveEntry primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1392,7 +1395,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "BlockClosure_on_do", BlockClosure_on_do },
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
-  { "Symbol_asString", Symbol_asString },
+  { "String_asSymbol", String_asSymbol },
   { "SmallInteger_print", SmallInteger_print },
   { "LargeInteger_print", LargeInteger_print },
   { "Float_print", Float_print },
@@ -1412,9 +1415,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Strings */
   { "String_hash", String_hash },
 
-  /* Dictionaries */
-  { "Dictionary_pos", Dictionary_pos },
-
   /* File streams */
   { "FileStream_fileOp", FileStream_fileOp },
 
@@ -1428,6 +1428,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
   { "SmallInteger_div", SmallInteger_div },
+  { "SmallInteger_mul", SmallInteger_mul },
   { "SmallInteger_mod", SmallInteger_mod },
   { "SmallInteger_bitAnd", SmallInteger_bitAnd },
   { "SmallInteger_bitOr", SmallInteger_bitOr },

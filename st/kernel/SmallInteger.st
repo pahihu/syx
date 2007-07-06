@@ -83,6 +83,11 @@ DEALINGS IN THE SOFTWARE.
 	 ^super / aNumber
 !
 
+* aNumber
+     <primitive: 'SmallInteger_mul'>
+	 ^super * aNumber
+!
+
 \\ aNumber
      <primitive: 'SmallInteger_mod'>
 	 ^super \\ aNumber

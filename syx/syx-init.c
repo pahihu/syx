@@ -98,7 +98,7 @@ _syx_file_in_basic (void)
     "Association.st", "Link.st",
     "Stream.st", "PositionableStream.st", "FileStream.st",
     "TextCollector.st",
-    "Dictionary.st", "SystemDictionary.st",
+    "Set.st", "Dictionary.st", "SystemDictionary.st",
     "Console.st",
     "Gtk.st",
     NULL
@@ -115,7 +115,7 @@ _syx_file_in_basic (void)
 static SyxOop
 _syx_create_class (syx_varsize instanceSize)
 {
-  SyxOop object = syx_object_new_size (syx_nil, TRUE, SYX_DATA_CLASS_CLASS_ALL);
+  SyxOop object = syx_object_new_vars (syx_nil, SYX_VARS_CLASS_CLASS_ALL);
   SYX_CLASS_INSTANCE_SIZE(object) = syx_small_integer_new (instanceSize);
   return object;
 }
@@ -144,19 +144,19 @@ syx_build_basic (void)
   syx_false = syx_memory_alloc ();
 
   /* create raw instances of basic classes */
-  Object = _syx_create_class (SYX_DATA_OBJECT_ALL);
-  Behavior = _syx_create_class (SYX_DATA_CLASS_ALL);
-  Class = _syx_create_class (SYX_DATA_CLASS_CLASS_ALL);
-  syx_symbol_class = _syx_create_class (SYX_DATA_SYMBOL_ALL);
-  syx_string_class = _syx_create_class (SYX_DATA_STRING_ALL);
-  syx_small_integer_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
-  syx_character_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
-  syx_byte_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
-  syx_array_class = _syx_create_class (SYX_DATA_OBJECT_ALL);
-  syx_variable_binding_class = _syx_create_class (SYX_DATA_VARIABLE_BINDING_ALL);
-  syx_link_class = _syx_create_class (SYX_DATA_LINK_ALL);
-  syx_dictionary_class = _syx_create_class (SYX_DATA_DICTIONARY_ALL);
-  syx_metaclass_class = _syx_create_class (SYX_DATA_METACLASS_ALL);
+  Object = _syx_create_class (SYX_VARS_OBJECT_ALL);
+  Behavior = _syx_create_class (SYX_VARS_CLASS_ALL);
+  Class = _syx_create_class (SYX_VARS_CLASS_CLASS_ALL);
+  syx_symbol_class = _syx_create_class (SYX_VARS_SYMBOL_ALL);
+  syx_string_class = _syx_create_class (SYX_VARS_STRING_ALL);
+  syx_small_integer_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
+  syx_character_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
+  syx_byte_array_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
+  syx_array_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
+  syx_variable_binding_class = _syx_create_class (SYX_VARS_VARIABLE_BINDING_ALL);
+  syx_link_class = _syx_create_class (SYX_VARS_LINK_ALL);
+  syx_dictionary_class = _syx_create_class (SYX_VARS_DICTIONARY_ALL);
+  syx_metaclass_class = _syx_create_class (SYX_VARS_METACLASS_ALL);
 
   syx_globals = syx_dictionary_new (100);
   syx_symbols = syx_dictionary_new (1000);

@@ -41,10 +41,12 @@
 
 //! Cast a SyxOop to a native pointer type
 #define SYX_OOP_CAST_POINTER(oop) ((syx_pointer) (oop))
+//! Cast a pointer to a SyxOop
+#define SYX_POINTER_CAST_OOP(ptr) ((SyxOop) (ptr))
 
-//! Be TRUE if the number can be embedded
+//! TRUE if the number can be embedded
 #define SYX_SMALL_INTEGER_CAN_EMBED(num) ((syx_int32)(num) >= (-1 << 30) && (syx_int32)(num) < (1 << 30))
-//! Be TRUE if an overflow occurs when doing the sum of a and b
+//! TRUE if an overflow occurs when doing the sum of a and b
 #define SYX_SMALL_INTEGER_OVERFLOW(a,b) ((a > 0) == (b >= 0)) && ((a > 0) != ((a + b) >= 0))
 //! Force the embedding of an integer
 #define SYX_SMALL_INTEGER_EMBED(num) ((syx_int32)(num) & ~(3 << 30))

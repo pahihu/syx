@@ -1,3 +1,19 @@
+2007-07-06  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-error.c (syx_error_init): what a missing static
+
+	* st/kernel/Dictionary.st: subclass Collection and remove hashTable variable
+	
+	* Done an heavy refactoring to hold both instance variables and data into objects. Before, an object could have only one of these two states.
+
+	* syx/syx-object.c (syx_object_vars_size): added
+
+	* st/kernel/SmallInteger.st (*): added temporarly to get rid of primitives for finding indexes
+
+	* st/kernel/Set.st: added
+
+	* st/kernel/SequenceableCollection.st (=): added
+
 2007-07-05  Luca Bruno  <lethalman88@gmail.com>
 
 	== Released Syx 0.1.1 version ==

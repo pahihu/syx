@@ -113,7 +113,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 	  if (!strcmp (syx_bytecode_unary_messages[i], selector))
 	    {
 	      binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
-	      selbinding = syx_object_new (syx_globals_at ("Association"), TRUE);
+	      selbinding = syx_object_new (syx_globals_at ("Association"));
 	      SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
 	      SYX_ASSOCIATION_VALUE (selbinding) = binding;
 	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_UNARY,
@@ -127,7 +127,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 	  if (!strcmp (syx_bytecode_binary_messages[i], selector))
 	    {
 	      binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
-	      selbinding = syx_object_new (syx_globals_at ("Association"), TRUE);
+	      selbinding = syx_object_new (syx_globals_at ("Association"));
 	      SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
 	      SYX_ASSOCIATION_VALUE (selbinding) = binding;
 	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_BINARY,

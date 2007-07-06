@@ -35,7 +35,8 @@
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
-#define SYX_OBJECT_SIZE(oop) (SYX_OBJECT(oop)->size)
+#define SYX_OBJECT_VARS(oop) (SYX_OBJECT(oop)->vars)
+#define SYX_OBJECT_DATA_SIZE(oop) (SYX_OBJECT(oop)->data_size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
@@ -65,16 +66,19 @@ struct SyxObject
   //! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop
   SyxOop class;
   
-  //! Specify if this object contains references to other objects
+  //! Specify if this object contains references to other objects in its data
   syx_bool has_refs : 1;
 
   //! Used to mark the object by the garbage collector
   syx_bool is_marked : 1;
 
-  //! The number elements held by the object
-  syx_varsize size;
+  //! A list of SyxOop containing instance variables.
+  SyxOop *vars;
 
-  //! A list of SyxOop. It can be used also to hold syx_uint8 for ByteArrays
+  //! The number of data elements held by the object
+  syx_varsize data_size;
+
+  //! This holds the data stored for the object. These can be oops, bytes, doubles and so on.
   SyxOop *data;
 };
 
@@ -116,13 +120,15 @@ extern SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
-SyxOop syx_object_new (SyxOop class, syx_bool has_refs);
+SyxOop syx_object_new_vars (SyxOop class, syx_varsize vars_size);
+inline SyxOop syx_object_new (SyxOop class);
 SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
 SyxOop syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data);
 SyxOop syx_object_copy (SyxOop object);
+syx_varsize syx_object_vars_size (SyxOop object);
 void syx_object_free (SyxOop oop);
 void syx_object_resize (SyxOop oop, syx_varsize size);
-#define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_SIZE(oop)+size))
+#define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_DATA_SIZE(oop)+size))
 syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
 inline syx_int32 syx_object_hash (SyxOop oop);
 inline SyxOop syx_object_get_class (SyxOop oop);
@@ -165,75 +171,73 @@ inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
 
 //! Create a new raw CompiledMethod
-#define syx_method_new() (syx_object_new (syx_compiled_method_class, TRUE))
+#define syx_method_new() (syx_object_new (syx_compiled_method_class))
 
 //! Create a new raw CompiledBlock
-#define syx_block_new() (syx_object_new (syx_compiled_block_class, TRUE))
+#define syx_block_new() (syx_object_new (syx_compiled_block_class))
 
-inline SyxOop syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
-inline SyxOop syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
+SyxOop syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
+SyxOop syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
 inline SyxOop syx_process_new (SyxOop context);
 
 /* Accessors */
 
-#define SYX_CLASS_NAME(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_NAME])
-#define SYX_CLASS_SUPERCLASS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_SUPERCLASS])
-#define SYX_CLASS_INSTANCE_VARIABLES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_VARIABLES])
-#define SYX_CLASS_INSTANCE_SIZE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_INSTANCE_SIZE])
-#define SYX_CLASS_METHODS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_METHODS])
-#define SYX_CLASS_SUBCLASSES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_SUBCLASSES])
+#define SYX_CLASS_NAME(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_NAME])
+#define SYX_CLASS_SUPERCLASS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_SUPERCLASS])
+#define SYX_CLASS_INSTANCE_VARIABLES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_INSTANCE_VARIABLES])
+#define SYX_CLASS_INSTANCE_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_INSTANCE_SIZE])
+#define SYX_CLASS_METHODS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_METHODS])
+#define SYX_CLASS_SUBCLASSES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_SUBCLASSES])
 
-#define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METACLASS_INSTANCE_CLASS])
+#define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METACLASS_INSTANCE_CLASS])
 
-#define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_CLASS_CLASS_VARIABLES])
+#define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_CLASS_VARIABLES])
 
-#define SYX_ASSOCIATION_KEY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_ASSOCIATION_KEY])
-#define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_ASSOCIATION_VALUE])
+#define SYX_ASSOCIATION_KEY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_KEY])
+#define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_VALUE])
 
-#define SYX_LINK_NEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_LINK_NEXT])
+#define SYX_LINK_NEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_LINK_NEXT])
 
-#define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_VARIABLE_BINDING_DICTIONARY])
+#define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_VARIABLE_BINDING_DICTIONARY])
 
-#define SYX_DICTIONARY_HASH_TABLE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_DICTIONARY_HASH_TABLE])
+#define SYX_METHOD_SELECTOR(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_SELECTOR])
+#define SYX_METHOD_BYTECODES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_BYTECODES])
+#define SYX_METHOD_LITERALS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_LITERALS])
+#define SYX_METHOD_ARGUMENTS_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_ARGUMENTS_COUNT])
+#define SYX_METHOD_TEMPORARIES_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_TEMPORARIES_COUNT])
+#define SYX_METHOD_STACK_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_STACK_SIZE])
+#define SYX_METHOD_PRIMITIVE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_PRIMITIVE])
 
-#define SYX_METHOD_SELECTOR(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_SELECTOR])
-#define SYX_METHOD_BYTECODES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_BYTECODES])
-#define SYX_METHOD_LITERALS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_LITERALS])
-#define SYX_METHOD_ARGUMENTS_COUNT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_ARGUMENTS_COUNT])
-#define SYX_METHOD_TEMPORARIES_COUNT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_TEMPORARIES_COUNT])
-#define SYX_METHOD_STACK_SIZE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_STACK_SIZE])
-#define SYX_METHOD_PRIMITIVE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_PRIMITIVE])
+#define SYX_BLOCK_ARGUMENTS_TOP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_ARGUMENTS_TOP])
 
-#define SYX_BLOCK_ARGUMENTS_TOP(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_ARGUMENTS_TOP])
+#define SYX_BLOCK_CLOSURE_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CLOSURE_BLOCK])
+#define SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CLOSURE_DEFINED_CONTEXT])
 
-#define SYX_BLOCK_CLOSURE_BLOCK(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_CLOSURE_BLOCK])
-#define SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_CLOSURE_DEFINED_CONTEXT])
+#define SYX_METHOD_CONTEXT_PARENT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_PARENT])
+#define SYX_METHOD_CONTEXT_METHOD(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_METHOD])
+#define SYX_METHOD_CONTEXT_STACK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_STACK])
+#define SYX_METHOD_CONTEXT_SP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_SP])
+#define SYX_METHOD_CONTEXT_IP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_IP])
+#define SYX_METHOD_CONTEXT_RECEIVER(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_RECEIVER])
+#define SYX_METHOD_CONTEXT_ARGUMENTS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_ARGUMENTS])
+#define SYX_METHOD_CONTEXT_TEMPORARIES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_TEMPORARIES])
+#define SYX_METHOD_CONTEXT_RETURN_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_RETURN_CONTEXT])
 
-#define SYX_METHOD_CONTEXT_PARENT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_PARENT])
-#define SYX_METHOD_CONTEXT_METHOD(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_METHOD])
-#define SYX_METHOD_CONTEXT_STACK(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_STACK])
-#define SYX_METHOD_CONTEXT_SP(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_SP])
-#define SYX_METHOD_CONTEXT_IP(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_IP])
-#define SYX_METHOD_CONTEXT_RECEIVER(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_RECEIVER])
-#define SYX_METHOD_CONTEXT_ARGUMENTS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_ARGUMENTS])
-#define SYX_METHOD_CONTEXT_TEMPORARIES(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_TEMPORARIES])
-#define SYX_METHOD_CONTEXT_RETURN_CONTEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_METHOD_CONTEXT_RETURN_CONTEXT])
+#define SYX_BLOCK_CONTEXT_OUTER_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_OUTER_CONTEXT])
+#define SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_HANDLED_EXCEPTION])
+#define SYX_BLOCK_CONTEXT_HANDLER_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_HANDLER_BLOCK])
 
-#define SYX_BLOCK_CONTEXT_OUTER_CONTEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_CONTEXT_OUTER_CONTEXT])
-#define SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_CONTEXT_HANDLED_EXCEPTION])
-#define SYX_BLOCK_CONTEXT_HANDLER_BLOCK(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_BLOCK_CONTEXT_HANDLER_BLOCK])
+#define SYX_PROCESS_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_CONTEXT])
+#define SYX_PROCESS_SUSPENDED(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_SUSPENDED])
+#define SYX_PROCESS_RETURNED_OBJECT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_RETURNED_OBJECT])
+#define SYX_PROCESS_NEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_NEXT])
+#define SYX_PROCESS_SCHEDULED(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_SCHEDULED])
 
-#define SYX_PROCESS_CONTEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESS_CONTEXT])
-#define SYX_PROCESS_SUSPENDED(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESS_SUSPENDED])
-#define SYX_PROCESS_RETURNED_OBJECT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESS_RETURNED_OBJECT])
-#define SYX_PROCESS_NEXT(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESS_NEXT])
-#define SYX_PROCESS_SCHEDULED(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESS_SCHEDULED])
+#define SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESSOR_SCHEDULER_ACTIVE_PROCESS])
+#define SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS])
+#define SYX_PROCESSOR_SCHEDULER_BYTESLICE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESSOR_SCHEDULER_BYTESLICE])
 
-#define SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_ACTIVE_PROCESS])
-#define SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_FIRST_PROCESS])
-#define SYX_PROCESSOR_SCHEDULER_BYTESLICE(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_PROCESSOR_SCHEDULER_BYTESLICE])
-
-#define SYX_SEMAPHORE_LIST(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_SEMAPHORE_LIST])
-#define SYX_SEMAPHORE_SIGNALS(oop) (SYX_OBJECT_DATA(oop)[SYX_DATA_SEMAPHORE_SIGNALS])
+#define SYX_SEMAPHORE_LIST(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_SEMAPHORE_LIST])
+#define SYX_SEMAPHORE_SIGNALS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_SEMAPHORE_SIGNALS])
 
 #endif /* SYX_OBJECT_H */

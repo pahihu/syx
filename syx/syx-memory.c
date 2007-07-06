@@ -89,6 +89,7 @@ syx_memory_init (syx_int32 mem_size)
   syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
   _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
 
+  // fill freed memory with all memory oops
   for (_syx_freed_memory_top=0, object=SYX_MEMORY_TOP;
        _syx_freed_memory_top < _syx_memory_size;
        _syx_freed_memory_top++, object--)
@@ -108,6 +109,8 @@ syx_memory_clear (void)
 
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
+      if (object->vars)
+	syx_free (object->vars);
       if (object->data)
 	syx_free (object->data);
     }
@@ -141,6 +144,8 @@ syx_memory_alloc (void)
       SYX_OBJECT_IS_MARKED(oop) = TRUE;
       _syx_memory_gc_trans[_syx_memory_gc_trans_top++] = oop;
     }
+  else
+    SYX_OBJECT_IS_MARKED(oop) = FALSE;
 
   return oop;
 }
@@ -269,20 +274,27 @@ syx_memory_save_image (syx_symbol path)
 
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
+      syx_varsize vars_size;
       if (SYX_IS_NIL (object->class))
 	continue;
 
       _syx_memory_write ((SyxOop *)&object, FALSE, 1, image);
       _syx_memory_write (&object->class, FALSE, 1, image);
       fputc (object->has_refs, image);
-      fwrite (&object->size, sizeof (syx_varsize), 1, image);
 
-      if (object->size > 0)
+      // store instance variables
+      vars_size = syx_object_vars_size ((SyxOop)object);
+      fwrite (&vars_size, sizeof (syx_varsize), 1, image);
+      _syx_memory_write (object->vars, TRUE, vars_size, image);
+
+      // store data
+      fwrite (&object->data_size, sizeof (syx_varsize), 1, image);
+      if (object->data_size > 0)
 	{
 	  if (object->has_refs)
-	    _syx_memory_write (object->data, TRUE, object->size, image);
+	    _syx_memory_write (object->data, TRUE, object->data_size, image);
 	  else
-	    fwrite (object->data, sizeof (syx_int8), object->size, image);
+	    fwrite (object->data, sizeof (syx_int8), object->data_size, image);
 	}
     }
 
@@ -367,27 +379,36 @@ syx_memory_load_image (syx_symbol path)
 
   while (!feof (image))
     {
+      syx_int32 vars_size = 0;
       if (!_syx_memory_read ((SyxOop *)&object, FALSE, 1, image))
 	break;
 
       _syx_memory_read (&object->class, FALSE, 1, image);
       object->has_refs = fgetc (image);
-      fread (&object->size, sizeof (syx_varsize), 1, image);
 
-      if (object->size > 0)
+      // fetch instance variables
+      fread (&vars_size, sizeof (syx_varsize), 1, image);
+      if (object->vars)
+	syx_free (object->vars);
+      object->vars = syx_calloc (vars_size, sizeof (SyxOop));
+      _syx_memory_read (object->vars, TRUE, vars_size, image);
+
+      // fetch data
+      fread (&object->data_size, sizeof (syx_varsize), 1, image);
+      if (object->data_size > 0)
 	{
 	  if (object->data)
 	    syx_free (object->data);
 	  
 	  if (object->has_refs)
 	    {
-	      object->data = syx_calloc (object->size, sizeof (SyxOop));
-	      _syx_memory_read (object->data, TRUE, object->size, image);
+	      object->data = syx_calloc (object->data_size, sizeof (SyxOop));
+	      _syx_memory_read (object->data, TRUE, object->data_size, image);
 	    }
 	  else
 	    {
-	      object->data = syx_calloc (object->size, sizeof (syx_int8));
-	      fread (object->data, sizeof (syx_int8), object->size, image);
+	      object->data = syx_calloc (object->data_size, sizeof (syx_int8));
+	      fread (object->data, sizeof (syx_int8), object->data_size, image);
 	    }
 	}
     }
@@ -423,9 +444,12 @@ _syx_memory_gc_mark (SyxOop object)
 
   _syx_memory_gc_mark (SYX_OBJECT(object)->class);
 
+  for (i=0; i < syx_object_vars_size (object); i++)
+    _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
+
   if (SYX_OBJECT_HAS_REFS (object))
     {
-      for (i=0; i < SYX_OBJECT_SIZE (object); i++)
+      for (i=0; i < SYX_OBJECT_DATA_SIZE (object); i++)
 	_syx_memory_gc_mark (SYX_OBJECT_DATA(object)[i]);
     }
 }
@@ -433,7 +457,7 @@ _syx_memory_gc_mark (SyxOop object)
 static void
 _syx_memory_gc_sweep ()
 {
-  SyxObject *object = syx_memory + 3; // skip constants
+  SyxObject *object;
 
   // skip constants
   for (object=syx_memory+3; object <= SYX_MEMORY_TOP; object++)

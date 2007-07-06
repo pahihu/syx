@@ -242,16 +242,16 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   SYX_CLASS_INSTANCE_VARIABLES(subclass) = inst_vars;
   SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (super_inst_vars_size
-							     + SYX_OBJECT_SIZE (inst_vars));
+							     + SYX_OBJECT_DATA_SIZE (inst_vars));
 
   // Now parse class variables
   class_vars = _syx_cold_parse_vars (class_vars_lexer, TRUE);
   syx_lexer_free (class_vars_lexer, TRUE);
 
-  SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_SIZE (class_vars)); 
+  SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_DATA_SIZE (class_vars)); 
 
   // translate from array to dictionary
-  for (i=0; i < SYX_OBJECT_SIZE(class_vars); i++)
+  for (i=0; i < SYX_OBJECT_DATA_SIZE(class_vars); i++)
     syx_dictionary_at_symbol_put (SYX_CLASS_CLASS_VARIABLES(subclass),
 				  SYX_OBJECT_DATA(class_vars)[i], syx_nil);
   // get rid of this
@@ -419,7 +419,7 @@ syx_semaphore_signal (SyxOop semaphore)
   signals = SYX_SMALL_INTEGER (SYX_SEMAPHORE_SIGNALS(semaphore));
   signals++;
 
-  while (signals > 0 && SYX_OBJECT_SIZE (list) > 0)
+  while (signals > 0 && SYX_OBJECT_DATA_SIZE (list) > 0)
     {
       SYX_PROCESS_SUSPENDED (SYX_OBJECT_DATA(list)[i]) = syx_false;
       signals--;
@@ -427,7 +427,7 @@ syx_semaphore_signal (SyxOop semaphore)
     }
 
   // create a new array without signaled processes
-  SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_SIZE(list) - i,
+  SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(list) - i,
 						     SYX_OBJECT_DATA(list) + i);
   SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
 
@@ -453,7 +453,7 @@ syx_semaphore_wait (SyxOop semaphore)
   process = syx_processor_active_process;
   SYX_PROCESS_SUSPENDED (process) = syx_true;
   syx_object_grow_by (list, 1);
-  SYX_OBJECT_DATA(list)[SYX_OBJECT_SIZE(list) - 1] = process;
+  SYX_OBJECT_DATA(list)[SYX_OBJECT_DATA_SIZE(list) - 1] = process;
 
   // release
   _syx_sem_lock--;

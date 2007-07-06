@@ -39,6 +39,11 @@ superclass
     ^superclass
 !
 
+methodDictionary
+    "Returns the Dictionary containing the methods of the class"
+    ^methodDictionary
+!
+
 printString
     "My string representation is my name itself"
     ^self name asString
@@ -62,8 +67,7 @@ basicNew: anInteger
 !
 
 new: anInteger
-    <primitive: 'Behavior_newColon'>
-	^self primitiveFailed
+    self shouldNotImplement
 ! !
 
 !Behavior methodsFor: 'class creation'!

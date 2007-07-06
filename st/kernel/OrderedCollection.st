@@ -6,8 +6,8 @@ add: anObject
 !
 
 addAll: aCollection
-    aCollection do: [:ea |
-	self add: ea]
+    aCollection do: [ :ea |
+	self add: ea ]
 !
 
 remove: anObject ifAbsent: aBlock

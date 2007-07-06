@@ -29,7 +29,7 @@ nil subclass: #Object
     classVariableNames: ''!
 
 Object subclass: #Behavior
-       instanceVariableNames: 'name superclass instanceVariableNames instanceSize methodDict subclasses'
+       instanceVariableNames: 'name superclass instanceVariableNames instanceSize methodDictionary subclasses'
        classVariableNames: ''!
 
 Object subclass: #UndefinedObject
@@ -49,6 +49,10 @@ Behavior subclass: #Metaclass
 Object subclass: #Collection
        instanceVariableNames: ''
        classVariableNames: ''!
+
+Collection subclass: #Set
+	   instanceVariableNames: ''
+	   classVariableNames: ''!
 
 Collection subclass: #SequenceableCollection
 	   instanceVariableNames: ''
@@ -151,7 +155,7 @@ ByteArray subclass: #String
 	  instanceVariableNames: ''
           classVariableNames: ''!
 
-Object subclass: #Symbol
+String subclass: #Symbol
        instanceVariableNames: ''
        classVariableNames: ''!
 
@@ -221,9 +225,9 @@ Association subclass: #VariableBinding
 	    instanceVariableNames: 'dictionary'
 	    classVariableNames: ''!
 
-Object subclass: #Dictionary
-       instanceVariableNames: 'hashTable'
-       classVariableNames: ''!
+Collection subclass: #Dictionary
+	   instanceVariableNames: ''
+	   classVariableNames: ''!
 
 Dictionary subclass: #SystemDictionary
 	   instanceVariableNames: ''

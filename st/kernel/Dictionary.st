@@ -25,40 +25,23 @@ DEALINGS IN THE SOFTWARE.
 !Dictionary class methodsFor: 'instance creation'!
 
 new: size
-    ^self basicNew
-	initializeTable: size;
-	yourself
-!
-
-new
-    ^self new: 30
-! !
-
-!Dictionary methodsFor: 'initialize-release'!
-
-initializeTable: size
-    hashTable := Array new: size + 3
-! !
-
-!Dictionary methodsFor: 'private'!
-
-indexFor: aHash
-    <primitive: 'Dictionary_pos'>
-	self primitiveFailed
+    ^self basicNew: (size max: 15) * 2 + 3
 ! !
 
 !Dictionary methodsFor: 'accessing'!
 
 removeKey: aKey
-    1 to: hashTable size by: 2 do: [ :i |
-	(hashTable at: i) = aKey
-	    ifTrue: [ hashTable at: i put: nil. ^hashTable at: i + 1 put: nil ] ]
+    | index |
+    index := self indexOf: aKey.
+    (self basicAt: index) isNil
+	ifTrue: [ NotFound signal: 'Key not found' ].
+    self basicAt: index put: nil
 !
 
 indexOf: aKey
     | h2 pos size |
-    size := hashTable size.
-    pos := self indexFor: aKey hash.
+    size := self basicSize.
+    pos := 2 * (aKey hash \\ ((size - 1) / 2)).
     h2 := pos / 4.
 
     (h2 between: 0 and: 1)
@@ -66,29 +49,37 @@ indexOf: aKey
     (h2 \\ 2) isZero
 	ifFalse: [ h2 := h2 - 1 ].
 
-    1 to: hashTable size do: [ :i |
+    1 to: size do: [ :i |
 	| key |
-	key := hashTable at: pos + 1.
+	key := self basicAt: pos + 1.
 	key = aKey | key isNil
 	    ifTrue: [ ^pos + 1 ].
 	pos := pos + h2.
 	pos >= (size - 1)
-	    ifTrue: [ pos := pos - (size - 1) ] ]
+	    ifTrue: [ pos := pos - (size - 1) ] ].
+    self error: 'Dictionary is full'
 !
 
 at: aKey
-    | index key |
+    | index |
     index := self indexOf: aKey.
-    (hashTable at: index) isNil
-	ifTrue: [ NotFound signal: 'key not found' ].
-    ^hashTable at: index + 1
+    (self basicAt: index) isNil
+	ifTrue: [ NotFound signal: 'Key not found' ].
+    ^self basicAt: index + 1
 !
 
 at: aKey put: aValue
     | index |
     index := self indexOf: aKey.
-    hashTable
-	at: index put: aKey;
-	at: index + 1 put: aValue.
+    self
+	basicAt: index put: aKey;
+	basicAt: index + 1 put: aValue.
     ^aValue
+!
+
+do: aBlock
+    1 to: self basicSize by: 2 do: [ :i |
+         | el |
+         el := self basicAt: i.
+	 el ifNotNil: [ aBlock value: el ] ]
 ! !

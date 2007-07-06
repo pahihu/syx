@@ -182,6 +182,16 @@ abs
 	ifFalse: [ ^(aNumber coerce: self) ~~ aNumber ]
 !
 
+/ aNumber
+    "Coerce aNumber and do division"
+    self notImplementedYet
+!
+
+* aNumber
+    "Coerce aNumber and do multiplication"
+    self notImplementedYet
+!
+
 \\ aNumber
     "Coerce aNumber and do modulo"
     self generality > aNumber generality

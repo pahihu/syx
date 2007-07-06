@@ -209,7 +209,7 @@ syx_exec_state_fetch (void)
   es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
   es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
   es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
-  es->bytecodes_count = SYX_OBJECT_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
+  es->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
   es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
   es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
 }
@@ -314,7 +314,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push instance at %d\n", argument);
 #endif
-  syx_interp_stack_push (SYX_OBJECT_DATA(es->receiver)[argument]);
+  syx_interp_stack_push (SYX_OBJECT_VARS(es->receiver)[argument]);
   return TRUE;
 }
 
@@ -417,7 +417,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_instance)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign instance at %d\n", argument);
 #endif
-  SYX_OBJECT_DATA(es->receiver)[argument] = syx_interp_stack_peek ();
+  SYX_OBJECT_VARS(es->receiver)[argument] = syx_interp_stack_peek ();
   return TRUE;
 }
 

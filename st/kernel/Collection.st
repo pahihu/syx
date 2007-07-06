@@ -24,6 +24,10 @@ DEALINGS IN THE SOFTWARE.
 
 !Collection class methodsFor: 'instance creation'!
 
+new: count
+    ^self basicNew: count
+!
+
 new
     ^self new: 0
 !
@@ -65,26 +69,6 @@ addAll: aCollection
 do: aBlock
     "Call aBlock for each element of the collection"
     self subclassResponsibility
-!
-
-first
-    ^self at: 1
-!
-
-second
-    ^self at: 2
-!
-
-third
-    ^self at: 3
-!
-
-fourth
-    ^self at: 4
-!
-
-last
-    ^self at: self size
 !
 
 size
@@ -174,6 +158,10 @@ detect: discriminatorBlock ifNone: exceptionHandler
 
 asArray
     ^Array withAll: self
+!
+
+asString
+    ^String withAll: self
 !
 
 asByteArray

@@ -66,6 +66,26 @@ replaceFrom: startIndex to: stopIndex with: aCollection
 
 !SequenceableCollection methodsFor: 'enumerating'!
 
+first
+    ^self at: 1
+!
+
+second
+    ^self at: 2
+!
+
+third
+    ^self at: 3
+!
+
+fourth
+    ^self at: 4
+!
+
+last
+    ^self at: self size
+!
+
 after: anObject
     "Answer the object that follows anObject in the collection"
     1 to: self size do: [ :i |
@@ -124,5 +144,18 @@ indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
         (self at: i) == anElement ifTrue: [ ^i ].
     ].
     ^exceptionBlock value
-! !
+!
 
+= aCollection
+    "Answer if the receiver is equivalent to aCollection"
+    self class = aCollection class
+	ifFalse: [ ^false ].
+
+    self size = aCollection size
+	ifFalse: [ ^false ].
+
+    1 to: self size do: [ :i |
+	(self at: i) = (aCollection at: i)
+	    ifFalse: [ ^false ] ].
+    ^true
+! !

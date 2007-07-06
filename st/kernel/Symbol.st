@@ -22,25 +22,60 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Symbol class methodsFor: 'instance creation'!
+
+new: count
+    self shouldNotImplement
+!
+
+new
+    self shouldNotImplement
+!
+
+basicNew
+    self shouldNotImplement
+!
+
+basicNew: count
+    self shouldNotImplement
+! !
+
 !Symbol methodsFor: 'basic'!
+
+at: anIndex put: anObject
+    self shouldNotImplement
+!
+
+basicAt: anIndex put: anObject
+    self shouldNotImplement
+!
 
 hash
     <primitive: 'String_hash'>
 	self primitiveFailed
 ! !
 
-!Symbol methodsFor: 'accessing'!
+!Symbol methodsFor: 'converting'!
 
 asString
-    <primitive: 'Symbol_asString'>
-	self primitiveFailed
+    ^String withAll: self
 !
+
+asSymbol
+    ^self
+! !
+
+!Symbol methodsFor: 'printing'!
 
 printString
     ^'#', self asString
 ! !
 
 !Symbol methodsFor: 'testing'!
+
+isString
+    ^false
+!
 
 isSymbol
     ^true

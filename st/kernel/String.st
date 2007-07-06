@@ -63,11 +63,20 @@ doIt
 
 !String methodsFor: 'converting'!
 
+asSymbol
+    <primitive: 'String_asSymbol'>
+	self primitiveFailed
+!
+
 asString
     ^self
 ! !
 
 !String methodsFor: 'testing'!
+
+isSymbol
+    ^false
+!
 
 isString
     ^true

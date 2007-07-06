@@ -41,7 +41,7 @@
   Objects are the core of Syx. They can represent both instances or classes.
   \note all objects are allocated in the Syx Memory
 */
- 
+
 SyxOop syx_nil,
   syx_true,
   syx_false,
@@ -80,9 +80,20 @@ SyxOop syx_nil,
 
 /* Inlines */
 
+//! Returns the number of instance variables held by the object
+/*!
+  This method obtain the size of the instance from the instanceSize of its class
+*/
+inline syx_varsize
+syx_object_vars_size (SyxOop object)
+{
+  SyxOop class = syx_object_get_class (object);
+  return SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
+}
+
 //! Resize SyxObject::data to the given size, being careful of object indexables and byte indexables
 /*!
-  If the new size is lesser than the current, the data at the end of the array will be lost
+  Warning, if the new size is lesser than the current, the data at the end of the array will be lost
 */
 inline void
 syx_object_resize (SyxOop object, syx_varsize size)
@@ -94,7 +105,7 @@ syx_object_resize (SyxOop object, syx_varsize size)
     SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
 					   size * sizeof (syx_int8));
 
-  SYX_OBJECT_SIZE(object) = size;
+  SYX_OBJECT_DATA_SIZE(object) = size;
 }
 
 //! Get the class of an object
@@ -161,7 +172,7 @@ syx_object_hash (SyxOop object)
 inline SyxOop 
 syx_metaclass_new (SyxOop supermetaclass)
 {
-  SyxOop metaclass = syx_object_new (syx_metaclass_class, TRUE);
+  SyxOop metaclass = syx_object_new (syx_metaclass_class);
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
@@ -182,7 +193,7 @@ inline SyxOop
 syx_class_new (SyxOop superclass)
 {
   SyxOop metaclass = syx_metaclass_new (syx_object_get_class (superclass));
-  SyxOop class = syx_object_new (metaclass, TRUE);
+  SyxOop class = syx_object_new (metaclass);
   SYX_CLASS_SUPERCLASS(class) = superclass;
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
@@ -245,7 +256,7 @@ syx_array_remove (SyxOop array, SyxOop element)
   syx_varsize i, size;
   syx_bool found = FALSE;
 
-  size = SYX_OBJECT_SIZE (array);
+  size = SYX_OBJECT_DATA_SIZE (array);
   for (i=0; i < size; i++)
     {
       if (found)
@@ -270,7 +281,7 @@ syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
 {
   syx_varsize i, size;
 
-  size = SYX_OBJECT_SIZE (array);
+  size = SYX_OBJECT_DATA_SIZE (array);
 
   if (unique)
     {
@@ -373,6 +384,7 @@ syx_string_hash (syx_symbol string)
 
   if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
     ret >>= 2;
+
   return SYX_SMALL_INTEGER_EMBED (ret);
 }
 
@@ -380,7 +392,7 @@ syx_string_hash (syx_symbol string)
 inline SyxOop
 syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
 {
-  SyxOop object = syx_object_new (syx_variable_binding_class, TRUE);
+  SyxOop object = syx_object_new (syx_variable_binding_class);
   SYX_ASSOCIATION_KEY(object) = key;
   SYX_ASSOCIATION_VALUE(object) = syx_small_integer_new (index);
   SYX_VARIABLE_BINDING_DICTIONARY(object) = dictionary;
@@ -391,7 +403,7 @@ syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
 inline SyxOop 
 syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 {
-  SyxOop object = syx_object_new (syx_link_class, TRUE);
+  SyxOop object = syx_object_new (syx_link_class);
   SYX_ASSOCIATION_KEY(object) = key;
   SYX_ASSOCIATION_VALUE(object) = value;
   SYX_LINK_NEXT(object) = next;
@@ -402,12 +414,10 @@ syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 /*!
   The effective size of the hash table is size * 2
 */
-SyxOop 
+inline SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
-  SyxOop object = syx_object_new (syx_dictionary_class, TRUE);
-  SYX_DICTIONARY_HASH_TABLE(object) = syx_array_new_size (size * 2 + 3);
-  return object;
+  return syx_object_new_size (syx_dictionary_class, TRUE, size * 2 + 3);
 }
 
 //! Create an association key -> index to be used as binding. Raise an error if not found
@@ -419,9 +429,9 @@ syx_dictionary_new (syx_varsize size)
 SyxOop
 syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
   syx_uint32 h2 = pos / 4;
   syx_uint32 i;
@@ -435,7 +445,7 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
@@ -457,9 +467,9 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop
 syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
   syx_uint32 h2 = pos / 4;
   syx_uint32 i;
@@ -473,7 +483,7 @@ syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop 
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
@@ -492,16 +502,19 @@ syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop 
 SyxOop
 syx_dictionary_bind (SyxOop binding)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  if (SYX_IS_NIL (dict))
+    return syx_nil;
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  SyxOop entry = table[pos];
   syx_uint32 h2;
   syx_uint32 i;
 
   if (SYX_OOP_EQ (entry, key))
-    return SYX_OBJECT_DATA(table)[pos+1];
+    return table[pos+1];
 
   pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
   h2 = pos / 4;
@@ -515,13 +528,13 @@ syx_dictionary_bind (SyxOop binding)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  return SYX_OBJECT_DATA(table)[pos+1];
+	  return table[pos+1];
 	}
     }
 
@@ -539,16 +552,19 @@ syx_dictionary_bind (SyxOop binding)
 SyxOop
 syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  if (SYX_IS_NIL (dict))
+    return syx_nil;
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  SyxOop entry = table[pos];
   syx_uint32 h2;
   syx_uint32 i;
 
   if (SYX_OOP_EQ (entry, key))
-    return SYX_OBJECT_DATA(table)[pos+1];
+    return table[pos+1];
 
   pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
   h2 = pos / 4;
@@ -562,13 +578,13 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  return SYX_OBJECT_DATA(table)[pos+1];
+	  return table[pos+1];
 	}
     }
 
@@ -582,17 +598,20 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
 void
 syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (SYX_VARIABLE_BINDING_DICTIONARY (binding));
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  if (SYX_IS_NIL (dict))
+    return;
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
   syx_varsize pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = SYX_OBJECT_DATA(table)[pos];
+  SyxOop entry = table[pos];
   syx_uint32 h2;
   syx_uint32 i;
 
   if (SYX_OOP_EQ (entry, key))
     {
-      SYX_OBJECT_DATA(table)[pos+1] = value;
+      table[pos+1] = value;
       return;
     }
 
@@ -608,13 +627,13 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (SYX_OOP_EQ (entry, key))
 	{
 	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  SYX_OBJECT_DATA(table)[pos+1] = value;
+	  table[pos+1] = value;
 	  return;
 	}
     }
@@ -629,9 +648,9 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_varsize i;
   syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
   syx_uint32 h2 = pos / 4;
@@ -645,11 +664,11 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[pos+1];
+	return table[pos+1];
     }
 
   syx_signal (SYX_ERROR_NOT_FOUND, 0);
@@ -664,9 +683,9 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
   SyxOop entry;
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_varsize i;
   syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
   syx_uint32 h2 = pos / 4;
@@ -680,11 +699,11 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	break;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return SYX_OBJECT_DATA(table)[pos+1];
+	return table[pos+1];
     }
 
   return object;
@@ -694,8 +713,8 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 void
 syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
-  SyxOop table = SYX_DICTIONARY_HASH_TABLE (dict);
-  syx_varsize size = SYX_OBJECT_SIZE (table);
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_varsize i;
   SyxOop entry;
   syx_uint32 pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
@@ -710,16 +729,16 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
     {
       if (pos >= size - 1)
 	pos -= size - 1;
-      entry = SYX_OBJECT_DATA(table)[pos];
+      entry = table[pos];
       if (SYX_IS_NIL (entry))
 	{
-	  SYX_OBJECT_DATA(table)[pos] = key;
-	  SYX_OBJECT_DATA(table)[pos+1] = value;
+	  table[pos] = key;
+	  table[pos+1] = value;
 	  return;
 	}
       else if (SYX_OOP_EQ(entry, key))
 	{
-	  SYX_OBJECT_DATA(table)[pos+1] = value;
+	  table[pos+1] = value;
 	  return;
 	}
     }
@@ -734,7 +753,7 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 inline SyxOop 
 syx_block_closure_new (SyxOop block)
 {
-  SyxOop object = syx_object_new (syx_block_closure_class, TRUE);
+  SyxOop object = syx_object_new (syx_block_closure_class);
   SYX_BLOCK_CLOSURE_BLOCK(object) = block;
   return object;
 }
@@ -746,7 +765,7 @@ syx_block_closure_new (SyxOop block)
 inline SyxOop 
 syx_process_new (SyxOop context)
 {
-  SyxOop object = syx_object_new (syx_process_class,  TRUE);
+  SyxOop object = syx_object_new (syx_process_class);
   SYX_PROCESS_CONTEXT(object) = context;
   SYX_PROCESS_SUSPENDED(object) = syx_true;
   SYX_PROCESS_SCHEDULED(object) = syx_false;
@@ -761,12 +780,12 @@ syx_process_new (SyxOop context)
   \param receiver an Object receiving the message
   \param arguments the arguments passed to the message
 */
-inline SyxOop 
+SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
   syx_memory_gc_begin ();
 
-  SyxOop object = syx_object_new (syx_method_context_class, TRUE);
+  SyxOop object = syx_object_new (syx_method_context_class);
   SyxOop ctx_args;
   syx_int32 arguments_count, temporaries_count;
 
@@ -780,7 +799,7 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
       SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (arguments_count);
       
       if (!SYX_IS_NIL (arguments))
-	memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+	memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
     }
 
   temporaries_count = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method));
@@ -802,12 +821,12 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 /*!
   \param outer_context a MethodContext or BlockContext for a nested block
 */
-inline SyxOop 
+SyxOop 
 syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
   syx_memory_gc_begin ();
 
-  SyxOop object = syx_object_new (syx_block_context_class, TRUE);
+  SyxOop object = syx_object_new (syx_block_context_class);
   SyxOop ctx_args;
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
@@ -817,7 +836,7 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
   if (!SYX_IS_NIL(ctx_args) && !SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
-	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_SIZE(arguments) * sizeof (SyxOop ));
+	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
@@ -833,55 +852,55 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 
 /* Object */
 
-//! Create a new object
+//! Create a new object specifying an arbitrary number of instance variables
 /*!
   \param class the class of the new instance
-  \param has_refs specify if the object holds other object references or not
+  \param vars_size number of instance variables the instance must hold
 */
-SyxOop 
-syx_object_new (SyxOop class, syx_bool has_refs)
+SyxOop
+syx_object_new_vars (SyxOop class, syx_varsize vars_size)
 {
   SyxOop oop = syx_memory_alloc ();
   SyxObject *object = SYX_OBJECT (oop);
   
   object->class = class;
-  object->has_refs = has_refs;
-  object->size = SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
-  object->data = object->size ? syx_calloc (object->size, sizeof (SyxObject)) : NULL;
-
+  object->has_refs = FALSE;
+  object->vars = syx_calloc (vars_size, sizeof (SyxOop));
+  object->data_size = 0;
+  object->data = NULL;
   return oop;
+}
+
+//! Create a new object
+inline SyxOop
+syx_object_new (SyxOop class)
+{
+  return syx_object_new_vars (class, SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class)));
 }
 
 SyxOop 
 syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
 {
-  SyxOop oop = syx_memory_alloc ();
-  SyxObject *object = SYX_OBJECT (oop);
-  
-  object->class = class;
+  SyxObject *object = SYX_OBJECT (syx_object_new (class));
+
   object->has_refs = has_refs;
-  object->size = size;
-  if (size > 0)
-    object->data = (has_refs
-		    ? syx_calloc (size, sizeof (SyxOop))
-		    : syx_calloc (size, sizeof (syx_int8)));
-
-
-  return oop;
+  object->data_size = size;
+  object->data = (has_refs
+		  ? syx_calloc (size, sizeof (SyxOop))
+		  : syx_calloc (size, sizeof (syx_int8)));
+  return (SyxOop)object;
 }
 
 SyxOop 
 syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data)
 {
-  SyxOop oop = syx_memory_alloc ();
-  SyxObject *object = SYX_OBJECT (oop);
+  SyxObject *object = SYX_OBJECT (syx_object_new (class));
 
-  object->class = class;
   object->has_refs = has_refs;
-  object->size = size;
+  object->data_size = size;
   object->data = data;
 
-  return oop;
+  return (SyxOop)object;
 }
 
 //! Make a shallow copy of an object
@@ -897,11 +916,18 @@ syx_object_copy (SyxOop object)
 
   obj1->class = obj2->class;
   obj1->has_refs = obj2->has_refs;
-  obj1->size = obj2->size;
-  if (obj1->has_refs)
-    obj1->data = syx_memdup (obj2->data, obj1->size, sizeof (SyxOop));
-  else
-    obj1->data = syx_memdup (obj2->data, obj1->size, sizeof (syx_int8));
+
+  obj1->vars = syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->class)),
+			   sizeof (SyxOop));
+
+  obj1->data_size = obj2->data_size;
+  if (obj1->data)
+    {
+      if (obj1->has_refs)
+	obj1->data = syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));
+      else
+	obj1->data = syx_memdup (obj2->data, obj1->data_size, sizeof (syx_int8));
+    }
 
   return oop;
 }
@@ -910,6 +936,7 @@ syx_object_copy (SyxOop object)
 inline void
 syx_object_free (SyxOop object)
 {
+  syx_free (SYX_OBJECT_VARS (object));
   syx_free (SYX_OBJECT_DATA (object));
   syx_memory_free (object);
 }
@@ -950,7 +977,7 @@ syx_class_get_all_instance_variable_names (SyxOop class)
   for (tot_size=0; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS (class))
     {
       inst_vars = SYX_CLASS_INSTANCE_VARIABLES (class);
-      size = SYX_OBJECT_SIZE (inst_vars);
+      size = SYX_OBJECT_DATA_SIZE (inst_vars);
 
       for (i=size; i > 0; i--)
 	{
