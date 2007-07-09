@@ -749,6 +749,55 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
 					  SYX_SMALL_INTEGER (second)));
 }
 
+/* Thanks to Sam Philiphs for this contribute */
+SYX_FUNC_PRIMITIVE (SmallInteger_bitShift)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop arg;
+  syx_int32 val, shift, sval, i;
+
+  val = SYX_SMALL_INTEGER(es->message_receiver);
+  arg = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (arg))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  shift = SYX_SMALL_INTEGER(arg);
+
+  // Overflow test.  Check that the highest bit set shifted doesn't overflow a
+  // SmallInteger.
+  i = 0;
+  sval = abs(val);
+
+  while (sval >= 16)
+    {
+        sval = sval >> 4;
+        i += 4;
+    }
+
+  while (sval != 0)
+    {
+        sval = sval >> 1;
+        i++;
+    }
+
+  if ((i + shift) > 30)
+    {
+        SYX_PRIM_FAIL;
+    }
+
+  if (shift >= 0)
+    {
+      SYX_PRIM_RETURN (syx_small_integer_new (val << shift));
+    }
+  else
+    {
+      SYX_PRIM_RETURN (syx_small_integer_new (val >> abs(shift)));
+    }
+}
+
 SYX_FUNC_PRIMITIVE (SmallInteger_asFloat)
 {
   syx_double n = (syx_double)SYX_SMALL_INTEGER (es->message_receiver);
@@ -1438,6 +1487,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_bitAnd", SmallInteger_bitAnd },
   { "SmallInteger_bitOr", SmallInteger_bitOr },
   { "SmallInteger_bitXor", SmallInteger_bitXor },
+  { "SmallInteger_bitShift", SmallInteger_bitShift },
   { "SmallInteger_asFloat", SmallInteger_asFloat },
   { "SmallInteger_asLargeInteger", SmallInteger_asLargeInteger },
 
