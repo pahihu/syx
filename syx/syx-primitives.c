@@ -199,7 +199,7 @@ SYX_FUNC_PRIMITIVE (ByteArray_at)
     {
       SYX_PRIM_FAIL;
     }
-  SYX_PRIM_RETURN(syx_character_new (SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index]));
+  SYX_PRIM_RETURN(syx_small_integer_new (SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index]));
 }
 
 SYX_FUNC_PRIMITIVE (ByteArray_at_put)
@@ -213,7 +213,12 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
     {
       SYX_PRIM_FAIL;
     }
-  SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index] = SYX_CHARACTER (oop);
+  
+  if (!SYX_IS_SMALL_INTEGER (oop) || SYX_SMALL_INTEGER (oop) < 0 || SYX_SMALL_INTEGER (oop) > 255)
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index] = SYX_SMALL_INTEGER (oop);
   SYX_PRIM_RETURN (oop);
 }
 

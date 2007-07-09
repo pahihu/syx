@@ -23,8 +23,6 @@
 */
 
 #include "syx-memory.h"
-#include <unistd.h>
-#include <stdio.h>
 #include "syx-types.h"
 #include "syx-error.h"
 #include "syx-plugins.h"
@@ -33,6 +31,9 @@
 #include "syx-scheduler.h"
 #include "syx-object.h"
 #include "syx-interp.h"
+
+#include <unistd.h>
+#include <stdio.h>
 
 static syx_string _syx_root_path;
 static syx_string _syx_image_path;
@@ -96,9 +97,10 @@ _syx_file_in_basic (void)
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
     "Association.st", "Link.st",
-    "Stream.st", "PositionableStream.st", "FileStream.st",
+    "Stream.st", "PositionableStream.st", "WriteStream.st", "FileStream.st",
     "TextCollector.st",
-    "Set.st", "Dictionary.st", "SystemDictionary.st",
+    "Set.st", "Bag.st",
+    "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
     "Console.st",
     "Gtk.st",
     NULL

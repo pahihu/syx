@@ -79,3 +79,35 @@ replaceFrom: startIndex to: stopIndex with: aCollection
     <primitive: 'ArrayedCollection_replaceFromToWith'>
 	^super replaceFrom: startIndex to: stopIndex with: aCollection
 ! !
+
+!ArrayedCollection methodsFor: 'enumerating'!
+
+collect: transformerBlock
+    "Evaluate the block for each element of the receiver.
+     The results of these evaluations are collected into a new collection"
+    | coll |
+    coll := self copyEmpty.
+    1 to: self size do: [ :i |
+	coll at: i put: (transformerBlock value: (self at: i)) ].
+    ^coll
+!
+
+reject: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
+    | stream |
+    stream := WriteStream on: self copyEmpty.
+    self do: [ :ea |
+	(discriminatorBlock value: ea)
+	    ifTrue: [ stream nextPut: ea ] ].
+    ^stream contents
+!
+
+select: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
+    | stream |
+    stream := WriteStream on: self copyEmpty.
+    self do: [ :ea |
+	(discriminatorBlock value: ea)
+	    ifTrue: [ stream nextPut: ea ] ].
+    ^stream contents
+!

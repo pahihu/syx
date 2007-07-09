@@ -80,6 +80,10 @@ size
 
 !Collection methodsFor: 'copying'!
 
+copyEmpty
+    ^self copyEmpty: self basicSize
+!
+
 copyEmpty: newSize
     "Create the empty collection of the given size"
     ^self class new: newSize
@@ -91,7 +95,7 @@ collect: transformerBlock
     "Evaluate the block for each element of the receiver.
      The results of these evaluations are collected into a new collection"
     | coll |
-    coll := OrderedCollection new.
+    coll := self copyEmpty.
     self do: [ :ea |
 	coll add: (transformerBlock value: ea) ].
     ^coll
@@ -118,7 +122,7 @@ occurrencesOf: anObject
 reject: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
     | coll |
-    coll := OrderedCollection new.
+    coll := self copyEmpty.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifFalse: [ coll add: ea ] ].
@@ -128,7 +132,7 @@ reject: discriminatorBlock
 select: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
     | coll |
-    coll := OrderedCollection new.
+    coll := self copyEmpty.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifTrue: [ coll add: ea ] ].
@@ -158,6 +162,14 @@ detect: discriminatorBlock ifNone: exceptionHandler
 
 asArray
     ^Array withAll: self
+!
+
+asSet
+    ^Set withAll: self
+!
+
+asBag
+    ^Bag withAll: self
 !
 
 asString

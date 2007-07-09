@@ -51,3 +51,9 @@ value
     "Answer the association's value"
     ^value
 ! !
+
+!Association methodsFor: 'printing'!
+
+printString
+    ^self key printString, '->', self value printString
+! !

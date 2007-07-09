@@ -840,7 +840,8 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (block)));
+  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
+  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (block)) + 1);
 
   SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) = outer_context;
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = SYX_METHOD_CONTEXT_RETURN_CONTEXT (outer_context);

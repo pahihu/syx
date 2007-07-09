@@ -136,6 +136,9 @@ syx_parser_parse (SyxParser *self)
     _syx_parser_parse_primitive (self);
 
   _syx_parser_parse_temporaries (self);
+
+  if (self->_in_block)
+    syx_bytecode_push_constant (self->bytecode, 0);
   _syx_parser_parse_body (self);
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
@@ -311,8 +314,10 @@ _syx_parser_parse_term (SyxParser *self)
     default:
       if (token.type == SYX_TOKEN_END)
 	syx_error ("End of input unexpected")
-      else
+      else if (token.type > SYX_TOKEN_STRING_ENTRY)
 	syx_error ("Invalid expression start %s\n", token.value.string)
+      else
+	syx_error ("Invalid expression start\n")
     }
 
   syx_lexer_next_token (self->lexer);

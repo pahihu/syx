@@ -74,6 +74,10 @@ SequenceableCollection subclass: #OrderedCollection
 		       instanceVariableNames: ''
                        classVariableNames: ''!
 
+Set subclass: #Bag
+    instanceVariableNames: ''
+    classVariableNames: ''!
+
 "Execution"
 
 Object subclass: #ContextPart
@@ -229,9 +233,13 @@ Collection subclass: #Dictionary
 	   instanceVariableNames: ''
 	   classVariableNames: ''!
 
-Dictionary subclass: #SystemDictionary
+Dictionary subclass: #IdentityDictionary
 	   instanceVariableNames: ''
-           classVariableNames: ''!
+	   classVariableNames: ''!
+
+IdentityDictionary subclass: #SystemDictionary
+		   instanceVariableNames: ''
+		   classVariableNames: ''!
 
 "Gtk"
 

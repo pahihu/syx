@@ -79,6 +79,10 @@ value: anObject
     "Call my block with anObject as single argument"
     <primitive: 'BlockClosure_valueWith'>
 	self primitiveFailed
+!
+
+value: firstObject value: secondObject
+    ^self valueWithArguments: { firstObject. secondObject }
 ! !
 
 !BlockClosure methodsFor: 'accessing'!

@@ -25,7 +25,9 @@ DEALINGS IN THE SOFTWARE.
 !Dictionary class methodsFor: 'instance creation'!
 
 new: size
-    ^self basicNew: (size max: 15) * 2 + 3
+    ^self basicNew: ((size \\ 2 = 0
+			 ifTrue: [ size + 1 ]
+			 ifFalse: [ size ]) max: 15)
 ! !
 
 !Dictionary methodsFor: 'accessing'!
@@ -75,11 +77,61 @@ at: aKey put: aValue
 	basicAt: index put: aKey;
 	basicAt: index + 1 put: aValue.
     ^aValue
+! !
+
+!Dictionary methodsFor: 'enumerating'!
+
+keysAndValuesDo: aBlock
+    1 to: self basicSize by: 2 do: [ :i |
+	 | key |
+	 (key := self basicAt: i)
+	     ifNotNil: [ aBlock value: key value: (self basicAt: i + 1) ] ]
+!
+
+associationsDo: aBlock
+    self keysAndValuesDo: [ :key :value |
+	aBlock value: key -> value ]
+!
+
+keysDo: aBlock
+    1 to: self basicSize by: 2 do: [ :i |
+	| key |
+	(key := self basicAt: i)
+	    ifNotNil: [ aBlock value: key ] ]
 !
 
 do: aBlock
     1 to: self basicSize by: 2 do: [ :i |
-         | el |
-         el := self basicAt: i.
-	 el ifNotNil: [ aBlock value: el ] ]
+	(self basicAt: i)
+	    ifNotNil: [ aBlock value: (self basicAt: i + 1) ] ]
+!
+
+collect: transformerBlock
+    "Evaluate the block for each element of the receiver.
+     The results of these evaluations are collected into a new collection"
+    | coll |
+    coll := self copyEmpty.
+    self keysAndValuesDo: [ :key :value |
+	coll at: key put: (transformerBlock value: value) ].
+    ^coll
+!
+
+reject: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
+    | coll |
+    coll := self copyEmpty.
+    self keysAndValuesDo: [ :key :value |
+	(discriminatorBlock value: value)
+	    ifFalse: [ coll at: key put: value ] ].
+    ^coll
+!
+
+select: discriminatorBlock
+    "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
+    | coll |
+    coll := self copyEmpty.
+    self keysAndValuesDo: [ :key :value |
+	(discriminatorBlock value: value)
+	    ifFalse: [ coll at: key put: value ] ].
+    ^coll
 ! !

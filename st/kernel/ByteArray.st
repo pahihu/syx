@@ -34,14 +34,14 @@ basicNew: size
 	self primitiveFailed
 ! !
 
-!ByteArray methodsFor: 'accessing'!
+!ByteArray methodsFor: 'basic'!
 
 at: anIndex
     <primitive: 'ByteArray_at'>
 	self primitiveFailed
 !
 
-at: anIndex put: aCharacter
+at: anIndex put: aSmallInteger
     <primitive: 'ByteArray_at_put'>
 	self primitiveFailed
 !
@@ -51,12 +51,22 @@ basicAt: anIndex
 	self primitiveFailed
 !
 
-basicAt: anIndex put: aCharacter
+basicAt: anIndex put: aSmallInteger
+    <primitive: 'ByteArray_at_put'>
+	self primitiveFailed
+!
+
+byteAt: anIndex
+    <primitive: 'ByteArray_at'>
+	self primitiveFailed
+!
+
+byteAt: anIndex put: aSmallInteger
     <primitive: 'ByteArray_at_put'>
 	self primitiveFailed
 ! !
 
-!ByteArray methodsFor: 'basic'!
+!ByteArray methodsFor: 'replacing'!
 
 replaceFrom: startIndex to: stopIndex with: aCollection
     <primitive: 'ArrayedCollection_replaceFromToWith'>

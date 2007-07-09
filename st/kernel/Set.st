@@ -1,9 +1,9 @@
 !Set class methodsFor: 'instance creation'!
 
 new: size
-    ^self basicNew: (size max: 10)
-	initializeTable: size;
-	yourself
+    ^self basicNew: ((size \\ 2 = 0
+			  ifTrue: [ size + 1 ]
+			  ifFalse: [ size ]) max: 11)
 ! !
 
 !Set methodsFor: 'accessing'!
@@ -27,7 +27,7 @@ indexOf: anObject
 	pos := pos + h2.
 	pos > size
 	    ifTrue: [ pos := pos - size ] ].
-    self error: 'Set is full'
+    self error: 'Full'
 !
 
 do: aBlock
@@ -40,7 +40,7 @@ do: aBlock
 add: anObject
     | index |
     anObject
-	ifNil: [ ^nil ].
+	ifNil: [ self error: 'Invalid element' ].
     
     index := self indexOf: anObject.
     (self basicAt: index) isNil
@@ -49,6 +49,9 @@ add: anObject
 
 remove: anObject
     | index |
+    anObject
+	ifNil: [ ^self ].
+
     index := self indexOf: anObject.
     (self basicAt: index) isNil
 	ifTrue: [ NotFound signal: 'Object not found' ].

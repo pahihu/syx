@@ -63,6 +63,7 @@ codePoint
 ! !
 
 !Character methodsFor: 'converting'!
+
 asCharacter
     ^self
 !
@@ -74,4 +75,10 @@ asString
 
 printString
     ^self asString
+! !
+
+!Character methodsFor: 'testing'!
+
+isCharacter
+    ^true
 ! !

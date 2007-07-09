@@ -82,6 +82,10 @@ hash
     
 !Object methodsFor: 'testing'!
 
+isCharacter
+    ^false
+!
+
 isKindOf: aClass
     "Answer true if the receiver's class is a subclass of aClass"
     | class |

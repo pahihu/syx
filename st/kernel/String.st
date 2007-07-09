@@ -29,6 +29,28 @@ new: anIndex
     ^super new: anIndex + 1
 ! !
 
+!String methodsFor: 'basic'!
+
+at: anIndex
+    ^Character codePoint: (self byteAt: anIndex)
+!
+
+at: anIndex put: aCharacter
+    aCharacter isCharacter
+	ifFalse: [ self error: 'A character is required' ].
+    ^self byteAt: anIndex put: aCharacter codePoint
+!
+
+basicAt: anIndex
+    ^Character codePoint: (self byteAt: anIndex)
+!
+
+basicAt: anIndex put: aCharacter
+    aCharacter isCharacter
+	ifFalse: [ self error: 'A character is required' ].
+    ^self byteAt: anIndex put: aCharacter codePoint
+! !
+
 !String methodsFor: 'primitives'!
 
 printString

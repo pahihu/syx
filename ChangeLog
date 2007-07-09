@@ -1,10 +1,44 @@
+2007-07-09  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-parser.c (syx_parser_parse): push nil at the bottom of block context stack
+
+	* st/kernel/String.st: added basic refinements
+
+	* st/kernel/ByteArray.st: (byteAt:): added
+	(byteAt:put:): added
+
+	* syx/syx-primitives.c (ByteArray_at): return a small integer
+	(ByteArray_at_put): require a small integer
+
+	* syx/syx-init.h (SYX_INIT_MEMORY_SIZE): doubled initial memory size to 20000 objects
+
+	* st/kernel/Bag.st: added
+
+	* st/kernel/WriteStream.st: added
+
+	* st/kernel/BlockClosure.st (value:value:): added
+
+	* st/kernel/Dictionary.st (associationsDo:): added
+	(do:): fixed to enumarate values
+	(keysAndValuesDo:): added
+	(keysDo:): added
+	(select:, collect:, reject:): added for refinement
+
+	* st/kernel/ArrayedCollection.st (select:, collect:, reject:): added for refinement
+
+	* st/kernel/Collection.st (copyEmpty): added
+
+	* syx/syx-parser.c (_syx_parser_parse_term): on error, print the expression if it's a string
+
+	* st/kernel/IdentityDictionary.st: added
+
 2007-07-06  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-error.c (syx_error_init): what a missing static
 
 	* st/kernel/Dictionary.st: subclass Collection and remove hashTable variable
 	
-	* Done an heavy refactoring to hold both instance variables and data into objects. Before, an object could have only one of these two states.
+	* Done an heavy refactoring to hold both instance variables and data into objects. Before this, an object could have only one of these two states.
 
 	* syx/syx-object.c (syx_object_vars_size): added
 
@@ -18,7 +52,7 @@
 
 	== Released Syx 0.1.1 version ==
 
-	* syx/syx-scheduler.c (_syx_scheduler_save): remove fd_sets from being from into the image
+	* syx/syx-scheduler.c (_syx_scheduler_save): remove fd_sets from being written into the image
 	
 	* src/SConscript: fixed bdist command
 	
