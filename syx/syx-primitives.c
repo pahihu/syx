@@ -39,6 +39,10 @@
 #include <unistd.h>
 #include <string.h>
 
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
 inline SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
@@ -302,15 +306,6 @@ SYX_FUNC_PRIMITIVE (String_asSymbol)
 SYX_FUNC_PRIMITIVE (SmallInteger_print)
 {
   printf ("%d\n", SYX_SMALL_INTEGER(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
-SYX_FUNC_PRIMITIVE (LargeInteger_print)
-{
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (es->message_receiver))
-    printf ("%llu\n", SYX_OBJECT_LARGE_INTEGER (es->message_receiver));
-  else
-    printf ("-%llu\n", SYX_OBJECT_LARGE_INTEGER (es->message_receiver));
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
@@ -806,444 +801,166 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asFloat)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
 {
-  syx_int32 num = SYX_SMALL_INTEGER (es->message_receiver);
-  if (num >= 0)
-    {
-      SYX_PRIM_RETURN (syx_large_positive_integer_new ((syx_uint64) num));
-    }
-  else
-    {
-      SYX_PRIM_RETURN (syx_large_negative_integer_new ((syx_uint64) -num));
-    }
-}
-
-/* Large positive integers */
-
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_plus)
-{
-  SYX_PRIM_ARGS(1);
-  
-  SyxOop first, second;
-  syx_uint64 a, b, result;
-
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      a = SYX_OBJECT_LARGE_INTEGER (first);
-      b = SYX_OBJECT_LARGE_INTEGER (second);
-      if (a > b)
-	{
-	  result = a - b;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
-	    }
-	}
-      else
-	{
-	  result = b - a;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
-	    }
-	}
-    }
-
+#ifdef HAVE_LIBGMP
+  SYX_PRIM_RETURN (syx_large_integer_new_integer (SYX_SMALL_INTEGER (es->message_receiver)));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_minus)
+
+/* Large integers */
+
+#define _GET_Z mpz_t *z = (mpz_t *)SYX_OBJECT_DATA (es->message_receiver)
+#define _GET_OP2 SYX_PRIM_ARGS(1); if (!SYX_OBJECT_IS_LARGE_INTEGER (es->message_arguments[0])) { SYX_PRIM_FAIL; } \
+  mpz_t *op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
+#define _NEW_R SyxOop rop = syx_large_integer_new_integer (0); mpz_t *r = (mpz_t *)SYX_OBJECT_DATA (rop)
+
+SYX_FUNC_PRIMITIVE(LargeInteger_print)
 {
-  SYX_PRIM_ARGS(1);
-  
-  SyxOop first, second;
-  syx_uint64 a, b, result;
-
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      a = SYX_OBJECT_LARGE_INTEGER (first);
-      b = SYX_OBJECT_LARGE_INTEGER (second);
-      if (a > b)
-	{
-	  result = a - b;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
-	    }
-	}
-      else
-	{
-	  result = b - a;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
-	    }
-	}
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  gmp_printf ("%Zd\n", *z);
+  SYX_PRIM_RETURN (es->message_receiver);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_lt)
+
+/* Arithmetic */
+
+SYX_FUNC_PRIMITIVE(LargeInteger_plus)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  _NEW_R;
+  mpz_add (*r, *z, *op2);
+  SYX_PRIM_RETURN (rop);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_gt)
+SYX_FUNC_PRIMITIVE(LargeInteger_minus)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  _NEW_R;
+  mpz_sub (*r, *z, *op2);
+  SYX_PRIM_RETURN (rop);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_le)
+SYX_FUNC_PRIMITIVE(LargeInteger_lt)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) < 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_ge)
+SYX_FUNC_PRIMITIVE(LargeInteger_gt)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) > 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_eq)
+SYX_FUNC_PRIMITIVE(LargeInteger_le)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) ==
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) <= 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargePositiveInteger_ne)
+SYX_FUNC_PRIMITIVE(LargeInteger_ge)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) !=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) >= 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-/* Large negative integers */
-
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_plus)
+SYX_FUNC_PRIMITIVE(LargeInteger_eq)
 {
-  SYX_PRIM_ARGS(1);
-  
-  SyxOop first, second;
-  syx_uint64 a, b, result;
-
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_large_negative_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-  else if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      a = SYX_OBJECT_LARGE_INTEGER (first);
-      b = SYX_OBJECT_LARGE_INTEGER (second);
-      if (a > b)
-	{
-	  result = a - b;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
-	    }
-	}
-      else
-	{
-	  result = b - a;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
-	    }
-	}
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) == 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_minus)
+SYX_FUNC_PRIMITIVE(LargeInteger_ne)
 {
-  SYX_PRIM_ARGS(1);
-  
-  SyxOop first, second;
-  syx_uint64 a, b, result;
-
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_large_positive_integer_new (SYX_OBJECT_LARGE_INTEGER (first) + SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      a = SYX_OBJECT_LARGE_INTEGER (first);
-      b = SYX_OBJECT_LARGE_INTEGER (second);
-      if (a > b)
-	{
-	  result = a - b;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (-result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) -result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_negative_integer_new (result));
-	    }
-	}
-      else
-	{
-	  result = b - a;
-	  if (result < ((syx_uint64)1 << 31) && SYX_SMALL_INTEGER_CAN_EMBED (result))
-	    {
-	      SYX_PRIM_RETURN (syx_small_integer_new ((syx_int32) result));
-	    }
-	  else
-	    {
-	      SYX_PRIM_RETURN (syx_large_positive_integer_new (result));
-	    }
-	}
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) != 0));
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_lt)
+SYX_FUNC_PRIMITIVE(LargeInteger_mul)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  _NEW_R;
+  mpz_mul (*r, *z, *op2);
+  SYX_PRIM_RETURN (rop);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_gt)
+SYX_FUNC_PRIMITIVE(LargeInteger_mod)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  _GET_OP2;
+  _NEW_R;
+  mpz_tdiv_r (*r, *z, *op2);
+  SYX_PRIM_RETURN (rop);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_le)
+SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 {
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) >=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  mpz_clear (*z);
+  SYX_PRIM_RETURN(syx_nil);
+#else
   SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_ge)
-{
-  SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) <=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
 
-  SYX_PRIM_FAIL;
-}
-
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_eq)
-{
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_false);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) ==
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
-  SYX_PRIM_FAIL;
-}
-
-SYX_FUNC_PRIMITIVE (LargeNegativeInteger_ne)
-{
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_true);
-    }
-  else if (SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER (second))
-    {
-      SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_LARGE_INTEGER (first) !=
-					SYX_OBJECT_LARGE_INTEGER (second)));
-    }
-
-  SYX_PRIM_FAIL;
-}
 
 /* Floats */
 
@@ -1451,8 +1168,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
 
   { "String_asSymbol", String_asSymbol },
   { "SmallInteger_print", SmallInteger_print },
-  { "LargeInteger_print", LargeInteger_print },
   { "Float_print", Float_print },
+  { "LargeInteger_print", LargeInteger_print },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },
@@ -1491,25 +1208,18 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_asFloat", SmallInteger_asFloat },
   { "SmallInteger_asLargeInteger", SmallInteger_asLargeInteger },
 
-  /* Large positive integers */
-  { "LargePositiveInteger_plus", LargePositiveInteger_plus },
-  { "LargePositiveInteger_minus", LargePositiveInteger_minus },
-  { "LargePositiveInteger_lt", LargePositiveInteger_lt },
-  { "LargePositiveInteger_gt", LargePositiveInteger_gt },
-  { "LargePositiveInteger_le", LargePositiveInteger_le },
-  { "LargePositiveInteger_ge", LargePositiveInteger_ge },
-  { "LargePositiveInteger_eq", LargePositiveInteger_eq },
-  { "LargePositiveInteger_ne", LargePositiveInteger_ne },
-
-  /* Large negative integers */
-  { "LargeNegativeInteger_plus", LargeNegativeInteger_plus },
-  { "LargeNegativeInteger_minus", LargeNegativeInteger_minus },
-  { "LargeNegativeInteger_lt", LargeNegativeInteger_lt },
-  { "LargeNegativeInteger_gt", LargeNegativeInteger_gt },
-  { "LargeNegativeInteger_le", LargeNegativeInteger_le },
-  { "LargeNegativeInteger_ge", LargeNegativeInteger_ge },
-  { "LargeNegativeInteger_eq", LargeNegativeInteger_eq },
-  { "LargeNegativeInteger_ne", LargeNegativeInteger_ne },
+  /* Large integers */
+  { "LargeInteger_plus", LargeInteger_plus },
+  { "LargeInteger_minus", LargeInteger_minus },
+  { "LargeInteger_lt", LargeInteger_lt },
+  { "LargeInteger_gt", LargeInteger_gt },
+  { "LargeInteger_le", LargeInteger_le },
+  { "LargeInteger_ge", LargeInteger_ge },
+  { "LargeInteger_eq", LargeInteger_eq },
+  { "LargeInteger_ne", LargeInteger_ne },
+  { "LargeInteger_mul", LargeInteger_mul },
+  { "LargeInteger_mod", LargeInteger_mod },
+  { "LargeInteger_clear", LargeInteger_clear },
 
   /* Floats */
   { "Float_plus", Float_plus },

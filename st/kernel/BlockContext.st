@@ -52,7 +52,7 @@ handles: anException
 
 showTraceback
     "Shows my single traceback"
-    (self receiver class printString, '>>', self homeContext method selector asString, '[]') printNl.
+    (self receiver class printString, '>>', self homeContext method selector printString, '[]') printNl.
 !
 
 homeContext

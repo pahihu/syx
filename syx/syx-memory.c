@@ -22,14 +22,18 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "syx-config.h"
+#include "syx-memory.h"
+#include "syx-object.h"
+#include "syx-error.h"
+#include "syx-scheduler.h"
+#include "syx-utils.h"
+#include "syx-interp.h"
+
 #include <assert.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "syx-object.h"
-#include "syx-memory.h"
-#include "syx-error.h"
-#include "syx-scheduler.h"
 
 #ifdef SYX_DEBUG_INFO
 #define SYX_DEBUG_GC
@@ -106,7 +110,23 @@ syx_memory_clear (void)
     return;
 
   SyxObject *object = syx_memory;
+  SyxOop context;
 
+  // finalize objects
+  for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
+    {
+      if (SYX_IS_NIL (object->class))
+	continue;
+
+      if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (object->class)))
+	{
+	  context = syx_send_unary_message (syx_nil,
+					    SYX_POINTER_CAST_OOP (object), "finalize");
+	  syx_process_execute_blocking (syx_process_new (context));
+	}
+    }
+
+  // free memory used by objects
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
       if (object->vars)

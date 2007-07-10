@@ -25,6 +25,8 @@
 #ifndef SYX_PLATFORM_H
 #define SYX_PLATFORM_H
 
+#include "syx-config.h"
+
 #define _SYX_XSTRINGIFY(s) #s
 #define SYX_STRINGIFY(s) _SYX_XSTRINGIFY(s)
 

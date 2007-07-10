@@ -96,7 +96,7 @@ typedef syx_nint SyxOop;
 #define syx_character_new(ch) (((SyxOop)(ch) << 2) + SYX_TYPE_CHARACTER)
 
 //! Basic conversions
-#define SYX_SMALL_INTEGER(oop) ((syx_int32)((syx_nint)(oop) >> 1))
+#define SYX_SMALL_INTEGER(oop) ((syx_int32)(oop) >> 1)
 #define SYX_CHARACTER(oop) ((syx_int8)((syx_nint)(oop) >> 2))
 
 

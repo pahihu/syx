@@ -25,19 +25,18 @@
 #ifndef SYX_MEMORY_H
 #define SYX_MEMORY_H
 
-#ifdef HAVE_CONFIG_H
-  #include <config.h>
-#endif
+#include "syx-config.h"
 
 #ifdef HAVE_STRNDUP
   #define _GNU_SOURCE
 #endif
 
-#include <stdlib.h>
-#include <string.h>
 #include "syx-object.h"
 #include "syx-types.h"
 #include "syx-init.h"
+
+#include <stdlib.h>
+#include <string.h>
 
 extern SyxObject *syx_memory;
 extern syx_int32 _syx_memory_size;

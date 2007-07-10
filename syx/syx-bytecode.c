@@ -57,13 +57,14 @@ syx_bytecode_free (SyxBytecode *bytecode)
 /*!
   Contains common unary messages avoiding them to be inserted into method literals.
 */
-syx_symbol syx_bytecode_unary_messages[] = {"isNil", "notNil", "value", "new", "class", "superclass", "print", "printString",
-					    "unity", NULL};
+syx_symbol syx_bytecode_unary_messages[] = {"isNil", "notNil", "value", "new", "class", "superclass",
+					    "print", "printNl", "printString", "unity", NULL};
 
 /*!
   Same as syx_bytecode_unary_messages but contains binary messages and keyword messages with a single argument
 */
-syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "=", "~=", "at:", "do:", "value:", "valueWithArguments:",
+syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "=", "~=", "at:",
+					     "do:", "value:", "valueWithArguments:",
 					     "new:", "to:", "basicAt:", NULL};
 
 //! Manually generate an instruction

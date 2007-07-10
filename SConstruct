@@ -63,13 +63,14 @@ else:
 
 opts.AddOptions (
    BoolOption ('plugins', """Build with plugins support""", True),
+   BoolOption ('bignum', """Build with infinite-precision numbers (needs gmp library)""", True),
    BoolOption ('attach', """Attach a debugger for test failures""", False),              
    EnumOption ('debug', """Debug output and symbols""", 'normal',
                allowed_values=('no', 'normal', 'info', 'full'),
                ignorecase=True),
 
-   BoolOption ('GTK', """Build the syx-gtk plugin""", True),
-   BoolOption ('READLINE', """Build the syx-readline plugin""", True))
+   BoolOption ('GTK', """Build the syx-gtk plugin to support graphical user interfaces""", True),
+   BoolOption ('READLINE', """Build the syx-readline plugin to add more console features""", True))
 
 opts.Update (env)
 
@@ -101,7 +102,7 @@ env.Help (opts.GenerateHelpText (env) + """
      """)
 
 # Configuration
-conf = Configure (env, config_h='config.h')
+conf = Configure (env, config_h="syx/syx-config.h")
 
 print 'Mandatory headers...'
 
@@ -143,7 +144,10 @@ print 'Optional functions...'
 for f in ['strndup']:
    conf.CheckFunc (f)
 
-print
+if env['bignum']:
+   if not conf.CheckLibWithHeader ('gmp', 'gmp.h', 'c', 'mpz_t t; mpz_init (t); mpz_clear (t);'):
+      print "WARNING: gmp library not found. Multiple-precision numbers won't be supported"
+
 if env['plugins']:
     if (env['PLATFORM'] == 'win32' and have_windows_h) or conf.CheckLibWithHeader ('dl', 'dlfcn.h', 'c', 'dlopen(0, 0);'):
         env.MergeFlags ('-DWITH_PLUGINS')
@@ -154,7 +158,7 @@ if env['plugins']:
 conf.Finish ()
 
 # Flags
-env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -include #config.h -I#.')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -I#.')
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim"')
 else:

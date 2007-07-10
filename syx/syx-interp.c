@@ -480,7 +480,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   SyxOop binding;
   SyxOop class, method, context;
-  syx_int16 primitive;
+  syx_int32 primitive;
 
   binding = es->literals[argument];
   class = syx_object_get_class (es->message_receiver); 
@@ -522,7 +522,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   SyxOop binding;
   SyxOop class, method, context;
-  syx_int16 primitive;
+  syx_int32 primitive;
 
   binding = es->literals[argument];
   class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver)); 
@@ -566,10 +566,12 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   syx_int32 primitive;
   syx_int32 index;
   SyxOop binding;
+  syx_symbol selector;
   
   es->message_receiver = syx_interp_stack_pop ();
   index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_KEY (es->literals[argument]));
   binding = SYX_ASSOCIATION_VALUE (es->literals[argument]);
+  selector = SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding));
 
   switch (index)
     {
@@ -599,11 +601,10 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD unary #%s\n", selector);
 #endif
-      return syx_signal_does_not_understand (es->message_receiver, syx_nil);
+      return syx_signal_does_not_understand (es->message_receiver, syx_symbol_new (selector));
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
-
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
@@ -625,15 +626,17 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
   SyxOop class, method, context, first_argument, arguments;
-  syx_int16 primitive;
+  syx_int32 primitive;
   syx_bool ret = FALSE;
   SyxOop binding;
   syx_int32 index;
+  syx_symbol selector;
 
   first_argument = syx_interp_stack_pop ();
   es->message_receiver = syx_interp_stack_pop ();
   index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_KEY (es->literals[argument]));
   binding = SYX_ASSOCIATION_VALUE (es->literals[argument]);
+  selector = SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding));
 
   if (index < 8 && SYX_IS_SMALL_INTEGER(es->message_receiver) && SYX_IS_SMALL_INTEGER(first_argument))
     {
@@ -678,7 +681,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD binary #%s\n", selector);
 #endif
-      return syx_signal_does_not_understand (es->message_receiver, syx_nil);
+      return syx_signal_does_not_understand (es->message_receiver, syx_symbol_new (selector));
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));

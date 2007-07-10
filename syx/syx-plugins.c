@@ -297,7 +297,6 @@ syx_plugin_call (SyxExecState *es, SyxOop method)
   literals = SYX_OBJECT_DATA(SYX_METHOD_LITERALS(method));
   plugin = SYX_OBJECT_SYMBOL(literals[1]);
   func = SYX_OBJECT_SYMBOL(literals[0]);
-
   for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
     {
       if (!strcmp (entry->name, plugin))

@@ -47,7 +47,10 @@ initializeSystem
 	at: #stdin put: (FileStream on: 0);
 	at: #stdout put: (FileStream on: 1);
 	at: #stderr put: (FileStream on: 2);
-	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:)
+	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
+
+    Object allSubclassesDo: [ :ea |
+	ea initialize ]
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!

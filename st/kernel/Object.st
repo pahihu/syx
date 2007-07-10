@@ -28,6 +28,12 @@ initialize
     ^self
 ! !
 
+!Object methodsFor: 'finalization'!
+
+finalize
+    'asd' printNl
+! !
+
 !Object methodsFor: 'copying'!
 
 copy

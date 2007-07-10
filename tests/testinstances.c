@@ -40,13 +40,13 @@ main (int argc, char *argv[])
 
   obj = syx_small_integer_new (123);
   assert (SYX_SMALL_INTEGER(obj) == 123);
-
+/*
   obj = syx_large_positive_integer_new (0xFFFFFFFFFFFFFFF);
   assert (SYX_OBJECT_LARGE_INTEGER(obj) == 0xFFFFFFFFFFFFFFF);
 
   obj = syx_large_negative_integer_new (0x111111111111111);
   assert (SYX_OBJECT_LARGE_INTEGER(obj) == 0x111111111111111);
-
+*/
   obj = syx_character_new ('c');
   assert (SYX_CHARACTER(obj) == 'c');
 

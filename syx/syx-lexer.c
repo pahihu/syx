@@ -23,13 +23,18 @@
 */
 
 #include "syx-memory.h"
+#include "syx-error.h"
+#include "syx-types.h"
+#include "syx-lexer.h"
+
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "syx-error.h"
-#include "syx-types.h"
-#include "syx-lexer.h"
+
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
 
 static void _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar);
 static void _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar);
@@ -133,8 +138,13 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
   token->type = SYX_TOKEN_INT_CONST;
   if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
     {
-      token->value.large_integer = strtoll (s, (char **)NULL, 10);
+#ifdef HAVE_LIBGMP
+      token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
+      mpz_init_set_str (*token->value.large_integer, s, 10);
       token->type = SYX_TOKEN_LARGE_INT_CONST;
+#else
+      syx_error ("Integer too large");
+#endif /* HAVE_LIBGMP */
     }
   else if (errno != 0)
     {
@@ -163,8 +173,13 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
       token->type = SYX_TOKEN_INT_CONST;
       if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
 	{
-	  token->value.large_integer = strtoll (s, (char **)NULL, radix);
+#ifdef HAVE_LIBGMP
+	  token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
+	  mpz_init_set_str (*token->value.large_integer, s, radix);
 	  token->type = SYX_TOKEN_LARGE_INT_CONST;
+#else
+	  syx_error ("Integer too large");
+#endif /* HAVE_LIBGMP */
 	}
       else if (errno != 0)
 	{

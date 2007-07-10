@@ -30,7 +30,6 @@
 #include "syx-enums.h"
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
-#define SYX_OBJECT_LARGE_INTEGER(oop) (*((syx_uint64 *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
@@ -51,11 +50,8 @@
 			      ((oop) < (SyxOop)syx_memory ||		\
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
-#define SYX_OBJECT_IS_LARGE_POSITIVE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
-						   SYX_OBJECT(oop)->class == syx_large_positive_integer_class)
-#define SYX_OBJECT_IS_LARGE_NEGATIVE_INTEGER(oop) (SYX_IS_OBJECT(oop) &&	\
-						   SYX_OBJECT(oop)->class == syx_large_negative_integer_class)
 #define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_float_class)
+#define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_large_integer_class)
 
 /* Oop */
 
@@ -96,8 +92,7 @@ extern SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
-  syx_large_positive_integer_class,
-  syx_large_negative_integer_class,
+  syx_large_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
@@ -151,8 +146,9 @@ void syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value);
 
 inline SyxOop syx_metaclass_new (SyxOop supermetaclass);
 inline SyxOop syx_class_new (SyxOop superclass);
-inline SyxOop syx_large_positive_integer_new (syx_uint64 integer);
-inline SyxOop syx_large_negative_integer_new (syx_uint64 integer);
+inline SyxOop syx_large_integer_new (syx_symbol string, syx_int32 base);
+inline SyxOop syx_large_integer_new_integer (syx_int32 integer);
+inline SyxOop syx_large_integer_new_mpz (syx_pointer mpz);
 inline SyxOop syx_float_new (syx_double floating);
 inline SyxOop syx_byte_array_new (syx_varsize size, syx_uint8 *data);
 inline SyxOop syx_byte_array_new_size (syx_varsize size);
@@ -188,6 +184,7 @@ inline SyxOop syx_process_new (SyxOop context);
 #define SYX_CLASS_INSTANCE_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_INSTANCE_SIZE])
 #define SYX_CLASS_METHODS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_METHODS])
 #define SYX_CLASS_SUBCLASSES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_SUBCLASSES])
+#define SYX_CLASS_FINALIZATION(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_FINALIZATION])
 
 #define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METACLASS_INSTANCE_CLASS])
 

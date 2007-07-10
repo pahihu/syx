@@ -258,11 +258,13 @@ _syx_parser_parse_term (SyxParser *self)
       syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (token.value.integer));
       syx_token_free (token);
       break;
+#ifdef HAVE_LIBGMP
     case SYX_TOKEN_LARGE_INT_CONST:
       syx_bytecode_push_literal (self->bytecode,
-				 syx_large_positive_integer_new (token.value.large_integer));
+				 syx_large_integer_new_mpz (token.value.large_integer));
       syx_token_free (token);
       break;
+#endif
     case SYX_TOKEN_FLOAT_CONST:
       syx_bytecode_push_literal (self->bytecode, syx_float_new (token.value.floating));
       syx_token_free (token);
@@ -299,9 +301,16 @@ _syx_parser_parse_term (SyxParser *self)
 	  token = syx_lexer_next_token (self->lexer);
 	  if (token.type == SYX_TOKEN_INT_CONST)
 	    syx_bytecode_push_literal (self->bytecode, syx_small_integer_new (-token.value.integer));
+
+#ifdef HAVE_LIBGMP
 	  else if (token.type == SYX_TOKEN_LARGE_INT_CONST)
-	    syx_bytecode_push_literal (self->bytecode,
-				       syx_large_negative_integer_new (token.value.large_integer));
+	    {
+	      mpz_neg (*token.value.large_integer, *token.value.large_integer);
+	      syx_bytecode_push_literal (self->bytecode,
+					 syx_large_integer_new_mpz (token.value.large_integer));
+	    }
+#endif /* HAVE_LIBGMP */
+
 	  else if (token.type == SYX_TOKEN_FLOAT_CONST)
 	    syx_bytecode_push_literal (self->bytecode, syx_float_new (-token.value.floating));
 	  else
@@ -434,7 +443,6 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       if (token.type != SYX_TOKEN_STR_CONST)
 	syx_error ("expected a string containing the primitive to be called\n");
-
       syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
       syx_token_free (token);
 
@@ -445,8 +453,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (token.type != SYX_TOKEN_STR_CONST)
-	syx_error ("expected a string containin the plugin name\n");
-
+	syx_error ("expected a string containing the plugin name\n");
       syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
       syx_token_free (token);
 
@@ -457,7 +464,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       syx_lexer_next_token (self->lexer);
 
-      SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (-2);
+      SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-2);
     }
   else
     syx_error ("expected primitive or cCall");

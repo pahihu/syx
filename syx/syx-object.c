@@ -33,6 +33,10 @@
 
 #include <stdio.h>
 
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
 /*! \page syx_object Syx Object
   
   \section Description
@@ -54,8 +58,7 @@ SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
-  syx_large_positive_integer_class,
-  syx_large_negative_integer_class,
+  syx_large_integer_class,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
@@ -204,26 +207,53 @@ syx_class_new (SyxOop superclass)
   return class;
 }
 
-//! Create a LargePositiveInteger (a 64-bit unsigned integer)
-inline SyxOop
-syx_large_positive_integer_new (syx_uint64 num)
+//! Create a new LargeInteger
+/*!
+  \b This function is available only if Syx has been linked with the GMP library
+
+  \param string a textual representation of the number
+  \param base the radix of the representation
+*/
+SyxOop
+syx_large_integer_new (syx_symbol string, syx_int32 base)
 {
-  SyxOop oop = syx_object_new_size (syx_large_positive_integer_class, FALSE, sizeof (syx_uint64));
-  SYX_OBJECT_LARGE_INTEGER(oop) = num;
+#ifdef HAVE_LIBGMP
+  mpz_t *z = syx_calloc (1, sizeof (mpz_t));
+  SyxOop oop;
+  mpz_init_set_str (*z, string, 10);
+  oop = syx_object_new_data (syx_large_integer_class, FALSE, sizeof (mpz_t), (SyxOop *)z);
   return oop;
+#endif
+  return syx_nil;
 }
 
-//! Create a LargeNegativeInteger (a 64-bit unsigned integer)
-/*!
-  The representation of a LargeNegativeInteger is the same of the positive one, except that's handled differently.
-  So take care of the class when doing operations on these numbers.
- */
-inline SyxOop
-syx_large_negative_integer_new (syx_uint64 num)
+//! Create a new LargeInteger with the given mpz
+SyxOop
+syx_large_integer_new_mpz (syx_pointer mpz)
 {
-  SyxOop oop = syx_object_new_size (syx_large_negative_integer_class, FALSE, sizeof (syx_uint64));
-  SYX_OBJECT_LARGE_INTEGER(oop) = num;
+#ifdef HAVE_LIBGMP
+  SyxOop oop;
+  oop = syx_object_new_data (syx_large_integer_class, FALSE, sizeof (mpz_t), (SyxOop *)mpz);
   return oop;
+#endif
+  return syx_nil;
+}
+
+//! Transform a 32-bit integer to a multiple precision integer
+/*!
+  \b This function is available only if Syx has been linked with the GMP library
+*/
+SyxOop
+syx_large_integer_new_integer (syx_int32 i)
+{
+#ifdef HAVE_LIBGMP
+  mpz_t *z = syx_calloc (1, sizeof (mpz_t));
+  SyxOop oop;
+  mpz_init_set_si (*z, i);
+  oop = syx_object_new_data (syx_large_integer_class, FALSE, sizeof (mpz_t), (SyxOop *)z);
+  return oop;
+#endif
+  return syx_nil;
 }
 
 //! Create a Float object
@@ -934,9 +964,26 @@ syx_object_copy (SyxOop object)
 }
 
 //! Frees all the memory used by the object
+/*!
+  If the class has finalizationRequest set to true, perform #finalize on the object
+*/
 inline void
 syx_object_free (SyxOop object)
 {
+  SyxOop context, class;
+  if (!SYX_IS_OBJECT (object))
+    return;
+
+  class = syx_object_get_class (object);
+  if (SYX_IS_NIL (class))
+    return;
+
+  if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (class)))
+    {
+      context = syx_send_unary_message (syx_interp_get_current_context (), object, "finalize");
+      syx_process_execute_blocking (syx_process_new (context));
+    }
+
   syx_free (SYX_OBJECT_VARS (object));
   syx_free (SYX_OBJECT_DATA (object));
   syx_memory_free (object);
@@ -945,7 +992,7 @@ syx_object_free (SyxOop object)
 //! Check if a class is a superclass of another one
 /*!
   \param class a class
-  \param class a class that should be a subclass of the former
+  \param subclass a class that should be a subclass of the former
   \return TRUE if the first is a superclass of the second
 */
 syx_bool

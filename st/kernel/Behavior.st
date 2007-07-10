@@ -138,3 +138,9 @@ allSuperclassesDo: aBlock
     [ (class := self superclass) notNil ]
 	whileTrue: [ aBlock value: class ]
 ! !
+
+!Class methodsFor: 'initialize-release'!
+
+initialize
+
+! !

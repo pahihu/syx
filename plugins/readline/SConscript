@@ -33,14 +33,8 @@ lib_sources = Split ("plugin-init.c")
 if penv['READLINE']:
    env = penv.Clone ()
    if env['PLATFORM'] != 'win32':
-      conf = Configure (env, config_h='readline-config.h')
-      if not conf.CheckLibWithHeader ('curses', ['curses.h', 'term.h'], 'c', 'tgetnum(NULL);'):
-         conf.Finish ()
-         print "WARNING: missing 'curses' library for readline plugin"
-      elif not conf.CheckLibWithHeader ('readline', ['stdio.h', 'curses.h', 'term.h', 'readline/readline.h', 'readline/history.h'], 'c', 'add_history("testline");'):
-         conf.Finish ()
-         print 'WARNING: building without readline plugin'
-      else:
+      conf = Configure (env)
+      if conf.CheckLibWithHeader ('curses', ['curses.h', 'term.h'], 'c', 'tgetnum(NULL);') and conf.CheckLibWithHeader ('readline', ['stdio.h', 'curses.h', 'term.h', 'readline/readline.h', 'readline/history.h'], 'c', 'add_history("testline");'):
          conf.Finish ()
          lib_objects = env.SharedObject (lib_sources)
          lib_shared = env.SharedLibrary (target='syx-readline', source=lib_objects)
@@ -48,6 +42,9 @@ if penv['READLINE']:
          
          instdir = os.path.join (env['datadir'], 'plugins', 'readline')
          env.SyxInstall (instdir, lib_shared)
+      else:
+         conf.Finish ()
+         print 'WARNING: building without readline plugin'
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'readline'), lib_sources + ['SConscript'])
 penv.Alias ('sdist', target)

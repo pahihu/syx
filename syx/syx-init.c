@@ -84,9 +84,7 @@ _syx_file_in_basic (void)
   static syx_symbol kernel_filenames[] = {
     "Behavior.st", "Metaclass.st",
     "Symbol.st",
-    "Magnitude.st", "Number.st", "Integer.st", "SmallInteger.st",
-    "LargeInteger.st", "LargePositiveInteger.st", "LargeNegativeInteger.st",
-    "Float.st",
+    "Magnitude.st", "Number.st", "Integer.st", "SmallInteger.st", "LargeInteger.st", "Float.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Character.st", "ByteArray.st", "String.st",
@@ -232,8 +230,7 @@ syx_fetch_basic (void)
   syx_symbol_class = syx_globals_at ("Symbol");
   syx_string_class = syx_globals_at ("String");
   syx_small_integer_class = syx_globals_at ("SmallInteger");
-  syx_large_positive_integer_class = syx_globals_at ("LargePositiveInteger");
-  syx_large_negative_integer_class = syx_globals_at ("LargeNegativeInteger");
+  syx_large_integer_class = syx_globals_at ("LargeInteger");
   syx_float_class = syx_globals_at ("Float");
   syx_character_class = syx_globals_at ("Character");
   syx_byte_array_class = syx_globals_at ("ByteArray");
@@ -241,6 +238,7 @@ syx_fetch_basic (void)
   syx_variable_binding_class = syx_globals_at ("VariableBinding");
   syx_link_class = syx_globals_at ("Link");
   syx_dictionary_class = syx_globals_at ("Dictionary");
+  syx_cpointer_class = syx_globals_at ("CPointer");
 
   syx_compiled_method_class = syx_globals_at ("CompiledMethod");
   syx_compiled_block_class = syx_globals_at ("CompiledBlock");
@@ -306,10 +304,10 @@ syx_init (syx_symbol root_path)
 void
 syx_quit (void)
 {
+  syx_memory_clear ();
   syx_interp_quit ();
   syx_plugin_finalize ();
   syx_scheduler_quit ();
-  syx_memory_clear ();
   syx_error_clear ();
 
   syx_free (_syx_image_path);

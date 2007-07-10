@@ -318,8 +318,6 @@ void
 syx_scheduler_quit (void)
 {
   SyxSchedulerPoll *p, *pp;
-  syx_processor_first_process = syx_nil;
-  syx_processor_active_process = syx_nil;
 
   for (p=_syx_scheduler_poll_read; p;)
     {

@@ -22,6 +22,23 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!LargeInteger class methodsFor: 'initialize-release'!
+
+initialize
+    finalizationRequest := true
+! !
+
+!LargeInteger methodsFor: 'finalization'!
+
+clear
+    <primitive: 'LargeInteger_clear'>
+	self primitiveFailed
+!
+
+finalize
+    self clear
+! !
+
 !LargeInteger methodsFor: 'coercing'!
 
 asLargeInteger
@@ -54,14 +71,6 @@ isSmallInteger
     ^false
 !
 
-isLargePositiveInteger
-    ^self >= 0
-!
-
-isLargeNegativeInteger
-    ^self < 0
-!
-
 isLargeInteger
     ^true
 ! !
@@ -75,8 +84,68 @@ print
 
 !LargeInteger methodsFor: 'arithmetic'!
 
-\\ aNumber
++ aNumber
+     <primitive: 'LargeInteger_plus'>
+	 ^super + aNumber
+!
+
+- aNumber
+     <primitive: 'LargeInteger_minus'>
+	 ^super - aNumber
+!
+
+< aNumber
+     <primitive: 'LargeInteger_lt'>
+	 ^super < aNumber
+!
+
+> aNumber
+     <primitive: 'LargeInteger_gt'>
+	 ^super > aNumber
+!
+
+<= aNumber
+     <primitive: 'LargeInteger_le'>
+	 ^super <= aNumber
+!
+
+>= aNumber
+     <primitive: 'LargeInteger_ge'>
+	 ^super >= aNumber
+!
+
+= aNumber
+     <primitive: 'LargeInteger_eq'>
+	 ^super = aNumber
+!
+
+== aNumber
+     <primitive: 'LargeInteger_eq'>
+	 ^super == aNumber
+!
+
+~= aNumber
+     <primitive: 'LargeInteger_ne'>
+	 ^super ~= aNumber
+!
+
+~~ aNumber
+     <primitive: 'LargeInteger_ne'>
+	 ^super ~~ aNumber
+!
+
+/ aNumber
      self notImplementedYet
+!
+
+* aNumber
+     <primitive: 'LargeInteger_mul'>
+	 ^super * aNumber
+!
+
+\\ aNumber
+     <primitive: 'LargeInteger_mod'>
+	 ^super \\ aNumber
 ! !
 
 !LargeInteger methodsFor: 'bit-wise operations'!

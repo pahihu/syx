@@ -1,3 +1,27 @@
+2007-07-10  Luca Bruno  <lethalman88@gmail.com>
+
+	* SConstruct: use syx/syx-config.h instead of config.h
+
+	* Added support for infinite-precision numbers
+
+	* syx/syx-object.h (SYX_CLASS_FINALIZATION): added
+
+	* syx/syx-object.c (syx_object_free): added object finalization
+	(syx_large_integer_new): added
+	(syx_large_integer_new_integer): added
+	(syx_large_integer_new_mpz): added
+
+	* syx/syx-types.h (SYX_SMALL_INTEGER): fixed small integer unpacking
+
+	* syx/syx-interp.c (syx_interp_send_binary): use of syx_int32 for primitives
+	(syx_inter_send_unary): idem
+
+	* SConscript: fixed readline detecting
+
+	* plugins/gtk/plugin-init.c (SYX_FUNC_PRIMITIVE): fixed according to previous objects refactoring
+
+	* syx/syx-init.c (syx_fetch_basic): fetch CPointer class
+
 2007-07-09  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-parser.c (syx_parser_parse): push nil at the bottom of block context stack

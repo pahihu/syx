@@ -28,16 +28,22 @@
 #include "syx-types.h"
 #include "syx-enums.h"
 
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
 /* Token */
 
 typedef struct SyxToken SyxToken;
 
 struct SyxToken {
   SyxTokenType type;
-  union
+  union SyxTokenValue
   {
     syx_int32 integer;
-    syx_uint64 large_integer;
+#ifdef HAVE_LIBGMP
+    mpz_t *large_integer;
+#endif
     syx_double floating;
     syx_char character;
     syx_string string;

@@ -40,7 +40,7 @@ SYX_FUNC_PRIMITIVE(GtkWindow_new)
 
 SYX_FUNC_PRIMITIVE(GtkWidget_showAll)
 {
-  syx_pointer w = SYX_OOP_CAST_POINTER(SYX_OBJECT_DATA(es->message_receiver)[0]);
+  syx_pointer w = SYX_OOP_CAST_POINTER(SYX_OBJECT_VARS(es->message_receiver)[0]);
   gtk_widget_show_all(w);
   SYX_PRIM_RETURN(es->message_receiver);
 }

@@ -25,6 +25,7 @@
 #ifndef SYX_H
 #define SYX_H
 
+#include "syx-config.h"
 #include "syx-enums.h"
 #include "syx-types.h"
 #include "syx-object.h"

@@ -25,6 +25,10 @@
 #include <assert.h>
 #include "../syx/syx.h"
 
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
 int
 main (int argc, char *argv[])
 {
@@ -49,14 +53,16 @@ main (int argc, char *argv[])
   assert (token.type == SYX_TOKEN_INT_CONST);
   assert (token.value.integer == 0x123);
 
+#ifdef HAVE_LIBGMP
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_LARGE_INT_CONST);
-  assert (token.value.large_integer == 0xFFFFFFFF);
+  assert (mpz_cmp_si (*token.value.large_integer, 0xFFFFFFFF) == 0);
 
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_LARGE_INT_CONST);
-  assert (token.value.large_integer == 0xFFFFFFFFFFFF);
-  
+  assert (mpz_cmp_si (*token.value.large_integer, 0xFFFFFFFFFFFF) == 0);
+#endif
+
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_FLOAT_CONST);
   assert (token.value.floating == 123.321);
