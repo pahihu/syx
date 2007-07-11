@@ -25,12 +25,19 @@
 #ifndef SYX_OBJECT_H
 #define SYX_OBJECT_H
 
-#include <string.h>
 #include "syx-types.h"
 #include "syx-enums.h"
 
+#include <string.h>
+
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
 #define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
+
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#define SYX_OBJECT_LARGE_INTEGER(oop) (*((mpz_t *)(SYX_OBJECT(oop)->data)))
+#endif
+
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))

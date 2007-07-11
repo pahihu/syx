@@ -25,10 +25,6 @@
 #include <assert.h>
 #include "../syx/syx.h"
 
-#ifdef HAVE_LIBGMP
-#include <gmp.h>
-#endif
-
 int
 main (int argc, char *argv[])
 {
@@ -37,7 +33,11 @@ main (int argc, char *argv[])
 
   syx_init (".");
 
+#ifdef HAVE_LIBGMP
   lexer = syx_lexer_new ("nameconst 123 16r123 16rFFFFFFFF 16rFFFFFFFFFFFF 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
+#else
+  lexer = syx_lexer_new ("nameconst 123 16r123 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
+#endif
 
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_NAME_CONST);

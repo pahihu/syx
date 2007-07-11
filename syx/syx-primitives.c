@@ -814,7 +814,32 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
 #define _GET_Z mpz_t *z = (mpz_t *)SYX_OBJECT_DATA (es->message_receiver)
 #define _GET_OP2 SYX_PRIM_ARGS(1); if (!SYX_OBJECT_IS_LARGE_INTEGER (es->message_arguments[0])) { SYX_PRIM_FAIL; } \
   mpz_t *op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
-#define _NEW_R SyxOop rop = syx_large_integer_new_integer (0); mpz_t *r = (mpz_t *)SYX_OBJECT_DATA (rop)
+#define _NEW_R mpz_t *r = syx_calloc (1, sizeof (mpz_t)); mpz_init (*r)
+#define _RET_R if (mpz_fits_sint_p (*r) && SYX_SMALL_INTEGER_CAN_EMBED (mpz_get_si (*r))) \
+    { syx_int32 ret = mpz_get_si (*r); mpz_clear (*r); SYX_PRIM_RETURN (syx_small_integer_new (ret)); } \
+  else									\
+    { SYX_PRIM_RETURN (syx_large_integer_new_mpz (r)); }
+
+#ifdef HAVE_LIBGMP
+#define _DO_OP(op)				\
+  _GET_Z;					\
+  _GET_OP2;					\
+  _NEW_R;					\
+  op (*r, *z, *op2);				\
+  _RET_R
+#else
+#define _DO_OP(op) SYX_PRIM_FAIL
+#endif /* HAVE_LIBGMP */
+
+#ifdef HAVE_LIBGMP
+#define _CMP_OP(op)						\
+  _GET_Z;							\
+  _GET_OP2;							\
+  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) op 0));
+#else
+#define _CMP_OP(op) SYX_PRIM_FAIL
+#endif /* HAVE_LIBGMP */
+
 
 SYX_FUNC_PRIMITIVE(LargeInteger_print)
 {
@@ -832,121 +857,97 @@ SYX_FUNC_PRIMITIVE(LargeInteger_print)
 
 SYX_FUNC_PRIMITIVE(LargeInteger_plus)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  _NEW_R;
-  mpz_add (*r, *z, *op2);
-  SYX_PRIM_RETURN (rop);
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _DO_OP (mpz_add);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_minus)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  _NEW_R;
-  mpz_sub (*r, *z, *op2);
-  SYX_PRIM_RETURN (rop);
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _DO_OP (mpz_sub);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_lt)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) < 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (<);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_gt)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) > 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (>);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_le)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) <= 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (<=);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_ge)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) >= 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (>=);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_eq)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) == 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (==);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_ne)
 {
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) != 0));
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
+  _CMP_OP (!=);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_mul)
 {
+  _DO_OP (mpz_mul);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_mod)
+{
+  _DO_OP (mpz_tdiv_r);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_bitAnd)
+{
+  _DO_OP (mpz_and);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_bitOr)
+{
+  _DO_OP (mpz_ior);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_bitXor)
+{
+  _DO_OP (mpz_xor);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_bitShift)
+{
 #ifdef HAVE_LIBGMP
+  SYX_PRIM_ARGS(1);
+  syx_int32 shift;
   _GET_Z;
-  _GET_OP2;
   _NEW_R;
-  mpz_mul (*r, *z, *op2);
-  SYX_PRIM_RETURN (rop);
+  if (!SYX_IS_SMALL_INTEGER (es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }
+  
+  shift = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  if (shift > 0)
+    mpz_mul_2exp (*r, *z, shift);
+  else if (shift < 0)
+    mpz_tdiv_q_2exp (*r, *z, -shift);
+  else
+    {
+      SYX_PRIM_RETURN (es->message_receiver);
+    }
+
+  _RET_R;
 #else
   SYX_PRIM_FAIL;
 #endif /* HAVE_LIBGMP */
 }
 
-SYX_FUNC_PRIMITIVE(LargeInteger_mod)
-{
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  _GET_OP2;
-  _NEW_R;
-  mpz_tdiv_r (*r, *z, *op2);
-  SYX_PRIM_RETURN (rop);
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
-}
 
 SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 {
@@ -1219,6 +1220,10 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "LargeInteger_ne", LargeInteger_ne },
   { "LargeInteger_mul", LargeInteger_mul },
   { "LargeInteger_mod", LargeInteger_mod },
+  { "LargeInteger_bitAnd", LargeInteger_bitAnd },
+  { "LargeInteger_bitOr", LargeInteger_bitOr },
+  { "LargeInteger_bitXor", LargeInteger_bitXor },
+  { "LargeInteger_bitShift", LargeInteger_bitShift },
   { "LargeInteger_clear", LargeInteger_clear },
 
   /* Floats */

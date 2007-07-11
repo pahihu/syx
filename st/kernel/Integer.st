@@ -25,6 +25,21 @@ bitXor: aNumber
     self generality > aNumber generality
 	ifTrue: [ ^self bitXor: (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) bitXor: aNumber ]
+!
+
+bitShift: aNumber
+    aNumber isSmallInteger
+	ifFalse: [ self error: 'A small integer is required' ].
+   
+    ^self asLargeInteger bitShift: aNumber
+!
+
+<< aNumber
+    ^self bitShift: aNumber
+!
+
+>> aNumber
+    ^self bitShift: aNumber negated
 ! !
 
 !Integer methodsFor: 'testing'!

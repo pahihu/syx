@@ -70,22 +70,16 @@ main (int argc, char *argv[])
   puts ("- Test floats");
   ret_obj = _interpret ("method | a | a := 123.321. ^a + 2.2");
   assert (SYX_OBJECT_FLOAT(ret_obj) == 125.521);
-  
-/*
+
+#ifdef HAVE_LIBGMP  
   puts ("- Test large integers");
-  ret_obj = _interpret ("method | a | a := 16rFFFFFFFFFFFF. ^a - 16rFFFFFFFFFF");
-  assert (SYX_OBJECT_LARGE_INTEGER(ret_obj) == 0xff0000000000);
-  ret_obj = _interpret ("method ^16rFFF - 16rFFFFFFFFFFFFFF");
-  assert (SYX_OBJECT_LARGE_INTEGER(ret_obj) == 0xfffffffffff000);
   ret_obj = _interpret ("method ^16rFFFFFFFFFFFF - 16rFFFFFFFFFFF0");
   assert (SYX_SMALL_INTEGER(ret_obj) == 0xF);
   // 30 bits + 30 bits
-  ret_obj = _interpret ("method ^2r1111111111111111111111111111111 + 2r1111111111111111111111111111111");
-  assert (SYX_OBJECT_LARGE_INTEGER (ret_obj) == (((syx_uint64)1 << 31) - 1) * 2);
-  ret_obj = _interpret ("method ^-16rFFFFFFFFFFFF - 10");
-  assert (SYX_OBJECT_LARGE_INTEGER (ret_obj) == 0xFFFFFFFFFFFF + 10);
-*/
-  
+  ret_obj = _interpret ("method ^2r1111111111111111111111111111111 + 2r1111111111111111111111111111111 = 4294967294");
+  assert (SYX_IS_TRUE (ret_obj));
+#endif  
+
   puts ("- Test class variables");
   lexer = syx_lexer_new ("Object subclass: #TestClass instanceVariableNames: '' classVariableNames: 'TestVar'!"
 			 "!TestClass class methodsFor: 'testing'!"

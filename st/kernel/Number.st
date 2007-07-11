@@ -184,12 +184,12 @@ abs
 
 / aNumber
     "Coerce aNumber and do division"
-    self notImplementedYet
+    self notYetImplemented
 !
 
 * aNumber
     "Coerce aNumber and do multiplication"
-    self notImplementedYet
+    self notYetImplemented
 !
 
 \\ aNumber

@@ -288,6 +288,7 @@ syx_process_execute_scheduled (SyxOop process)
 void
 syx_process_execute_blocking (SyxOop process)
 {
+  SyxExecState *orig_es;
   syx_uint16 byte;
 
   if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
@@ -296,6 +297,8 @@ syx_process_execute_blocking (SyxOop process)
       return;
     }
 
+  orig_es = es;
+  es = syx_exec_state_new ();
   es->process = process;
   syx_exec_state_fetch ();
   syx_processor_active_process = process;
@@ -306,6 +309,9 @@ syx_process_execute_blocking (SyxOop process)
     }
 
   syx_exec_state_save ();
+  syx_exec_state_free ();
+
+  es = orig_es;
 }
 
 
@@ -625,9 +631,8 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
-  SyxOop class, method, context, first_argument, arguments;
+  SyxOop class, method, context, first_argument;
   syx_int32 primitive;
-  syx_bool ret = FALSE;
   SyxOop binding;
   syx_int32 index;
   syx_symbol selector;
@@ -684,30 +689,24 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
       return syx_signal_does_not_understand (es->message_receiver, syx_symbol_new (selector));
     }
 
-  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
-  if (primitive != -1)
-    {
-      if (es->message_arguments)
-	syx_free (es->message_arguments);
+  if (es->message_arguments)
+    syx_free (es->message_arguments);
+  
+  es->message_arguments = syx_calloc (1, sizeof (SyxOop));
+  es->message_arguments[0] = first_argument;
 
-      es->message_arguments = &first_argument;
-      es->message_arguments_count = 1;
-      if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-	ret = syx_interp_call_primitive (primitive, method);
-      else if (primitive == -2)
-	ret = syx_plugin_call (es, method);
-      es->message_arguments = NULL;
-      return ret;
-    }
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    return syx_interp_call_primitive (primitive, method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, method);
 
   syx_memory_gc_begin ();
-
-  arguments = syx_array_new_size (1);
-  SYX_OBJECT_DATA(arguments)[0] = first_argument;
-
-  context = syx_method_context_new (es->context, method, es->message_receiver, arguments);
-
+  context = syx_method_context_new (es->context, method, es->message_receiver,
+				    syx_array_new (1, es->message_arguments));
   syx_memory_gc_end ();
+  es->message_arguments = NULL;
+
   return syx_interp_enter_context (context);
 }
 

@@ -135,7 +135,7 @@ print
 !
 
 / aNumber
-     self notImplementedYet
+     self notYetImplemented
 !
 
 * aNumber
@@ -150,14 +150,22 @@ print
 
 !LargeInteger methodsFor: 'bit-wise operations'!
 
-bitAnd: aNumber
-    self notImplementedYet
+bitAnd: aSmallInteger
+    <primitive: 'LargeInteger_bitAnd'>
+	self primitiveFailed
 !
 
-bitOr: aNumber
-    self notImplementedYet
+bitOr: aSmallInteger
+    <primitive: 'LargeInteger_bitOr'>
+	self primitiveFailed
 !
 
-bitXor: aNumber
-    self notImplementedyet
+bitXor: aSmallInteger
+    <primitive: 'LargeInteger_bitXor'>
+	self primtiveFailed
+!
+
+bitShift: aSmallInteger
+    <primitive: 'LargeInteger_bitShift'>
+	self primitiveFailed
 ! !

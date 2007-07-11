@@ -58,7 +58,7 @@ SyxOop syx_nil,
   syx_character_class,
   syx_cpointer_class,
 
-  syx_large_integer_class,
+  syx_large_integer_class = 0,
   syx_float_class,
   syx_symbol_class,
   syx_string_class,
@@ -980,12 +980,14 @@ syx_object_free (SyxOop object)
 
   if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (class)))
     {
-      context = syx_send_unary_message (syx_interp_get_current_context (), object, "finalize");
+      context = syx_send_unary_message (syx_nil, object, "finalize");
       syx_process_execute_blocking (syx_process_new (context));
     }
 
-  syx_free (SYX_OBJECT_VARS (object));
-  syx_free (SYX_OBJECT_DATA (object));
+  if (SYX_OBJECT_VARS (object))
+    syx_free (SYX_OBJECT_VARS (object));
+  if (SYX_OBJECT_DATA (object))
+    syx_free (SYX_OBJECT_DATA (object));
   syx_memory_free (object);
 }
 

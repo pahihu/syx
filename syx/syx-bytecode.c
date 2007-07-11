@@ -104,9 +104,10 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
 void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
+  SyxOop binding;
+  /*
   syx_int16 i;
-  SyxOop binding, selbinding;
-
+  SyxOop selbinding;
   if (!to_super)
     {
       for (i=0; syx_bytecode_unary_messages[i]; i++)
@@ -137,7 +138,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 	    }
 	} 
     }
-
+  */
   binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_MARK_ARGUMENTS, argument_count);
   if (to_super)

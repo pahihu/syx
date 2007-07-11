@@ -113,14 +113,6 @@ bitXor: aNumber
 bitShift: aNumber
     <primitive: 'SmallInteger_bitShift'>
         ^super bitShift: aNumber
-!
-
-<< aNumber
-    ^self bitShift: aNumber
-!
-
->> aNumber
-    ^self bitShift: aNumber negated
 ! !
 
 !SmallInteger methodsFor: 'testing'!

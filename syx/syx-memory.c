@@ -232,7 +232,7 @@ syx_memory_gc_end (void)
 }
 
 
-inline void
+static void
 _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 {
   syx_int32 i, idx;
@@ -314,7 +314,38 @@ syx_memory_save_image (syx_symbol path)
 	  if (object->has_refs)
 	    _syx_memory_write (object->data, TRUE, object->data_size, image);
 	  else
-	    fwrite (object->data, sizeof (syx_int8), object->data_size, image);
+	    {
+#ifdef HAVE_LIBGMP
+	      if (SYX_OBJECT_IS_LARGE_INTEGER ((SyxOop)object))
+		{
+		  /* This algorithm is used to store large integers.
+		     We need to specify how many bytes GMP wrote to the image,
+		     for systems that doesn't support GMP */
+
+		  syx_int32 offset = 0;
+		  syx_nint start, end;
+		  // specify that's a large integer
+		  fputc (1, image);
+		  // make space to hold the offset
+		  fwrite (&offset, sizeof (syx_int32), 1, image);
+		  start = ftell (image);
+		  mpz_out_raw (image, SYX_OBJECT_LARGE_INTEGER ((SyxOop)object));
+		  end = ftell (image);
+		  offset = end - start;
+		  // go back to the offset
+		  fseek (image, - offset - sizeof (syx_int32), SEEK_CUR);
+		  fwrite (&offset, sizeof (syx_int32), 1, image);
+		  // return again to continue normal writing
+		  fseek (image, offset, SEEK_CUR);
+		}
+	      else
+#endif
+		{
+		  // it's not a large integer
+		  fputc (0, image);
+		  fwrite (object->data, sizeof (syx_int8), object->data_size, image);
+		}
+	    }
 	}
     }
 
@@ -325,7 +356,7 @@ syx_memory_save_image (syx_symbol path)
 
 
 
-inline syx_bool
+static syx_bool
 _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 {
   syx_int32 i, idx;
@@ -428,7 +459,20 @@ syx_memory_load_image (syx_symbol path)
 	  else
 	    {
 	      object->data = syx_calloc (object->data_size, sizeof (syx_int8));
-	      fread (object->data, sizeof (syx_int8), object->data_size, image);
+	      if (fgetc (image))
+		{
+		  syx_int32 offset;
+		  fread (&offset, sizeof (syx_int32), 1, image);
+#ifdef HAVE_LIBGMP
+		  mpz_init (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object));
+		  mpz_inp_raw (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object), image);
+#else
+		  // skip GMP data since we can't handle it
+		  fseek (image, offset, SEEK_CUR);
+#endif
+		}
+	      else
+		fread (object->data, sizeof (syx_int8), object->data_size, image);
 	    }
 	}
     }

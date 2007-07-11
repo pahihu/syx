@@ -50,10 +50,12 @@ SYX_FUNC_PRIMITIVE(Readline_addHistory)
 syx_bool
 syx_plugin_initialize (void)
 {
+  using_history ();
   return TRUE;
 }
 
 void
 syx_plugin_finalize (void)
 {
+  clear_history ();
 }

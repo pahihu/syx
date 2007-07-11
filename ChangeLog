@@ -1,3 +1,15 @@
+2007-07-11  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (syx_memory_save_image): save large integers taking care of that Syx built without the Bignum support
+
+	* syx/syx-interp.c (syx_process_execute_blocking): be safe against scheduling processes
+
+	* syx/syx-primitives.c (LargeInteger): return a SmallInteger when we can
+
+	* syx/syx-bytecode.c (syx_bytecode_gen_message): special unary and binary messages need to be rewritten
+
+	* syx/syx-interp.c (syx_send_binary_message): fixed possibly memory corruption
+
 2007-07-10  Luca Bruno  <lethalman88@gmail.com>
 
 	* SConstruct: use syx/syx-config.h instead of config.h

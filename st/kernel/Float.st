@@ -113,5 +113,5 @@ isFloat
 !
 
 \\ aNumber
-     self notImplementedYet
+     self notYetImplemented
 ! !
