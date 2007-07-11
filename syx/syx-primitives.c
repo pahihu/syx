@@ -522,7 +522,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_plus)
 
   a = SYX_SMALL_INTEGER (first);
   b = SYX_SMALL_INTEGER (second);
-  if (SYX_SMALL_INTEGER_OVERFLOW (a, b))
+  if (SYX_SMALL_INTEGER_SUM_OVERFLOW (a, b))
     {
       SYX_PRIM_FAIL;
     }
@@ -552,7 +552,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 
   a = SYX_SMALL_INTEGER (first);
   b = SYX_SMALL_INTEGER (second);
-  if (SYX_SMALL_INTEGER_OVERFLOW (a, -b))
+  if (SYX_SMALL_INTEGER_DIFF_OVERFLOW (a, b))
     {
       SYX_PRIM_FAIL;
     }
@@ -674,14 +674,29 @@ SYX_FUNC_PRIMITIVE (SmallInteger_mul)
   SYX_PRIM_ARGS(1);
 
   SyxOop first, second;
+  syx_int32 a, b, result;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
     {
       SYX_PRIM_FAIL;
     }
-  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) *
-					  SYX_SMALL_INTEGER (second)));
+
+  a = SYX_SMALL_INTEGER (first);
+  b = SYX_SMALL_INTEGER (second);
+
+  if (SYX_SMALL_INTEGER_MUL_OVERFLOW (a, b))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  result = a * b;
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (result))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (result));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_mod)
@@ -750,7 +765,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitShift)
   SYX_PRIM_ARGS(1);
 
   SyxOop arg;
-  syx_int32 val, shift, sval, i;
+  syx_int32 val, shift;
 
   val = SYX_SMALL_INTEGER(es->message_receiver);
   arg = es->message_arguments[0];
@@ -759,33 +774,22 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitShift)
       SYX_PRIM_FAIL;
     }
 
-  shift = SYX_SMALL_INTEGER(arg);
+  shift = SYX_SMALL_INTEGER (arg);
 
-  // Overflow test.  Check that the highest bit set shifted doesn't overflow a
-  // SmallInteger.
-  i = 0;
-  sval = abs(val);
-
-  while (sval >= 16)
+  if (SYX_SMALL_INTEGER_SHIFT_OVERFLOW (val, shift))
     {
-        sval = sval >> 4;
-        i += 4;
+      SYX_PRIM_FAIL;
     }
-
-  while (sval != 0)
-    {
-        sval = sval >> 1;
-        i++;
-    }
-
-  if ((i + shift) > 30)
-    {
-        SYX_PRIM_FAIL;
-    }
-
+  
   if (shift >= 0)
     {
-      SYX_PRIM_RETURN (syx_small_integer_new (val << shift));
+      val <<= shift;
+      if (!SYX_SMALL_INTEGER_CAN_EMBED (val))
+	{
+	  SYX_PRIM_FAIL;
+	}
+      
+      SYX_PRIM_RETURN (syx_small_integer_new (val));
     }
   else
     {

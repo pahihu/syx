@@ -1,5 +1,12 @@
 2007-07-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* SConstruct: build on Mac OS
+
+	* syx/SConscript: call ldconfig on POSIX at the end
+	
+	* syx/syx-object.c (SYX_SMALL_INTEGER_MUL_OVERFLOW): added
+	(SYX_SMALL_INTEGER_SHIFT_OVERFLOW): added
+
 	* syx/syx-memory.c (syx_memory_save_image): save large integers taking care of that Syx built without the Bignum support
 
 	* syx/syx-interp.c (syx_process_execute_blocking): be safe against scheduling processes

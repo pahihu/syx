@@ -106,7 +106,7 @@ conf = Configure (env, config_h="syx/syx-config.h")
 
 print 'Mandatory headers...'
 
-for h in ['string.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
+for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
           'sys/types.h', 'errno.h', 'getopt.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
@@ -117,7 +117,9 @@ print 'Optional headers...'
 
 for h in ['stdarg.h']:
    conf.CheckCHeader (h)
-   
+for t in ['int64_t']:
+   conf.CheckType (t, '#include <stdint.h>', 'c')
+
 if env['PLATFORM'] == 'win32':
    have_windows_h = conf.CheckCHeader ('windows.h')
 
@@ -159,6 +161,9 @@ conf.Finish ()
 
 # Flags
 env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -I#.')
+if env['PLATFORM'] == 'os2':
+   env.MergeFlags ('-fno-common')
+
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim"')
 else:

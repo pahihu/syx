@@ -35,6 +35,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
 #ifdef SYX_DEBUG_INFO
 #define SYX_DEBUG_GC
 #endif

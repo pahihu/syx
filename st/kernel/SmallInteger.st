@@ -34,8 +34,15 @@ DEALINGS IN THE SOFTWARE.
 - aNumber
      <primitive: 'SmallInteger_minus'>
 	 ^aNumber isSmallInteger
-	 ifTrue: [ self asLargeInteger - aNumber asLargeInteger ]
-	 ifFalse: [ super - aNumber ]
+	     ifTrue: [ self asLargeInteger - aNumber asLargeInteger ]
+	     ifFalse: [ super - aNumber ]
+!
+
+* aNumber
+     <primitive: 'SmallInteger_mul'>
+	 ^aNumber isSmallInteger
+	     ifTrue: [self asLargeInteger * aNumber asLargeInteger ]
+	     ifFalse: [ super * aNumber ]
 !
 
 < aNumber
@@ -81,11 +88,6 @@ DEALINGS IN THE SOFTWARE.
 / aNumber
      <primitive: 'SmallInteger_div'>
 	 ^super / aNumber
-!
-
-* aNumber
-     <primitive: 'SmallInteger_mul'>
-	 ^super * aNumber
 !
 
 \\ aNumber

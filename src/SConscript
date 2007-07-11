@@ -26,30 +26,34 @@
 
 import os
 Import ('env', 'distdir')
+xenv = env.Clone ()
+if env['PLATFORM'] == 'os2':
+    xenv.MergeFlags ("-bundle -flat_namespace -undefined suppress")
+xenv.MergeFlags ("-lsyx")
 
 prog_sources = Split ("main.c")
 prog_resources = Split ("syx.ico resources.rc")
-prog_objects = [env.Object (prog_sources)]
+prog_objects = [xenv.Object (prog_sources)]
 
-if env['PLATFORM'] == 'win32':
-    prog_objects.append (env.RES ('resources.rc'))
+if xenv['PLATFORM'] == 'win32':
+    prog_objects.append (xenv.RES ('resources.rc'))
     
-prog = env.Program (target='syx', source=prog_objects, LIBS=['syx'])
+prog = xenv.Program (target='syx', source=prog_objects)
 Default (prog)
 
 inst = env.SyxInstall (env['bindir'], prog)
 
 # Create the image once installed
 
-image = env.Command (env['imagepath'], inst, '$SOURCE -r $datadir -S')
+image = env.Command (xenv['imagepath'], inst, '$SOURCE -r $datadir -S')
 env.Alias ('install', image)
 env.AlwaysBuild (image)
-env.Depends (image, os.path.join(env['datadir'], 'st'))
+env.Depends (image, os.path.join(xenv['datadir'], 'st'))
 
 # Distribution
 
 if env['PLATFORM'] != 'win32':
-    bimage = env.Command (os.path.join (distdir, env['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
+    bimage = env.Command (os.path.join (distdir, xenv['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
     env.Depends (bimage, image)
     env.NoClean (image, bimage)
     env.Alias ('bdist', bimage)

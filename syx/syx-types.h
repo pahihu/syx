@@ -25,8 +25,10 @@
 #ifndef SYX_TYPES_H
 #define SYX_TYPES_H
 
-#include <stdio.h>
 #include "syx-enums.h"
+
+#include <limits.h>
+#include <stdint.h>
 
 /*! \page syx_types Syx Types
   Contains various C data types definition, including SyxOop
@@ -47,7 +49,9 @@
 //! TRUE if the number can be embedded
 #define SYX_SMALL_INTEGER_CAN_EMBED(num) ((syx_int32)(num) >= (-1 << 30) && (syx_int32)(num) < (1 << 30))
 //! TRUE if an overflow occurs when doing the sum of a and b
-#define SYX_SMALL_INTEGER_OVERFLOW(a,b) ((a > 0) == (b >= 0)) && ((a > 0) != ((a + b) >= 0))
+#define SYX_SMALL_INTEGER_SUM_OVERFLOW(a,b) (((a ^ b) | (((a ^ (~(a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) + b) ^ b)) >= 0)
+//! TRUE if an overflow occurs when doing the difference between a and b
+#define SYX_SMALL_INTEGER_DIFF_OVERFLOW(a,b) (((a ^ b) & (((a ^ ((a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) - b) ^ b)) < 0)
 //! Force the embedding of an integer
 #define SYX_SMALL_INTEGER_EMBED(num) ((syx_int32)(num) & ~(3 << 30))
 
@@ -61,23 +65,25 @@ typedef unsigned char syx_bool;
 typedef char syx_char;
 typedef unsigned char syx_uchar;
 
-typedef char syx_int8;
-typedef unsigned char syx_uint8;
+typedef int8_t syx_int8;
+typedef uint8_t syx_uint8;
 
 typedef syx_char * syx_string;
 typedef const syx_char * syx_symbol;
 
-typedef short int syx_int16;
-typedef unsigned short int syx_uint16;
+typedef int16_t syx_int16;
+typedef uint16_t syx_uint16;
 
-typedef int syx_int32;
-typedef unsigned int syx_uint32;
+typedef int32_t syx_int32;
+typedef uint32_t syx_uint32;
 
 typedef long syx_nint;
 typedef unsigned long syx_unint;
 
-typedef long long int syx_int64;
-typedef unsigned long long int syx_uint64;
+#ifdef HAVE_INT64_T
+typedef int64_t syx_int64;
+typedef uint64_t syx_uint64;
+#endif
 
 typedef long syx_size;
 typedef syx_int32 syx_varsize;
@@ -99,5 +105,9 @@ typedef syx_nint SyxOop;
 #define SYX_SMALL_INTEGER(oop) ((syx_int32)(oop) >> 1)
 #define SYX_CHARACTER(oop) ((syx_int8)((syx_nint)(oop) >> 2))
 
+//! TRUE if an overflow occurs when doing b times a
+inline syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
+//! TRUE if an overflow occurs when shifting a on the left by b
+inline syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
 
 #endif /* SYX_TYPES_H */
