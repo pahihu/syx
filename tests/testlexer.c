@@ -34,7 +34,7 @@ main (int argc, char *argv[])
   syx_init (".");
 
 #ifdef HAVE_LIBGMP
-  lexer = syx_lexer_new ("nameconst 123 16r123 16rFFFFFFFF 16rFFFFFFFFFFFF 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
+  lexer = syx_lexer_new ("nameconst 123 16r123 16rFFFFFFFF 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
 #else
   lexer = syx_lexer_new ("nameconst 123 16r123 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");
 #endif
@@ -57,10 +57,6 @@ main (int argc, char *argv[])
   token = syx_lexer_next_token (lexer);
   assert (token.type == SYX_TOKEN_LARGE_INT_CONST);
   assert (mpz_cmp_si (*token.value.large_integer, 0xFFFFFFFF) == 0);
-
-  token = syx_lexer_next_token (lexer);
-  assert (token.type == SYX_TOKEN_LARGE_INT_CONST);
-  assert (mpz_cmp_si (*token.value.large_integer, 0xFFFFFFFFFFFF) == 0);
 #endif
 
   token = syx_lexer_next_token (lexer);

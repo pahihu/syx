@@ -60,8 +60,9 @@ tests = ['testlexer', 'testimage', 'testcoldparser', 'testinstances', 'testparse
 targets = []
 deptarget = None
 
+env.MergeFlags ("-lsyx")
 for test in tests:
-    prog = env.Program (target=test, source=test+'.c', LIBS=['syx'])
+    prog = env.Program (target=test, source=test+'.c')
     target = test+'.passed'
     env.AlwaysBuild (target)
     env.Depends (target, deptarget)
