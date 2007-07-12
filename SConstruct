@@ -161,7 +161,7 @@ conf.Finish ()
 
 # Flags
 env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -I#.')
-if env['PLATFORM'] == 'os2':
+if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')
 
 if env['PLATFORM'] == 'win32':

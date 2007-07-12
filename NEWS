@@ -16,7 +16,8 @@
 	- Added support for infinite-precision numbers using GMP
 	- Integer overflow checks when doing sum, difference, multiplication and bit-shift
 
-	Note that Syx can be compiled also without GMP. Eventough you use an image containing LargeIntegers, Syx will run without problems but won't understand that numbers.
+	Note that Syx can be compiled also without GMP. Eventough you use an image containing
+	LargeIntegers, Syx will run without problems but won't understand that numbers.
 
 (Luca Bruno)
 

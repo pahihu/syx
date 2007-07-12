@@ -27,7 +27,7 @@
 import os
 Import ('env', 'distdir')
 xenv = env.Clone ()
-if env['PLATFORM'] == 'os2':
+if env['PLATFORM'] == 'darwin':
     xenv.MergeFlags ("-bundle -flat_namespace -undefined suppress")
 xenv.MergeFlags ("-lsyx")
 
