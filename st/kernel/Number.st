@@ -69,9 +69,23 @@ to: stop do: aBlock
     self to: stop by: self unity do: aBlock
 !
 
+to: stop reverseDo: aBlock
+    "Do aBlock decreasing self to stop. Pass the counter to aBlock"
+    self to: stop by: self unity reverseDo: aBlock
+!
+
+to: stop by: step reverseDo: aBlock
+    "Do aBlock decreasing self to stop stepping by step. Pass the counter to aBlock"
+    | i |
+    i := self.
+    [ i >= stop ]
+	whileTrue: [ aBlock value: i.
+		     i := i - step ]
+!
+
 to: stop by: step do: aBlock
-    "Do aBlock from self to stop stepping by step. Pass the counter to aBlock"
-    | i b |
+    "Do aBlock increasing self to stop stepping by step. Pass the counter to aBlock"
+    | i |
     i := self.
     [ i <= stop ]
 	whileTrue: [ aBlock value: i.

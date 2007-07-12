@@ -1,8 +1,31 @@
+2007-07-12  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-primitives.c (Object_at_put): prevent from modifying constant literals
+	(ByteArray_at_put): idem
+
+	* syx/syx-object.h (struct SyxObject): added is_constant flag
+
+	* st/kernel/Number.st (to:by:reverseDo:): added
+
+	* st/kernel/ArrayedCollection.st (copyWith:): added
+	
+
+	* st/kernel/Collection.st (copyWith:): added 
+
+	* st/kernel/SequenceableCollection.st (findFirst:): added
+	(findLast:): added
+	(reverse): added
+	(reverseDo): added
+	(with:do:): added
+	(atAll:put:): added
+	(atAllPut:): added
+	(from:to:keysAndValuesDo:) added
+
 2007-07-11  Luca Bruno  <lethalman88@gmail.com>
 
 	* SConstruct: build on Mac OS
 
-	* syx/SConscript: call ldconfig on POSIX at the end
+	* syx/SConscript: call ldconfig on POSIX during installation
 	
 	* syx/syx-object.c (SYX_SMALL_INTEGER_MUL_OVERFLOW): added
 	(SYX_SMALL_INTEGER_SHIFT_OVERFLOW): added
@@ -170,7 +193,6 @@
 	(after:): added
 	(before:): added
 	(copyFrom:to:): added
-	(copyWith:): added
 
 	* st/kernel/Collection.st (collect:): added
 	(includes:): added

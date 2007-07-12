@@ -35,7 +35,7 @@
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
-#define SYX_OBJECT_LARGE_INTEGER(oop) (*((mpz_t *)(SYX_OBJECT(oop)->data)))
+#define SYX_OBJECT_LARGE_INTEGER(oop) (*(mpz_t *)(SYX_OBJECT(oop)->data))
 #endif
 
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
@@ -46,6 +46,7 @@
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
 #define SYX_OBJECT_HAS_REFS(oop) (SYX_OBJECT(oop)->has_refs)
 #define SYX_OBJECT_IS_MARKED(oop) (SYX_OBJECT(oop)->is_marked)
+#define SYX_OBJECT_IS_CONSTANT(oop) (SYX_OBJECT(oop)->is_constant)
 
 #define SYX_IS_NIL(oop) ((oop) == 0 || (oop) == syx_nil)
 #define SYX_IS_TRUE(oop) ((oop) == syx_true)
@@ -74,6 +75,9 @@ struct SyxObject
 
   //! Used to mark the object by the garbage collector
   syx_bool is_marked : 1;
+
+  //! Set to TRUE if data shouldn't be modified
+  syx_bool is_constant : 1;
 
   //! A list of SyxOop containing instance variables.
   SyxOop *vars;

@@ -72,8 +72,9 @@ nextChunk
 !
 
 run
-    haveReadline := Smalltalk loadPlugin: 'readline'.
     [
+	"Compatibilty with Syx compiled without readline support"
+	haveReadline := Smalltalk loadPlugin: 'readline'.
 	[
 	    | chunk method context |
 	    chunk := self nextChunk.

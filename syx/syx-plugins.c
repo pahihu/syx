@@ -62,8 +62,12 @@ syx_library_open (syx_symbol location)
   ret = LoadLibrary (location);
 #else
   ret = dlopen (location, RTLD_NOW);
+
+#ifdef DEBUG_INFO
   if (!ret)
     puts (dlerror ());
+#endif /* DEBUG_INFO */
+
 #endif /* HAVE_LIBDL */
 
 #endif /* WITH_PLUGINS */
@@ -91,8 +95,12 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
   ret = GetProcAddress (handle, name);
 #else
   ret = dlsym (handle, name);
+
+#ifdef DEBUG_INFO
   if (!ret)
     puts (dlerror ());
+#endif /* DEBUG_INFO */
+
 #endif /* HAVE_LIBDL */
 
 #endif /* WITH_PLUGINS */

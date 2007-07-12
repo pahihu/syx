@@ -966,6 +966,7 @@ syx_object_new_vars (SyxOop class, syx_varsize vars_size)
   
   object->class = class;
   object->has_refs = FALSE;
+  object->is_constant = FALSE;
   object->vars = syx_calloc (vars_size, sizeof (SyxOop));
   object->data_size = 0;
   object->data = NULL;
@@ -1017,12 +1018,13 @@ syx_object_copy (SyxOop object)
 
   obj1->class = obj2->class;
   obj1->has_refs = obj2->has_refs;
+  obj1->is_constant = FALSE;
 
   obj1->vars = syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->class)),
 			   sizeof (SyxOop));
 
   obj1->data_size = obj2->data_size;
-  if (obj1->data)
+  if (obj2->data)
     {
       if (obj1->has_refs)
 	obj1->data = syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));

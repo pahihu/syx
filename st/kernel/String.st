@@ -38,7 +38,8 @@ at: anIndex
 at: anIndex put: aCharacter
     aCharacter isCharacter
 	ifFalse: [ self error: 'A character is required' ].
-    ^self byteAt: anIndex put: aCharacter codePoint
+    self byteAt: anIndex put: aCharacter codePoint.
+    ^aCharacter
 !
 
 basicAt: anIndex
@@ -48,7 +49,8 @@ basicAt: anIndex
 basicAt: anIndex put: aCharacter
     aCharacter isCharacter
 	ifFalse: [ self error: 'A character is required' ].
-    ^self byteAt: anIndex put: aCharacter codePoint
+    self byteAt: anIndex put: aCharacter codePoint.
+    ^aCharacter
 ! !
 
 !String methodsFor: 'primitives'!

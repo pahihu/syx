@@ -57,6 +57,13 @@ add: anObject
     self shouldNotImplement
 !
 
+size
+    <primitive: 'Object_size'>
+	self primitiveFailed
+! !
+
+!ArrayedCollection methodsFor: 'copying'!
+
 copyFrom: startIndex to: stopIndex
     | coll i |
     stopIndex < startIndex ifTrue: [ ^self copyEmpty: 0 ].
@@ -74,6 +81,19 @@ copyWith: anObject
     coll at: coll size put: anObject.
     ^coll
 !
+
+reverse
+    "Answer a collection copying the receiver's elements in the opposite order"
+    | coll i |
+    coll := self copyEmpty.
+    i := 0.
+    self reverseDo: [ :ea |
+	coll at: (i := i + 1) put: ea ].
+    ^coll
+! !
+
+
+!ArrayedCollection methodsFor: 'replacing'!
 
 replaceFrom: startIndex to: stopIndex with: aCollection
     <primitive: 'ArrayedCollection_replaceFromToWith'>
@@ -110,4 +130,4 @@ select: discriminatorBlock
 	(discriminatorBlock value: ea)
 	    ifTrue: [ stream nextPut: ea ] ].
     ^stream contents
-!
+! !

@@ -102,11 +102,17 @@ SYX_FUNC_PRIMITIVE (Object_at_put)
   syx_varsize index;
   SyxOop object;
 
+  if (SYX_OBJECT_IS_CONSTANT (es->message_receiver))
+    {
+      SYX_PRIM_FAIL;
+    }
+
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
   if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
       SYX_PRIM_FAIL;
     }
+
   object = es->message_arguments[1];
   SYX_OBJECT_DATA(es->message_receiver)[index] = object;
 
@@ -156,7 +162,6 @@ SYX_FUNC_PRIMITIVE (Object_copy)
 {
   SYX_PRIM_RETURN (syx_object_copy (es->message_receiver));
 }
-
 
 
 
@@ -210,7 +215,12 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
 {
   SYX_PRIM_ARGS(2);
   syx_varsize index;
-  SyxOop oop = es->message_arguments[1];
+  SyxOop oop;
+
+  if (SYX_OBJECT_IS_CONSTANT (es->message_receiver))
+    {
+      SYX_PRIM_FAIL;
+    }
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
   if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
@@ -218,6 +228,7 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
       SYX_PRIM_FAIL;
     }
   
+  oop = es->message_arguments[1];
   if (!SYX_IS_SMALL_INTEGER (oop) || SYX_SMALL_INTEGER (oop) < 0 || SYX_SMALL_INTEGER (oop) > 255)
     {
       SYX_PRIM_FAIL;

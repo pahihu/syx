@@ -38,15 +38,20 @@ copyFrom: startIndex to: stopIndex
     "Answer a collection which is a copy of the receiver, with the elements from startIndex to stopIndex"
     | coll |
     coll := self copyEmpty: 0.
+    stopIndex < startIndex
+	ifTrue: [ ^coll ].
+
     self from: startIndex to: stopIndex do: [ :ea | coll add: ea ].
     ^coll
 !
 
-copyWith: newElement
-    "Answer a collection which is a copy of the receiver, and adds a newElement at the end"
+reverse
+    "Answer a collection copying the receiver's elements in the opposite order"
     | coll |
-    coll := self class withAll: self.
-    ^coll add: newElement; yourself
+    coll := self copyEmpty: 0.
+    self reverseDo: [ :ea |
+	coll add: ea ].
+    ^coll
 ! !
 
 !SequenceableCollection methodsFor: 'replacing'!
@@ -62,9 +67,49 @@ replaceFrom: startIndex to: stopIndex with: aCollection
     j := 0.
     startIndex to: (stopIndex min: aCollection size) do: [ :i |
 	self at: i put: (aCollection at: (j := j + 1)) ]
+!
+
+atAll: indices put: newElement
+    "Replace all elements at the given indices with a newElement"
+    indices do: [ :i |
+	self at: i put: newElement ]
+!
+
+atAllPut: newElement
+    "Replace all receiver's elements with a newElement"
+    1 to: self size do: [ :i |
+	self at: i put: newElement ]
 ! !
 
 !SequenceableCollection methodsFor: 'enumerating'!
+
+with: otherCollection do: aBlock
+    "Evaluate aBlock with the elements of the receiver and otherCollection.
+     The two collections must have the same size"
+    self size ~= otherCollection size
+	ifTrue: [ self error: 'The size of the two collections is not equal' ].
+
+    self from: 1 to: self size keysAndValuesDo: [ :i :ea |
+	aBlock value: ea value: (otherCollection at: i) ]
+!
+
+findFirst: discriminatorBlock
+    "Answer the index of the first element for which the discriminator block evaluates to true.
+     If no such element is found, zero is returned"
+    self from: 1 to: self size keysAndValuesDo: [ :i :ea |
+	(discriminatorBlock value: ea)
+	    ifTrue: [ ^i ] ]
+    ^0
+!
+
+findLast: discriminatorBlock
+    "Answer the index of the last element for which the discriminator block evaluates to true.
+     If no such element i found, zero is returned"
+    self size to: 1 reverseDo: [ :i |
+	(discriminatorBlock value: (self at: i))
+	    ifTrue: [ ^i ] ].
+    ^0
+!
 
 first
     ^self at: 1
@@ -88,18 +133,23 @@ last
 
 after: anObject
     "Answer the object that follows anObject in the collection"
-    1 to: self size do: [ :i |
-	((self at: i) = anObject)
+    self from: 1 to: self size keysAndValuesDo: [ :i :ea |
+	ea = anObject
 	    ifTrue: [ ^self at: i + 1 ] ].
     NotFound signal
 !
 
 before: anObject
     "Answer the object that's before anObject in the collection"
-    1 to: self size do: [ :i |
-	((self at: i) = anObject)
-	    ifTrue: [ ^self at: i - 1 ] ].
+    self from 1 to: self size keysAndValuesDo: [ :i :ea |
+	ea = anObject
+	    ifTrue: [ ^self at: i - 1 ] ]
     NotFound signal
+!
+
+from: startIndex to: stopIndex keysAndValuesDo: aBlock
+    "Evaluate aBlock with the index of each element as first argument and the element as second argument"
+    startIndex to: stopIndex do: [ :i | aBlock value: i value: (self at: i) ]
 !
 
 from: startIndex to: stopIndex do: aBlock
@@ -110,6 +160,12 @@ from: startIndex to: stopIndex do: aBlock
 do: aBlock
     "Call aBlock for each element of the collection"
     self from: 1 to: self size do: aBlock
+!
+
+reverseDo: aBlock
+    "Call aBlock traversing the elements of the collection in the opposite order of do:"
+    self size to: 1 reverseDo: [ :i |
+	aBlock value: (self at: i) ]
 ! !
 
 !SequenceableCollection methodsFor: 'basic'!

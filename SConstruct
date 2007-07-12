@@ -186,7 +186,7 @@ env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
                                'doxygen $SOURCES'))
 env.Clean ('doc', 'build/doc')
 
-distdir = '#syx-0.1.1'
+distdir = '#syx-0.1.2'
 
 # Installation
 

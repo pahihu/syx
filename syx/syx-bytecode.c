@@ -166,6 +166,9 @@ syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 	return i;
     }
 
+  if (SYX_IS_OBJECT (literal))
+    SYX_OBJECT_IS_CONSTANT(literal) = TRUE;
+
   bytecode->literals[bytecode->literals_top++] = literal;
   return bytecode->literals_top - 1;
 }

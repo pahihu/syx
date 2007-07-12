@@ -87,6 +87,11 @@ copyEmpty
 copyEmpty: newSize
     "Create the empty collection of the given size"
     ^self class new: newSize
+!
+
+copyWith: newElement
+    "Answer a collection which is a copy of the receiver, and adds a newElement"
+    ^(self class withAll: self) add: newElement; yourself
 ! !
 
 !Collection methodsFor: 'enumerating'!
