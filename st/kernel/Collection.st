@@ -47,7 +47,7 @@ withAll: aCollection
     ^self new addAll: aCollection
 ! !
 
-!Collection methodsFor: 'indexable fields'!
+!Collection methodsFor: 'extensibility'!
 
 growTo: anInteger
     self basicGrowTo: anInteger
@@ -66,16 +66,14 @@ addAll: aCollection
 	self add: ea ]
 !
 
-do: aBlock
-    "Call aBlock for each element of the collection"
+remove: anObject ifAbsent: exceptionHandler
+    "Remove anObject from the collection. Evaluate exceptionHandler if anObject is not found"
     self subclassResponsibility
 !
 
-size
-    | count |
-    count := 0.
-    self do: [ :element | count := count + 1].
-    ^count
+remove: anObject
+    "Remove anObject and fail if it's absent"
+    self remove: anObject ifAbsent: [ NotFound signal ]
 ! !
 
 !Collection methodsFor: 'copying'!
@@ -95,6 +93,11 @@ copyWith: newElement
 ! !
 
 !Collection methodsFor: 'enumerating'!
+
+do: aBlock
+    "Call aBlock for each element of the collection"
+    self subclassResponsibility
+!
 
 collect: transformerBlock
     "Evaluate the block for each element of the receiver.
@@ -162,7 +165,16 @@ detect: discriminatorBlock ifNone: exceptionHandler
     [ self detect: discriminatorBlock ]
 	on: Error do: exceptionHandler
 ! !
-    
+   
+!Collection methodsFor: 'basic'!
+
+size
+    | count |
+    count := 0.
+    self do: [ :element | count := count + 1].
+    ^count
+! !
+ 
 !Collection methodsFor: 'converting'!
 
 asArray

@@ -85,9 +85,9 @@ DEALINGS IN THE SOFTWARE.
 	 ^super ~~ aNumber
 !
 
-/ aNumber
-     <primitive: 'SmallInteger_div'>
-	 ^super / aNumber
+quo: aNumber
+     <primitive: 'SmallInteger_quo'>
+	 ^super quo: aNumber
 !
 
 \\ aNumber

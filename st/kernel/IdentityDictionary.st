@@ -3,8 +3,8 @@
 indexOf: aKey
     | h2 pos size |
     size := self basicSize.
-    pos := 2 * (aKey hash \\ ((size - 1) / 2)).
-    h2 := pos / 4.
+    pos := 2 * (aKey hash \\ ((size - 1) quo: 2)).
+    h2 := pos quo: 4.
 
     (h2 between: 0 and: 1)
 	ifTrue: [ h2 := 2 ].
@@ -19,5 +19,6 @@ indexOf: aKey
 	pos := pos + h2.
 	pos >= (size - 1)
 	    ifTrue: [ pos := pos - (size - 1) ] ].
+
     self error: 'Dictionary is full'
 ! !

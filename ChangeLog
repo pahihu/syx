@@ -1,6 +1,14 @@
-2007-07-12  Luca Bruno  <lethalman88@gmail.com>
+2007-07-13  Luca Bruno  <lethalman88@gmail.com>
 
 	== Released 0.1.2 version ==
+
+	* syx/syx-memory.c (GC transactions): use multiple-level transactions
+
+	* st/kernel/Float.st (truncated): added
+
+	* st/kernel/SmallInteger.st (quo:): added and remove #/ fake
+
+2007-07-12  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-primitives.c (Object_at_put): prevent from modifying constant literals
 	(ByteArray_at_put): idem

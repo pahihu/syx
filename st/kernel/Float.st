@@ -114,4 +114,9 @@ isFloat
 
 \\ aNumber
      self notYetImplemented
+!
+
+truncated
+    <primitive: 'Float_trunc'>
+	self primitiveFailed
 ! !

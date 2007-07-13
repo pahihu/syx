@@ -1,4 +1,4 @@
-12 July 2007
+13 July 2007
 ------------
 
 	Released Syx 0.1.2 version.
@@ -12,7 +12,7 @@
 	- Added basic WriteStream
 	- Doubled initial memory size to hold 20000 objects
 	- Fixed ByteArray/String small integer to character conversion
-	- Added object finalization
+	- Added object finalization by fixing GC transactions
 	- Added support for infinite-precision numbers using GMP
 	- Integer overflow checks when doing sum, difference, multiplication and bit-shift
 

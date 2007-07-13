@@ -203,16 +203,18 @@ abs
 	ifFalse: [ ^(aNumber coerce: self) ~~ aNumber ]
 !
 
-/ aNumber
-    "Coerce aNumber and do division"
-    self notYetImplemented
-!
-
 \\ aNumber
     "Coerce aNumber and do modulo"
     self generality > aNumber generality
 	ifTrue: [ ^self \\ (self coerce: aNumber) ]
 	ifFalse: [ ^(aNumber coerce: self) \\ aNumber ]
+!
+
+quo: aNumber
+    "Coerce and answer the truncated quotient"
+    self generality > aNumber generality
+	ifTrue: [ ^self quo: (self coerce: aNumber) ]
+	ifFalse: [ ^(aNumber coerce: self) quo: aNumber ]
 !
 
 generality

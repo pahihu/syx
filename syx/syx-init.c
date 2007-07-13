@@ -338,6 +338,9 @@ syx_set_root_path (syx_symbol root_path)
   if (access (root_path, R_OK) < 0)
      return FALSE;
 
+  if (_syx_root_path)
+     syx_free (_syx_root_path);
+
   _syx_root_path = strdup (root_path);
   return TRUE;
 }
@@ -349,7 +352,7 @@ syx_set_image_path (syx_symbol image_path)
   if (!image_path)
      return FALSE;
    
-  if (!_syx_image_path)
+  if (_syx_image_path)
     syx_free (_syx_image_path);
 
   _syx_image_path = strdup (image_path);

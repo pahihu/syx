@@ -191,13 +191,9 @@ Integer subclass: #LargeInteger
 	instanceVariableNames: ''
 	classVariableNames: ''!
 
-LargeInteger subclass: #LargePositiveInteger
-	     instanceVariableNames: ''
-	     classVariableNames: ''!
-
-LargeInteger subclass: #LargeNegativeInteger
-	     instanceVariableNames: ''
-	     classVariableNames: ''!
+Number subclass: #Fraction
+       instanceVarableNames: 'numerator denominator'
+       classVariableNames: ''!
 
 Number subclass: #Float
        instanceVariableNames: ''

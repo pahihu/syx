@@ -55,7 +55,7 @@ static syx_bool _syx_memory_initialized = FALSE;
 // Holds temporary objects that must not be freed during a transaction
 static SyxOop _syx_memory_gc_trans[256];
 static syx_int32 _syx_memory_gc_trans_top = 0;
-static syx_bool _syx_memory_gc_trans_running = FALSE;
+static syx_int32 _syx_memory_gc_trans_running = 0;
 
 inline void _syx_memory_gc_mark (SyxOop object);
 static void _syx_memory_gc_sweep ();
@@ -216,7 +216,7 @@ syx_memory_gc (void)
 inline void
 syx_memory_gc_begin (void)
 {
-  _syx_memory_gc_trans_running = TRUE;
+  _syx_memory_gc_trans_running++;
 }
 
 //! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
@@ -226,6 +226,9 @@ syx_memory_gc_end (void)
   syx_int32 i;
 
   if (!_syx_memory_gc_trans_running)
+    return;
+
+  if (--_syx_memory_gc_trans_running)
     return;
 
   for (i=0; i < _syx_memory_gc_trans_top; i++)

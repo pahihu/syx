@@ -42,6 +42,12 @@ bitShift: aNumber
     ^self bitShift: aNumber negated
 ! !
 
+!Integer methodsFor: 'converting'!
+
+truncated
+    ^self
+! !
+
 !Integer methodsFor: 'testing'!
 
 isLargeInteger

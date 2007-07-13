@@ -32,19 +32,32 @@ new: size
 
 !Dictionary methodsFor: 'accessing'!
 
-removeKey: aKey
+removeKey: aKey ifAbsent: exceptionHandler
     | index |
     index := self indexOf: aKey.
     (self basicAt: index) isNil
-	ifTrue: [ NotFound signal: 'Key not found' ].
-    self basicAt: index put: nil
+	ifTrue: [ ^exceptionHandler value ].
+    self basicAt: index put: nil.
+    ^aKey
+!
+
+removeKey: aKey
+    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found' ]
+!
+
+remove: anAssociation ifAbsent: exceptionHandler
+    ^self removeKey: anAssociation key ifAbsent: exceptionHandler
+!
+
+remove: anAssociation
+    ^self removeKey: anAssociation key
 !
 
 indexOf: aKey
     | h2 pos size |
     size := self basicSize.
-    pos := 2 * (aKey hash \\ ((size - 1) / 2)).
-    h2 := pos / 4.
+    pos := 2 * (aKey hash \\ ((size - 1) quo: 2)).
+    h2 := pos quo: 4.
 
     (h2 between: 0 and: 1)
 	ifTrue: [ h2 := 2 ].

@@ -12,7 +12,7 @@ indexOf: anObject
     | h2 pos size |
     size := self basicSize.
     pos := anObject hash \\ (size - 1).
-    h2 := pos / 4.
+    h2 := pos quo: 4.
 
     h2 := h2 max: 1.
     (h2 ~= 1 & ((h2 \\ 2) isZero))
@@ -40,20 +40,20 @@ do: aBlock
 add: anObject
     | index |
     anObject
-	ifNil: [ self error: 'Invalid element' ].
+	ifNil: [ self error: 'Element must not be nil' ].
     
     index := self indexOf: anObject.
     (self basicAt: index) isNil
 	ifTrue: [ self basicAt: index put: anObject ]
 !
 
-remove: anObject
+remove: anObject ifAbsent: exceptionHandler
     | index |
     anObject
 	ifNil: [ ^self ].
 
     index := self indexOf: anObject.
     (self basicAt: index) isNil
-	ifTrue: [ NotFound signal: 'Object not found' ].
+	ifTrue: [ ^exceptionHandler value ].
     self basicAt: index put: nil
 ! !

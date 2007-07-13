@@ -38,6 +38,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
@@ -665,7 +666,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
   SYX_PRIM_RETURN (syx_boolean_new (first != second));
 }
 
-SYX_FUNC_PRIMITIVE (SmallInteger_div)
+SYX_FUNC_PRIMITIVE (SmallInteger_quo)
 {
   SYX_PRIM_ARGS(1);
 
@@ -1100,6 +1101,10 @@ SYX_FUNC_PRIMITIVE (Float_ne)
 				    SYX_OBJECT_FLOAT (second)));
 }
 
+SYX_FUNC_PRIMITIVE (Float_trunc)
+{
+  SYX_PRIM_RETURN (syx_small_integer_new (trunc (SYX_OBJECT_FLOAT (es->message_receiver))));
+}
 
 /* Object memory and Smalltalk */
 
@@ -1214,7 +1219,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
-  { "SmallInteger_div", SmallInteger_div },
+  { "SmallInteger_quo", SmallInteger_quo },
   { "SmallInteger_mul", SmallInteger_mul },
   { "SmallInteger_mod", SmallInteger_mod },
   { "SmallInteger_bitAnd", SmallInteger_bitAnd },
@@ -1250,6 +1255,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Float_ge", Float_ge },
   { "Float_eq", Float_eq },
   { "Float_ne", Float_ne },
+  { "Float_trunc", Float_trunc },
 
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },

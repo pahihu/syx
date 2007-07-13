@@ -140,6 +140,10 @@ else:
       print "Can't build Syx without select function!"
       env.Exit (1)
 
+if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (double)3.0;'):
+   print "Can't build Syx without the math library!"
+   env.Exit (1)
+
 print
 print 'Optional functions...'
 

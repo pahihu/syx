@@ -54,7 +54,7 @@ _help (void)
 	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"
 	  "  -h --help\t\tPrint this message.\n\n"
-	  "For more information, please visit the homepage: http://code.google.com/p/syx.\n"
+	  "For more informations, please visit the homepage: http://code.google.com/p/syx.\n"
 	  "Report bugs to \"lethalman88@gmail.com\".\n",
 	  SYX_ROOT_PATH, SYX_IMAGE_PATH);
   exit (EXIT_SUCCESS);
@@ -103,7 +103,7 @@ _getopt_do (int argc, char **argv)
 	      scratch = TRUE;
 	      break;
 	    case 3:
-	      printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
+	      printf ("Syx %s\nVisit the homepage: http://code.google.com/p/syx\n"
 		      "Copyright (c) 2007 Luca Bruno\n",
 		      SYX_VERSION);
 	      exit (EXIT_SUCCESS);
@@ -125,7 +125,7 @@ _getopt_do (int argc, char **argv)
 	  scratch = TRUE;
 	  break;
 	case 'v':
-	  printf ("Syx %s by Luca Bruno\nVisit the homepage: http://code.google.com/p/syx\n"
+	  printf ("Syx %s\nVisit the homepage: http://code.google.com/p/syx\n"
 		  "Copyright (c) 2007 Luca Bruno\n",
 		  SYX_VERSION);
 	  exit (EXIT_SUCCESS);
@@ -136,10 +136,16 @@ _getopt_do (int argc, char **argv)
     }
 
   if (!syx_init (root_path))
-    syx_error ("Couldn't initialize Syx for root %s\n", root_path);
+    syx_error ("Couldn't initialize Syx for root: %s\n", root_path ? root_path : syx_get_root_path ());
+
+  if (root_path)
+    syx_free (root_path);
 
   if (image_path)
-    syx_set_image_path (image_path);
+    {
+      syx_set_image_path (image_path);
+      syx_free (image_path);
+    }
    
   if (scratch)
     {
