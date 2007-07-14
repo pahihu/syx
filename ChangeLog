@@ -1,10 +1,17 @@
 2007-07-14  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Float.st (/): added
+
+	* syx/syx-primitives.c (SmallInteger_div): added overflow check
+
+	* syx/syx-types.h (SYX_SMALL_INTEGER_DIV_OVERFLOW): added
+
 	* syx/syx-lexer.c (_syx_char_is_binary_second): fixed '-' character from being used as second char for binary messages (e.g 4/-3 should be handled as 4 / -3)
 
 	* st/kernel/SmallInteger.st (/): added
 	
 	* st/kernel/Fraction.st: added
+	(asFloat): added
 
 2007-07-13  Luca Bruno  <lethalman88@gmail.com>
 

@@ -21,6 +21,12 @@ ensureDenominator
     	ifTrue: [ numerator := numerator negated. denominator := denominator negated ]
 ! !
 
+!Fraction methodsFor: 'converting'!
+
+asFloat
+    ^numerator asFloat / denominator asFloat
+! !
+
 !Fraction methodsFor: 'printing'!
 
 print

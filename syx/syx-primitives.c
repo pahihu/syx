@@ -683,6 +683,10 @@ SYX_FUNC_PRIMITIVE (SmallInteger_div)
     {
       SYX_PRIM_FAIL;
     }
+  if (SYX_SMALL_INTEGER_DIV_OVERFLOW (a, b))
+    {
+      SYX_PRIM_FAIL;
+    }
   
   SYX_PRIM_RETURN (syx_small_integer_new (a / b));
 }
@@ -1032,6 +1036,21 @@ SYX_FUNC_PRIMITIVE (Float_minus)
 				  SYX_OBJECT_FLOAT (second)));
 }
 
+SYX_FUNC_PRIMITIVE (Float_div)
+{
+  SYX_PRIM_ARGS (1);
+
+  SyxOop first, second;
+  first = es->message_receiver;
+  second = es->message_arguments[0];
+  if (!SYX_OBJECT_IS_FLOAT (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) /
+				  SYX_OBJECT_FLOAT (second)));
+}
+
 SYX_FUNC_PRIMITIVE (Float_lt)
 {
   SYX_PRIM_ARGS(1);
@@ -1271,6 +1290,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Floats */
   { "Float_plus", Float_plus },
   { "Float_minus", Float_minus },
+  { "Float_div", Float_div },
   { "Float_lt", Float_lt },
   { "Float_gt", Float_gt },
   { "Float_le", Float_le },

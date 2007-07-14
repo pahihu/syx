@@ -52,6 +52,8 @@
 #define SYX_SMALL_INTEGER_SUM_OVERFLOW(a,b) (((a ^ b) | (((a ^ (~(a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) + b) ^ b)) >= 0)
 //! TRUE if an overflow occurs when doing the difference between a and b
 #define SYX_SMALL_INTEGER_DIFF_OVERFLOW(a,b) (((a ^ b) & (((a ^ ((a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) - b) ^ b)) < 0)
+//! TRUE if an overflow occurs when doing division between a and b
+#define SYX_SMALL_INTEGER_DIV_OVERFLOW(a,b) ((b == 0) || ((a == INT_MIN) && (b == -1)))
 //! Force the embedding of an integer
 #define SYX_SMALL_INTEGER_EMBED(num) ((syx_int32)(num) & ~(3 << 30))
 

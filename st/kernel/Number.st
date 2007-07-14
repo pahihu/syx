@@ -204,7 +204,10 @@ abs
 !
 
 / aNumber
-    self notYetImplemented
+    "Coerce aNumber and do division"
+    self generality > aNumber generality
+        ifTrue: [ ^self / (self coerce: aNumber) ]
+        ifFalse: [ ^(aNumber coerce: self) / aNumber ]
 !
 
 \\ aNumber

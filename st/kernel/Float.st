@@ -112,6 +112,11 @@ isFloat
 	 ^super ~~ aNumber
 !
 
+/ aNumber
+     <primitive: 'Float_div'>
+         ^super / aNumber
+!
+
 \\ aNumber
      self notYetImplemented
 !
