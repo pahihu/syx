@@ -41,6 +41,11 @@ finalize
 
 !LargeInteger methodsFor: 'coercing'!
 
+asFloat
+    <primitive: 'LargeInteger_asFloat'>
+	self primitiveFailed
+!
+
 asLargeInteger
     ^self
 !
@@ -73,13 +78,6 @@ isSmallInteger
 
 isLargeInteger
     ^true
-! !
-
-!LargeInteger methodsFor: 'printing'!
-
-print
-    <primitive: 'LargeInteger_print'>
-	self primitiveFailed
 ! !
 
 !LargeInteger methodsFor: 'arithmetic'!
@@ -135,12 +133,29 @@ print
 !
 
 / aNumber
-     self notYetImplemented
+     <primitive: 'LargeInteger_div'>
+	 ^aNumber isLargeInteger
+	     ifTrue: [ Fraction numerator: self denominator: aNumber ]
+	     ifFalse: [ super / aNumber ]
 !
 
 * aNumber
      <primitive: 'LargeInteger_mul'>
 	 ^super * aNumber
+!
+
+// aNumber
+     <primitive: 'LargeInteger_intDiv'>
+	 self generality > aNumber generality
+	     ifTrue: [ ^self // (self coerce: aNumber) ]
+	     ifFalse: [ ^(aNumber coerce: self) // aNumber ]
+!
+
+quo: aNumber
+     <primitive: 'LargeInteger_quo'>
+	 self generality > aNumber generality
+	     ifTrue: [ ^self // (self coerce: aNumber) ]
+	     ifFalse: [ ^(aNumber coerce: self) // aNumber ]
 !
 
 \\ aNumber

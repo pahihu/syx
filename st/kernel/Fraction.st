@@ -21,6 +21,20 @@ ensureDenominator
     	ifTrue: [ numerator := numerator negated. denominator := denominator negated ]
 ! !
 
+!Fraction methodsFor: 'arithmetic'!
+
+ceiling
+    ^self asFloat ceiling
+!
+
+floor
+    ^self asFloat floor
+!
+
+truncated
+    ^self asFloat truncated
+! !
+
 !Fraction methodsFor: 'converting'!
 
 asFloat
@@ -29,10 +43,14 @@ asFloat
 
 !Fraction methodsFor: 'printing'!
 
-print
-    numerator print. '/' print. denominator print
-!
-
-printNl
-    self print. Transcript cr
+printString
+    | stream |
+    stream := WriteStream on: String new.
+    stream
+	nextPut: $(;
+	nextPutAll: numerator printString;
+	nextPut: $/;
+	nextPutAll: denominator printString;
+	nextPut: $).
+    ^stream contents
 ! !

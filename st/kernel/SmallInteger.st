@@ -92,11 +92,6 @@ DEALINGS IN THE SOFTWARE.
 	      ifFalse: [ super / aNumber ]
 !
 
-quo: aNumber
-     <primitive: 'SmallInteger_quo'>
-	 ^super quo: aNumber
-!
-
 \\ aNumber
      <primitive: 'SmallInteger_mod'>
 	 ^super \\ aNumber
@@ -147,11 +142,6 @@ asFloat
 
 asLargeInteger
     <primitive: 'SmallInteger_asLargeInteger'>
-	self primitiveFailed
-!
-
-print
-    <primitive: 'SmallInteger_print'>
 	self primitiveFailed
 !
 

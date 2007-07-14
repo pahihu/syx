@@ -92,12 +92,6 @@ to: stop by: step do: aBlock
                      i := i + step ]
 ! !
 
-!Number methodsFor: 'printing'!
-
-printNl
-    self print
-! !
-
 !Number methodsFor: 'coercing'!
 
 zero
@@ -127,87 +121,92 @@ abs
 !
 
 + aNumber
-     "Coerce aNumber and do the sum"
-     self generality > aNumber generality
-	 ifTrue: [ ^self + (self coerce: aNumber) ]
-	 ifFalse: [ ^(aNumber coerce: self) + aNumber ]
+    "Coerce aNumber and do the sum"
+    ^self generality > aNumber generality
+	 ifTrue: [ self + (self coerce: aNumber) ]
+	 ifFalse: [ (aNumber coerce: self) + aNumber ]
 !
 
 - aNumber
     "Coerce aNumber and do the difference"
-    self generality > aNumber generality
-	ifTrue: [ ^self - (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) - aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self - (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) - aNumber ]
 !
 
 * aNumber
     "Coerce aNumber and do multiplication"
-    self generality > aNumber generality
-	ifTrue: [ ^self * (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) * aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self * (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) * aNumber ]
 !
 
 < aNumber
-    "Coerce aNumber and compare"
+    ^"Coerce aNumber and compare"
     self generality > aNumber generality
-	ifTrue: [ ^self < (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) < aNumber ]
+	ifTrue: [ self < (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) < aNumber ]
 !
 
 > aNumber
     "Coerce aNumber and compare"
-    self generality > aNumber generality
-	ifTrue: [ ^self > (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) > aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self > (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) > aNumber ]
 !
 
 <= aNumber
     "Coerce aNumber and compare"
-    self generality > aNumber generality
-	ifTrue: [ ^self <= (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) <= aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self <= (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) <= aNumber ]
 !
 
 >= aNumber
     "Coerce aNumber and compare"
-    self generality > aNumber generality
-	ifTrue: [ ^self >= (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) >= aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self >= (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) >= aNumber ]
 !
 
 = aNumber
     "Coerce aNumber and compare equality"
-    self generality > aNumber generality
-	ifTrue: [ ^self = (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) = aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self = (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) = aNumber ]
 !
 
 == aNumber
-     "Coerce aNumber and compare equality"
-     self generality > aNumber generality
-	 ifTrue: [ ^self == (self coerce: aNumber) ]
-	 ifFalse: [ ^(aNumber coerce: self) == aNumber ]
+    "Coerce aNumber and compare equality"
+    ^self generality > aNumber generality
+	 ifTrue: [ self == (self coerce: aNumber) ]
+	 ifFalse: [ (aNumber coerce: self) == aNumber ]
 !
 
 ~= aNumber
     "Coerce aNumber and compare inequality"
-    self generality > aNumber generality
-	ifTrue: [ ^self ~= (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) ~= aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self ~= (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) ~= aNumber ]
 !
 
 ~~ aNumber
     "Coerce aNumber and compare inequality"
-    self generality > aNumber generality
-	ifTrue: [ ^self ~~ (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) ~~ aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self ~~ (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) ~~ aNumber ]
 !
 
 / aNumber
     "Coerce aNumber and do division"
-    self generality > aNumber generality
-        ifTrue: [ ^self / (self coerce: aNumber) ]
-        ifFalse: [ ^(aNumber coerce: self) / aNumber ]
+    ^self generality > aNumber generality
+        ifTrue: [ self / (self coerce: aNumber) ]
+        ifFalse: [ (aNumber coerce: self) / aNumber ]
+!
+
+// aNumber
+    "Do division then answer the quotient floor"
+    ^(self / aNumber) floor
 !
 
 \\ aNumber
@@ -218,10 +217,8 @@ abs
 !
 
 quo: aNumber
-    "Coerce and answer the truncated quotient"
-    self generality > aNumber generality
-	ifTrue: [ ^self quo: (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) quo: aNumber ]
+    "Do division then answer the truncated quotient"
+    ^(self / aNumber) truncated
 !
 
 generality

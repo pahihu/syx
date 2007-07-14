@@ -46,6 +46,10 @@ coerce: aNumber
 
 !Float methodsFor: 'printing'!
 
+printNl
+    ^self print
+!
+
 print
     <primitive: 'Float_print'>
 	self primitiveFailed
@@ -119,6 +123,16 @@ isFloat
 
 \\ aNumber
      self notYetImplemented
+!
+
+ceiling
+    <primitive: 'Float_ceil'>
+	self primitiveFailed
+!
+
+floor
+    <primitive: 'Float_floor'>
+	self primitiveFailed
 !
 
 truncated

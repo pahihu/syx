@@ -691,21 +691,6 @@ SYX_FUNC_PRIMITIVE (SmallInteger_div)
   SYX_PRIM_RETURN (syx_small_integer_new (a / b));
 }
 
-SYX_FUNC_PRIMITIVE (SmallInteger_quo)
-{
-  SYX_PRIM_ARGS(1);
-
-  SyxOop first, second;
-  first = es->message_receiver;
-  second = es->message_arguments[0];
-  if (!SYX_IS_SMALL_INTEGER (second))
-    {
-      SYX_PRIM_FAIL;
-    }
-  SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) /
-					  SYX_SMALL_INTEGER (second)));
-}
-
 SYX_FUNC_PRIMITIVE (SmallInteger_mul)
 {
   SYX_PRIM_ARGS(1);
@@ -936,6 +921,35 @@ SYX_FUNC_PRIMITIVE(LargeInteger_ne)
   _CMP_OP (!=);
 }
 
+SYX_FUNC_PRIMITIVE(LargeInteger_div)
+{
+#ifdef HAVE_LIBGMP
+  SYX_PRIM_ARGS(1);
+  _GET_Z;
+  _GET_OP2;
+  _NEW_R;
+  if (!mpz_divisible_p (*z, *op2))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  mpz_divexact (*r, *z, *op2);
+  _RET_R;
+#else
+  SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_intDiv)
+{
+  _DO_OP (mpz_fdiv_q);
+}
+
+SYX_FUNC_PRIMITIVE(LargeInteger_quo)
+{
+  _DO_OP (mpz_tdiv_q);
+}
+
 SYX_FUNC_PRIMITIVE(LargeInteger_mul)
 {
   _DO_OP (mpz_mul);
@@ -943,7 +957,7 @@ SYX_FUNC_PRIMITIVE(LargeInteger_mul)
 
 SYX_FUNC_PRIMITIVE(LargeInteger_mod)
 {
-  _DO_OP (mpz_tdiv_r);
+  _DO_OP (mpz_fdiv_r);
 }
 
 SYX_FUNC_PRIMITIVE(LargeInteger_bitAnd)
@@ -977,7 +991,7 @@ SYX_FUNC_PRIMITIVE(LargeInteger_bitShift)
   if (shift > 0)
     mpz_mul_2exp (*r, *z, shift);
   else if (shift < 0)
-    mpz_tdiv_q_2exp (*r, *z, -shift);
+    mpz_fdiv_q_2exp (*r, *z, -shift);
   else
     {
       SYX_PRIM_RETURN (es->message_receiver);
@@ -988,6 +1002,17 @@ SYX_FUNC_PRIMITIVE(LargeInteger_bitShift)
   SYX_PRIM_FAIL;
 #endif /* HAVE_LIBGMP */
 }
+
+SYX_FUNC_PRIMITIVE(LargeInteger_asFloat)
+{
+#ifdef HAVE_LIBGMP
+  _GET_Z;
+  SYX_PRIM_RETURN (syx_float_new (mpz_get_d (*z)));
+#else
+  SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
+}
+
 
 
 SYX_FUNC_PRIMITIVE(LargeInteger_clear)
@@ -1141,9 +1166,58 @@ SYX_FUNC_PRIMITIVE (Float_ne)
 				    SYX_OBJECT_FLOAT (second)));
 }
 
+SYX_FUNC_PRIMITIVE (Float_ceil)
+{
+  double ret = ceil (SYX_OBJECT_FLOAT (es->message_receiver));
+
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
+    {
+#ifdef HAVE_LIBGMP
+      _NEW_R;
+      mpz_init_set_d (*r, ret);
+      SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
+#else
+      SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (ret));
+}
+
+SYX_FUNC_PRIMITIVE (Float_floor)
+{
+  double ret = floor (SYX_OBJECT_FLOAT (es->message_receiver));
+
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
+    {
+#ifdef HAVE_LIBGMP
+      _NEW_R;
+      mpz_init_set_d (*r, ret);
+      SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
+#else
+      SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (ret));
+}
+
 SYX_FUNC_PRIMITIVE (Float_trunc)
 {
-  SYX_PRIM_RETURN (syx_small_integer_new (trunc (SYX_OBJECT_FLOAT (es->message_receiver))));
+  double ret = trunc (SYX_OBJECT_FLOAT (es->message_receiver));
+
+  if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
+    {
+#ifdef HAVE_LIBGMP
+      _NEW_R;
+      mpz_init_set_d (*r, ret);
+      SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
+#else
+      SYX_PRIM_FAIL;
+#endif /* HAVE_LIBGMP */
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (ret));
 }
 
 /* Object memory and Smalltalk */
@@ -1228,7 +1302,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
   { "String_asSymbol", String_asSymbol },
-  { "SmallInteger_print", SmallInteger_print },
   { "Float_print", Float_print },
   { "LargeInteger_print", LargeInteger_print },
 
@@ -1260,7 +1333,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
   { "SmallInteger_div", SmallInteger_div },
-  { "SmallInteger_quo", SmallInteger_quo },
   { "SmallInteger_mul", SmallInteger_mul },
   { "SmallInteger_mod", SmallInteger_mod },
   { "SmallInteger_bitAnd", SmallInteger_bitAnd },
@@ -1279,6 +1351,9 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "LargeInteger_ge", LargeInteger_ge },
   { "LargeInteger_eq", LargeInteger_eq },
   { "LargeInteger_ne", LargeInteger_ne },
+  { "LargeInteger_div", LargeInteger_div },
+  { "LargeInteger_intDiv", LargeInteger_intDiv },
+  { "LargeInteger_quo", LargeInteger_quo },
   { "LargeInteger_mul", LargeInteger_mul },
   { "LargeInteger_mod", LargeInteger_mod },
   { "LargeInteger_bitAnd", LargeInteger_bitAnd },
@@ -1286,6 +1361,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "LargeInteger_bitXor", LargeInteger_bitXor },
   { "LargeInteger_bitShift", LargeInteger_bitShift },
   { "LargeInteger_clear", LargeInteger_clear },
+  { "LargeInteger_asFloat", LargeInteger_asFloat },
 
   /* Floats */
   { "Float_plus", Float_plus },
@@ -1297,6 +1373,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Float_ge", Float_ge },
   { "Float_eq", Float_eq },
   { "Float_ne", Float_ne },
+  { "Float_ceil", Float_ceil },
+  { "Float_floor", Float_floor },
   { "Float_trunc", Float_trunc },
 
   /* Object memory */

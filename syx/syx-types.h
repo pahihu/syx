@@ -47,7 +47,7 @@
 #define SYX_POINTER_CAST_OOP(ptr) ((SyxOop) (ptr))
 
 //! TRUE if the number can be embedded
-#define SYX_SMALL_INTEGER_CAN_EMBED(num) ((syx_int32)(num) >= (-1 << 30) && (syx_int32)(num) < (1 << 30))
+#define SYX_SMALL_INTEGER_CAN_EMBED(num) ((num) >= (-1 << 30) && (num) < (1 << 30))
 //! TRUE if an overflow occurs when doing the sum of a and b
 #define SYX_SMALL_INTEGER_SUM_OVERFLOW(a,b) (((a ^ b) | (((a ^ (~(a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) + b) ^ b)) >= 0)
 //! TRUE if an overflow occurs when doing the difference between a and b

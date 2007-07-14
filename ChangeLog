@@ -1,6 +1,18 @@
 2007-07-14  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/LargeInteger.st (/): added
+	(//): added
+	(quo:): added
+
+	* st/kernel/Number.st (//): added
+	(quo:): refined
+
 	* st/kernel/Float.st (/): added
+	(floor): added
+	(ceiling): added
+
+	* st/kernel/Integer.st (radix:): added
+	(printString): added
 
 	* syx/syx-primitives.c (SmallInteger_div): added overflow check
 

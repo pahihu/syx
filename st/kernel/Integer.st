@@ -42,7 +42,44 @@ bitShift: aNumber
     ^self bitShift: aNumber negated
 ! !
 
+!Integer methodsFor: 'printing'!
+
+radix: base
+    "Returns a string representing the integer with the given base.
+     The base must be between 2 and 16"
+    | stream num |
+    base isInteger & (base between: 2 and: 16)
+	ifFalse: [ self error: 'Argument must be an integer between 2 and 16' ].
+    self isZero
+	ifTrue: [ ^'0' ].
+    stream := WriteStream on: String new.
+    num := self abs.
+    [ num ~= 0 ]
+	whileTrue: [
+	    | cp |
+	    cp := $0 codePoint + (num \\ base).
+	    cp > $9 codePoint
+		ifTrue: [ cp := cp + $A codePoint - $9 codePoint - 1 ].
+	    stream nextPut: (Character codePoint: cp).
+	    num := num // base ].
+    self negative
+	ifTrue: [ stream nextPut: $- ].
+    ^stream contents reverse
+!
+
+printString
+    ^self radix: 10
+! !
+
 !Integer methodsFor: 'converting'!
+
+ceiling
+    ^self
+!
+
+floor
+    ^self
+!
 
 truncated
     ^self
