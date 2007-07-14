@@ -103,7 +103,7 @@ typedef syx_nint SyxOop;
 
 //! Basic conversions
 #define SYX_SMALL_INTEGER(oop) ((syx_int32)(oop) >> 1)
-#define SYX_CHARACTER(oop) ((syx_int8)((syx_nint)(oop) >> 2))
+#define SYX_CHARACTER(oop) ((syx_uchar)((syx_nint)(oop) >> 2))
 
 //! TRUE if an overflow occurs when doing b times a
 inline syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
