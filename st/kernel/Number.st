@@ -203,6 +203,10 @@ abs
 	ifFalse: [ ^(aNumber coerce: self) ~~ aNumber ]
 !
 
+/ aNumber
+    self notYetImplemented
+!
+
 \\ aNumber
     "Coerce aNumber and do modulo"
     self generality > aNumber generality

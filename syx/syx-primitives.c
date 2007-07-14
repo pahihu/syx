@@ -666,6 +666,27 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
   SYX_PRIM_RETURN (syx_boolean_new (first != second));
 }
 
+SYX_FUNC_PRIMITIVE (SmallInteger_div)
+{
+  SYX_PRIM_ARGS(1);
+
+  SyxOop second;
+  syx_int32 a, b;
+  second = es->message_arguments[0];
+  if (!SYX_IS_SMALL_INTEGER (second))
+    {
+      SYX_PRIM_FAIL;
+    }
+  a = SYX_SMALL_INTEGER (es->message_receiver);
+  b = SYX_SMALL_INTEGER (second);
+  if (a % b)
+    {
+      SYX_PRIM_FAIL;
+    }
+  
+  SYX_PRIM_RETURN (syx_small_integer_new (a / b));
+}
+
 SYX_FUNC_PRIMITIVE (SmallInteger_quo)
 {
   SYX_PRIM_ARGS(1);
@@ -1219,6 +1240,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "SmallInteger_ge", SmallInteger_ge },
   { "SmallInteger_eq", SmallInteger_eq },
   { "SmallInteger_ne", SmallInteger_ne },
+  { "SmallInteger_div", SmallInteger_div },
   { "SmallInteger_quo", SmallInteger_quo },
   { "SmallInteger_mul", SmallInteger_mul },
   { "SmallInteger_mod", SmallInteger_mod },

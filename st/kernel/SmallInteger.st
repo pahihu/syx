@@ -85,6 +85,13 @@ DEALINGS IN THE SOFTWARE.
 	 ^super ~~ aNumber
 !
 
+/ aNumber
+     <primitive: 'SmallInteger_div'>
+       	 ^aNumber isSmallInteger
+	      ifTrue: [ Fraction numerator: self denominator: aNumber ]      
+	      ifFalse: [ super / aNumber ]
+!
+
 quo: aNumber
      <primitive: 'SmallInteger_quo'>
 	 ^super quo: aNumber

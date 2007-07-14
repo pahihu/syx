@@ -314,7 +314,7 @@ _syx_char_is_single_binary (syx_char c)
 static syx_bool
 _syx_char_is_binary_second (syx_char c)
 {
-  return !(isalnum (c) || isspace (c) || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
+  return !(isalnum (c) || isspace (c) || c == '-' || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
 }
 
 //! Get the next character or 0
