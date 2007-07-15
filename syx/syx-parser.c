@@ -289,7 +289,7 @@ _syx_parser_parse_term (SyxParser *self)
 	  _syx_parser_parse_expression (self);
 	  token = syx_lexer_get_last_token (self->lexer);
 	  if (! (token.type == SYX_TOKEN_CLOSING && token.value.character == ')'))
-	    syx_error ("Expected ) after sub expression");
+	    syx_error ("Expected ) after sub expression\n");
 	}
       else if (!strcmp (token.value.string, "["))
 	_syx_parser_parse_block (self);
@@ -314,7 +314,7 @@ _syx_parser_parse_term (SyxParser *self)
 	  else if (token.type == SYX_TOKEN_FLOAT_CONST)
 	    syx_bytecode_push_literal (self->bytecode, syx_float_new (-token.value.floating));
 	  else
-	    syx_error ("Negation not followed by number");
+	    syx_error ("Negation not followed by number\n");
 
 	  syx_token_free (token);
 	}
@@ -322,7 +322,7 @@ _syx_parser_parse_term (SyxParser *self)
 
     default:
       if (token.type == SYX_TOKEN_END)
-	syx_error ("End of input unexpected")
+	syx_error ("End of input unexpected\n")
       else if (token.type > SYX_TOKEN_STRING_ENTRY)
 	syx_error ("Invalid expression start %s\n", token.value.string)
       else
@@ -411,7 +411,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
   token = syx_lexer_next_token (self->lexer);
   if (token.type != SYX_TOKEN_NAME_COLON)
-    syx_error ("expected name colon");
+    syx_error ("expected name colon\n");
 
   if (!strcmp (token.value.string, "primitive:"))
     {
@@ -428,7 +428,7 @@ _syx_parser_parse_primitive (SyxParser *self)
       
       token = syx_lexer_next_token (self->lexer);
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-	syx_error ("expected >");
+	syx_error ("expected >\n");
       syx_token_free (token);
       
       SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
@@ -448,7 +448,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "plugin:")))
-	syx_error ("expected plugin:");
+	syx_error ("expected plugin:\n");
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
@@ -459,7 +459,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-	syx_error ("expected >");
+	syx_error ("expected >\n");
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
@@ -467,7 +467,7 @@ _syx_parser_parse_primitive (SyxParser *self)
       SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-2);
     }
   else
-    syx_error ("expected primitive or cCall");
+    syx_error ("expected primitive or cCall\n");
 
   return;
 }
@@ -489,7 +489,7 @@ _syx_parser_parse_temporaries (SyxParser *self)
 	  token = syx_lexer_next_token (self->lexer);
 	}
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-	syx_error ("Temporary list not terminated by bar");
+	syx_error ("Temporary list not terminated by bar\n");
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
@@ -1008,7 +1008,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
     }
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-    syx_error ("Expected | after block message pattern");
+    syx_error ("Expected | after block message pattern\n");
 
   syx_token_free (token);
   syx_lexer_next_token (self->lexer);

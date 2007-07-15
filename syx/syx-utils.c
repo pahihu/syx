@@ -92,7 +92,7 @@ _syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized)
       if (capitalized && !isupper (token.value.string[0]))
 	{
 	  syx_token_free (token);
-	  syx_error ("First letter must be uppercase");
+	  syx_error ("First letter must be uppercase\n");
 	}
 
       vars_raw[vars_size] = syx_symbol_new (token.value.string);
@@ -123,7 +123,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   if (token.type != SYX_TOKEN_NAME_CONST)
     {
-      syx_error ("Expected a name constant");
+      syx_error ("Expected a name constant\n");
       syx_token_free (token);
       return FALSE;
     }
@@ -137,7 +137,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (!(token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "subclass:")))
     {
       syx_token_free (token);
-      syx_error ("Expected #subclass:");
+      syx_error ("Expected #subclass:\n");
       return FALSE;
     }
   syx_token_free (token);
@@ -146,7 +146,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_SYM_CONST)
     {
       syx_token_free (token);
-      syx_error ("Expected a symbol constant");
+      syx_error ("Expected a symbol constant\n");
       return FALSE;
     }
 
@@ -181,7 +181,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_NAME_COLON)
     {
       syx_token_free (token);
-      syx_error ("Expected #instanceVariableNames:");
+      syx_error ("Expected #instanceVariableNames:\n");
       return FALSE;
     }
   syx_token_free (token);
@@ -190,7 +190,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_STR_CONST)
     {
       syx_token_free (token);
-      syx_error ("Expected a string as argument for #instanceVariableNames:");
+      syx_error ("Expected a string as argument for #instanceVariableNames:\n");
       return FALSE;
     }
   inst_vars_lexer = syx_lexer_new (token.value.string);
@@ -199,7 +199,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_NAME_COLON)
     {
       syx_token_free (token);
-      syx_error ("Expected #classVariableNames:");
+      syx_error ("Expected #classVariableNames:\n");
       return FALSE;
     }
   syx_token_free (token);
@@ -208,7 +208,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_STR_CONST)
     {
       syx_token_free (token);
-      syx_error ("Expected a string as argument for #classVariableNames:");
+      syx_error ("Expected a string as argument for #classVariableNames:\n");
       return FALSE;
     }
   class_vars_lexer = syx_lexer_new (token.value.string);
@@ -217,7 +217,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (!_IS_EXL_MARK (token))
     {
       syx_token_free (token);
-      syx_error ("Class definition must terminate with an exlamation mark");
+      syx_error ("Class definition must terminate with an exlamation mark\n");
       return FALSE;
     }
   syx_token_free (token);

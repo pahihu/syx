@@ -53,7 +53,7 @@ static syx_bool _syx_memory_initialized = FALSE;
 #define SYX_MEMORY_TOP (&syx_memory[_syx_memory_size - 1])
 
 // Holds temporary objects that must not be freed during a transaction
-static SyxOop _syx_memory_gc_trans[256];
+static SyxOop _syx_memory_gc_trans[0x100];
 static syx_int32 _syx_memory_gc_trans_top = 0;
 static syx_int32 _syx_memory_gc_trans_running = 0;
 
@@ -102,6 +102,8 @@ syx_memory_init (syx_int32 mem_size)
        _syx_freed_memory_top < _syx_memory_size;
        _syx_freed_memory_top++, object--)
     _syx_freed_memory[_syx_freed_memory_top] = (SyxOop) object;
+  _syx_memory_gc_trans_running = 0;
+  _syx_memory_gc_trans_top = 0;
 
   _syx_memory_initialized = TRUE;
 }
@@ -163,7 +165,7 @@ syx_memory_alloc (void)
   if (_syx_memory_gc_trans_running)
     {
       if (_syx_memory_gc_trans_top == 0x100)
-	syx_error ("transactions can hold up to 256 objects");
+	syx_error ("transactions can hold up to 256 objects\n");
 
       SYX_OBJECT_IS_MARKED(oop) = TRUE;
       _syx_memory_gc_trans[_syx_memory_gc_trans_top++] = oop;
@@ -198,6 +200,15 @@ syx_memory_gc (void)
   syx_int32 reclaimed;
 #endif
 
+  /* Save the state of transactions.
+     syx_object_free can call #finalize methods, so we need another transaction */
+  syx_int32 trans_top = _syx_memory_gc_trans_top;
+  syx_int32 trans_running = _syx_memory_gc_trans_running;
+  SyxOop trans[0x100];
+  memcpy (trans, _syx_memory_gc_trans, sizeof (SyxOop) * 0x100);
+  _syx_memory_gc_trans_top = 0;
+  _syx_memory_gc_trans_running = 0;
+
   _syx_memory_gc_mark (syx_symbols);
   _syx_memory_gc_mark (syx_globals);
   _syx_memory_gc_sweep ();
@@ -206,6 +217,11 @@ syx_memory_gc (void)
   reclaimed = _syx_freed_memory_top - old_top;
   syx_debug ("GC: reclaimed %d (%d%%); available %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size);
 #endif
+
+  // Restore the normal transaction
+  _syx_memory_gc_trans_top = trans_top;
+  _syx_memory_gc_trans_running = trans_running;
+  memcpy (_syx_memory_gc_trans, trans, sizeof (SyxOop) * 0x100);
 }
 
 //! Begins a garbage collection transaction.
@@ -224,18 +240,14 @@ inline void
 syx_memory_gc_end (void)
 {
   syx_int32 i;
-
-  if (!_syx_memory_gc_trans_running)
-    return;
-
-  if (--_syx_memory_gc_trans_running)
+  if (--_syx_memory_gc_trans_running > 0)
     return;
 
   for (i=0; i < _syx_memory_gc_trans_top; i++)
     SYX_OBJECT_IS_MARKED(_syx_memory_gc_trans[i]) = FALSE;
 
   _syx_memory_gc_trans_top = 0;
-  _syx_memory_gc_trans_running = FALSE;
+  _syx_memory_gc_trans_running = 0;
 }
 
 
@@ -550,7 +562,7 @@ syx_malloc (syx_int32 size)
 
   ptr = malloc (size);
   if (!ptr)
-    syx_error ("out of memory");
+    syx_error ("out of memory\n");
 
   return ptr;
 }
@@ -562,7 +574,7 @@ syx_malloc0 (syx_int32 size)
 
   ptr = malloc (size);
   if (!ptr)
-    syx_error ("out of memory");
+    syx_error ("out of memory\n");
 
   memset (ptr, '\0', size);
   return ptr;
@@ -575,7 +587,7 @@ syx_calloc (syx_int32 elements, syx_int32 element_size)
 
   ptr = calloc (elements, element_size);
   if (!ptr)
-    syx_error ("out of memory");
+    syx_error ("out of memory\n");
 
   return ptr;
 }
@@ -587,7 +599,7 @@ syx_realloc (syx_pointer ptr, syx_int32 size)
 
   nptr = realloc (ptr, size);
   if (!nptr)
-    syx_error ("out of memory");
+    syx_error ("out of memory\n");
 
   return nptr;
 }

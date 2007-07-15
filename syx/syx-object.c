@@ -206,7 +206,7 @@ syx_object_get_class (SyxOop object)
   if (SYX_IS_CPOINTER(object))
     return syx_cpointer_class;
 
-  syx_error ("unknown object");
+  syx_error ("unknown object\n");
 }
 
 //! Set the class of an object

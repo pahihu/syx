@@ -72,10 +72,6 @@ coerce: aNumber
 
 !LargeInteger methodsFor: 'testing'!
 
-isSmallInteger
-    ^false
-!
-
 isLargeInteger
     ^true
 ! !
@@ -135,7 +131,7 @@ isLargeInteger
 / aNumber
      <primitive: 'LargeInteger_div'>
 	 ^aNumber isLargeInteger
-	     ifTrue: [ Fraction numerator: self denominator: aNumber ]
+	     ifTrue: [ (Fraction numerator: self denominator: aNumber) reduce ]
 	     ifFalse: [ super / aNumber ]
 !
 

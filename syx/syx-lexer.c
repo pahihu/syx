@@ -128,28 +128,33 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_int32 stop = 0;
   syx_nint radix = 10;
   syx_bool sign = FALSE;
+  syx_nint tol;
 
   do
     s[stop++] = lastChar;
   while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
   errno = 0;
-  token->value.integer = strtol (s, (char **)NULL, 10);
-  token->type = SYX_TOKEN_INT_CONST;
-  if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
+  tol = strtol (s, (char **)NULL, 10);
+  if (errno == ERANGE || tol < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (tol))
     {
 #ifdef HAVE_LIBGMP
       token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
       mpz_init_set_str (*token->value.large_integer, s, 10);
       token->type = SYX_TOKEN_LARGE_INT_CONST;
 #else
-      syx_error ("Integer too large");
+      syx_error ("Integer too large\n");
 #endif /* HAVE_LIBGMP */
     }
   else if (errno != 0)
     {
       perror ("LEXER");
       exit (EXIT_FAILURE);
+    }
+  else
+    {
+      token->value.integer = tol;
+      token->type = SYX_TOKEN_INT_CONST;
     }
 
   // a radix?
@@ -169,22 +174,26 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
       s[stop] = '\0';
 
       errno = 0;
-      token->value.integer = strtol (s, (char **)NULL, radix);
-      token->type = SYX_TOKEN_INT_CONST;
-      if (errno == ERANGE || token->value.integer < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (token->value.integer))
+      tol = strtol (s, (char **)NULL, radix);
+      if (errno == ERANGE || tol < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (tol))
 	{
 #ifdef HAVE_LIBGMP
 	  token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
 	  mpz_init_set_str (*token->value.large_integer, s, radix);
 	  token->type = SYX_TOKEN_LARGE_INT_CONST;
 #else
-	  syx_error ("Integer too large");
+	  syx_error ("Integer too large\n");
 #endif /* HAVE_LIBGMP */
 	}
       else if (errno != 0)
 	{
 	  perror ("LEXER");
 	  exit (EXIT_FAILURE);
+	}
+      else
+	{
+	  token->value.integer = tol;
+	  token->type = SYX_TOKEN_INT_CONST;
 	}
     }
 

@@ -1,3 +1,18 @@
+!Integer methodsFor: 'arithmetic'!
+
+gcd: aNumber
+    "Answer the greatest common divisor"
+    | num tmp remainder |
+    num := self max: aNumber.
+    remainder := self min: aNumber.
+    [ remainder isZero ]
+	whileFalse: [    
+	    tmp := remainder.
+	    remainder := num \\ remainder.
+	    num := tmp ].
+    ^num abs
+! !
+
 !Integer methodsFor: 'bit-wise operations'!
 
 bitAnd: aNumber
@@ -87,18 +102,6 @@ truncated
 
 !Integer methodsFor: 'testing'!
 
-isLargeInteger
-    ^self subclassResponsibility
-!
-
-isSmallInteger
-    ^self subclassResponsibility
-!
-
 isInteger
     ^true
-!
-
-isFloat
-    ^false
 ! !

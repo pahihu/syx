@@ -24,6 +24,10 @@ DEALINGS IN THE SOFTWARE.
 
 !Float methodsFor: 'coercing'!
 
+asFraction
+    ^self notYetImplemented
+!
+
 asFloat
     ^self
 !
@@ -56,9 +60,6 @@ print
 ! !
 
 !Float methodsFor: 'testing'!
-
-isInteger
-    ^false
 
 isFloat
     ^true

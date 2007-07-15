@@ -1,3 +1,26 @@
+2007-07-15  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/Number.st (reciprocal): added
+	(asFraction): added
+	(compare:): added
+
+	* st/kernel/Integer.st (gcd:): added
+
+	* st/kernel/Fraction.st (reduce): added
+	(+): added
+	(-): added
+	(*): added
+	(/): added
+	(reciprocal): added refinement
+	(compare:) added
+	(<, >, <=, >=, =, ~=): added
+	(zero): added
+
+	* syx/syx-memory.c (syx_memory_gc_end): fixed GC transactions ending
+	(syx_memory_gc): save/restore GC transaction state to hold #finalize messages
+
+	* syx/syx-lexer.c (_syx_lexer_token_number): fixed small integer parsing
+
 2007-07-14  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/LargeInteger.st (/): added

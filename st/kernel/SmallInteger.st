@@ -88,7 +88,7 @@ DEALINGS IN THE SOFTWARE.
 / aNumber
      <primitive: 'SmallInteger_div'>
        	 ^aNumber isSmallInteger
-	      ifTrue: [ Fraction numerator: self denominator: aNumber ]      
+	      ifTrue: [ (Fraction numerator: self denominator: aNumber) reduce ]
 	      ifFalse: [ super / aNumber ]
 !
 
@@ -120,10 +120,6 @@ bitShift: aNumber
 ! !
 
 !SmallInteger methodsFor: 'testing'!
-
-isLargeInteger
-    ^false
-!
 
 isSmallInteger
     ^true

@@ -30,16 +30,31 @@ new
 
 !Number methodsFor: 'testing'!
 
+isNumber
+    ^true
+
 isInteger
-    ^self subclassResponsibility
+    ^false
+!
+
+isSmallInteger
+    ^false
+!
+
+isLargeInteger
+    ^false
+!
+
+isFloat
+    ^false
+!
+
+isFraction
+    ^false
 !
 
 isZero
     ^self = self zero
-!
-
-isFloat
-    ^self subclassResponsibility
 !
 
 negative
@@ -56,10 +71,6 @@ sign
     self > self zero
 	ifTrue: [ ^1 ].
     ^0
-!
-
-isSmallInteger
-    ^self subclassResponsibility
 ! !
 
 !Number methodsFor: 'iterators'!
@@ -93,6 +104,10 @@ to: stop by: step do: aBlock
 ! !
 
 !Number methodsFor: 'coercing'!
+
+asFraction
+    ^Fraction numerator: self denominator: 1
+!
 
 zero
     ^self subclassResponsibility
@@ -219,6 +234,21 @@ abs
 quo: aNumber
     "Do division then answer the truncated quotient"
     ^(self / aNumber) truncated
+!
+
+compare: aNumber
+    "Return 1 if self > aNumber, 0 if = aNumber, -1 if < aNumber"
+    self > aNumber
+	ifTrue: [ ^1 ].
+    self = aNumber
+	ifTrue: [ ^0 ].
+    self < aNumber
+	ifTrue: [ ^-1 ]
+!
+
+reciprocal
+    "Answer the reciprocal number of self"
+    ^1 / self
 !
 
 generality

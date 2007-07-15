@@ -35,7 +35,7 @@
 
 /* Version */
 
-#define SYX_VERSION "0.1.2"
+#define SYX_VERSION "0.1.3"
 
 /* Some platform specific informations */
 
