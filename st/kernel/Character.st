@@ -38,6 +38,21 @@ nl
     ^self codePoint: 10
 !
 
+lf
+    "Answer a line feed character"
+    ^self codePoint: 10
+!
+
+space
+    "Answer a space character"
+    ^self codePoint: 32
+!
+
+tab
+    "Answer a space character"
+    ^self codePoint: 9
+!
+
 codePoint: anInteger
     "Create a character from its integer representation"
     <primitive: 'Character_new'>
@@ -73,6 +88,16 @@ asString
     ^String with: self
 !
 
+asUppercase
+    self isLowercase
+        ifTrue: [ ^Character codePoint: self codePoint - 32 ]
+!
+
+asLowercase
+    self isUppercase
+        ifTrue: [ ^Character codePoint: self codePoint + 32 ]
+!
+
 printString
     ^self asString
 ! !
@@ -81,4 +106,24 @@ printString
 
 isCharacter
     ^true
+!
+
+isLetter
+    ^self isLowercase | self isUppercase
+!
+
+isDigit
+    ^self codePoint between: 48 and: 57
+!
+
+isAlphaNumeric
+    ^self isDigit | self isLetter
+!
+
+isLowercase
+    ^self codePoint between: $a codePoint and: $z codePoint
+!
+
+isUppercase
+    ^self codePoint between: $A codePoint and: $Z codePoint
 ! !
