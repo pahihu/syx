@@ -25,6 +25,7 @@
 #################################################################################
 
 import os, glob
+from SCons import Conftest
 
 env = Environment ()
 
@@ -102,7 +103,33 @@ env.Help (opts.GenerateHelpText (env) + """
      """)
 
 # Configuration
-conf = Configure (env, config_h="syx/syx-config.h")
+
+def check_endianness (ctx):
+   ctx.Message ("Checking for machine endianness...")
+   ret = ctx.TryRun ("""
+#include <stdio.h>
+int main (int argc, char **argv)
+{
+  static const int i = 1;
+  if ((*(char*)&i) == 0)
+    printf ("big");
+  else
+    printf ("little");
+
+  return 0;
+}
+""", '.c')
+   if ret[0]:
+      if ret[0] == 'big':
+         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 1)
+      else:
+         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
+      ctx.Result (ret[1])
+   else:
+      print "Can't build Syx without determining machine endianness"
+      ctx.Result (0)
+
+conf = Configure (env, custom_tests={ 'CheckEndianness' : check_endianness }, config_h="syx/syx-config.h")
 
 print 'Mandatory headers...'
 
@@ -115,7 +142,7 @@ for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h',
 print
 print 'Optional headers...'
 
-for h in ['stdarg.h']:
+for h in ['stdarg.h', 'byteswap.h']:
    conf.CheckCHeader (h)
 for t in ['int64_t']:
    conf.CheckType (t, '#include <stdint.h>', 'c')
@@ -143,6 +170,8 @@ else:
 if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (double)3.0;'):
    print "Can't build Syx without the math library!"
    env.Exit (1)
+
+conf.CheckEndianness ()
 
 print
 print 'Optional functions...'

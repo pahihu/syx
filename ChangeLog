@@ -1,5 +1,12 @@
 2007-07-15  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-platform.h (syx_bswap_32): wrap bswap_32
+
+	* SConstruct (check_endianness): added to check endianness
+	(byteswap.h): added for optional check
+
+	* syx/syx-memory.c: first attempt for the image to be compatible with different endianness
+
 	* src/SConscript: let it work on MacOSX (PPC)
 
 	* plugins/gtk/SConscript: do not compile GTK if it's not found
