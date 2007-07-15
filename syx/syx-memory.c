@@ -279,8 +279,9 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	  if (mark_type)
 	    fputc (0, image);
 
-	  idx = _SYX_IMAGE_SWAP (oop);
-	  fwrite (&oop, sizeof (syx_int32), 1, image);
+	  idx = (syx_int32)oop;
+	  idx = _SYX_IMAGE_SWAP (idx);
+	  fwrite (&idx, sizeof (syx_int32), 1, image);
 	}
     }
 }
@@ -334,7 +335,7 @@ syx_memory_save_image (syx_symbol path)
       data = syx_object_vars_size ((SyxOop)object);
       data = _SYX_IMAGE_SWAP(data);
       fwrite (&data, sizeof (syx_varsize), 1, image);
-      _syx_memory_write (object->vars, TRUE, data, image);
+      _syx_memory_write (object->vars, TRUE, _SYX_IMAGE_SWAP(data), image);
 
       // store data
       data = _SYX_IMAGE_SWAP (object->data_size);

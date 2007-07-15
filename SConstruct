@@ -120,7 +120,7 @@ int main (int argc, char **argv)
 }
 """, '.c')
    if ret[0]:
-      if ret[0] == 'big':
+      if ret[1] == 'big':
          Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 1)
       else:
          Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
