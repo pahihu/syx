@@ -2,7 +2,7 @@
 
 	* src/SConscript: let it work on MacOSX (PPC)
 
-	* plugins/gtk/SConscript: do not compile if GTK is not found
+	* plugins/gtk/SConscript: do not compile GTK if it's not found
 
 	* st/kernel/Character.st: applied Sam Philips's patch that covers more ANSI
 

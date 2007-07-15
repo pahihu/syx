@@ -79,7 +79,7 @@ remove: anObject
 !Collection methodsFor: 'copying'!
 
 copyEmpty
-    ^self copyEmpty: self basicSize
+    ^self copyEmpty: self size
 !
 
 copyEmpty: newSize
