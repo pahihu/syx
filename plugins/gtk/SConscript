@@ -41,15 +41,15 @@ if penv['GTK']:
     else:
         try:
             env.ParseConfig ("pkg-config glib-2.0 gobject-2.0 gthread-2.0 gtk+-2.0 --libs --cflags")
+
+	    lib_objects = env.SharedObject (lib_sources)
+            lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
+            Default (lib_shared)
+            
+            instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
+            env.SyxInstall (instdir, lib_shared)
         except:
             print "WARNING: GTK+ not found, plugin won't be built"
-
-    lib_objects = env.SharedObject (lib_sources)
-    lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
-    Default (lib_shared)
-
-    instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
-    env.SyxInstall (instdir, lib_shared)
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
 penv.Alias ('sdist', target)
