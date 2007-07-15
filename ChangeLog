@@ -1,5 +1,7 @@
 2007-07-15  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Character.st: applied Sam Philips's patch that covers more ANSI
+
 	* st/kernel/Number.st (reciprocal): added
 	(asFraction): added
 	(compare:): added
