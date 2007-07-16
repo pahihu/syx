@@ -250,12 +250,6 @@ syx_memory_gc_end (void)
   _syx_memory_gc_trans_running = 0;
 }
 
-#ifdef HAVE_BIG_ENDIANNESS
-#define _SYX_IMAGE_SWAP(x) syx_bswap_32(x)
-#else
-#define _SYX_IMAGE_SWAP(x) x
-#endif /* HAVE_BIG_ENDIANNESS */
-
 static void
 _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 {
@@ -271,7 +265,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	  if (mark_type)
 	    fputc (1, image);
 
-	  idx = _SYX_IMAGE_SWAP (idx);
+	  idx = SYX_COMPAT_SWAP_32 (idx);
 	  fwrite (&idx, sizeof (syx_int32), 1, image);
 	}
       else
@@ -280,7 +274,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	    fputc (0, image);
 
 	  idx = (syx_int32)oop;
-	  idx = _SYX_IMAGE_SWAP (idx);
+	  idx = SYX_COMPAT_SWAP_32 (idx);
 	  fwrite (&idx, sizeof (syx_int32), 1, image);
 	}
     }
@@ -311,9 +305,9 @@ syx_memory_save_image (syx_symbol path)
 
   syx_memory_gc ();
 
-  data = _SYX_IMAGE_SWAP (_syx_memory_size);
+  data = SYX_COMPAT_SWAP_32 (_syx_memory_size);
   fwrite (&data, sizeof (syx_int32), 1, image);
-  data = _SYX_IMAGE_SWAP (_syx_freed_memory_top);
+  data = SYX_COMPAT_SWAP_32 (_syx_freed_memory_top);
   fwrite (&data, sizeof (syx_int32), 1, image);
   _syx_memory_write (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
 
@@ -330,15 +324,16 @@ syx_memory_save_image (syx_symbol path)
       _syx_memory_write ((SyxOop *)&object, FALSE, 1, image);
       _syx_memory_write (&object->class, FALSE, 1, image);
       fputc (object->has_refs, image);
+      fputc (object->is_constant, image);
 
       // store instance variables
       data = syx_object_vars_size ((SyxOop)object);
-      data = _SYX_IMAGE_SWAP(data);
+      data = SYX_COMPAT_SWAP_32(data);
       fwrite (&data, sizeof (syx_varsize), 1, image);
-      _syx_memory_write (object->vars, TRUE, _SYX_IMAGE_SWAP(data), image);
+      _syx_memory_write (object->vars, TRUE, SYX_COMPAT_SWAP_32(data), image);
 
       // store data
-      data = _SYX_IMAGE_SWAP (object->data_size);
+      data = SYX_COMPAT_SWAP_32 (object->data_size);
       fwrite (&data, sizeof (syx_varsize), 1, image);
       if (object->data_size > 0)
 	{
@@ -365,7 +360,7 @@ syx_memory_save_image (syx_symbol path)
 		  offset = end - start;
 		  // go back to the offset
 		  fseek (image, - offset - sizeof (syx_int32), SEEK_CUR);
-		  data = _SYX_IMAGE_SWAP (offset);
+		  data = SYX_COMPAT_SWAP_32 (offset);
 		  fwrite (&data, sizeof (syx_int32), 1, image);
 		  // return again to continue normal writing
 		  fseek (image, offset, SEEK_CUR);
@@ -407,7 +402,7 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	  if (!fread (&idx, sizeof (syx_int32), 1, image))
 	    return FALSE;
 
-	  idx = _SYX_IMAGE_SWAP (idx);
+	  idx = SYX_COMPAT_SWAP_32 (idx);
 	  oop = (SyxOop)(syx_memory + idx);
 	}
       else
@@ -415,7 +410,7 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 	  if (!fread (&idx, sizeof (syx_int32), 1, image))
 	    return FALSE;
 
-	  oop = _SYX_IMAGE_SWAP (idx);
+	  oop = SYX_COMPAT_SWAP_32 (idx);
 	}
 
       oops[i] = oop;
@@ -453,11 +448,11 @@ syx_memory_load_image (syx_symbol path)
     return FALSE;
 
   fread (&data, sizeof (syx_int32), 1, image);
-  data = _SYX_IMAGE_SWAP (data);
+  data = SYX_COMPAT_SWAP_32 (data);
   syx_memory_init (data);
 
   fread (&data, sizeof (syx_int32), 1, image);
-  _syx_freed_memory_top = _SYX_IMAGE_SWAP (data);
+  _syx_freed_memory_top = SYX_COMPAT_SWAP_32 (data);
   _syx_memory_read (_syx_freed_memory, FALSE, _syx_freed_memory_top, image);
 
   _syx_scheduler_load (image);
@@ -472,10 +467,11 @@ syx_memory_load_image (syx_symbol path)
 
       _syx_memory_read (&object->class, FALSE, 1, image);
       object->has_refs = fgetc (image);
+      object->is_constant = fgetc (image);
 
       // fetch instance variables
       fread (&data, sizeof (syx_varsize), 1, image);
-      data = _SYX_IMAGE_SWAP (data);
+      data = SYX_COMPAT_SWAP_32 (data);
       if (object->vars)
 	syx_free (object->vars);
       object->vars = syx_calloc (data, sizeof (SyxOop));
@@ -483,7 +479,7 @@ syx_memory_load_image (syx_symbol path)
 
       // fetch data
       fread (&data, sizeof (syx_varsize), 1, image);
-      object->data_size = _SYX_IMAGE_SWAP (data);
+      object->data_size = SYX_COMPAT_SWAP_32 (data);
       if (object->data_size > 0)
 	{
 	  if (object->data)
@@ -500,7 +496,7 @@ syx_memory_load_image (syx_symbol path)
 	      if (fgetc (image))
 		{
 		  fread (&data, sizeof (syx_int32), 1, image);
-		  data = _SYX_IMAGE_SWAP (data);
+		  data = SYX_COMPAT_SWAP_32 (data);
 #ifdef HAVE_LIBGMP
 		  mpz_init (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object));
 		  mpz_inp_raw (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object), image);
@@ -518,7 +514,7 @@ syx_memory_load_image (syx_symbol path)
   fclose (image);
 
   syx_fetch_basic ();
-  
+
   return TRUE;
 }
 

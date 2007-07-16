@@ -149,12 +149,6 @@ _syx_scheduler_poll_wait (void)
   _syx_scheduler_poll_nfds = nfds;
 }
 
-#ifdef HAVE_BIG_ENDIANNESS
-#define _SYX_IMAGE_SWAP(x) syx_bswap_32(x)
-#else
-#define _SYX_IMAGE_SWAP(x) x
-#endif /* HAVE_BIG_ENDIANNESS */
-
 void
 _syx_scheduler_save (FILE *image)
 {
@@ -166,9 +160,9 @@ _syx_scheduler_save (FILE *image)
       fputc (1, image);
       index = SYX_MEMORY_INDEX_OF (p->semaphore);
       data = p->fd;
-      data = _SYX_IMAGE_SWAP (data);
+      data = SYX_COMPAT_SWAP_32 (data);
       fwrite (&data, sizeof (syx_int32), 1, image);
-      data = _SYX_IMAGE_SWAP (index);
+      data = SYX_COMPAT_SWAP_32 (index);
       fwrite (&data, sizeof (syx_int32), 1, image);
       p = p->next;
     }
@@ -180,15 +174,15 @@ _syx_scheduler_save (FILE *image)
       fputc (1, image);
       index = SYX_MEMORY_INDEX_OF (p->semaphore);
       data = p->fd;
-      data = _SYX_IMAGE_SWAP (data);
+      data = SYX_COMPAT_SWAP_32 (data);
       fwrite (&data, sizeof (syx_int32), 1, image);
-      data = _SYX_IMAGE_SWAP (index);
+      data = SYX_COMPAT_SWAP_32 (index);
       fwrite (&data, sizeof (syx_int32), 1, image);
       p = p->next;
     }
   fputc (0, image);
 }
-#define _SYX_IMAGE_SWAP(x) syx_bswap_32(x)
+#define SYX_COMPAT_SWAP_32(x) syx_bswap_32(x)
 void
 _syx_scheduler_load (FILE *image)
 {
@@ -207,9 +201,9 @@ _syx_scheduler_load (FILE *image)
 	p = syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = _SYX_IMAGE_SWAP (data);
+      p->fd = SYX_COMPAT_SWAP_32 (data);
       fread (&data, sizeof (syx_int32), 1, image);
-      index = _SYX_IMAGE_SWAP (data);
+      index = SYX_COMPAT_SWAP_32 (data);
       p->semaphore = (SyxOop)(syx_memory + index);
       p->next = NULL;
 
@@ -229,9 +223,9 @@ _syx_scheduler_load (FILE *image)
 	p = syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = _SYX_IMAGE_SWAP (data);
+      p->fd = SYX_COMPAT_SWAP_32 (data);
       fread (&data, sizeof (syx_int32), 1, image);
-      index = _SYX_IMAGE_SWAP (data);
+      index = SYX_COMPAT_SWAP_32 (data);
       p->semaphore = (SyxOop)(syx_memory + index);
       p->next = NULL;
 

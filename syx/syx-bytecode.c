@@ -22,10 +22,11 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "syx-memory.h"
+#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-bytecode.h"
-#include "syx-memory.h"
 
 //! Creates a new bytecode holder
 /*!
@@ -175,7 +176,7 @@ syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 
 SYX_FUNC_BYTECODE (gen_code, syx_uint16 value)
 {
-  bytecode->code[bytecode->code_top++] = value;
+  bytecode->code[bytecode->code_top++] = SYX_COMPAT_SWAP_16 (value);
 }
 
 SYX_FUNC_BYTECODE (do_special, SyxBytecodeSpecial special)
@@ -254,7 +255,7 @@ SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
 {
   syx_uint16 instruction = (SYX_BYTECODE_DO_SPECIAL << SYX_BYTECODE_ARGUMENT_BITS) + SYX_BYTECODE_DUPLICATE;
   memmove (bytecode->code + index + 1, bytecode->code + index, SYX_BYTECODE_MAX - index);
-  bytecode->code[index] = instruction;
+  bytecode->code[index] = SYX_COMPAT_SWAP_16 (instruction);
   bytecode->code_top++;
 }
 

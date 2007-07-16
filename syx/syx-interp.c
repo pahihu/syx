@@ -787,7 +787,7 @@ _syx_interp_get_next_byte (void)
   syx_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", es->context, es->ip, es->bytecodes[es->ip]);
 #endif
 
-  return es->bytecodes[es->ip++];
+  return SYX_COMPAT_SWAP_16 (es->bytecodes[es->ip++]);
 }
 
 static syx_bool
