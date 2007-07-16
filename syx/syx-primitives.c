@@ -1243,15 +1243,21 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
   SYX_PRIM_ARGS(1);
 
   SyxOop filename = es->message_arguments[0];
+  syx_bool ret;
 
   // save the current execution state
   syx_interp_stack_push (es->message_receiver);
   syx_exec_state_save ();
 
   if (SYX_IS_NIL (filename))
-    syx_memory_save_image (NULL);
+    ret = syx_memory_save_image (NULL);
   else
-    syx_memory_save_image (SYX_OBJECT_STRING (filename));
+    ret = syx_memory_save_image (SYX_OBJECT_STRING (filename));
+
+  if (!ret)
+    {
+      SYX_PRIM_FAIL;
+    }
   
   return FALSE;
 }
