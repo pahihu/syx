@@ -94,6 +94,10 @@ asSymbol
 
 asString
     ^self
+!
+
+asNumber
+    ^Number fromStream: (ReadStream on: self)
 ! !
 
 !String methodsFor: 'testing'!

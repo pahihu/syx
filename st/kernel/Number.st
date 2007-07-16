@@ -26,6 +26,34 @@ DEALINGS IN THE SOFTWARE.
 
 new
     ^self shouldNotImplement
+!
+
+fromStream: readStream
+    "Parse the string into a number"
+    | c n num scale |
+    c := readStream next.
+    c isDigit
+	ifFalse: [ ^0 ].
+
+    "Integer part first"
+    num := c codePoint - $0 codePoint.
+    [ c := readStream next. c notNil and: [ c isDigit ] ]
+	whileTrue: [
+	    n := c codePoint - $0 codePoint.
+	    num := num * 10 + n ].
+
+    "Is it just an integer?"
+    (c = $.)
+	ifFalse: [ ^num ].
+
+    "It's a float then"
+    scale := 0.1.
+    [ c := readStream next. c notNil and: [ c isDigit ] ]
+	whileTrue: [
+	    n := c codePoint - $0 codePoint.
+	    num := num + (n * scale).
+	    scale := scale * 0.1 ].
+    ^num
 ! !
 
 !Number methodsFor: 'testing'!

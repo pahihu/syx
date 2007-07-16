@@ -43,6 +43,7 @@ static void _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char l
 static void _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar);
 static syx_bool _syx_char_is_closing (syx_char c);
 static syx_bool _syx_char_is_single_binary (syx_char c);
+static syx_bool _syx_char_is_binary_second (syx_char c);
 
 /*! \page syx_lexer Syx Lexer
 
@@ -264,9 +265,27 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_char sstr[256] = {0};
   syx_string str = sstr;
 
-  while ((lastChar = syx_lexer_forward (self)) && (isalnum (lastChar) || lastChar == ':'))
-    *str++ = lastChar;
-  syx_lexer_push_back (self);
+  /* if it's not an alpha numeric symbol,
+     be sure to return a symbol of length 2 as the ANSI defines */
+  lastChar = syx_lexer_forward (self);
+  if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
+    {
+      *str++ = lastChar;
+      lastChar = syx_lexer_forward (self);
+      if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
+	*str++ = lastChar;
+      else
+	syx_lexer_push_back (self);
+    }
+  else
+    {
+      while (lastChar && (isalnum (lastChar) || lastChar == ':'))
+	{
+	  *str++ = lastChar;
+	  lastChar = syx_lexer_forward (self);
+	}
+      syx_lexer_push_back (self);
+    }
   
   token->type = SYX_TOKEN_SYM_CONST;
   token->value.string = strdup (sstr);
@@ -278,8 +297,20 @@ _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_char sstr[256] = {0};
   syx_string str = sstr;
 
-  while ((lastChar = syx_lexer_forward (self)) && lastChar != '\'')
-    *str++ = lastChar;
+  while (TRUE)
+    {
+      while ((lastChar = syx_lexer_forward (self)) && lastChar != '\'')
+	*str++ = lastChar;
+      
+      lastChar = syx_lexer_forward (self);
+      if (lastChar == '\'')
+	*str++ = '\'';
+      else
+	{
+	  syx_lexer_push_back (self);
+	  break;
+	}
+    }
 
   token->type = SYX_TOKEN_STR_CONST;
   token->value.string = strdup (sstr);

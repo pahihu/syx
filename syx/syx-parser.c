@@ -326,7 +326,7 @@ _syx_parser_parse_term (SyxParser *self)
       else if (token.type > SYX_TOKEN_STRING_ENTRY)
 	syx_error ("Invalid expression start %s\n", token.value.string)
       else
-	syx_error ("Invalid expression start\n")
+	syx_error ("Excepted expression\n")
     }
 
   syx_lexer_next_token (self->lexer);

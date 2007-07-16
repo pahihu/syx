@@ -117,6 +117,11 @@ isFloat
 	 ^super ~~ aNumber
 !
 
+* aNumber
+     <primitive: 'Float_mul'>
+	 ^super * aNumber
+!
+
 / aNumber
      <primitive: 'Float_div'>
          ^super / aNumber

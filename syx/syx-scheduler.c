@@ -182,7 +182,7 @@ _syx_scheduler_save (FILE *image)
     }
   fputc (0, image);
 }
-#define SYX_COMPAT_SWAP_32(x) syx_bswap_32(x)
+
 void
 _syx_scheduler_load (FILE *image)
 {

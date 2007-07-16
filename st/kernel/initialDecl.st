@@ -137,6 +137,10 @@ Stream subclass: #PositionableStream
        instanceVariableNames: 'collection curPos endPos'
        classVariableNames: ''!
 
+PositionableStream subclass: #ReadStream
+		   instanceVariableNames: ''
+		   classVariableNames: ''!
+
 PositionableStream subclass: #WriteStream
 		   instanceVariableNames: ''
                    classVariableNames: ''!
@@ -169,7 +173,7 @@ Object subclass: #Magnitude
 
 Magnitude subclass: #Character
 	  instanceVariableNames: ''
-          classVariableNames: ''!
+          classVariableNames: 'WhiteSpaceTable'!
 
 Magnitude subclass: #Number
 	  instanceVariableNames: ''
@@ -254,6 +258,12 @@ GObject subclass: #GtkWidget
 GtkWidget subclass: #GtkWindow
 	  instanceVariableNames: ''
           classVariableNames: ''!
+
+"Compiler"
+
+ReadStream subclass: #CompilerLexer
+	   instanceVariableNames: 'text stream lastChar lastToken pushedBack'
+	   classVariableNames: 'ClosingTokenTable SingleBinaryTable'!
 
 "Console"
 

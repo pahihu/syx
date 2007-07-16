@@ -1120,7 +1120,7 @@ syx_class_get_all_instance_variable_names (SyxOop class)
   \return syx_nil if no method has been found
 */
 SyxOop 
-syx_class_lookup_method (SyxOop class, syx_symbol selector)
+syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super)
 {
   SyxOop cur;
   SyxOop method;
@@ -1132,7 +1132,14 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
 
       method = syx_dictionary_at_symbol_if_absent (SYX_CLASS_METHODS (cur), selector, syx_nil);
       if (!SYX_IS_NIL (method))
-	return method;
+	{
+	  if (to_super)
+	    {
+	      to_super = FALSE;
+	      continue;
+	    }
+	  return method;
+	}
     }
 
   return syx_nil;
@@ -1143,7 +1150,7 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
   \return syx_nil if no method has been found
 */
 SyxOop 
-syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
+syx_class_lookup_method_binding (SyxOop class, SyxOop binding, syx_bool to_super)
 {
   SyxOop cur;
   SyxOop method;
@@ -1156,7 +1163,14 @@ syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
       SYX_VARIABLE_BINDING_DICTIONARY (binding) = SYX_CLASS_METHODS (cur);
       method = syx_dictionary_bind_if_absent (binding, syx_nil);
       if (!SYX_IS_NIL (method))
-	return method;
+	{
+	  if (to_super)
+	    {
+	      to_super = FALSE;
+	      continue;
+	    }
+	  return method;
+	}
     }
 
   return syx_nil;

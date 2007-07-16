@@ -142,8 +142,8 @@ inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
 syx_symbol *syx_class_get_all_instance_variable_names (SyxOop class);
 syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
-SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
-SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding);
+SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super);
+SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding, syx_bool to_super);
 
 SyxOop syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key);
 SyxOop syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);

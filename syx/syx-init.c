@@ -99,6 +99,7 @@ _syx_file_in_basic (void)
     "TextCollector.st",
     "Set.st", "Bag.st",
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
+    "Compiler.st",
     "Console.st",
     "Gtk.st",
     NULL

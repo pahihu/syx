@@ -5,7 +5,7 @@ on: aCollection
 !
 
 with: aCollection
-    ^(self on: aCollection) setToEnd
+    ^(self basicNew initializeOn: aCollection) setToEnd
 ! !
 
 !PositionableStream methodsFor: 'initialize-release'!
@@ -44,7 +44,8 @@ peek
 !
 
 next
-    self errorAtEnd.
+    self atEnd
+	ifTrue: [ ^nil ].
     ^collection at: self skipOne
 !
 
@@ -70,7 +71,7 @@ errorAtEnd
 !PositionableStream methodsFor: 'positioning'!
 
 skip: anInteger
-    ^curPos := (curPos + (anInteger max: 0)) min: endPos
+    ^curPos := (curPos + anInteger) min: endPos
 !
 
 truncate

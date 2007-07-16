@@ -28,6 +28,15 @@ new
     self shouldNotImplement
 !
 
+initialize
+    WhiteSpaceTable := { Character cr. Character nl. Character lf. Character space. Character tab.
+			 Character verticalTab. Character ff } asSet
+!
+
+whiteSpaces
+    ^WhiteSpaceTable
+!
+
 cr
     "Answer a carriage return character"
     ^self codePoint: 13
@@ -49,8 +58,18 @@ space
 !
 
 tab
-    "Answer a space character"
+    "Answer a tab character"
     ^self codePoint: 9
+!
+
+verticalTab
+    "Answer a vertical tab character"
+    ^self codePoint: 11
+!
+
+ff
+    "Answer a form-feed character"
+    ^self codePoint: 12
 !
 
 codePoint: anInteger
@@ -106,6 +125,10 @@ printString
 
 isCharacter
     ^true
+!
+
+isWhiteSpace
+    ^WhiteSpaceTable includes: self
 !
 
 isLetter

@@ -1,5 +1,20 @@
 2007-07-16  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-object.c (syx_class_lookup_method_binding): fixed to handle super messages
+	(syx_class_lookup_method): idem
+	All calls have been updated
+
+	* syx/syx-lexer.c (_syx_lexer_token_string): support single apices into strings
+	(_syx_lexer_token_binary): support for binary symbols up to 2 characters
+
+	* st/kernel/initialDecl.st (ReadStream): added
+
+	* st/kernel/Compiler.st: added
+
+	* st/kernel/Float.st (*): added
+
+	* st/kernel/String.st (asNumber): added
+
 	* syx/syx-memory.c: save object->is_constant in the image
 
 	* syx/syx-platform.h (syx_bswap_16): added

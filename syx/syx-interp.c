@@ -490,7 +490,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 
   binding = es->literals[argument];
   class = syx_object_get_class (es->message_receiver); 
-  method = syx_class_lookup_method_binding (class, binding);
+  method = syx_class_lookup_method_binding (class, binding, FALSE);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -531,8 +531,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   syx_int32 primitive;
 
   binding = es->literals[argument];
-  class = SYX_CLASS_SUPERCLASS (syx_object_get_class (es->message_receiver)); 
-  method = syx_class_lookup_method_binding (class, binding);
+  class = syx_object_get_class (es->message_receiver); 
+  method = syx_class_lookup_method_binding (class, binding, TRUE);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -596,7 +596,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding);  
+  method = syx_class_lookup_method_binding (class, binding, FALSE);  
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send unary message #%s\n", selector);
@@ -675,7 +675,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding);
+  method = syx_class_lookup_method_binding (class, binding, FALSE);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send binary message #%s\n", selector);

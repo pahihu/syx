@@ -161,6 +161,14 @@ printNl
 	self primitiveFailed
 !
 
+~= anObject
+    ^(self = anObject) not
+!
+
+~~ anObject
+    ^(self == anObject) not
+!
+
 printString
     ^'a ', self class name asString
 ! !

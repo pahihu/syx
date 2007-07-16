@@ -57,3 +57,11 @@ remove: anObject ifAbsent: exceptionHandler
 	ifTrue: [ ^exceptionHandler value ].
     self basicAt: index put: nil
 ! !
+
+!Set methodsFor: 'enumerating'!
+
+includes: anObject
+    | index |
+    index := self indexOf: anObject.
+    ^(self basicAt: index) notNil
+! !

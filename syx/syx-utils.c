@@ -470,7 +470,7 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   SyxOop method;
 
   class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  method = syx_class_lookup_method (class, selector, FALSE);
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
@@ -488,7 +488,7 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   SyxOop arguments;
 
   class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  method = syx_class_lookup_method (class, selector, FALSE);
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
@@ -519,7 +519,7 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
     return syx_send_unary_message (parent_context, receiver, selector);
 
   class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  method = syx_class_lookup_method (class, selector, FALSE);
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
 
