@@ -198,10 +198,6 @@ nextPut: anInstruction
     ^anInstruction
 !
 
-command: aSymbol
-    ^CompilerBytecodeCommands at: aSymbol
-!
-
 nextPutCommand: aCommand withArgument: anArgument
     anArgument > 16r7FF
 	ifTrue: [ ^self extend: aCommand withArgument: anArgument ]
@@ -313,5 +309,5 @@ doSpecial: specialSymbol
 
 extend: aCommand withArgument: anArgument
     self nextPutCommand: 16r1F withArgument: aCommand.
-    ^self nextPut: anInteger
+    ^self nextPut: anArgument
 ! !

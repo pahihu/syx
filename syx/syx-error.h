@@ -27,7 +27,6 @@
 
 #include <stdio.h>
 #include "syx-types.h"
-#include "syx-object.h"
 
 typedef syx_uint32 SyxErrorType;
 
