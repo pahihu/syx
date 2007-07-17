@@ -215,6 +215,10 @@ primitiveFailed
     ^Association key: self value: anObject
 !
 
+caseOf: anArrayOfAssociations
+    ^self caseOf: anArrayOfAssociations otherwise: [ NotFound signal ]
+!
+
 caseOf: anArrayOfAssociations otherwise: aBlock
     "
      Switch case between the keys of the array. If a block evaluates to the be equal of the receiver
