@@ -65,3 +65,9 @@ includes: anObject
     index := self indexOf: anObject.
     ^(self basicAt: index) notNil
 ! !
+
+!Set methodsFor: 'testing'!
+
+isSet
+    ^true
+! !

@@ -22,6 +22,12 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Array methodsFor: 'testing'!
+
+isArray
+    ^true
+! !
+
 !ArrayedCollection class methodsFor: 'instance creation'!
 
 with: anObject

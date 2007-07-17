@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 !Semaphore class methodsFor: 'instance creation'!
 
 new
-    ^super basicNew initialize
+    ^self basicNew initialize
 !
 
 forMutualExclusion

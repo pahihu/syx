@@ -22,3 +22,9 @@ indexOf: anObject
 	    ifTrue: [ pos := pos - size ] ].
     self error: 'Full'
 ! !
+
+!Bag methodsFor: 'testing'!
+
+isBag
+    ^true
+! !

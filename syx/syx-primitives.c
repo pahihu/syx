@@ -133,6 +133,11 @@ SYX_FUNC_PRIMITIVE (Object_resize)
 
 SYX_FUNC_PRIMITIVE (Object_size)
 {
+  if (!SYX_IS_OBJECT (es->message_receiver))
+    {
+      SYX_PRIM_RETURN (syx_small_integer_new (0));
+    }
+
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_OBJECT_DATA_SIZE (es->message_receiver)));
 }
 

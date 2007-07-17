@@ -102,10 +102,6 @@ asNumber
 
 !String methodsFor: 'testing'!
 
-isSymbol
-    ^false
-!
-
 isString
     ^true
 ! !

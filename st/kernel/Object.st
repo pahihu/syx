@@ -25,13 +25,13 @@ DEALINGS IN THE SOFTWARE.
 !Object methodsFor: 'initialize-release'!
 
 initialize
-    ^self
+
 ! !
 
 !Object methodsFor: 'finalization'!
 
 finalize
-    'asd' printNl
+
 ! !
 
 !Object methodsFor: 'copying'!
@@ -110,6 +110,14 @@ isKindOf: aClass
 isMemberOf: candidateClass
     "Answer true whenever the receiver is an instance of the given class"
     ^self class = candidateClass
+!
+
+isNumber
+    ^false
+!
+
+isCollection
+    ^false
 !
 
 isString
@@ -205,6 +213,21 @@ primitiveFailed
 -> anObject
     "Create a new association between myself and anObject"
     ^Association key: self value: anObject
+!
+
+caseOf: anArrayOfAssociations otherwise: aBlock
+    "
+     Switch case between the keys of the array. If a block evaluates to the be equal of the receiver
+     then the value of the association is evaluated.
+     
+     123 caseOf: {
+       [123] -> ['This is 123'].
+       [321] -> ['This is 321'] }
+     "
+    anArrayOfAssociations do: [ :assoc |
+	assoc key value = self
+	    ifTrue: [ ^assoc value value ] ].
+    ^aBlock value
 ! !
 
 !Object methodsFor: 'class type methods'!

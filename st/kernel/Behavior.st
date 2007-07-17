@@ -44,6 +44,11 @@ methodDictionary
     ^methodDictionary
 !
 
+instanceVariableNames
+    "Answer a copy of the names of the instance variables"
+    ^instanceVariableNames copy
+!
+
 printString
     "My string representation is my name itself"
     ^self name asString

@@ -189,6 +189,10 @@ size
     ^self basicSize
 !
 
+indexOf: anElement
+    ^self indexOf: anElement ifAbsent: [ NotFound signal ]
+!
+
 indexOf: anElement ifAbsent: exceptionBlock
     ^self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock
 !
@@ -197,7 +201,7 @@ indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
     "Answer the position of anElement in the collection.
      Searches for it starting from the given index."
     anIndex to: self size do: [ :i |
-        (self at: i) == anElement ifTrue: [ ^i ].
+        (self at: i) = anElement ifTrue: [ ^i ].
     ].
     ^exceptionBlock value
 !

@@ -99,7 +99,7 @@ env.Help (opts.GenerateHelpText (env) + """
            'scons install'       to install Syx.
            'scons sdist'         to create a directory with source distribution.
 	   'scons bdist'	 to create a directory with binary distribution
-                                 (implies 'scons install', doesn't work under Win32).
+                                 (implies 'scons install').
      """)
 
 # Configuration

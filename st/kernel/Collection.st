@@ -54,7 +54,7 @@ growTo: anInteger
 !
 
 growBy: anInteger
-    self growTo: self size + anInteger
+    self growTo: self basicSize + anInteger
 !
 
 add: anObject
@@ -202,6 +202,38 @@ asOrderedCollection
 ! !
 
 !Collection methodsFor: 'testing'!
+
+isCollection
+    ^true
+!
+
+isArray
+    ^false
+!
+
+isByteArray
+    ^false
+!
+
+isBag
+    ^false
+!
+
+isString
+    ^false
+!
+
+isOrderedCollection
+    ^false
+!
+
+isSymbol
+    ^false
+!
+
+isSet
+    ^false
+!
 
 isEmpty
     ^self size = 0

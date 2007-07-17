@@ -265,6 +265,10 @@ ReadStream subclass: #CompilerLexer
 	   instanceVariableNames: 'text stream lastChar lastToken pushedBack'
 	   classVariableNames: 'ClosingTokenTable SingleBinaryTable'!
 
+WriteStream subclass: #CompilerBytecode
+	    instanceVariableNames: 'literals stackSize'
+	    classVariableNames: ''!
+
 "Console"
 
 Object subclass: #Console

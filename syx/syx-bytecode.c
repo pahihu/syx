@@ -257,6 +257,7 @@ SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
   memmove (bytecode->code + index + 1, bytecode->code + index, SYX_BYTECODE_MAX - index);
   bytecode->code[index] = SYX_COMPAT_SWAP_16 (instruction);
   bytecode->code_top++;
+  bytecode->stack_size++;
 }
 
 inline void

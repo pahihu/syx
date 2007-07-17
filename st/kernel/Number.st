@@ -60,6 +60,7 @@ fromStream: readStream
 
 isNumber
     ^true
+!
 
 isInteger
     ^false

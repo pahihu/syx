@@ -40,7 +40,7 @@
 
 #define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
-#define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_int8 *)(SYX_OBJECT(oop)->data))
+#define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_uint8 *)(SYX_OBJECT(oop)->data))
 #define SYX_OBJECT_VARS(oop) (SYX_OBJECT(oop)->vars)
 #define SYX_OBJECT_DATA_SIZE(oop) (SYX_OBJECT(oop)->data_size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)

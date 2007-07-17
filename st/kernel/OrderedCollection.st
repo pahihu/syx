@@ -18,3 +18,9 @@ remove: anObject ifAbsent: aBlock
 removeAtIndex: anIndex
     ^self notYetImplemented
 ! !
+
+!OrderedCollection methodsFor: 'testing'!
+
+isOrderedCollection
+    ^true
+! !
