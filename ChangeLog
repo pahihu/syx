@@ -1,3 +1,18 @@
+2007-07-19  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/Magnitude.st (between:and:): moved from Number
+	
+	* st/kernel/Behavior.st (allSuperclassesDo:): fixed
+
+	* st/kernel/CompiledMethod.st (fromParser:): added
+	(initializeParser:): added
+
+	* st/kernel/Character.st: handle magnitude
+
+	* st/kernel/Compiler.st (CompilerParser): done, missing cascades and optimized blocks
+
+	* st/kernel/Stack.st: added
+
 2007-07-17  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-bytecode.c (syx_bytecode_duplicate_at): increase stack size when duplicating objects

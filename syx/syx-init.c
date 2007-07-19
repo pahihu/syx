@@ -87,6 +87,7 @@ _syx_file_in_basic (void)
     "Magnitude.st", "Number.st", "Integer.st", "SmallInteger.st", "LargeInteger.st", "Fraction.st", "Float.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
+    "Stack.st",
     "Character.st", "ByteArray.st", "String.st",
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",

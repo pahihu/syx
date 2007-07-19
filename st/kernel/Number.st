@@ -146,12 +146,6 @@ coerce: aNumber
     ^aNumber
 ! !
 
-!Number methodsFor: 'shortcuts'!
-
-between: firstNumber and: secondNumber
-    ^(self >= firstNumber) & (self <= secondNumber)
-! !
-
 !Number methodsFor: 'arithmetic'!
 
 negated
@@ -215,6 +209,8 @@ abs
 
 = aNumber
     "Coerce aNumber and compare equality"
+    aNumber isNumber
+	ifFalse: [ ^false ].
     ^self generality > aNumber generality
 	ifTrue: [ self = (self coerce: aNumber) ]
 	ifFalse: [ (aNumber coerce: self) = aNumber ]
@@ -222,6 +218,8 @@ abs
 
 == aNumber
     "Coerce aNumber and compare equality"
+    aNumber isNumber
+	ifFalse: [ ^false ].
     ^self generality > aNumber generality
 	 ifTrue: [ self == (self coerce: aNumber) ]
 	 ifFalse: [ (aNumber coerce: self) == aNumber ]

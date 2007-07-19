@@ -38,6 +38,16 @@ String subclass: #CompilerBinaryToken
        instanceVariableNames: ''
        classVariableNames: ''!
 
+!CompilerIdentifierToken methodsFor: 'testing'!
+
+isNameConst
+    ^self isNameColon not
+!
+
+isNameColon
+    ^self last = $:
+! !
+
 !CompilerLexer class methodsFor: 'initialize-release'!
 
 initialize
@@ -47,8 +57,23 @@ initialize
 
 !CompilerLexer methodsFor: 'basic'!
 
+skip: anInteger
+    self atEnd
+	ifFalse: [ ^super skip: anInteger ]
+!
+
 next
     ^lastChar := super next
+! !
+
+!CompilerLexer methodsFor: 'accessing'!
+
+lastToken
+    ^lastToken
+!
+
+lastChar
+    ^lastChar
 ! !
 
 !CompilerLexer methodsFor: 'parsing'!
@@ -144,11 +169,26 @@ isBinarySecond: aCharacter
      (aCharacter = $-) | (self isClosing: aCharacter) | (self isSingleBinary: aCharacter)) not
 !
 
+expect: aToken toBe: discriminatorBlock instanceOf: aClass otherwise: exceptionBlock
+    ^(aToken class = aClass and: [ discriminatorBlock value: aToken ])
+	ifTrue: [ aToken ]
+	ifFalse: [ exceptionBlock value ]
+!
+
+expect: aToken equalTo: anObject instanceOf: aClass otherwise: exceptionBlock
+    ^self expect: aToken toBe: [ :t | t = (aClass withAll: anObject) ] instanceOf: aClass otherwise: exceptionBlock
+!
+
+expect: aToken equalTo: anObject instanceOf: aClass
+    ^self expect: aToken equalTo: anObject instanceOf: aClass
+	  otherwise: [ self error: 'Expected ', anObject printString, ' got ', aToken printString ]
+!
+
 nextToken
     | binary |
     self skipBlankAndComments.
 
-    lastChar ifNil: [ ^nil ].
+    lastChar ifNil: [ ^lastToken := nil ].
     lastChar isLetter
 	ifTrue: [ ^lastToken := self identifierToken ].
     lastChar isDigit
@@ -171,11 +211,11 @@ nextToken
     (self isBinarySecond: self next)
 	ifTrue: [ binary := binary, lastChar asString ]
 	ifFalse: [ self skip: -1 ].
-    ^binary
+    ^lastToken := binary
 ! !
 
 
-" THE PARSER "
+" THE BYTECODE "
 
 !CompilerBytecode class methodsFor: 'instance creation'!
 
@@ -284,12 +324,12 @@ assignBindingVariable: aBindingVariable
 
 sendMessage: aMessage ofArguments: numArguments toSuper: aBoolean
     | binding |
-    binding := VariableBinding key: aMessage value: 0.
+    binding := VariableBinding key: aMessage asSymbol value: 0.
     self nextPutCommand: 11 withArgument: numArguments.
     ^self nextPutCommand: (aBoolean
 			      ifTrue: [ 13 ]
 			      ifFalse: [ 12 ])
-	 withArgument: (self genLiteral: binding)
+	  withArgument: (self genLiteral: binding)
 !
 
 doSpecial: specialSymbol
@@ -310,4 +350,578 @@ doSpecial: specialSymbol
 extend: aCommand withArgument: anArgument
     self nextPutCommand: 16r1F withArgument: aCommand.
     ^self nextPut: anArgument
+! !
+
+
+
+" THE PARSER "
+
+!CompilerParser class methodsFor: 'instance creation'!
+
+initialize
+    PrimitiveTable := #(
+ 	    'Processor_yield'
+	    'Object_class'
+	    'Behavior_new'
+	    'Behavior_newColon'
+	    'Object_at'
+	    'Object_at_put'
+	    'Object_size'
+	    'Object_identityEqual'
+	    'Object_identityHash'
+	    'Object_hash'
+	    'Object_equal'
+	    'Object_resize'
+	    'Object_copy'
+
+	    'ArrayedCollection_replaceFromToWith'
+	    'ByteArray_newColon'
+	    'ByteArray_at'
+	    'ByteArray_at_put'
+	    
+	    'BlockClosure_asContext'
+	    'BlockClosure_value'
+	    'BlockClosure_valueWith'
+	    'BlockClosure_valueWithArguments'
+	    'BlockClosure_on_do'
+	    'BlockClosure_newProcess'
+
+	    'String_asSymbol'
+	    'Float_print'
+
+	    'Processor_enter'
+	    'Processor_swapWith'
+	    'Processor_leaveTo_andAnswer'
+	    
+	    'Character_new'
+	    'Character_value'
+	    
+	    'Semaphore_signal'
+	    'Semaphore_wait'
+	    'Semaphore_waitFor'
+	    
+	    'String_compile'
+	    'String_hash'
+
+	    'FileStream_fileOp'
+
+	    'SmallInteger_plus'
+	    'SmallInteger_minus'
+	    'SmallInteger_lt'
+	    'SmallInteger_gt'
+	    'SmallInteger_le'
+	    'SmallInteger_ge'
+	    'SmallInteger_eq'
+	    'SmallInteger_ne'
+	    'SmallInteger_div'
+	    'SmallInteger_mul'
+	    'SmallInteger_mod'
+	    'SmallInteger_bitAnd'
+	    'SmallInteger_bitOr'
+	    'SmallInteger_bitXor'
+	    'SmallInteger_bitShift'
+	    'SmallInteger_asFloat'
+	    'SmallInteger_asLargeInteger'
+
+	    'LargeInteger_plus'
+	    'LargeInteger_minus'
+	    'LargeInteger_lt'
+	    'LargeInteger_gt'
+	    'LargeInteger_le'
+	    'LargeInteger_ge'
+	    'LargeInteger_eq'
+	    'LargeInteger_ne'
+	    'LargeInteger_div'
+	    'LargeInteger_intDiv'
+	    'LargeInteger_quo'
+	    'LargeInteger_mul'
+	    'LargeInteger_mod'
+	    'LargeInteger_bitAnd'
+	    'LargeInteger_bitOr'
+	    'LargeInteger_bitXor'
+	    'LargeInteger_bitShift'
+	    'LargeInteger_clear'
+	    'LargeInteger_asFloat'
+
+	    'Float_plus'
+	    'Float_minus'
+	    'Float_mul'
+	    'Float_div'
+	    'Float_lt'
+	    'Float_gt'
+	    'Float_le'
+	    'Float_ge'
+	    'Float_eq'
+	    'Float_ne'
+	    'Float_ceil'
+	    'Float_floor'
+	    'Float_trunc'
+	    
+	    'ObjectMemory_snapshot'
+	    'ObjectMemory_garbageCollect'
+
+	    'Smalltalk_quit'
+	    'Smalltalk_loadPlugin'
+	    'Smalltalk_unloadPlugin')
+!
+	    
+new
+    ^self shouldNotImplement
+!
+
+compilerLexerClass
+    ^CompilerLexer
+!
+
+compilerBytecodeClass
+    ^CompilerBytecode
+!
+
+onText: aString for: aClass
+    ^self on: (self compilerLexerClass on: aString) for: aClass
+!
+
+on: aCompilerLexer for: aClass
+    ^self basicNew
+	initializeLexer: aCompilerLexer class: aClass
+! !
+
+!CompilerParser methodsFor: 'initialize-release'!
+
+initializeLexer: aCompilerLexer class: aClass
+    lexer := aCompilerLexer.
+    class := aClass.
+    bytecode := CompilerBytecode new.
+
+    temporaryNames := OrderedCollection new.
+
+    argumentNames := OrderedCollection new.
+
+    instanceNames := Array new.
+    class allSuperclassesDo: [ :ea |
+	instanceNames := ea instanceVariableNames, instanceNames ].
+    instanceNames := instanceNames, class instanceVariableNames.
+
+    inBlock := false.
+
+    argumentScopes := Stack new.
+    temporaryScopes := Stack new
+! !
+
+!CompilerParser methodsFor: 'accessing'!
+
+bytecode
+    ^bytecode
+!
+
+argumentNames
+    ^argumentNames
+!
+
+temporaryNames
+    ^temporaryNames
+!
+
+methodMessage
+    ^methodMessage
+!
+
+methodPrimitive
+    ^methodPrimitive
+! !
+
+!CompilerParser methodsFor: 'variable names'!
+
+indexOfTemporary: anIdentifier ifPresent: aBlock
+    temporaryScopes contents reverseDo: [ :scope |
+	temporaryNames from: scope key to: scope value keysAndValuesDo: [ :i :ea |
+	    ea = anIdentifier
+		ifTrue: [ ^aBlock value: i ] ] ].
+!
+
+indexOfArgument: anIdentifier ifPresent: aBlock
+    argumentScopes contents reverseDo: [ :scope |
+	argumentNames from: scope key to: scope value keysAndValuesDo: [ :i :ea |
+	    ea = anIdentifier
+		ifTrue: [ ^aBlock value: i ] ] ].
+!
+
+indexOfInstance: aSymbol ifPresent: aBlock
+    | index |
+    index := instanceNames indexOf: aSymbol ifAbsent: [ nil ].
+    index ifNotNil: [ aBlock value: index ]
+! !
+
+!CompilerParser methodsFor: 'parsing'!
+
+parse
+    lexer nextToken
+	ifNil: [ ^self ].
+    
+    self parseMessagePattern.
+
+    inBlock
+	ifFalse: [ self parsePrimitive ].
+
+    self parseTemporaries.
+    inBlock
+	ifTrue: [ bytecode pushConstant: nil ].
+    self parseBody.
+
+    bytecode doSpecial: #selfReturn.
+!
+
+parseMessagePattern
+    inBlock
+	ifTrue: [ self parseBlockMessagePattern ]
+	ifFalse: [ self parseMethodMessagePattern ]
+!
+
+parseBlockMessagePattern
+    | token argNum |
+    token := lexer lastToken.
+    argNum := argumentNames size.
+
+    lexer expect: token equalTo: ':' instanceOf: CompilerBinaryToken
+	  otherwise: [ ^argumentScopes push: argNum -> argNum ].
+
+    [ token class = CompilerBinaryToken and: [ token = ':' ] ]
+	whileTrue: [
+	    token := lexer expect: lexer nextToken
+			   toBe: [ :t | t isNameConst ]
+			   instanceOf: CompilerIdentifierToken
+			   otherwise: [ ^self error: 'Invalid argument name' ].
+	    argumentNames add: token.
+	    token := lexer nextToken ].
+
+    lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken.
+
+    argumentScopes push: argNum -> argumentNames size.
+    lexer nextToken
+!
+
+parseMethodMessagePattern
+    | token argNum keywordMessage |
+    token := lexer lastToken.
+    argNum := argumentNames size.
+    keywordMessage := WriteStream on: String new.
+
+    (token class = CompilerIdentifierToken and: [ token isNameConst ])
+	ifTrue: [
+	    methodMessage := token asSymbol.
+	    argumentScopes push: argNum -> argNum.
+	    ^lexer nextToken ].
+
+    token class = CompilerBinaryToken
+	ifTrue: [
+	    methodMessage := token asSymbol.
+	    token := self nextToken.
+	    token class = CompilerIdentifierToken
+		ifFalse: [ ^self error: 'Expected name constant for argument name' ].
+	    argumentNames add: token.
+	    argumentScopes push: argNum -> (argNum + 1).
+	    ^lexer nextToken ].
+
+    token class = CompilerIdentifierToken
+	ifFalse: [ ^self error: 'Invalid message pattern' ].
+
+    [ token class = CompilerIdentifierToken ]
+	whileTrue: [
+	    keywordMessage nextPutAll: token.
+	    token := lexer expect: lexer nextToken
+			   toBe: [ :t | t isNameConst ]
+			   instanceOf: CompilerIdentifierToken.
+	    argumentNames add: token.
+	    token := lexer nextToken ].
+
+    argumentScopes push: argNum -> argumentNames size.
+    methodMessage := keywordMessage contents asSymbol
+!
+
+parseSystemPrimitive
+   | token |
+    token := lexer nextToken.
+    token isString
+	ifFalse: [ ^self error: 'Expected a string containing the primitive to be called' ].
+    
+    methodPrimitive := PrimitiveTable
+	indexOf: token
+	ifAbsent: [ ^self error: 'Unknown primitive named ', token ].
+    
+    token := lexer expect: lexer nextToken
+		   equalTo: '>'
+		   instanceOf: CompilerBinaryToken.
+    lexer nextToken
+!
+
+parsePluginPrimitive
+    | token |
+    token := lexer nextToken.
+    token isString
+	ifFalse: [ ^self error: 'Expected a string containing the primitive to be called' ].
+    
+    bytecode genLiteral: token asSymbol.
+    
+    token := lexer expect: lexer nextToken
+		   equalTo: 'plugin:'
+		   instanceOf: CompilerIdentifierToken.
+    token := lexer nextToken.
+    token isString
+	ifFalse: [ ^self error: 'Expected a string containing the plugin name' ].
+    bytecode genLiteral: token asSymbol.
+
+    token := lexer expect: lexer nextToken
+		   equalTo: '>'
+		   instanceOf: CompilerBinaryToken.
+    
+    methodPrimitive := -2.
+    lexer nextToken
+!
+
+parsePrimitive
+    | token |
+    lexer expect: lexer lastToken
+	  equalTo: '<'
+	  instanceOf: CompilerBinaryToken
+	  otherwise: [ ^methodPrimitive := -1 ].
+
+    token := lexer expect: lexer nextToken
+		   toBe: [ :t | t isNameColon ]
+		   instanceOf: CompilerIdentifierToken
+		   otherwise: [ self error: 'Expected name colon' ].
+
+    token
+	caseOf: {
+		 [ 'primitive:' ] -> [ self parseSystemPrimitive ].
+		 [ 'cCall:' ] -> [ self parsePluginPrimitive ] }
+	otherwise: [ ^self error: 'Expected primitive: or cCall:' ]
+!
+
+parseTemporaries
+    | token tmpNum |
+    token := lexer lastToken.
+    tmpNum := temporaryNames size.
+    
+    lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken
+	  otherwise: [ ^argumentScopes push: tmpNum -> tmpNum ].
+    
+    ((token := self nextToken) = class and: [ token isNameConst ])
+	whileTrue: [ temporaryNames add: token ].
+   
+    lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken.
+    temporaryScopes push: tmpNum -> temporaryNames size.
+    lexer nextToken
+!
+
+parseBody
+    | token closedBraces |
+    token := lexer lastToken.
+    closedBraces := false.
+    
+    [ token notNil ]
+	whileTrue: [
+	    (inBlock & (token class = CompilerClosingToken) and: [ token = ']' ])
+		ifTrue: [ ^self ].
+	    self parseStatement.
+	    token := lexer lastToken.
+	    token = $.
+	        ifTrue: [
+		    token := lexer nextToken.
+		    token isNil | token class = CompilerClosingToken
+			ifFalse: [ bytecode popTop ] ] ]
+!
+
+parseStatement
+    | token |
+    token := lexer lastToken.
+    lexer expect: token equalTo: '^' instanceOf: CompilerBinaryToken
+	  otherwise: [ ^self parseExpression ].
+
+    lexer nextToken.
+    self parseExpression.
+    bytecode doSpecial: #stackReturn
+!
+
+parseExpression
+    | token assignName superTerm |
+    token := lexer lastToken.
+    superTerm := false.
+
+    (token class = CompilerIdentifierToken and: [ token isNameConst ])
+	ifTrue: [
+	    assignName := token.
+	    (token := lexer nextToken) = ':=' & (token class = CompilerBinaryToken)
+		ifTrue: [
+		    lexer nextToken.
+		    self parseAssignment: assignName ]
+		ifFalse: [
+		    superTerm := self parseNameTerm: assignName ] ]
+	ifFalse: [
+	    superTerm := self parseTerm ].
+    self doContinuation: superTerm
+!
+
+parseAssignment: assignName
+    | binding |
+    self indexOfTemporary: assignName
+	 ifPresent: [ :i | ^bytecode assignTemporary: i ].
+    self indexOfInstance: assignName
+	 ifPresent: [ :i | ^bytecode assignInstance: i ].
+
+    self error: 'Unassignable variable named: ', assignName
+!
+
+parseTerm
+    | token superTerm |
+    token := lexer lastToken.
+    superTerm := false.
+    token class
+	caseOf: {
+	    [ CompilerIdentifierToken ] -> [ 
+		token isNameColon
+		    ifTrue: [ ^self error: 'Unexpected name colon identifier' ].
+		superTerm := self parseNameTerm: token ].
+	    [ CompilerBinaryToken ] -> [
+		token := String withAll: token.
+		token caseOf: {
+		    [ '(' ] -> [
+			lexer nextToken.
+			self parseExpression.
+			lexer expect: lexer lastToken
+			      equalTo: ')'
+			      instanceOf: CompilerClosingToken ].
+		    [ '[' ] -> [ self parseBlock ].
+		    [ '{' ] -> [ self parseArray ].
+		    [ '-' ] -> [ bytecode pushLiteral: lexer nextToken negated ] } ].
+	    [ UndefinedObject ] -> [ ^self error: 'Unexpected end of input' ] }
+	otherwise: [ bytecode pushLiteral: token ].
+    lexer nextToken.
+    ^superTerm
+!
+
+doContinuation: toSuper
+    "TODO handle cascades"
+    | token superReceiver |
+    superReceiver := self doKeyContinuation: toSuper.
+    token := lexer lastToken.
+!
+
+doKeyContinuation: toSuper
+    "TODO compile optimized blocks"
+    | token superReceiver |
+    superReceiver := self doBinaryContinuation: toSuper.
+    token := lexer lastToken.
+    (token class = CompilerIdentifierToken and: [ token isNameColon ])
+	ifTrue: [
+	    | numArgs message |
+	    token = 'ifTrue:'
+		ifTrue: [
+		    | jump conditionJump |
+		    lexer nextToken.
+		    jump := self parseOptimizedBlock: #branchIfTrue doPop: false.
+		    token := lexer lastToken.
+		    (token = CompilerIdentifierToken and: [ token = 'ifFalse:' ])
+			ifTrue: [
+			    lexer nextToken.
+			    
+			    "skip ifFalse: block if condition is true"
+			    bytecode doSpecial: #branch.
+			    bytecode nextPut: 0.
+			    conditionJump := bytecode position - 1.
+
+			    "jump here if condition is false"
+			    bytecode
+				position: jump;
+				nextPut: bytecode collection size - 1;
+				setToEnd.
+			    self parseOptimizedBlock: #branch doPop: true.
+			    "we don't need any jump after ifFalse:"
+			    bytecode
+				position: jump;
+				nextPut: 0;
+				setToEnd.
+
+			    "jump here if condition was true"
+			    bytecode
+				position: conditionJump;
+				nextPut: bytecode collection size - 1;
+				setToEnd ].
+		    ^false ].
+
+	    numArgs := 0.
+	    message := WriteStream on: String new.
+	    [token class = CompilerIdentifierToken and: [ token isNameColon ]]
+		whileTrue: [
+		    message nextPutAll: token.
+		    numArgs := numArgs + 1.
+		    lexer nextToken.
+
+		    superReceiver := self parseTerm.
+		    self doBinaryContinuation: superReceiver.
+		    
+		    token := lexer lastToken ].
+	    
+	    bytecode sendMessage: message contents ofArguments: numArgs toSuper: superReceiver.
+	    ^false ].
+    ^superReceiver
+!
+
+parseOptimizedBlock: branchType doPop: aBoolean
+    | jump blockState token |
+    bytecode doSpecial: branchType.
+    bytecode nextPut: 0.
+    jump := bytecode position - 1.
+    
+    aBoolean
+	ifTrue: [ bytecode popTop ].
+    
+    blockState := inBlock.
+    inBlock := true.
+
+    token := lexer lastToken.
+    (token class = CompilerBinaryToken and: [ token = '[' ])
+	ifTrue: [
+	    lexer nextToken.
+	    self parseTemporaries.
+	    self parseBody.
+	    temporaryScopes pop ]
+	ifFalse: [
+	    self doBinaryContinuation: self parseTerm.
+	    bytecode sendMessage: #value ofArguments: 0 toSuper: false ].
+
+    inBlock := blockState.
+    bytecode
+	position: jump;
+	nextPut: bytecode collection size - 1;
+	setAtEnd.
+    ^jump
+!
+
+doBinaryContinuation: toSuper
+    | token superReceiver |
+    superReceiver := self doUnaryContinuation: toSuper.
+    token := lexer lastToken.
+    [ token class = CompilerBinaryToken ]
+	whileTrue: [
+	    | message |
+            message := token.
+	    lexer nextToken.
+	    superReceiver := self parseTerm.
+	    self doUnaryContinuation: superReceiver.
+	    token := lexer lastToken.
+
+	    bytecode sendMessage: message ofArguments: 1 toSuper: superReceiver ].
+    ^superReceiver
+!
+
+doUnaryContinuation: toSuper
+    | token superReceiver |
+    superReceiver := toSuper.
+    token := lexer lastToken.
+    [ token class = CompilerIdentifierToken and: [ token isNameConst ] ]
+	whileTrue: [
+	    bytecode sendMessage: token ofArguments: 0 toSuper: superReceiver.
+	    token := lexer nextToken.
+	    superReceiver := false ].
+    ^superReceiver
 ! !

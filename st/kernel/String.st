@@ -81,7 +81,7 @@ size
 doIt
     | method context |
     method := ('goDoIt ', self) compile.
-    context := MethodContext on: method parent: thisContext receiver: nil arguments: nil.
+    context := MethodContext on: method parent: thisContext receiver: nil arguments: #().
     ^Processor enter: context
 ! !
 

@@ -872,18 +872,6 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
 #endif /* HAVE_LIBGMP */
 
 
-SYX_FUNC_PRIMITIVE(LargeInteger_print)
-{
-#ifdef HAVE_LIBGMP
-  _GET_Z;
-  gmp_printf ("%Zd\n", *z);
-  SYX_PRIM_RETURN (es->message_receiver);
-#else
-  SYX_PRIM_FAIL;
-#endif /* HAVE_LIBGMP */
-}
-
-
 /* Arithmetic */
 
 SYX_FUNC_PRIMITIVE(LargeInteger_plus)
@@ -1329,7 +1317,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
 
   { "String_asSymbol", String_asSymbol },
   { "Float_print", Float_print },
-  { "LargeInteger_print", LargeInteger_print },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },

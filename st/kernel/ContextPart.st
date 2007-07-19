@@ -101,7 +101,7 @@ method: aMethod parent: aContext receiver: anObject arguments: anArray
     method argumentCount > 0
 	ifTrue: [ arguments := Array new: method argumentCount ].
 
-    anArray notNil
+    anArray notEmpty
 	ifTrue: [ arguments replaceFrom: 1 with: anArray ].
 
     method temporaryCount > 0

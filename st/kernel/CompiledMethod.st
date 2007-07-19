@@ -22,6 +22,27 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!CompiledMethod class methodsFor: 'instance creation'!
+
+fromParser: aCompilerParser
+    ^CompiledMethod new initializeParser: aCompilerParser
+! !
+
+!CompiledMethod methodsFor: 'initialize-release'!
+
+initializeParser: aCompilerParser
+    bytecodes
+	ifNotNil: [ ^self error: 'Already initialized' ].
+
+    bytecodes := aCompilerParser bytecode contents.
+    stackSize := aCompilerParser bytecode stackSize.
+    literals := aCompilerParser bytecode literals.
+    argumentCount := aCompilerParser argumentNames size.
+    temporaryCount := aCompilerParser temporaryNames size.
+    selector := aCompilerParser methodMessage.
+    primitive := aCompilerParser methodPrimitive
+! !
+
 !CompiledMethod methodsFor: 'accessing'!
 
 bytecodes

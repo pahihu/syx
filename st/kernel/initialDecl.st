@@ -74,6 +74,10 @@ SequenceableCollection subclass: #OrderedCollection
 		       instanceVariableNames: ''
                        classVariableNames: ''!
 
+Object subclass: #Stack
+       instanceVariableNames: 'collection top'
+       classVariableNames: ''!
+
 Set subclass: #Bag
     instanceVariableNames: ''
     classVariableNames: ''!
@@ -262,12 +266,16 @@ GtkWidget subclass: #GtkWindow
 "Compiler"
 
 ReadStream subclass: #CompilerLexer
-	   instanceVariableNames: 'text stream lastChar lastToken pushedBack'
+	   instanceVariableNames: 'lastChar lastToken'
 	   classVariableNames: 'ClosingTokenTable SingleBinaryTable'!
 
 WriteStream subclass: #CompilerBytecode
 	    instanceVariableNames: 'literals stackSize'
 	    classVariableNames: ''!
+
+Object subclass: #CompilerParser
+       instanceVariableNames: 'lexer class bytecode argumentScopes temporaryScopes methodPrimitive methodMessage inBlock temporaryNames argumentNames instanceNames'
+       classVariableNames: 'PrimitiveTable'!
 
 "Console"
 

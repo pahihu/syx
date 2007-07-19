@@ -22,6 +22,12 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!Magnitude methodsFor: 'shortcuts'!
+
+between: firstNumber and: secondNumber
+    ^(self >= firstNumber) & (self <= secondNumber)
+! !
+
 !Magnitude methodsFor: 'comparing'!
 
 < aMagnitude

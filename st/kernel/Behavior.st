@@ -140,7 +140,8 @@ allSubclassesDo: aBlock
 allSuperclassesDo: aBlock  
     "Call aBlock for each superclass of this class"
     | class |
-    [ (class := self superclass) notNil ]
+    class := self.
+    [ (class := class superclass) notNil ]
 	whileTrue: [ aBlock value: class ]
 ! !
 

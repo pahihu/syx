@@ -88,6 +88,22 @@ codePoint
 
 !Character methodsFor: 'comparing'!
 
+< aCharacter
+     ^self codePoint < aCharacter codePoint
+!
+
+> aCharacter
+     ^self codePoint > aCharacter codePoint
+!
+
+<= aCharacter
+     ^self codePoint <= aCharacter codePoint
+!
+
+>= aCharacter
+     ^self codePoint >= aCharacter codePoint
+!
+
 = aCharacter
      ^self codePoint = aCharacter codePoint
 !
@@ -136,7 +152,7 @@ isLetter
 !
 
 isDigit
-    ^self codePoint between: 48 and: 57
+    ^self between: $0 and: $9
 !
 
 isAlphaNumeric
@@ -144,9 +160,9 @@ isAlphaNumeric
 !
 
 isLowercase
-    ^self codePoint between: $a codePoint and: $z codePoint
+    ^self between: $a and: $z
 !
 
 isUppercase
-    ^self codePoint between: $A codePoint and: $Z codePoint
+    ^self between: $A and: $Z
 ! !
