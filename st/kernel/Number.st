@@ -32,7 +32,7 @@ fromStream: readStream
     "Parse the string into a number"
     | c n num scale |
     c := readStream next.
-    c isDigit
+    (c notNil and: [ c isDigit ])
 	ifFalse: [ ^0 ].
 
     "Integer part first"

@@ -56,10 +56,6 @@ not
     ^false
 !
 
-print
-    'true' print
-!
-
 printString
     ^'true'
 ! !

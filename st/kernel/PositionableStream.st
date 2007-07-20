@@ -33,8 +33,7 @@ position
 position: anInteger
     (anInteger between: 0 and: endPos)
 	ifTrue: [ curPos := anInteger ]
-	ifFalse: [ self error: 'Position out of bounds' ].
-    curPos := anInteger
+	ifFalse: [ self error: 'Position out of bounds' ]
 !
 
 peek

@@ -57,11 +57,6 @@ initialize
 
 !CompilerLexer methodsFor: 'basic'!
 
-skip: anInteger
-    self atEnd
-	ifFalse: [ ^super skip: anInteger ]
-!
-
 next
     ^lastChar := super next
 ! !
@@ -81,7 +76,7 @@ lastChar
 skipBlankAndComments
     [ self next = $"
         ifTrue: [
-            [ self next notNil & (lastChar ~= $") ]
+            [ self next notNil and: [ lastChar ~= $" ] ]
 		whileTrue.
             self next ].
 	lastChar notNil and: [ lastChar isWhiteSpace | (lastChar = $") ] ] whileTrue
@@ -138,7 +133,8 @@ numberToken
     | ret |
     self skip: -1.
     ret := Number fromStream: self.
-    self skip: -1.
+    self atEnd
+	ifFalse: [ self skip: -1 ].
     ^ret
 !
 
@@ -152,6 +148,7 @@ stringToken
 		    stream nextPut: lastChar ].
 	    self next = $'
 		ifTrue: [ stream nextPut: $' ] ].
+    self skip: -1.
 
     ^stream contents
 !
@@ -567,7 +564,6 @@ parse
     inBlock
 	ifTrue: [ bytecode pushConstant: nil ].
     self parseBody.
-
     bytecode doSpecial: #selfReturn.
 !
 
@@ -703,7 +699,7 @@ parseTemporaries
     tmpNum := temporaryNames size.
     
     lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken
-	  otherwise: [ ^argumentScopes push: tmpNum -> tmpNum ].
+	  otherwise: [ ^temporaryScopes push: tmpNum -> tmpNum ].
     
     ((token := self nextToken) = class and: [ token isNameConst ])
 	whileTrue: [ temporaryNames add: token ].
@@ -720,15 +716,17 @@ parseBody
     
     [ token notNil ]
 	whileTrue: [
-	    (inBlock & (token class = CompilerClosingToken) and: [ token = ']' ])
+	    (inBlock and: [ token class = CompilerClosingToken and: [ token asSymbol = ']' asSymbol ] ] )
 		ifTrue: [ ^self ].
 	    self parseStatement.
 	    token := lexer lastToken.
-	    token = $.
+	    (token class = CompilerClosingToken and: [ token asSymbol = '.' asSymbol ])
 	        ifTrue: [
 		    token := lexer nextToken.
 		    token isNil | token class = CompilerClosingToken
-			ifFalse: [ bytecode popTop ] ] ]
+			ifFalse: [ bytecode doSpecial: #popTop ] ] ].
+    inBlock
+	ifTrue: [ self error: 'Expected ] after block' ]
 !
 
 parseStatement
@@ -746,7 +744,6 @@ parseExpression
     | token assignName superTerm |
     token := lexer lastToken.
     superTerm := false.
-
     (token class = CompilerIdentifierToken and: [ token isNameConst ])
 	ifTrue: [
 	    assignName := token.
@@ -808,43 +805,48 @@ doContinuation: toSuper
 
 doKeyContinuation: toSuper
     "TODO compile optimized blocks"
-    | token superReceiver |
+    | token superReceiver conditionalBranch |
     superReceiver := self doBinaryContinuation: toSuper.
     token := lexer lastToken.
     (token class = CompilerIdentifierToken and: [ token isNameColon ])
 	ifTrue: [
 	    | numArgs message |
-	    token = 'ifTrue:'
+	    token asSymbol = #ifTrue:
 		ifTrue: [
+		    conditionalBranch := #branchIfTrue ].
+	    token asSymbol = #ifFalse:
+		ifTrue: [
+		    conditionalBranch := #branchIfFalse ].
+	    conditionalBranch
+		ifNotNil: [
 		    | jump conditionJump |
 		    lexer nextToken.
-		    jump := self parseOptimizedBlock: #branchIfTrue doPop: false.
+		    jump := self parseOptimizedBlock: conditionalBranch doPop: false.
 		    token := lexer lastToken.
-		    (token = CompilerIdentifierToken and: [ token = 'ifFalse:' ])
+		    (token class = CompilerIdentifierToken
+			 and: [ conditionalBranch = #branchIfTrue & (token asSymbol = #ifFalse:)
+				    or: [ conditionalBranch = #branchIfFalse & (token asSymbol = #ifTrue:) ] ] )
 			ifTrue: [
 			    lexer nextToken.
 			    
-			    "skip ifFalse: block if condition is true"
+			    "skip else block if condition"
 			    bytecode doSpecial: #branch.
 			    bytecode nextPut: 0.
-			    conditionJump := bytecode position - 1.
+			    conditionJump := bytecode position - 2.
 
-			    "jump here if condition is false"
+			    "jump here if not condition"
 			    bytecode
 				position: jump;
-				nextPut: bytecode collection size - 1;
+				nextPut: bytecode collection size / 2;
 				setToEnd.
-			    self parseOptimizedBlock: #branch doPop: true.
-			    "we don't need any jump after ifFalse:"
+			    jump := self parseOptimizedBlock: #branch doPop: true.
+			    "we don't need any jump after else block"
 			    bytecode
 				position: jump;
 				nextPut: 0;
-				setToEnd.
-
-			    "jump here if condition was true"
-			    bytecode
+				"jump here if condition"
 				position: conditionJump;
-				nextPut: bytecode collection size - 1;
+				nextPut: bytecode collection size / 2;
 				setToEnd ].
 		    ^false ].
 
@@ -870,20 +872,21 @@ parseOptimizedBlock: branchType doPop: aBoolean
     | jump blockState token |
     bytecode doSpecial: branchType.
     bytecode nextPut: 0.
-    jump := bytecode position - 1.
+    jump := bytecode position - 2.
     
     aBoolean
-	ifTrue: [ bytecode popTop ].
+	ifTrue: [ bytecode doSpecial: #popTop ].
     
     blockState := inBlock.
     inBlock := true.
 
     token := lexer lastToken.
-    (token class = CompilerBinaryToken and: [ token = '[' ])
+    (token class = CompilerBinaryToken and: [ token asSymbol = '[' asSymbol ])
 	ifTrue: [
 	    lexer nextToken.
 	    self parseTemporaries.
 	    self parseBody.
+	    lexer nextToken.
 	    temporaryScopes pop ]
 	ifFalse: [
 	    self doBinaryContinuation: self parseTerm.
@@ -892,8 +895,8 @@ parseOptimizedBlock: branchType doPop: aBoolean
     inBlock := blockState.
     bytecode
 	position: jump;
-	nextPut: bytecode collection size - 1;
-	setAtEnd.
+	nextPut: bytecode collection size / 2;
+	setToEnd.
     ^jump
 !
 
@@ -909,7 +912,6 @@ doBinaryContinuation: toSuper
 	    superReceiver := self parseTerm.
 	    self doUnaryContinuation: superReceiver.
 	    token := lexer lastToken.
-
 	    bytecode sendMessage: message ofArguments: 1 toSuper: superReceiver ].
     ^superReceiver
 !
