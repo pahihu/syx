@@ -75,9 +75,7 @@ SYX_FUNC_PRIMITIVE (ByteArray_newColon)
 {
   SYX_PRIM_ARGS(1);
   syx_varsize size = SYX_SMALL_INTEGER (es->message_arguments[0]);
-  SYX_PRIM_RETURN(syx_object_new_data (es->message_receiver, FALSE,
-				       size,
-				       syx_calloc (size, sizeof (syx_int8))));
+  SYX_PRIM_RETURN(syx_object_new_size (es->message_receiver, FALSE, size));
 }
 
 SYX_FUNC_PRIMITIVE (Object_class)

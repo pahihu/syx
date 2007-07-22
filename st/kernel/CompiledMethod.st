@@ -64,3 +64,10 @@ stackSize
 selector
     ^selector
 ! !
+
+!CompiledBlock methodsFor: 'initialize-release'!
+
+initializeParser: aCompilerParser
+    super initializeParser: aCompilerParser.
+    argumentsTop := aCompilerParser argumentScopes peek key
+! !

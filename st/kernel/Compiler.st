@@ -91,7 +91,9 @@ identifierToken
 
     lastChar = $:
 	ifTrue: [ stream nextPut: $: ]
-	ifFalse: [ self skip: -1 ].
+	ifFalse: [ 
+	    self atEnd
+		ifFalse: [ self skip: -1 ] ].
 
     ^stream contents
 !
@@ -105,7 +107,8 @@ symbolToken
     [ self atEnd not and: [ self next isAlphaNumeric | (lastChar = $:) ] ]
 	whileTrue: [
 	    stream nextPut: lastChar ].
-    self skip: -1.
+    self atEnd
+	ifFalse: [ self skip: -1 ].
 
     ^stream contents asSymbol
 !
@@ -148,7 +151,8 @@ stringToken
 		    stream nextPut: lastChar ].
 	    self next = $'
 		ifTrue: [ stream nextPut: $' ] ].
-    self skip: -1.
+    self atEnd
+	ifFalse: [ self skip: -1 ].
 
     ^stream contents
 !
@@ -207,7 +211,9 @@ nextToken
     binary := CompilerBinaryToken with: lastChar.
     (self isBinarySecond: self next)
 	ifTrue: [ binary := binary, lastChar asString ]
-	ifFalse: [ self skip: -1 ].
+	ifFalse: [ 
+	    self atEnd
+		ifFalse: [ self skip: -1 ] ].
     ^lastToken := binary
 ! !
 
@@ -254,14 +260,14 @@ stackSize
 !CompilerBytecode methodsFor: 'bytecodes'!
 
 genLiteral: anObject
-    ^literals indexOf: anObject
-	      ifAbsent: [ literals add: anObject.
-			  literals size - 1 ]
+    ^(literals indexOf: anObject
+	       ifAbsent: [ literals add: anObject.
+			   literals size ]) - 1
 !
 
 pushInstance: anIndex
     stackSize := stackSize + 1.
-    ^self nextPutCommand: 0 withArgument: anIndex
+    ^self nextPutCommand: 0 withArgument: anIndex - 1
 !
 
 pushArgument: anIndex
@@ -271,7 +277,7 @@ pushArgument: anIndex
 
 pushTemporary: anIndex
     stackSize := stackSize + 1.
-    ^self nextPutCommand: 2 withArgument: anIndex
+    ^self nextPutCommand: 2 withArgument: anIndex - 1
 !
 
 pushLiteral: anObject
@@ -284,17 +290,17 @@ pushConstant: aConstant
     stackSize := stackSize + 1.
     argument := aConstant
 	caseOf: {
-	    [ nil ] -> [ 0 ].
-	    [ true ] -> [ 1 ].
-	    [ false ] -> [ 2 ].
-	    [ #context ] -> [ 3 ] }
+	    [ #nil ] -> [ 0 ].
+	    [ #true ] -> [ 1 ].
+	    [ #false ] -> [ 2 ].
+	    [ #thisContext ] -> [ 3 ] }
 	otherwise: [ self error: 'Unknown constant' ].
     ^self nextPutCommand: 4 withArgument: argument
 !
 
-pushBindingVariable: aBindingVariable
+pushVariableBinding: aVariableBinding
     stackSize := stackSize + 1.
-    ^self nextPutCommand: 5 withArguments: (self genLiteral: aBindingVariable)
+    ^self nextPutCommand: 5 withArgument: (self genLiteral: aVariableBinding)
 !
 
 pushArray: numElements
@@ -308,11 +314,11 @@ pushBlockClosure: aBlockClosure
 !
 
 assignInstance: anIndex
-    ^self nextPutCommand: 8 withArgument: anIndex
+    ^self nextPutCommand: 8 withArgument: anIndex - 1
 !
 
 assignTemporary: anIndex
-    ^self nextPutCommand: 9 withArgument: anIndex
+    ^self nextPutCommand: 9 withArgument: anIndex - 1
 !
 
 assignBindingVariable: aBindingVariable
@@ -519,6 +525,14 @@ temporaryNames
     ^temporaryNames
 !
 
+argumentScopes
+    ^argumentScopes
+!
+
+temporaryScopes
+    ^temporaryScopes
+!
+
 methodMessage
     ^methodMessage
 !
@@ -530,16 +544,20 @@ methodPrimitive
 !CompilerParser methodsFor: 'variable names'!
 
 indexOfTemporary: anIdentifier ifPresent: aBlock
+    | name |
+    name := anIdentifier asSymbol.
     temporaryScopes contents reverseDo: [ :scope |
 	temporaryNames from: scope key to: scope value keysAndValuesDo: [ :i :ea |
-	    ea = anIdentifier
+	    ea asSymbol = name
 		ifTrue: [ ^aBlock value: i ] ] ].
 !
 
 indexOfArgument: anIdentifier ifPresent: aBlock
+    | name |
+    name := anIdentifier asSymbol.
     argumentScopes contents reverseDo: [ :scope |
 	argumentNames from: scope key to: scope value keysAndValuesDo: [ :i :ea |
-	    ea = anIdentifier
+	    ea asSymbol = name
 		ifTrue: [ ^aBlock value: i ] ] ].
 !
 
@@ -562,7 +580,7 @@ parse
 
     self parseTemporaries.
     inBlock
-	ifTrue: [ bytecode pushConstant: nil ].
+	ifTrue: [ bytecode pushConstant: #nil ].
     self parseBody.
     bytecode doSpecial: #selfReturn.
 !
@@ -576,12 +594,12 @@ parseMessagePattern
 parseBlockMessagePattern
     | token argNum |
     token := lexer lastToken.
-    argNum := argumentNames size.
+    argNum := argumentNames size + 1.
 
     lexer expect: token equalTo: ':' instanceOf: CompilerBinaryToken
-	  otherwise: [ ^argumentScopes push: argNum -> argNum ].
+	  otherwise: [ ^argumentScopes push: argNum -> (argNum - 1) ].
 
-    [ token class = CompilerBinaryToken and: [ token = ':' ] ]
+    [ token class = CompilerBinaryToken and: [ token first = $: ] ]
 	whileTrue: [
 	    token := lexer expect: lexer nextToken
 			   toBe: [ :t | t isNameConst ]
@@ -599,23 +617,23 @@ parseBlockMessagePattern
 parseMethodMessagePattern
     | token argNum keywordMessage |
     token := lexer lastToken.
-    argNum := argumentNames size.
+    argNum := argumentNames size + 1.
     keywordMessage := WriteStream on: String new.
 
     (token class = CompilerIdentifierToken and: [ token isNameConst ])
 	ifTrue: [
 	    methodMessage := token asSymbol.
-	    argumentScopes push: argNum -> argNum.
+	    argumentScopes push: argNum -> (argNum - 1).
 	    ^lexer nextToken ].
 
     token class = CompilerBinaryToken
 	ifTrue: [
 	    methodMessage := token asSymbol.
-	    token := self nextToken.
+	    token := lexer nextToken.
 	    token class = CompilerIdentifierToken
 		ifFalse: [ ^self error: 'Expected name constant for argument name' ].
 	    argumentNames add: token.
-	    argumentScopes push: argNum -> (argNum + 1).
+	    argumentScopes push: argNum -> argNum.
 	    ^lexer nextToken ].
 
     token class = CompilerIdentifierToken
@@ -696,14 +714,14 @@ parsePrimitive
 parseTemporaries
     | token tmpNum |
     token := lexer lastToken.
-    tmpNum := temporaryNames size.
-    
+    tmpNum := temporaryNames size + 1.
+
     lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken
-	  otherwise: [ ^temporaryScopes push: tmpNum -> tmpNum ].
+	  otherwise: [ ^temporaryScopes push: tmpNum -> (tmpNum - 1) ].
     
-    ((token := self nextToken) = class and: [ token isNameConst ])
+    [ (token := lexer nextToken) class = CompilerIdentifierToken and: [ token isNameConst ] ]
 	whileTrue: [ temporaryNames add: token ].
-   
+    
     lexer expect: token equalTo: '|' instanceOf: CompilerBinaryToken.
     temporaryScopes push: tmpNum -> temporaryNames size.
     lexer nextToken
@@ -716,11 +734,13 @@ parseBody
     
     [ token notNil ]
 	whileTrue: [
-	    (inBlock and: [ token class = CompilerClosingToken and: [ token asSymbol = ']' asSymbol ] ] )
+	    (inBlock and: [ token class = CompilerClosingToken and: [ token first = $] ] ] )
 		ifTrue: [ ^self ].
+
 	    self parseStatement.
 	    token := lexer lastToken.
-	    (token class = CompilerClosingToken and: [ token asSymbol = '.' asSymbol ])
+
+	    (token class = CompilerClosingToken and: [ token first = $. ])
 	        ifTrue: [
 		    token := lexer nextToken.
 		    token isNil | token class = CompilerClosingToken
@@ -747,7 +767,7 @@ parseExpression
     (token class = CompilerIdentifierToken and: [ token isNameConst ])
 	ifTrue: [
 	    assignName := token.
-	    (token := lexer nextToken) = ':=' & (token class = CompilerBinaryToken)
+	    ((token := lexer nextToken) class = CompilerBinaryToken and: [ token asSymbol = #:= ] )
 		ifTrue: [
 		    lexer nextToken.
 		    self parseAssignment: assignName ]
@@ -761,11 +781,34 @@ parseExpression
 parseAssignment: assignName
     | binding |
     self indexOfTemporary: assignName
-	 ifPresent: [ :i | ^bytecode assignTemporary: i ].
+	 ifPresent: [ :i | self parseExpression. ^bytecode assignTemporary: i ].
     self indexOfInstance: assignName
-	 ifPresent: [ :i | ^bytecode assignInstance: i ].
+	 ifPresent: [ :i | self parseExpression. ^bytecode assignInstance: i ].
 
     self error: 'Unassignable variable named: ', assignName
+!
+
+parseNameTerm: anIdentifier
+    | name binding |
+    name := anIdentifier asSymbol.
+    (#(self super) includes: name)
+	ifTrue: [
+	    bytecode pushArgument: 0.
+	    ^name = #super ].
+
+    (#(nil true false thisContext) includes: name)
+	ifTrue: [ ^bytecode pushConstant: name ].
+
+    self indexOfArgument: name
+	 ifPresent: [ :i | ^bytecode pushArgument: i ].
+    self indexOfTemporary: name
+	 ifPresent: [ :i | ^bytecode pushTemporary: i ].
+    self indexOfInstance: name
+	 ifPresent: [ :i | ^bytecode pushInstance: i ].
+
+    binding := VariableBinding key: name on: Smalltalk.
+    binding value: binding value - 1.
+    bytecode pushVariableBinding: binding
 !
 
 parseTerm
@@ -794,6 +837,26 @@ parseTerm
 	otherwise: [ bytecode pushLiteral: token ].
     lexer nextToken.
     ^superTerm
+!
+
+parseBlock
+    | block closure oldBytecode blockState |
+    oldBytecode := bytecode.
+    blockState := inBlock.
+
+    bytecode := CompilerBytecode new.
+    inBlock := true.
+
+    self parse.
+
+    block := CompiledBlock fromParser: self.
+    closure := BlockClosure new: block.
+    bytecode := oldBytecode.
+    inBlock := blockState.
+    temporaryScopes pop.
+    argumentScopes pop.
+
+    bytecode pushBlockClosure: closure
 !
 
 doContinuation: toSuper
@@ -849,6 +912,30 @@ doKeyContinuation: toSuper
 				nextPut: bytecode collection size / 2;
 				setToEnd ].
 		    ^false ].
+	    token asSymbol = #whileTrue:
+		ifTrue: [
+		    conditionalBranch := #branchIfTrue ].
+	    token asSymbol = #whileFalse:
+		ifTrue: [
+		    conditionalBranch := #branchIfFalse ].
+	    conditionalBranch
+		ifNotNil: [
+		    | loopJump conditionJump |
+		    lexer nextToken.
+		    loopJump := bytecode collection size / 2.
+		    bytecode doSpecial: #duplicate.
+		    bytecode sendMessage: #value ofArguments: 0 toSuper: false.
+		    conditionJump := self parseOptimizedBlock: conditionalBranch doPop: false.
+		    bytecode
+			doSpecial: #popTop;
+			doSpecial: #branch;
+			nextPut: loopJump;
+			position: conditionJump;
+			nextPut: bytecode collection size / 2;
+			setToEnd;
+			doSpecial: #popTop.
+
+		    ^false ].
 
 	    numArgs := 0.
 	    message := WriteStream on: String new.
@@ -881,7 +968,7 @@ parseOptimizedBlock: branchType doPop: aBoolean
     inBlock := true.
 
     token := lexer lastToken.
-    (token class = CompilerBinaryToken and: [ token asSymbol = '[' asSymbol ])
+    (token class = CompilerBinaryToken and: [ token first = $[ ])
 	ifTrue: [
 	    lexer nextToken.
 	    self parseTemporaries.
@@ -915,7 +1002,7 @@ doBinaryContinuation: toSuper
 	    bytecode sendMessage: message ofArguments: 1 toSuper: superReceiver ].
     ^superReceiver
 !
-
+    
 doUnaryContinuation: toSuper
     | token superReceiver |
     superReceiver := toSuper.

@@ -1,3 +1,20 @@
+2007-07-22  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/Compiler.st (CompilerParser): added whileTrue: and whileFalse: optimized blocks
+	(parseNameTerm:): added
+	(parseBlock): added
+	(CompilerLexer): do not skip when at the end of the stream
+
+	* st/kernel/Dictionary.st (associationAt:): added
+	
+	* st/kernel/CompiledMethod.st (CompiledBlock): initialize from parser
+
+	* st/kernel/Association.st (VariableBinding): added several methods
+
+	* st/kernel/Behavior.st (compile:): added
+
+	* st/kernel/Number.st (fromStream:): skip back the stream if it's not a float
+
 2007-07-20  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/Compiler.st: added optimized conditional blocks

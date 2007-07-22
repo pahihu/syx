@@ -57,3 +57,29 @@ value
 printString
     ^self key printString, '->', self value printString
 ! !
+
+!VariableBinding class methodsFor: 'instance creation'!
+
+key: aSymbol on: aDictionary
+    ^(self key: aSymbol value: 0)
+	dictionary: aDictionary;
+	yourself
+! !
+
+!VariableBinding methodsFor: 'accessing'!
+
+update
+    | index |
+    value := dictionary indexOf: key.
+    (dictionary basicAt: value) ifNil:
+	[ NotFound signal: 'Key not found: ', key ]
+!
+
+dictionary: aDictionary
+    dictionary := aDictionary.
+    self update
+!
+
+dictionary
+    ^dictionary
+! !

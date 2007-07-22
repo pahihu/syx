@@ -534,7 +534,7 @@ syx_freev (syx_pointer *ptrv)
 inline void
 _syx_memory_gc_mark (SyxOop object)
 {
-  syx_int32 i;
+  syx_varsize i;
   if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
     return;
 

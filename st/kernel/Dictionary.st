@@ -42,7 +42,7 @@ removeKey: aKey ifAbsent: exceptionHandler
 !
 
 removeKey: aKey
-    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found' ]
+    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
 !
 
 remove: anAssociation ifAbsent: exceptionHandler
@@ -75,11 +75,19 @@ indexOf: aKey
     self error: 'Dictionary is full'
 !
 
+associationAt: aKey
+    | index key |
+    index := self indexOf: aKey.
+    (key := self basicAt: index) isNil
+	ifTrue: [ NotFound signal: 'Key not found: ', aKey ].
+    ^(key -> (self basicAt: index + 1))
+!
+
 at: aKey
     | index |
     index := self indexOf: aKey.
     (self basicAt: index) isNil
-	ifTrue: [ NotFound signal: 'Key not found' ].
+	ifTrue: [ NotFound signal: 'Key not found: ', aKey ].
     ^self basicAt: index + 1
 !
 

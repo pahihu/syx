@@ -22,6 +22,18 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!BlockClosure class methodsFor: 'instance creation'!
+
+new: aBlock
+    ^self new initializeBlock: aBlock
+! !
+
+!BlockClosure methodsFor: 'initialize-release'!
+
+initializeBlock: aBlock
+    block := aBlock
+! !
+
 !BlockClosure methodsFor: 'executing'!
 
 block

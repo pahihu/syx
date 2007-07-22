@@ -46,6 +46,11 @@ fromStream: readStream
     (c = $.)
 	ifFalse: [ ^num ].
 
+    "Check if it's really a float"
+    c := readStream next.
+    (c notNil and: [ c isDigit ])
+	ifFalse: [ readStream skip: -1. ^num ].
+
     "It's a float then"
     scale := 0.1.
     [ c := readStream next. c notNil and: [ c isDigit ] ]
