@@ -236,6 +236,8 @@ initialize
 
 nextPut: anInstruction
     "Write a 16-bit integer into the stream"
+    (anInstruction >> 8) = 104
+	ifTrue: [ self error: '' ].
     super nextPut: (anInstruction bitAnd: 16rFF).
     super nextPut: anInstruction >> 8.
     ^anInstruction
@@ -783,7 +785,7 @@ parseAssignment: assignName
     self indexOfTemporary: assignName
 	 ifPresent: [ :i | self parseExpression. ^bytecode assignTemporary: i ].
     self indexOfInstance: assignName
-	 ifPresent: [ :i | self parseExpression. ^bytecode assignInstance: i ].
+	 ifPresent: [ :i | self parseExpression. bytecode assignInstance: i ].
 
     self error: 'Unassignable variable named: ', assignName
 !
@@ -800,15 +802,16 @@ parseNameTerm: anIdentifier
 	ifTrue: [ ^bytecode pushConstant: name ].
 
     self indexOfArgument: name
-	 ifPresent: [ :i | ^bytecode pushArgument: i ].
+	 ifPresent: [ :i | bytecode pushArgument: i. ^false ].
     self indexOfTemporary: name
-	 ifPresent: [ :i | ^bytecode pushTemporary: i ].
+	 ifPresent: [ :i | bytecode pushTemporary: i. ^false ].
     self indexOfInstance: name
-	 ifPresent: [ :i | ^bytecode pushInstance: i ].
+	 ifPresent: [ :i | bytecode pushInstance: i. ^false ].
 
     binding := VariableBinding key: name on: Smalltalk.
     binding value: binding value - 1.
-    bytecode pushVariableBinding: binding
+    bytecode pushVariableBinding: binding.
+    ^false
 !
 
 parseTerm
@@ -822,6 +825,7 @@ parseTerm
 		    ifTrue: [ ^self error: 'Unexpected name colon identifier' ].
 		superTerm := self parseNameTerm: token ].
 	    [ CompilerBinaryToken ] -> [
+		superTerm := false.
 		token := String withAll: token.
 		token caseOf: {
 		    [ '(' ] -> [

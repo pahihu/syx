@@ -4,6 +4,7 @@
 	(parseNameTerm:): added
 	(parseBlock): added
 	(CompilerLexer): do not skip when at the end of the stream
+	fixed super receiver
 
 	* st/kernel/Dictionary.st (associationAt:): added
 	
