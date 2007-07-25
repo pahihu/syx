@@ -143,14 +143,17 @@ syx_parser_parse (SyxParser *self)
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
 
-  SYX_METHOD_BYTECODES(self->method) = syx_byte_array_new_ref (self->bytecode->code_top * sizeof (syx_uint16),
-							       (syx_uint8 *)self->bytecode->code);
-  SYX_METHOD_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
-							 self->bytecode->literals);
-
-  SYX_METHOD_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->_argument_names_top);
-  SYX_METHOD_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->_temporary_names_top);
-  SYX_METHOD_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);
+  SYX_CODE_BYTECODES(self->method) = syx_byte_array_new_ref (self->bytecode->code_top * sizeof (syx_uint16),
+							     (syx_uint8 *)self->bytecode->code);
+  SYX_CODE_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
+						       self->bytecode->literals);
+  
+  SYX_CODE_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->_argument_names_top);
+  SYX_CODE_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->_temporary_names_top);
+  SYX_CODE_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);
+  SYX_CODE_TEXT(self->method) = syx_string_new (self->lexer->text +
+						syx_find_first_non_whitespace (self->lexer->text));
+  SYX_CODE_CLASS(self->method) = self->class;
 
   if (self->_in_block)
     SYX_BLOCK_ARGUMENTS_TOP(self->method) = syx_small_integer_new (self->_argument_scopes.stack[self->_argument_scopes.top-1].start);
@@ -805,7 +808,10 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
       selector = strdup (token.value.string);
       
       if (do_cascade)
-	self->_duplicate_indexes[self->_duplicate_indexes_top - 1] = self->bytecode->code_top;
+	{
+	  self->_duplicate_indexes[self->_duplicate_indexes_top - 1] = self->bytecode->code_top;
+	  do_cascade = FALSE;
+	}
 
       syx_token_free (token);
       syx_lexer_next_token (self->lexer);

@@ -22,10 +22,24 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!WriteStream class methodsFor: 'instance creation'!
+!WriteStream methodsFor: 'initialize-release'!
 
-on: aCollection
-    ^(self basicNew initializeOn: aCollection)
-	truncate;
-	yourself
+initialize
+    super initialize.
+    self allowWriteOnly.
+    self truncate
+! !
+
+!ReadStream methodsFor: 'initialize-release'!
+
+initialize
+    super initialize.
+    self allowReadOnly
+! !
+
+!ReadWriteStream methodsFor: 'initialize-release'!
+
+initialize
+    super initialize.
+    self allowReadAndWrite
 ! !

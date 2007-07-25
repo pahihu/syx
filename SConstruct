@@ -29,12 +29,12 @@ from SCons import Conftest
 
 env = Environment ()
 
-opts = Options()
+opts = Options ('options.cache')
 
 if env['PLATFORM'] == 'win32':
    opts.AddOptions (PathOption('prefix',
                               'Installation prefix',
-                              'C:\\\\Syx', []))
+                              'C:\\\\Syx', PathOption.PathAccept))
    env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
    env['imagepath'] = '$prefix\\\\default.sim'
    env['includedir'] = '$prefix\\\\include'
@@ -42,27 +42,31 @@ else:
    opts.AddOptions (
       PathOption('prefix', 
                  'Installation prefix', 
-                 '/usr/local', []),
+                 '/usr/local', PathOption.PathAccept),
       PathOption('exec_prefix',
                  'Installation prefix for executables and object code libraries',
-                 '$prefix', []),
+                 '$prefix', PathOption.PathAccept),
       PathOption('bindir', 
                  'Installation prefix for user executables', 
-                 '$exec_prefix/bin', []),
+                 '$exec_prefix/bin', PathOption.PathAccept),
       PathOption('datadir',
                  'Installation prefix for packages',
-                 '$prefix/share/syx', []),
+                 '$prefix/share/syx', PathOption.PathAccept),
       PathOption('imagepath',
                  'Installation path for the default binary image',
-                 '$datadir/default.sim', []),
+                 '$datadir/default.sim', PathOption.PathAccept),
       PathOption('libdir',
                  'Installation prefix for object code libraries', 
-                 '$exec_prefix/lib', []),
+                 '$exec_prefix/lib', PathOption.PathAccept),
       PathOption('includedir',
                  'Installation prefix for C header files', 
-                 '$prefix/include', []))
+                 '$prefix/include', PathOption.PathAccept))
 
 opts.AddOptions (
+   ('host', """cross-compile to build programs to run on HOST""", ''),
+   EnumOption ('endianness',
+               """Specify manually the endianness of the host machine (auto, big, little)""",
+               'auto', allowed_values=('auto', 'little', 'big'), ignorecase=True),    
    BoolOption ('plugins', """Build with plugins support""", True),
    BoolOption ('bignum', """Build with infinite-precision numbers (needs gmp library)""", True),
    BoolOption ('attach', """Attach a debugger for test failures""", False),              
@@ -74,6 +78,7 @@ opts.AddOptions (
    BoolOption ('READLINE', """Build the syx-readline plugin to add more console features""", True))
 
 opts.Update (env)
+opts.Save ('options.cache', env)
 
 # My 64bit LFS keep its toolchain in /tools64 and set LD_LIBRARY_PATH for tests
 if env['PLATFORM'] == 'posix':
@@ -106,6 +111,14 @@ env.Help (opts.GenerateHelpText (env) + """
 
 def check_endianness (ctx):
    ctx.Message ("Checking for machine endianness...")
+   if env['endianness'] != 'auto':
+      if env['endianness'] == 'big':
+         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 1)
+      else:
+         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
+      ctx.Result (env['endianness'])
+      return True
+
    ret = ctx.TryRun ("""
 #include <stdio.h>
 int main (int argc, char **argv)
@@ -125,11 +138,44 @@ int main (int argc, char **argv)
       else:
          Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
       ctx.Result (ret[1])
+      return True
    else:
       print "Can't build Syx without determining machine endianness"
       ctx.Result (0)
+      return False
 
 conf = Configure (env, custom_tests={ 'CheckEndianness' : check_endianness }, config_h="syx/syx-config.h")
+
+
+# Cross compiling
+
+if env['host']:
+   cenv = env.Clone (ENV=os.environ)
+   print
+   print 'Cross-compile to run on %s...' % env['host']
+
+   tool = env['host']+'-ar'
+   env['AR'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['AR'])
+
+   tool = env['host']+'-as'
+   env['AS'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['AS'])
+
+   tool = env['host']+'-gcc'
+   env['CC'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['CC'])
+   if not env['CC']:
+      print "Can't find a valid C compiler"
+      env.Exit(1)
+
+   tool = cenv['host']+'-ranlib'
+   env['RANLIB'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['RANLIB'])
+
+
+# Do configuration
+
 
 print 'Mandatory headers...'
 
@@ -171,7 +217,8 @@ if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (doub
    print "Can't build Syx without the math library!"
    env.Exit (1)
 
-conf.CheckEndianness ()
+if not conf.CheckEndianness ():
+   env.Exit (1)
 
 print
 print 'Optional functions...'
@@ -191,6 +238,9 @@ if env['plugins']:
         env['plugins'] = False
 
 conf.Finish ()
+
+
+
 
 # Flags
 env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -I#.')

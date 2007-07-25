@@ -22,13 +22,49 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!Stream methodsFor: 'instance creation'!
+!Stream class methodsFor: 'instance creation'!
 
 new
-    ^self shouldNotImplement
+    ^self basicNew initialize
+! !
+
+!Stream methodsFor: 'initialize-release'!
+
+initialize
+    self allowReadOnly
 ! !
 
 !Stream methodsFor: 'accessing'!
+
+allowReadOnly
+    accessMode := 0
+!
+
+allowReadAndWrite
+    accessMode := 1
+!
+
+allowWriteOnly
+    accessMode := 2
+!
+
+canRead
+    ^accessMode <= 1
+!
+
+canWrite
+    ^accessMode >= 1
+!
+
+ensureReadable
+    self canRead
+	ifFalse: [ ^self error: 'the stream is not readable' ]
+!
+
+ensureWriteable
+    self canWrite
+	ifFalse: [ ^self error: 'the stream is not writeable' ]
+!
 
 next
     self subclassResponsibility
@@ -37,6 +73,7 @@ next
 next: amount
     "Returns a collection with the given number of objects next in the stream"
     | i stream |
+    self ensureReadable.
     stream := WriteStream on: (self collectionClass new: amount).
     1 to: amount do: [ :i |
 	stream nextPut: self next ].
@@ -66,6 +103,7 @@ nextPut: anObject
 
 nextPutAll: aCollection
     "Write all the objects in aCollection to the receiver"
+    self ensureWriteable.
     aCollection do: [ :element | self nextPut: element ].
     ^aCollection
 ! !

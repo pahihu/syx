@@ -41,4 +41,9 @@ SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbo
 SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
 SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
 
+
+/* Utilities for strings */
+
+syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+
 #endif /* SYX_UTILS_H */

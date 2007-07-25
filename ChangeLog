@@ -1,4 +1,65 @@
+2007-07-25  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-interp.c (syx_interp_do_special): ensure condition is boolean
+
+	* syx/syx-object.c (syx_class_lookup_method): class for super messages must be specified instead of a specific alghoritm
+	(syx_class_lookup_method_binding): same
+
+	* syx/syx-enums.h (SyxVariables): Do not include unused instance variables in CompiledBlock
+	All calls have been updated, also in Smalltalk.
+	
+	* st/kernel/SequenceableCollection.st (replaceFrom:with:): use self size instead of the given collection one
+	(copyFrom:): added
+
+	* st/kernel/CompiledMethod.st (CompiledCode): moved accessors from CompiledMethod and added methodClass
+
+	* st/kernel/WriteStream.st: added some other initialization for other streams
+
+	* st/kernel/Stream.st: added access mode
+
+	* st/kernel/FileStream.st (fileIn): added
+	Added more features
+
+	* syx/syx-primitives.c (FileStream_fileOp): new operation to obtain the size of the file; return nil for #next when at EOF
+	(ArrayedCollection_replaceFromToWith): fixed size of the effective replacement and added checks
+	(String_compile): removed
+
+2007-07-24  Luca Bruno  <lethalman88@gmail.com>
+
+	Fixed a big bug relative to super messages updating all calls.
+
+	* st/kernel/Number.st (readFrom:): fixed float parsing
+
+	* st/kernel/Compiler.st (CompilerLexer): include the stream as instance variable instead of subclassing ReadStream
+
+2007-07-23  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/String.st (compileFor:): a refactor of old #compile using the ST compiler
+
+	* syx/syx-init.h (SYX_INIT_MEMORY_SIZE): changed default size from 20000 objects to 100000 objects
+
+	* syx/syx-init.c (syx_initialize_system): addded
+
+	* st/kernel/SystemDictionary.st (initialize): added
+	(initializeSystem): call all system initialization object requests
+	(registerForSystemInitialization:): added
+
+	* syx/syx-utils.c (syx_find_first_non_whitespace): added
+
+	* syx/syx-parser.c (syx_parser_parse): save text in methods
+
+	* syx/syx-object.h (SYX_METHOD_TEXT): added 'text' instance variable to CompiledCodes
+
+	* SConstruct (endianness): added option to manually specify the endianness of the machine
+	(host): added option to cross-compile for the specified machine
+
+	* st/kernel/Compiler.st (duplicateAt:): added
+	(doContinuation:): support cascades
+
 2007-07-22  Luca Bruno  <lethalman88@gmail.com>
+
+	* SConstruct: cache options
+	added support for cross compiling
 
 	* st/kernel/Compiler.st (CompilerParser): added whileTrue: and whileFalse: optimized blocks
 	(parseNameTerm:): added

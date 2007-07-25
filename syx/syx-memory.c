@@ -215,7 +215,7 @@ syx_memory_gc (void)
 
 #ifdef SYX_DEBUG_GC
   reclaimed = _syx_freed_memory_top - old_top;
-  syx_debug ("GC: reclaimed %d (%d%%); available %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size);
+  syx_debug ("GC: reclaimed %d (%d%%); available %d; used %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size - _syx_freed_memory_top, _syx_memory_size);
 #endif
 
   // Restore the normal transaction
@@ -514,6 +514,7 @@ syx_memory_load_image (syx_symbol path)
   fclose (image);
 
   syx_fetch_basic ();
+  syx_initialize_system ();
 
   return TRUE;
 }

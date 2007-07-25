@@ -85,7 +85,8 @@ _getopt_do (int argc, char **argv)
     {
       c = getopt_long (argc, argv, "r:i:sSvh",
 		       long_options, &opt_idx);
-      if (c == -1)
+
+      if (c == (syx_char)-1)
 	break;
 
       switch (c)

@@ -105,10 +105,14 @@ codePoint
 !
 
 = aCharacter
+     aCharacter isCharacter
+	 ifFalse: [ ^false ].
      ^self codePoint = aCharacter codePoint
 !
 
 == aCharacter
+     aCharacter isCharacter
+	 ifFalse: [ ^false ].
      ^self codePoint = aCharacter codePoint
 ! !
 

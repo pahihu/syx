@@ -553,7 +553,7 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
       
     }
 
-  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+  syx_error ("Can't create binding for unexisting key %s\n", key);
   
   return syx_nil;
 }
@@ -771,7 +771,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 	return table[pos+1];
     }
 
-  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+  syx_error ("Can't find key %s\n", key);
   
   return syx_nil;
 }
@@ -893,7 +893,7 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   SYX_METHOD_CONTEXT_METHOD(object) = method;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
-  arguments_count = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENTS_COUNT (method));
+  arguments_count = SYX_SMALL_INTEGER(SYX_CODE_ARGUMENTS_COUNT (method));
   if (arguments_count > 0)
     {
       SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (arguments_count);
@@ -902,13 +902,13 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 	memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
     }
 
-  temporaries_count = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARIES_COUNT (method));
+  temporaries_count = SYX_SMALL_INTEGER(SYX_CODE_TEMPORARIES_COUNT (method));
   if (temporaries_count > 0)
     SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (temporaries_count);
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (method)));
+  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_CODE_STACK_SIZE (method)));
 
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = parent;
 
@@ -941,7 +941,7 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_METHOD_STACK_SIZE (block)) + 1);
+  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_CODE_STACK_SIZE (block)) + 1);
 
   SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) = outer_context;
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = SYX_METHOD_CONTEXT_RETURN_CONTEXT (outer_context);
@@ -1120,7 +1120,7 @@ syx_class_get_all_instance_variable_names (SyxOop class)
   \return syx_nil if no method has been found
 */
 SyxOop 
-syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super)
+syx_class_lookup_method (SyxOop class, syx_symbol selector)
 {
   SyxOop cur;
   SyxOop method;
@@ -1132,14 +1132,7 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super)
 
       method = syx_dictionary_at_symbol_if_absent (SYX_CLASS_METHODS (cur), selector, syx_nil);
       if (!SYX_IS_NIL (method))
-	{
-	  if (to_super)
-	    {
-	      to_super = FALSE;
-	      continue;
-	    }
-	  return method;
-	}
+	return method;
     }
 
   return syx_nil;
@@ -1150,7 +1143,7 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super)
   \return syx_nil if no method has been found
 */
 SyxOop 
-syx_class_lookup_method_binding (SyxOop class, SyxOop binding, syx_bool to_super)
+syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
 {
   SyxOop cur;
   SyxOop method;
@@ -1163,14 +1156,7 @@ syx_class_lookup_method_binding (SyxOop class, SyxOop binding, syx_bool to_super
       SYX_VARIABLE_BINDING_DICTIONARY (binding) = SYX_CLASS_METHODS (cur);
       method = syx_dictionary_bind_if_absent (binding, syx_nil);
       if (!SYX_IS_NIL (method))
-	{
-	  if (to_super)
-	    {
-	      to_super = FALSE;
-	      continue;
-	    }
-	  return method;
-	}
+	return method;
     }
 
   return syx_nil;

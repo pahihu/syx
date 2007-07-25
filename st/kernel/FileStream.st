@@ -33,17 +33,28 @@ on: aFD
 !
 
 open: aFilename
-    ^self basicNew fd: (self fileOp: 0 with: aFilename with: self read)
+    ^self open: aFilename for: self read
 !
 
 open: aFilename for: aMode
-    ^self basicNew fd: (self fileOp: 0 with: aFilename with: aMode)
+    | inst |
+    inst := self basicNew fd: (self fileOp: 0 with: aFilename with: aMode).
+    aMode
+	caseOf: {
+	    [ self read ] -> [ inst allowReadOnly ].
+	    [ self write ] -> [ inst allowWriteOnly ].
+	    [ self readWrite ] -> [ inst allowReadAndWrite ] }.
+    ^inst
 !
 
 fileOp: anInteger with: anArgument with: anotherArgument
     "Returns a file descriptor"
     <primitive: 'FileStream_fileOp'>
 	self primitiveFailed
+!
+
+fileIn: aFilename
+    ^(self open: aFilename) fileIn; yourself
 !
 
 write
@@ -60,8 +71,47 @@ readWrite
 
 !FileStream methodsFor: 'accessing'!
 
+contents
+    | pos ret |
+    pos := curPos.
+    self reset.
+    ret := self upToEnd.
+    self position: pos.
+    ^ret
+!
+
+upToEnd
+    ^self next: (self size - curPos)
+!
+
+size
+    | primSize |
+    primSize := self fileOp: 7 on: fd.
+    ^primSize max: endPos
+!    
+
+atEnd
+    ^self size = curPos
+!
+
+fileIn
+    | stream lexer parser method context |
+    stream := ReadWriteStream with: 'doFileIn ' copy.
+    stream
+	nextPutAll: self contents;
+	reset.
+    lexer := CompilerLexer readFrom: stream.
+    parser := CompilerParser on: lexer for: nil class.
+    parser parse.
+    method := CompiledMethod fromParser: parser.
+    context := MethodContext on: method parent: thisContext receiver: nil arguments: #().
+    Processor enter: context
+!
+
 fd: aFD
-    fd := aFD
+    fd := aFD.
+    collection := String new: 10.
+    curPos := endPos := 0
 !
 
 fd
@@ -80,6 +130,18 @@ fileOp: anInteger on: aFD with: anArgument
 	self primitiveFailed
 ! !
 
+!FileStream methodsFor: 'private'!
+
+nextPutBuffer: aByteArray
+    | pos |
+    pos := curPos + 1.
+    curPos := curPos + aByteArray size.
+    super atEnd
+	ifTrue: [ (endPos := curPos) >= collection size
+		      ifTrue: [ collection growTo: endPos + 10 ] ].
+    ^collection replaceFrom: pos to: curPos with: aByteArray
+! !
+
 !FileStream methodsFor: 'basic'!
 
 close
@@ -87,11 +149,15 @@ close
 !
 
 nextPut: aCharacter
-    self fileOp: 2 on: fd with: aCharacter
+    self ensureWriteable.
+    self fileOp: 2 on: fd with: aCharacter.
+"    ^super nextPut: aCharacter"
 !
 
-nextPutAll: aString
-    self fileOp: 3 on: fd with: aString
+nextPutAll: aByteArray
+    self ensureWriteable.
+    self fileOp: 3 on: fd with: aByteArray.
+"    ^super nextPutAll: aByteArray"
 !
 
 flush
@@ -99,9 +165,17 @@ flush
 !
 
 next
-    ^self fileOp: 5 on: fd
+    | c |
+    self ensureReadable.
+    c := self fileOp: 5 on: fd.
+    self nextPutBuffer: c asString.
+    ^c
 !
 
-nextAll: numBytes
-    ^self fileOp: 6 on: fd with: numBytes
+next: numBytes
+    | s |
+    self ensureReadable.
+    s := self fileOp: 6 on: fd with: numBytes.
+    self nextPutBuffer: s.
+    ^s
 ! !

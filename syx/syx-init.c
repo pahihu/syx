@@ -129,7 +129,7 @@ _syx_create_class (syx_varsize instanceSize)
   Then creates all the classes needed by the VM, the Smalltalk dictionary and a dictionary containing all the symbols.
   Sets up the basic object hierarchy and insert each class into Smalltalk.
   Ends up this process by fileing in the basic declarations from initialDecl.st and the other *.st files, and calls syx_fetch_basic to fetch all classes in the VM.
-  Finally, prepares the environment by running a blocking Process that calls Smalltalk>>initializeSystem and initialize everything else from within Smalltalk itself.
+  Finally, prepares the environment by running a blocking Process that calls Smalltalk>>initializeFirstSystem and initialize everything else from within Smalltalk itself.
 */  
 void
 syx_build_basic (void)
@@ -161,6 +161,8 @@ syx_build_basic (void)
   syx_metaclass_class = _syx_create_class (SYX_VARS_METACLASS_ALL);
 
   syx_globals = syx_dictionary_new (100);
+  // hold SystemDictionary instance variables
+  SYX_OBJECT_VARS(syx_globals) = syx_calloc (1, sizeof (SyxOop));
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
@@ -210,15 +212,18 @@ syx_build_basic (void)
    
   _syx_file_in_basic ();
 
-  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
+  context = syx_send_unary_message (syx_nil, syx_globals, "initialize");
   syx_process_execute_blocking (syx_process_new (context));
+
+  syx_initialize_system ();
 }
 
 //! Fetch all the things needed by the VM to run accordly to the image
 /*!
   Sets up syx_nil, syx_true and syx_false constants.
   Lookup all classes from the Smalltalk dictionary and insert them into the VM.
-  Finally initialize the interpreter, the errors system and the scheduler
+  Then initialize the interpreter, the errors system and the scheduler.
+  Finally send SystemDictionary>>#initializeSystem to initialize everything else from within Smalltalk
 */
 void
 syx_fetch_basic (void)
@@ -250,11 +255,20 @@ syx_fetch_basic (void)
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
   syx_link_class = syx_globals_at ("Link");
-  
+
   syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
   syx_interp_init ();
   syx_error_init ();
   syx_scheduler_init ();
+}
+
+//! Call Smalltalk>>#initializeSystem in blocking mode
+void
+syx_initialize_system (void)
+{
+  SyxOop context;
+  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
+  syx_process_execute_blocking (syx_process_new (context));
 }
 
 //! Setup the basic external environment of Syx, such as the root and the image path

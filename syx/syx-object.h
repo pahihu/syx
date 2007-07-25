@@ -51,6 +51,7 @@
 #define SYX_IS_NIL(oop) ((oop) == 0 || (oop) == syx_nil)
 #define SYX_IS_TRUE(oop) ((oop) == syx_true)
 #define SYX_IS_FALSE(oop) ((oop) == syx_false)
+#define SYX_IS_BOOLEAN(oop) (SYX_IS_TRUE(oop) || SYX_IS_FALSE(oop))
 #define SYX_IS_OBJECT(oop) (SYX_IS_POINTER(oop) &&		\
 			    (oop) >= (SyxOop)syx_memory &&	\
 			    (oop) <= (SyxOop)(syx_memory + _syx_memory_size - 1))
@@ -142,8 +143,8 @@ inline void syx_object_set_class (SyxOop oop, SyxOop class);
 
 syx_symbol *syx_class_get_all_instance_variable_names (SyxOop class);
 syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
-SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector, syx_bool to_super);
-SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding, syx_bool to_super);
+SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
+SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding);
 
 SyxOop syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key);
 SyxOop syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
@@ -208,12 +209,16 @@ inline SyxOop syx_process_new (SyxOop context);
 
 #define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_VARIABLE_BINDING_DICTIONARY])
 
+#define SYX_CODE_BYTECODES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_BYTECODES])
+#define SYX_CODE_LITERALS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_LITERALS])
+#define SYX_CODE_ARGUMENTS_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_ARGUMENTS_COUNT])
+#define SYX_CODE_TEMPORARIES_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_TEMPORARIES_COUNT])
+#define SYX_CODE_STACK_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_STACK_SIZE])
+#define SYX_CODE_PRIMITIVE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_PRIMITIVE])
+#define SYX_CODE_CLASS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_CLASS])
+#define SYX_CODE_TEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_TEXT])
+
 #define SYX_METHOD_SELECTOR(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_SELECTOR])
-#define SYX_METHOD_BYTECODES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_BYTECODES])
-#define SYX_METHOD_LITERALS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_LITERALS])
-#define SYX_METHOD_ARGUMENTS_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_ARGUMENTS_COUNT])
-#define SYX_METHOD_TEMPORARIES_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_TEMPORARIES_COUNT])
-#define SYX_METHOD_STACK_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_STACK_SIZE])
 #define SYX_METHOD_PRIMITIVE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_PRIMITIVE])
 
 #define SYX_BLOCK_ARGUMENTS_TOP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_ARGUMENTS_TOP])

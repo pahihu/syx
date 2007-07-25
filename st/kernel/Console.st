@@ -28,6 +28,12 @@ run
     ^self new run
 ! !
 
+!Console methodsFor: 'initialize-release'!
+
+initializeSystem
+    haveReadline := Smalltalk loadPlugin: 'readline'
+! !
+
 !Console methodsFor: 'running'!
 
 primReadline: aString
@@ -42,15 +48,13 @@ primAddHistory: aString
 
 nextLine
     | line |
-    "This works only with sockets on Windows"
-"    Semaphore new waitForRead: stdin fd."
     haveReadline
 	ifTrue: [ line := self primReadline: '> '.
 		  line isNil
 		      ifTrue: [ 'EOF' printNl. Smalltalk quit ].
 		  self primAddHistory: line ]
 	ifFalse: [ '> ' print.
-	           line := stdin nextAll: 1024.
+	           line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ 'EOF' printNl. Smalltalk quit].
 		   line := line copyFrom: 1 to: line size - 1 ].
@@ -72,9 +76,9 @@ nextChunk
 !
 
 run
+    Smalltalk registerForSystemInitialization: self.
+    self initializeSystem.
     [
-	"Compatibilty with Syx compiled without readline support"
-	haveReadline := Smalltalk loadPlugin: 'readline'.
 	[
 	    | chunk method context |
 	    chunk := self nextChunk.

@@ -163,7 +163,6 @@ syx_interp_call_primitive (syx_int16 primitive, SyxOop method)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Do primitive %d (%s)\n", primitive, prim_entry->name);
 #endif
-
  
   return prim_entry->func (es, method);
 }
@@ -207,9 +206,9 @@ syx_exec_state_fetch (void)
     es->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (es->context));
 
   es->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (es->context));
-  es->literals = SYX_OBJECT_DATA (SYX_METHOD_LITERALS (method));
-  es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_METHOD_BYTECODES (method));
-  es->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_METHOD_BYTECODES (method)) / 2;
+  es->literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
+  es->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_CODE_BYTECODES (method));
+  es->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_CODE_BYTECODES (method)) / 2;
   es->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (es->context));
   es->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (es->context));
 }
@@ -490,7 +489,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 
   binding = es->literals[argument];
   class = syx_object_get_class (es->message_receiver); 
-  method = syx_class_lookup_method_binding (class, binding, FALSE);
+  method = syx_class_lookup_method_binding (class, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -531,8 +530,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   syx_int32 primitive;
 
   binding = es->literals[argument];
-  class = syx_object_get_class (es->message_receiver); 
-  method = syx_class_lookup_method_binding (class, binding, TRUE);
+  class = SYX_CLASS_SUPERCLASS (SYX_CODE_CLASS (SYX_METHOD_CONTEXT_METHOD (es->context)));
+  method = syx_class_lookup_method_binding (class, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -596,7 +595,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding, FALSE);  
+  method = syx_class_lookup_method_binding (class, binding);  
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send unary message #%s\n", selector);
@@ -675,7 +674,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     }
 
   class = syx_object_get_class (es->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding, FALSE);
+  method = syx_class_lookup_method_binding (class, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send binary message #%s\n", selector);
@@ -747,6 +746,8 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       condition = syx_interp_stack_pop ();
       jump = _syx_interp_get_next_byte ();
+      if (!SYX_IS_BOOLEAN (condition))
+	syx_signal (SYX_ERROR_INTERP, 0);
 
       // Check for jump to the other conditional branch
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))

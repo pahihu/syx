@@ -32,6 +32,12 @@ peek
     ^collection at: top
 !
 
+peekPut: anObject
+    top = 0
+	ifTrue: [ ^self error: 'Stack is empty' ].
+    ^collection at: top put: anObject
+!
+
 contents
     ^collection copyFrom: 1 to: top
 ! !

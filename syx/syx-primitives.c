@@ -39,6 +39,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
@@ -175,24 +178,33 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
   syx_varsize start = SYX_SMALL_INTEGER (es->message_arguments[0]) - 1;
   SyxOop coll = es->message_arguments[2];
   syx_varsize end = SYX_SMALL_INTEGER(es->message_arguments[1]);
-  syx_varsize i;
+  syx_varsize length = end - start;
+
+  if (start >= end || end > SYX_OBJECT_DATA_SIZE (es->message_receiver))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  if (length > SYX_OBJECT_DATA_SIZE (coll))
+    {
+      SYX_PRIM_FAIL;
+    }
 
   // distinguish between arrays and bytearrays
   if (SYX_OBJECT_HAS_REFS (es->message_receiver))
     {
       if (SYX_OBJECT_HAS_REFS (coll))
-	memcpy (SYX_OBJECT_DATA (es->message_receiver) + start, SYX_OBJECT_DATA (coll), end * sizeof (SyxOop));
+	memcpy (SYX_OBJECT_DATA (es->message_receiver) + start, SYX_OBJECT_DATA (coll), length * sizeof (SyxOop));
       else
 	{
-	  for (i=start; i < end; i++)
-	    SYX_OBJECT_DATA(es->message_receiver)[i] = syx_character_new (SYX_OBJECT_BYTE_ARRAY(coll)[i]);
+	  SYX_PRIM_FAIL;
 	}
     }
   else
     {
       if (!SYX_OBJECT_HAS_REFS (coll))
 	memcpy (SYX_OBJECT_BYTE_ARRAY (es->message_receiver) + start,
-		SYX_OBJECT_BYTE_ARRAY (coll), end * sizeof (syx_int8));
+		SYX_OBJECT_BYTE_ARRAY (coll), length * sizeof (syx_int8));
       else
 	{
 	  SYX_PRIM_FAIL;
@@ -417,7 +429,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	else if (*mode == 'w')
 	  flags |= O_WRONLY;
 	else
-	  syx_error ("mh? %s\n", mode);
+	  syx_error ("Unknown open mode %s\n", mode);
 	
 	ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
       }
@@ -439,7 +451,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       SYX_PRIM_ARGS(3);
 
       if (!SYX_IS_NIL (es->message_arguments[2]))
-	ret = write (fd, SYX_OBJECT_STRING (es->message_arguments[2]),
+	ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
 		     SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
       else
 	ret = 0;
@@ -452,7 +464,12 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     case 5: // next
       {
 	syx_char c;
-	read (fd, &c, 1);
+	if (!read (fd, &c, 1))
+	  {
+	    // EOF
+	    SYX_PRIM_RETURN (syx_nil);
+	  }
+
 	SYX_PRIM_RETURN (syx_character_new (c));
       }
       break;
@@ -480,38 +497,24 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       }
       break;
 
+    case 7: // size
+      {
+	struct stat statbuf;
+	if ((fstat (fd, &statbuf)) < 0)
+	  {
+	    SYX_PRIM_FAIL;
+	  }
+
+	SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
+      }
+      break;
+
     default: // unknown
       syx_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->message_arguments[0]));
 
     }
 
   SYX_PRIM_RETURN (syx_small_integer_new (ret));
-}
-
-SYX_FUNC_PRIMITIVE (String_compile)
-{
-  SyxLexer *lexer;
-  SyxParser *parser;
-  SyxOop meth;
-
-  lexer = syx_lexer_new (SYX_OBJECT_STRING (es->message_receiver));
-  if (!lexer)
-    {
-      SYX_PRIM_RETURN (syx_nil);
-    }
-
-  meth = syx_method_new ();
-  parser = syx_parser_new (lexer, meth, syx_undefined_object_class);
-  if (!syx_parser_parse (parser))
-    {
-      syx_parser_free (parser, TRUE);
-      SYX_PRIM_FAIL;
-    }
-
-  syx_lexer_free (lexer, FALSE);
-  syx_parser_free (parser, FALSE);
-
-  SYX_PRIM_RETURN (meth);
 }
 
 SYX_FUNC_PRIMITIVE (String_hash)
@@ -1326,7 +1329,6 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Semaphore_signal", Semaphore_signal },
   { "Semaphore_wait", Semaphore_wait },
   { "Semaphore_waitFor", Semaphore_waitFor },
-  { "String_compile", String_compile },
 
   /* Strings */
   { "String_hash", String_hash },

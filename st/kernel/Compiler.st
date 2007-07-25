@@ -55,13 +55,37 @@ initialize
     SingleBinaryTable := { ${. $[. $(. $). $]. $}. $!. $^ }
 ! !
 
+!CompilerLexer class methodsFor: 'instance creation'!
+
+readFrom: readStream
+    ^self new initializeStream: readStream
+!
+
+text: aString
+    ^self readFrom: (ReadStream on: aString)
+! !
+
 !CompilerLexer methodsFor: 'basic'!
 
 next
-    ^lastChar := super next
+    ^lastChar := stream next
+! !
+
+!CompilerLexer methodsFor: 'initialize-release'!
+
+initializeStream: readStream
+    stream := readStream
 ! !
 
 !CompilerLexer methodsFor: 'accessing'!
+
+stream
+    ^stream
+!
+
+text
+    ^stream contents
+!
 
 lastToken
     ^lastToken
@@ -83,39 +107,39 @@ skipBlankAndComments
 !
 
 identifierToken
-    | stream |
-    stream := WriteStream with: (CompilerIdentifierToken with: lastChar).
-    [ self atEnd or: [ self next isAlphaNumeric not ] ]
+    | s |
+    s := WriteStream with: (CompilerIdentifierToken with: lastChar).
+    [ stream atEnd or: [ self next isAlphaNumeric not ] ]
 	whileFalse: [
-	    stream nextPut: lastChar ].
+	    s nextPut: lastChar ].
 
     lastChar = $:
-	ifTrue: [ stream nextPut: $: ]
+	ifTrue: [ s nextPut: $: ]
 	ifFalse: [ 
-	    self atEnd
-		ifFalse: [ self skip: -1 ] ].
+	    stream atEnd
+		ifFalse: [ stream skip: -1 ] ].
 
-    ^stream contents
+    ^s contents
 !
 
 symbolToken
-    | stream |
+    | s |
     self next isDigit | (lastChar isWhiteSpace)
 	ifTrue: [ self error: 'Invalid symbol' ].
-    stream := WriteStream with: lastChar asString.
+    s := WriteStream with: lastChar asString.
     
-    [ self atEnd not and: [ self next isAlphaNumeric | (lastChar = $:) ] ]
+    [ stream atEnd not and: [ self next isAlphaNumeric | (lastChar = $:) ] ]
 	whileTrue: [
-	    stream nextPut: lastChar ].
-    self atEnd
-	ifFalse: [ self skip: -1 ].
+	    s nextPut: lastChar ].
+    stream atEnd
+	ifFalse: [ stream skip: -1 ].
 
-    ^stream contents asSymbol
+    ^s contents asSymbol
 !
 
 literalArrayToken
-    | stream |
-    stream := WriteStream on: Array new.
+    | s |
+    s := WriteStream on: Array new.
     [ self nextToken isNil or: [ lastToken class = CompilerClosingToken & (lastToken first = $)) ] ]
 	whileFalse: [
 	    | token |
@@ -128,33 +152,33 @@ literalArrayToken
 			    ifTrue: [ self literalArrayToken ]
 			    ifFalse: [ lastToken asSymbol ] ] }
 		otherwise: [ lastToken ].
-	    stream nextPut: token ].
-    ^stream contents
+	    s nextPut: token ].
+    ^s contents
 !
 
 numberToken
     | ret |
-    self skip: -1.
-    ret := Number fromStream: self.
-    self atEnd
-	ifFalse: [ self skip: -1 ].
+    stream skip: -1.
+    ret := Number readFrom: stream.
+    stream atEnd
+	ifFalse: [ stream skip: -1 ].
     ^ret
 !
 
 stringToken
-    | stream |
-    stream := WriteStream on: String new.
+    | s |
+    s := WriteStream on: String new.
     [ lastChar = $' ]
 	whileTrue: [
-	    [ self atEnd or: [ self next = $' ] ]
+	    [ stream atEnd or: [ self next = $' ] ]
 		whileFalse: [
-		    stream nextPut: lastChar ].
+		    s nextPut: lastChar ].
 	    self next = $'
-		ifTrue: [ stream nextPut: $' ] ].
-    self atEnd
-	ifFalse: [ self skip: -1 ].
+		ifTrue: [ s nextPut: $' ] ].
+    stream atEnd
+	ifFalse: [ stream skip: -1 ].
 
-    ^stream contents
+    ^s contents
 !
 
 isClosing: aCharacter
@@ -200,7 +224,7 @@ nextToken
 	ifTrue: [
 	    self next = $(
 		ifTrue: [ ^lastToken := self literalArrayToken ]
-		ifFalse: [ self skip: -1. ^lastToken := self symbolToken ] ].
+		ifFalse: [ stream skip: -1. ^lastToken := self symbolToken ] ].
     lastChar = $'
 	ifTrue: [ ^lastToken := self stringToken ].
     (self isClosing: lastChar)
@@ -212,19 +236,13 @@ nextToken
     (self isBinarySecond: self next)
 	ifTrue: [ binary := binary, lastChar asString ]
 	ifFalse: [ 
-	    self atEnd
-		ifFalse: [ self skip: -1 ] ].
+	    stream atEnd
+		ifFalse: [ stream skip: -1 ] ].
     ^lastToken := binary
 ! !
 
 
 " THE BYTECODE "
-
-!CompilerBytecode class methodsFor: 'instance creation'!
-
-new
-    ^(self on: ByteArray new) initialize
-! !
 
 !CompilerBytecode methodsFor: 'basic'!
 
@@ -236,8 +254,6 @@ initialize
 
 nextPut: anInstruction
     "Write a 16-bit integer into the stream"
-    (anInstruction >> 8) = 104
-	ifTrue: [ self error: '' ].
     super nextPut: (anInstruction bitAnd: 16rFF).
     super nextPut: anInstruction >> 8.
     ^anInstruction
@@ -335,6 +351,17 @@ sendMessage: aMessage ofArguments: numArguments toSuper: aBoolean
 			      ifTrue: [ 13 ]
 			      ifFalse: [ 12 ])
 	  withArgument: (self genLiteral: binding)
+!
+
+duplicateAt: anIndex
+    | coll instruction |
+    instruction := (16 << 11) + 3.
+    coll := collection copyFrom: anIndex + 1.
+    self
+	position: anIndex;
+	nextPut: instruction.
+    coll do: [ :ea |
+	super nextPut: ea ]
 !
 
 doSpecial: specialSymbol
@@ -482,8 +509,8 @@ compilerBytecodeClass
     ^CompilerBytecode
 !
 
-onText: aString for: aClass
-    ^self on: (self compilerLexerClass on: aString) for: aClass
+text: aString for: aClass
+    ^self on: (self compilerLexerClass text: aString) for: aClass
 !
 
 on: aCompilerLexer for: aClass
@@ -496,7 +523,7 @@ on: aCompilerLexer for: aClass
 initializeLexer: aCompilerLexer class: aClass
     lexer := aCompilerLexer.
     class := aClass.
-    bytecode := CompilerBytecode new.
+    bytecode := CompilerParser compilerBytecodeClass on: ByteArray new.
 
     temporaryNames := OrderedCollection new.
 
@@ -510,10 +537,15 @@ initializeLexer: aCompilerLexer class: aClass
     inBlock := false.
 
     argumentScopes := Stack new.
-    temporaryScopes := Stack new
+    temporaryScopes := Stack new.
+    duplicateIndexes := Stack new
 ! !
 
 !CompilerParser methodsFor: 'accessing'!
+
+lexer
+    ^lexer
+!
 
 bytecode
     ^bytecode
@@ -646,7 +678,8 @@ parseMethodMessagePattern
 	    keywordMessage nextPutAll: token.
 	    token := lexer expect: lexer nextToken
 			   toBe: [ :t | t isNameConst ]
-			   instanceOf: CompilerIdentifierToken.
+			   instanceOf: CompilerIdentifierToken
+			   otherwise: [ self error: 'Expected name const' ].
 	    argumentNames add: token.
 	    token := lexer nextToken ].
 
@@ -785,7 +818,7 @@ parseAssignment: assignName
     self indexOfTemporary: assignName
 	 ifPresent: [ :i | self parseExpression. ^bytecode assignTemporary: i ].
     self indexOfInstance: assignName
-	 ifPresent: [ :i | self parseExpression. bytecode assignInstance: i ].
+	 ifPresent: [ :i | self parseExpression. ^bytecode assignInstance: i ].
 
     self error: 'Unassignable variable named: ', assignName
 !
@@ -799,7 +832,7 @@ parseNameTerm: anIdentifier
 	    ^name = #super ].
 
     (#(nil true false thisContext) includes: name)
-	ifTrue: [ ^bytecode pushConstant: name ].
+	ifTrue: [ bytecode pushConstant: name. ^false ].
 
     self indexOfArgument: name
 	 ifPresent: [ :i | bytecode pushArgument: i. ^false ].
@@ -825,7 +858,6 @@ parseTerm
 		    ifTrue: [ ^self error: 'Unexpected name colon identifier' ].
 		superTerm := self parseNameTerm: token ].
 	    [ CompilerBinaryToken ] -> [
-		superTerm := false.
 		token := String withAll: token.
 		token caseOf: {
 		    [ '(' ] -> [
@@ -848,7 +880,7 @@ parseBlock
     oldBytecode := bytecode.
     blockState := inBlock.
 
-    bytecode := CompilerBytecode new.
+    bytecode := CompilerParser compilerBytecodeClass on: ByteArray new.
     inBlock := true.
 
     self parse.
@@ -866,18 +898,32 @@ parseBlock
 doContinuation: toSuper
     "TODO handle cascades"
     | token superReceiver |
+    duplicateIndexes push: 0.
     superReceiver := self doKeyContinuation: toSuper.
     token := lexer lastToken.
+
+    [ token class = CompilerClosingToken and: [ token first = $; ] ]
+	whileTrue: [
+	    bytecode
+		duplicateAt: duplicateIndexes peek;
+		doSpecial: #popTop.
+	    lexer nextToken.
+	    self doKeyContinuation: superReceiver.
+	    token := lexer lastToken ].
+
+    duplicateIndexes pop
 !
 
 doKeyContinuation: toSuper
     "TODO compile optimized blocks"
     | token superReceiver conditionalBranch |
-    superReceiver := self doBinaryContinuation: toSuper.
+    superReceiver := self doBinaryContinuation: toSuper cascading: true.
     token := lexer lastToken.
     (token class = CompilerIdentifierToken and: [ token isNameColon ])
 	ifTrue: [
 	    | numArgs message |
+	    duplicateIndexes peekPut: bytecode collection size.
+
 	    token asSymbol = #ifTrue:
 		ifTrue: [
 		    conditionalBranch := #branchIfTrue ].
@@ -950,7 +996,7 @@ doKeyContinuation: toSuper
 		    lexer nextToken.
 
 		    superReceiver := self parseTerm.
-		    self doBinaryContinuation: superReceiver.
+		    self doBinaryContinuation: superReceiver cascading: false.
 		    
 		    token := lexer lastToken ].
 	    
@@ -980,7 +1026,7 @@ parseOptimizedBlock: branchType doPop: aBoolean
 	    lexer nextToken.
 	    temporaryScopes pop ]
 	ifFalse: [
-	    self doBinaryContinuation: self parseTerm.
+	    self doBinaryContinuation: self parseTerm cascading: false.
 	    bytecode sendMessage: #value ofArguments: 0 toSuper: false ].
 
     inBlock := blockState.
@@ -991,28 +1037,35 @@ parseOptimizedBlock: branchType doPop: aBoolean
     ^jump
 !
 
-doBinaryContinuation: toSuper
-    | token superReceiver |
-    superReceiver := self doUnaryContinuation: toSuper.
+doBinaryContinuation: toSuper cascading: aBoolean
+    | token superReceiver doCascade |
+    superReceiver := self doUnaryContinuation: toSuper cascading: aBoolean.
     token := lexer lastToken.
+    doCascade := aBoolean.
     [ token class = CompilerBinaryToken ]
 	whileTrue: [
 	    | message |
+	    doCascade ifTrue: [
+		duplicateIndexes peekPut: bytecode collection size.
+		doCascade := false ].
+
             message := token.
 	    lexer nextToken.
 	    superReceiver := self parseTerm.
-	    self doUnaryContinuation: superReceiver.
+	    self doUnaryContinuation: superReceiver cascading: false.
 	    token := lexer lastToken.
 	    bytecode sendMessage: message ofArguments: 1 toSuper: superReceiver ].
     ^superReceiver
 !
     
-doUnaryContinuation: toSuper
+doUnaryContinuation: toSuper cascading: aBoolean
     | token superReceiver |
     superReceiver := toSuper.
     token := lexer lastToken.
     [ token class = CompilerIdentifierToken and: [ token isNameConst ] ]
 	whileTrue: [
+	    aBoolean
+		ifTrue: [ duplicateIndexes peekPut: bytecode collection size ].
 	    bytecode sendMessage: token ofArguments: 0 toSuper: superReceiver.
 	    token := lexer nextToken.
 	    superReceiver := false ].

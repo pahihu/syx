@@ -96,11 +96,9 @@ subclass: classSymbol instanceVariableNames: instanceVariables classVariableName
 !Behavior methodsFor: 'compiling'!
 
 compile: aString
-    | parser method |
-    parser := CompilerParser onText: aString for: self.
-    parser parse.
-    method := CompiledMethod fromParser: parser.
-    methodDictionary at: parser methodMessage put: method
+    | method |
+    method := aString compileFor: self.
+    methodDictionary at: method selector put: method
 ! !
 
 !Behavior methodsFor: 'private'!

@@ -22,6 +22,36 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!CompiledCode methodsFor: 'accessing'!
+
+bytecodes
+    ^bytecodes
+!
+
+argumentCount
+    ^argumentCount
+!
+
+temporaryCount
+    ^temporaryCount
+!
+
+stackSize
+    ^stackSize
+!
+
+methodClass
+    ^class
+!
+
+text
+    ^text
+!
+
+selector
+    ^nil
+! !
+
 !CompiledMethod class methodsFor: 'instance creation'!
 
 fromParser: aCompilerParser
@@ -40,26 +70,11 @@ initializeParser: aCompilerParser
     argumentCount := aCompilerParser argumentNames size.
     temporaryCount := aCompilerParser temporaryNames size.
     selector := aCompilerParser methodMessage.
-    primitive := aCompilerParser methodPrimitive
+    primitive := aCompilerParser methodPrimitive.
+    text := aCompilerParser lexer text
 ! !
 
 !CompiledMethod methodsFor: 'accessing'!
-
-bytecodes
-    ^bytecodes
-!
-
-argumentCount
-    ^argumentCount
-!
-
-temporaryCount
-    ^temporaryCount
-!
-
-stackSize
-    ^stackSize
-!
 
 selector
     ^selector

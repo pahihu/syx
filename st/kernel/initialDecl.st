@@ -105,11 +105,11 @@ Object subclass: #Semaphore
        classVariableNames: ''!
 
 Object subclass: #CompiledCode
-       instanceVariableNames: 'selector bytecodes literals argumentCount temporaryCount stackSize primitive'
+       instanceVariableNames: 'bytecodes literals argumentCount temporaryCount stackSize text class'
        classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: ''
+	     instanceVariableNames: 'selector primitive'
              classVariableNames: ''!
 
 CompiledMethod subclass: #CompiledBlock
@@ -134,7 +134,7 @@ Object subclass: #ObjectMemory
 "Streams"
 
 Object subclass: #Stream
-       instanceVariableNames: ''
+       instanceVariableNames: 'accessMode'
        classVariableNames: ''!
 
 Stream subclass: #PositionableStream
@@ -158,7 +158,7 @@ ReadWriteStream subclass: #ByteStream
                 classVariableNames: ''!
 
 ByteStream subclass: #FileStream
-	   instanceVariableNames: 'fd name filePtr'
+	   instanceVariableNames: 'fd name filePtr peek'
            classVariableNames: ''!
 
 "Basic data types"
@@ -242,7 +242,7 @@ Dictionary subclass: #IdentityDictionary
 	   classVariableNames: ''!
 
 IdentityDictionary subclass: #SystemDictionary
-		   instanceVariableNames: ''
+		   instanceVariableNames: 'systemInitializationRequests'
 		   classVariableNames: ''!
 
 "Gtk"
@@ -265,16 +265,16 @@ GtkWidget subclass: #GtkWindow
 
 "Compiler"
 
-ReadStream subclass: #CompilerLexer
-	   instanceVariableNames: 'lastChar lastToken'
-	   classVariableNames: 'ClosingTokenTable SingleBinaryTable'!
+Object subclass: #CompilerLexer
+       instanceVariableNames: 'lastChar lastToken stream'
+       classVariableNames: 'ClosingTokenTable SingleBinaryTable'!
 
 WriteStream subclass: #CompilerBytecode
 	    instanceVariableNames: 'literals stackSize'
 	    classVariableNames: ''!
 
 Object subclass: #CompilerParser
-       instanceVariableNames: 'lexer class bytecode argumentScopes temporaryScopes methodPrimitive methodMessage inBlock temporaryNames argumentNames instanceNames'
+       instanceVariableNames: 'lexer class bytecode argumentScopes temporaryScopes duplicateIndexes methodPrimitive methodMessage inBlock temporaryNames argumentNames instanceNames'
        classVariableNames: 'PrimitiveTable'!
 
 "Console"

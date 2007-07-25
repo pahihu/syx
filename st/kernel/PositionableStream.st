@@ -1,11 +1,11 @@
 !PositionableStream class methodsFor: 'instance creation'!
 
 on: aCollection
-    ^self basicNew initializeOn: aCollection
+    ^self new initializeOn: aCollection
 !
 
 with: aCollection
-    ^(self basicNew initializeOn: aCollection) setToEnd
+    ^self new initializeOn: aCollection; setToEnd
 ! !
 
 !PositionableStream methodsFor: 'initialize-release'!
@@ -13,10 +13,14 @@ with: aCollection
 initializeOn: aCollection
     collection := aCollection.
     curPos := 0.
-    endPos := collection size
+    endPos := collection size    
 ! !
 
 !PositionableStream methodsFor: 'accessing'!
+
+size
+    ^endPos
+!
 
 collectionClass
     ^collection class
@@ -24,6 +28,10 @@ collectionClass
 
 contents
     ^collection copyFrom: 1 to: endPos
+!
+
+upToEnd
+    ^collection copyFrom: (curPos + 1 min: endPos) to: endPos
 !
 
 position
@@ -37,23 +45,38 @@ position: anInteger
 !
 
 peek
+    self ensureReadable.
     self atEnd
 	ifTrue: [ ^collection at: curPos ].
     ^collection at: curPos + 1
 !
 
 next
+    self ensureReadable.
     self atEnd
 	ifTrue: [ ^nil ].
     ^collection at: self skipOne
 !
 
-nextPut: anObject  
+nextPut: anObject
+    self ensureWriteable.
     curPos := curPos + 1.
     self atEnd
-	ifTrue: [ (endPos := curPos) > collection size
-		      ifTrue: [ collection growTo: endPos ] ].
+	ifTrue: [ (endPos := curPos) >= collection size
+		      ifTrue: [ collection growTo: endPos + 10 ] ].
     ^collection at: curPos put: anObject
+!
+
+nextPutAll: aCollection
+    | pos |
+    self ensureWriteable.
+    pos := curPos + 1.
+    curPos := curPos + aCollection size.
+    self atEnd
+	ifTrue: [ (endPos := curPos) >= collection size
+		      ifTrue: [ collection growTo: endPos + 10 ] ].
+    collection replaceFrom: pos to: curPos with: aCollection.
+    ^aCollection
 !
 
 collection

@@ -41,16 +41,27 @@ quit
     ^self quit: 0
 !
 
-initializeSystem
+registerForSystemInitialization: anObject
+    systemInitializationRequests add: anObject
+!
+
+initialize
     "This method is called once when creating the image"
+    systemInitializationRequests := Set new.
+
     self
-	at: #stdin put: (FileStream on: 0);
-	at: #stdout put: (FileStream on: 1);
-	at: #stderr put: (FileStream on: 2);
+	at: #stdin put: (FileStream on: 0) allowReadOnly;
+	at: #stdout put: (FileStream on: 1) allowWriteOnly;
+	at: #stderr put: (FileStream on: 2) allowWriteOnly;
 	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     Object allSubclassesDo: [ :ea |
 	ea initialize ]
+!
+
+initializeSystem
+    systemInitializationRequests do: [ :ea |
+	ea initializeSystem ]
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!

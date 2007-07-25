@@ -34,6 +34,10 @@ DEALINGS IN THE SOFTWARE.
 
 !SequenceableCollection methodsFor: 'copying'!
 
+copyFrom: startIndex
+    ^self copyFrom: startIndex to: self size
+!
+
 copyFrom: startIndex to: stopIndex
     "Answer a collection which is a copy of the receiver, with the elements from startIndex to stopIndex"
     | coll |
@@ -58,14 +62,14 @@ reverse
 
 replaceFrom: startIndex with: aCollection
     "Replace items from startIndex to aCollection's size with the elements of aCollection."
-    self replaceFrom: startIndex to: aCollection size with: aCollection
+    self replaceFrom: startIndex to: self size with: aCollection
 !
 
 replaceFrom: startIndex to: stopIndex with: aCollection
     "Replace items from startIndex to stopIndex with the elements of aCollection"
     | j |
     j := 0.
-    startIndex to: (stopIndex min: aCollection size) do: [ :i |
+    startIndex to: stopIndex do: [ :i |
 	self at: i put: (aCollection at: (j := j + 1)) ]
 !
 

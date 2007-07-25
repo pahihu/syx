@@ -29,12 +29,13 @@
 #include "syx-object.h"
 
 //! Default initial memory size
-#define SYX_INIT_MEMORY_SIZE 20000
+#define SYX_INIT_MEMORY_SIZE 100000
 
 syx_bool syx_init (syx_symbol root_path);
 void syx_quit (void);
 void syx_build_basic (void);
 void syx_fetch_basic (void);
+void syx_initialize_system (void);
 
 syx_string syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename);
 syx_symbol syx_get_root_path (void);

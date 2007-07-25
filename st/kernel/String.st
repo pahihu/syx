@@ -37,7 +37,7 @@ at: anIndex
 
 at: anIndex put: aCharacter
     aCharacter isCharacter
-	ifFalse: [ self error: 'A character is required' ].
+	ifFalse: [ self error: 'A character is required got ', aCharacter printString ].
     self byteAt: anIndex put: aCharacter codePoint.
     ^aCharacter
 !
@@ -57,11 +57,6 @@ basicAt: anIndex put: aCharacter
 
 printString
     ^self
-!
-
-compile
-    <primitive: 'String_compile'>
-	self primitiveFailed
 ! !
 
 !String methodsFor: 'basic'!
@@ -78,9 +73,16 @@ size
 
 !String methodsFor: 'utilities'!
 
+compileFor: aClass
+    | parser method |
+    parser := CompilerParser text: self for: aClass.
+    parser parse.
+    ^CompiledMethod fromParser: parser
+!
+
 doIt
     | method context |
-    method := ('goDoIt ', self) compile.
+    method := ('goDoIt ', self) compileFor: nil class.
     context := MethodContext on: method parent: thisContext receiver: nil arguments: #().
     ^Processor enter: context
 ! !
@@ -97,7 +99,7 @@ asString
 !
 
 asNumber
-    ^Number fromStream: (ReadStream on: self)
+    ^Number readFrom: (ReadStream on: self)
 ! !
 
 !String methodsFor: 'testing'!

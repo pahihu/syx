@@ -28,7 +28,7 @@ new
     ^self shouldNotImplement
 !
 
-fromStream: readStream
+readFrom: readStream
     "Parse the string into a number"
     | c n num scale |
     c := readStream next.
@@ -53,11 +53,12 @@ fromStream: readStream
 
     "It's a float then"
     scale := 0.1.
-    [ c := readStream next. c notNil and: [ c isDigit ] ]
+    [ c notNil and: [ c isDigit ] ]
 	whileTrue: [
 	    n := c codePoint - $0 codePoint.
 	    num := num + (n * scale).
-	    scale := scale * 0.1 ].
+	    scale := scale * 0.1.
+	    c := readStream next ].
     ^num
 ! !
 
