@@ -1262,6 +1262,18 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (ObjectMemory_setConstant)
+{
+  SYX_PRIM_ARGS(1);
+  SyxOop oop = es->message_arguments[0];
+  if (!SYX_IS_OBJECT (oop))
+    {
+      SYX_PRIM_FAIL;
+    }
+  SYX_OBJECT_IS_CONSTANT(oop) = TRUE;
+  SYX_PRIM_RETURN(es->message_receiver);
+}
+
 SYX_FUNC_PRIMITIVE (Smalltalk_quit)
 {
   SYX_PRIM_ARGS(1);
@@ -1394,6 +1406,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },
   { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
+  { "ObjectMemory_setConstant", ObjectMemory_setConstant },
 
   /* Smalltalk environment */
   { "Smalltalk_quit", Smalltalk_quit },

@@ -37,7 +37,7 @@ prog_objects = [xenv.Object (prog_sources)]
 
 if xenv['PLATFORM'] == 'win32':
     prog_objects.append (xenv.RES ('resources.rc'))
-    
+
 prog = xenv.Program (target='syx', source=prog_objects)
 Default (prog)
 

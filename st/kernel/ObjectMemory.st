@@ -42,6 +42,10 @@ snapshot
 
 !ObjectMemory class methodsFor: 'private'!
 
+setConstant: anObject
+    <primitive: 'ObjectMemory_setConstant'>
+!
+
 primSnapshot: aFilename
     <primitive: 'ObjectMemory_snapshot'>
 	self primitiveFailed

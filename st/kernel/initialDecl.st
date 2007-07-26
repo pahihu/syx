@@ -242,7 +242,7 @@ Dictionary subclass: #IdentityDictionary
 	   classVariableNames: ''!
 
 IdentityDictionary subclass: #SystemDictionary
-		   instanceVariableNames: 'systemInitializationRequests'
+		   instanceVariableNames: 'systemInitializationRequests commandLineArguments'
 		   classVariableNames: ''!
 
 "Gtk"

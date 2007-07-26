@@ -59,9 +59,20 @@ initialize
 	ea initialize ]
 !
 
-initializeSystem
+initializeSystem: commandLineArguments
+    commandLineArguments := commandLineArguments.
+
     systemInitializationRequests do: [ :ea |
-	ea initializeSystem ]
+	ea initializeSystem ].
+
+    commandLineArguments notEmpty
+	ifTrue: [ FileStream fileIn: commandLineArguments first ]
+! !
+
+!SystemDictionary methodsFor: 'accessing'!
+
+commandLineArguments
+    ^commandLineArguments
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!

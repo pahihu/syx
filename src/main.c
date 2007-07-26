@@ -67,7 +67,7 @@ _getopt_do (int argc, char **argv)
   SyxOop process;
 
   syx_char c;
-  int opt_idx;
+  syx_int32 opt_idx;
   syx_string root_path = NULL;
   syx_string image_path = NULL;
   syx_bool scratch = FALSE;
@@ -134,9 +134,10 @@ _getopt_do (int argc, char **argv)
 	default:
 	  _help ();
 	}
+
     }
 
-  if (!syx_init (root_path))
+  if (!syx_init (argc - optind, argv+optind, root_path))
     syx_error ("Couldn't initialize Syx for root: %s\n", root_path ? root_path : syx_get_root_path ());
 
   if (root_path)

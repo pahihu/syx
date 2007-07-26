@@ -37,6 +37,8 @@
 
 static syx_string _syx_root_path;
 static syx_string _syx_image_path;
+static syx_varsize _syx_argc;
+static syx_string *_syx_argv;
 
 static void _syx_file_in_basic (void);
 static void _syx_file_in_basic_decl (void);
@@ -267,7 +269,13 @@ void
 syx_initialize_system (void)
 {
   SyxOop context;
-  context = syx_send_unary_message (syx_nil, syx_globals, "initializeSystem");
+  SyxOop arguments = syx_array_new_size (_syx_argc);
+  syx_varsize i;
+
+  for (i=0; i < _syx_argc; i++)
+    SYX_OBJECT_DATA(arguments)[i] = syx_string_new (_syx_argv[i]);
+
+  context = syx_send_binary_message (syx_nil, syx_globals, "initializeSystem:", arguments);
   syx_process_execute_blocking (syx_process_new (context));
 }
 
@@ -276,11 +284,14 @@ syx_initialize_system (void)
   \param root_path an arbitrary root directory for Syx or NULL
 */
 syx_bool
-syx_init (syx_symbol root_path)
+syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
 {
   static syx_bool initialized = FALSE;   
   if (initialized || !syx_set_root_path (root_path))
     return FALSE;
+
+  _syx_argc = argc;
+  _syx_argv = argv;
 
   // first look in the working directory
   if (access ("default.sim", R_OK) == 0)

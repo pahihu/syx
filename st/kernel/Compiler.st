@@ -279,8 +279,10 @@ stackSize
 
 genLiteral: anObject
     ^(literals indexOf: anObject
-	       ifAbsent: [ literals add: anObject.
-			   literals size ]) - 1
+	       ifAbsent: [
+		   ObjectMemory setConstant: anObject.
+		   literals add: anObject.
+		   literals size ]) - 1
 !
 
 pushInstance: anIndex
@@ -354,12 +356,11 @@ sendMessage: aMessage ofArguments: numArguments toSuper: aBoolean
 !
 
 duplicateAt: anIndex
-    | coll instruction |
-    instruction := (16 << 11) + 3.
-    coll := collection copyFrom: anIndex + 1.
+    | coll |
+    coll := collection copyFrom: anIndex + 1 to: endPos.
     self
 	position: anIndex;
-	nextPut: instruction.
+	doSpecial: #duplicate.
     coll do: [ :ea |
 	super nextPut: ea ]
 !
@@ -922,7 +923,7 @@ doKeyContinuation: toSuper
     (token class = CompilerIdentifierToken and: [ token isNameColon ])
 	ifTrue: [
 	    | numArgs message |
-	    duplicateIndexes peekPut: bytecode collection size.
+	    duplicateIndexes peekPut: bytecode size.
 
 	    token asSymbol = #ifTrue:
 		ifTrue: [
@@ -950,7 +951,7 @@ doKeyContinuation: toSuper
 			    "jump here if not condition"
 			    bytecode
 				position: jump;
-				nextPut: bytecode collection size / 2;
+				nextPut: bytecode size / 2;
 				setToEnd.
 			    jump := self parseOptimizedBlock: #branch doPop: true.
 			    "we don't need any jump after else block"
@@ -959,7 +960,7 @@ doKeyContinuation: toSuper
 				nextPut: 0;
 				"jump here if condition"
 				position: conditionJump;
-				nextPut: bytecode collection size / 2;
+				nextPut: bytecode size / 2;
 				setToEnd ].
 		    ^false ].
 	    token asSymbol = #whileTrue:
@@ -972,7 +973,7 @@ doKeyContinuation: toSuper
 		ifNotNil: [
 		    | loopJump conditionJump |
 		    lexer nextToken.
-		    loopJump := bytecode collection size / 2.
+		    loopJump := bytecode size / 2.
 		    bytecode doSpecial: #duplicate.
 		    bytecode sendMessage: #value ofArguments: 0 toSuper: false.
 		    conditionJump := self parseOptimizedBlock: conditionalBranch doPop: false.
@@ -981,7 +982,7 @@ doKeyContinuation: toSuper
 			doSpecial: #branch;
 			nextPut: loopJump;
 			position: conditionJump;
-			nextPut: bytecode collection size / 2;
+			nextPut: bytecode size / 2;
 			setToEnd;
 			doSpecial: #popTop.
 
@@ -1032,7 +1033,7 @@ parseOptimizedBlock: branchType doPop: aBoolean
     inBlock := blockState.
     bytecode
 	position: jump;
-	nextPut: bytecode collection size / 2;
+	nextPut: bytecode size / 2;
 	setToEnd.
     ^jump
 !
@@ -1046,7 +1047,7 @@ doBinaryContinuation: toSuper cascading: aBoolean
 	whileTrue: [
 	    | message |
 	    doCascade ifTrue: [
-		duplicateIndexes peekPut: bytecode collection size.
+		duplicateIndexes peekPut: bytecode size.
 		doCascade := false ].
 
             message := token.
@@ -1065,7 +1066,7 @@ doUnaryContinuation: toSuper cascading: aBoolean
     [ token class = CompilerIdentifierToken and: [ token isNameConst ] ]
 	whileTrue: [
 	    aBoolean
-		ifTrue: [ duplicateIndexes peekPut: bytecode collection size ].
+		ifTrue: [ duplicateIndexes peekPut: bytecode size ].
 	    bytecode sendMessage: token ofArguments: 0 toSuper: superReceiver.
 	    token := lexer nextToken.
 	    superReceiver := false ].

@@ -151,13 +151,13 @@ close
 nextPut: aCharacter
     self ensureWriteable.
     self fileOp: 2 on: fd with: aCharacter.
-"    ^super nextPut: aCharacter"
+"    self nextPutBuffer: aCharacter asString"
 !
 
 nextPutAll: aByteArray
     self ensureWriteable.
     self fileOp: 3 on: fd with: aByteArray.
-"    ^super nextPutAll: aByteArray"
+"    self nextPutBuffer: aByteArray"
 !
 
 flush

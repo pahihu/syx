@@ -63,10 +63,10 @@ syx_library_open (syx_symbol location)
 #else
   ret = dlopen (location, RTLD_NOW);
 
-#ifdef DEBUG_INFO
+#ifdef SYX_DEBUG_INFO
   if (!ret)
     puts (dlerror ());
-#endif /* DEBUG_INFO */
+#endif /* SYX_DEBUG_INFO */
 
 #endif /* HAVE_LIBDL */
 
@@ -96,10 +96,10 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
 #else
   ret = dlsym (handle, name);
 
-#ifdef DEBUG_INFO
+#ifdef SYX_DEBUG_INFO
   if (!ret)
     puts (dlerror ());
-#endif /* DEBUG_INFO */
+#endif /* SYX_DEBUG_INFO */
 
 #endif /* HAVE_LIBDL */
 

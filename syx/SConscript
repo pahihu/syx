@@ -41,11 +41,27 @@ lib_sources = Split ("""
 	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
             syx-plugins.c
 	    """)
-lib_objects = libenv.SharedObject (lib_sources)
-lib_shared = libenv.SharedLibrary (target='syx', source=lib_objects)
-Default (lib_shared)
 
-target = env.SyxInstall (env['libdir'], lib_shared)
+if env['shared']:
+    lib_objects = libenv.SharedObject (lib_sources)
+    lib = libenv.SharedLibrary (target='syx', source=lib_objects)
+    Default (lib)
+
+    target = env.SyxInstall (env['libdir'], lib)
+    if env['PLATFORM'] == 'posix':
+        senv = env.Clone ()
+        senv['ENV'] = os.environ
+        targetdep = env.Alias ('install', senv.Command ('ldconfig', lib,
+                                                        ['@echo -n Updating ld cache...',
+                                                         '@ldconfig',
+                                                         '@echo " done"']))
+        env.Depends (targetdep, target)
+
+if env['static']:
+    lib_objects = libenv.StaticObject (lib_sources)
+    lib = libenv.StaticLibrary (target='syx', source=lib_objects)
+    Default (lib)
+    env.SyxInstall (env['libdir'], lib)
 
 target = env.Install (os.path.join (distdir, 'syx'), lib_sources + ['SConscript'])
 env.Alias ('sdist', target)
@@ -59,14 +75,6 @@ includes = ['syx.h', 'syx-interp.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error
 incdir = os.path.join (env['includedir'], 'syx')
 env.Install (incdir, includes)
 env.Alias ('install', incdir)
-
-if env['PLATFORM'] == 'posix':
-    senv = env.Clone ()
-    senv['ENV'] = os.environ
-    env.Alias ('install', senv.Command ('ldconfig', lib_shared,
-                                        ['@echo -n Updating ld cache...',
-                                         '@ldconfig',
-                                         '@echo " done"']))
 
 target = env.Install (os.path.join (distdir, 'syx'), includes)
 env.Alias ('sdist', target)

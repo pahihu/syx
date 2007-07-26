@@ -1,3 +1,19 @@
+2007-07-26  Luca Bruno  <lethalman88@gmail.com>
+
+	* SConstruct: added 'shared' and 'static' options
+
+	* st/kernel/Compiler.st: fixed stream positioning to handle cascading
+
+	* st/kernel/ObjectMemory.st (setConstant:): added
+
+	* st/kernel/Compiler.st (genLiteral:): set literals to be constant
+
+	* syx/syx-init.c (syx_initialize_system): pass command line arguments to the Smalltalk initializer
+	(syx_init): initialize command line arguments
+
+	* st/kernel/SystemDictionary.st (commandLineArguments): added variable with accessor
+	(initializeSystem:): fileIn the first argument
+
 2007-07-25  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-interp.c (syx_interp_do_special): ensure condition is boolean
