@@ -32,7 +32,7 @@ main (int argc, char *argv[])
 {
   struct timeval start, end;
 
-  syx_init (".");
+  syx_init (0, NULL, ".");
   syx_build_basic ();
 
   puts ("- Test saving image");

@@ -31,7 +31,7 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
   SyxToken token;
 
-  syx_init (".");
+  syx_init (0, NULL, ".");
 
 #ifdef HAVE_LIBGMP
   lexer = syx_lexer_new ("nameconst 123 16r123 16rFFFFFFFF 123.321 1e2 1.3e-2 $c $  #symbol #(aaa) \"comment\" 'string' + := -> !!");

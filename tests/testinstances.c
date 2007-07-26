@@ -33,7 +33,7 @@ main (int argc, char *argv[])
   SyxOop obj, instobj;
   struct timeval start, end;
 
-  syx_init (".");
+  syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
 
   gettimeofday (&start, NULL);

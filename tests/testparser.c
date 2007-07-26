@@ -35,7 +35,7 @@ main (int argc, char *argv[])
   SyxParser *parser;
   struct timeval start, end;
   
-  syx_init (".");
+  syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
 
 #define PARSE(text) lexer = syx_lexer_new (text);			\

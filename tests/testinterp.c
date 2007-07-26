@@ -59,7 +59,7 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
 
   // use build to find plugins
-  syx_init ("build");
+  syx_init (0, NULL, "build");
   syx_memory_load_image ("test.sim");
   syx_scheduler_init ();
 
