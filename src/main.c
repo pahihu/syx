@@ -24,7 +24,14 @@
 
 #include <syx/syx.h>
 #include <stdio.h>
+
+#ifdef HAVE_GETOPT
 #include <getopt.h>
+#endif
+
+#ifdef WINDOWS
+#include <windows.h>
+#endif
 
 /*! \mainpage Smalltalk YX
     
@@ -45,7 +52,7 @@ static void
 _help (void)
 {
   printf ("This is Smalltalk YX. Usage:\n\n"
-	  "\tsyx [options]\n\n"
+	  "\tsyx [options] [ -- filename [arguments] ] \n\n"
 	  "Options:\n\n"
 	  "  -r --root=DIR\t\tSpecify the root path of Syx\n\t\t\t(default: %s).\n\n"
 	  "  -i --image=IMAGEFILE\tLoad the image IMAGEFILE, also SYX_IMAGE_PATH=x\n"
@@ -63,15 +70,15 @@ _help (void)
 static void
 _getopt_do (int argc, char **argv)
 {
-  SyxOop context;
-  SyxOop process;
-
-  syx_char c;
-  syx_int32 opt_idx;
   syx_string root_path = NULL;
   syx_string image_path = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
+
+#ifdef HAVE_GETOPT
+  syx_char c;
+  syx_int32 opt_idx;
+
   static struct option long_options[] = {
     {"root", 1, 0, 0},
     {"image", 1, 0, 0},
@@ -139,6 +146,10 @@ _getopt_do (int argc, char **argv)
 
   if (!syx_init (argc - optind, argv+optind, root_path))
     syx_error ("Couldn't initialize Syx for root: %s\n", root_path ? root_path : syx_get_root_path ());
+#else
+  if (!syx_init (argc - 1, argv+1, root_path))
+    syx_error ("Couldn't initialize Syx for root: %s\n", syx_get_root_path ());
+#endif
 
   if (root_path)
     syx_free (root_path);
@@ -153,12 +164,6 @@ _getopt_do (int argc, char **argv)
     {
       syx_build_basic ();
 
-      context = syx_send_unary_message (syx_nil, syx_globals_at ("Console"), "run");
-      process = syx_process_new (context);
-      SYX_PROCESS_SUSPENDED(process) = syx_false;
-      
-      syx_scheduler_add_process (process);
-
       if (!syx_memory_save_image (NULL))
 	syx_warning ("Can't save the image\n");
 
@@ -167,11 +172,18 @@ _getopt_do (int argc, char **argv)
 	  syx_quit ();
 	  exit (EXIT_SUCCESS);
 	}
+
+      syx_initialize_system ();
     }
   else
     {
       if (!syx_memory_load_image (NULL))
 	syx_error ("Image not found\n");
+
+      // Force WinWorkspace startup on WinCE
+#ifdef WINCE
+      SYX_OBJECT_VARS(syx_globals)[3] = syx_globals_at ("WinWorkspace");
+#endif
     }
 }
 

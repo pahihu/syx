@@ -27,6 +27,12 @@
 
 #include <stdio.h>
 #include "syx-types.h"
+#include "syx-config.h"
+#include "syx-utils.h"
+
+#ifdef WINCE
+#include <windows.h>
+#endif
 
 typedef syx_uint32 SyxErrorType;
 
@@ -54,13 +60,30 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 						     receiver,		\
 						     "doesNotUnderstand:", \
 						     selector))
-
+#ifndef WINCE
 #define syx_error(args...)			\
   {						\
     fprintf (stderr, "ERROR: ");		\
     fprintf (stderr, args);			\
     exit (EXIT_FAILURE);			\
   }
+#else /* WINCE */
+
+#ifndef UNICODE
+#define syx_error(message, args...)					\
+  {									\
+    MessageBox (0, message, "Error", 0);				\
+    exit(EXIT_FAILURE);							\
+  }
+#else /* UNICODE */
+#define syx_error(message, args...)		\
+  {									\
+    MessageBox (0, syx_to_wstring (message), L"Error", 0);		\
+    exit(EXIT_FAILURE);							\
+  }
+#endif /* UNICODE */
+
+#endif /* WINCE */
 
 #define syx_warning(args...)			\
   {						\
@@ -68,11 +91,15 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
     fprintf (stderr, args);			\
   }
 
+#ifdef HAVE_PERROR
 #define syx_perror(args...)			\
   {						\
     perror (args);				\
     exit (EXIT_FAILURE);			\
   }
+#else
+#define syx_perror(args...) syx_error(args)
+#endif
 
 #define syx_debug(args...)			\
   printf (args)					

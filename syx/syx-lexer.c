@@ -23,6 +23,7 @@
 */
 
 #include "syx-memory.h"
+#include "syx-platform.h"
 #include "syx-error.h"
 #include "syx-types.h"
 #include "syx-lexer.h"
@@ -30,7 +31,10 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+
+#ifdef HAVE_ERRNO_H
 #include <errno.h>
+#endif
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
@@ -149,8 +153,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
     }
   else if (errno != 0)
     {
-      perror ("LEXER");
-      exit (EXIT_FAILURE);
+      syx_perror ("LEXER");
     }
   else
     {
@@ -188,8 +191,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	}
       else if (errno != 0)
 	{
-	  perror ("LEXER");
-	  exit (EXIT_FAILURE);
+	  syx_perror ("LEXER");
 	}
       else
 	{

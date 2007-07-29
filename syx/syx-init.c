@@ -105,6 +105,7 @@ _syx_file_in_basic (void)
     "Compiler.st",
     "Console.st",
     "Gtk.st",
+    "WinWorkspace.st",
     NULL
   };
 
@@ -138,6 +139,7 @@ syx_build_basic (void)
 {
   SyxOop Object, Behavior, Class;
   SyxOop context;
+  SyxOop process;
 
   syx_memory_clear ();
   syx_memory_init (SYX_INIT_MEMORY_SIZE);
@@ -164,7 +166,7 @@ syx_build_basic (void)
 
   syx_globals = syx_dictionary_new (100);
   // hold SystemDictionary instance variables
-  SYX_OBJECT_VARS(syx_globals) = syx_calloc (1, sizeof (SyxOop));
+  SYX_OBJECT_VARS(syx_globals) = syx_calloc (4, sizeof (SyxOop));
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
@@ -215,9 +217,8 @@ syx_build_basic (void)
   _syx_file_in_basic ();
 
   context = syx_send_unary_message (syx_nil, syx_globals, "initialize");
-  syx_process_execute_blocking (syx_process_new (context));
-
-  syx_initialize_system ();
+  process = syx_process_new (context);
+  syx_process_execute_blocking (process);
 }
 
 //! Fetch all the things needed by the VM to run accordly to the image
@@ -264,19 +265,25 @@ syx_fetch_basic (void)
   syx_scheduler_init ();
 }
 
-//! Call Smalltalk>>#initializeSystem in blocking mode
+//! Remove Smalltalk startupProcess from being scheduled and call Smalltalk>>#startupSystem: in a scheduled process
 void
 syx_initialize_system (void)
 {
   SyxOop context;
+  SyxOop process;
   SyxOop arguments = syx_array_new_size (_syx_argc);
   syx_varsize i;
 
   for (i=0; i < _syx_argc; i++)
     SYX_OBJECT_DATA(arguments)[i] = syx_string_new (_syx_argv[i]);
 
-  context = syx_send_binary_message (syx_nil, syx_globals, "initializeSystem:", arguments);
-  syx_process_execute_blocking (syx_process_new (context));
+  process = SYX_OBJECT_VARS(syx_globals)[2];
+  if (!SYX_IS_NIL (process))
+    syx_scheduler_remove_process (process);
+
+  context = syx_send_binary_message (syx_nil, syx_globals, "startupSystem:", arguments);
+  process = syx_process_new (context);
+  SYX_PROCESS_SUSPENDED (process) = syx_false;
 }
 
 //! Setup the basic external environment of Syx, such as the root and the image path
@@ -293,18 +300,28 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
   _syx_argc = argc;
   _syx_argv = argv;
 
+#ifdef WINCE
+  _syx_image_path = "\\default.sim";
+  goto end;
+#endif
+
   // first look in the working directory
+#ifdef HAVE_ACCESS
   if (access ("default.sim", R_OK) == 0)
+#else
+  if (fopen ("default.sim", "r"))
+#endif
     {
       _syx_image_path = "default.sim";
       goto end;
     }
 
   // then look in the environment
+#ifdef HAVE_GETENV
   _syx_image_path = getenv ("SYX_IMAGE_PATH");
   if (_syx_image_path)
     goto end;
-
+#endif
   // look in the root directory
   if (root_path && !strcmp (root_path, _syx_root_path))
     {
@@ -319,7 +336,7 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
 
  end:
    
-  _syx_image_path = strdup (_syx_image_path),
+  _syx_image_path = strdup (_syx_image_path);
   initialized = TRUE;
   return TRUE;
 }
@@ -361,9 +378,11 @@ syx_set_root_path (syx_symbol root_path)
 {
   if (!root_path)
      root_path = SYX_ROOT_PATH;
-   
+
+#ifdef HAVE_ACCESS
   if (access (root_path, R_OK) < 0)
      return FALSE;
+#endif
 
   if (_syx_root_path)
      syx_free (_syx_root_path);

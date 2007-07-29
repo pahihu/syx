@@ -98,6 +98,8 @@ subclass: classSymbol instanceVariableNames: instanceVariables classVariableName
 compile: aString
     | method |
     method := aString compileFor: self.
+    methodDictionary
+	ifNil: [ methodDictionary := Dictionary new: 10 ].
     methodDictionary at: method selector put: method
 ! !
 

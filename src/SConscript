@@ -31,11 +31,12 @@ if env['PLATFORM'] == 'darwin':
     xenv.MergeFlags ("-bundle -flat_namespace")
 xenv.MergeFlags ("-lsyx")
 
+prog_resources = Split ("syx-ico resources.rc")
 prog_sources = Split ("main.c")
-prog_resources = Split ("syx.ico resources.rc")
+
 prog_objects = [xenv.Object (prog_sources)]
 
-if xenv['PLATFORM'] == 'win32':
+if xenv['PLATFORM'] == 'win32' and not xenv['host']:
     prog_objects.append (xenv.RES ('resources.rc'))
 
 prog = xenv.Program (target='syx', source=prog_objects)
@@ -45,10 +46,11 @@ inst = env.SyxInstall (env['bindir'], prog)
 
 # Create the image once installed
 
-image = env.Command (xenv['imagepath'], inst, '$SOURCE -r $datadir -S')
-env.Alias ('install', image)
-env.AlwaysBuild (image)
-env.Depends (image, os.path.join(xenv['datadir'], 'st'))
+if not env['host']:
+    image = env.Command (xenv['imagepath'], inst, '$SOURCE -r $datadir -S')
+    env.Alias ('install', image)
+    env.AlwaysBuild (image)
+    env.Depends (image, os.path.join(xenv['datadir'], 'st'))
 
 # Distribution
 

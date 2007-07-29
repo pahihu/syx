@@ -36,6 +36,7 @@
 
 #ifdef HAVE_WINDOWS_H
   #include <windows.h>
+  #include <winbase.h>
 #endif
 
 #endif /* WITH_PLUGINS */
@@ -59,8 +60,8 @@ syx_library_open (syx_symbol location)
     return NULL;
 
 #ifndef HAVE_LIBDL
-  ret = LoadLibrary (location);
-#else
+  ret = LoadLibrary (SYX_IFDEF_UNICODE (location));
+#else /* HAVE_LIBDL */
   ret = dlopen (location, RTLD_NOW);
 
 #ifdef SYX_DEBUG_INFO
@@ -71,7 +72,6 @@ syx_library_open (syx_symbol location)
 #endif /* HAVE_LIBDL */
 
 #endif /* WITH_PLUGINS */
-
   return ret;
 }
 
@@ -92,8 +92,8 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
     return NULL;
 
 #ifndef HAVE_LIBDL
-  ret = GetProcAddress (handle, name);
-#else
+  ret = GetProcAddress (handle, SYX_IFDEF_UNICODE (name));
+#else /* HAVE_LIBDL */
   ret = dlsym (handle, name);
 
 #ifdef SYX_DEBUG_INFO
@@ -145,7 +145,7 @@ syx_pointer
 syx_plugin_load (syx_symbol name)
 {
   syx_pointer handle = NULL;
-   
+
 #ifdef WITH_PLUGINS
   syx_string location;
   syx_string namext;
@@ -181,7 +181,7 @@ syx_plugin_load (syx_symbol name)
 
   if (!location)
     return NULL;
-   
+
   handle = syx_library_open (location);
   syx_free (location);
   if (!handle)

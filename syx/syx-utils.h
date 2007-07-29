@@ -44,6 +44,18 @@ SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
 
 /* Utilities for strings */
 
+syx_wstring syx_to_wstring (syx_symbol s);
+syx_string syx_to_string (syx_wsymbol ws);
 syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+
+#ifdef UNICODE
+#define SYX_IFDEF_UNICODE(s) (syx_to_wstring (s))
+#define SYX_IFDEF_ANSI(ws) (syx_to_string (ws))
+#define SYX_IFDEF_CHAR_T syx_wchar
+#else
+#define SYX_IFDEF_UNICODE(s) s
+#define SYX_IFDEF_ANSI(ws) ws
+#define SYX_IFDEF_CHAR_T syx_char
+#endif
 
 #endif /* SYX_UTILS_H */

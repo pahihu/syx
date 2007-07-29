@@ -33,6 +33,7 @@
 #include "syx-init.h"
 
 #ifdef WINDOWS
+  #include <windows.h>
   #include <winsock2.h>
 #endif
 
@@ -98,8 +99,7 @@ _syx_scheduler_poll_wait (void)
   res = select (_syx_scheduler_poll_nfds + 1, &r, &w, NULL, &tv);
   if (res == -1)
     {
-      perror ("SCHEDULER: ");
-      return;
+      syx_perror ("SCHEDULER: ");
     }
 
   nfds = -1;
@@ -261,7 +261,7 @@ syx_scheduler_init (void)
 void
 syx_scheduler_run (void)
 {
-  syx_bool running = FALSE;
+  static syx_bool running = FALSE;
 
   if (running)
     return;

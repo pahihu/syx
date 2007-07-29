@@ -1,3 +1,45 @@
+2007-07-29  Luca Bruno  <lethalman88@gmail.com>
+
+	* plugins/gtk/SConscript: fix Gtk+ build
+
+	* plugins/wingui: added plugin
+
+	* syx/syx-scheduler.c (syx_scheduler_run): missing static
+
+	* syx/syx-plugins.c: handle unicode win32 api
+
+	* syx/syx-platform.h: emulate errno for platforms that doesn't have support for it
+
+	* syx/syx-primitives.c (FileStream_fileOp): return 0 if fstat is not available
+
+	* syx/syx-error.h (syx_error): show a MessageBox on WindowsCE
+
+	* syx/syx-utils.c (syx_cold_file_in): say we have 1000000 characters in a standard file if fstat is not available
+	(syx_to_wstring): added
+	(syx_to_string): added
+
+	* st/kernel/WinWorkspace.st: added
+
+	* syx/syx-init.c: fixed number of instance variables for Smalltalk
+	(syx_initialize_system): remove previous startupProcess and call #startupSystem: in a new scheduled process
+	(syx_init): force image to be in the root device for embedded WindowsCE
+
+	* syx/syx-types.h: added syx_wstring and syx_wsymbol types
+
+	* st/kernel/TextCollector.st (cr): show also the carriage return
+
+	* st/kernel/SystemDictionary.st (startupSystem:): (was initializeSystem:) handle startup requests
+
+	* src/main.c (_do_getopt): restrictive support to missing getopt
+	force WinWorkspace to startup on WindowsCE
+
+	* src/SConscript: do not create the default image if we're cross compiling
+
+	* syx/SConstruct: added WINGUI option to enable/disable the syx-wingui plugin
+	define WINCE macro when compiling for WindowsCE
+	let getopt, fstat, access, getenv and perror be optional functions
+	do not specify c99 standard when cross compiling to WindowsCE since the library doesn't handle ANSI calls
+
 2007-07-26  Luca Bruno  <lethalman88@gmail.com>
 
 	* SConstruct: added 'shared' and 'static' options

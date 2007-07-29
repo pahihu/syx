@@ -301,6 +301,7 @@ syx_process_execute_blocking (SyxOop process)
   es->process = process;
   syx_exec_state_fetch ();
   syx_processor_active_process = process;
+
   while (es->ip < es->bytecodes_count)
     {
       byte = _syx_interp_get_next_byte ();

@@ -77,6 +77,7 @@ opts.AddOptions (
                ignorecase=True),
 
    BoolOption ('GTK', """Build the syx-gtk plugin to support graphical user interfaces""", True),
+   BoolOption ('WINGUI', """Build the syx-wingui plugin to support native windows user interfaces""", True),
    BoolOption ('READLINE', """Build the syx-readline plugin to add more console features""", True))
 
 opts.Update (env)
@@ -156,6 +157,13 @@ if env['host']:
    print
    print 'Cross-compile to run on %s...' % env['host']
 
+   tool = env['host']+'-gcc'
+   env['CC'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['CC'])
+   if not env['CC']:
+      print "Can't find a valid C compiler"
+      env.Exit(1)
+
    tool = env['host']+'-ar'
    env['AR'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['AR'])
@@ -164,17 +172,16 @@ if env['host']:
    env['AS'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['AS'])
 
-   tool = env['host']+'-gcc'
-   env['CC'] = cenv.WhereIs (tool)
-   print 'Checking for %s... %s' % (tool, env['CC'])
-   if not env['CC']:
-      print "Can't find a valid C compiler"
-      env.Exit(1)
-
    tool = cenv['host']+'-ranlib'
    env['RANLIB'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['RANLIB'])
 
+   tool = cenv['host']+'-windres'
+   env['RC'] = cenv.WhereIs (tool)
+   print 'Checking for %s... %s' % (tool, env['RC'])
+
+   if 'wince' in env['host']:
+      env.MergeFlags("-DWINCE")
 
 # Do configuration
 
@@ -182,7 +189,7 @@ if env['host']:
 print 'Mandatory headers...'
 
 for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
-          'sys/types.h', 'errno.h', 'getopt.h']:
+          'sys/types.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
       env.Exit (1)
@@ -190,7 +197,7 @@ for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h',
 print
 print 'Optional headers...'
 
-for h in ['stdarg.h', 'byteswap.h']:
+for h in ['stdarg.h', 'byteswap.h', 'errno.h']:
    conf.CheckCHeader (h)
 for t in ['int64_t']:
    conf.CheckType (t, '#include <stdint.h>', 'c')
@@ -201,13 +208,18 @@ if env['PLATFORM'] == 'win32':
 print
 print 'Mandatory functions...'
 
-for f in ['strtol', 'strtof', 'strtod', 'gettimeofday', 'getopt']:
+for f in ['strtol', 'strtod']:
    if not conf.CheckFunc (f):
       print "Can't build Syx without %s function!" % f
       env.Exit (1)
 
 if env['PLATFORM'] == 'win32':
-   if not conf.CheckLibWithHeader ('wsock32', 'winsock2.h', 'c', 'select(0, NULL, NULL, NULL, NULL);'):
+   lib = 'wsock32'
+   if 'wince' in env['host']:
+      lib = 'winsock'
+      conf.CheckLib ('coredll')
+
+   if not conf.CheckLibWithHeader (lib, 'winsock2.h', 'c', 'select(0, NULL, NULL, NULL, NULL);'):
       print "Can't build Syx without select function!"
       env.Exit (1)
 else:
@@ -225,7 +237,7 @@ if not conf.CheckEndianness ():
 print
 print 'Optional functions...'
 
-for f in ['strndup']:
+for f in ['strndup', 'getopt', 'fstat', 'access', 'getenv', 'perror']:
    conf.CheckFunc (f)
 
 if env['bignum']:
@@ -245,11 +257,16 @@ conf.Finish ()
 
 
 # Flags
-env.MergeFlags ('-Wall -Wno-strict-aliasing -std=c99 -U__STRICT_ANSI__ -I#.')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -U__STRICT_ANSI__ -I#.')
+if not 'wince' in env['host']:
+   env.MergeFlags ('-std=c99')
+
 if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')
 
-if env['PLATFORM'] == 'win32':
+if 'wince' in env['host']:
+   env.MergeFlags ('-DROOT_PATH="" -DIMAGE_PATH="default.sim"')
+elif env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim"')
 else:
    env.MergeFlags ('-DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')

@@ -29,6 +29,7 @@
 
 #include <limits.h>
 #include <stdint.h>
+#include <wchar.h>
 
 /*! \page syx_types Syx Types
   Contains various C data types definition, including SyxOop
@@ -67,11 +68,15 @@ typedef unsigned char syx_bool;
 typedef char syx_char;
 typedef unsigned char syx_uchar;
 
+typedef wchar_t syx_wchar;
+
 typedef int8_t syx_int8;
 typedef uint8_t syx_uint8;
 
 typedef syx_char * syx_string;
 typedef const syx_char * syx_symbol;
+typedef syx_wchar * syx_wstring;
+typedef const syx_wchar * syx_wsymbol;
 
 typedef int16_t syx_int16;
 typedef uint16_t syx_uint16;

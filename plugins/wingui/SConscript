@@ -26,14 +26,29 @@
 
 import os
 
-Import ('env', 'distdir')
+Import ('penv', 'distdir')
 
-penv = env.Clone ()
-    
-if penv['PLATFORM'] == 'win32':
-    penv.MergeFlags ('-DBUILD_DLL')
-     
-SConscript (dirs=['gtk', 'readline', 'wingui'], exports=['penv', 'distdir'])
+lib_sources = Split ("plugin-init.c")
 
-target = env.Install (os.path.join (distdir, 'plugins'), 'SConscript')
-env.Alias ('sdist', target)
+if penv['WINGUI']:
+   env = penv.Clone ()
+   if env['PLATFORM'] == 'win32':
+      go = True
+      if 'wince' in env['host']:
+         conf = Configure (env)
+         if not conf.CheckLib ('commctrl'):
+            print 'WARNING: building without wingui plugin'
+            go = False
+         conf.Finish ()
+
+      if go:
+         env.MergeFlags ("-lsyx")
+         lib_objects = env.SharedObject (lib_sources)
+         lib_shared = env.SharedLibrary (target='syx-wingui', source=lib_objects)
+         Default (lib_shared)
+         
+         instdir = os.path.join (env['datadir'], 'plugins', 'wingui')
+         env.SyxInstall (instdir, lib_shared)
+
+target = penv.Install (os.path.join (distdir, 'plugins', 'wingui'), lib_sources + ['SConscript'])
+penv.Alias ('sdist', target)

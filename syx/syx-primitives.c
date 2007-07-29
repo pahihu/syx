@@ -449,10 +449,12 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 3: // nextPutAll:
       SYX_PRIM_ARGS(3);
-
+      
       if (!SYX_IS_NIL (es->message_arguments[2]))
-	ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
-		     SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
+	{
+	  ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
+		       SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
+	}
       else
 	ret = 0;
       break;
@@ -474,9 +476,8 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       }
       break;
 
-    case 6: // nextAll:
+    case 6: // next:
       SYX_PRIM_ARGS(3);
-
       {
 	syx_int32 count = SYX_SMALL_INTEGER (es->message_arguments[2]);
 	syx_char s[count];
@@ -499,6 +500,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 7: // size
       {
+	#ifdef HAVE_FSTAT
 	struct stat statbuf;
 	if ((fstat (fd, &statbuf)) < 0)
 	  {
@@ -506,6 +508,9 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	  }
 
 	SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
+	#else
+	SYX_PRIM_RETURN (syx_small_integer_new (0));
+	#endif
       }
       break;
 

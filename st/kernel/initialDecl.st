@@ -242,7 +242,7 @@ Dictionary subclass: #IdentityDictionary
 	   classVariableNames: ''!
 
 IdentityDictionary subclass: #SystemDictionary
-		   instanceVariableNames: 'systemInitializationRequests commandLineArguments'
+		   instanceVariableNames: 'systemInitializationRequests commandLineArguments startupProcess startupObject'
 		   classVariableNames: ''!
 
 "Gtk"
@@ -262,6 +262,12 @@ GObject subclass: #GtkWidget
 GtkWidget subclass: #GtkWindow
 	  instanceVariableNames: ''
           classVariableNames: ''!
+
+"WinWorkspace"
+
+Object subclass: #WinWorkspace
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 "Compiler"
 

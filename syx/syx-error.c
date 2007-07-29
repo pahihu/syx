@@ -23,6 +23,8 @@
 */
 
 #include "syx-memory.h"
+#include "syx-platform.h"
+#include "syx-config.h"
 #include "syx-error.h"
 #include "syx-types.h"
 #include "syx-object.h"
@@ -31,6 +33,10 @@
 
 static SyxErrorEntry **_syx_error_entries = NULL;
 static SyxErrorType _syx_error_entries_top = 0;
+
+#ifndef HAVE_ERRNO_H
+int errno=0;
+#endif
 
 //! Initialize the error reporting system
 /*!

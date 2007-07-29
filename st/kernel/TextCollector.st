@@ -55,6 +55,7 @@ proxyMessage: anAssociation
 
 cr
     "Write a new line to the receiver"
+    super cr.
     self nl
 !
 

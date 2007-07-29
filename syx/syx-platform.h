@@ -63,6 +63,11 @@
 
 /* Some platform specific informations */
 
+#ifndef HAVE_ERRNO_H
+extern int errno;
+#define ERANGE -32
+#endif
+
 #ifdef WINDOWS
 
  #define SYX_PATH_SEPARATOR '\\'

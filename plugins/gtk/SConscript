@@ -33,6 +33,7 @@ lib_sources = Split ("plugin-init.c")
 
 if penv['GTK']:
     env = penv.Clone ()
+    go = True
     if env['PLATFORM'] == 'win32':
         for path in os.environ['PATH'].split(';'):
             if 'GTK' in path:
@@ -50,6 +51,15 @@ if penv['GTK']:
             env.SyxInstall (instdir, lib_shared)
         except:
             print "WARNING: GTK+ not found, plugin won't be built"
+            go = False
+
+    if go: 
+        lib_objects = env.SharedObject (lib_sources)
+        lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
+        Default (lib_shared)	   
+        
+        instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
+        env.SyxInstall (instdir, lib_shared)
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
 penv.Alias ('sdist', target)

@@ -362,22 +362,27 @@ syx_cold_file_in (syx_symbol filename)
   SyxLexer *lexer;
   syx_string buffer;
   syx_int32 fd, count;
-  struct stat statbuf;
+  syx_size size;
   
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
 	syx_error ("can't open %s\n", filename);
 	return FALSE;
      }
-   
+#ifdef HAVE_FSTAT
+  struct stat statbuf;
   if ((fstat (fd, &statbuf)) < 0)
      {
 	syx_error ("can't obtain size of %s\n", filename);
 	return FALSE;
      }
+  size = statbuf.st_size;
+#else
+  size = 1000000;
+#endif
 
-  buffer = syx_malloc (statbuf.st_size + 1);
-  count = read (fd, buffer, statbuf.st_size);
+  buffer = syx_malloc (size + 1);
+  count = read (fd, buffer, size);
   buffer[count - 1] = '\0';
    
   close (fd);
@@ -537,7 +542,25 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   return context;
 }
 
+//! Returns a syx_wstring from a syx_string
+syx_wstring
+syx_to_wstring (syx_symbol s)
+{
+  syx_size size = strlen (s);
+  syx_wstring ws = syx_calloc (size+1, sizeof (wchar_t));
+  mbstowcs (ws, s, size);
+  return ws;
+}
 
+//! Returns a syx_string from a syx_wstring
+syx_string
+syx_to_string (syx_wsymbol ws)
+{
+  syx_size size = wcslen (ws);
+  syx_string s = syx_calloc (size+1, sizeof (syx_char));
+  wcstombs (s, ws, size);
+  return s;
+}
 
 //! Returns the first index in the string that is not a whitespace
 syx_uint32

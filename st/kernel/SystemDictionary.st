@@ -56,17 +56,28 @@ initialize
 	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     Object allSubclassesDo: [ :ea |
-	ea initialize ]
+	ea initialize ].
 !
 
-initializeSystem: commandLineArguments
+startupObject: anObject
+    startupObject := anObject
+!
+
+startupSystem: commandLineArguments
     commandLineArguments := commandLineArguments.
 
     systemInitializationRequests do: [ :ea |
 	ea initializeSystem ].
 
     commandLineArguments notEmpty
-	ifTrue: [ FileStream fileIn: commandLineArguments first ]
+	ifTrue: [ FileStream fileIn: commandLineArguments first ].
+
+    startupProcess := Processor activeProcess.
+    startupObject isNil
+        ifTrue: [
+	     Console startup ]
+	ifFalse: [
+	     startupObject startup ]
 ! !
 
 !SystemDictionary methodsFor: 'accessing'!

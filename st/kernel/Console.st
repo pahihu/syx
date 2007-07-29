@@ -24,14 +24,8 @@ DEALINGS IN THE SOFTWARE.
 
 !Console class methodsFor: 'instance creation'!
 
-run
+startup
     ^self new run
-! !
-
-!Console methodsFor: 'initialize-release'!
-
-initializeSystem
-    haveReadline := Smalltalk loadPlugin: 'readline'
 ! !
 
 !Console methodsFor: 'running'!
@@ -76,8 +70,7 @@ nextChunk
 !
 
 run
-    Smalltalk registerForSystemInitialization: self.
-    self initializeSystem.
+    haveReadline := Smalltalk loadPlugin: 'readline'.
     [
 	[
 	    | chunk method context |

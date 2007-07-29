@@ -55,7 +55,7 @@ resume
 terminate
     self isActive
 	ifTrue: [ Processor leaveTo: nil andAnswer: nil]
-	ifFalse: [ context := nil ]
+	ifFalse: [ suspended := false. context := nil ]
 ! !
 
 !Process methodsFor: 'testing'!
