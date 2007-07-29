@@ -934,6 +934,7 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
 
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
+
   if (!SYX_IS_NIL(ctx_args) && !SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENTS_TOP(block)),
 	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));

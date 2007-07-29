@@ -617,7 +617,7 @@ parse
     inBlock
 	ifTrue: [ bytecode pushConstant: #nil ].
     self parseBody.
-    bytecode doSpecial: #selfReturn.
+    bytecode doSpecial: #selfReturn
 !
 
 parseMessagePattern

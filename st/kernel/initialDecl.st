@@ -112,9 +112,9 @@ CompiledCode subclass: #CompiledMethod
 	     instanceVariableNames: 'selector primitive'
              classVariableNames: ''!
 
-CompiledMethod subclass: #CompiledBlock
-	       instanceVariableNames: 'argumentsTop'
-               classVariableNames: ''!
+CompiledCode subclass: #CompiledBlock
+	     instanceVariableNames: 'argumentsTop'
+	     classVariableNames: ''!
 
 Object subclass: #BlockClosure
        instanceVariableNames: 'block definedContext'

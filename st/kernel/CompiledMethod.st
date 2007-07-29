@@ -52,13 +52,7 @@ selector
     ^nil
 ! !
 
-!CompiledMethod class methodsFor: 'instance creation'!
-
-fromParser: aCompilerParser
-    ^CompiledMethod new initializeParser: aCompilerParser
-! !
-
-!CompiledMethod methodsFor: 'initialize-release'!
+!CompiledCode methodsFor: 'initialize-release'!
 
 initializeParser: aCompilerParser
     bytecodes
@@ -69,9 +63,21 @@ initializeParser: aCompilerParser
     literals := aCompilerParser bytecode literals.
     argumentCount := aCompilerParser argumentNames size.
     temporaryCount := aCompilerParser temporaryNames size.
-    selector := aCompilerParser methodMessage.
-    primitive := aCompilerParser methodPrimitive.
     text := aCompilerParser lexer text
+! !
+
+!CompiledCode class methodsFor: 'instance creation'!
+
+fromParser: aCompilerParser
+    ^self new initializeParser: aCompilerParser
+! !
+
+!CompiledMethod methodsFor: 'initialize-release'!
+
+initializeParser: aCompilerParser
+    super initializeParser: aCompilerParser.
+    selector := aCompilerParser methodMessage.
+    primitive := aCompilerParser methodPrimitive
 ! !
 
 !CompiledMethod methodsFor: 'accessing'!
@@ -84,5 +90,5 @@ selector
 
 initializeParser: aCompilerParser
     super initializeParser: aCompilerParser.
-    argumentsTop := aCompilerParser argumentScopes peek key
+    argumentsTop := aCompilerParser argumentScopes peek key - 1
 ! !

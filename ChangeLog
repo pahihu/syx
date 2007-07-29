@@ -1,5 +1,9 @@
 2007-07-29  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/CompiledMethod.st: fixed inherited methods
+
+	* st/kernel/initialDecl.st: fixed inheritance for compiled codes according to syx-enums.h
+
 	* plugins/gtk/SConscript: fix Gtk+ build
 
 	* plugins/wingui: added plugin
