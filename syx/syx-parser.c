@@ -131,7 +131,6 @@ syx_parser_parse (SyxParser *self)
 
   _syx_parser_parse_message_pattern (self);
 
-  SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-1);
   if (!self->_in_block)
     _syx_parser_parse_primitive (self);
 
@@ -407,6 +406,8 @@ _syx_parser_parse_primitive (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
   syx_int32 prim_index;
+
+  SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-1);
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "<")))
     return;
@@ -927,6 +928,9 @@ _syx_parser_parse_literal_array (SyxParser *self)
 	case SYX_TOKEN_STR_CONST:
 	  elements[top++] = syx_string_new (token.value.string);
 	  syx_token_free (token);
+	  break;
+	case SYX_TOKEN_CHAR_CONST:
+	  elements[top++] = syx_character_new (token.value.character);
 	  break;
 	default:
 	  syx_error ("illegal text in literal array\n");

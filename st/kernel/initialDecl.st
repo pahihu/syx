@@ -177,7 +177,7 @@ Object subclass: #Magnitude
 
 Magnitude subclass: #Character
 	  instanceVariableNames: ''
-          classVariableNames: 'WhiteSpaceTable'!
+          classVariableNames: 'WhiteSpaceTable XDigitsTable'!
 
 Magnitude subclass: #Number
 	  instanceVariableNames: ''

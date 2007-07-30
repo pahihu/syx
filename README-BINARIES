@@ -1,0 +1,14 @@
+Smalltalk YX - Binary distribution
+
+All informations, license, documentation, usage and sources are provided
+in the source distribution of Smalltalk YX.
+
+This directory contains a distribution ready to run, with machine-dependent
+ and machine-independent files.
+
+= Installation =
+
+To install the binary distribution, you must copy the contents of this
+directory in the root of your device, except this README file.
+For example, if you're running on Linux, you must copy all folders
+directly in the root /.

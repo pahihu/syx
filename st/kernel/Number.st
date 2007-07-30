@@ -42,23 +42,37 @@ readFrom: readStream
 	    n := c codePoint - $0 codePoint.
 	    num := num * 10 + n ].
 
+    "Check for radix"
+    c asLowercase = $r
+	ifTrue: [
+	    | radix table |
+	    table := #($0 $1 $2 $3 $4 $5 $6 $7 $8 $9 $A $B $C $D $E $F).
+	    radix := num.
+	    num := 0.
+	    [ (c := readStream next) notNil and: [ c isXDigit ] ]
+		whileTrue: [
+		    | idx |
+		    idx := table indexOf: c asUppercase.
+		    idx > radix
+			ifTrue: [
+			    readStream skip: -1. ^num ].
+		    num := (num * radix) + idx - 1 ] ].
+
     "Is it just an integer?"
     (c = $.)
-	ifFalse: [ ^num ].
-
-    "Check if it's really a float"
-    c := readStream next.
-    (c notNil and: [ c isDigit ])
 	ifFalse: [ readStream skip: -1. ^num ].
 
-    "It's a float then"
+    "Maybe a float"
     scale := 0.1.
+    c := readStream next.
     [ c notNil and: [ c isDigit ] ]
 	whileTrue: [
 	    n := c codePoint - $0 codePoint.
 	    num := num + (n * scale).
 	    scale := scale * 0.1.
 	    c := readStream next ].
+
+    readStream skip: -1.
     ^num
 ! !
 

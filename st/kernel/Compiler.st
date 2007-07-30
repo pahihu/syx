@@ -140,7 +140,7 @@ symbolToken
 literalArrayToken
     | s |
     s := WriteStream on: Array new.
-    [ self nextToken isNil or: [ lastToken class = CompilerClosingToken & (lastToken first = $)) ] ]
+    [ self nextToken isNil or: [ lastToken class = CompilerClosingToken and: [ lastToken first = $) ] ] ]
 	whileFalse: [
 	    | token |
 	    token := lastToken class
@@ -159,10 +159,7 @@ literalArrayToken
 numberToken
     | ret |
     stream skip: -1.
-    ret := Number readFrom: stream.
-    stream atEnd
-	ifFalse: [ stream skip: -1 ].
-    ^ret
+    ^Number readFrom: stream
 !
 
 stringToken

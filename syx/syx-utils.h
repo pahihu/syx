@@ -49,13 +49,23 @@ syx_string syx_to_string (syx_wsymbol ws);
 syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
 
 #ifdef UNICODE
+
+//! If UNICODE is defined, convert the given ANSI string (syx_char) to a wide string (syx_wchar)
 #define SYX_IFDEF_UNICODE(s) (syx_to_wstring (s))
+//! If UNICODE is defined, Convert the given wide string (syx_wchar) to an ANSI string (syx_char)
 #define SYX_IFDEF_ANSI(ws) (syx_to_string (ws))
+//! If UNICODE is defined, expand to syx_wchar, else syx_char
 #define SYX_IFDEF_CHAR_T syx_wchar
-#else
+
+#else /* UNICODE */
+
+//! If UNICODE is defined, convert the given ANSI string (syx_char) to a wide string (syx_wchar)
 #define SYX_IFDEF_UNICODE(s) s
+//! If UNICODE is defined, convert the given wide string (syx_wchar) to an ANSI string (syx_char)
 #define SYX_IFDEF_ANSI(ws) ws
+//! If UNICODE is defined, expand to syx_wchar, else syx_char
 #define SYX_IFDEF_CHAR_T syx_char
-#endif
+
+#endif /* UNICODE */
 
 #endif /* SYX_UTILS_H */

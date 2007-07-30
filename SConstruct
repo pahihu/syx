@@ -92,22 +92,30 @@ env['tools'] = ['default', 'mingw']
    
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
-     Type: 'scons'               to build Syx.
-           'scons plugins=no'    build without plugins support
-           'scons debug=no'      release build with high optimization.
-           'scons debug=normal'  add debug symbols (default).
-           'scons debug=info' 	 display more messages.
-           'scons debug=full'    trace the entire execution stack of Smalltalk.
-           'scons test'          to test Syx.
-           'scons test attach=yes'
-                                 to test Syx and attach a debugger if a
-                                 test fails
+  Type: 'scons'               to build Syx.
+        'scons doc'           to create the reference
+                              documentation (requires Doxygen).
 
-           'scons doc'           to create reference documentation (requires Doxygen).
-           'scons install'       to install Syx.
-           'scons sdist'         to create a directory with source distribution.
-	   'scons bdist'	 to create a directory with binary distribution
-                                 (implies 'scons install').
+        'scons endianness=auto,big,little'
+                              specify the endianness of the target
+                              machine (default: auto)
+
+        'scons host=arch-os'  cross-compile to build programs
+                              to run on the specified host
+
+        'scons debug=no'      release build with high optimization.
+        'scons debug=normal'  add debug symbols (default).
+        'scons debug=info'    display more messages.
+        'scons debug=full'    trace the entire execution stack of Smalltalk.
+        'scons test'          to test Syx.
+        'scons test attach=yes'
+                              to test Syx and attach a debugger if a
+                              test fails
+
+        'scons install'       to install Syx.
+        'scons sdist'         to create a directory with source distribution.
+        'scons bdist'         to create a directory with binary distribution
+                              (implies 'scons install').
      """)
 
 # Configuration
@@ -288,7 +296,7 @@ env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
                                'doxygen $SOURCES'))
 env.Clean ('doc', 'build/doc')
 
-distdir = '#syx-0.1.2'
+distdir = '#syx-0.1.3'
 
 # Installation
 
@@ -334,3 +342,8 @@ env.Alias ('sdist', target)
 
 target = env.Install (os.path.join (distdir, 'doc', 'html', 'extras'), '#doc/html/extras/footer.html')
 env.Alias ('sdist', target)
+
+# Binary distribution
+
+target = env.Install (distdir, '#README-BINARIES')
+env.Alias ('bdist', target)

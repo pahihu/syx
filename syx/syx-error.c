@@ -68,6 +68,12 @@ syx_error_clear (void)
   syx_free (_syx_error_entries);
 }
 
+//! Register a kind of error
+/*!
+  Create a new hook for reporting errors from C to the Smalltalk environment.
+
+  \return a number identifying the king of error for future lookups
+*/
 SyxErrorType
 syx_error_register (syx_symbol name, SyxOop class)
 {
@@ -85,6 +91,11 @@ syx_error_register (syx_symbol name, SyxOop class)
   return _syx_error_entries_top - 1;
 }
 
+//! Lookup for an error
+/*!
+  \param type the type return from syx_error_register
+  \return the entry of the error
+*/
 SyxErrorEntry *
 syx_error_lookup (SyxErrorType type)
 {

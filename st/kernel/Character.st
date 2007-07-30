@@ -30,7 +30,8 @@ new
 
 initialize
     WhiteSpaceTable := { Character cr. Character nl. Character lf. Character space. Character tab.
-			 Character verticalTab. Character ff } asSet
+			 Character verticalTab. Character ff } asSet.
+    XDigitsTable := (Set new: 40) addAll: #($0 $1 $2 $3 $4 $5 $6 $7 $8 $9 $a $b $c $d $e $f $A $B $C $D $E $F)
 !
 
 whiteSpaces
@@ -157,6 +158,10 @@ isLetter
 
 isDigit
     ^self between: $0 and: $9
+!
+
+isXDigit
+    ^XDigitsTable includes: self
 !
 
 isAlphaNumeric

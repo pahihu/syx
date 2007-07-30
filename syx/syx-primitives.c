@@ -853,7 +853,8 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
   mpz_t *op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
 #define _NEW_R mpz_t *r = syx_calloc (1, sizeof (mpz_t)); mpz_init (*r)
 #define _RET_R if (mpz_fits_sint_p (*r) && SYX_SMALL_INTEGER_CAN_EMBED (mpz_get_si (*r))) \
-    { syx_int32 ret = mpz_get_si (*r); mpz_clear (*r); SYX_PRIM_RETURN (syx_small_integer_new (ret)); } \
+    { syx_int32 ret = mpz_get_si (*r); mpz_clear (*r); syx_free (r);	\
+      SYX_PRIM_RETURN (syx_small_integer_new (ret)); }			\
   else									\
     { SYX_PRIM_RETURN (syx_large_integer_new_mpz (r)); }
 

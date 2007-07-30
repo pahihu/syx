@@ -83,76 +83,6 @@ SyxOop syx_nil,
 
 /* Inlines */
 
-//! TRUE if an overflow occurs when doing b times a
-inline syx_bool
-SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
-{
-#ifdef HAVE_INT64_T
-  syx_int64 res = (syx_int64)a * (syx_int64)b;
-  if ((res > INT_MAX) || (res < INT_MIN))
-    return TRUE;
-#else
-  if (a > 0) 
-    {
-      if (b > 0)
-	{
-	  if (a > (INT_MAX / b))
-	    return TRUE;
-	} 
-      else
-	{
-	  if (b < (INT_MIN / a))
-	    return TRUE;
-	} 
-    } 
-  else
-    { 
-      if (b > 0)
-	{ 
-	  if (a < (INT_MIN / b))
-	    return TRUE;
-	} 
-      else
-	{ 
-	  if ( (a != 0) && (b < (INT_MAX / a)))
-	    return TRUE;
-	} 
-    }
-#endif
-
-  return FALSE;
-}
-
-//! TRUE if an overflow occurs when shifting a by b
-inline syx_bool
-SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b)
-{
-  // Thanks to Sam Philips 
-
-  if (b <= 0)
-    return FALSE;
-
-  syx_int32 i = 0;
-  syx_int32 sval = abs(a);
-
-  while (sval >= 16)
-    {
-      sval = sval >> 4;
-      i += 4;
-    }
-  
-  while (sval != 0)
-    {
-      sval = sval >> 1;
-      i++;
-    }
-  
-  if ((i + b) > 30)
-    return TRUE;
-
-  return FALSE;
-}
-
 //! Returns the number of instance variables held by the object
 /*!
   This method obtain the size of the instance from the instanceSize of its class
@@ -981,6 +911,11 @@ syx_object_new (SyxOop class)
   return syx_object_new_vars (class, SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class)));
 }
 
+//! Create a new object of the given size
+/*!
+  \param has_refs specify if the created object must be Object indexable or Byte indexable
+  \param size number of objects/bytes to hold
+*/
 SyxOop 
 syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
 {
@@ -994,6 +929,12 @@ syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
   return (SyxOop)object;
 }
 
+//! Create a new object of the given size with the given data
+/*!
+  \param has_refs specify if the created object must be Object indexable or Byte indexable
+  \param size number of objects/bytes to hold
+  \param data the data of the object (must be an array of SyxOop or syx_int8)
+*/
 SyxOop 
 syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data)
 {
@@ -1161,4 +1102,78 @@ syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
     }
 
   return syx_nil;
+}
+
+
+
+/* Small integer overflow checks */
+
+//! TRUE if an overflow occurs when doing b times a
+inline syx_bool
+SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
+{
+#ifdef HAVE_INT64_T
+  syx_int64 res = (syx_int64)a * (syx_int64)b;
+  if ((res > INT_MAX) || (res < INT_MIN))
+    return TRUE;
+#else
+  if (a > 0) 
+    {
+      if (b > 0)
+	{
+	  if (a > (INT_MAX / b))
+	    return TRUE;
+	} 
+      else
+	{
+	  if (b < (INT_MIN / a))
+	    return TRUE;
+	} 
+    } 
+  else
+    { 
+      if (b > 0)
+	{ 
+	  if (a < (INT_MIN / b))
+	    return TRUE;
+	} 
+      else
+	{ 
+	  if ( (a != 0) && (b < (INT_MAX / a)))
+	    return TRUE;
+	} 
+    }
+#endif
+
+  return FALSE;
+}
+
+//! TRUE if an overflow occurs when shifting a by b
+inline syx_bool
+SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b)
+{
+  // Thanks to Sam Philips 
+
+  if (b <= 0)
+    return FALSE;
+
+  syx_int32 i = 0;
+  syx_int32 sval = abs(a);
+
+  while (sval >= 16)
+    {
+      sval = sval >> 4;
+      i += 4;
+    }
+  
+  while (sval != 0)
+    {
+      sval = sval >> 1;
+      i++;
+    }
+  
+  if ((i + b) > 30)
+    return TRUE;
+
+  return FALSE;
 }

@@ -54,12 +54,22 @@
 /* Swap for big endian machines */
 
 #ifdef HAVE_BIG_ENDIANNESS
+
+//! Swap 16-bit on big endian machines. No operation is done on little endian machines
 #define SYX_COMPAT_SWAP_16(x) syx_bswap_16(x)
+
+//! Swap 16-bit on big endian machines. No operation is done on little endian machines
 #define SYX_COMPAT_SWAP_32(x) syx_bswap_32(x)
-#else
+
+#else /* HAVE_BIG_ENDIANNESS */
+
+//! Swap 16-bit on big endian machines. No operation is done on little endian machines
 #define SYX_COMPAT_SWAP_16(x) (x)
+
+//! Swap 16-bit on big endian machines. No operation is done on little endian machines
 #define SYX_COMPAT_SWAP_32(x) (x)
-#endif
+
+#endif /* HAVE_BIT_ENDIANNESS */
 
 /* Some platform specific informations */
 

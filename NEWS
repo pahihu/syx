@@ -1,3 +1,44 @@
+30 July 2007
+------------
+
+	Released Syx 0.1.3 version.
+
+	This release adds yet more support for other platforms (Windows CE), a bunch of bug fixes,
+	and many features like the ST compiler. This is a list of what changed
+	since previous release:
+	- Fractions, division methods and some other match functions
+	  (floor, ceiling, quo, trunc, ...) have been added
+	- Some lexer issues (quotes, minus, ...) have been fixed
+	- Fixed garbage collection while finalizing objects
+	- Many ANSI methods for Character have been covered
+	- First attempt to reach endianness image compatibility
+	- String to Number methods and viceversa have been added
+	- Super messages have been fixed
+	- Syntax shortucts such as Object>>#caseOf:otherwise: have been added
+	- Fixed cascading parsing
+	- A complete Smalltalk compiler has been added
+	- Support for cross-compiling and with more options have been added to Scons
+	- Save text of methods
+	- Increased initial memory size from 20000 objects to 100000 objects
+	- More C functions have been documented
+	- An important issue in ArrayedCollection>>#replace:From:To:With: primitive has been fixed
+	- Access mode (read, write, read and write) to Streams and more methods
+	  to FileStreams have been added
+	- CompiledMethod and CompiledBlock inheritance has been reorganized
+	- Run Smalltalk scripts from command line
+	- New plugin to wrap native Win API to create a simple WinWorkspace
+	- Build Syx for Windows CE with WinWorkspace running on the device
+	- Support for user-defined startup sequence has been added
+	- Support for wide-character strings has been added
+	- getopt, errno, fstat, access, getenv and perror are now optional functions
+
+	Cross-compiling to Windows CE has been done with host=arm-wince-mingw32ce using CeGCC
+	by disabling all configuration options.
+	Endianness compatibility is not perfectly reached yet.
+
+(Luca Bruno)
+
+
 13 July 2007
 ------------
 

@@ -49,6 +49,8 @@ main (int argc, char *argv[])
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \
   process = syx_process_new (context)
 
+  syx_processor_first_process = syx_nil;
+
   puts ("- Test processes");
   INTERPRET ("method"\
 	     "['Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl.'Process 1' printNl] fork."\

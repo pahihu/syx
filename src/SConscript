@@ -31,7 +31,7 @@ if env['PLATFORM'] == 'darwin':
     xenv.MergeFlags ("-bundle -flat_namespace")
 xenv.MergeFlags ("-lsyx")
 
-prog_resources = Split ("syx-ico resources.rc")
+prog_resources = Split ("syx.ico resources.rc")
 prog_sources = Split ("main.c")
 
 prog_objects = [xenv.Object (prog_sources)]

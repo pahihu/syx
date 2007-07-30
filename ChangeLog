@@ -1,3 +1,21 @@
+2007-07-30  Luca Bruno  <lethalman88@gmail.com>
+
+	== Released 0.1.3 version ==
+	
+	* st/kernel/Character.st (isXDigit): added
+
+	* st/kernel/Compiler.st (literalArrayToken): fixed parsing when the array contains numbers
+
+	* st/kernel/Number.st (readFrom:): parse radix numbers
+
+	* syx/syx-parser.c (_syx_parser_parse_literal_array): character parsing in the array was missed
+
+	* SConstruct: updated the help message
+
+	* Documentate more functions
+
+	* tests/testinterp.c: fix to run after the startup changes
+
 2007-07-29  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/CompiledMethod.st: fixed inherited methods
@@ -26,7 +44,7 @@
 
 	* syx/syx-init.c: fixed number of instance variables for Smalltalk
 	(syx_initialize_system): remove previous startupProcess and call #startupSystem: in a new scheduled process
-	(syx_init): force image to be in the root device for embedded WindowsCE
+	(syx_init): force image to be in the root device for embedded Windows CE
 
 	* syx/syx-types.h: added syx_wstring and syx_wsymbol types
 
@@ -40,7 +58,7 @@
 	* src/SConscript: do not create the default image if we're cross compiling
 
 	* syx/SConstruct: added WINGUI option to enable/disable the syx-wingui plugin
-	define WINCE macro when compiling for WindowsCE
+	define WINCE macro when compiling for Windows CE
 	let getopt, fstat, access, getenv and perror be optional functions
 	do not specify c99 standard when cross compiling to WindowsCE since the library doesn't handle ANSI calls
 
@@ -178,7 +196,7 @@
 	(syx_class_lookup_method): idem
 	All calls have been updated
 
-	* syx/syx-lexer.c (_syx_lexer_token_string): support single apices into strings
+	* syx/syx-lexer.c (_syx_lexer_token_string): support single quotes into strings
 	(_syx_lexer_token_binary): support for binary symbols up to 2 characters
 
 	* st/kernel/initialDecl.st (ReadStream): added

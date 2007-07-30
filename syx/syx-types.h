@@ -102,15 +102,19 @@ typedef void * syx_pointer;
 typedef syx_nint SyxOop;
 
 
-//! Basic instance types
-//! Evaluate syx_true or syx_false depending on the given condition
+/* Basic instance types */
+
+//! Expands to syx_true or syx_false depending on the given condition
 #define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
+//! Create a new SmallInteger
 #define syx_small_integer_new(num) (((SyxOop)(num) << 1) + SYX_TYPE_SMALL_INTEGER)
+//! Create a new Character
 #define syx_character_new(ch) (((SyxOop)(ch) << 2) + SYX_TYPE_CHARACTER)
 
-//! Basic conversions
+//! Retrieve a syx_int32 from a SyxOop
 #define SYX_SMALL_INTEGER(oop) ((syx_int32)(oop) >> 1)
-#define SYX_CHARACTER(oop) ((syx_uchar)((syx_nint)(oop) >> 2))
+//! Retrieve a syx_uchar from a SyxOop
+#define SYX_CHARACTER(oop) ((syx_uchar)((oop) >> 2))
 
 //! TRUE if an overflow occurs when doing b times a
 inline syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);

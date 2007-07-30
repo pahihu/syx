@@ -49,17 +49,27 @@ void syx_error_clear (void);
 SyxErrorType syx_error_register (syx_symbol name, SyxOop class);
 SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
+//! Signal an error in the Smalltalk environment
+/*!
+  \param type the type return from syx_error_register
+*/
 #define syx_signal(type, args...)					\
   syx_interp_enter_context (syx_send_message (syx_interp_get_current_context (), \
 					      syx_error_lookup (type)->class, \
 					      "signal",			\
 					      args))
 
+//! Send receiver>>#doesNotUnderstand: with selector
 #define syx_signal_does_not_understand(receiver, selector)		\
   syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (), \
 						     receiver,		\
 						     "doesNotUnderstand:", \
 						     selector))
+
+//! Display an error then exits
+/*!
+  This function will show an error MessageBox on Windows CE
+*/
 #ifndef WINCE
 #define syx_error(args...)			\
   {						\
@@ -68,7 +78,6 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
     exit (EXIT_FAILURE);			\
   }
 #else /* WINCE */
-
 #ifndef UNICODE
 #define syx_error(message, args...)					\
   {									\
@@ -85,12 +94,15 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 #endif /* WINCE */
 
+
+//! Display a warning message
 #define syx_warning(args...)			\
   {						\
     fprintf (stderr, "WARNING: ");		\
     fprintf (stderr, args);			\
   }
 
+//! Display perror message and exit
 #ifdef HAVE_PERROR
 #define syx_perror(args...)			\
   {						\
@@ -101,6 +113,7 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 #define syx_perror(args...) syx_error(args)
 #endif
 
+//! Display debugging messages
 #define syx_debug(args...)			\
   printf (args)					
     

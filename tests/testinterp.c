@@ -116,7 +116,7 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method ^[ :s | [ :s | s ] value: 321] value: 123");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
-  puts ("- Another text for nested blocks and arguments");
+  puts ("- Another test for nested blocks and arguments");
   ret_obj = _interpret ("method | b | b := [ :a | a ]."
 			"^[ :b | "
 			"   ([ :b | "
