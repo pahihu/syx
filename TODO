@@ -1,4 +1,5 @@
 Major:
+- Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Image compatibile on both big and little endian machines
 - Auto-growable collections
@@ -11,7 +12,6 @@ Minor:
 - Add pool dictionaries
 - Use radix for floats in the lexer
 - Object inspecting
-- Fix special unary and binary messages without being too expensive
 
 Later:
 - Create a series of Smalltalk tests and benchmarks

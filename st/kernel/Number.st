@@ -273,9 +273,9 @@ abs
 
 \\ aNumber
     "Coerce aNumber and do modulo"
-    self generality > aNumber generality
-	ifTrue: [ ^self \\ (self coerce: aNumber) ]
-	ifFalse: [ ^(aNumber coerce: self) \\ aNumber ]
+    ^self generality > aNumber generality
+	ifTrue: [ self \\ (self coerce: aNumber) ]
+	ifFalse: [ (aNumber coerce: self) \\ aNumber ]
 !
 
 quo: aNumber

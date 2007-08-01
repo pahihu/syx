@@ -289,6 +289,7 @@ syx_process_execute_blocking (SyxOop process)
 {
   SyxExecState *orig_es;
   syx_uint16 byte;
+  SyxOop orig_process;
 
   if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
     {
@@ -296,6 +297,7 @@ syx_process_execute_blocking (SyxOop process)
       return;
     }
 
+  orig_process = syx_processor_active_process;
   orig_es = es;
   es = syx_exec_state_new ();
   es->process = process;
@@ -312,6 +314,7 @@ syx_process_execute_blocking (SyxOop process)
   syx_exec_state_free ();
 
   es = orig_es;
+  syx_processor_active_process = orig_process;
 }
 
 
