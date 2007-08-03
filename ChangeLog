@@ -1,7 +1,16 @@
 2007-08-03  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-init.c (syx_build_basic): send #initializeFirstSystem instead of #initialize
+
+	* st/kernel/ArrayedCollection.st (copyWithout:): added refinement
+	
+	* st/kernel/Collection.st (copyWithout:): added
+
 	* st/kernel/SequenceableCollection.st (copyReplaceAll:with:): added
 	(matchSubcollection:startingAt:): added
+	(copyReplaceFrom:to:with:): added
+	(copyReplaceFrom:to:withObject:): added
+	(copyReplacing:withObject:): added
 
 2007-08-02  Luca Bruno  <lethalman88@gmail.com>
 

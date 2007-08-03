@@ -229,7 +229,7 @@ syx_build_basic (void)
    
   _syx_file_in_basic ();
 
-  context = syx_send_unary_message (syx_nil, syx_globals, "initialize");
+  context = syx_send_unary_message (syx_nil, syx_globals, "initializeFirstSystem");
   process = syx_process_new (context);
   syx_process_execute_blocking (process);
 }

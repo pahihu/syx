@@ -88,6 +88,18 @@ copyWith: anObject
     ^coll
 !
 
+copyWithout: oldElement
+    "Copy the entire collection omitting those equivalent to oldElement"
+    | coll count j |
+    count := self occurrencesOf: oldElement.
+    coll := self copyEmpty: self size - count.
+    j := 0.
+    self from: 1 to: self size keysAndValuesDo: [ :i :v |
+	v = oldElement
+	    ifFalse: [ coll at: (j := j + 1) put: v ] ].
+    ^coll
+!
+
 reverse
     "Answer a collection copying the receiver's elements in the opposite order"
     | coll i |

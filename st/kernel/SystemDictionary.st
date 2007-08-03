@@ -45,7 +45,7 @@ registerForSystemInitialization: anObject
     systemInitializationRequests add: anObject
 !
 
-initialize
+initializeFirstSystem
     "This method is called once when creating the image"
     systemInitializationRequests := Set new.
 

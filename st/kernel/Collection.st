@@ -87,9 +87,14 @@ copyEmpty: newSize
     ^self class new: newSize
 !
 
+copyWithout: oldElement
+    "Answer a collection with the same receiver's elements omitting those equivalent to oldElement"
+    ^self copy remove: oldElement; yourself
+!
+
 copyWith: newElement
     "Answer a collection which is a copy of the receiver, and adds a newElement"
-    ^(self class withAll: self) add: newElement; yourself
+    ^self copy add: newElement; yourself
 ! !
 
 !Collection methodsFor: 'enumerating'!

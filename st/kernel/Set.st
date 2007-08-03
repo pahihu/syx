@@ -92,6 +92,7 @@ remove: anObject ifAbsent: exceptionHandler
     (self basicAt: index) isNil
 	ifTrue: [ ^exceptionHandler value ].
     self basicAt: index put: nil.
+    numElements := numElements - 1.
     ^anObject
 ! !
 

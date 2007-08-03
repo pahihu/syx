@@ -49,14 +49,33 @@ copyFrom: startIndex to: stopIndex
     ^coll
 !
 
-matchSubcollection: aCollection startingAt: anIndex
+indexOfSubCollection: targetSequence startingAt: anIndex ifAbsent: exceptionHandler
+    "Answer the index of the first element of the collection if the sequence matches targetSequence.
+     Call the exceptionHandler if none is found"
+    | selfSize targetSize |
+    selfSize := self size.
+    targetSize := targetSequence size.
+
+    anIndex to: selfSize do: [ :i |
+	(self matchSubCollection: targetSequence startingAt: i)
+	    ifTrue: [ ^i ] ].
+    ^exceptionHandler value
+!
+
+indexOfSubCollection: targetSequence startingAt: anIndex
+    "Answer the index of the first element of the collection if the sequence matches targetSequence.
+     Return 0 if none is foudn"
+    ^self indexOfSubCollection: targetSequence startingAt: anIndex ifAbsent: [ 0 ]
+!
+
+matchSubCollection: aCollection startingAt: anIndex
     "Answer true if the given collection matches the receiver's elements starting at the given index"
     | j |
-    self size - anIndex < aCollection size
+    self size - anIndex + 1 < aCollection size
 	ifTrue: [ ^false ].
 
     j := 0.
-    self from: anIndex to: aCollection size do: [ :ea |
+    self from: anIndex to: anIndex + aCollection size - 1 do: [ :ea |
 	ea = (aCollection at: (j := j + 1))
 	    ifFalse: [ ^false ] ].
     ^true
@@ -71,12 +90,64 @@ copyReplaceAll: targetElements with: replacementElements
     i := 0.
     [ i <= self size ]
 	whileTrue: [
-	    (self matchSubcollection: targetElements startingAt: (i := i + 1))
+	    (self matchSubCollection: targetElements startingAt: (i := i + 1))
 		ifTrue: [ 
 		    stream nextPutAll: replacementElements.
 		    i := i + targetSize ].
 	    stream nextPut: (self at: i) ].
     ^stream contents
+!
+
+copyReplaceFrom: startIndex to: stopIndex with: replacementElements
+    "Answer a collection which elements are replaced from startIndex to stopIndex with the elements
+     of the given collection"
+    | stream |
+    (startIndex between: 1 and: self size + 1)
+	ifFalse: [ ^self error: 'invalid start index' ].
+    (stopIndex between: startIndex - 1 and: self size)
+	ifFalse: [ ^self error: 'invalid stop index' ].
+
+    stream := WriteStream on: self class new.
+    self from: 1 to: startIndex - 1 do: [ :ea |
+	stream nextPut: ea ].
+    stream nextPutAll: replacementElements.
+    self from: stopIndex + 1 to: self size do: [ :ea |
+	stream nextPut: ea ].
+    ^stream contents
+!
+
+copyReplaceFrom: startIndex to: stopIndex withObject: anObject
+    "Answer a collection which elements from startIndex to stopIndex are replaced
+     with anObject"
+    | stream |
+    (startIndex between: 1 and: self size + 1)
+	ifFalse: [ ^self error: 'invalid start index' ].
+    (stopIndex between: startIndex - 1 and: self size)
+	ifFalse: [ ^self error: 'invalid stop index' ].
+
+    stream := WriteStream on: self class new.
+    self from: 1 to: startIndex - 1 do: [ :ea |
+	stream nextPut: ea ].
+
+    stopIndex < startIndex
+	ifTrue: [ stream nextPut: anObject ]
+	ifFalse: [
+	    startIndex to: stopIndex do: [ :i |
+		stream nextPut: anObject ] ].
+
+    self from: stopIndex + 1 to: self size do: [ :ea |
+	stream nextPut: ea ].
+    ^stream contents
+!
+
+copyReplacing: targetElement withObject: replacementElement
+    "Answer a collection with the same receiver's elements replacing targetElement with replacementElement"
+    | coll |
+    coll := self copy.
+    self from: 1 to: coll size keysAndValuesDo: [ :i :v |
+	v = targetElement
+	    ifTrue: [ coll at: i put: replacementElement ] ].
+    ^coll
 !
 
 reverse
