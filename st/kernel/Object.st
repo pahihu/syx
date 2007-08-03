@@ -214,6 +214,42 @@ primitiveFailed
 
 !Object methodsFor: 'syntax shortcuts'!
 
+respondsTo: selector
+    "Answer if the receiver can respond to the given selector"
+    ^self class doesUnderstand: selector
+!
+
+perform: selector
+    <primitive: 'Object_perform'>
+	(self respondsTo: selector)
+	ifFalse: [ self doesNotUnderstand: selector ]
+!
+
+perform: selector with: argument1
+    <primitive: 'Object_perform'>
+	(self respondsTo: selector)
+	ifFalse: [ self doesNotUnderstand: selector ]
+!
+
+perform: selector with: argument1 with: argument2
+    <primitive: 'Object_perform'>
+	(self respondsTo: selector)
+	ifFalse: [ self doesNotUnderstand: selector ]
+!
+
+perform: selector with: argument1 with: argument2 with: argument3
+    <primitive: 'Object_perform'>
+	(self respondsTo: selector)
+	ifFalse: [ self doesNotUnderstand: selector ]
+!
+
+perform: selector withArguments: arguments
+    "Send a message using the given message selector and the given collection of arguments"
+    <primitive: 'Object_performWithArguments'>
+	(self respondsTo: selector)
+	ifFalse: [ self doesNotUnderstand: selector ]
+!
+
 -> anObject
     "Create a new association between myself and anObject"
     ^Association key: self value: anObject

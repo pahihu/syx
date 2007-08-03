@@ -51,7 +51,7 @@ Object subclass: #Collection
        classVariableNames: ''!
 
 Collection subclass: #Set
-	   instanceVariableNames: ''
+	   instanceVariableNames: 'numElements'
 	   classVariableNames: ''!
 
 Collection subclass: #SequenceableCollection
@@ -225,16 +225,12 @@ Object subclass: #Association
        instanceVariableNames: 'key value'
        classVariableNames: ''!
 
-Association subclass: #Link
-	    instanceVariableNames: 'next'
-            classVariableNames: ''!
-
 Association subclass: #VariableBinding
 	    instanceVariableNames: 'dictionary'
 	    classVariableNames: ''!
 
 Collection subclass: #Dictionary
-	   instanceVariableNames: ''
+	   instanceVariableNames: 'numElements'
 	   classVariableNames: ''!
 
 Dictionary subclass: #IdentityDictionary

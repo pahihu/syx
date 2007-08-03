@@ -1,12 +1,45 @@
 !Set class methodsFor: 'instance creation'!
 
 new: size
-    ^self basicNew: ((size \\ 2 = 0
-			  ifTrue: [ size + 1 ]
-			  ifFalse: [ size ]) max: 11)
+    ^(self basicNew: ((size \\ 2 = 0
+			   ifTrue: [ size + 1 ]
+			   ifFalse: [ size ]) max: 11)) initialize
+! !
+
+!Set methodsFor: 'initialize-release'!
+
+initialize
+    numElements := 0
+! !    
+
+!Set methodsFor: 'private'!
+
+incrementNumElements
+    (numElements := numElements + 1) > (self basicSize // 2)
+	ifTrue: [ self rehashToSize: self basicSize + (numElements) ]
 ! !
 
 !Set methodsFor: 'accessing'!
+
+size
+    ^numElements
+!
+
+rehashClass
+    ^self class
+!
+
+growTo: anInteger
+    self rehashToSize: anInteger
+!
+    
+rehashToSize: anInteger
+    | d |
+    d := self rehashClass new: anInteger.
+    self do: [ :ea |
+	d add: ea ].
+    ObjectMemory atData: self put: d
+!
 
 indexOf: anObject
     | h2 pos size |
@@ -44,7 +77,10 @@ add: anObject
     
     index := self indexOf: anObject.
     (self basicAt: index) isNil
-	ifTrue: [ self basicAt: index put: anObject ]
+	ifTrue: [
+	    self basicAt: index put: anObject.
+	    self incrementNumElements ].
+    ^anObject
 !
 
 remove: anObject ifAbsent: exceptionHandler
@@ -55,7 +91,8 @@ remove: anObject ifAbsent: exceptionHandler
     index := self indexOf: anObject.
     (self basicAt: index) isNil
 	ifTrue: [ ^exceptionHandler value ].
-    self basicAt: index put: nil
+    self basicAt: index put: nil.
+    ^anObject
 ! !
 
 !Set methodsFor: 'enumerating'!

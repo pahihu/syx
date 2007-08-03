@@ -25,12 +25,49 @@ DEALINGS IN THE SOFTWARE.
 !Dictionary class methodsFor: 'instance creation'!
 
 new: size
-    ^self basicNew: ((size \\ 2 = 0
-			 ifTrue: [ size + 1 ]
-			 ifFalse: [ size ]) max: 15)
+    ^(self basicNew: ((size \\ 2 = 0
+			   ifTrue: [ size + 1 ]
+			   ifFalse: [ size ]) max: 15)) initialize
+! !
+
+!Dictionary methodsFor: 'initialize-release'!
+
+initialize
+    numElements := 0
+! !
+
+!Dictionary methodsFor: 'private'!
+
+rehashClass
+    ^self class
+!
+
+incrementNumElements
+    numElements := numElements + 1
 ! !
 
 !Dictionary methodsFor: 'accessing'!
+
+size
+    ^numElements
+!
+
+growTo: anInteger
+    self rehashToSize: anInteger
+!
+    
+rehashToSize: anInteger
+    | d |
+    d := self rehashClass new: anInteger.
+    self keysAndValuesDo: [ :k :v |
+	d at: k put: v ].
+    ObjectMemory atData: self put: d
+!
+
+incrementNumElements
+    (numElements := numElements + 1) > (self basicSize // 4)
+	ifTrue: [ self rehashToSize: self basicSize + (numElements * 2) ]
+!
 
 removeKey: aKey ifAbsent: exceptionHandler
     | index |
@@ -71,9 +108,10 @@ indexOf: aKey
 	    ifTrue: [ ^pos + 1 ].
 	pos := pos + h2.
 	pos >= (size - 1)
-	    ifTrue: [ pos := pos - (size - 1) ] ].
-    self error: 'Dictionary is full'
+	    ifTrue: [ pos := pos - (size - 1) ] ]
 !
+
+
 
 associationAt: aKey
     | index key |
@@ -97,6 +135,7 @@ at: aKey put: aValue
     self
 	basicAt: index put: aKey;
 	basicAt: index + 1 put: aValue.
+    self incrementNumElements.
     ^aValue
 ! !
 
@@ -125,6 +164,13 @@ do: aBlock
     1 to: self basicSize by: 2 do: [ :i |
 	(self basicAt: i)
 	    ifNotNil: [ aBlock value: (self basicAt: i + 1) ] ]
+!
+
+includesKey: anObject
+    "Answer true if the given key is present in the dictionary, otherwise false"
+    | index |
+    index := self indexOf: anObject.
+    ^(self basicAt: index) notNil
 !
 
 collect: transformerBlock

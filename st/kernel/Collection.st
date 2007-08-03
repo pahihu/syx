@@ -73,7 +73,7 @@ remove: anObject ifAbsent: exceptionHandler
 
 remove: anObject
     "Remove anObject and fail if it's absent"
-    self remove: anObject ifAbsent: [ NotFound signal ]
+    ^self remove: anObject ifAbsent: [ NotFound signal ]
 ! !
 
 !Collection methodsFor: 'copying'!

@@ -80,6 +80,12 @@ startupSystem: commandLineArguments
 	     startupObject startup ]
 ! !
 
+!SystemDictionary methodsFor: 'private'!
+
+rehashClass
+    ^self class superclass
+! !
+
 !SystemDictionary methodsFor: 'accessing'!
 
 commandLineArguments

@@ -61,12 +61,12 @@ cr
 
 nextPut: aCharacter
     "Write aCharacter to the receiver"
-    proxyReceiver nextPut: aCharacter
+    proxyReceiver perform: proxySelector with: aCharacter asString
 !
 
 nextPutAll: aString
     "Write aString to the receiver"
-    proxyReceiver nextPutAll: aString
+    proxyReceiver perform: proxySelector with: aString
 !
 
 show: aString

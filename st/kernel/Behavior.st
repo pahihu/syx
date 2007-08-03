@@ -121,8 +121,23 @@ initializeSubclassOf: aClass named: classSymbol
     superclass := aClass.
     instanceVariableNames := #().
     subclasses := #().
+    methodDictionary := IdentityDictionary new.
     name := classSymbol.
     aClass addSubclass: self
+! !
+
+!Behavior methodsFor: 'methods'!
+
+doesUnderstand: selector
+    "Answer true if the receiver understand the given message selector, else false"
+    | class |
+    class := self.
+    [ class notNil ]
+	whileTrue: [
+	    (class methodDictionary includesKey: selector)
+		ifTrue: [ ^true ].
+	    class := class superclass ].
+    ^false
 ! !
 
 !Behavior methodsFor: 'enumerating'!

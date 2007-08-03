@@ -66,7 +66,6 @@ SyxOop syx_nil,
   syx_array_class,
 
   syx_variable_binding_class,
-  syx_link_class,
   syx_dictionary_class,
 
   syx_compiled_method_class,
@@ -179,6 +178,7 @@ syx_metaclass_new (SyxOop supermetaclass)
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
+  SYX_CLASS_METHODS(metaclass) = syx_dictionary_new (51);
 
   SYX_CLASS_SUBCLASSES(metaclass) = syx_array_new (0, NULL);
   syx_array_add (SYX_CLASS_SUBCLASSES(supermetaclass), metaclass, TRUE);
@@ -201,6 +201,7 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
+  SYX_CLASS_METHODS(class) = syx_dictionary_new (51);
 
   SYX_CLASS_SUBCLASSES(class) = syx_array_new (0, NULL);
   syx_array_add (SYX_CLASS_SUBCLASSES(superclass), class, TRUE);
@@ -429,17 +430,6 @@ syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
   return object;
 }
 
-//! Creates a new Link key -> value
-inline SyxOop 
-syx_link_new (SyxOop key, SyxOop value, SyxOop next)
-{
-  SyxOop object = syx_object_new (syx_link_class);
-  SYX_ASSOCIATION_KEY(object) = key;
-  SYX_ASSOCIATION_VALUE(object) = value;
-  SYX_LINK_NEXT(object) = next;
-  return object;
-}
-
 //! Creates a new dictionary and its hash table
 /*!
   The effective size of the hash table is size * 2
@@ -447,7 +437,9 @@ syx_link_new (SyxOop key, SyxOop value, SyxOop next)
 inline SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
-  return syx_object_new_size (syx_dictionary_class, TRUE, size * 2 + 3);
+  SyxOop dict = syx_object_new_size (syx_dictionary_class, TRUE, size * 2 + 3);
+  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (0);
+  return dict;
 }
 
 //! Create an association key -> index to be used as binding. Raise an error if not found
@@ -749,6 +741,7 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   SyxOop entry;
   syx_uint32 pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
   syx_uint32 h2 = pos / 4;
+  SyxOop num_elements = SYX_DICTIONARY_NUM_ELEMENTS (dict);
 
   if (!h2 || h2 == 1)
     h2 = 2;
@@ -764,11 +757,13 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 	{
 	  table[pos] = key;
 	  table[pos+1] = value;
+	  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (SYX_SMALL_INTEGER(num_elements) + 1);
 	  return;
 	}
       else if (SYX_OOP_EQ(entry, key))
 	{
 	  table[pos+1] = value;
+	  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (SYX_SMALL_INTEGER(num_elements) + 1);
 	  return;
 	}
     }

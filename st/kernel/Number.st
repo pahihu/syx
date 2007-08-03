@@ -176,6 +176,7 @@ negated
 abs
     self < self zero
 	ifTrue: [ ^self negated ]
+	ifFalse: [ ^self ]
 !
 
 + aNumber

@@ -112,7 +112,7 @@ _syx_file_in_basic (void)
     "Signal.st",
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
-    "Association.st", "Link.st",
+    "Association.st",
     "Stream.st", "PositionableStream.st", "WriteStream.st", "FileStream.st",
     "TextCollector.st",
     "Set.st", "Bag.st",
@@ -175,13 +175,12 @@ syx_build_basic (void)
   syx_byte_array_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
   syx_array_class = _syx_create_class (SYX_VARS_OBJECT_ALL);
   syx_variable_binding_class = _syx_create_class (SYX_VARS_VARIABLE_BINDING_ALL);
-  syx_link_class = _syx_create_class (SYX_VARS_LINK_ALL);
   syx_dictionary_class = _syx_create_class (SYX_VARS_DICTIONARY_ALL);
   syx_metaclass_class = _syx_create_class (SYX_VARS_METACLASS_ALL);
 
-  syx_globals = syx_dictionary_new (100);
+  syx_globals = syx_dictionary_new (200);
   // hold SystemDictionary instance variables
-  SYX_OBJECT_VARS(syx_globals) = syx_calloc (4, sizeof (SyxOop));
+  SYX_OBJECT_VARS(syx_globals) = syx_calloc (SYX_VARS_DICTIONARY_ALL + 4, sizeof (SyxOop));
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
@@ -211,7 +210,6 @@ syx_build_basic (void)
   _SETUP_CLASS ("Character", syx_character_class, Object);
   _SETUP_CLASS ("Array", syx_array_class, Object);
   _SETUP_CLASS ("VariableBinding", syx_variable_binding_class, Object);
-  _SETUP_CLASS ("Link", syx_link_class, Object);
   _SETUP_CLASS ("Dictionary", syx_dictionary_class, Object);
   _syx_file_in_basic_decl ();
 
@@ -261,7 +259,6 @@ syx_fetch_basic (void)
   syx_byte_array_class = syx_globals_at ("ByteArray");
   syx_array_class = syx_globals_at ("Array");
   syx_variable_binding_class = syx_globals_at ("VariableBinding");
-  syx_link_class = syx_globals_at ("Link");
   syx_dictionary_class = syx_globals_at ("Dictionary");
   syx_cpointer_class = syx_globals_at ("CPointer");
 
@@ -272,7 +269,6 @@ syx_fetch_basic (void)
   syx_block_context_class = syx_globals_at ("BlockContext");
   syx_process_class = syx_globals_at ("Process");
   syx_processor_scheduler_class = syx_globals_at ("ProcessorScheduler");
-  syx_link_class = syx_globals_at ("Link");
 
   syx_globals_at_put (syx_symbol_new ("ImageFileName"), syx_string_new (_syx_image_path));
   syx_interp_init ();

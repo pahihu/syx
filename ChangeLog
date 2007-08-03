@@ -1,3 +1,38 @@
+2007-08-03  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/SequenceableCollection.st (copyReplaceAll:with:): added
+	(matchSubcollection:startingAt:): added
+
+2007-08-02  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/TextCollector.st: use #perform:with: to send message to the proxy
+
+	* st/kernel/Behavior.st (initializeSubclassOf): create a method dictionary
+
+	* syx/syx-object.c (syx_metaclass_new): create a method dictionary
+	(syx_class_new): create a method dictionary
+
+	* st/kernel/Object.st (respondsTo:): added
+	(perform:): added
+	(perform:with:): added
+	(perform:with:with:): added
+	(perform:with:with:with): added
+	(perform:withArguments): added
+
+	* st/kernel/Behavior.st (doesUnderstand:): added
+
+	* st/kernel/Dictionary.st (includesKey:): added
+
+	* st/kernel/Set.st: added rehashing methods
+	added numElements instance variable
+
+	* st/kernel/Dictionary.st: added rehashing methods
+	added numElements instance variable
+
+	* st/kernel/ObjectMemory.st (atData:put:): added with primitive
+
+	* st/kernel/Link.st: removed since unused anymore
+
 2007-08-01  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-interp.c (syx_process_execute_blocking): save/restore the active process when running blocking processes

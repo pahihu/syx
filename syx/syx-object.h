@@ -112,7 +112,6 @@ extern SyxOop syx_nil,
   syx_array_class,
 
   syx_variable_binding_class,
-  syx_link_class,
   syx_dictionary_class,
 
   syx_compiled_method_class,
@@ -174,7 +173,6 @@ inline SyxOop syx_symbol_new (syx_symbol symbol);
 inline SyxOop syx_string_new (syx_symbol string);
 inline syx_int32 syx_string_hash (syx_symbol string);
 inline SyxOop syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dict);
-inline SyxOop syx_link_new (SyxOop key, SyxOop value, SyxOop next);
 inline SyxOop syx_dictionary_new (syx_varsize size);
 inline SyxOop syx_block_closure_new (SyxOop block);
 
@@ -202,10 +200,10 @@ inline SyxOop syx_process_new (SyxOop context);
 
 #define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_CLASS_VARIABLES])
 
+#define SYX_DICTIONARY_NUM_ELEMENTS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_DICTIONARY_NUM_ELEMENTS])
+
 #define SYX_ASSOCIATION_KEY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_KEY])
 #define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_VALUE])
-
-#define SYX_LINK_NEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_LINK_NEXT])
 
 #define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_VARIABLE_BINDING_DICTIONARY])
 

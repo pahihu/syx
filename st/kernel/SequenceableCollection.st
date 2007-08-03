@@ -49,6 +49,36 @@ copyFrom: startIndex to: stopIndex
     ^coll
 !
 
+matchSubcollection: aCollection startingAt: anIndex
+    "Answer true if the given collection matches the receiver's elements starting at the given index"
+    | j |
+    self size - anIndex < aCollection size
+	ifTrue: [ ^false ].
+
+    j := 0.
+    self from: anIndex to: aCollection size do: [ :ea |
+	ea = (aCollection at: (j := j + 1))
+	    ifFalse: [ ^false ] ].
+    ^true
+!
+
+copyReplaceAll: targetElements with: replacementElements
+    "Answer a collection which elements are the same of the receiver, expect those that match
+     the given target elements"
+    | stream targetSize i |
+    targetSize := targetElements size.
+    stream := WriteStream on: self class new.
+    i := 0.
+    [ i <= self size ]
+	whileTrue: [
+	    (self matchSubcollection: targetElements startingAt: (i := i + 1))
+		ifTrue: [ 
+		    stream nextPutAll: replacementElements.
+		    i := i + targetSize ].
+	    stream nextPut: (self at: i) ].
+    ^stream contents
+!
+
 reverse
     "Answer a collection copying the receiver's elements in the opposite order"
     | coll |

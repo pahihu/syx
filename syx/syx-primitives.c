@@ -170,7 +170,82 @@ SYX_FUNC_PRIMITIVE (Object_copy)
   SYX_PRIM_RETURN (syx_object_copy (es->message_receiver));
 }
 
+SYX_FUNC_PRIMITIVE (Object_perform)
+{
+  SYX_PRIM_ARGS(1);
+  SyxOop class;
+  SyxOop message_method;
+  SyxOop context;
+  SyxOop selector = es->message_arguments[0];
+  SyxOop message_arguments;
+  syx_int32 primitive;
+  class = syx_object_get_class (es->message_receiver); 
+  message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
 
+  if (SYX_IS_NIL (message_method))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    return syx_interp_call_primitive (primitive, message_method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, message_method);
+
+  if (es->message_arguments_count > 1)
+    {
+      syx_memory_gc_begin ();
+      message_arguments = syx_array_new_ref (es->message_arguments_count - 1,
+					     es->message_arguments+1);
+      context = syx_method_context_new (es->context, message_method, es->message_receiver, message_arguments);
+      syx_memory_gc_end ();
+      es->message_arguments = NULL;
+    }
+  else
+    context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
+
+  return syx_interp_enter_context (context);
+}
+
+SYX_FUNC_PRIMITIVE (Object_performWithArguments)
+{
+  SYX_PRIM_ARGS(2);
+  SyxOop class;
+  SyxOop message_method;
+  SyxOop context;
+  SyxOop selector = es->message_arguments[0];
+  SyxOop arguments = es->message_arguments[1];
+  SyxOop message_arguments;
+  syx_int32 primitive;
+  class = syx_object_get_class (es->message_receiver); 
+  message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
+
+  if (SYX_IS_NIL (message_method))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
+  if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
+    return syx_interp_call_primitive (primitive, message_method);
+  else if (primitive == -2)
+    return syx_plugin_call (es, message_method);
+
+  if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
+    {
+      syx_memory_gc_begin ();
+      message_arguments = syx_array_new_ref (SYX_OBJECT_DATA_SIZE (arguments),
+					     SYX_OBJECT_DATA (arguments));
+      context = syx_method_context_new (es->context, message_method, es->message_receiver, message_arguments);
+      syx_memory_gc_end ();
+      es->message_arguments = NULL;
+    }
+  else
+    context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
+
+  return syx_interp_enter_context (context);
+}
 
 SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
 {
@@ -252,8 +327,6 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
   SYX_OBJECT_BYTE_ARRAY(es->message_receiver)[index] = SYX_SMALL_INTEGER (oop);
   SYX_PRIM_RETURN (oop);
 }
-
-
 
 SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 {
@@ -1268,15 +1341,35 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (ObjectMemory_atDataPut)
+{
+  SYX_PRIM_ARGS(2);
+  SyxOop source = es->message_arguments[1];
+  SyxOop dest = es->message_arguments[0];
+  syx_bool has_refs = SYX_OBJECT_HAS_REFS(source);
+  if (has_refs != SYX_OBJECT_HAS_REFS(dest))
+    {
+      SYX_PRIM_FAIL;
+    }
+  syx_free (SYX_OBJECT_DATA(dest));
+  if (has_refs)
+    SYX_OBJECT_DATA(dest) = syx_memdup (SYX_OBJECT_DATA(source),
+					SYX_OBJECT_DATA_SIZE(source), sizeof (SyxOop));
+  else
+    SYX_OBJECT_DATA(dest) = syx_memdup (SYX_OBJECT_DATA(source),
+					SYX_OBJECT_DATA_SIZE(source), sizeof (syx_int8));
+  SYX_OBJECT_DATA_SIZE(dest) = SYX_OBJECT_DATA_SIZE(source);
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SYX_FUNC_PRIMITIVE (ObjectMemory_setConstant)
 {
   SYX_PRIM_ARGS(1);
   SyxOop oop = es->message_arguments[0];
-  if (!SYX_IS_OBJECT (oop))
+  if (SYX_IS_OBJECT (oop))
     {
-      SYX_PRIM_FAIL;
+      SYX_OBJECT_IS_CONSTANT(oop) = TRUE;
     }
-  SYX_OBJECT_IS_CONSTANT(oop) = TRUE;
   SYX_PRIM_RETURN(es->message_receiver);
 }
 
@@ -1318,6 +1411,8 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Object_equal", Object_equal },
   { "Object_resize", Object_resize },
   { "Object_copy", Object_copy },
+  { "Object_perform", Object_perform },
+  { "Object_performWithArguments", Object_performWithArguments },
 
   /* Arrayed collections */
   { "ArrayedCollection_replaceFromToWith", ArrayedCollection_replaceFromToWith },
@@ -1327,6 +1422,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "ByteArray_at", ByteArray_at },
   { "ByteArray_at_put", ByteArray_at_put },
 
+  /* Blocks */
   { "BlockClosure_asContext", BlockClosure_asContext },
   { "BlockClosure_value", BlockClosure_value },
   { "BlockClosure_valueWith", BlockClosure_valueWith },
@@ -1412,6 +1508,7 @@ static SyxPrimitiveEntry primitive_entries[] = {
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },
   { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
+  { "ObjectMemory_atDataPut", ObjectMemory_atDataPut },
   { "ObjectMemory_setConstant", ObjectMemory_setConstant },
 
   /* Smalltalk environment */
