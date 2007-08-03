@@ -128,11 +128,19 @@ symbolToken
 	ifTrue: [ self error: 'Invalid symbol' ].
     s := WriteStream with: lastChar asString.
     
-    [ stream atEnd not and: [ self next isAlphaNumeric | (lastChar = $:) ] ]
-	whileTrue: [
-	    s nextPut: lastChar ].
-    stream atEnd
-	ifFalse: [ stream skip: -1 ].
+    (self isBinarySecond: lastChar)
+	ifTrue: [
+	    (self isBinarySecond: self next)
+		ifTrue: [ s nextPut: lastChar ]
+		ifFalse: [
+		    stream atEnd
+			ifFalse: [ stream skip: -1 ] ] ]
+	ifFalse: [
+	    [ stream atEnd not and: [ self next isAlphaNumeric | (lastChar = $:) ] ]
+		whileTrue: [
+		    s nextPut: lastChar ].
+	    stream atEnd
+		ifFalse: [ stream skip: -1 ] ].
 
     ^s contents asSymbol
 !
@@ -891,6 +899,20 @@ parseBlock
     argumentScopes pop.
 
     bytecode pushBlockClosure: closure
+!
+
+parseArray
+    | token numElements |
+    token := lexer nextToken.
+    numElements := 0.
+    [ token notNil and: [ token class = CompilerClosingToken and: [ token first = $} ] ] ]
+	whileFalse: [
+	    self parseExpression.
+	    numElements := numElements + 1.
+	    token := lexer lastToken.
+	    (token class = CompilerClosingToken and: [ token first = $. ])
+		ifTrue: [ token := lexer nextToken ] ].
+    bytecode pushArray: numElements
 !
 
 doContinuation: toSuper

@@ -65,6 +65,11 @@ readFrom: readStream
     "Maybe a float"
     scale := 0.1.
     c := readStream next.
+
+    "Be sure it's a float"
+    (c notNil and: [ c isDigit ])
+	ifFalse: [ readStream skip: -2. ^num ].
+
     [ c notNil and: [ c isDigit ] ]
 	whileTrue: [
 	    n := c codePoint - $0 codePoint.
@@ -123,6 +128,16 @@ sign
 ! !
 
 !Number methodsFor: 'iterators'!
+
+to: stop
+    "Create an Interval between the receiver and stop"
+    ^Interval from: self to: stop
+!
+
+to: stop by: step
+    "Create an Interval between the receiver and stop by step"
+    ^Interval from: self to: stop by: step
+!
 
 to: stop do: aBlock
     "Do aBlock from self to stop. Pass the counter to aBlock"

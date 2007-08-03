@@ -58,6 +58,10 @@ Collection subclass: #SequenceableCollection
 	   instanceVariableNames: ''
            classVariableNames: ''!
 
+SequenceableCollection subclass: #Interval
+	   instanceVariableNames: 'start stop step'
+	   classVariableNames: ''!
+
 SequenceableCollection subclass: #ArrayedCollection
 		       instanceVariableNames: ''
                        classVariableNames: ''!

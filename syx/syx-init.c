@@ -115,6 +115,7 @@ _syx_file_in_basic (void)
     "Association.st",
     "Stream.st", "PositionableStream.st", "WriteStream.st", "FileStream.st",
     "TextCollector.st",
+    "Interval.st",
     "Set.st", "Bag.st",
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
     "Compiler.st",

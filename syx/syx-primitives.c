@@ -177,8 +177,11 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   SyxOop message_method;
   SyxOop context;
   SyxOop selector = es->message_arguments[0];
-  SyxOop message_arguments;
+  SyxOop *message_arguments;
+  syx_varsize message_arguments_count;
   syx_int32 primitive;
+  syx_bool ret;
+
   class = syx_object_get_class (es->message_receiver); 
   message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
 
@@ -187,25 +190,41 @@ SYX_FUNC_PRIMITIVE (Object_perform)
       SYX_PRIM_FAIL;
     }
 
+  // save the real state
+  message_arguments = es->message_arguments;
+  message_arguments_count = es->message_arguments_count;
+  es->message_arguments_count--;
+  if (!es->message_arguments_count)
+    es->message_arguments = NULL;
+  else
+    es->message_arguments++;
+
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-    return syx_interp_call_primitive (primitive, message_method);
+    ret = syx_interp_call_primitive (primitive, message_method);
   else if (primitive == -2)
-    return syx_plugin_call (es, message_method);
-
-  if (es->message_arguments_count > 1)
-    {
-      syx_memory_gc_begin ();
-      message_arguments = syx_array_new_ref (es->message_arguments_count - 1,
-					     es->message_arguments+1);
-      context = syx_method_context_new (es->context, message_method, es->message_receiver, message_arguments);
-      syx_memory_gc_end ();
-      es->message_arguments = NULL;
-    }
+    ret = syx_plugin_call (es, message_method);
   else
-    context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
+    {
+      if (es->message_arguments_count > 0)
+	{
+	  syx_memory_gc_begin ();
+	  context = syx_method_context_new (es->context, message_method, es->message_receiver,
+					    syx_array_new_ref (es->message_arguments_count,
+							       es->message_arguments));
+	  syx_memory_gc_end ();
+	}
+      else
+	context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
+      
+      ret = syx_interp_enter_context (context);
+    }
 
-  return syx_interp_enter_context (context);
+  // restore the state
+  es->message_arguments = message_arguments;
+  es->message_arguments_count = message_arguments_count;
+
+  return ret;
 }
 
 SYX_FUNC_PRIMITIVE (Object_performWithArguments)
@@ -216,8 +235,12 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   SyxOop context;
   SyxOop selector = es->message_arguments[0];
   SyxOop arguments = es->message_arguments[1];
-  SyxOop message_arguments;
+  SyxOop args;
+  SyxOop *message_arguments;
+  syx_varsize message_arguments_count;
   syx_int32 primitive;
+  syx_bool ret;
+
   class = syx_object_get_class (es->message_receiver); 
   message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
 
@@ -226,25 +249,41 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
       SYX_PRIM_FAIL;
     }
 
+  // save the real state
+  message_arguments = es->message_arguments;
+  message_arguments_count = es->message_arguments_count;
+  es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
+  if (!es->message_arguments_count)
+    es->message_arguments = NULL;
+  else
+    es->message_arguments = SYX_OBJECT_DATA(arguments);
+
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
-    return syx_interp_call_primitive (primitive, message_method);
+    ret = syx_interp_call_primitive (primitive, message_method);
   else if (primitive == -2)
-    return syx_plugin_call (es, message_method);
-
-  if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
-    {
-      syx_memory_gc_begin ();
-      message_arguments = syx_array_new_ref (SYX_OBJECT_DATA_SIZE (arguments),
-					     SYX_OBJECT_DATA (arguments));
-      context = syx_method_context_new (es->context, message_method, es->message_receiver, message_arguments);
-      syx_memory_gc_end ();
-      es->message_arguments = NULL;
-    }
+    ret = syx_plugin_call (es, message_method);
   else
-    context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
+    {
+      if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
+	{
+	  syx_memory_gc_begin ();
+	  args = syx_array_new_ref (es->message_arguments_count, es->message_arguments);
+	  context = syx_method_context_new (es->context, message_method,
+					    es->message_receiver, args);
+	  syx_memory_gc_end ();
+	}
+      else
+	context = syx_method_context_new (es->context, message_method, es->message_receiver, syx_nil);
 
-  return syx_interp_enter_context (context);
+      ret = syx_interp_enter_context (context);
+    }
+
+  // restore the state
+  es->message_arguments = message_arguments;
+  es->message_arguments_count = message_arguments_count;
+
+  return ret;
 }
 
 SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
