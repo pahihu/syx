@@ -1,3 +1,23 @@
+2007-08-04  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/SequenceableCollection.st (replaceFrom:with:): fixed stop index
+
+	* st/kernel/Interval.st (at:): added
+	(size): added
+	(start, stop, step): added accessors
+	(reverse): added
+
+	* st/kernel/Number.st (to:by:do:): support for negative steps
+	(to:by:reverseDo:): removed
+
+	* st/kernel/SequenceableCollection.st (from:to:by:keysAndValuesDo:): added
+	(from:to:by:do:): added
+
+	* st/kernel/Collection.st (copyClass): added
+	(collectClass): added
+
+	* SConstruct: add the examples directory to the source distribution
+
 2007-08-03  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-primitives.c (Object_perform): fixed arguments

@@ -336,6 +336,11 @@ path = os.path.join (distdir, 'st', 'kernel')
 target = env.Install (path, sources)
 env.Alias ('sdist', target)
 
+sources = glob.glob ('examples/*.st')
+path = os.path.join (distdir, 'examples')
+target = env.Install (path, sources);
+env.Alias ('sdist', target)
+
 sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile']
 target = env.Install (distdir, sources)
 env.Alias ('sdist', target)

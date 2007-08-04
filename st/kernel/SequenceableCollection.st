@@ -86,7 +86,7 @@ copyReplaceAll: targetElements with: replacementElements
      the given target elements"
     | stream targetSize i |
     targetSize := targetElements size.
-    stream := WriteStream on: self class new.
+    stream := WriteStream on: self copyEmpty.
     i := 0.
     [ i <= self size ]
 	whileTrue: [
@@ -107,7 +107,7 @@ copyReplaceFrom: startIndex to: stopIndex with: replacementElements
     (stopIndex between: startIndex - 1 and: self size)
 	ifFalse: [ ^self error: 'invalid stop index' ].
 
-    stream := WriteStream on: self class new.
+    stream := WriteStream on: self copyEmpty.
     self from: 1 to: startIndex - 1 do: [ :ea |
 	stream nextPut: ea ].
     stream nextPutAll: replacementElements.
@@ -163,7 +163,7 @@ reverse
 
 replaceFrom: startIndex with: aCollection
     "Replace items from startIndex to aCollection's size with the elements of aCollection."
-    self replaceFrom: startIndex to: self size with: aCollection
+    self replaceFrom: startIndex to: startIndex + aCollection size - 1 with: aCollection
 !
 
 replaceFrom: startIndex to: stopIndex with: aCollection
@@ -252,6 +252,11 @@ before: anObject
     NotFound signal
 !
 
+from: startIndex to: stopIndex by: step keysAndValuesDo: aBlock
+    "Evaluate aBlock with the index of each element as first argument and the element as second argument"
+    startIndex to: stopIndex by: step do: [ :i | aBlock value: i value: (self at: i) ]
+!
+
 from: startIndex to: stopIndex keysAndValuesDo: aBlock
     "Evaluate aBlock with the index of each element as first argument and the element as second argument"
     startIndex to: stopIndex do: [ :i | aBlock value: i value: (self at: i) ]
@@ -262,6 +267,11 @@ from: startIndex to: stopIndex do: aBlock
     startIndex to: stopIndex do: [ :i | aBlock value: (self at: i) ]
 !
 
+from: startIndex to: stopIndex by: step do: aBlock
+    "Call aBlock for each element from startIndex to stopIndex"
+    startIndex to: stopIndex by: step do: [ :i | aBlock value: (self at: i) ]
+!
+
 do: aBlock
     "Call aBlock for each element of the collection"
     self from: 1 to: self size do: aBlock
@@ -269,8 +279,8 @@ do: aBlock
 
 reverseDo: aBlock
     "Call aBlock traversing the elements of the collection in the opposite order of do:"
-    self size to: 1 reverseDo: [ :i |
-	aBlock value: (self at: i) ]
+    self from: self size to: 1 by: -1 do: [ :ea |
+	aBlock value: ea ]
 ! !
 
 !SequenceableCollection methodsFor: 'basic'!

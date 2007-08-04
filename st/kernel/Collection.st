@@ -82,19 +82,23 @@ copyEmpty
     ^self copyEmpty: self size
 !
 
+copyClass
+    ^self class
+!
+
 copyEmpty: newSize
     "Create the empty collection of the given size"
-    ^self class new: newSize
+    ^self copyClass new: newSize
 !
 
 copyWithout: oldElement
     "Answer a collection with the same receiver's elements omitting those equivalent to oldElement"
-    ^self copy remove: oldElement; yourself
+    ^(self copyClass withAll: self) remove: oldElement; yourself
 !
 
 copyWith: newElement
     "Answer a collection which is a copy of the receiver, and adds a newElement"
-    ^self copy add: newElement; yourself
+    ^(self copyClass withAll: self) add: newElement; yourself
 ! !
 
 !Collection methodsFor: 'enumerating'!
@@ -104,11 +108,19 @@ do: aBlock
     self subclassResponsibility
 !
 
+collectClass
+    ^self class
+!
+
+copyEmptyForCollect
+    ^self collectClass new: self size
+!
+
 collect: transformerBlock
     "Evaluate the block for each element of the receiver.
      The results of these evaluations are collected into a new collection"
     | coll |
-    coll := self copyEmpty.
+    coll := self copyEmptyForCollect.
     self do: [ :ea |
 	coll add: (transformerBlock value: ea) ].
     ^coll
@@ -135,7 +147,7 @@ occurrencesOf: anObject
 reject: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
     | coll |
-    coll := self copyEmpty.
+    coll := self copyEmptyForCollect.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifFalse: [ coll add: ea ] ].
@@ -145,7 +157,7 @@ reject: discriminatorBlock
 select: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
     | coll |
-    coll := self copyEmpty.
+    coll := self copyEmptyForCollect.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifTrue: [ coll add: ea ] ].

@@ -42,9 +42,72 @@ initializeFrom: start to: stop by: step
     start := start.
     stop := stop.
     step := step
+! !
+
+!Interval methodsFor: 'basic'!
+
+at: anIndex
+    anIndex > self size
+	ifTrue: [ ^self error: 'Invalid index' ].
+    ^start + (anIndex - 1 * step)
+!
+
+size
+    ^((start - stop) abs + 1 / step) ceiling
+! !
+
+!Interval methodsFor: 'accessing'!
+
+start
+    ^start
+!
+
+stop
+    ^stop
+!
+
+step
+    ^step
+! !
+
+!Interval methodsFor: 'copying'!
+
+copyClass
+    ^Array
+! !
+
+!Interval methodsFor: 'enumerating'!
+
+collectClass
+    ^Array
+!
+
+reverse
+    "Answer a reversed Interval of the receiver"
+    ^Interval from: stop to: start by: step negated
 !
 
 do: aBlock
-    start to: stop by: step do: [ :i |
-	aBlock value: i ]
+    "Do aBlock passing the interval elements as first argument of the given block"
+    | i |
+    i := start.
+    step positive
+	ifTrue: [
+	    [ i <= stop ]
+		whileTrue: [ aBlock value: i.
+			     i := i + step ] ]
+	ifFalse: [
+	    [ i >= stop ]
+		whileTrue: [ aBlock value: i.
+			     i := i + step ] ]
+!
+
+collect: transformerBlock
+    "Evaluate the block for each element of the receiver.
+     The results of these evaluations are collected into a new collection"
+    | coll |
+    coll := self copyEmptyForCollect.
+    self from: 1 to: self size keysAndValuesDo: [ :i :v |
+	coll at: i put: (transformerBlock value: v) ].
+    ^coll
 ! !

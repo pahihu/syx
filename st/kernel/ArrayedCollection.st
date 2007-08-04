@@ -124,7 +124,7 @@ collect: transformerBlock
     "Evaluate the block for each element of the receiver.
      The results of these evaluations are collected into a new collection"
     | coll |
-    coll := self copyEmpty.
+    coll := self copyEmptyForCollect.
     1 to: self size do: [ :i |
 	coll at: i put: (transformerBlock value: (self at: i)) ].
     ^coll
@@ -133,7 +133,7 @@ collect: transformerBlock
 reject: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
     | stream |
-    stream := WriteStream on: self copyEmpty.
+    stream := WriteStream on: self copyEmptyForCollect.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifTrue: [ stream nextPut: ea ] ].
@@ -143,7 +143,7 @@ reject: discriminatorBlock
 select: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return true"
     | stream |
-    stream := WriteStream on: self copyEmpty.
+    stream := WriteStream on: self copyEmptyForCollect.
     self do: [ :ea |
 	(discriminatorBlock value: ea)
 	    ifTrue: [ stream nextPut: ea ] ].

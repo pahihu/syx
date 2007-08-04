@@ -149,22 +149,19 @@ to: stop reverseDo: aBlock
     self to: stop by: self unity reverseDo: aBlock
 !
 
-to: stop by: step reverseDo: aBlock
-    "Do aBlock decreasing self to stop stepping by step. Pass the counter to aBlock"
-    | i |
-    i := self.
-    [ i >= stop ]
-	whileTrue: [ aBlock value: i.
-		     i := i - step ]
-!
-
 to: stop by: step do: aBlock
     "Do aBlock increasing self to stop stepping by step. Pass the counter to aBlock"
     | i |
     i := self.
-    [ i <= stop ]
-	whileTrue: [ aBlock value: i.
-                     i := i + step ]
+    step positive
+	ifTrue: [
+	    [ i <= stop ]
+		whileTrue: [ aBlock value: i.
+			     i := i + step ] ]
+	ifFalse: [
+	    [ i >= stop ]
+		whileTrue: [ aBlock value: i.
+			     i := i + step ] ]
 ! !
 
 !Number methodsFor: 'coercing'!
