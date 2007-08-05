@@ -28,6 +28,12 @@ isArray
     ^true
 ! !
 
+!Array methodsFor: 'converting'!
+
+asArray
+    ^self
+! !
+
 !ArrayedCollection class methodsFor: 'instance creation'!
 
 with: anObject

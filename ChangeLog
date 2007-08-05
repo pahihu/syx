@@ -1,3 +1,15 @@
+2007-08-05  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/String.st: added comparing methods
+
+	* st/kernel/OrderedCollection.st: added size buffering for new elements
+
+	* st/kernel/Number.st (/): added zero division check
+
+	* st/kernel/Signal.st: added ZeroDivide
+
+	* Added basic converting methods to collections
+
 2007-08-04  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/SequenceableCollection.st (replaceFrom:with:): fixed stop index

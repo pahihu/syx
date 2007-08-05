@@ -3,7 +3,6 @@ Major:
 - Create examples and yet more documentation
 - Image compatibile on both big and little endian machines
 - Auto-growable collections
-- Rehashing functions
 - System signal handling
 - Object printing
 - Streams

@@ -22,11 +22,6 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!ByteArray methodsFor: 'testing'!
-
-isByteArray
-    ^true
-! !
 
 !ByteArray class methodsFor: 'instance creation'!
 
@@ -83,4 +78,16 @@ replaceFrom: startIndex to: stopIndex with: aCollection
 	    (element isCharacter or: [ element isSmallInteger & (element >= 0) & (element <= 255) ])
 		ifTrue: [ self at: i put: element ]
 		ifFalse: [ self primitiveFailed ] ]		
+! !
+
+!ByteArray methodsFor: 'testing'!
+
+isByteArray
+    ^true
+! !
+
+!ByteArray methodsFor: 'converting'!
+
+asByteArray
+    ^self
 ! !

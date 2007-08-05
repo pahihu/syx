@@ -96,6 +96,12 @@ remove: anObject ifAbsent: exceptionHandler
     ^anObject
 ! !
 
+!Set methodsFor: 'converting'!
+
+asSet
+    ^self
+! !
+
 !Set methodsFor: 'enumerating'!
 
 includes: anObject

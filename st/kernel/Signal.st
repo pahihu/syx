@@ -150,3 +150,9 @@ message: aMessage receiver: anObject
     receiver := anObject.
     self messageText: anObject class printString, ': did not understood ', aMessage printString
 ! !
+
+!ZeroDivide methodsFor: 'signaling'!
+
+description
+    ^'Division by zero.'
+! !

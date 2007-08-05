@@ -802,6 +802,11 @@ SYX_FUNC_PRIMITIVE (SmallInteger_div)
     }
   a = SYX_SMALL_INTEGER (es->message_receiver);
   b = SYX_SMALL_INTEGER (second);
+  if (!b)
+    {
+      SYX_PRIM_FAIL;
+    }
+
   if (a % b)
     {
       SYX_PRIM_FAIL;

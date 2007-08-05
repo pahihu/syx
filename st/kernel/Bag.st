@@ -23,7 +23,21 @@ indexOf: anObject
     self error: 'Full'
 ! !
 
+!Bag methodsFor: 'converting'!
+
+asSet
+    ^Set withAll: self
+!
+
+asBag
+    ^self
+! !
+
 !Bag methodsFor: 'testing'!
+
+isSet
+    ^false
+!
 
 isBag
     ^true

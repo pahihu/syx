@@ -28,7 +28,7 @@ denominator
 
 ensureDenominator
     denominator isZero
-    	ifTrue: [ self error: 'Zero division' ].
+    	ifTrue: [ ^self zeroDivide ].
     denominator negative
     	ifTrue: [ numerator := numerator negated. denominator := denominator negated ]
 ! !

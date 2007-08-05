@@ -1,8 +1,33 @@
+!OrderedCollection class methodsFor: 'instance-creation'!
+
+new: size
+    ^(self basicNew: size) initialize
+!
+
+new
+    ^self new: 11
+! !
+
+!OrderedCollection methodsFor: 'initialize-release'!
+
+initialize
+    numElements := 0
+! !
+
 !OrderedCollection methodsFor: 'basic'!
 
+incrementNumElements
+    (numElements := numElements + 1) > (self basicSize // 2)
+	ifTrue: [ self growTo: self basicSize + numElements ]
+!
+
+size
+    ^numElements
+!
+
 add: anObject
-    self growBy: 1.
-    self at: self size put: anObject
+    self incrementNumElements.
+    self at: numElements put: anObject
 !
 
 addAll: aCollection
@@ -17,6 +42,12 @@ remove: anObject ifAbsent: aBlock
 
 removeAtIndex: anIndex
     ^self notYetImplemented
+! !
+
+!OrderedCollection methodsFor: 'converting'!
+
+asOrderedCollection
+    ^self
 ! !
 
 !OrderedCollection methodsFor: 'testing'!

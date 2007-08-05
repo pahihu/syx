@@ -75,7 +75,7 @@ ArrayedCollection subclass: #ByteArray
                   classVariableNames: ''!
 
 SequenceableCollection subclass: #OrderedCollection
-		       instanceVariableNames: ''
+		       instanceVariableNames: 'numElements'
                        classVariableNames: ''!
 
 Object subclass: #Stack
@@ -312,6 +312,10 @@ Error subclass: #VMError
       classVariableNames: ''!
 
 Error subclass: #Halt
+      instanceVariableNames: ''
+      classVariableNames: ''!
+
+Error subclass: #ZeroDivide
       instanceVariableNames: ''
       classVariableNames: ''!
 

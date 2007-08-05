@@ -107,3 +107,36 @@ asNumber
 isString
     ^true
 ! !
+
+!String methodsFor: 'comparing'!
+
+= aString
+     self hash == aString hash ifFalse: [ ^false ].
+     ^super = aString
+!
+
+< aString
+    ^(self compare: aString) < 0
+!
+
+> aString
+    ^(self compare: aString) > 0
+!
+
+<= aString
+    ^(self compare: aString) <= 0
+!
+
+>= aString
+    ^(self compare: aString) >= 0
+!
+
+compare: aString
+    1 to: (self size min: aString size) do: [ :i |
+	| n1 n2 |
+	n1 := (self at: i) codePoint.
+	n2 := (aString at: i) codePoint.
+	n1 = n2 ifFalse: [ ^n1 - n2 ] ].
+
+    ^self size - aString size
+! !

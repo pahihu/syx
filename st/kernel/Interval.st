@@ -29,6 +29,8 @@ new: count
 !
 
 from: start to: stop by: step
+    step = 0
+	ifTrue: [ ^self error: 'Zero step has been given' ].
     ^self basicNew initializeFrom: start to: stop by: step; yourself
 !
 
