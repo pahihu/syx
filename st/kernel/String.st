@@ -71,6 +71,24 @@ size
     ^self basicSize - 1
 ! !
 
+!String methodsFor: 'matching'!
+
+subStrings: separators
+    | stream index size subindex |
+    stream := WriteStream on: Array new.
+    size := separators size.
+    index := 1.
+    [ index <= self size ]
+	whileTrue: [
+	    subindex := self indexOfSubCollection: separators startingAt: index.
+	    subindex = 0
+		ifTrue: [ stream nextPut: (self copyFrom: index to: self size).
+			  ^stream contents ].
+	    stream nextPut: (self copyFrom: index to: subindex - 1).
+	    index := subindex + size ].
+    ^stream contents
+! !
+
 !String methodsFor: 'utilities'!
 
 compileFor: aClass
@@ -98,6 +116,14 @@ asString
     ^self
 !
 
+asUppercase
+    ^self collect: [ :ea | ea asUppercase ]
+!
+
+asLowercase
+    ^self collect: [ :ea | ea asLowercase ]
+!
+
 asNumber
     ^Number readFrom: (ReadStream on: self)
 ! !
@@ -110,8 +136,21 @@ isString
 
 !String methodsFor: 'comparing'!
 
+sameAs: aCollection
+    self size == aCollection size
+	ifFalse: [ ^false ].
+
+    self with: aCollection do: [ :a :b |
+	a = b
+	    ifFalse: [ ^false ] ].
+
+    ^true
+!
+
 = aString
-     self hash == aString hash ifFalse: [ ^false ].
+     self hash == aString hash
+	ifFalse: [ ^false ].
+
      ^super = aString
 !
 

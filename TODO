@@ -2,10 +2,10 @@ Major:
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Image compatibile on both big and little endian machines
-- Auto-growable collections
+- Fix exception handling sequence
 - System signal handling
 - Object printing
-- Streams
+- Fix and improve file/IO streams
 
 Minor:
 - Add pool dictionaries
@@ -14,6 +14,7 @@ Minor:
 
 Later:
 - Create a series of Smalltalk tests and benchmarks
+- Create a SWIG module (partially done)
 
 Finally:
 - Method inlining

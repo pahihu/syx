@@ -69,10 +69,17 @@ on: anExceptionClass do: aBlock
     ^thisContext enter: ctx
 !
 
+ifCurtailed: aBlock
+    "Be sure aBlock is called if an error occurs evaluating the receiver"
+    ^self on: Signal do: [ :ex | aBlock value. ex pass. ^nil ]
+!    
+
 ensure: aBlock
     "Be sure aBlock is called if an error occurs or not"
-    self on: Signal do: [ :ex | ^aBlock value ].
-    ^aBlock value
+    | ret |
+    ret := self on: Signal do: [ :ex | aBlock value. ex pass. ^nil ].
+    aBlock value.
+    ^ret
 !
 
 valueWithArguments: anArray
