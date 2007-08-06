@@ -48,6 +48,7 @@ def builder_test (target, source, env):
       if env['attach']:
           app = 'gdb '+app
           env.Execute (app)
+	  env.Exit (0)
    f.close ()
 
 action = env.Action (builder_test, lambda *args, **kwargs: '')

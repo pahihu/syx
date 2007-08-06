@@ -1,3 +1,13 @@
+2007-08-06  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-object.c (syx_dictionary_index_of): added
+	(syx_dictionary_rehash): added
+	(syx_dictionary_at_symbol_put): rehash when full
+	
+	Changed dictionary behavior to use linear probing
+	Detached Gtk smalltalk files to be packaged alone
+	Create a SWIG interface to wrap Gtk
+
 2007-08-05  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/BlockClosure.st (ensure:): fixed

@@ -248,7 +248,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   class_vars = _syx_cold_parse_vars (class_vars_lexer, TRUE);
   syx_lexer_free (class_vars_lexer, TRUE);
 
-  SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_DATA_SIZE (class_vars)); 
+  SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_DATA_SIZE (class_vars) + 10); 
 
   // translate from array to dictionary
   for (i=0; i < SYX_OBJECT_DATA_SIZE(class_vars); i++)

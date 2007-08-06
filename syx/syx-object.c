@@ -178,7 +178,7 @@ syx_metaclass_new (SyxOop supermetaclass)
   SYX_CLASS_SUPERCLASS(metaclass) = supermetaclass;
   SYX_CLASS_INSTANCE_SIZE(metaclass) = SYX_CLASS_INSTANCE_SIZE(supermetaclass);
   SYX_CLASS_INSTANCE_VARIABLES(metaclass) = syx_array_new (0, NULL);
-  SYX_CLASS_METHODS(metaclass) = syx_dictionary_new (51);
+  SYX_CLASS_METHODS(metaclass) = syx_dictionary_new (50);
 
   SYX_CLASS_SUBCLASSES(metaclass) = syx_array_new (0, NULL);
   syx_array_add (SYX_CLASS_SUBCLASSES(supermetaclass), metaclass, TRUE);
@@ -201,7 +201,7 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
   SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
   SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
-  SYX_CLASS_METHODS(class) = syx_dictionary_new (51);
+  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
 
   SYX_CLASS_SUBCLASSES(class) = syx_array_new (0, NULL);
   syx_array_add (SYX_CLASS_SUBCLASSES(superclass), class, TRUE);
@@ -437,9 +437,45 @@ syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
 inline SyxOop 
 syx_dictionary_new (syx_varsize size)
 {
-  SyxOop dict = syx_object_new_size (syx_dictionary_class, TRUE, size * 2 + 3);
+  SyxOop dict = syx_object_new_size (syx_dictionary_class, TRUE, size * 2);
   SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (0);
   return dict;
+}
+
+//! Returns the index of the given symbol, the index of an empty entry or -1 if the key was not found
+/*!
+  Take care the dictionary MUST contain only key symbols
+
+  \param return_nil_index if TRUE returns the index of the first nil entry
+*/
+syx_int32
+syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
+{
+  SyxOop entry;
+  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  SyxOop *table = SYX_OBJECT_DATA (dict);
+  syx_uint32 i = 2 * (syx_string_hash (key) % (size / 2));
+  syx_int32 num_elements = SYX_SMALL_INTEGER (SYX_DICTIONARY_NUM_ELEMENTS (dict)) + return_nil_index;
+
+  for (; num_elements; i+=2)
+    {
+      if (i >= size)
+	i = 0;
+      entry = table[i];
+      if (SYX_IS_NIL (entry))
+	{
+	  if (return_nil_index)
+	    return i;
+	  else
+	    return -1;
+	}
+      num_elements--;
+      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
+	return i;
+      
+    }
+
+  return -1;
 }
 
 //! Create an association key -> index to be used as binding. Raise an error if not found
@@ -451,33 +487,13 @@ syx_dictionary_new (syx_varsize size)
 SyxOop
 syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 {
-  SyxOop entry;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
-  syx_uint32 h2 = pos / 4;
-  syx_uint32 i;
+  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  SyxOop *table;
+  if (index < 0)
+    syx_error ("Can't create binding for unexisting key %s\n", key);
 
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos += h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return syx_variable_binding_new (entry, pos, dict);
-      
-    }
-
-  syx_error ("Can't create binding for unexisting key %s\n", key);
-  
-  return syx_nil;
+  table = SYX_OBJECT_DATA (dict);
+  return syx_variable_binding_new (table[index], index, dict);
 }
 
 //! Create an association key -> index to be used as binding. Return the given object if not found
@@ -489,30 +505,13 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop
 syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  SyxOop entry;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
-  syx_uint32 h2 = pos / 4;
-  syx_uint32 i;
-  
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
+  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  SyxOop *table;
+  if (index < 0)
+    return object;
 
-  for (i=0; i < size; i++, pos += h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return syx_variable_binding_new (entry, pos, dict);
-    }
-
-  return object;
+  table = SYX_OBJECT_DATA (dict);
+  return syx_variable_binding_new (table[index], index, dict);
 }
 
 //! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Raise an exception if not bound
@@ -527,42 +526,24 @@ syx_dictionary_bind (SyxOop binding)
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
   if (SYX_IS_NIL (dict))
     return syx_nil;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+
   SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[pos];
-  syx_uint32 h2;
-  syx_uint32 i;
+  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = table[index];
 
   if (SYX_OOP_EQ (entry, key))
-    return table[pos+1];
+    return table[index+1];
 
-  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
-  h2 = pos / 4;
-
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos += h2)
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+  if (index < 0)
     {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (SYX_OOP_EQ (entry, key))
-	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  return table[pos+1];
-	}
+      syx_signal (SYX_ERROR_NOT_FOUND, 0);
+      return syx_nil;
     }
 
-  syx_signal (SYX_ERROR_NOT_FOUND, 0);
-
-  return syx_nil;
+  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (index);
+  return table[index+1];
 }
 
 //! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Return the given object if not found
@@ -576,41 +557,22 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
 {
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
   if (SYX_IS_NIL (dict))
-    return syx_nil;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+    return object;
+
   SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_uint32 pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[pos];
-  syx_uint32 h2;
-  syx_uint32 i;
+  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = table[index];
 
   if (SYX_OOP_EQ (entry, key))
-    return table[pos+1];
+    return table[index+1];
 
-  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
-  h2 = pos / 4;
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+  if (index < 0)
+    return object;
 
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos += h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (SYX_OOP_EQ (entry, key))
-	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  return table[pos+1];
-	}
-    }
-
-  return object;
+  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (index);
+  return table[index+1];
 }
 
 //! Set the object value of the binding returned by syx_dictionary_binding_at_symbol. Raise an exception if not found
@@ -623,44 +585,24 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
   if (SYX_IS_NIL (dict))
     return;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+
   SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_varsize pos = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[pos];
-  syx_uint32 h2;
-  syx_uint32 i;
+  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  SyxOop entry = table[index];
 
-  if (SYX_OOP_EQ (entry, key))
+  if (SYX_OOP_NE (entry, key))
     {
-      table[pos+1] = value;
-      return;
-    }
-
-  pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
-  h2 = pos / 4;
-
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos+=h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (SYX_OOP_EQ (entry, key))
+      index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+      if (index < 0)
 	{
-	  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (pos);
-	  table[pos+1] = value;
+	  syx_signal (SYX_ERROR_NOT_FOUND, 0);
 	  return;
 	}
     }
 
-  syx_signal (SYX_ERROR_NOT_FOUND, 0);
+  SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (index);
+  table[index+1] = value;
 }
 
 //! Lookup a key by symbol in the dictionary. Raise an error if not found
@@ -670,32 +612,11 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
-  SyxOop entry;
-  syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_varsize i;
-  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
-  syx_uint32 h2 = pos / 4;
+  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  if (index < 0)
+    syx_error ("Can't find key %s\n", key);
 
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos+=h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return table[pos+1];
-    }
-
-  syx_error ("Can't find key %s\n", key);
-  
-  return syx_nil;
+  return SYX_OBJECT_DATA(dict)[index+1];
 }
 
 //! Lookup a key by symbol in the dictionary. Return the given object if not found
@@ -705,70 +626,59 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  SyxOop entry;
+  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  if (index < 0)
+    return object;
+
+  return SYX_OBJECT_DATA(dict)[index+1];
+}
+
+//! Grow the dictionary and rehash all data
+void
+syx_dictionary_rehash (SyxOop dict)
+{
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  syx_int32 num_elements = SYX_SMALL_INTEGER (SYX_DICTIONARY_NUM_ELEMENTS (dict));
+  syx_varsize newsize = size + num_elements;
   SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_varsize i;
-  syx_uint32 pos = 2 * (syx_string_hash (key) % ((size - 1) / 2));
-  syx_uint32 h2 = pos / 4;
+  SyxOop newdict = syx_dictionary_new (newsize);
+  SyxOop entry;
+  syx_int32 i;
 
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos+=h2)
+  for (i=0; num_elements; i+=2)
     {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	break;
-      if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return table[pos+1];
+      entry = table[i];
+      if (!SYX_IS_NIL (entry))
+	{
+	  syx_dictionary_at_symbol_put (newdict, entry, table[i+1]);
+	  num_elements--;
+	}
     }
 
-  return object;
+  syx_free (SYX_OBJECT_DATA (dict));
+  SYX_OBJECT_DATA (dict) = SYX_OBJECT_DATA (newdict);
+  SYX_OBJECT_DATA_SIZE (dict) = SYX_OBJECT_DATA_SIZE (newdict);
+  syx_memory_free (newdict);
 }
+
 
 //! Insert key -> value in the dictionary
 void
 syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
+  syx_int32 num_elements = SYX_SMALL_INTEGER (SYX_DICTIONARY_NUM_ELEMENTS (dict));
+  if (num_elements >= size / 2)
+    syx_dictionary_rehash (dict);
+
   SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_varsize i;
-  SyxOop entry;
-  syx_uint32 pos = 2 * (syx_string_hash (SYX_OBJECT_SYMBOL (key)) % ((size - 1) / 2));
-  syx_uint32 h2 = pos / 4;
-  SyxOop num_elements = SYX_DICTIONARY_NUM_ELEMENTS (dict);
+  syx_int32 index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), TRUE);
+  if (index < 0)
+    syx_error ("Not enough space for dictionary %p\n", SYX_OBJECT (dict));
 
-  if (!h2 || h2 == 1)
-    h2 = 2;
-  else if ((h2 % 2))
-    h2--;
-
-  for (i=0; i < size; i++, pos+=h2)
-    {
-      if (pos >= size - 1)
-	pos -= size - 1;
-      entry = table[pos];
-      if (SYX_IS_NIL (entry))
-	{
-	  table[pos] = key;
-	  table[pos+1] = value;
-	  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (SYX_SMALL_INTEGER(num_elements) + 1);
-	  return;
-	}
-      else if (SYX_OOP_EQ(entry, key))
-	{
-	  table[pos+1] = value;
-	  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (SYX_SMALL_INTEGER(num_elements) + 1);
-	  return;
-	}
-    }
-
-  syx_error ("Not enough space for dictionary %p\n", SYX_OBJECT(dict));
+  table[index] = key;
+  table[index+1] = value;
+  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (num_elements + 1);
 }
 
 //! Create a new BlockClosure

@@ -120,7 +120,6 @@ _syx_file_in_basic (void)
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
     "Compiler.st",
     "Console.st",
-    "Gtk.st",
     "WinWorkspace.st",
     NULL
   };

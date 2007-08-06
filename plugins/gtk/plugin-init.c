@@ -32,19 +32,6 @@ _syx_gtk_main (void)
    gtk_main ();
 }
 
-SYX_FUNC_PRIMITIVE(GtkWindow_new)
-{
-  syx_pointer w = (syx_pointer)gtk_window_new (0);
-  SYX_PRIM_RETURN((SyxOop)w);
-}
-
-SYX_FUNC_PRIMITIVE(GtkWidget_showAll)
-{
-  syx_pointer w = SYX_OOP_CAST_POINTER(SYX_OBJECT_VARS(es->message_receiver)[0]);
-  gtk_widget_show_all(w);
-  SYX_PRIM_RETURN(es->message_receiver);
-}
-
 SYX_FUNC_PRIMITIVE(Gtk_main)
 {
   if (!_syx_gtk_main_thread)
@@ -69,13 +56,28 @@ syx_bool
 syx_plugin_initialize (void)
 {
   static syx_bool _syx_gtk_initialized = FALSE;
+  syx_symbol *filename;
+  syx_string full_filename;
+  static syx_symbol gtk_filenames[] = {
+    "Gtk.st", "GObject.st",
+    "GtkWidget.st", "GtkLabel.st", "GtkContainer.st",
+    "GtkWindow.st",
+    NULL
+  };
 
-  if (!_syx_gtk_initialized)
+  if (_syx_gtk_initialized)
+    return TRUE;
+
+  for (filename = gtk_filenames; *filename; filename++)
     {
-      g_thread_init (NULL);
-      gtk_init (NULL, NULL);
-      _syx_gtk_initialized = TRUE;
-    }  
+      full_filename = syx_find_file ("st", "gtk", *filename);
+      syx_cold_file_in (full_filename);
+      syx_free (full_filename);
+    }
+
+  g_thread_init (NULL);
+  gtk_init (NULL, NULL);
+  _syx_gtk_initialized = TRUE;
 }
 
 void

@@ -59,6 +59,7 @@
 			      ((oop) < (SyxOop)syx_memory ||		\
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
+#define SYX_OBJECT_IS_STRING(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_string_class)
 #define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_float_class)
 #define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_large_integer_class)
 
@@ -145,6 +146,8 @@ syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
 SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
 SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding);
 
+syx_int32 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index);
+void syx_dictionary_rehash (SyxOop dict);
 SyxOop syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key);
 SyxOop syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
 SyxOop syx_dictionary_bind (SyxOop binding);
