@@ -1,9 +1,23 @@
+2007-08-07  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/YXTools.st: added model-view-controller classes and basic Workspace and WorkspaceView
+
+	* plugins/gtk/st/GtkTools.st: added GtkWorkspace and GtkWorkspaceView
+
+	* plugins/gtk/st/GtkBox.st: added wrapper for GtkBox, GtkHBox and GtkVBox
+
+	* plugins/gtk/st/GtkButton.st: added wrapper
+
+	* plugins/gtk/pango.i: added basic SWIG interface
+
+	* plugins/gtk/plugin-init.c: fixed threaded main loop
+
 2007-08-06  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-object.c (syx_dictionary_index_of): added
 	(syx_dictionary_rehash): added
 	(syx_dictionary_at_symbol_put): rehash when full
-	
+
 	Changed dictionary behavior to use linear probing
 	Detached Gtk smalltalk files to be packaged alone
 	Create a SWIG interface to wrap Gtk

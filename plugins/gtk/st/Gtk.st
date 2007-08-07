@@ -22,7 +22,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-"Declarations"
+"Pango declarations"
+
+Object subclass: #PangoAttrList
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
+"Gtk declarations"
 
 Object subclass: #Gtk
        instanceVariableNames: ''
@@ -44,10 +50,35 @@ GtkWidget subclass: #GtkLabel
 	  instanceVariableNames: ''
 	  classVariableNames: ''!
 
+GtkWidget subclass: #GtkButton
+	  instanceVariableNames: ''
+	  classVariableNames: ''!
+
 GtkContainer subclass: #GtkWindow
 	     instanceVariableNames: ''
 	     classVariableNames: ''!
 
+GtkContainer subclass: #GtkBox
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
+GtkBox subclass: #GtkVBox
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
+GtkBox subclass: #GtkHBox
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
+"GUI Tools"
+
+WorkspaceView subclass: #GtkWorkspaceView
+	      instanceVariableNames: ''
+	      classVariableNames: ''!
+
+Workspace subclass: #GtkWorkspace
+	  instanceVariableNames: ''
+	  classVariableNames: ''!
 
 "Gtk control class"
 

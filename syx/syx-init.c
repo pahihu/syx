@@ -119,6 +119,7 @@ _syx_file_in_basic (void)
     "Set.st", "Bag.st",
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
     "Compiler.st",
+    "YXTools.st",
     "Console.st",
     "WinWorkspace.st",
     NULL

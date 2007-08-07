@@ -108,15 +108,15 @@ lineWrapMode: pangoWrapMode
 	self primitiveFailed
 !
 
-primLayoutOffsets
+primLayoutOffsets: start to: stop
     <cCall: 'Gtk_gtk_label_get_layout_offsets' plugin: 'gtk'>
 	self primitiveFailed
 !
 
 layoutOffsets
     | offsets |
-    offsets := self primLayoutOffsets.
-    ^offsets first @ offsets second
+    offsets := self primLayoutOffsets: 0 to: 0.
+    ^offsets second to: offsets third
 !
 
 mnemonicKeyval

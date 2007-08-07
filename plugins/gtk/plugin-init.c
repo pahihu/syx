@@ -29,7 +29,9 @@ static syx_pointer _syx_gtk_main_thread = NULL;
 static void
 _syx_gtk_main (void)
 {
-   gtk_main ();
+  gdk_threads_enter ();
+  gtk_main ();
+  gdk_threads_leave ();
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_main)
@@ -61,7 +63,7 @@ syx_plugin_initialize (void)
   static syx_symbol gtk_filenames[] = {
     "Gtk.st", "GObject.st",
     "GtkWidget.st", "GtkLabel.st", "GtkContainer.st",
-    "GtkWindow.st",
+    "GtkWindow.st", "GtkButton.st", "GtkTools.st", "GtkBox.st",
     NULL
   };
 
@@ -76,8 +78,13 @@ syx_plugin_initialize (void)
     }
 
   g_thread_init (NULL);
-  gtk_init (NULL, NULL);
+  gdk_threads_init ();
+  gdk_threads_enter ();
+  gtk_init (0, NULL);
   _syx_gtk_initialized = TRUE;
+  gdk_threads_leave ();
+
+  return TRUE;
 }
 
 void

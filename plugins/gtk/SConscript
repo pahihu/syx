@@ -30,6 +30,8 @@ import os, glob
 Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c gtk_wrap.c")
+st_sources = Split("st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/GtkWidget.st \
+                         st/GtkContainer.st st/GtkButton.st st/GtkTools.st st/GtkBox.st")
 
 if penv['GTK']:
     env = penv.Clone ()
@@ -61,15 +63,12 @@ if penv['GTK']:
         instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
         env.SyxInstall (instdir, lib_shared)
 
-        sources = Split("st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/GtkWidget.st \
-                         st/GtkContainer.st")
         path = os.path.join (env['datadir'], 'st', 'gtk')
-        env.SyxInstall (path, sources)
+        env.SyxInstall (path, st_sources)
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])
 penv.Alias ('sdist', target)
 
-sources = glob.glob ('st/*.st')
 path = os.path.join (distdir, 'plugins', 'gtk', 'st')
-target = penv.Install (path, sources)
+target = penv.Install (path, st_sources)
 penv.Alias ('sdist', target)

@@ -115,6 +115,9 @@
 
 #include <syx/syx.h>
 
+#define _SWIG_APPEND_RESULT(oop) SYX_OBJECT_DATA(result_oop)[num_values++] = (oop)
+#define _SWIG_SET_RESULT(oop) result_oop = (oop)
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 
 
 #include <glib.h>
@@ -149,7 +152,18 @@ typedef struct {
 #include <glib-object.h>
 
 
+#include <pango/pango.h>
+
+
 #include <gdk/gdk.h>
+
+
+typedef union {
+    char b[20];
+    short s[10];
+    long l[5];
+  } _GdkEventClient_data;
+
 
 
 #include <gtk/gtk.h>
@@ -159,9 +173,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GStaticMutex)
   struct _GStaticMutex *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GStaticMutex *)(struct _GStaticMutex *) calloc(1, sizeof(struct _GStaticMutex));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -175,9 +191,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GStaticMutex)
   {
     arg1 = (struct _GStaticMutex *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -187,9 +205,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GStaticMutex_static_mutex)
   _GStaticMutex_static_mutex *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (_GStaticMutex_static_mutex *)(_GStaticMutex_static_mutex *) calloc(1, sizeof(_GStaticMutex_static_mutex));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -203,9 +223,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GStaticMutex_static_mutex)
   {
     arg1 = (_GStaticMutex_static_mutex *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -215,9 +237,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GSystemThread)
   union _GSystemThread *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (union _GSystemThread *)(union _GSystemThread *) calloc(1, sizeof(union _GSystemThread));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -231,9 +255,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GSystemThread)
   {
     arg1 = (union _GSystemThread *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -243,9 +269,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GFloatIEEE754)
   union _GFloatIEEE754 *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (union _GFloatIEEE754 *)(union _GFloatIEEE754 *) calloc(1, sizeof(union _GFloatIEEE754));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -259,9 +287,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GFloatIEEE754)
   {
     arg1 = (union _GFloatIEEE754 *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -271,9 +301,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GFloatIEEE754_mpn)
   _GFloatIEEE754_mpn *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (_GFloatIEEE754_mpn *)(_GFloatIEEE754_mpn *) calloc(1, sizeof(_GFloatIEEE754_mpn));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -287,9 +319,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GFloatIEEE754_mpn)
   {
     arg1 = (_GFloatIEEE754_mpn *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -299,9 +333,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GDoubleIEEE754)
   union _GDoubleIEEE754 *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (union _GDoubleIEEE754 *)(union _GDoubleIEEE754 *) calloc(1, sizeof(union _GDoubleIEEE754));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -315,9 +351,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GDoubleIEEE754)
   {
     arg1 = (union _GDoubleIEEE754 *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -327,9 +365,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GDoubleIEEE754_mpn)
   _GDoubleIEEE754_mpn *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (_GDoubleIEEE754_mpn *)(_GDoubleIEEE754_mpn *) calloc(1, sizeof(_GDoubleIEEE754_mpn));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -343,9 +383,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GDoubleIEEE754_mpn)
   {
     arg1 = (_GDoubleIEEE754_mpn *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -355,9 +397,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTimeVal)
   struct _GTimeVal *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTimeVal *)(struct _GTimeVal *) calloc(1, sizeof(struct _GTimeVal));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -371,9 +415,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTimeVal)
   {
     arg1 = (struct _GTimeVal *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -391,9 +437,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_quark_try_string)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GQuark)g_quark_try_string((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -412,9 +460,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_quark_from_static_string)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GQuark)g_quark_from_static_string((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -433,9 +483,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_quark_from_string)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GQuark)g_quark_from_string((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -454,9 +506,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_quark_to_string)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gchar *)g_quark_to_string(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -475,9 +529,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_intern_string)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gchar *)g_intern_string((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -496,9 +552,1619 @@ SYX_FUNC_PRIMITIVE(Gtk_g_intern_static_string)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gchar *)g_intern_static_string((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_get_charset)
+{
+  char **arg1 = (char **) 0 ;
+  gboolean result;
+  char const *temp1 ;
+  SyxOop result_oop;
+  
+  {
+    temp1 = (const char *) SYX_OBJECT_STRING(es->message_arguments[0]);
+    arg1 = &temp1;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  result = g_get_charset((char const **)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg1));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isalnum)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isalnum(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isalpha)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isalpha(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_iscntrl)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_iscntrl(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isdigit)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isdigit(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isgraph)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isgraph(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_islower)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_islower(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isprint)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isprint(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_ispunct)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_ispunct(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isspace)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isspace(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isupper)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isupper(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isxdigit)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isxdigit(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_istitle)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_istitle(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_isdefined)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_isdefined(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_iswide)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_iswide(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_iswide_cjk)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_iswide_cjk(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_toupper)
+{
+  gunichar arg1 ;
+  gunichar result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gunichar)g_unichar_toupper(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_tolower)
+{
+  gunichar arg1 ;
+  gunichar result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gunichar)g_unichar_tolower(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_totitle)
+{
+  gunichar arg1 ;
+  gunichar result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gunichar)g_unichar_totitle(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_digit_value)
+{
+  gunichar arg1 ;
+  gint result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gint)g_unichar_digit_value(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_xdigit_value)
+{
+  gunichar arg1 ;
+  gint result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gint)g_unichar_xdigit_value(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_type)
+{
+  gunichar arg1 ;
+  GUnicodeType result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GUnicodeType)g_unichar_type(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_break_type)
+{
+  gunichar arg1 ;
+  GUnicodeBreakType result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GUnicodeBreakType)g_unichar_break_type(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unicode_canonical_ordering)
+{
+  gunichar *arg1 = (gunichar *) 0 ;
+  gsize arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (gunichar *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  g_unicode_canonical_ordering(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unicode_canonical_decomposition)
+{
+  gunichar arg1 ;
+  gsize *arg2 = (gsize *) 0 ;
+  gunichar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg2 = (gsize *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar *)g_unicode_canonical_decomposition(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_var_g_utf8_skip)
+{
+  SyxOop result_oop;
+  
+  {
+    SWIG_APPEND_VALUE (syx_string_new(g_utf8_skip));
+  }
+  
+  return result_oop;
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_get_char)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gunichar result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gunichar)g_utf8_get_char((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_get_char_validated)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gunichar result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gunichar)g_utf8_get_char_validated((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_offset_to_pointer)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  glong arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_offset_to_pointer((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_pointer_to_offset)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  glong result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (glong)g_utf8_pointer_to_offset((char const *)arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_prev_char)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_prev_char((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_find_next_char)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_find_next_char((char const *)arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_find_prev_char)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_find_prev_char((char const *)arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strlen)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  glong result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (glong)g_utf8_strlen((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strncpy)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  gsize arg3 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strncpy(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strchr)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gunichar arg3 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strchr((char const *)arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strrchr)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gunichar arg3 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strrchr((char const *)arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strreverse)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strreverse((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_to_utf16)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gunichar2 *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[4])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar2 *)g_utf8_to_utf16((char const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_to_ucs4)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gunichar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[4])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar *)g_utf8_to_ucs4((char const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_to_ucs4_fast)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  gunichar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar *)g_utf8_to_ucs4_fast((char const *)arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf16_to_ucs4)
+{
+  gunichar2 *arg1 = (gunichar2 *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gunichar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (gunichar2 *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar *)g_utf16_to_ucs4((unsigned short const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf16_to_utf8)
+{
+  gunichar2 *arg1 = (gunichar2 *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (gunichar2 *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf16_to_utf8((unsigned short const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_ucs4_to_utf16)
+{
+  gunichar *arg1 = (gunichar *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gunichar2 *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (gunichar *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  result = (gunichar2 *)g_ucs4_to_utf16((unsigned int const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_ucs4_to_utf8)
+{
+  gunichar *arg1 = (gunichar *) 0 ;
+  glong arg2 ;
+  glong *arg3 = (glong *) 0 ;
+  glong *arg4 = (glong *) 0 ;
+  GError **arg5 = (GError **) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (gunichar *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (glong *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (glong *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (GError **) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_ucs4_to_utf8((unsigned int const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_to_utf8)
+{
+  gunichar arg1 ;
+  gchar *arg2 = (gchar *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gint)g_unichar_to_utf8(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_validate)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar **arg3 = (gchar **) 0 ;
+  gboolean result;
+  char const *temp3 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    temp3 = (const char *) SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  result = g_utf8_validate((char const *)arg1,arg2,(char const **)arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_validate)
+{
+  gunichar arg1 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = g_unichar_validate(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strup)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strup((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_strdown)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_strdown((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_casefold)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_casefold((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_normalize)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  GNormalizeMode arg3 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_normalize((char const *)arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_collate)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gint)g_utf8_collate((char const *)arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_collate_key)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_collate_key((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_utf8_collate_key_for_filename)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  gssize arg2 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (gchar *)g_utf8_collate_key_for_filename((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_g_unichar_get_mirror_char)
+{
+  gunichar arg1 ;
+  gunichar *arg2 = (gunichar *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg2 = (gunichar *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  result = g_unichar_get_mirror_char(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -509,9 +2175,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeClass)
   struct _GTypeClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeClass *)(struct _GTypeClass *) calloc(1, sizeof(struct _GTypeClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -525,9 +2193,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeClass)
   {
     arg1 = (struct _GTypeClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -537,9 +2207,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeInstance)
   struct _GTypeInstance *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeInstance *)(struct _GTypeInstance *) calloc(1, sizeof(struct _GTypeInstance));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -553,9 +2225,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeInstance)
   {
     arg1 = (struct _GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -565,9 +2239,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeInterface)
   struct _GTypeInterface *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeInterface *)(struct _GTypeInterface *) calloc(1, sizeof(struct _GTypeInterface));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -581,9 +2257,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeInterface)
   {
     arg1 = (struct _GTypeInterface *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -593,9 +2271,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeQuery)
   struct _GTypeQuery *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeQuery *)(struct _GTypeQuery *) calloc(1, sizeof(struct _GTypeQuery));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -609,9 +2289,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeQuery)
   {
     arg1 = (struct _GTypeQuery *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -620,8 +2302,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_init)
 {
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   g_type_init();
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -638,8 +2322,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_init_with_debug_flags)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   g_type_init_with_debug_flags(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -657,9 +2343,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_name)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gchar *)g_type_name(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -678,9 +2366,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_qname)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GQuark)g_type_qname(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -699,9 +2389,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_from_name)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_from_name((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -720,9 +2412,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_parent)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_parent(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -741,9 +2435,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_depth)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (guint)g_type_depth(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -770,9 +2466,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_next_base)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_next_base(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -799,9 +2497,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_is_a)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  result = (gboolean)g_type_is_a(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_type_is_a(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -820,9 +2520,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_ref)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_class_ref(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -841,9 +2543,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_peek)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_class_peek(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -862,9 +2566,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_peek_static)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_class_peek_static(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -878,8 +2584,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_unref)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_type_class_unref(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -893,9 +2601,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_peek_parent)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_class_peek_parent(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -918,9 +2628,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interface_peek)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_interface_peek(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -935,9 +2647,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interface_peek_parent)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_interface_peek_parent(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -956,9 +2670,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_default_interface_ref)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_default_interface_ref(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -977,9 +2693,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_default_interface_peek)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_default_interface_peek(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -993,8 +2711,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_default_interface_unref)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_type_default_interface_unref(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1014,11 +2734,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_children)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GType *)g_type_children(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1039,11 +2761,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interfaces)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GType *)g_type_interfaces(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1073,8 +2797,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_set_qdata)
   {
     arg3 = (gpointer) es->message_arguments[2];
   }
+  gdk_threads_enter ();
   g_type_set_qdata(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1100,9 +2826,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_get_qdata)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_get_qdata(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1122,10 +2850,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_query)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (GTypeQuery *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GTypeQuery *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_type_query(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1135,9 +2865,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeInfo)
   struct _GTypeInfo *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeInfo *)(struct _GTypeInfo *) calloc(1, sizeof(struct _GTypeInfo));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1151,9 +2883,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeInfo)
   {
     arg1 = (struct _GTypeInfo *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1163,9 +2897,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeFundamentalInfo)
   struct _GTypeFundamentalInfo *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeFundamentalInfo *)(struct _GTypeFundamentalInfo *) calloc(1, sizeof(struct _GTypeFundamentalInfo));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1179,9 +2915,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeFundamentalInfo)
   {
     arg1 = (struct _GTypeFundamentalInfo *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1191,9 +2929,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GInterfaceInfo)
   struct _GInterfaceInfo *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GInterfaceInfo *)(struct _GInterfaceInfo *) calloc(1, sizeof(struct _GInterfaceInfo));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1207,9 +2947,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GInterfaceInfo)
   {
     arg1 = (struct _GInterfaceInfo *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1219,9 +2961,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GTypeValueTable)
   struct _GTypeValueTable *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GTypeValueTable *)(struct _GTypeValueTable *) calloc(1, sizeof(struct _GTypeValueTable));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1235,9 +2979,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GTypeValueTable)
   {
     arg1 = (struct _GTypeValueTable *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1266,7 +3012,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_static)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GTypeInfo *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GTypeInfo *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
@@ -1275,9 +3021,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_static)
     }	   
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_register_static(arg1,(char const *)arg2,(struct _GTypeInfo const *)arg3,arg4);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1317,7 +3065,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_static_simple)
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    arg4 = (GClassInitFunc) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GClassInitFunc) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
@@ -1327,7 +3075,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_static_simple)
     arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   }
   {
-    arg6 = (GInstanceInitFunc) SYX_OBJECT_VARS(es->message_arguments[4])[0];
+    arg6 = (GInstanceInitFunc) SYX_OBJECT_VARS(es->message_arguments[5])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[6]))
@@ -1336,9 +3084,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_static_simple)
     }	   
     arg7 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_register_static_simple(arg1,(char const *)arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1368,7 +3118,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_dynamic)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GTypePlugin *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GTypePlugin *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
@@ -1377,9 +3127,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_dynamic)
     }	   
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_register_dynamic(arg1,(char const *)arg2,arg3,arg4);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1410,10 +3162,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_fundamental)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GTypeInfo *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GTypeInfo *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
-    arg4 = (GTypeFundamentalInfo *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GTypeFundamentalInfo *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
@@ -1422,9 +3174,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_register_fundamental)
     }	   
     arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_register_fundamental(arg1,(char const *)arg2,(struct _GTypeInfo const *)arg3,(struct _GTypeFundamentalInfo const *)arg4,arg5);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1452,10 +3206,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_add_interface_static)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (GInterfaceInfo *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GInterfaceInfo *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_type_add_interface_static(arg1,arg2,(struct _GInterfaceInfo const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1482,10 +3238,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_add_interface_dynamic)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (GTypePlugin *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GTypePlugin *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_type_add_interface_dynamic(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1510,8 +3268,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interface_add_prerequisite)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_type_interface_add_prerequisite(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1531,11 +3291,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interface_prerequisites)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GType *)g_type_interface_prerequisites(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1557,8 +3319,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_add_private)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_type_class_add_private(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1574,15 +3338,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_instance_get_private)
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_type_instance_get_private(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1601,9 +3367,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_get_plugin)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GTypePlugin *)g_type_get_plugin(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1630,9 +3398,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_interface_get_plugin)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GTypePlugin *)g_type_interface_get_plugin(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1643,9 +3413,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_fundamental_next)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)g_type_fundamental_next();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1664,9 +3436,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_fundamental)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GType)g_type_fundamental(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1685,9 +3459,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_create_instance)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GTypeInstance *)g_type_create_instance(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1701,8 +3477,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_free_instance)
   {
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_type_free_instance(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1717,10 +3495,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_add_class_cache_func)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (GTypeClassCacheFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GTypeClassCacheFunc) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_type_add_class_cache_func(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1735,10 +3515,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_remove_class_cache_func)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (GTypeClassCacheFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GTypeClassCacheFunc) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_type_remove_class_cache_func(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1751,8 +3533,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_class_unref_uncached)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_type_class_unref_uncached(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1767,10 +3551,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_add_interface_check)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (GTypeInterfaceCheckFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GTypeInterfaceCheckFunc) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_type_add_interface_check(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1785,10 +3571,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_remove_interface_check)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (GTypeInterfaceCheckFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GTypeInterfaceCheckFunc) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_type_remove_interface_check(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -1806,9 +3594,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_value_table_peek)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GTypeValueTable *)g_type_value_table_peek(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1823,9 +3613,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_instance)
   {
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)g_type_check_instance(arg1);
+  gdk_threads_enter ();
+  result = g_type_check_instance(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1842,15 +3634,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_instance_cast)
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GTypeInstance *)g_type_check_instance_cast(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1867,15 +3661,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_instance_is_a)
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)g_type_check_instance_is_a(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_type_check_instance_is_a(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1892,15 +3688,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_class_cast)
     arg1 = (GTypeClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GTypeClass *)g_type_check_class_cast(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1917,15 +3715,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_class_is_a)
     arg1 = (GTypeClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)g_type_check_class_is_a(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_type_check_class_is_a(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1944,9 +3744,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_is_value_type)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)g_type_check_is_value_type(arg1);
+  gdk_threads_enter ();
+  result = g_type_check_is_value_type(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1961,9 +3763,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_value)
   {
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)g_type_check_value(arg1);
+  gdk_threads_enter ();
+  result = g_type_check_value(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -1980,15 +3784,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_check_value_holds)
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)g_type_check_value_holds(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_type_check_value_holds(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2015,9 +3821,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_test_flags)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  result = (gboolean)g_type_test_flags(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_type_test_flags(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2032,9 +3840,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_name_from_instance)
   {
     arg1 = (GTypeInstance *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)g_type_name_from_instance(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2049,9 +3859,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_type_name_from_class)
   {
     arg1 = (GTypeClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)g_type_name_from_class(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2062,9 +3874,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GClosureNotifyData)
   struct _GClosureNotifyData *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GClosureNotifyData *)(struct _GClosureNotifyData *) calloc(1, sizeof(struct _GClosureNotifyData));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2078,9 +3892,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GClosureNotifyData)
   {
     arg1 = (struct _GClosureNotifyData *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2090,9 +3906,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GClosure)
   struct _GClosure *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GClosure *)(struct _GClosure *) calloc(1, sizeof(struct _GClosure));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2106,9 +3924,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GClosure)
   {
     arg1 = (struct _GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2118,9 +3938,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GCClosure)
   struct _GCClosure *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GCClosure *)(struct _GCClosure *) calloc(1, sizeof(struct _GCClosure));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2134,9 +3956,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GCClosure)
   {
     arg1 = (struct _GCClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2153,14 +3977,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_cclosure_new)
     arg1 = (GCallback) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_cclosure_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2178,14 +4004,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_cclosure_new_swap)
     arg1 = (GCallback) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_cclosure_new_swap(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2212,9 +4040,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_type_cclosure_new)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_signal_type_cclosure_new(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2229,9 +4059,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_ref)
   {
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_closure_ref(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2245,8 +4077,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_sink)
   {
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_closure_sink(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2259,8 +4093,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_unref)
   {
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_closure_unref(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2282,9 +4118,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_new_simple)
   {
     arg2 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_closure_new_simple(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2301,13 +4139,15 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_add_finalize_notifier)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_closure_add_finalize_notifier(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2323,13 +4163,15 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_remove_finalize_notifier)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_closure_remove_finalize_notifier(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2345,13 +4187,15 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_add_invalidate_notifier)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_closure_add_invalidate_notifier(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2367,13 +4211,15 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_remove_invalidate_notifier)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_closure_remove_invalidate_notifier(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2391,19 +4237,21 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_add_marshal_guards)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
   {
-    arg4 = (gpointer) es->message_arguments[3];
+    arg4 = (gpointer) es->message_arguments[2];
   }
   {
     arg5 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
+  gdk_threads_enter ();
   g_closure_add_marshal_guards(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2420,8 +4268,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_set_marshal)
   {
     arg2 = (GClosureMarshal) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   g_closure_set_marshal(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2437,13 +4287,15 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_set_meta_marshal)
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
   {
     arg3 = (GClosureMarshal) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_closure_set_meta_marshal(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2456,8 +4308,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_invalidate)
   {
     arg1 = (GClosure *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_closure_invalidate(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2478,20 +4332,22 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_invoke)
     arg2 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     arg4 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
-    arg5 = (gpointer) es->message_arguments[4];
+    arg5 = (gpointer) es->message_arguments[3];
   }
+  gdk_threads_enter ();
   g_closure_invoke(arg1,arg2,arg3,(struct _GValue const *)arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2501,9 +4357,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GSignalInvocationHint)
   struct _GSignalInvocationHint *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GSignalInvocationHint *)(struct _GSignalInvocationHint *) calloc(1, sizeof(struct _GSignalInvocationHint));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2517,9 +4375,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GSignalInvocationHint)
   {
     arg1 = (struct _GSignalInvocationHint *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2529,9 +4389,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GSignalQuery)
   struct _GSignalQuery *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GSignalQuery *)(struct _GSignalQuery *) calloc(1, sizeof(struct _GSignalQuery));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2545,9 +4407,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GSignalQuery)
   {
     arg1 = (struct _GSignalQuery *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2589,16 +4453,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_newv)
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
-    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
   }
   {
-    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[5])[0];
+    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[6])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[7]))
@@ -2615,11 +4479,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_newv)
     arg9 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   }
   {
-    arg10 = (GType *) SYX_OBJECT_VARS(es->message_arguments[8])[0];
+    arg10 = (GType *) SYX_OBJECT_VARS(es->message_arguments[9])[0];
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_newv((char const *)arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2662,16 +4528,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_new_valist)
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
-    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
   }
   {
-    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[5])[0];
+    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[6])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[7]))
@@ -2687,9 +4553,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_new_valist)
     }	   
     arg9 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_new_valist((char const *)arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2739,13 +4607,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_new)
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
-    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GSignalAccumulator) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
   }
   {
-    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[5])[0];
+    arg7 = (GSignalCMarshaller) SYX_OBJECT_VARS(es->message_arguments[6])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[7]))
@@ -2761,9 +4629,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_new)
     }	   
     arg9 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_new((char const *)arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2781,24 +4651,26 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_emitv)
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
-  }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     arg4 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_signal_emitv((struct _GValue const *)arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2828,8 +4700,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_emit_valist)
     }	   
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
+  gdk_threads_enter ();
   g_signal_emit_valist(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2859,8 +4733,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_emit)
     }	   
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
+  gdk_threads_enter ();
   g_signal_emit(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2882,8 +4758,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_emit_by_name)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_emit_by_name(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2909,9 +4787,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_lookup)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_lookup((char const *)arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2930,9 +4810,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_name)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gchar *)g_signal_name(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2952,10 +4834,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_query)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (GSignalQuery *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GSignalQuery *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_signal_query(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -2975,11 +4859,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_list_ids)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (guint *)g_signal_list_ids(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3010,21 +4896,23 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_parse_name)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (guint *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
-    arg4 = (GQuark *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GQuark *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[4]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg5 = SYX_IS_TRUE(es->message_arguments[4]);
   }
-  result = (gboolean)g_signal_parse_name((char const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_enter ();
+  result = g_signal_parse_name((char const *)arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3039,9 +4927,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_get_invocation_hint)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   result = (GSignalInvocationHint *)g_signal_get_invocation_hint(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3071,8 +4961,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_stop_emission)
     }	   
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
+  gdk_threads_enter ();
   g_signal_stop_emission(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3093,8 +4985,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_stop_emission_by_name)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_stop_emission_by_name(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3124,17 +5018,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_add_emission_hook)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (GSignalEmissionHook) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GSignalEmissionHook) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
     arg4 = (gpointer) es->message_arguments[3];
   }
   {
-    arg5 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_add_emission_hook(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3160,8 +5056,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_remove_emission_hook)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_remove_emission_hook(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3193,15 +5091,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_has_handler_pending)
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg4 = SYX_IS_TRUE(es->message_arguments[3]);
   }
-  result = (gboolean)g_signal_has_handler_pending(arg1,arg2,arg3,arg4);
+  gdk_threads_enter ();
+  result = g_signal_has_handler_pending(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3235,18 +5135,20 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_closure_by_id)
     arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    arg4 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[4]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg5 = SYX_IS_TRUE(es->message_arguments[4]);
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_connect_closure_by_id(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3272,18 +5174,20 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_closure)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg4 = SYX_IS_TRUE(es->message_arguments[3]);
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_connect_closure(arg1,(char const *)arg2,arg3,arg4);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3311,13 +5215,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_data)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GCallback) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GCallback) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
     arg4 = (gpointer) es->message_arguments[3];
   }
   {
-    arg5 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GClosureNotify) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[5]))
@@ -3326,9 +5230,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_data)
     }	   
     arg6 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_connect_data(arg1,(char const *)arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3350,8 +5256,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_block)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_handler_block(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3372,8 +5280,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_unblock)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_handler_unblock(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3394,8 +5304,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_disconnect)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_signal_handler_disconnect(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3417,9 +5329,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_is_connected)
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  result = (gboolean)g_signal_handler_is_connected(arg1,arg2);
+  gdk_threads_enter ();
+  result = g_signal_handler_is_connected(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3462,7 +5376,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_find)
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
-    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
@@ -3470,9 +5384,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handler_find)
   {
     arg7 = (gpointer) es->message_arguments[6];
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_handler_find(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3515,7 +5431,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_block_matched)
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
-    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
@@ -3523,9 +5439,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_block_matched)
   {
     arg7 = (gpointer) es->message_arguments[6];
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_handlers_block_matched(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3568,7 +5486,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_unblock_matched)
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
-    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
@@ -3576,9 +5494,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_unblock_matched)
   {
     arg7 = (gpointer) es->message_arguments[6];
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_handlers_unblock_matched(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3621,7 +5541,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_disconnect_matched)
     arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
-    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    arg5 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
   }
   {
     arg6 = (gpointer) es->message_arguments[5];
@@ -3629,9 +5549,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_disconnect_matched)
   {
     arg7 = (gpointer) es->message_arguments[6];
   }
+  gdk_threads_enter ();
   result = (guint)g_signal_handlers_disconnect_matched(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3659,10 +5581,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_override_class_closure)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_signal_override_class_closure(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3679,8 +5603,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_chain_from_overridden)
   {
     arg2 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   g_signal_chain_from_overridden((struct _GValue const *)arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3704,11 +5630,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_accumulator_true_handled)
     arg3 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
   {
-    arg4 = (gpointer) es->message_arguments[3];
+    arg4 = (gpointer) es->message_arguments[2];
   }
-  result = (gboolean)g_signal_accumulator_true_handled(arg1,arg2,(struct _GValue const *)arg3,arg4);
+  gdk_threads_enter ();
+  result = g_signal_accumulator_true_handled(arg1,arg2,(struct _GValue const *)arg3,arg4);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3722,8 +5650,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_handlers_destroy)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_signal_handlers_destroy(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3733,9 +5663,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GObject)
   struct _GObject *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GObject *)(struct _GObject *) calloc(1, sizeof(struct _GObject));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3749,9 +5681,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GObject)
   {
     arg1 = (struct _GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3761,9 +5695,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GObjectClass)
   struct _GObjectClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GObjectClass *)(struct _GObjectClass *) calloc(1, sizeof(struct _GObjectClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3777,9 +5713,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GObjectClass)
   {
     arg1 = (struct _GObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3789,9 +5727,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GObjectConstructParam)
   struct _GObjectConstructParam *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GObjectConstructParam *)(struct _GObjectConstructParam *) calloc(1, sizeof(struct _GObjectConstructParam));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3805,9 +5745,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GObjectConstructParam)
   {
     arg1 = (struct _GObjectConstructParam *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3817,9 +5759,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_initially_unowned_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)g_initially_unowned_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3836,17 +5780,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_class_install_property)
     arg1 = (GObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_object_class_install_property(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3862,15 +5808,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_class_find_property)
     arg1 = (GObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GParamSpec *)g_object_class_find_property(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3889,9 +5837,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_class_list_properties)
   {
     arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GParamSpec **)g_object_class_list_properties(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3908,21 +5858,23 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_class_override_property)
     arg1 = (GObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_object_class_override_property(arg1,arg2,(char const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3937,10 +5889,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_interface_install_property)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_object_interface_install_property(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3962,9 +5916,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_interface_find_property)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GParamSpec *)g_object_interface_find_property(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3981,11 +5937,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_interface_list_properties)
     arg1 = (gpointer) es->message_arguments[0];
   }
   {
-    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GParamSpec **)g_object_interface_list_properties(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4013,9 +5971,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_new)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_new(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4044,11 +6004,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_newv)
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    arg3 = (GParameter *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GParameter *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_newv(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4076,9 +6038,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_new_valist)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GObject *)g_object_new_valist(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4101,8 +6065,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_object_set(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4124,8 +6090,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_get)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_object_get(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4148,9 +6116,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_connect)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_connect(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4173,8 +6143,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_disconnect)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   g_object_disconnect(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4190,14 +6162,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_valist)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   g_object_set_valist(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4213,14 +6187,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_get_valist)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   g_object_get_valist(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4236,17 +6212,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_property)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_object_set_property(arg1,(char const *)arg2,(struct _GValue const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4262,17 +6240,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_get_property)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   g_object_get_property(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4285,8 +6265,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_freeze_notify)
   {
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_object_freeze_notify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4301,14 +6283,16 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_notify)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   g_object_notify(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4321,8 +6305,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_thaw_notify)
   {
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_object_thaw_notify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4336,9 +6322,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_is_floating)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
-  result = (gboolean)g_object_is_floating(arg1);
+  gdk_threads_enter ();
+  result = g_object_is_floating(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4353,9 +6341,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_ref_sink)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_ref_sink(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4370,9 +6360,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_ref)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_ref(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4386,8 +6378,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_unref)
   {
     arg1 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_object_unref(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4406,10 +6400,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_weak_ref)
     arg2 = (GWeakNotify) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_weak_ref(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4428,10 +6424,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_weak_unref)
     arg2 = (GWeakNotify) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_weak_unref(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4448,8 +6446,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_add_weak_pointer)
   {
     arg2 = (gpointer *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   g_object_add_weak_pointer(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4466,8 +6466,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_remove_weak_pointer)
   {
     arg2 = (gpointer *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   g_object_remove_weak_pointer(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4486,10 +6488,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_add_toggle_ref)
     arg2 = (GToggleNotify) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_add_toggle_ref(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4508,10 +6512,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_remove_toggle_ref)
     arg2 = (GToggleNotify) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_remove_toggle_ref(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4527,15 +6533,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_get_qdata)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_get_qdata(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4552,17 +6560,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_qdata)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_set_qdata(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4579,20 +6589,22 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_qdata_full)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
   {
     arg4 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_object_set_qdata_full(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4608,15 +6620,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_steal_qdata)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_steal_qdata(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4633,15 +6647,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_get_data)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_get_data(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4658,17 +6674,19 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_data)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   g_object_set_data(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4685,20 +6703,22 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_set_data_full)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
   {
     arg4 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   g_object_set_data_full(arg1,(char const *)arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4714,15 +6734,17 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_steal_data)
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (gpointer)g_object_steal_data(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4740,8 +6762,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_watch_closure)
   {
     arg2 = (GClosure *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   g_object_watch_closure(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4759,9 +6783,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_cclosure_new_object)
   {
     arg2 = (GObject *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_cclosure_new_object(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4780,9 +6806,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_cclosure_new_object_swap)
   {
     arg2 = (GObject *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_cclosure_new_object_swap(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4803,11 +6831,13 @@ SYX_FUNC_PRIMITIVE(Gtk_g_closure_new_object)
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
-    arg2 = (GObject *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GObject *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   result = (GClosure *)g_closure_new_object(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4823,10 +6853,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_value_set_object)
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_value_set_object(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4840,9 +6872,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_value_get_object)
   {
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gpointer)g_value_get_object((struct _GValue const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4857,9 +6891,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_value_dup_object)
   {
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GObject *)g_value_dup_object((struct _GValue const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4886,7 +6922,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_object)
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
-    arg3 = (GCallback) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    arg3 = (GCallback) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
   {
     arg4 = (gpointer) es->message_arguments[3];
@@ -4898,9 +6934,11 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_object)
     }	   
     arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   }
+  gdk_threads_enter ();
   result = (gulong)g_signal_connect_object(arg1,(char const *)arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4914,8 +6952,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_force_floating)
   {
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_object_force_floating(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4928,8 +6968,10 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_run_dispose)
   {
     arg1 = (GObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   g_object_run_dispose(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4944,10 +6986,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_value_take_object)
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_value_take_object(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4962,10 +7006,12 @@ SYX_FUNC_PRIMITIVE(Gtk_g_value_set_object_take_ownership)
     arg1 = (GValue *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gpointer) es->message_arguments[1];
+    arg2 = (gpointer) es->message_arguments[0];
   }
+  gdk_threads_enter ();
   g_value_set_object_take_ownership(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4987,9 +7033,3546 @@ SYX_FUNC_PRIMITIVE(Gtk_g_object_compat_control)
   {
     arg2 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   result = (gsize)g_object_compat_control(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoColor)
+{
+  struct _PangoColor *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoColor *)(struct _PangoColor *) calloc(1, sizeof(struct _PangoColor));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoColor)
+{
+  struct _PangoColor *arg1 = (struct _PangoColor *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_color_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)pango_color_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_color_copy)
+{
+  PangoColor *arg1 = (PangoColor *) 0 ;
+  PangoColor *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoColor *)pango_color_copy((struct _PangoColor const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_color_free)
+{
+  PangoColor *arg1 = (PangoColor *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_color_free(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_color_parse)
+{
+  PangoColor *arg1 = (PangoColor *) 0 ;
+  char *arg2 = (char *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = pango_color_parse(arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_color_to_string)
+{
+  PangoColor *arg1 = (PangoColor *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (gchar *)pango_color_to_string((struct _PangoColor const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttribute)
+{
+  struct _PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttribute *)(struct _PangoAttribute *) calloc(1, sizeof(struct _PangoAttribute));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttribute)
+{
+  struct _PangoAttribute *arg1 = (struct _PangoAttribute *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttribute *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrClass)
+{
+  struct _PangoAttrClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrClass *)(struct _PangoAttrClass *) calloc(1, sizeof(struct _PangoAttrClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrClass)
+{
+  struct _PangoAttrClass *arg1 = (struct _PangoAttrClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrString)
+{
+  struct _PangoAttrString *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrString *)(struct _PangoAttrString *) calloc(1, sizeof(struct _PangoAttrString));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrString)
+{
+  struct _PangoAttrString *arg1 = (struct _PangoAttrString *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrString *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrLanguage)
+{
+  struct _PangoAttrLanguage *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrLanguage *)(struct _PangoAttrLanguage *) calloc(1, sizeof(struct _PangoAttrLanguage));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrLanguage)
+{
+  struct _PangoAttrLanguage *arg1 = (struct _PangoAttrLanguage *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrLanguage *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrInt)
+{
+  struct _PangoAttrInt *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrInt *)(struct _PangoAttrInt *) calloc(1, sizeof(struct _PangoAttrInt));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrInt)
+{
+  struct _PangoAttrInt *arg1 = (struct _PangoAttrInt *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrInt *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrFloat)
+{
+  struct _PangoAttrFloat *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrFloat *)(struct _PangoAttrFloat *) calloc(1, sizeof(struct _PangoAttrFloat));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrFloat)
+{
+  struct _PangoAttrFloat *arg1 = (struct _PangoAttrFloat *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrFloat *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrColor)
+{
+  struct _PangoAttrColor *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrColor *)(struct _PangoAttrColor *) calloc(1, sizeof(struct _PangoAttrColor));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrColor)
+{
+  struct _PangoAttrColor *arg1 = (struct _PangoAttrColor *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrColor *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrSize)
+{
+  struct _PangoAttrSize *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrSize *)(struct _PangoAttrSize *) calloc(1, sizeof(struct _PangoAttrSize));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrSize)
+{
+  struct _PangoAttrSize *arg1 = (struct _PangoAttrSize *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrSize *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrShape)
+{
+  struct _PangoAttrShape *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrShape *)(struct _PangoAttrShape *) calloc(1, sizeof(struct _PangoAttrShape));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrShape)
+{
+  struct _PangoAttrShape *arg1 = (struct _PangoAttrShape *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrShape *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoAttrFontDesc)
+{
+  struct _PangoAttrFontDesc *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoAttrFontDesc *)(struct _PangoAttrFontDesc *) calloc(1, sizeof(struct _PangoAttrFontDesc));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoAttrFontDesc)
+{
+  struct _PangoAttrFontDesc *arg1 = (struct _PangoAttrFontDesc *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoAttrFontDesc *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_type_register)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  PangoAttrType result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrType)pango_attr_type_register((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attribute_copy)
+{
+  PangoAttribute *arg1 = (PangoAttribute *) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attribute_copy((struct _PangoAttribute const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attribute_destroy)
+{
+  PangoAttribute *arg1 = (PangoAttribute *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_attribute_destroy(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attribute_equal)
+{
+  PangoAttribute *arg1 = (PangoAttribute *) 0 ;
+  PangoAttribute *arg2 = (PangoAttribute *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  result = pango_attribute_equal((struct _PangoAttribute const *)arg1,(struct _PangoAttribute const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_language_new)
+{
+  PangoLanguage *arg1 = (PangoLanguage *) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLanguage *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_language_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_family_new)
+{
+  char *arg1 = (char *) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_family_new((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_foreground_new)
+{
+  guint16 arg1 ;
+  guint16 arg2 ;
+  guint16 arg3 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_foreground_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_background_new)
+{
+  guint16 arg1 ;
+  guint16 arg2 ;
+  guint16 arg3 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_background_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_size_new)
+{
+  int arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_size_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_size_new_absolute)
+{
+  int arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_size_new_absolute(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_style_new)
+{
+  PangoStyle arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_style_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_weight_new)
+{
+  PangoWeight arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_weight_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_variant_new)
+{
+  PangoVariant arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_variant_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_stretch_new)
+{
+  PangoStretch arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_stretch_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_font_desc_new)
+{
+  PangoFontDescription *arg1 = (PangoFontDescription *) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoFontDescription *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_font_desc_new((PangoFontDescription const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_underline_new)
+{
+  PangoUnderline arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_underline_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_underline_color_new)
+{
+  guint16 arg1 ;
+  guint16 arg2 ;
+  guint16 arg3 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_underline_color_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_strikethrough_new)
+{
+  gboolean arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_strikethrough_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_strikethrough_color_new)
+{
+  guint16 arg1 ;
+  guint16 arg2 ;
+  guint16 arg3 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_strikethrough_color_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_rise_new)
+{
+  int arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_rise_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_scale_new)
+{
+  double arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_scale_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_fallback_new)
+{
+  gboolean arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_fallback_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_letter_spacing_new)
+{
+  int arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_letter_spacing_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_shape_new)
+{
+  PangoRectangle *arg1 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_shape_new((PangoRectangle const *)arg1,(PangoRectangle const *)arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_shape_new_with_data)
+{
+  PangoRectangle *arg1 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  gpointer arg3 = (gpointer) 0 ;
+  PangoAttrDataCopyFunc arg4 = (PangoAttrDataCopyFunc) 0 ;
+  GDestroyNotify arg5 = (GDestroyNotify) 0 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gpointer) es->message_arguments[1];
+  }
+  {
+    arg4 = (PangoAttrDataCopyFunc) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_shape_new_with_data((PangoRectangle const *)arg1,(PangoRectangle const *)arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_gravity_new)
+{
+  PangoGravity arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_gravity_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_gravity_hint_new)
+{
+  PangoGravityHint arg1 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_gravity_hint_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)pango_attr_list_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_new)
+{
+  PangoAttrList *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (PangoAttrList *)pango_attr_list_new();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_ref)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttrList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrList *)pango_attr_list_ref(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_unref)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_list_unref(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_copy)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttrList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrList *)pango_attr_list_copy(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_insert)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttribute *arg2 = (PangoAttribute *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_list_insert(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_insert_before)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttribute *arg2 = (PangoAttribute *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_list_insert_before(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_change)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttribute *arg2 = (PangoAttribute *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttribute *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_list_change(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_splice)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttrList *arg2 = (PangoAttrList *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  pango_attr_list_splice(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_filter)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttrFilterFunc arg2 = (PangoAttrFilterFunc) 0 ;
+  gpointer arg3 = (gpointer) 0 ;
+  PangoAttrList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttrFilterFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gpointer) es->message_arguments[1];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrList *)pango_attr_list_filter(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_list_get_iterator)
+{
+  PangoAttrList *arg1 = (PangoAttrList *) 0 ;
+  PangoAttrIterator *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrIterator *)pango_attr_list_get_iterator(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_range)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_attr_iterator_range(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_next)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_attr_iterator_next(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_copy)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  PangoAttrIterator *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrIterator *)pango_attr_iterator_copy(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_destroy)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_iterator_destroy(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_get)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  PangoAttrType arg2 ;
+  PangoAttribute *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoAttribute *)pango_attr_iterator_get(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_get_font)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  PangoFontDescription *arg2 = (PangoFontDescription *) 0 ;
+  PangoLanguage **arg3 = (PangoLanguage **) 0 ;
+  GSList **arg4 = (GSList **) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoFontDescription *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoLanguage **) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (GSList **) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  gdk_threads_enter ();
+  pango_attr_iterator_get_font(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_attr_iterator_get_attrs)
+{
+  PangoAttrIterator *arg1 = (PangoAttrIterator *) 0 ;
+  GSList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoAttrIterator *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GSList *)pango_attr_iterator_get_attrs(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_parse_markup)
+{
+  char *arg1 = (char *) 0 ;
+  int arg2 ;
+  gunichar arg3 ;
+  PangoAttrList **arg4 = (PangoAttrList **) 0 ;
+  char **arg5 = (char **) 0 ;
+  gunichar *arg6 = (gunichar *) 0 ;
+  GError **arg7 = (GError **) 0 ;
+  gboolean result;
+  char *temp5 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    arg4 = (PangoAttrList **) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  {
+    temp5 = (char *) SYX_OBJECT_STRING(es->message_arguments[4]);
+    arg5 = &temp5;
+  }
+  {
+    arg6 = (gunichar *) SYX_OBJECT_VARS(es->message_arguments[5])[0];
+  }
+  {
+    arg7 = (GError **) SYX_OBJECT_VARS(es->message_arguments[6])[0];
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  result = pango_parse_markup((char const *)arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg5));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__PangoLayoutLine)
+{
+  struct _PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _PangoLayoutLine *)(struct _PangoLayoutLine *) calloc(1, sizeof(struct _PangoLayoutLine));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__PangoLayoutLine)
+{
+  struct _PangoLayoutLine *arg1 = (struct _PangoLayoutLine *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)pango_layout_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_new)
+{
+  PangoContext *arg1 = (PangoContext *) 0 ;
+  PangoLayout *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoContext *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayout *)pango_layout_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_copy)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoLayout *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayout *)pango_layout_copy(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_context)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoContext *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoContext *)pango_layout_get_context(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_attributes)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoAttrList *arg2 = (PangoAttrList *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_set_attributes(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_attributes)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoAttrList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAttrList *)pango_layout_get_attributes(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_text)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_text(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_text)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  char *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (char *)pango_layout_get_text(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_markup)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_markup(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_markup_with_accel)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  gunichar arg4 ;
+  gunichar *arg5 = (gunichar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    arg5 = (gunichar *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_set_markup_with_accel(arg1,(char const *)arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_font_description)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoFontDescription *arg2 = (PangoFontDescription *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoFontDescription *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_set_font_description(arg1,(PangoFontDescription const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_font_description)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoFontDescription *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoFontDescription *)pango_layout_get_font_description(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_width)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_width(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_width)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_get_width(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_wrap)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoWrapMode arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_wrap(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_wrap)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoWrapMode result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoWrapMode)pango_layout_get_wrap(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_is_wrapped)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_is_wrapped(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_indent)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_indent(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_indent)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_get_indent(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_spacing)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_spacing(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_spacing)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_get_spacing(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_justify)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_justify(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_justify)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_get_justify(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_auto_dir)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_auto_dir(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_auto_dir)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_get_auto_dir(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_alignment)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoAlignment arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_alignment(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_alignment)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoAlignment result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoAlignment)pango_layout_get_alignment(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_tabs)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoTabArray *arg2 = (PangoTabArray *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoTabArray *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_set_tabs(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_tabs)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoTabArray *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoTabArray *)pango_layout_get_tabs(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_single_paragraph_mode)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_single_paragraph_mode(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_single_paragraph_mode)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_get_single_paragraph_mode(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_set_ellipsize)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoEllipsizeMode arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  pango_layout_set_ellipsize(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_ellipsize)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoEllipsizeMode result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoEllipsizeMode)pango_layout_get_ellipsize(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_is_ellipsized)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_is_ellipsized(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_unknown_glyphs_count)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_get_unknown_glyphs_count(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_context_changed)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_context_changed(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_log_attrs)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoLogAttr **arg2 = (PangoLogAttr **) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoLogAttr **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  pango_layout_get_log_attrs(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_index_to_pos)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_index_to_pos(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_index_to_line_x)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  gboolean arg3 ;
+  int *arg4 = (int *) 0 ;
+  int *arg5 = (int *) 0 ;
+  int temp4 ;
+  int temp5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+  {
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_layout_index_to_line_x(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_cursor_pos)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg4 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_get_cursor_pos(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_move_cursor_visually)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  gboolean arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int arg5 ;
+  int *arg6 = (int *) 0 ;
+  int *arg7 = (int *) 0 ;
+  int temp6 ;
+  int temp7 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  {
+    temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = &temp6;
+  }
+  {
+    temp7 = (int) SYX_SMALL_INTEGER(es->message_arguments[5]);
+    arg7 = &temp7;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_layout_move_cursor_visually(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_xy_to_index)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  int *arg4 = (int *) 0 ;
+  int *arg5 = (int *) 0 ;
+  gboolean result;
+  int temp4 ;
+  int temp5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+  {
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = pango_layout_xy_to_index(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_extents)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_get_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_pixel_extents)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_get_pixel_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_size)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int *arg2 = (int *) 0 ;
+  int *arg3 = (int *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_layout_get_size(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_pixel_size)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int *arg2 = (int *) 0 ;
+  int *arg3 = (int *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_layout_get_pixel_size(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_line_count)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_get_line_count(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_line)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutLine *)pango_layout_get_line(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_line_readonly)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  int arg2 ;
+  PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutLine *)pango_layout_get_line_readonly(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_lines)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  GSList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GSList *)pango_layout_get_lines(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_lines_readonly)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  GSList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GSList *)pango_layout_get_lines_readonly(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)pango_layout_line_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_ref)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutLine *)pango_layout_line_ref(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_unref)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_line_unref(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_x_to_index)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  int arg2 ;
+  int *arg3 = (int *) 0 ;
+  int *arg4 = (int *) 0 ;
+  gboolean result;
+  int temp3 ;
+  int temp4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = pango_layout_line_x_to_index(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_index_to_x)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  int arg2 ;
+  gboolean arg3 ;
+  int *arg4 = (int *) 0 ;
+  int temp4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  pango_layout_line_index_to_x(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_get_x_ranges)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  int **arg4 = (int **) 0 ;
+  int *arg5 = (int *) 0 ;
+  int temp5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    arg4 = (int **) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  pango_layout_line_get_x_ranges(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_get_extents)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_line_get_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_line_get_pixel_extents)
+{
+  PangoLayoutLine *arg1 = (PangoLayoutLine *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutLine *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_line_get_pixel_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)pango_layout_iter_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_get_iter)
+{
+  PangoLayout *arg1 = (PangoLayout *) 0 ;
+  PangoLayoutIter *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayout *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutIter *)pango_layout_get_iter(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_free)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_free(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_index)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_iter_get_index(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_run)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoLayoutRun *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutRun *)pango_layout_iter_get_run(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_run_readonly)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoLayoutRun *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutRun *)pango_layout_iter_get_run_readonly(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_line)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutLine *)pango_layout_iter_get_line(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_line_readonly)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoLayoutLine *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (PangoLayoutLine *)pango_layout_iter_get_line_readonly(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_at_last_line)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_iter_at_last_line(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_next_char)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_iter_next_char(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_next_cluster)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_iter_next_cluster(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_next_run)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_iter_next_run(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_next_line)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = pango_layout_iter_next_line(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_char_extents)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_get_char_extents(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_cluster_extents)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_get_cluster_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_run_extents)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_get_run_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_line_extents)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_get_line_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_line_yrange)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  int *arg2 = (int *) 0 ;
+  int *arg3 = (int *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  pango_layout_iter_get_line_yrange(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_layout_extents)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  PangoRectangle *arg2 = (PangoRectangle *) 0 ;
+  PangoRectangle *arg3 = (PangoRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (PangoRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  pango_layout_iter_get_layout_extents(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_pango_layout_iter_get_baseline)
+{
+  PangoLayoutIter *arg1 = (PangoLayoutIter *) 0 ;
+  int result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (PangoLayoutIter *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (int)pango_layout_iter_get_baseline(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5000,9 +10583,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GdkPoint)
   struct _GdkPoint *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GdkPoint *)(struct _GdkPoint *) calloc(1, sizeof(struct _GdkPoint));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5016,9 +10601,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GdkPoint)
   {
     arg1 = (struct _GdkPoint *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5028,9 +10615,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GdkRectangle)
   struct _GdkRectangle *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GdkRectangle *)(struct _GdkRectangle *) calloc(1, sizeof(struct _GdkRectangle));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5044,9 +10633,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GdkRectangle)
   {
     arg1 = (struct _GdkRectangle *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5056,9 +10647,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GdkSegment)
   struct _GdkSegment *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GdkSegment *)(struct _GdkSegment *) calloc(1, sizeof(struct _GdkSegment));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5072,9 +10665,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GdkSegment)
   {
     arg1 = (struct _GdkSegment *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5084,9 +10679,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GdkSpan)
   struct _GdkSpan *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GdkSpan *)(struct _GdkSpan *) calloc(1, sizeof(struct _GdkSpan));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5100,9 +10697,4695 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GdkSpan)
   {
     arg1 = (struct _GdkSpan *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkDeviceKey)
+{
+  struct _GdkDeviceKey *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkDeviceKey *)(struct _GdkDeviceKey *) calloc(1, sizeof(struct _GdkDeviceKey));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkDeviceKey)
+{
+  struct _GdkDeviceKey *arg1 = (struct _GdkDeviceKey *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkDeviceKey *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkDeviceAxis)
+{
+  struct _GdkDeviceAxis *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkDeviceAxis *)(struct _GdkDeviceAxis *) calloc(1, sizeof(struct _GdkDeviceAxis));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkDeviceAxis)
+{
+  struct _GdkDeviceAxis *arg1 = (struct _GdkDeviceAxis *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkDeviceAxis *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkDevice)
+{
+  struct _GdkDevice *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkDevice *)(struct _GdkDevice *) calloc(1, sizeof(struct _GdkDevice));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkDevice)
+{
+  struct _GdkDevice *arg1 = (struct _GdkDevice *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkTimeCoord)
+{
+  struct _GdkTimeCoord *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkTimeCoord *)(struct _GdkTimeCoord *) calloc(1, sizeof(struct _GdkTimeCoord));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkTimeCoord)
+{
+  struct _GdkTimeCoord *arg1 = (struct _GdkTimeCoord *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkTimeCoord *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gdk_device_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_devices_list)
+{
+  GList *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GList *)gdk_devices_list();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_set_source)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  GdkInputSource arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_device_set_source(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_set_mode)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  GdkInputMode arg2 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = gdk_device_set_mode(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_set_key)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  guint arg2 ;
+  guint arg3 ;
+  GdkModifierType arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_device_set_key(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_set_axis_use)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  guint arg2 ;
+  GdkAxisUse arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_device_set_axis_use(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_get_state)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  gdouble *arg3 = (gdouble *) 0 ;
+  GdkModifierType *arg4 = (GdkModifierType *) 0 ;
+  double temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    temp3 = (double) SYX_OBJECT_FLOAT(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+  {
+    arg4 = (GdkModifierType *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  gdk_device_get_state(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_get_history)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  guint32 arg3 ;
+  guint32 arg4 ;
+  GdkTimeCoord ***arg5 = (GdkTimeCoord ***) 0 ;
+  gint *arg6 = (gint *) 0 ;
+  gboolean result;
+  int temp6 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    arg5 = (GdkTimeCoord ***) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  {
+    temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = &temp6;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  result = gdk_device_get_history(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_free_history)
+{
+  GdkTimeCoord **arg1 = (GdkTimeCoord **) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkTimeCoord **) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_device_free_history(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_get_axis)
+{
+  GdkDevice *arg1 = (GdkDevice *) 0 ;
+  gdouble *arg2 = (gdouble *) 0 ;
+  GdkAxisUse arg3 ;
+  gdouble *arg4 = (gdouble *) 0 ;
+  gboolean result;
+  double temp2 ;
+  double temp4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDevice *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (double) SYX_OBJECT_FLOAT(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    temp4 = (double) SYX_OBJECT_FLOAT(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gdk_device_get_axis(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg4));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_input_set_extension_events)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  GdkExtensionMode arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_input_set_extension_events(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_device_get_core_pointer)
+{
+  GdkDevice *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GdkDevice *)gdk_device_get_core_pointer();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventAny)
+{
+  struct _GdkEventAny *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventAny *)(struct _GdkEventAny *) calloc(1, sizeof(struct _GdkEventAny));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventAny)
+{
+  struct _GdkEventAny *arg1 = (struct _GdkEventAny *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventAny *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventExpose)
+{
+  struct _GdkEventExpose *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventExpose *)(struct _GdkEventExpose *) calloc(1, sizeof(struct _GdkEventExpose));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventExpose)
+{
+  struct _GdkEventExpose *arg1 = (struct _GdkEventExpose *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventExpose *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventNoExpose)
+{
+  struct _GdkEventNoExpose *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventNoExpose *)(struct _GdkEventNoExpose *) calloc(1, sizeof(struct _GdkEventNoExpose));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventNoExpose)
+{
+  struct _GdkEventNoExpose *arg1 = (struct _GdkEventNoExpose *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventNoExpose *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventVisibility)
+{
+  struct _GdkEventVisibility *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventVisibility *)(struct _GdkEventVisibility *) calloc(1, sizeof(struct _GdkEventVisibility));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventVisibility)
+{
+  struct _GdkEventVisibility *arg1 = (struct _GdkEventVisibility *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventVisibility *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventMotion)
+{
+  struct _GdkEventMotion *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventMotion *)(struct _GdkEventMotion *) calloc(1, sizeof(struct _GdkEventMotion));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventMotion)
+{
+  struct _GdkEventMotion *arg1 = (struct _GdkEventMotion *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventMotion *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventButton)
+{
+  struct _GdkEventButton *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventButton *)(struct _GdkEventButton *) calloc(1, sizeof(struct _GdkEventButton));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventButton)
+{
+  struct _GdkEventButton *arg1 = (struct _GdkEventButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventScroll)
+{
+  struct _GdkEventScroll *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventScroll *)(struct _GdkEventScroll *) calloc(1, sizeof(struct _GdkEventScroll));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventScroll)
+{
+  struct _GdkEventScroll *arg1 = (struct _GdkEventScroll *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventScroll *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventKey)
+{
+  struct _GdkEventKey *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventKey *)(struct _GdkEventKey *) calloc(1, sizeof(struct _GdkEventKey));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventKey)
+{
+  struct _GdkEventKey *arg1 = (struct _GdkEventKey *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventKey *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventCrossing)
+{
+  struct _GdkEventCrossing *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventCrossing *)(struct _GdkEventCrossing *) calloc(1, sizeof(struct _GdkEventCrossing));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventCrossing)
+{
+  struct _GdkEventCrossing *arg1 = (struct _GdkEventCrossing *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventCrossing *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventFocus)
+{
+  struct _GdkEventFocus *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventFocus *)(struct _GdkEventFocus *) calloc(1, sizeof(struct _GdkEventFocus));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventFocus)
+{
+  struct _GdkEventFocus *arg1 = (struct _GdkEventFocus *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventFocus *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventConfigure)
+{
+  struct _GdkEventConfigure *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventConfigure *)(struct _GdkEventConfigure *) calloc(1, sizeof(struct _GdkEventConfigure));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventConfigure)
+{
+  struct _GdkEventConfigure *arg1 = (struct _GdkEventConfigure *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventConfigure *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventProperty)
+{
+  struct _GdkEventProperty *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventProperty *)(struct _GdkEventProperty *) calloc(1, sizeof(struct _GdkEventProperty));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventProperty)
+{
+  struct _GdkEventProperty *arg1 = (struct _GdkEventProperty *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventProperty *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventSelection)
+{
+  struct _GdkEventSelection *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventSelection *)(struct _GdkEventSelection *) calloc(1, sizeof(struct _GdkEventSelection));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventSelection)
+{
+  struct _GdkEventSelection *arg1 = (struct _GdkEventSelection *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventSelection *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventOwnerChange)
+{
+  struct _GdkEventOwnerChange *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventOwnerChange *)(struct _GdkEventOwnerChange *) calloc(1, sizeof(struct _GdkEventOwnerChange));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventOwnerChange)
+{
+  struct _GdkEventOwnerChange *arg1 = (struct _GdkEventOwnerChange *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventOwnerChange *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventProximity)
+{
+  struct _GdkEventProximity *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventProximity *)(struct _GdkEventProximity *) calloc(1, sizeof(struct _GdkEventProximity));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventProximity)
+{
+  struct _GdkEventProximity *arg1 = (struct _GdkEventProximity *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventProximity *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventClient)
+{
+  struct _GdkEventClient *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventClient *)(struct _GdkEventClient *) calloc(1, sizeof(struct _GdkEventClient));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventClient)
+{
+  struct _GdkEventClient *arg1 = (struct _GdkEventClient *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventClient *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventClient_data)
+{
+  _GdkEventClient_data *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (_GdkEventClient_data *)(_GdkEventClient_data *) calloc(1, sizeof(_GdkEventClient_data));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventClient_data)
+{
+  _GdkEventClient_data *arg1 = (_GdkEventClient_data *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (_GdkEventClient_data *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventSetting)
+{
+  struct _GdkEventSetting *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventSetting *)(struct _GdkEventSetting *) calloc(1, sizeof(struct _GdkEventSetting));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventSetting)
+{
+  struct _GdkEventSetting *arg1 = (struct _GdkEventSetting *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventSetting *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventWindowState)
+{
+  struct _GdkEventWindowState *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventWindowState *)(struct _GdkEventWindowState *) calloc(1, sizeof(struct _GdkEventWindowState));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventWindowState)
+{
+  struct _GdkEventWindowState *arg1 = (struct _GdkEventWindowState *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventWindowState *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventGrabBroken)
+{
+  struct _GdkEventGrabBroken *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventGrabBroken *)(struct _GdkEventGrabBroken *) calloc(1, sizeof(struct _GdkEventGrabBroken));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventGrabBroken)
+{
+  struct _GdkEventGrabBroken *arg1 = (struct _GdkEventGrabBroken *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventGrabBroken *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEventDND)
+{
+  struct _GdkEventDND *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkEventDND *)(struct _GdkEventDND *) calloc(1, sizeof(struct _GdkEventDND));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEventDND)
+{
+  struct _GdkEventDND *arg1 = (struct _GdkEventDND *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkEventDND *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkEvent)
+{
+  union _GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (union _GdkEvent *)(union _GdkEvent *) calloc(1, sizeof(union _GdkEvent));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkEvent)
+{
+  union _GdkEvent *arg1 = (union _GdkEvent *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (union _GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gdk_event_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_events_pending)
+{
+  gboolean result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = gdk_events_pending();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get)
+{
+  GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GdkEvent *)gdk_event_get();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_peek)
+{
+  GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GdkEvent *)gdk_event_peek();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_graphics_expose)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkEvent *)gdk_event_get_graphics_expose(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_put)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_event_put(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_new)
+{
+  GdkEventType arg1 ;
+  GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GdkEvent *)gdk_event_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_copy)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  GdkEvent *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkEvent *)gdk_event_copy(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_free)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_event_free(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_time)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  guint32 result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (guint32)gdk_event_get_time(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_state)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  GdkModifierType *arg2 = (GdkModifierType *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkModifierType *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  result = gdk_event_get_state(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_coords)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  gdouble *arg2 = (gdouble *) 0 ;
+  gdouble *arg3 = (gdouble *) 0 ;
+  gboolean result;
+  double temp2 ;
+  double temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (double) SYX_OBJECT_FLOAT(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (double) SYX_OBJECT_FLOAT(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gdk_event_get_coords(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_root_coords)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  gdouble *arg2 = (gdouble *) 0 ;
+  gdouble *arg3 = (gdouble *) 0 ;
+  gboolean result;
+  double temp2 ;
+  double temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (double) SYX_OBJECT_FLOAT(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (double) SYX_OBJECT_FLOAT(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gdk_event_get_root_coords(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_axis)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  GdkAxisUse arg2 ;
+  gdouble *arg3 = (gdouble *) 0 ;
+  gboolean result;
+  double temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    temp3 = (double) SYX_OBJECT_FLOAT(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  result = gdk_event_get_axis(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_float_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_handler_set)
+{
+  GdkEventFunc arg1 = (GdkEventFunc) 0 ;
+  gpointer arg2 = (gpointer) 0 ;
+  GDestroyNotify arg3 = (GDestroyNotify) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEventFunc) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (gpointer) es->message_arguments[0];
+  }
+  {
+    arg3 = (GDestroyNotify) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  gdk_event_handler_set(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_set_screen)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  GdkScreen *arg2 = (GdkScreen *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkScreen *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_event_set_screen(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_event_get_screen)
+{
+  GdkEvent *arg1 = (GdkEvent *) 0 ;
+  GdkScreen *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkEvent *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkScreen *)gdk_event_get_screen(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_set_show_events)
+{
+  gboolean arg1 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_set_show_events(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_get_show_events)
+{
+  gboolean result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = gdk_get_show_events();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_add_client_message_filter)
+{
+  GdkAtom arg1 = (GdkAtom) 0 ;
+  GdkFilterFunc arg2 = (GdkFilterFunc) 0 ;
+  gpointer arg3 = (gpointer) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkAtom) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkFilterFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gpointer) es->message_arguments[1];
+  }
+  gdk_threads_enter ();
+  gdk_add_client_message_filter(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_setting_get)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  GValue *arg2 = (GValue *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
+    arg2 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  result = gdk_setting_get((char const *)arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkWindowAttr)
+{
+  struct _GdkWindowAttr *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkWindowAttr *)(struct _GdkWindowAttr *) calloc(1, sizeof(struct _GdkWindowAttr));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkWindowAttr)
+{
+  struct _GdkWindowAttr *arg1 = (struct _GdkWindowAttr *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkWindowAttr *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkGeometry)
+{
+  struct _GdkGeometry *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkGeometry *)(struct _GdkGeometry *) calloc(1, sizeof(struct _GdkGeometry));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkGeometry)
+{
+  struct _GdkGeometry *arg1 = (struct _GdkGeometry *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkGeometry *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkPointerHooks)
+{
+  struct _GdkPointerHooks *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkPointerHooks *)(struct _GdkPointerHooks *) calloc(1, sizeof(struct _GdkPointerHooks));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkPointerHooks)
+{
+  struct _GdkPointerHooks *arg1 = (struct _GdkPointerHooks *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkPointerHooks *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkWindowObject)
+{
+  struct _GdkWindowObject *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkWindowObject *)(struct _GdkWindowObject *) calloc(1, sizeof(struct _GdkWindowObject));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkWindowObject)
+{
+  struct _GdkWindowObject *arg1 = (struct _GdkWindowObject *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkWindowObject *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GdkWindowObjectClass)
+{
+  struct _GdkWindowObjectClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GdkWindowObjectClass *)(struct _GdkWindowObjectClass *) calloc(1, sizeof(struct _GdkWindowObjectClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GdkWindowObjectClass)
+{
+  struct _GdkWindowObjectClass *arg1 = (struct _GdkWindowObjectClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GdkWindowObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_object_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gdk_window_object_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_new)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowAttr *arg2 = (GdkWindowAttr *) 0 ;
+  gint arg3 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindowAttr *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_new(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_destroy)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_destroy(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_window_type)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowType result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindowType)gdk_window_get_window_type(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_at_pointer)
+{
+  gint *arg1 = (gint *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  GdkWindow *result = 0 ;
+  int temp1 ;
+  int temp2 ;
+  SyxOop result_oop;
+  
+  {
+    temp1 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg1 = &temp1;
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = &temp2;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_at_pointer(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg1));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_show)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_show(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_hide)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_hide(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_withdraw)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_withdraw(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_show_unraised)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_show_unraised(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_move)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_move(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_resize)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_resize(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_move_resize)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gdk_window_move_resize(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_reparent)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_reparent(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_clear)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_clear(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_clear_area)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gdk_window_clear_area(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_clear_area_e)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gdk_window_clear_area_e(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_raise)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_raise(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_lower)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_lower(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_focus)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  guint32 arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_focus(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_user_data)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gpointer arg2 = (gpointer) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (gpointer) es->message_arguments[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_user_data(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_override_redirect)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_override_redirect(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_accept_focus)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_accept_focus(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_focus_on_map)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_focus_on_map(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_add_filter)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkFilterFunc arg2 = (GdkFilterFunc) 0 ;
+  gpointer arg3 = (gpointer) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkFilterFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gpointer) es->message_arguments[1];
+  }
+  gdk_threads_enter ();
+  gdk_window_add_filter(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_remove_filter)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkFilterFunc arg2 = (GdkFilterFunc) 0 ;
+  gpointer arg3 = (gpointer) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkFilterFunc) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gpointer) es->message_arguments[1];
+  }
+  gdk_threads_enter ();
+  gdk_window_remove_filter(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_scroll)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_scroll(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_move_region)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_move_region(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_shape_combine_mask)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkBitmap *arg2 = (GdkBitmap *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkBitmap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_shape_combine_mask(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_shape_combine_region)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_shape_combine_region(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_child_shapes)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_child_shapes(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_merge_child_shapes)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_merge_child_shapes(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_input_shape_combine_mask)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkBitmap *arg2 = (GdkBitmap *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkBitmap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_input_shape_combine_mask(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_input_shape_combine_region)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
+  gdk_window_input_shape_combine_region(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_child_input_shapes)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_child_input_shapes(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_merge_child_input_shapes)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_merge_child_input_shapes(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_is_visible)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gdk_window_is_visible(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_is_viewable)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gdk_window_is_viewable(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_state)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowState result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindowState)gdk_window_get_state(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_static_gravities)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = gdk_window_set_static_gravities(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_foreign_new)
+{
+  GdkNativeWindow arg1 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_foreign_new(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_lookup)
+{
+  GdkNativeWindow arg1 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_lookup(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_foreign_new_for_display)
+{
+  GdkDisplay *arg1 = (GdkDisplay *) 0 ;
+  GdkNativeWindow arg2 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDisplay *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_foreign_new_for_display(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_lookup_for_display)
+{
+  GdkDisplay *arg1 = (GdkDisplay *) 0 ;
+  GdkNativeWindow arg2 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkDisplay *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_lookup_for_display(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_hints)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  gint arg6 ;
+  gint arg7 ;
+  gint arg8 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[5]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[6]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_hints(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_type_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowTypeHint arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_type_hint(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_type_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowTypeHint result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindowTypeHint)gdk_window_get_type_hint(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_modal_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_modal_hint(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_skip_taskbar_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_skip_taskbar_hint(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_skip_pager_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_skip_pager_hint(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_urgency_hint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_urgency_hint(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_geometry_hints)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkGeometry *arg2 = (GdkGeometry *) 0 ;
+  GdkWindowHints arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkGeometry *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_geometry_hints(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_set_sm_client_id)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_set_sm_client_id((char const *)arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_begin_paint_rect)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRectangle *arg2 = (GdkRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_begin_paint_rect(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_begin_paint_region)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_begin_paint_region(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_end_paint)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_end_paint(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_title)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_title(arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_role)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_role(arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_transient_for)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_transient_for(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_background)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkColor *arg2 = (GdkColor *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkColor *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_background(arg1,(struct _GdkColor const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_back_pixmap)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkPixmap *arg2 = (GdkPixmap *) 0 ;
+  gboolean arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkPixmap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_back_pixmap(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_cursor)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkCursor *arg2 = (GdkCursor *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkCursor *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_cursor(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_user_data)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gpointer *arg2 = (gpointer *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (gpointer *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_get_user_data(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_geometry)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gint *arg4 = (gint *) 0 ;
+  gint *arg5 = (gint *) 0 ;
+  gint *arg6 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  int temp4 ;
+  int temp5 ;
+  int temp6 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+  {
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
+  }
+  {
+    temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = &temp6;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (6);
+  gdk_threads_enter ();
+  gdk_window_get_geometry(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_position)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gdk_window_get_position(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_origin)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gint result;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = (gint)gdk_window_get_origin(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_deskrelative_origin)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gboolean result;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gdk_window_get_deskrelative_origin(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_root_origin)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gdk_window_get_root_origin(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_frame_extents)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRectangle *arg2 = (GdkRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_get_frame_extents(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_pointer)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint *arg2 = (gint *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  GdkModifierType *arg4 = (GdkModifierType *) 0 ;
+  GdkWindow *result = 0 ;
+  int temp2 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+  {
+    arg4 = (GdkModifierType *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_get_pointer(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_parent)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_get_parent(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_toplevel)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_get_toplevel(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_children)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GList *)gdk_window_get_children(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_peek_children)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GList *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GList *)gdk_window_peek_children(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_events)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkEventMask result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkEventMask)gdk_window_get_events(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_events)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkEventMask arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_events(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_icon_list)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GList *arg2 = (GList *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_icon_list(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_icon)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  GdkPixmap *arg3 = (GdkPixmap *) 0 ;
+  GdkBitmap *arg4 = (GdkBitmap *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (GdkPixmap *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (GdkBitmap *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_icon(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_icon_name)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_icon_name(arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_group)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_set_group(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_group)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_window_get_group(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_decorations)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWMDecoration arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_decorations(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_decorations)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWMDecoration *arg2 = (GdkWMDecoration *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkWMDecoration *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  result = gdk_window_get_decorations(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_functions)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWMFunction arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_functions(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_toplevels)
+{
+  GList *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GList *)gdk_window_get_toplevels();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_iconify)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_iconify(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_deiconify)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_deiconify(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_stick)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_stick(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_unstick)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_unstick(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_maximize)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_maximize(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_unmaximize)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_unmaximize(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_fullscreen)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_fullscreen(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_unfullscreen)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_unfullscreen(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_keep_above)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_keep_above(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_keep_below)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_keep_below(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_register_dnd)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_register_dnd(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_begin_resize_drag)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkWindowEdge arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  guint32 arg6 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+  }
+  gdk_threads_enter ();
+  gdk_window_begin_resize_drag(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_begin_move_drag)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  guint32 arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gdk_window_begin_move_drag(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_invalidate_rect)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRectangle *arg2 = (GdkRectangle *) 0 ;
+  gboolean arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_invalidate_rect(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_invalidate_region)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  gboolean arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gdk_window_invalidate_region(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_invalidate_maybe_recurse)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *arg2 = (GdkRegion *) 0 ;
+  gboolean (*arg3)(GdkWindow *,gpointer) = (gboolean (*)(GdkWindow *,gpointer)) 0 ;
+  gpointer arg4 = (gpointer) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gboolean (*)(GdkWindow *,gpointer)) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (gpointer) es->message_arguments[2];
+  }
+  gdk_threads_enter ();
+  gdk_window_invalidate_maybe_recurse(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_update_area)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkRegion *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkRegion *)gdk_window_get_update_area(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_freeze_updates)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_freeze_updates(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_thaw_updates)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_thaw_updates(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_process_all_updates)
+{
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  gdk_window_process_all_updates();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_process_updates)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_process_updates(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_set_debug_updates)
+{
+  gboolean arg1 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gdk_window_set_debug_updates(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_constrain_size)
+{
+  GdkGeometry *arg1 = (GdkGeometry *) 0 ;
+  guint arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint *arg5 = (gint *) 0 ;
+  gint *arg6 = (gint *) 0 ;
+  int temp5 ;
+  int temp6 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkGeometry *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  {
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
+  }
+  {
+    temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = &temp6;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gdk_window_constrain_size(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_get_internal_paint_info)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  GdkDrawable **arg2 = (GdkDrawable **) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gint *arg4 = (gint *) 0 ;
+  int temp3 ;
+  int temp4 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GdkDrawable **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
+  }
+  {
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gdk_window_get_internal_paint_info(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_enable_synchronized_configure)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_enable_synchronized_configure(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_window_configure_finished)
+{
+  GdkWindow *arg1 = (GdkWindow *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gdk_window_configure_finished(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_set_pointer_hooks)
+{
+  GdkPointerHooks *arg1 = (GdkPointerHooks *) 0 ;
+  GdkPointerHooks *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GdkPointerHooks *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GdkPointerHooks *)gdk_set_pointer_hooks((struct _GdkPointerHooks const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gdk_get_default_root_window)
+{
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GdkWindow *)gdk_get_default_root_window();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5112,9 +15395,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkRequisition)
   struct _GtkRequisition *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkRequisition *)(struct _GtkRequisition *) calloc(1, sizeof(struct _GtkRequisition));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5128,9 +15413,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkRequisition)
   {
     arg1 = (struct _GtkRequisition *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5140,9 +15427,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWidget)
   struct _GtkWidget *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWidget *)(struct _GtkWidget *) calloc(1, sizeof(struct _GtkWidget));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5156,9 +15445,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWidget)
   {
     arg1 = (struct _GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5168,9 +15459,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWidgetClass)
   struct _GtkWidgetClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWidgetClass *)(struct _GtkWidgetClass *) calloc(1, sizeof(struct _GtkWidgetClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5184,9 +15477,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWidgetClass)
   {
     arg1 = (struct _GtkWidgetClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5196,9 +15491,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWidgetAuxInfo)
   struct _GtkWidgetAuxInfo *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWidgetAuxInfo *)(struct _GtkWidgetAuxInfo *) calloc(1, sizeof(struct _GtkWidgetAuxInfo));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5212,9 +15509,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWidgetAuxInfo)
   {
     arg1 = (struct _GtkWidgetAuxInfo *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5224,9 +15523,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWidgetShapeInfo)
   struct _GtkWidgetShapeInfo *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWidgetShapeInfo *)(struct _GtkWidgetShapeInfo *) calloc(1, sizeof(struct _GtkWidgetShapeInfo));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5240,9 +15541,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWidgetShapeInfo)
   {
     arg1 = (struct _GtkWidgetShapeInfo *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5252,9 +15555,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_widget_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5282,9 +15587,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_new)
     }	   
     arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_widget_new(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5299,9 +15606,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_ref)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_widget_ref(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5315,8 +15624,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_unref)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_unref(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5329,8 +15640,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_destroy)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_destroy(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5347,8 +15660,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_destroyed)
   {
     arg2 = (GtkWidget **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_destroyed(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5364,14 +15679,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5384,8 +15701,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_unparent)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_unparent(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5398,8 +15717,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_show)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_show(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5412,8 +15733,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_show_now)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_show_now(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5426,8 +15749,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_hide)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_hide(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5440,8 +15765,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_show_all)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_show_all(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5454,8 +15781,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_hide_all)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_hide_all(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5470,14 +15799,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_no_show_all)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_no_show_all(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5491,9 +15822,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_no_show_all)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_get_no_show_all(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_get_no_show_all(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5507,8 +15840,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_map)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_map(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5521,8 +15856,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_unmap)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_unmap(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5535,8 +15872,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_realize)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_realize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5549,8 +15888,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_unrealize)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_unrealize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5563,8 +15904,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_draw)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_queue_draw(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5582,35 +15925,37 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_draw_area)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
-  }
+  gdk_threads_enter ();
   gtk_widget_queue_draw_area(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5623,8 +15968,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_clear)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_queue_clear(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5642,35 +15989,37 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_clear_area)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
-  }
+  gdk_threads_enter ();
   gtk_widget_queue_clear_area(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5683,8 +16032,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_resize)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_queue_resize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5697,8 +16048,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_queue_resize_no_redraw)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_queue_resize_no_redraw(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5715,8 +16068,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_draw)
   {
     arg2 = (GdkRectangle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_draw(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5733,8 +16088,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_size_request)
   {
     arg2 = (GtkRequisition *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_size_request(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5751,8 +16108,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_size_allocate)
   {
     arg2 = (GtkAllocation *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_size_allocate(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5769,8 +16128,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_child_requisition)
   {
     arg2 = (GtkRequisition *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_get_child_requisition(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5789,31 +16150,33 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_add_accelerator)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GtkAccelGroup *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
-  }
+  gdk_threads_enter ();
   gtk_widget_add_accelerator(arg1,(char const *)arg2,arg3,arg4,arg5,arg6);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5834,22 +16197,24 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_remove_accelerator)
     arg2 = (GtkAccelGroup *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
+  gdk_threads_enter ();
+  result = gtk_widget_remove_accelerator(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
-  }
-  result = (gboolean)gtk_widget_remove_accelerator(arg1,arg2,arg3,arg4);
-  {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5866,17 +16231,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_accel_path)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GtkAccelGroup *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_accel_path(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5890,9 +16257,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_list_accel_closures)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GList *)gtk_widget_list_accel_closures(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5909,15 +16278,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_can_activate_accel)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)gtk_widget_can_activate_accel(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_widget_can_activate_accel(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5934,15 +16305,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_mnemonic_activate)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
-  result = (gboolean)gtk_widget_mnemonic_activate(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_widget_mnemonic_activate(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5961,9 +16334,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_event)
   {
     arg2 = (GdkEvent *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
-  result = (gboolean)gtk_widget_event(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_widget_event(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5982,9 +16357,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_send_expose)
   {
     arg2 = (GdkEvent *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (gint)gtk_widget_send_expose(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5999,9 +16376,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_activate)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_activate(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_activate(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6024,9 +16403,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_scroll_adjustments)
   {
     arg3 = (GtkAdjustment *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
-  result = (gboolean)gtk_widget_set_scroll_adjustments(arg1,arg2,arg3);
+  gdk_threads_enter ();
+  result = gtk_widget_set_scroll_adjustments(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6044,8 +16425,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_reparent)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_reparent(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6067,9 +16450,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_intersect)
   {
     arg3 = (GdkRectangle *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
-  result = (gboolean)gtk_widget_intersect(arg1,arg2,arg3);
+  gdk_threads_enter ();
+  result = gtk_widget_intersect(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6088,9 +16473,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_region_intersect)
   {
     arg2 = (GdkRegion *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GdkRegion *)gtk_widget_region_intersect(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6104,8 +16491,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_freeze_child_notify)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_freeze_child_notify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6120,14 +16509,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_child_notify)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_child_notify(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6140,8 +16531,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_thaw_child_notify)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_thaw_child_notify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6155,9 +16548,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_is_focus)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_is_focus(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_is_focus(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6171,8 +16566,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_grab_focus)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_grab_focus(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6185,8 +16582,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_grab_default)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_grab_default(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6201,14 +16600,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_name)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_name(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6222,9 +16623,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_name)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_widget_get_name(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6240,14 +16643,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_state)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_state(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6262,14 +16667,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_sensitive)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_sensitive(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6284,14 +16691,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_app_paintable)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_app_paintable(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6306,14 +16715,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_double_buffered)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_double_buffered(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6328,14 +16739,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_redraw_on_allocate)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_redraw_on_allocate(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6352,8 +16765,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_parent)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_parent(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6370,8 +16785,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_parent_window)
   {
     arg2 = (GdkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_parent_window(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6386,14 +16803,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_child_visible)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_child_visible(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6407,9 +16826,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_child_visible)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_get_child_visible(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_get_child_visible(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6424,9 +16845,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_parent)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_widget_get_parent(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6441,9 +16864,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_parent_window)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkWindow *)gtk_widget_get_parent_window(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6460,15 +16885,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_child_focus)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
-  result = (gboolean)gtk_widget_child_focus(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_widget_child_focus(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6485,21 +16912,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_size_request)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_widget_set_size_request(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6509,20 +16938,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_size_request)
   GtkWidget *arg1 = (GtkWidget *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_widget_get_size_request(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -6537,21 +16984,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_uposition)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_widget_set_uposition(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6567,21 +17016,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_usize)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_widget_set_usize(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6596,14 +17047,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_events)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_events(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6618,14 +17071,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_add_events)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_add_events(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6639,8 +17094,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_extension_events)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
   gtk_widget_set_extension_events(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6654,7 +17118,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_extension_events)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = gtk_widget_get_extension_events(arg1);
+  gdk_threads_enter ();
+  result = (GdkExtensionMode)gtk_widget_get_extension_events(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6668,9 +17137,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_toplevel)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_widget_get_toplevel(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6687,15 +17158,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_ancestor)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_widget_get_ancestor(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6710,9 +17183,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_colormap)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkColormap *)gtk_widget_get_colormap(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6727,9 +17202,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_visual)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkVisual *)gtk_widget_get_visual(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6744,9 +17221,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_screen)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkScreen *)gtk_widget_get_screen(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6761,9 +17240,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_has_screen)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_has_screen(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_has_screen(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6778,9 +17259,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_display)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkDisplay *)gtk_widget_get_display(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6795,9 +17278,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_root_window)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkWindow *)gtk_widget_get_root_window(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6812,9 +17297,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_settings)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkSettings *)gtk_widget_get_settings(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6833,9 +17320,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_clipboard)
   {
     arg2 = (GdkAtom) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GtkClipboard *)gtk_widget_get_clipboard(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6850,9 +17339,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_accessible)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (AtkObject *)gtk_widget_get_accessible(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6870,8 +17361,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_colormap)
   {
     arg2 = (GdkColormap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_colormap(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6885,9 +17378,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_events)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gint)gtk_widget_get_events(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6898,20 +17393,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_pointer)
   GtkWidget *arg1 = (GtkWidget *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_widget_get_pointer(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -6928,9 +17441,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_is_ancestor)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
-  result = (gboolean)gtk_widget_is_ancestor(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_widget_is_ancestor(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6945,6 +17460,8 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_translate_coordinates)
   gint *arg5 = (gint *) 0 ;
   gint *arg6 = (gint *) 0 ;
   gboolean result;
+  int temp5 ;
+  int temp6 ;
   SyxOop result_oop;
   
   {
@@ -6954,30 +17471,46 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_translate_coordinates)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
   }
   {
-    arg5 = (gint *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = &temp6;
+  }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gtk_widget_translate_coordinates(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   {
-    arg6 = (gint *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   }
-  result = (gboolean)gtk_widget_translate_coordinates(arg1,arg2,arg3,arg4,arg5,arg6);
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
   }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -6990,9 +17523,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_hide_on_delete)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_hide_on_delete(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_hide_on_delete(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7010,8 +17545,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_style)
   {
     arg2 = (GtkStyle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_style(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7024,8 +17561,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_ensure_style)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_ensure_style(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7039,9 +17578,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_style)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkStyle *)gtk_widget_get_style(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7059,8 +17600,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_style)
   {
     arg2 = (GtkRcStyle *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_style(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7074,9 +17617,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_modifier_style)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkRcStyle *)gtk_widget_get_modifier_style(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7093,17 +17638,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_fg)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GdkColor *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_fg(arg1,arg2,(struct _GdkColor const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7119,17 +17666,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_bg)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GdkColor *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_bg(arg1,arg2,(struct _GdkColor const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7145,17 +17694,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_text)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GdkColor *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_text(arg1,arg2,(struct _GdkColor const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7171,17 +17722,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_base)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GdkColor *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_base(arg1,arg2,(struct _GdkColor const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7198,8 +17751,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_modify_font)
   {
     arg2 = (PangoFontDescription *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_modify_font(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7213,9 +17768,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_create_pango_context)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (PangoContext *)gtk_widget_create_pango_context(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7230,9 +17787,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_pango_context)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (PangoContext *)gtk_widget_get_pango_context(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7249,15 +17808,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_create_pango_layout)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (PangoLayout *)gtk_widget_create_pango_layout(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7276,29 +17837,31 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_render_icon)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[3]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_OBJECT_STRING(es->message_arguments[3]);
+    arg4 = SYX_OBJECT_STRING(es->message_arguments[2]);
   }
+  gdk_threads_enter ();
   result = (GdkPixbuf *)gtk_widget_render_icon(arg1,(char const *)arg2,arg3,(char const *)arg4);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7314,14 +17877,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_composite_name)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_composite_name(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7335,9 +17900,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_composite_name)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_widget_get_composite_name(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7351,8 +17918,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_reset_rc_styles)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_reset_rc_styles(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7365,8 +17934,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_push_colormap)
   {
     arg1 = (GdkColormap *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_push_colormap(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7375,8 +17946,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_push_composite_child)
 {
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   gtk_widget_push_composite_child();
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7385,8 +17958,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_pop_composite_child)
 {
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   gtk_widget_pop_composite_child();
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7395,8 +17970,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_pop_colormap)
 {
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   gtk_widget_pop_colormap();
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7413,8 +17990,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_install_style_property)
   {
     arg2 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_class_install_style_property(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7432,8 +18011,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_install_style_property_parser)
   {
     arg2 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_class_install_style_property_parser(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7449,15 +18030,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_find_style_property)
     arg1 = (GtkWidgetClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GParamSpec *)gtk_widget_class_find_style_property(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7476,9 +18059,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_list_style_properties)
   {
     arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GParamSpec **)gtk_widget_class_list_style_properties(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7495,17 +18080,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_style_get_property)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_style_get_property(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7521,14 +18108,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_style_get_valist)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_style_get_valist(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7544,14 +18133,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_style_get)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_style_get(arg1,(char const *)arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7564,8 +18155,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_default_colormap)
   {
     arg1 = (GdkColormap *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_set_default_colormap(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7575,9 +18168,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_default_style)
   GtkStyle *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GtkStyle *)gtk_widget_get_default_style();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7588,9 +18183,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_default_colormap)
   GdkColormap *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GdkColormap *)gtk_widget_get_default_colormap();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7601,9 +18198,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_default_visual)
   GdkVisual *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GdkVisual *)gtk_widget_get_default_visual();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7619,14 +18218,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_direction)
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_direction(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7640,9 +18241,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_direction)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkTextDirection)gtk_widget_get_direction(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7660,8 +18263,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_set_default_direction)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_widget_set_default_direction(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7671,9 +18276,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_get_default_direction)
   GtkTextDirection result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GtkTextDirection)gtk_widget_get_default_direction();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7688,9 +18295,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_is_composited)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_widget_is_composited(arg1);
+  gdk_threads_enter ();
+  result = gtk_widget_is_composited(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7711,21 +18320,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_shape_combine_mask)
     arg2 = (GdkBitmap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
-  }
+  gdk_threads_enter ();
   gtk_widget_shape_combine_mask(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7745,21 +18356,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_input_shape_combine_mask)
     arg2 = (GdkBitmap *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
-  }
+  gdk_threads_enter ();
   gtk_widget_input_shape_combine_mask(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7772,8 +18385,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_reset_shapes)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_widget_reset_shapes(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7784,6 +18399,8 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_path)
   guint *arg2 = (guint *) 0 ;
   gchar **arg3 = (gchar **) 0 ;
   gchar **arg4 = (gchar **) 0 ;
+  char *temp3 ;
+  char *temp4 ;
   SyxOop result_oop;
   
   {
@@ -7793,14 +18410,30 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_path)
     arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gchar **) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (char *) SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg3 = &temp3;
   }
   {
-    arg4 = (gchar **) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    temp4 = (char *) SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg4 = &temp4;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_widget_path(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg4));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -7810,6 +18443,8 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_path)
   guint *arg2 = (guint *) 0 ;
   gchar **arg3 = (gchar **) 0 ;
   gchar **arg4 = (gchar **) 0 ;
+  char *temp3 ;
+  char *temp4 ;
   SyxOop result_oop;
   
   {
@@ -7819,14 +18454,30 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_class_path)
     arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gchar **) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (char *) SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg3 = &temp3;
   }
   {
-    arg4 = (gchar **) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    temp4 = (char *) SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg4 = &temp4;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_widget_class_path(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg4));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -7839,9 +18490,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_list_mnemonic_labels)
   {
     arg1 = (GtkWidget *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GList *)gtk_widget_list_mnemonic_labels(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7859,8 +18512,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_add_mnemonic_label)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_add_mnemonic_label(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7877,8 +18532,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_widget_remove_mnemonic_label)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_widget_remove_mnemonic_label(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7888,9 +18545,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_requisition_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_requisition_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7905,9 +18564,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_requisition_copy)
   {
     arg1 = (GtkRequisition *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkRequisition *)gtk_requisition_copy((struct _GtkRequisition const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7921,8 +18582,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_requisition_free)
   {
     arg1 = (GtkRequisition *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_requisition_free(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7932,9 +18595,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkContainer)
   struct _GtkContainer *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkContainer *)(struct _GtkContainer *) calloc(1, sizeof(struct _GtkContainer));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7948,9 +18613,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkContainer)
   {
     arg1 = (struct _GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7960,9 +18627,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkContainerClass)
   struct _GtkContainerClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkContainerClass *)(struct _GtkContainerClass *) calloc(1, sizeof(struct _GtkContainerClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7976,9 +18645,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkContainerClass)
   {
     arg1 = (struct _GtkContainerClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -7988,9 +18659,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_container_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8006,14 +18679,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_border_width)
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_container_set_border_width(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8027,9 +18702,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_border_width)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (guint)gtk_container_get_border_width(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8047,8 +18724,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_add)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_add(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8065,8 +18744,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_remove)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_remove(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8081,14 +18762,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_resize_mode)
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_container_set_resize_mode(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8102,9 +18785,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_resize_mode)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkResizeMode)gtk_container_get_resize_mode(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8118,8 +18803,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_check_resize)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_container_check_resize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8138,10 +18825,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_foreach)
     arg2 = (GtkCallback) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   gtk_container_foreach(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8161,8 +18850,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_foreach_full)
   {
     arg2 = (GtkCallback) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_foreach_full(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8176,9 +18867,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_children)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GList *)gtk_container_get_children(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8200,8 +18893,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_propagate_expose)
   {
     arg3 = (GdkEventExpose *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_container_propagate_expose(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8218,8 +18913,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_focus_chain)
   {
     arg2 = (GList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_set_focus_chain(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8237,9 +18934,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_focus_chain)
   {
     arg2 = (GList **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
-  result = (gboolean)gtk_container_get_focus_chain(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_container_get_focus_chain(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8253,8 +18952,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_unset_focus_chain)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_container_unset_focus_chain(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8269,14 +18970,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_reallocate_redraws)
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_container_set_reallocate_redraws(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8293,8 +18996,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_focus_child)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_set_focus_child(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8311,8 +19016,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_focus_vadjustment)
   {
     arg2 = (GtkAdjustment *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_set_focus_vadjustment(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8326,9 +19033,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_focus_vadjustment)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkAdjustment *)gtk_container_get_focus_vadjustment(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8346,8 +19055,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_set_focus_hadjustment)
   {
     arg2 = (GtkAdjustment *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_container_set_focus_hadjustment(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8361,9 +19072,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_get_focus_hadjustment)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkAdjustment *)gtk_container_get_focus_hadjustment(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8377,8 +19090,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_resize_children)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_container_resize_children(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8392,9 +19107,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_type)
   {
     arg1 = (GtkContainer *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GType)gtk_container_child_type(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8411,17 +19128,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_class_install_child_property)
     arg1 = (GtkContainerClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GParamSpec *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_container_class_install_child_property(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8437,15 +19156,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_class_find_child_property)
     arg1 = (GObjectClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GParamSpec *)gtk_container_class_find_child_property(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8464,9 +19185,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_class_list_child_properties)
   {
     arg2 = (guint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   result = (GParamSpec **)gtk_container_class_list_child_properties(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8487,14 +19210,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_add_with_properties)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   gtk_container_add_with_properties(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8514,14 +19239,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_set)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   gtk_container_child_set(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8541,14 +19268,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_get)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   gtk_container_child_get(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8568,14 +19297,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_set_valist)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   gtk_container_child_set_valist(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8595,14 +19326,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_get_valist)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
   gtk_container_child_get_valist(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8622,17 +19355,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_set_property)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
     arg4 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   gtk_container_child_set_property(arg1,arg2,(char const *)arg3,(struct _GValue const *)arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8652,17 +19387,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_child_get_property)
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
   {
     arg4 = (GValue *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
   }
+  gdk_threads_enter ();
   gtk_container_child_get_property(arg1,arg2,(char const *)arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8681,10 +19418,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_container_forall)
     arg2 = (GtkCallback) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
   {
-    arg3 = (gpointer) es->message_arguments[2];
+    arg3 = (gpointer) es->message_arguments[1];
   }
+  gdk_threads_enter ();
   gtk_container_forall(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8694,9 +19433,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkLabel)
   struct _GtkLabel *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkLabel *)(struct _GtkLabel *) calloc(1, sizeof(struct _GtkLabel));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8710,9 +19451,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkLabel)
   {
     arg1 = (struct _GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8722,9 +19465,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkLabelClass)
   struct _GtkLabelClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkLabelClass *)(struct _GtkLabelClass *) calloc(1, sizeof(struct _GtkLabelClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8738,9 +19483,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkLabelClass)
   {
     arg1 = (struct _GtkLabelClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8750,9 +19497,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_label_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8771,9 +19520,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_new)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_label_new((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8792,9 +19543,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_new_with_mnemonic)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_label_new_with_mnemonic((char const *)arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8810,14 +19563,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_text)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_text(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8831,9 +19586,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_text)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_label_get_text(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8851,8 +19608,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_attributes)
   {
     arg2 = (PangoAttrList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_label_set_attributes(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8866,9 +19625,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_attributes)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (PangoAttrList *)gtk_label_get_attributes(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8884,14 +19645,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_label)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_label(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8905,9 +19668,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_label)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_label_get_label(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8923,14 +19688,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_markup)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_markup(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8945,14 +19712,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_use_markup)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_use_markup(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -8966,9 +19735,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_use_markup)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_label_get_use_markup(arg1);
+  gdk_threads_enter ();
+  result = gtk_label_get_use_markup(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8984,14 +19755,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_use_underline)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_use_underline(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9005,9 +19778,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_use_underline)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_label_get_use_underline(arg1);
+  gdk_threads_enter ();
+  result = gtk_label_get_use_underline(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9023,14 +19798,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_markup_with_mnemonic)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_markup_with_mnemonic(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9044,9 +19821,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_mnemonic_keyval)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (guint)gtk_label_get_mnemonic_keyval(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9064,8 +19843,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_mnemonic_widget)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_label_set_mnemonic_widget(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9079,9 +19860,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_mnemonic_widget)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_label_get_mnemonic_widget(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9097,14 +19880,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_text_with_mnemonic)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_text_with_mnemonic(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9119,14 +19904,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_justify)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_justify(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9140,9 +19927,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_justify)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkJustification)gtk_label_get_justify(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9157,8 +19946,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_ellipsize)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
   gtk_label_set_ellipsize(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9172,7 +19970,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_ellipsize)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = gtk_label_get_ellipsize(arg1);
+  gdk_threads_enter ();
+  result = (PangoEllipsizeMode)gtk_label_get_ellipsize(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9187,14 +19990,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_width_chars)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_width_chars(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9208,9 +20013,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_width_chars)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gint)gtk_label_get_width_chars(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9226,14 +20033,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_max_width_chars)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_max_width_chars(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9247,9 +20056,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_max_width_chars)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gint)gtk_label_get_max_width_chars(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9265,14 +20076,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_pattern)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_pattern(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9287,14 +20100,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_line_wrap)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_line_wrap(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9308,9 +20123,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_line_wrap)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_label_get_line_wrap(arg1);
+  gdk_threads_enter ();
+  result = gtk_label_get_line_wrap(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9325,8 +20142,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_line_wrap_mode)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
   gtk_label_set_line_wrap_mode(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9340,7 +20166,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_line_wrap_mode)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = gtk_label_get_line_wrap_mode(arg1);
+  gdk_threads_enter ();
+  result = (PangoWrapMode)gtk_label_get_line_wrap_mode(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9355,14 +20186,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_selectable)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_selectable(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9376,9 +20209,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_selectable)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_label_get_selectable(arg1);
+  gdk_threads_enter ();
+  result = gtk_label_get_selectable(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9394,14 +20229,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_angle)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_angle(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9415,9 +20252,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_angle)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gdouble)gtk_label_get_angle(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_float_new(result);
+    SWIG_APPEND_VALUE (syx_float_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9434,21 +20273,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_select_region)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_label_select_region(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9459,22 +20300,40 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_selection_bounds)
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
   gboolean result;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
-  result = (gboolean)gtk_label_get_selection_bounds(arg1,arg2,arg3);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  result = gtk_label_get_selection_bounds(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -9487,9 +20346,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_layout)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (PangoLayout *)gtk_label_get_layout(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9500,20 +20361,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_layout_offsets)
   GtkLabel *arg1 = (GtkLabel *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_label_get_layout_offsets(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -9527,14 +20406,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_set_single_line_mode)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_label_set_single_line_mode(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9548,9 +20429,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get_single_line_mode)
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_label_get_single_line_mode(arg1);
+  gdk_threads_enter ();
+  result = gtk_label_get_single_line_mode(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9560,17 +20443,30 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_get)
 {
   GtkLabel *arg1 = (GtkLabel *) 0 ;
   gchar **arg2 = (gchar **) 0 ;
+  char *temp2 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gchar **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (char *) SYX_OBJECT_STRING(es->message_arguments[0]);
+    arg2 = &temp2;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
   gtk_label_get(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_string_new(*arg2));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -9585,15 +20481,613 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_label_parse_uline)
     arg1 = (GtkLabel *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (guint)gtk_label_parse_uline(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkButton)
+{
+  struct _GtkButton *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkButton *)(struct _GtkButton *) calloc(1, sizeof(struct _GtkButton));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkButton)
+{
+  struct _GtkButton *arg1 = (struct _GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkButtonClass)
+{
+  struct _GtkButtonClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkButtonClass *)(struct _GtkButtonClass *) calloc(1, sizeof(struct _GtkButtonClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkButtonClass)
+{
+  struct _GtkButtonClass *arg1 = (struct _GtkButtonClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkButtonClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_button_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_new)
+{
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_button_new();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_new_with_label)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_button_new_with_label((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_new_from_stock)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_button_new_from_stock((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_new_with_mnemonic)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_button_new_with_mnemonic((char const *)arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_pressed)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_pressed(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_released)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_released(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_clicked)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_clicked(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_enter)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_enter(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_leave)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_leave(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_relief)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkReliefStyle arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_relief(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_relief)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkReliefStyle result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GtkReliefStyle)gtk_button_get_relief(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_label)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gchar *arg2 = (gchar *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_label(arg1,(char const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_label)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (gchar *)gtk_button_get_label(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_string_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_use_underline)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_use_underline(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_use_underline)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gtk_button_get_use_underline(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_use_stock)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_use_stock(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_use_stock)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gtk_button_get_use_stock(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_focus_on_click)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_focus_on_click(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_focus_on_click)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gtk_button_get_focus_on_click(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_alignment)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gfloat arg2 ;
+  gfloat arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_alignment(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_alignment)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  gfloat *arg2 = (gfloat *) 0 ;
+  gfloat *arg3 = (gfloat *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (gfloat *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gfloat *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_get_alignment(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_image)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gtk_button_set_image(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_image)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_button_get_image(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_set_image_position)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkPositionType arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_button_set_image_position(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_button_get_image_position)
+{
+  GtkButton *arg1 = (GtkButton *) 0 ;
+  GtkPositionType result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkButton *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (GtkPositionType)gtk_button_get_image_position(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9604,9 +21098,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWindow)
   struct _GtkWindow *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWindow *)(struct _GtkWindow *) calloc(1, sizeof(struct _GtkWindow));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9620,9 +21116,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWindow)
   {
     arg1 = (struct _GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9632,9 +21130,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWindowClass)
   struct _GtkWindowClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWindowClass *)(struct _GtkWindowClass *) calloc(1, sizeof(struct _GtkWindowClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9648,9 +21148,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWindowClass)
   {
     arg1 = (struct _GtkWindowClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9660,9 +21162,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWindowGroup)
   struct _GtkWindowGroup *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWindowGroup *)(struct _GtkWindowGroup *) calloc(1, sizeof(struct _GtkWindowGroup));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9676,9 +21180,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWindowGroup)
   {
     arg1 = (struct _GtkWindowGroup *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9688,9 +21194,11 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GtkWindowGroupClass)
   struct _GtkWindowGroupClass *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (struct _GtkWindowGroupClass *)(struct _GtkWindowGroupClass *) calloc(1, sizeof(struct _GtkWindowGroupClass));
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9704,9 +21212,11 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GtkWindowGroupClass)
   {
     arg1 = (struct _GtkWindowGroupClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   free((char *) arg1);
   
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9716,9 +21226,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_window_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9737,9 +21249,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_new)
     }	   
     arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_window_new(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9755,14 +21269,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_title)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_title(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9776,9 +21292,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_title)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_window_get_title(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9795,21 +21313,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_wmclass)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  }
+  {
     if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   }
-  {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_OBJECT_STRING(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_window_set_wmclass(arg1,(char const *)arg2,(char const *)arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9824,14 +21344,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_role)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_role(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9845,9 +21367,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_role)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_window_get_role(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9865,8 +21389,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_add_accel_group)
   {
     arg2 = (GtkAccelGroup *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_add_accel_group(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9883,8 +21409,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_remove_accel_group)
   {
     arg2 = (GtkAccelGroup *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_remove_accel_group(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9899,14 +21427,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_position)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_position(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9920,9 +21450,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_activate_focus)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_activate_focus(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_activate_focus(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9940,8 +21472,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_focus)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_focus(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9955,9 +21489,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_focus)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWidget *)gtk_window_get_focus(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9975,8 +21511,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default)
   {
     arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_default(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -9990,9 +21528,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_activate_default)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_activate_default(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_activate_default(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10010,8 +21550,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_transient_for)
   {
     arg2 = (GtkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_transient_for(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10025,9 +21567,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_transient_for)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWindow *)gtk_window_get_transient_for(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10042,8 +21586,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_type_hint)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
   gtk_window_set_type_hint(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10057,7 +21610,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_type_hint)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = gtk_window_get_type_hint(arg1);
+  gdk_threads_enter ();
+  result = (GdkWindowTypeHint)gtk_window_get_type_hint(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10072,14 +21630,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_skip_taskbar_hint)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_skip_taskbar_hint(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10093,9 +21653,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_skip_taskbar_hint)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_skip_taskbar_hint(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_skip_taskbar_hint(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10111,14 +21673,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_skip_pager_hint)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_skip_pager_hint(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10132,9 +21696,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_skip_pager_hint)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_skip_pager_hint(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_skip_pager_hint(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10150,14 +21716,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_urgency_hint)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_urgency_hint(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10171,9 +21739,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_urgency_hint)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_urgency_hint(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_urgency_hint(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10189,14 +21759,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_accept_focus)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_accept_focus(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10210,9 +21782,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_accept_focus)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_accept_focus(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_accept_focus(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10228,14 +21802,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_focus_on_map)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_focus_on_map(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10249,9 +21825,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_focus_on_map)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_focus_on_map(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_focus_on_map(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10267,14 +21845,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_destroy_with_parent)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_destroy_with_parent(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10288,9 +21868,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_destroy_with_parent)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_destroy_with_parent(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_destroy_with_parent(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10306,14 +21888,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_resizable)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_resizable(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10327,9 +21911,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_resizable)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_resizable(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_resizable(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10344,8 +21930,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_gravity)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
   gtk_window_set_gravity(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10359,7 +21954,12 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_gravity)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = gtk_window_get_gravity(arg1);
+  gdk_threads_enter ();
+  result = (GdkGravity)gtk_window_get_gravity(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10381,8 +21981,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_geometry_hints)
   {
     arg3 = (GdkGeometry *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  }
+  gdk_threads_enter ();
   gtk_window_set_geometry_hints(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10399,8 +22008,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_screen)
   {
     arg2 = (GdkScreen *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_screen(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10414,9 +22025,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_screen)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkScreen *)gtk_window_get_screen(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10431,9 +22044,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_is_active)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_is_active(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_is_active(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10448,9 +22063,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_has_toplevel_focus)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_has_toplevel_focus(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_has_toplevel_focus(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10466,14 +22083,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_has_frame)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_has_frame(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10487,9 +22106,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_has_frame)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_has_frame(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_has_frame(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10508,35 +22129,37 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_frame_dimensions)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
-  }
+  gdk_threads_enter ();
   gtk_window_set_frame_dimensions(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10548,26 +22171,54 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_frame_dimensions)
   gint *arg3 = (gint *) 0 ;
   gint *arg4 = (gint *) 0 ;
   gint *arg5 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
+  int temp4 ;
+  int temp5 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
   {
-    arg4 = (gint *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+    temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = &temp4;
   }
   {
-    arg5 = (gint *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+    temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = &temp5;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (5);
+  gdk_threads_enter ();
   gtk_window_get_frame_dimensions(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -10581,14 +22232,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_decorated)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_decorated(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10602,9 +22255,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_decorated)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_decorated(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_decorated(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10620,14 +22275,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_deletable)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_deletable(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10641,9 +22298,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_deletable)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_deletable(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_deletable(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10661,8 +22320,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_icon_list)
   {
     arg2 = (GList *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_icon_list(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10676,9 +22337,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_icon_list)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GList *)gtk_window_get_icon_list(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10696,8 +22359,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_icon)
   {
     arg2 = (GdkPixbuf *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_icon(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10712,14 +22377,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_icon_name)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_icon_name(arg1,(char const *)arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10736,18 +22403,20 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_icon_from_file)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
     arg3 = (GError **) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
-  result = (gboolean)gtk_window_set_icon_from_file(arg1,(char const *)arg2,arg3);
+  gdk_threads_enter ();
+  result = gtk_window_set_icon_from_file(arg1,(char const *)arg2,arg3);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10762,9 +22431,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_icon)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkPixbuf *)gtk_window_get_icon(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10779,9 +22450,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_icon_name)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (gchar *)gtk_window_get_icon_name(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_string_new(result);
+    SWIG_APPEND_VALUE (syx_string_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10795,8 +22468,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default_icon_list)
   {
     arg1 = (GList *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_default_icon_list(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10806,9 +22481,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_default_icon_list)
   GList *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GList *)gtk_window_get_default_icon_list();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10822,8 +22499,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default_icon)
   {
     arg1 = (GdkPixbuf *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_set_default_icon(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10840,8 +22519,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default_icon_name)
     }	   
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_default_icon_name((char const *)arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10861,11 +22542,13 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default_icon_from_file)
     arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
   {
-    arg2 = (GError **) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    arg2 = (GError **) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
-  result = (gboolean)gtk_window_set_default_icon_from_file((char const *)arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_window_set_default_icon_from_file((char const *)arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10877,14 +22560,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_auto_startup_notification)
   SyxOop result_oop;
   
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_auto_startup_notification(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10899,14 +22584,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_modal)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_modal(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10920,9 +22607,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_modal)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
-  result = (gboolean)gtk_window_get_modal(arg1);
+  gdk_threads_enter ();
+  result = gtk_window_get_modal(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10933,9 +22622,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_list_toplevels)
   GList *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GList *)gtk_window_list_toplevels();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10952,17 +22643,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_add_mnemonic)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_window_add_mnemonic(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10978,17 +22671,19 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_remove_mnemonic)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
   {
     arg3 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
   }
+  gdk_threads_enter ();
   gtk_window_remove_mnemonic(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11005,22 +22700,24 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_mnemonic_activate)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
+  gdk_threads_enter ();
+  result = gtk_window_mnemonic_activate(arg1,arg2,arg3);
+  gdk_threads_leave ();
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
-  result = (gboolean)gtk_window_mnemonic_activate(arg1,arg2,arg3);
-  {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11036,14 +22733,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_mnemonic_modifier)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_mnemonic_modifier(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11057,9 +22756,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_mnemonic_modifier)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GdkModifierType)gtk_window_get_mnemonic_modifier(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11078,9 +22779,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_activate_key)
   {
     arg2 = (GdkEventKey *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
-  result = (gboolean)gtk_window_activate_key(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_window_activate_key(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11099,9 +22802,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_propagate_key_event)
   {
     arg2 = (GdkEventKey *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
-  result = (gboolean)gtk_window_propagate_key_event(arg1,arg2);
+  gdk_threads_enter ();
+  result = gtk_window_propagate_key_event(arg1,arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11115,8 +22820,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_present)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_present(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11131,14 +22838,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_present_with_time)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_present_with_time(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11151,8 +22860,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_iconify)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_iconify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11165,8 +22876,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_deiconify)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_deiconify(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11179,8 +22892,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_stick)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_stick(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11193,8 +22908,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_unstick)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_unstick(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11207,8 +22924,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_maximize)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_maximize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11221,8 +22940,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_unmaximize)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_unmaximize(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11235,8 +22956,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_fullscreen)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_fullscreen(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11249,8 +22972,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_unfullscreen)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_unfullscreen(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11265,14 +22990,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_keep_above)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_keep_above(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11287,14 +23014,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_keep_below)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_set_keep_below(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11313,28 +23042,44 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_begin_resize_drag)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+    arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   }
+  gdk_threads_enter ();
   gtk_window_begin_resize_drag(arg1,arg2,arg3,arg4,arg5,arg6);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11352,35 +23097,37 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_begin_move_drag)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg5 = SYX_SMALL_INTEGER(es->message_arguments[4]);
-  }
+  gdk_threads_enter ();
   gtk_window_begin_move_drag(arg1,arg2,arg3,arg4,arg5);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11397,28 +23144,30 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_policy)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
   {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+    arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg4 = SYX_SMALL_INTEGER(es->message_arguments[3]);
-  }
+  gdk_threads_enter ();
   gtk_window_set_policy(arg1,arg2,arg3,arg4);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11434,21 +23183,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_set_default_size)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_window_set_default_size(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11458,20 +23209,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_default_size)
   GtkWindow *arg1 = (GtkWindow *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_window_get_default_size(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -11486,21 +23255,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_resize)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_window_resize(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11510,20 +23281,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_size)
   GtkWindow *arg1 = (GtkWindow *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_window_get_size(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -11538,21 +23327,23 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_move)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
-    {
-      SYX_PRIM_FAIL;
-    }	   
-    arg3 = SYX_SMALL_INTEGER(es->message_arguments[2]);
-  }
+  gdk_threads_enter ();
   gtk_window_move(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11562,20 +23353,38 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_position)
   GtkWindow *arg1 = (GtkWindow *) 0 ;
   gint *arg2 = (gint *) 0 ;
   gint *arg3 = (gint *) 0 ;
+  int temp2 ;
+  int temp3 ;
   SyxOop result_oop;
   
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    arg2 = (gint *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+    temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[0]);
+    arg2 = &temp2;
   }
   {
-    arg3 = (gint *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+    temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg3 = &temp3;
   }
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
   gtk_window_get_position(arg1,arg2,arg3);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
+  }
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  }
   SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
 }
 
 
@@ -11590,15 +23399,17 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_parse_geometry)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_OBJECT_IS_STRING(es->message_arguments[1]))
+    if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_OBJECT_STRING(es->message_arguments[1]);
+    arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   }
-  result = (gboolean)gtk_window_parse_geometry(arg1,(char const *)arg2);
+  gdk_threads_enter ();
+  result = gtk_window_parse_geometry(arg1,(char const *)arg2);
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11613,9 +23424,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_get_group)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   result = (GtkWindowGroup *)gtk_window_get_group(arg1);
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11629,8 +23442,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_reshow_with_initial_size)
   {
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
+  gdk_threads_enter ();
   gtk_window_reshow_with_initial_size(arg1);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11640,9 +23455,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_group_get_type)
   GType result;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GType)gtk_window_group_get_type();
+  gdk_threads_leave ();
   {
-    result_oop = syx_small_integer_new(result);
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11653,9 +23470,11 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_group_new)
   GtkWindowGroup *result = 0 ;
   SyxOop result_oop;
   
+  gdk_threads_enter ();
   result = (GtkWindowGroup *)gtk_window_group_new();
+  gdk_threads_leave ();
   {
-    result_oop = (SyxOop) result;
+    SWIG_APPEND_VALUE ((SyxOop) result);
   }
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11673,8 +23492,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_group_add_window)
   {
     arg2 = (GtkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_group_add_window(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11691,8 +23512,10 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_group_remove_window)
   {
     arg2 = (GtkWindow *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
   }
+  gdk_threads_enter ();
   gtk_window_group_remove_window(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11707,14 +23530,16 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_remove_embedded_xid)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
-    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
     {
       SYX_PRIM_FAIL;
     }	   
-    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   }
+  gdk_threads_enter ();
   gtk_window_remove_embedded_xid(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11729,14 +23554,677 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_window_add_embedded_xid)
     arg1 = (GtkWindow *) SYX_OBJECT_VARS(es->message_receiver)[0];
   }
   {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_window_add_embedded_xid(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkBox)
+{
+  struct _GtkBox *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkBox *)(struct _GtkBox *) calloc(1, sizeof(struct _GtkBox));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkBox)
+{
+  struct _GtkBox *arg1 = (struct _GtkBox *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkBoxClass)
+{
+  struct _GtkBoxClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkBoxClass *)(struct _GtkBoxClass *) calloc(1, sizeof(struct _GtkBoxClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkBoxClass)
+{
+  struct _GtkBoxClass *arg1 = (struct _GtkBoxClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkBoxClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkBoxChild)
+{
+  struct _GtkBoxChild *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkBoxChild *)(struct _GtkBoxChild *) calloc(1, sizeof(struct _GtkBoxChild));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkBoxChild)
+{
+  struct _GtkBoxChild *arg1 = (struct _GtkBoxChild *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkBoxChild *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_box_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_pack_start)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gboolean arg3 ;
+  gboolean arg4 ;
+  guint arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_IS_TRUE(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gtk_box_pack_start(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_pack_end)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gboolean arg3 ;
+  gboolean arg4 ;
+  guint arg5 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_IS_TRUE(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  gdk_threads_enter ();
+  gtk_box_pack_end(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_pack_start_defaults)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gtk_box_pack_start_defaults(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_pack_end_defaults)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  gdk_threads_enter ();
+  gtk_box_pack_end_defaults(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_set_homogeneous)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_box_set_homogeneous(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_get_homogeneous)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = gtk_box_get_homogeneous(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_boolean_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_set_spacing)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  }
+  gdk_threads_enter ();
+  gtk_box_set_spacing(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_get_spacing)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  result = (gint)gtk_box_get_spacing(arg1);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_reorder_child)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gint arg3 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  gtk_box_reorder_child(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_query_child_packing)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gboolean *arg3 = (gboolean *) 0 ;
+  gboolean *arg4 = (gboolean *) 0 ;
+  guint *arg5 = (guint *) 0 ;
+  GtkPackType *arg6 = (GtkPackType *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    arg3 = (gboolean *) SYX_OBJECT_VARS(es->message_arguments[1])[0];
+  }
+  {
+    arg4 = (gboolean *) SYX_OBJECT_VARS(es->message_arguments[2])[0];
+  }
+  {
+    arg5 = (guint *) SYX_OBJECT_VARS(es->message_arguments[3])[0];
+  }
+  {
+    arg6 = (GtkPackType *) SYX_OBJECT_VARS(es->message_arguments[4])[0];
+  }
+  gdk_threads_enter ();
+  gtk_box_query_child_packing(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_box_set_child_packing)
+{
+  GtkBox *arg1 = (GtkBox *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gboolean arg3 ;
+  gboolean arg4 ;
+  guint arg5 ;
+  GtkPackType arg6 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (GtkBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  {
+    arg2 = (GtkWidget *) SYX_OBJECT_VARS(es->message_arguments[0])[0];
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg3 = SYX_IS_TRUE(es->message_arguments[1]);
+  }
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[2]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg4 = SYX_IS_TRUE(es->message_arguments[2]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
+  }
+  gdk_threads_enter ();
+  gtk_box_set_child_packing(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkHBox)
+{
+  struct _GtkHBox *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkHBox *)(struct _GtkHBox *) calloc(1, sizeof(struct _GtkHBox));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkHBox)
+{
+  struct _GtkHBox *arg1 = (struct _GtkHBox *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkHBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkHBoxClass)
+{
+  struct _GtkHBoxClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkHBoxClass *)(struct _GtkHBoxClass *) calloc(1, sizeof(struct _GtkHBoxClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkHBoxClass)
+{
+  struct _GtkHBoxClass *arg1 = (struct _GtkHBoxClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkHBoxClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_hbox_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_hbox_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_hbox_new)
+{
+  gboolean arg1 ;
+  gint arg2 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  {
     if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
     {
       SYX_PRIM_FAIL;
     }	   
     arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   }
-  gtk_window_add_embedded_xid(arg1,arg2);
-  result_oop = es->message_receiver;
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_hbox_new(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkVBox)
+{
+  struct _GtkVBox *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkVBox *)(struct _GtkVBox *) calloc(1, sizeof(struct _GtkVBox));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkVBox)
+{
+  struct _GtkVBox *arg1 = (struct _GtkVBox *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkVBox *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkVBoxClass)
+{
+  struct _GtkVBoxClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkVBoxClass *)(struct _GtkVBoxClass *) calloc(1, sizeof(struct _GtkVBoxClass));
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkVBoxClass)
+{
+  struct _GtkVBoxClass *arg1 = (struct _GtkVBoxClass *) 0 ;
+  SyxOop result_oop;
+  
+  {
+    arg1 = (struct _GtkVBoxClass *) SYX_OBJECT_VARS(es->message_receiver)[0];
+  }
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_vbox_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_vbox_get_type();
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  }
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_vbox_new)
+{
+  gboolean arg1 ;
+  gint arg2 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  {
+    if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg1 = SYX_IS_TRUE(es->message_arguments[0]);
+  }
+  {
+    if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+    {
+      SYX_PRIM_FAIL;
+    }	   
+    arg2 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  }
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_vbox_new(arg1,arg2);
+  gdk_threads_leave ();
+  {
+    SWIG_APPEND_VALUE ((SyxOop) result);
+  }
   SYX_PRIM_RETURN (result_oop);
 }
 
