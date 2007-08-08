@@ -22,6 +22,10 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+/* TODO: because of the class => my_class renaming in syx-config.h,
+   in msvc we need to include this before including syx-config.h */
+#include <math.h>
+
 #include "syx-memory.h"
 #include "syx-error.h"
 #include "syx-types.h"
@@ -38,7 +42,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
-#include <math.h>
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -592,7 +595,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       SYX_PRIM_ARGS(3);
       {
 	syx_int32 count = SYX_SMALL_INTEGER (es->message_arguments[2]);
-	syx_char s[count];
+	syx_string s = (syx_string) syx_malloc (count+1);
 	SyxOop string;
 
 	count = read (fd, s, count);
@@ -606,6 +609,8 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	s[count] = '\0';
 
 	string = syx_string_new (s);
+	syx_free (s);
+
 	SYX_PRIM_RETURN (string);
       }
       break;
@@ -1397,11 +1402,11 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_atDataPut)
     }
   syx_free (SYX_OBJECT_DATA(dest));
   if (has_refs)
-    SYX_OBJECT_DATA(dest) = syx_memdup (SYX_OBJECT_DATA(source),
-					SYX_OBJECT_DATA_SIZE(source), sizeof (SyxOop));
+    SYX_OBJECT_DATA(dest) = (SyxOop *) syx_memdup (SYX_OBJECT_DATA(source),
+						   SYX_OBJECT_DATA_SIZE(source), sizeof (SyxOop));
   else
-    SYX_OBJECT_DATA(dest) = syx_memdup (SYX_OBJECT_DATA(source),
-					SYX_OBJECT_DATA_SIZE(source), sizeof (syx_int8));
+    SYX_OBJECT_DATA(dest) = (SyxOop *) syx_memdup (SYX_OBJECT_DATA(source),
+						   SYX_OBJECT_DATA_SIZE(source), sizeof (syx_int8));
   SYX_OBJECT_DATA_SIZE(dest) = SYX_OBJECT_DATA_SIZE(source);
   SYX_PRIM_RETURN (es->message_receiver);
 }

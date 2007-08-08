@@ -77,12 +77,12 @@ syx_error_clear (void)
 SyxErrorType
 syx_error_register (syx_symbol name, SyxOop class)
 {
-  SyxErrorEntry *entry = syx_malloc (sizeof (SyxErrorEntry));
+  SyxErrorEntry *entry = (SyxErrorEntry *)syx_malloc (sizeof (SyxErrorEntry));
   if (!_syx_error_entries)
-    _syx_error_entries = syx_calloc (++_syx_error_entries_top, sizeof (SyxErrorEntry *));
+    _syx_error_entries = (SyxErrorEntry **)syx_calloc (++_syx_error_entries_top, sizeof (SyxErrorEntry *));
   else
-    _syx_error_entries = syx_realloc (_syx_error_entries,
-				      (++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
+    _syx_error_entries = (SyxErrorEntry **)syx_realloc (_syx_error_entries,
+							(++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
 
   entry->name = name;
   entry->class = class;

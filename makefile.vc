@@ -1,0 +1,80 @@
+# Makefile for Visual Studio
+# Written by Krzysztof Kowalczyk (http://blog.kowalczyk.info)
+# This code is in public domain.
+CC = cl.exe
+LD = link.exe
+
+VALID_TARGET=no
+!if "$(TARGET)"=="rel"
+OUTDIR=obj-rel-win
+CFLAGS = $(CFLAGS) /D "NDEBUG" /D "_SECURE_CSL=0" /MD /Ox /Os
+VALID_TARGET=yes
+!endif
+
+!if "$(TARGET)"=="dbg"
+OUTDIR=obj-dbg-win
+CFLAGS = $(CFLAGS) /D "_DEBUG" /MDd /Od
+VALID_TARGET=yes
+!endif
+
+O=$(OUTDIR)
+
+CFLAGS = $(CFLAGS) /nologo /c /TP
+# standard windows defines
+CFLAGS = $(CFLAGS) /D "WIN32" /D "_WIN32_WINNT=0x0500"
+#CFLAGS = $(CFLAGS) /D "WIN32_LEAN_AND_MEAN"
+#CFLAGS = $(CFLAGS) /D "UNICODE" /D "_UNICODE"
+#CFLAGS = $(CFLAGS) /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_SECURE_NO_DEPRECATE"
+CFLAGS = $(CFLAGS) /D "_CRT_SECURE_NO_WARNINGS"
+
+#CFLAGS = $(CFLAGS) /wd4244 /wd4018
+CFLAGS = $(CFLAGS) /wd4996
+CFLAGS = $(CFLAGS) /wd4273
+CFLAGS = $(CFLAGS) /wd4018
+
+CFLAGS = $(CFLAGS) /W3
+# /GR- : disable C++ RTTI
+CFLAGS = $(CFLAGS) /GR-
+# TODO: disable exceptions
+CFLAGS = $(CFLAGS) /EHsc
+CFLAGS = $(CFLAGS) /Zi
+
+CFLAGS = $(CFLAGS) /Isyx\msvc /I.
+
+LIBS = $(LIBS) kernel32.lib advapi32.lib
+
+LDFLAGS = $(LDFLAGS) /nologo /DEBUG
+
+OBJS=$(O)\syx-bytecode.obj $(O)\syx-error.obj $(O)\syx-init.obj $(O)\syx-interp.obj $(O)\syx-lexer.obj \
+  $(O)\syx-memory.obj $(O)\syx-object.obj $(O)\syx-parser.obj $(O)\syx-plugins.obj $(O)\syx-primitives.obj \
+#  $(O)\syx-scheduler.obj \
+  $(O)\syx-utils.obj
+
+SYX_EXE=$(O)\syx.exe
+SYX_PDB=$(O)\syx.pdb
+SYX_OBJS=$(OBJS) $(O)\main.obj
+
+!if "$(VALID_TARGET)"=="yes"
+all: $(OUTDIR) $(SYX_EXE)
+$(OUTDIR): force
+	@if not exist $(OUTDIR) mkdir $(OUTDIR)
+clean: force
+	-rmdir /S /Q $(OUTDIR)
+!else
+all clean: force
+	@echo TARGET must be set to dbg or rel
+!endif
+
+$(SYX_EXE): $(SYX_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(SYX_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+{syx\}.c{$(OUTDIR)}.obj::
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ $<
+
+{src\}.c{$(OUTDIR)}.obj::
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ $<
+
+force: ;

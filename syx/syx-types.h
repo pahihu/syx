@@ -25,6 +25,7 @@
 #ifndef SYX_TYPES_H
 #define SYX_TYPES_H
 
+#include "syx-config.h"
 #include "syx-enums.h"
 
 #include <limits.h>

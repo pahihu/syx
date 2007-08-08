@@ -382,7 +382,7 @@ syx_cold_file_in (syx_symbol filename)
   size = 1000000;
 #endif
 
-  buffer = syx_malloc (size + 1);
+  buffer = (syx_string) syx_malloc (size + 1);
   count = read (fd, buffer, size);
   buffer[count - 1] = '\0';
    
@@ -567,7 +567,7 @@ syx_wstring
 syx_to_wstring (syx_symbol s)
 {
   syx_size size = strlen (s);
-  syx_wstring ws = syx_calloc (size+1, sizeof (wchar_t));
+  syx_wstring ws = (syx_wstring) syx_calloc (size+1, sizeof (wchar_t));
   mbstowcs (ws, s, size);
   return ws;
 }
@@ -577,7 +577,7 @@ syx_string
 syx_to_string (syx_wsymbol ws)
 {
   syx_size size = wcslen (ws);
-  syx_string s = syx_calloc (size+1, sizeof (syx_char));
+  syx_string s = (syx_string) syx_calloc (size+1, sizeof (syx_char));
   wcstombs (s, ws, size);
   return s;
 }

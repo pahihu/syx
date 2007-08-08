@@ -72,7 +72,10 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
   if (!domain || !package || !filename)
     return NULL;
 
-  full_path = syx_calloc (strlen (_syx_root_path) + strlen (domain) + strlen (package) + strlen (filename) + 4, sizeof (syx_char));
+  full_path = (syx_string) syx_calloc (strlen (_syx_root_path)
+				       + strlen (domain)
+				       + strlen (package)
+				       + strlen (filename) + 4, sizeof (syx_char));
 
   sprintf (full_path, "%s%c%s%c%s%c%s",
 	   _syx_root_path, SYX_PATH_SEPARATOR,
@@ -181,7 +184,7 @@ syx_build_basic (void)
 
   syx_globals = syx_dictionary_new (200);
   // hold SystemDictionary instance variables
-  SYX_OBJECT_VARS(syx_globals) = syx_calloc (SYX_VARS_DICTIONARY_ALL + 4, sizeof (SyxOop));
+  SYX_OBJECT_VARS(syx_globals) = (SyxOop *) syx_calloc (SYX_VARS_DICTIONARY_ALL + 4, sizeof (SyxOop));
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
@@ -338,7 +341,7 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
   // look in the root directory
   if (root_path && !strcmp (root_path, _syx_root_path))
     {
-      _syx_image_path = syx_malloc (strlen (_syx_root_path) + 13);
+      _syx_image_path = (syx_string) syx_malloc (strlen (_syx_root_path) + 13);
       sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
       initialized = TRUE;
       return TRUE;

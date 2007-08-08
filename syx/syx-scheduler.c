@@ -37,7 +37,6 @@
   #include <winsock2.h>
 #endif
 
-#include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
 

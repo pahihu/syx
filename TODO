@@ -6,6 +6,7 @@ Major:
 - System signal handling
 - Object printing
 - Fix and improve file/IO streams
+- Do not continue after fileing in files from command line. Create a -c option instead
 
 Minor:
 - Add pool dictionaries

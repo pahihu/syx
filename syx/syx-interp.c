@@ -178,7 +178,7 @@ syx_interp_get_current_context (void)
 inline SyxExecState *
 syx_exec_state_new (void)
 {
-  SyxExecState *ret = syx_malloc (sizeof (SyxExecState));
+  SyxExecState *ret = (SyxExecState *) syx_malloc (sizeof (SyxExecState));
   ret->message_arguments = NULL;
   return ret;
 }
@@ -472,7 +472,7 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 
   if (argument > 0)
     {
-      es->message_arguments = syx_calloc (argument, sizeof (SyxOop));
+      es->message_arguments = (SyxOop *) syx_calloc (argument, sizeof (SyxOop));
       for (i=argument - 1; i >= 0; i--)
 	es->message_arguments[i] = syx_interp_stack_pop ();
     }
@@ -695,7 +695,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   if (es->message_arguments)
     syx_free (es->message_arguments);
   
-  es->message_arguments = syx_calloc (1, sizeof (SyxOop));
+  es->message_arguments = (SyxOop *) syx_calloc (1, sizeof (SyxOop));
   es->message_arguments[0] = first_argument;
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));

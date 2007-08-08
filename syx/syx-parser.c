@@ -72,7 +72,7 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
   if (!lexer || !SYX_IS_OBJECT (method))
     return NULL;
   
-  self = syx_malloc (sizeof (SyxParser));
+  self = (SyxParser *) syx_malloc (sizeof (SyxParser));
 
   self->lexer = lexer;
   self->method = method;
@@ -137,7 +137,7 @@ syx_parser_parse (SyxParser *self)
   _syx_parser_parse_temporaries (self);
 
   if (self->_in_block)
-    syx_bytecode_push_constant (self->bytecode, 0);
+    syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_NIL);
   _syx_parser_parse_body (self);
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);

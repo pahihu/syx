@@ -101,11 +101,11 @@ inline void
 syx_object_resize (SyxOop object, syx_varsize size)
 {
   if (SYX_OBJECT_HAS_REFS (object))
-    SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
-					   size * sizeof (SyxOop));
+    SYX_OBJECT_DATA(object) = (SyxOop *) syx_realloc (SYX_OBJECT_DATA(object),
+						      size * sizeof (SyxOop));
   else
-    SYX_OBJECT_DATA(object) = syx_realloc (SYX_OBJECT_DATA(object),
-					   size * sizeof (syx_int8));
+    SYX_OBJECT_DATA(object) = (SyxOop *) syx_realloc (SYX_OBJECT_DATA(object),
+						      size * sizeof (syx_int8));
 
   SYX_OBJECT_DATA_SIZE(object) = size;
 }
@@ -803,7 +803,7 @@ syx_object_new_vars (SyxOop class, syx_varsize vars_size)
   object->class = class;
   object->has_refs = FALSE;
   object->is_constant = FALSE;
-  object->vars = syx_calloc (vars_size, sizeof (SyxOop));
+  object->vars = (SyxOop *) syx_calloc (vars_size, sizeof (SyxOop));
   object->data_size = 0;
   object->data = NULL;
   return oop;
@@ -828,9 +828,9 @@ syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
 
   object->has_refs = has_refs;
   object->data_size = size;
-  object->data = (has_refs
-		  ? syx_calloc (size, sizeof (SyxOop))
-		  : syx_calloc (size, sizeof (syx_int8)));
+  object->data = (SyxOop *) (has_refs
+			     ? syx_calloc (size, sizeof (SyxOop))
+			     : syx_calloc (size, sizeof (syx_int8)));
   return (SyxOop)object;
 }
 
@@ -867,16 +867,16 @@ syx_object_copy (SyxOop object)
   obj1->has_refs = obj2->has_refs;
   obj1->is_constant = FALSE;
 
-  obj1->vars = syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->class)),
-			   sizeof (SyxOop));
+  obj1->vars = (SyxOop *) syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->class)),
+				      sizeof (SyxOop));
 
   obj1->data_size = obj2->data_size;
   if (obj2->data)
     {
       if (obj1->has_refs)
-	obj1->data = syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));
+	obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));
       else
-	obj1->data = syx_memdup (obj2->data, obj1->data_size, sizeof (syx_int8));
+	obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (syx_int8));
     }
 
   return oop;
@@ -956,7 +956,7 @@ syx_class_get_all_instance_variable_names (SyxOop class)
     }
   if (tot_size > 0)
     {
-      ret_names = syx_calloc (tot_size + 1, sizeof (syx_symbol));
+      ret_names = (syx_symbol *) syx_calloc (tot_size + 1, sizeof (syx_symbol));
       memcpy (ret_names, &names[255-tot_size+1], tot_size * sizeof (syx_symbol));
     }
   return ret_names;

@@ -94,8 +94,8 @@ syx_memory_init (syx_int32 mem_size)
 
   _syx_memory_size = mem_size;
 
-  syx_memory = syx_calloc (_syx_memory_size, sizeof (SyxObject));
-  _syx_freed_memory = syx_calloc (_syx_memory_size, sizeof (SyxOop));
+  syx_memory = (SyxObject *) syx_calloc (_syx_memory_size, sizeof (SyxObject));
+  _syx_freed_memory = (SyxOop *) syx_calloc (_syx_memory_size, sizeof (SyxOop));
 
   // fill freed memory with all memory oops
   for (_syx_freed_memory_top=0, object=SYX_MEMORY_TOP;
@@ -474,7 +474,7 @@ syx_memory_load_image (syx_symbol path)
       data = SYX_COMPAT_SWAP_32 (data);
       if (object->vars)
 	syx_free (object->vars);
-      object->vars = syx_calloc (data, sizeof (SyxOop));
+      object->vars = (SyxOop *) syx_calloc (data, sizeof (SyxOop));
       _syx_memory_read (object->vars, TRUE, data, image);
 
       // fetch data
@@ -487,12 +487,12 @@ syx_memory_load_image (syx_symbol path)
 	  
 	  if (object->has_refs)
 	    {
-	      object->data = syx_calloc (object->data_size, sizeof (SyxOop));
+	      object->data = (SyxOop *) syx_calloc (object->data_size, sizeof (SyxOop));
 	      _syx_memory_read (object->data, TRUE, object->data_size, image);
 	    }
 	  else
 	    {
-	      object->data = syx_calloc (object->data_size, sizeof (syx_int8));
+	      object->data = (SyxOop *) syx_calloc (object->data_size, sizeof (syx_int8));
 	      if (fgetc (image))
 		{
 		  fread (&data, sizeof (syx_int32), 1, image);
@@ -637,7 +637,7 @@ syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size)
 inline syx_string
 strndup (syx_symbol src, syx_size n)
 {
-  syx_string ret = syx_malloc (n + 1);
+  syx_string ret = (syx_string) syx_malloc (n + 1);
   memcpy (ret, src, n);
   ret[n] = '\0';
   return ret;

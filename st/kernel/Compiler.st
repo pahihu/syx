@@ -916,7 +916,6 @@ parseArray
 !
 
 doContinuation: toSuper
-    "TODO handle cascades"
     | token superReceiver |
     duplicateIndexes push: 0.
     superReceiver := self doKeyContinuation: toSuper.
@@ -935,7 +934,6 @@ doContinuation: toSuper
 !
 
 doKeyContinuation: toSuper
-    "TODO compile optimized blocks"
     | token superReceiver conditionalBranch |
     superReceiver := self doBinaryContinuation: toSuper cascading: true.
     token := lexer lastToken.

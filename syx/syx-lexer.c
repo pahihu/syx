@@ -67,7 +67,7 @@ syx_lexer_new (syx_symbol text)
   if (!text)
     return NULL;
 
-  self = syx_malloc (sizeof (SyxLexer));
+  self = (SyxLexer *) syx_malloc (sizeof (SyxLexer));
 
   self->text = self->_current_text = text;
   self->_pushed_back = -1;
@@ -434,14 +434,14 @@ syx_lexer_next_token (SyxLexer *lexer)
     }
   else if (_syx_char_is_single_binary (lastChar))
     {
-      str = syx_calloc (2, sizeof (syx_char));
+      str = (syx_string) syx_calloc (2, sizeof (syx_char));
       *str = lastChar;
       token.type = SYX_TOKEN_BINARY;
       token.value.string = str;
     }
   else
     {
-      str = syx_calloc (3, sizeof (syx_char));
+      str = (syx_string) syx_calloc (3, sizeof (syx_char));
       *str = lastChar;
       
       if (_syx_char_is_binary_second ((secondChar = syx_lexer_forward (lexer))))

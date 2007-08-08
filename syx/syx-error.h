@@ -53,11 +53,11 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 /*!
   \param type the type return from syx_error_register
 */
-#define syx_signal(type, args...)					\
+#define syx_signal(type, ...)						\
   syx_interp_enter_context (syx_send_message (syx_interp_get_current_context (), \
 					      syx_error_lookup (type)->class, \
 					      "signal",			\
-					      args))
+					      __VA_ARGS__))
 
 //! Send receiver>>#doesNotUnderstand: with selector
 #define syx_signal_does_not_understand(receiver, selector)		\
@@ -71,21 +71,21 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
   This function will show an error MessageBox on Windows CE
 */
 #ifndef WINCE
-#define syx_error(args...)			\
+#define syx_error(...)				\
   {						\
     fprintf (stderr, "ERROR: ");		\
-    fprintf (stderr, args);			\
+    fprintf (stderr, __VA_ARGS__);		\
     exit (EXIT_FAILURE);			\
   }
 #else /* WINCE */
 #ifndef UNICODE
-#define syx_error(message, args...)					\
+#define syx_error(message, ...)						\
   {									\
     MessageBox (0, message, "Error", 0);				\
     exit(EXIT_FAILURE);							\
   }
 #else /* UNICODE */
-#define syx_error(message, args...)		\
+#define syx_error(message, ...)						\
   {									\
     MessageBox (0, syx_to_wstring (message), L"Error", 0);		\
     exit(EXIT_FAILURE);							\
@@ -96,26 +96,25 @@ SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 
 //! Display a warning message
-#define syx_warning(args...)			\
+#define syx_warning(...)			\
   {						\
     fprintf (stderr, "WARNING: ");		\
-    fprintf (stderr, args);			\
+    fprintf (stderr, __VA_ARGS__);		\
   }
 
 //! Display perror message and exit
 #ifdef HAVE_PERROR
-#define syx_perror(args...)			\
+#define syx_perror(...)				\
   {						\
-    perror (args);				\
+    perror (__VA_ARGS__);			\
     exit (EXIT_FAILURE);			\
   }
 #else
-#define syx_perror(args...) syx_error(args)
+#define syx_perror syx_error
 #endif
 
 //! Display debugging messages
-#define syx_debug(args...)			\
-  printf (args)					
+#define syx_debug printf
     
 
 #endif /* SYX_ERROR_H */

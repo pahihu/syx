@@ -37,7 +37,7 @@ syx_bytecode_new (void)
 {
   SyxBytecode *bytecode;
 
-  bytecode = syx_malloc (sizeof (SyxBytecode));
+  bytecode = (SyxBytecode *)syx_malloc (sizeof (SyxBytecode));
   bytecode->code_top = 0;
   bytecode->literals_top = 0;
   bytecode->stack_size = 0;
