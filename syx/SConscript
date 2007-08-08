@@ -68,7 +68,7 @@ env.Alias ('sdist', target)
 
 # Install includes
 
-includes = ['syx.h', 'syx-interp.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error.h',
+includes = ['syx.h', 'syx-interp.h', 'syx-config.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error.h',
             'syx-lexer.h', 'syx-memory.h', 'syx-object.h', 'syx-init.h',
             'syx-parser.h', 'syx-platform.h', 'syx-scheduler.h', 'syx-utils.h',
             'syx-types.h', 'syx-plugins.h']

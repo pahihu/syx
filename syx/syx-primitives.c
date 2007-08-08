@@ -203,7 +203,7 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     ret = syx_interp_call_primitive (primitive, message_method);
   else if (primitive == -2)
-    ret = syx_plugin_call (es, message_method);
+    ret = syx_plugin_call_interp (es, message_method);
   else
     {
       if (es->message_arguments_count > 0)
@@ -262,7 +262,7 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     ret = syx_interp_call_primitive (primitive, message_method);
   else if (primitive == -2)
-    ret = syx_plugin_call (es, message_method);
+    ret = syx_plugin_call_interp (es, message_method);
   else
     {
       if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
@@ -1425,10 +1425,49 @@ SYX_FUNC_PRIMITIVE (Smalltalk_quit)
   exit (status);
 }
 
+SYX_FUNC_PRIMITIVE (Smalltalk_callPlugin)
+{
+  SyxOop *message_arguments;
+  syx_varsize message_arguments_count;
+  SyxOop plugin = es->message_arguments[0];
+  syx_symbol plugin_name = NULL;
+  SyxOop func = es->message_arguments[1];
+  SyxOop arguments = es->message_arguments[2];
+  syx_bool ret;
+
+  if (SYX_IS_NIL (func))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  if (!SYX_IS_NIL (plugin))
+    plugin_name = SYX_OBJECT_SYMBOL (plugin);
+
+  // save the real state
+  message_arguments = es->message_arguments;
+  message_arguments_count = es->message_arguments_count;
+  es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
+  if (!es->message_arguments_count)
+    es->message_arguments = NULL;
+  else
+    es->message_arguments = SYX_OBJECT_DATA(arguments);
+
+  ret = syx_plugin_call (es, plugin_name, SYX_OBJECT_SYMBOL (func), syx_nil);
+
+  // restore the state
+  es->message_arguments = message_arguments;
+  es->message_arguments_count = message_arguments_count;
+
+  return ret;
+}
+
 SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
 {
   SYX_PRIM_ARGS(1);
-  syx_symbol name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  SyxOop oop = es->message_arguments[0];
+  syx_symbol name = NULL;
+  if (!SYX_IS_NIL (oop))
+    name = SYX_OBJECT_SYMBOL (oop);
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_load (name)));
 }
 
@@ -1559,9 +1598,15 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Smalltalk_quit", Smalltalk_quit },
   { "Smalltalk_loadPlugin", Smalltalk_loadPlugin },
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
+  { "Smalltalk_callPlugin", Smalltalk_callPlugin },
 
   { NULL }
 };
+
+SYX_FUNC_PRIMITIVE(wewe)
+{
+  SYX_PRIM_RETURN (syx_true);
+}
 
 inline SyxPrimitiveEntry *
 syx_primitive_get_entry (syx_int32 index)

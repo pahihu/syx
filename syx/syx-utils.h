@@ -40,7 +40,7 @@ void syx_semaphore_wait (SyxOop semaphore);
 SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
 SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
 SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-
+void syx_file_in_blocking (syx_symbol file);
 
 /* Utilities for strings */
 

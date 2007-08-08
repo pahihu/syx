@@ -31,6 +31,7 @@
 #include "syx-error.h"
 #include "syx-utils.h"
 #include "syx-parser.h"
+#include "syx-interp.h"
 #include "syx-lexer.h"
 #include "syx-scheduler.h"
 #include "syx-memory.h"
@@ -541,6 +542,25 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
 
   return context;
 }
+
+//! Files in a file in blocking mode. This function send a message to FileStream>>#fileIn:
+void
+syx_file_in_blocking (syx_symbol file)
+{
+  SyxOop context;
+  SyxOop process;
+
+  context = syx_send_binary_message (syx_nil,
+				     syx_globals_at ("FileStream"),
+				     "fileIn:",
+				     syx_string_new (file));
+  process = syx_process_new (context);
+  syx_process_execute_blocking (process);
+}
+
+
+
+
 
 //! Returns a syx_wstring from a syx_string
 syx_wstring

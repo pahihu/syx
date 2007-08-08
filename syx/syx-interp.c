@@ -511,7 +511,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call (es, method);
+    return syx_plugin_call_interp (es, method);
 
   if (es->message_arguments_count > 0)
     {
@@ -553,7 +553,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call (es, method);
+    return syx_plugin_call_interp (es, method);
 
   if (es->message_arguments_count > 0)
     {
@@ -617,7 +617,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call (es, method);
+    return syx_plugin_call_interp (es, method);
 
   context = syx_method_context_new (es->context, method, es->message_receiver, syx_nil);
 
@@ -702,7 +702,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call (es, method);
+    return syx_plugin_call_interp (es, method);
 
   syx_memory_gc_begin ();
   context = syx_method_context_new (es->context, method, es->message_receiver,

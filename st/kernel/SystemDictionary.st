@@ -94,6 +94,15 @@ commandLineArguments
 
 !SystemDictionary methodsFor: 'plugins'!
 
+plugin: pluginName cCall: functionName withArguments: anArray
+    <primitive: 'Smalltalk_callPlugin'>
+	self primitiveFailed
+!
+
+cCall: functionName withArguments: anArray
+    ^self plugin: nil cCall: functionName withArguments: anArray
+!
+
 loadPlugin: name
     <primitive: 'Smalltalk_loadPlugin'>
 	self primitiveFailed

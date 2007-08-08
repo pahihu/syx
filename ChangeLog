@@ -1,3 +1,17 @@
+2007-08-08  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-plugins.c (syx_plugin_call): added, previous was renamed to syx_plugin_call_interp
+	(syx_plugins_init): added for creating a default method to send #primitiveFailed
+	Added support for main program handle (NULL filename)
+
+	* st/kernel/SystemDictionary.st (plugin:call:withArguments:): added with relative primitive
+
+	* syx/syx-utils.c (syx_file_in_blocking): added
+
+	* examples/embedding: added 4 kind of examples
+
+	* syx/SConscript: include syx-config.h to be installed
+
 2007-08-07  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/YXTools.st: added model-view-controller classes and basic Workspace and WorkspaceView

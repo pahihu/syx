@@ -275,6 +275,7 @@ syx_fetch_basic (void)
   syx_interp_init ();
   syx_error_init ();
   syx_scheduler_init ();
+  syx_plugins_init ();
 }
 
 //! Remove Smalltalk startupProcess from being scheduled and call Smalltalk>>#startupSystem: in a scheduled process
@@ -362,7 +363,7 @@ syx_quit (void)
 {
   syx_memory_clear ();
   syx_interp_quit ();
-  syx_plugin_finalize ();
+  syx_plugin_finalize_all ();
   syx_scheduler_quit ();
   syx_error_clear ();
 

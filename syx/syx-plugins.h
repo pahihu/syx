@@ -46,9 +46,11 @@ syx_bool syx_library_close (syx_pointer handle);
 typedef syx_bool (* SyxPluginInitializeFunc) (void);
 typedef void (* SyxPluginFinalizeFunc) (void);
 
-void syx_plugin_finalize (void);
+void syx_plugins_init (void);
+void syx_plugin_finalize_all (void);
 syx_pointer syx_plugin_load (syx_symbol name);
 syx_bool syx_plugin_unload (syx_symbol name);
-syx_bool syx_plugin_call (SyxExecState *es, SyxOop method);
+syx_bool syx_plugin_call_interp (SyxExecState *es, SyxOop method);
+syx_bool syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method);
 
 #endif /* SYX_PLUGINS_H */
