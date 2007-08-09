@@ -37,6 +37,22 @@
 
 #define SYX_VERSION "0.1.3"
 
+/* Inline */
+
+#if defined (HAVE_INLINE) && defined (__GNUC__) && defined (__STRICT_ANSI__)
+#  undef inline
+#  define inline __inline__
+#elif !defined (HAVE_INLINE)
+#  undef inline
+#  if defined (HAVE__INLINE__)
+#    define inline __inline__
+#  elif defined (HAVE__INLINE)
+#    define inline __inline
+#  else
+#    define inline
+#  endif
+#endif
+
 /* Byte swapping */
 
 #ifdef HAVE_BYTESWAP_H

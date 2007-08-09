@@ -32,9 +32,29 @@ setupUi
 !
 
 setupToolbar
-    | button |
-    button := GtkButton newWithMnemonic: '_Do it'.
-    mainContainer packStart: button
+    | hbox button |
+    hbox := GtkHBox new.
+
+    button := GtkButton fromStock: 'gtk-execute'.
+    button when: 'clicked' send: self -> #execute.
+    hbox packStart: button.
+
+    button := GtkButton fromStock: 'gtk-clear'.
+    hbox packStart: button.
+
+    button := GtkButton fromStock: 'gtk-quit'.
+    button when: 'clicked' send: self -> #close.
+    hbox packStart: button.
+
+    mainContainer packStart: hbox
+!
+
+execute
+    'Execute' printNl
+!
+
+close
+    'Close' printNl
 !
 
 open

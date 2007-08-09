@@ -297,6 +297,11 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
   syx_varsize end = SYX_SMALL_INTEGER(es->message_arguments[1]);
   syx_varsize length = end - start;
 
+  if (!SYX_IS_OBJECT (coll) || !SYX_OBJECT_DATA (coll))
+    {
+      SYX_PRIM_FAIL;
+    }
+
   if (start >= end || end > SYX_OBJECT_DATA_SIZE (es->message_receiver))
     {
       SYX_PRIM_FAIL;

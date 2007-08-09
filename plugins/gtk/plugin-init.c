@@ -23,22 +23,23 @@
 */
 
 #include "syx/syx.h"
+#include <gtk/gtk.h>
 
-static syx_pointer _syx_gtk_main_thread = NULL;
+static GThread *_syx_gtk_main_thread = NULL;
 
-static void
-_syx_gtk_main (void)
+static gpointer
+_syx_gtk_main (gpointer data)
 {
   gdk_threads_enter ();
   gtk_main ();
   gdk_threads_leave ();
+  return NULL;
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_main)
 {
   if (!_syx_gtk_main_thread)
-    _syx_gtk_main_thread = g_thread_create_full (_syx_gtk_main, NULL, 0, FALSE, FALSE,
-						 1, NULL);
+    _syx_gtk_main_thread = g_thread_create (_syx_gtk_main, NULL, FALSE, NULL);
 
   SYX_PRIM_RETURN(es->message_receiver);
 }

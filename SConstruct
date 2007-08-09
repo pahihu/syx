@@ -155,7 +155,50 @@ int main (int argc, char **argv)
       ctx.Result (0)
       return False
 
-conf = Configure (env, custom_tests={ 'CheckEndianness' : check_endianness }, config_h="syx/syx-config.h")
+def check_inline (ctx):
+   ctx.Message ("Checking for inline...")
+   ret = ctx.TryRun ("""
+#undef inline
+inline int foo () { return 0; }
+int main () { return foo (); }
+""", '.c')
+   if ret[0]:
+      Conftest._Have (ctx, 'HAVE_INLINE', 1)
+      ctx.Result (True)
+   else:
+      Conftest._Have (ctx, 'HAVE_INLINE', 0)
+      ctx.Result (False)
+
+def check__inline (ctx):
+   ctx.Message ("Checking for __inline...")
+   ret = ctx.TryRun ("""
+__inline int foo () { return 0; }
+int main () { return foo (); }
+""", '.c')
+   if ret[0]:
+      Conftest._Have (ctx, 'HAVE__INLINE', 1)
+      ctx.Result (True)
+   else:
+      Conftest._Have (ctx, 'HAVE__INLINE', 0)
+      ctx.Result (False)
+
+def check__inline__ (ctx):
+   ctx.Message ("Checking for __inline__...")
+   ret = ctx.TryRun ("""
+__inline__ int foo () { return 0; }
+int main () { return foo (); }
+""", '.c')
+   if ret[0]:
+      Conftest._Have (ctx, 'HAVE__INLINE__', 1)
+      ctx.Result (True)
+   else:
+      Conftest._Have (ctx, 'HAVE__INLINE__', 0)
+      ctx.Result (False)
+
+conf = Configure (env, custom_tests={ 'CheckEndianness' : check_endianness,
+                                      'CheckInline' : check_inline,
+                                      'Check__Inline': check__inline,
+                                      'Check__Inline__': check__inline__}, config_h="syx/syx-config.h")
 
 
 # Cross compiling
@@ -180,11 +223,11 @@ if env['host']:
    env['AS'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['AS'])
 
-   tool = cenv['host']+'-ranlib'
+   tool = env['host']+'-ranlib'
    env['RANLIB'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['RANLIB'])
 
-   tool = cenv['host']+'-windres'
+   tool = env['host']+'-windres'
    env['RC'] = cenv.WhereIs (tool)
    print 'Checking for %s... %s' % (tool, env['RC'])
 
@@ -241,6 +284,10 @@ if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (doub
 
 if not conf.CheckEndianness ():
    env.Exit (1)
+
+conf.CheckInline ()
+conf.Check__Inline ()
+conf.Check__Inline__ ()
 
 print
 print 'Optional functions...'

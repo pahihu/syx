@@ -4,6 +4,10 @@
 
 typedef syx_bool gboolean;
 typedef char gchar;
+// force first self on gpointer
+typedef GObject * gpointer;
+
+%typemap(in) GCallback c_handler "$1 = syx_gtk_callback;";
 
 %include typemaps.i
 

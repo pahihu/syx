@@ -275,7 +275,7 @@ abs
 / aNumber
     "Coerce aNumber and do division"
     aNumber isZero
-	ifTrue: [ ^self zeroDivide ].
+	ifTrue: [ self zeroDivide ].
 
     ^self generality > aNumber generality
         ifTrue: [ self / (self coerce: aNumber) ]
@@ -325,5 +325,5 @@ unity
 !Number methodsFor: 'signaling'!
 
 zeroDivide
-    ^ZeroDivide signal
+    ZeroDivide signal
 ! !

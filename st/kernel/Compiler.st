@@ -717,6 +717,14 @@ parsePluginPrimitive
     
     bytecode genLiteral: token asSymbol.
     
+    token := lexer nextToken.
+    "If the cCall is closed before specifying the plugin, then the plugin is the main program itself"
+    (token class = CompilerBinaryToken and: [ token first = $> ])
+	ifTrue: [
+	    bytecode genLiteral: nil.
+	    methodPrimitive := -2.
+	    ^lexer nextToken ].
+
     token := lexer expect: lexer nextToken
 		   equalTo: 'plugin:'
 		   instanceOf: CompilerIdentifierToken.

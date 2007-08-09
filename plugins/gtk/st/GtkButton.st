@@ -48,15 +48,15 @@ new
     ^self handle: self primNew
 !
 
-newWithLabel: aString
+withLabel: aString
     ^self handle: (self primNewWithLabel: aString)
 !
 
-newWithMnemonic: aString
+withMnemonic: aString
     ^self handle: (self primNewWithMnemonic: aString)
 !
 
-newFromStock: stockId
+fromStock: stockId
     ^self handle: (self primNewFromStock: stockId)
 ! !
 

@@ -151,8 +151,14 @@ message: aMessage receiver: anObject
     self messageText: anObject class printString, ': did not understood ', aMessage printString
 ! !
 
-!ZeroDivide methodsFor: 'signaling'!
+!ZeroDivide class methodsFor: 'instance creation'!
 
-description
-    ^'Division by zero.'
+signal
+    ^self signal: 'Division by zero.'
+! !
+
+!SubclassResponsibility class methodsFor: 'instance creation'!
+
+signal
+    ^self signal: 'This method is not responsibility of this class. A subclass must implement this method.'
 ! !

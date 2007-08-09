@@ -325,11 +325,11 @@ _syx_parser_parse_term (SyxParser *self)
     default:
       if (token.type == SYX_TOKEN_END)
 	syx_error ("End of input unexpected\n")
-      else if (token.type > SYX_TOKEN_STRING_ENTRY)
-	syx_error ("Invalid expression start %s\n", token.value.string)
-      else
-	syx_error ("Excepted expression\n")
-    }
+	else if (token.type > SYX_TOKEN_STRING_ENTRY)
+	  syx_error ("Invalid expression start %s\n", token.value.string)
+	  else
+	    syx_error ("Excepted expression\n")
+	      }
 
   syx_lexer_next_token (self->lexer);
   return super_term;
@@ -451,6 +451,15 @@ _syx_parser_parse_primitive (SyxParser *self)
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
+      if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">"))
+	{
+	  syx_token_free (token);
+	  syx_bytecode_gen_literal (self->bytecode, syx_nil);
+	  SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (-2);
+	  syx_lexer_next_token (self->lexer);
+	  return;
+	}
+
       if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "plugin:")))
 	syx_error ("expected plugin:\n");
       syx_token_free (token);
@@ -963,7 +972,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
-      if (!token.type == SYX_TOKEN_NAME_CONST)
+      if (token.type != SYX_TOKEN_NAME_CONST)
 	syx_error ("Expected name constant for argument name\n");
       self->_argument_names[self->_argument_names_top++] = token.value.string;
       scope.end++;
@@ -1030,5 +1039,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
 static void
 _syx_parser_parse_message_pattern (SyxParser *self)
 {
-  self->_in_block ? _syx_parser_parse_block_message_pattern (self) : _syx_parser_parse_method_message_pattern (self);
+  self->_in_block
+    ? _syx_parser_parse_block_message_pattern (self)
+    : _syx_parser_parse_method_message_pattern (self);
 }

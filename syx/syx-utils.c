@@ -544,7 +544,10 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
 }
 
 //! Files in a file in blocking mode. This function send a message to FileStream>>#fileIn:
-void
+/*!
+  \return Return the last returned object from the process
+*/
+SyxOop
 syx_file_in_blocking (syx_symbol file)
 {
   SyxOop context;
@@ -556,10 +559,25 @@ syx_file_in_blocking (syx_symbol file)
 				     syx_string_new (file));
   process = syx_process_new (context);
   syx_process_execute_blocking (process);
+  return SYX_PROCESS_RETURNED_OBJECT (process);
 }
 
 
+//! Do it in blocking mode. This function send a message to String>>#doIt
+/*!
+  \return Return the last returned object from the process
+*/
+SyxOop
+syx_do_it_blocking (syx_symbol code)
+{
+  SyxOop context;
+  SyxOop process;
 
+  context = syx_send_unary_message (syx_nil, syx_string_new (code), "doIt");
+  process = syx_process_new (context);
+  syx_process_execute_blocking (process);
+  return SYX_PROCESS_RETURNED_OBJECT (process);
+}
 
 
 //! Returns a syx_wstring from a syx_string

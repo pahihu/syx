@@ -480,6 +480,8 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
     es->message_arguments = NULL;
 
   es->message_receiver = syx_interp_stack_pop ();
+  if (es->sp < 0)
+    puts ("ASD");
   es->byteslice++; // be sure we send the message
 
   return TRUE;

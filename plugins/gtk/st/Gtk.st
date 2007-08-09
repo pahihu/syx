@@ -34,6 +34,10 @@ Object subclass: #Gtk
        instanceVariableNames: ''
        classVariableNames: ''!
 
+Object subclass: #GCallback
+       instanceVariableNames: 'selfPointer selector arguments handlerId'
+       classVariableNames: 'AllCallbacks'!
+
 Object subclass: #GObject
        instanceVariableNames: 'handle'
        classVariableNames: ''!
@@ -85,12 +89,49 @@ Workspace subclass: #GtkWorkspace
 
 !Gtk class methodsFor: 'main loop'!
 
-main
+primMain
     <cCall: 'Gtk_main' plugin: 'gtk'>
 	self primitiveFailed
+!
+
+main
+    | sem |
+    "Use a semaphore to keep the process alive but suspended forever"
+    [ sem := Semaphore new.
+      self primMain.
+      sem wait ] fork
 !
 
 mainQuit
     <cCall: 'Gtk_mainQuit' plugin: 'gtk'>
 	self primitiveFailed
+! !
+
+
+"Callbacks"
+
+!GCallback class methodsFor: 'instance creationg'!
+
+selector: aSelector withArguments: anArray
+    ^self basicNew initializeSelector: aSelector arguments: anArray
+! !
+
+!GCallback methodsFor: 'initialize-release'!
+
+initializeSelector: aSelector arguments: anArray
+    selector := aSelector.
+    arguments := anArray.
+    selfPointer := self.
+    AllCallbacks
+	ifNil: [ AllCallbacks := Bag new ].
+    AllCallbacks add: self
+!
+
+handlerId: aSignalHandler
+    handlerId := aSignalHandler
+!
+
+invoke
+    "This method is called directly from syx_gtk_callback"
+    selector key perform: selector value withArguments: arguments
 ! !

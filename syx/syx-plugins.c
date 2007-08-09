@@ -327,11 +327,15 @@ syx_plugin_call_interp (SyxExecState *es, SyxOop method)
 {
 #ifdef WITH_PLUGINS
   SyxOop *literals;
-  syx_symbol plugin;
+  SyxOop plugin_oop;
+  syx_symbol plugin = NULL;
   syx_symbol func;
 
   literals = SYX_OBJECT_DATA(SYX_CODE_LITERALS(method));
-  plugin = SYX_OBJECT_SYMBOL(literals[1]);
+  plugin_oop = literals[1];
+  // if plugin is NULL, the function is looked up in the main program
+  if (!SYX_IS_NIL (plugin_oop))
+    plugin = SYX_OBJECT_SYMBOL(plugin_oop);
   func = SYX_OBJECT_SYMBOL(literals[0]);
 
   return syx_plugin_call (es, plugin, func, method);

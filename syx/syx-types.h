@@ -27,6 +27,7 @@
 
 #include "syx-config.h"
 #include "syx-enums.h"
+#include "syx-platform.h"
 
 #include <limits.h>
 #include <stdint.h>

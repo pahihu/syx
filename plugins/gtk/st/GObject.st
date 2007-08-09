@@ -43,3 +43,22 @@ handle: aPointer
 handle
     ^handle
 ! !
+
+!GObject methodsFor: 'signals'!
+
+primConnect: signalName callback: ignored data: aGCallback destroyData: closureNotify connectFlags: connectFlags
+    <cCall: 'Gtk_g_signal_connect_data' plugin: 'gtk'>
+	self primitiveFailed
+!
+
+when: signalName send: aSelector
+    ^self when: signalName send: aSelector withArguments: #()
+!
+
+when: signalName send: aSelector withArguments: anArray
+    | callback id |
+    callback := GCallback selector: aSelector withArguments: anArray.
+    id := self primConnect: signalName callback: nil data: callback destroyData: nil connectFlags: 0.
+    callback handlerId: id.
+    ^callback
+! !

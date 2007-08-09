@@ -42,7 +42,7 @@ new: aString
     ^self handle: (self primNew: aString)
 !
 
-newWithMnemonic: aString
+withMnemonic: aString
     ^self handle: (self primNewWithMnemonic: aString)
 ! !
 

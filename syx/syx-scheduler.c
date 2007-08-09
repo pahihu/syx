@@ -345,11 +345,10 @@ syx_scheduler_quit (void)
   _syx_scheduler_poll_write = NULL;
 }
 
-//! Adds a Process to be scheduled
+//! Add a Process to be scheduled
 void
 syx_scheduler_add_process (SyxOop process)
 {
-  SyxOop inter_process;
   if (!SYX_IS_OBJECT (process))
     return;
 
@@ -359,7 +358,6 @@ syx_scheduler_add_process (SyxOop process)
 	syx_processor_first_process = syx_processor_active_process = process;
       else
 	{
-	  inter_process = SYX_PROCESS_NEXT(syx_processor_active_process);
 	  SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
 	  SYX_PROCESS_NEXT(syx_processor_active_process) = process;
 	}
@@ -380,15 +378,18 @@ syx_scheduler_remove_process (SyxOop process)
       return;
     }
 
-  for (prev_process=inter_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
+  for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
     {
       inter_process = SYX_PROCESS_NEXT(prev_process);
       if (SYX_OOP_EQ (inter_process, process))
 	{
 	  SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
 	  SYX_PROCESS_SCHEDULED(process) = syx_false;
-	  return;
+	  break;
 	}
     }
+
+  if (SYX_OOP_EQ (process, syx_processor_active_process))
+    syx_processor_active_process = syx_processor_first_process;
 }
 

@@ -1,3 +1,22 @@
+2007-08-09  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-scheduler.c (syx_scheduler_remove_process): set next process to be active
+
+	* syx/syx-primitives.c (ArrayedCollection_replaceFromToWith): added yet more checks
+
+	* syx/syx-plugins.c (syx_plugin_call_interp): support C calls to nil plugin (main program)
+
+	* st/kernel/Compiler.st (indexOfInstance): support C calls to nil plugin (main program)
+
+	* SConstruct: added inline checks (issue #9)
+
+	* syx/syx-platform.h: inline defines (issue #9)
+
+	* syx/syx-parser.c: indented file and fixed typo (issue #10)
+	(_syx_parser_parse_primitive): support C calls to the main program
+
+	* syx/syx-utils.c (syx_do_it_blocking): added
+
 2007-08-08  Luca Bruno  <lethalman88@gmail.com>
 
 	Added support for MSVC compilation (issue #8)
@@ -6,7 +25,8 @@
 	(syx_plugins_init): added for creating a default method to send #primitiveFailed
 	Added support for main program handle (NULL filename)
 
-	* st/kernel/SystemDictionary.st (plugin:call:withArguments:): added with relative primitive
+	* st/kernel/SystemDictionary.st (plugin:cCall:withArguments:): added with relative primitive
+	(cCall:withArguments:): added
 
 	* syx/syx-utils.c (syx_file_in_blocking): added
 
