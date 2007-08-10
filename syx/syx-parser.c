@@ -65,7 +65,7 @@ static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool sup
   \param method a CompiledMethod or CompiledBlock
   \param instance_names list of instance variable names
 */
-SyxParser *
+EXPORT SyxParser *
 syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
 {
   SyxParser *self;
@@ -95,7 +95,7 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
 /*!
   \param free_segment TRUE frees the instance_names (not its contents) and the lexer
 */
-void
+EXPORT void
 syx_parser_free (SyxParser *self, syx_bool free_segment)
 {
   syx_size i;
@@ -120,7 +120,7 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
 /*!
   \return TRUE if parsing was successful, otherwise FALSE
 */
-syx_bool
+EXPORT syx_bool
 syx_parser_parse (SyxParser *self)
 {
   SyxToken token;

@@ -44,10 +44,10 @@
 #define SYX_DEBUG_PROCESS_SWITCH
 #endif
 
-SyxOop syx_processor;
-SyxOop *_syx_processor_first_process;
-SyxOop *_syx_processor_active_process;
-SyxOop *_syx_processor_byteslice;
+EXPORT SyxOop syx_processor;
+EXPORT SyxOop *_syx_processor_first_process;
+EXPORT SyxOop *_syx_processor_active_process;
+EXPORT SyxOop *_syx_processor_byteslice;
 
 static SyxSchedulerPoll *_syx_scheduler_poll_read = NULL;
 static SyxSchedulerPoll *_syx_scheduler_poll_write = NULL;
@@ -148,7 +148,7 @@ _syx_scheduler_poll_wait (void)
   _syx_scheduler_poll_nfds = nfds;
 }
 
-void
+EXPORT void
 _syx_scheduler_save (FILE *image)
 {
   syx_int32 index, data;
@@ -182,7 +182,7 @@ _syx_scheduler_save (FILE *image)
   fputc (0, image);
 }
 
-void
+EXPORT void
 _syx_scheduler_load (FILE *image)
 {
   syx_int32 index, data;
@@ -237,7 +237,7 @@ _syx_scheduler_load (FILE *image)
 /*!
   If absent, create a ProcessorScheduler instance named Processor and insert it into the Smalltalk dictionary.
 */
-void
+EXPORT void
 syx_scheduler_init (void)
 {
   syx_processor = syx_globals_at_if_absent ("Processor", syx_nil);
@@ -257,7 +257,7 @@ syx_scheduler_init (void)
 }
 
 //! Run the scheduler in blocking mode. Exits once no Process is scheduled
-void
+EXPORT void
 syx_scheduler_run (void)
 {
   static syx_bool running = FALSE;
@@ -287,7 +287,7 @@ syx_scheduler_run (void)
   \param fd the file descriptor
   \param semaphore called when fd is ready for reading
 */
-void
+EXPORT void
 syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
 {
   SyxSchedulerPoll *p = syx_malloc (sizeof (SyxSchedulerPoll));
@@ -307,7 +307,7 @@ syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
   \param fd the file descriptor
   \param semaphore called when fd is ready for writing
 */
-void
+EXPORT void
 syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
 {
   SyxSchedulerPoll *p = syx_malloc (sizeof (SyxSchedulerPoll));
@@ -323,7 +323,7 @@ syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
 }
 
 //! Stop the scheduler
-void
+EXPORT void
 syx_scheduler_quit (void)
 {
   SyxSchedulerPoll *p, *pp;
@@ -346,7 +346,7 @@ syx_scheduler_quit (void)
 }
 
 //! Add a Process to be scheduled
-void
+EXPORT void
 syx_scheduler_add_process (SyxOop process)
 {
   if (!SYX_IS_OBJECT (process))
@@ -366,7 +366,7 @@ syx_scheduler_add_process (SyxOop process)
 }
 
 //! Remove a Process from being scheduled
-void
+EXPORT void
 syx_scheduler_remove_process (SyxOop process)
 {
   SyxOop inter_process, prev_process;

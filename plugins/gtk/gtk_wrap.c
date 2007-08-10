@@ -156,16 +156,7 @@ typedef struct {
 
 
 #include <glib-object.h>
-
-
-void syx_gtk_callback (GObject *bla, SyxOop callback)
-{
-        SyxOop context;
-        SyxOop process;
-        context = syx_send_unary_message (syx_nil, callback, "invoke");
-        process = syx_process_new (context);
-        SYX_PROCESS_SUSPENDED(process) = syx_false;
-}
+#include "syx-gobject.h"
 
 
 #include <pango/pango.h>
@@ -1972,22 +1963,6 @@ SYX_FUNC_PRIMITIVE(Gtk_g_unichar_get_mirror_char)
   result = g_unichar_get_mirror_char(arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
-  SYX_PRIM_RETURN (result_oop);
-}
-
-
-SYX_FUNC_PRIMITIVE(Gtk_syx_gtk_callback)
-{
-  GObject *arg1 = (GObject *) 0 ;
-  SyxOop arg2 ;
-  SyxOop result_oop;
-  
-  SWIG_FIRST_SELF(arg1, GObject *, es->message_receiver)
-  arg2=es->message_arguments[0];
-  gdk_threads_enter ();
-  syx_gtk_callback(arg1,arg2);
-  gdk_threads_leave ();
-  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -4650,7 +4625,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_data)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  arg3 = syx_gtk_callback;
+  SWIG_FIRST_SELF(arg3, GCallback, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, gpointer, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, GClosureNotify, es->message_arguments[3])
   
@@ -6085,7 +6060,7 @@ SYX_FUNC_PRIMITIVE(Gtk_g_signal_connect_object)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  arg3 = syx_gtk_callback;
+  SWIG_FIRST_SELF(arg3, GCallback, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, gpointer, es->message_arguments[2])
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
@@ -20917,6 +20892,561 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_vbox_new)
   result = (GtkWidget *)gtk_vbox_new(arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkAdjustment)
+{
+  struct _GtkAdjustment *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkAdjustment *)(struct _GtkAdjustment *) calloc(1, sizeof(struct _GtkAdjustment));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkAdjustment)
+{
+  struct _GtkAdjustment *arg1 = (struct _GtkAdjustment *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkAdjustment *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkAdjustmentClass)
+{
+  struct _GtkAdjustmentClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkAdjustmentClass *)(struct _GtkAdjustmentClass *) calloc(1, sizeof(struct _GtkAdjustmentClass));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkAdjustmentClass)
+{
+  struct _GtkAdjustmentClass *arg1 = (struct _GtkAdjustmentClass *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkAdjustmentClass *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_adjustment_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_new)
+{
+  gdouble arg1 ;
+  gdouble arg2 ;
+  gdouble arg3 ;
+  gdouble arg4 ;
+  gdouble arg5 ;
+  gdouble arg6 ;
+  GtkObject *result = 0 ;
+  SyxOop result_oop;
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg1 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_OBJECT_FLOAT(es->message_arguments[2]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[3]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_OBJECT_FLOAT(es->message_arguments[3]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[4]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg5 = SYX_OBJECT_FLOAT(es->message_arguments[4]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[5]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg6 = SYX_OBJECT_FLOAT(es->message_arguments[5]);
+  
+  gdk_threads_enter ();
+  result = (GtkObject *)gtk_adjustment_new(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_changed)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_receiver)
+  gdk_threads_enter ();
+  gtk_adjustment_changed(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_value_changed)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_receiver)
+  gdk_threads_enter ();
+  gtk_adjustment_value_changed(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_clamp_page)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  gdouble arg2 ;
+  gdouble arg3 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_receiver)
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+  
+  gdk_threads_enter ();
+  gtk_adjustment_clamp_page(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_get_value)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  gdouble result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gdouble)gtk_adjustment_get_value(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_float_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_adjustment_set_value)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  gdouble arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_receiver)
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_OBJECT_FLOAT(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_adjustment_set_value(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkScrolledWindow)
+{
+  struct _GtkScrolledWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkScrolledWindow *)(struct _GtkScrolledWindow *) calloc(1, sizeof(struct _GtkScrolledWindow));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkScrolledWindow)
+{
+  struct _GtkScrolledWindow *arg1 = (struct _GtkScrolledWindow *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkScrolledWindowClass)
+{
+  struct _GtkScrolledWindowClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkScrolledWindowClass *)(struct _GtkScrolledWindowClass *) calloc(1, sizeof(struct _GtkScrolledWindowClass));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkScrolledWindowClass)
+{
+  struct _GtkScrolledWindowClass *arg1 = (struct _GtkScrolledWindowClass *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkScrolledWindowClass *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_scrolled_window_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_new)
+{
+  GtkAdjustment *arg1 = (GtkAdjustment *) 0 ;
+  GtkAdjustment *arg2 = (GtkAdjustment *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkAdjustment *, es->message_arguments[0])
+  SWIG_FIRST_SELF(arg2, GtkAdjustment *, es->message_arguments[1])
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_scrolled_window_new(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_set_hadjustment)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkAdjustment *arg2 = (GtkAdjustment *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkAdjustment *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_scrolled_window_set_hadjustment(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_set_vadjustment)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkAdjustment *arg2 = (GtkAdjustment *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkAdjustment *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_scrolled_window_set_vadjustment(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_hadjustment)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkAdjustment *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkAdjustment *)gtk_scrolled_window_get_hadjustment(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_vadjustment)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkAdjustment *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkAdjustment *)gtk_scrolled_window_get_vadjustment(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_hscrollbar)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_scrolled_window_get_hscrollbar(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_vscrollbar)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_scrolled_window_get_vscrollbar(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_set_policy)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkPolicyType arg2 ;
+  GtkPolicyType arg3 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  gdk_threads_enter ();
+  gtk_scrolled_window_set_policy(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_policy)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkPolicyType *arg2 = (GtkPolicyType *) 0 ;
+  GtkPolicyType *arg3 = (GtkPolicyType *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkPolicyType *, es->message_arguments[0])
+  SWIG_FIRST_SELF(arg3, GtkPolicyType *, es->message_arguments[1])
+  gdk_threads_enter ();
+  gtk_scrolled_window_get_policy(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_set_placement)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkCornerType arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_scrolled_window_set_placement(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_unset_placement)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  gtk_scrolled_window_unset_placement(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_placement)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkCornerType result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkCornerType)gtk_scrolled_window_get_placement(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_set_shadow_type)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkShadowType arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_scrolled_window_set_shadow_type(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_get_shadow_type)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkShadowType result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkShadowType)gtk_scrolled_window_get_shadow_type(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_scrolled_window_add_with_viewport)
+{
+  GtkScrolledWindow *arg1 = (GtkScrolledWindow *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkScrolledWindow *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkWidget *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_scrolled_window_add_with_viewport(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
 

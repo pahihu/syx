@@ -60,7 +60,7 @@ static syx_bool _syx_char_is_binary_second (syx_char c);
   \param text the code
   \return A new SyxLexer
 */
-SyxLexer *
+EXPORT SyxLexer *
 syx_lexer_new (syx_symbol text)
 {
   SyxLexer *self;
@@ -80,7 +80,7 @@ syx_lexer_new (syx_symbol text)
 /*!
   \param free_text TRUE frees the text
 */
-void
+EXPORT void
 syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
 {
   if (free_text)
@@ -94,7 +94,7 @@ syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
   The only way the token can be freed is only when it holds a string.
   In that case, the string is freed
 */
-void
+EXPORT void
 syx_token_free (SyxToken token)
 {
   if (token.type > SYX_TOKEN_STRING_ENTRY)
@@ -360,7 +360,7 @@ _syx_char_is_binary_second (syx_char c)
 }
 
 //! Get the next character or 0
-syx_char
+EXPORT syx_char
 syx_lexer_forward (SyxLexer *lexer)
 {
   syx_char cc;
@@ -379,16 +379,8 @@ syx_lexer_forward (SyxLexer *lexer)
   return cc;
 }
 
-//! Move backward the text pointer
-inline syx_char
-syx_lexer_push_back (SyxLexer *lexer)
-{
-  lexer->_pushed_back = syx_lexer_get_last_char (lexer);
-  return lexer->_pushed_back;
-}
-
 //! Returns the next token parsed by the lexer
-SyxToken
+EXPORT SyxToken
 syx_lexer_next_token (SyxLexer *lexer)
 {
   syx_char lastChar, secondChar;
@@ -461,7 +453,7 @@ syx_lexer_next_token (SyxLexer *lexer)
 /*!
   \return A string containing the chunk without the exlamation mark. It must be freed once it's not needed anymore
 */
-syx_string
+EXPORT syx_string
 syx_lexer_next_chunk (SyxLexer *lexer)
 {
   SyxToken token;
@@ -493,14 +485,14 @@ syx_lexer_next_chunk (SyxLexer *lexer)
 }
 
 //! Returns the last token returned by syx_lexer_next_token
-SyxToken
+EXPORT SyxToken
 syx_lexer_get_last_token (SyxLexer *lexer)
 {
   return lexer->last_token;
 }
 
 //! Returns the last character returned by syx_lexer_forward
-syx_char
+EXPORT syx_char
 syx_lexer_get_last_char (SyxLexer *lexer)
 {
   return lexer->last_char;

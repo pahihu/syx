@@ -118,9 +118,10 @@ typedef syx_nint SyxOop;
 //! Retrieve a syx_uchar from a SyxOop
 #define SYX_CHARACTER(oop) ((syx_uchar)((oop) >> 2))
 
+
 //! TRUE if an overflow occurs when doing b times a
-inline syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
+extern EXPORT syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
 //! TRUE if an overflow occurs when shifting a on the left by b
-inline syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
+extern EXPORT syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
 
 #endif /* SYX_TYPES_H */

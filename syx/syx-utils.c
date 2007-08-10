@@ -331,7 +331,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
 /*!
   \return TRUE if no error has occurred
 */
-syx_bool
+EXPORT syx_bool
 syx_cold_parse (SyxLexer *lexer)
 {
   SyxToken token;
@@ -357,7 +357,7 @@ syx_cold_parse (SyxLexer *lexer)
 /*!
   \return TRUE if no error has occurred
 */
-syx_bool
+EXPORT syx_bool
 syx_cold_file_in (syx_symbol filename)
 {
   SyxLexer *lexer;
@@ -409,7 +409,7 @@ syx_cold_file_in (syx_symbol filename)
 /*!
   The function is thread-safe
 */
-void
+EXPORT void
 syx_semaphore_signal (SyxOop semaphore)
 {
   // wait
@@ -445,7 +445,7 @@ syx_semaphore_signal (SyxOop semaphore)
 /*!
   The function is thread-safe
 */
-void
+EXPORT void
 syx_semaphore_wait (SyxOop semaphore)
 {
   // wait
@@ -468,7 +468,7 @@ syx_semaphore_wait (SyxOop semaphore)
 /* Utilities to interact with Smalltalk */
 
 //! Create a MethodContext for a unary message ready to enter a Process
-SyxOop
+EXPORT SyxOop
 syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
@@ -485,7 +485,7 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
 }
 
 //! Create a MethodContext for a binary message ready to enter a Process
-SyxOop
+EXPORT SyxOop
 syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;
@@ -511,7 +511,7 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
 /*!
   \param num_args number of variadic SyxOop arguments
 */
-SyxOop
+EXPORT SyxOop
 syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
   va_list ap;
@@ -543,11 +543,39 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   return context;
 }
 
+
+//! Create a MethodContext for an arbitrary message ready to enter a Process
+/*!
+  \param arguments an Array of arguments
+*/
+EXPORT SyxOop
+syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments)
+{
+  SyxOop context;
+  SyxOop class;
+  SyxOop method;
+
+  class = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (class, selector);
+  if (SYX_IS_NIL (method))
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
+
+  syx_memory_gc_begin ();
+
+  context = syx_method_context_new (parent_context, method, receiver, arguments);
+
+  syx_memory_gc_end ();
+
+  return context;
+}
+
+
+
 //! Files in a file in blocking mode. This function send a message to FileStream>>#fileIn:
 /*!
   \return Return the last returned object from the process
 */
-SyxOop
+EXPORT SyxOop
 syx_file_in_blocking (syx_symbol file)
 {
   SyxOop context;
@@ -567,7 +595,7 @@ syx_file_in_blocking (syx_symbol file)
 /*!
   \return Return the last returned object from the process
 */
-SyxOop
+EXPORT SyxOop
 syx_do_it_blocking (syx_symbol code)
 {
   SyxOop context;
@@ -581,7 +609,7 @@ syx_do_it_blocking (syx_symbol code)
 
 
 //! Returns a syx_wstring from a syx_string
-syx_wstring
+EXPORT syx_wstring
 syx_to_wstring (syx_symbol s)
 {
   syx_size size = strlen (s);
@@ -591,7 +619,7 @@ syx_to_wstring (syx_symbol s)
 }
 
 //! Returns a syx_string from a syx_wstring
-syx_string
+EXPORT syx_string
 syx_to_string (syx_wsymbol ws)
 {
   syx_size size = wcslen (ws);
@@ -601,7 +629,7 @@ syx_to_string (syx_wsymbol ws)
 }
 
 //! Returns the first index in the string that is not a whitespace
-syx_uint32
+EXPORT syx_uint32
 syx_find_first_non_whitespace (syx_symbol string)
 {
   syx_uint32 i;

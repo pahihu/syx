@@ -1,3 +1,24 @@
+2007-08-10  Luca Bruno  <lethalman88@gmail.com>
+
+	Refactored all inline to be inserted into headers (issue #9).
+	Added dllimport and dllexport attributes when building DLLs.
+	
+	* syx/syx-memory.c (syx_freev): removed
+
+	* plugins/gtk/st/GtkScrolledWindow.st: added
+
+	* plugins/gtk/st/GtkAdjustment.st: added
+
+	* plugins/gtk/plugin-init.c (syx_g_closure_marshal): added marshal function for GClosure
+
+	* plugins/gtk/st/GObject.st (GClosure): added wrapper
+	
+	* syx/syx-utils.c (syx_send_messagev): added
+
+	* syx/syx-plugins.c (syx_plugin_symbol): added
+
+	* st/kernel/SystemDictionary.st (plugin:cSymbol:): added with primitive
+
 2007-08-09  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-scheduler.c (syx_scheduler_remove_process): set next process to be active

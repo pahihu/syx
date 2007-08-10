@@ -95,12 +95,17 @@ commandLineArguments
 !SystemDictionary methodsFor: 'plugins'!
 
 plugin: pluginName cCall: functionName withArguments: anArray
-    <primitive: 'Smalltalk_callPlugin'>
+    <primitive: 'Smalltalk_pluginCall'>
 	self primitiveFailed
 !
 
 cCall: functionName withArguments: anArray
     ^self plugin: nil cCall: functionName withArguments: anArray
+!
+
+plugin: pluginName cSymbol: symbolName
+    <primitive: 'Smalltalk_pluginSymbol'>
+	self primitiveFailed
 !
 
 loadPlugin: name

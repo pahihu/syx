@@ -64,7 +64,7 @@ static SyxOop _syx_create_class (syx_varsize instanceSize);
   For example if you want a Smalltalk file of a package, specify the domain "st", the package name
   and the file name.
 */
-syx_string 
+EXPORT syx_string 
 syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
 {
   syx_string full_path;
@@ -153,7 +153,7 @@ _syx_create_class (syx_varsize instanceSize)
   Ends up this process by fileing in the basic declarations from initialDecl.st and the other *.st files, and calls syx_fetch_basic to fetch all classes in the VM.
   Finally, prepares the environment by running a blocking Process that calls Smalltalk>>initializeFirstSystem and initialize everything else from within Smalltalk itself.
 */  
-void
+EXPORT void
 syx_build_basic (void)
 {
   SyxOop Object, Behavior, Class;
@@ -245,7 +245,7 @@ syx_build_basic (void)
   Then initialize the interpreter, the errors system and the scheduler.
   Finally send SystemDictionary>>#initializeSystem to initialize everything else from within Smalltalk
 */
-void
+EXPORT void
 syx_fetch_basic (void)
 {
   syx_nil = (SyxOop)(syx_memory);
@@ -282,7 +282,7 @@ syx_fetch_basic (void)
 }
 
 //! Remove Smalltalk startupProcess from being scheduled and call Smalltalk>>#startupSystem: in a scheduled process
-void
+EXPORT void
 syx_initialize_system (void)
 {
   SyxOop context;
@@ -306,7 +306,7 @@ syx_initialize_system (void)
 /*!
   \param root_path an arbitrary root directory for Syx or NULL
 */
-syx_bool
+EXPORT syx_bool
 syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
 {
   static syx_bool initialized = FALSE;   
@@ -361,7 +361,7 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
 /*!
   Run special tasks to finalize the Syx process, such as clearing all the allocated memory
 */
-void
+EXPORT void
 syx_quit (void)
 {
   syx_memory_clear ();
@@ -378,7 +378,7 @@ syx_quit (void)
 /*!
   \return a constant string containing the path of the root directory
 */
-syx_symbol 
+EXPORT syx_symbol 
 syx_get_root_path (void)
 {
   return _syx_root_path;
@@ -389,7 +389,7 @@ syx_get_root_path (void)
   \param root_path the new path
   \return TRUE if the path exists and is readable
 */
-syx_bool
+EXPORT syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
   if (!root_path)
@@ -408,7 +408,7 @@ syx_set_root_path (syx_symbol root_path)
 }
 
 //! Sets the initial image path
-syx_bool
+EXPORT syx_bool
 syx_set_image_path (syx_symbol image_path)
 {
   if (!image_path)
@@ -425,7 +425,7 @@ syx_set_image_path (syx_symbol image_path)
 /*!
  This path won't be used once Syx is initialized. The image path will be obtained from the ImageFileName global
 */
-syx_symbol
+EXPORT syx_symbol
 syx_get_image_path (void)
 {
   return _syx_image_path;

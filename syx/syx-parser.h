@@ -69,8 +69,8 @@ struct SyxParser
   syx_int32 _argument_names_top;
 };
 
-SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class);
-void syx_parser_free (SyxParser *parser, syx_bool free_segment);
-syx_bool syx_parser_parse (SyxParser *parser);
+EXPORT extern SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class);
+EXPORT extern void syx_parser_free (SyxParser *parser, syx_bool free_segment);
+EXPORT extern syx_bool syx_parser_parse (SyxParser *parser);
 
 #endif /* SYX_PARSER_H */

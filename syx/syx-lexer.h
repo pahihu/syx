@@ -50,7 +50,7 @@ struct SyxToken {
   } value;
 };
 
-void syx_token_free (SyxToken token);
+EXPORT extern void syx_token_free (SyxToken token);
 
 /* Lexer */
 
@@ -65,14 +65,22 @@ struct SyxLexer {
   syx_char _pushed_back;
 };
 
-SyxLexer *syx_lexer_new (syx_symbol text);
-void syx_lexer_free (SyxLexer *lexer, syx_bool free_text);
+EXPORT extern SyxLexer *syx_lexer_new (syx_symbol text);
+EXPORT extern void syx_lexer_free (SyxLexer *lexer, syx_bool free_text);
 
-syx_char syx_lexer_forward (SyxLexer *lexer);
-inline syx_char syx_lexer_push_back (SyxLexer *lexer);
-SyxToken syx_lexer_next_token (SyxLexer *lexer);
-syx_char *syx_lexer_next_chunk (SyxLexer *lexer);
-SyxToken syx_lexer_get_last_token (SyxLexer *lexer);
-syx_char syx_lexer_get_last_char (SyxLexer *lexer);
+EXPORT extern syx_char syx_lexer_forward (SyxLexer *lexer);
+EXPORT extern SyxToken syx_lexer_next_token (SyxLexer *lexer);
+EXPORT extern syx_char *syx_lexer_next_chunk (SyxLexer *lexer);
+EXPORT extern SyxToken syx_lexer_get_last_token (SyxLexer *lexer);
+EXPORT extern syx_char syx_lexer_get_last_char (SyxLexer *lexer);
+
+//! Move backward the text pointer
+INLINE syx_char
+syx_lexer_push_back (SyxLexer *lexer)
+{
+  lexer->_pushed_back = syx_lexer_get_last_char (lexer);
+  return lexer->_pushed_back;
+}
+
 
 #endif

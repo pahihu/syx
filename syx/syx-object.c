@@ -46,7 +46,7 @@
   \note all objects are allocated in the Syx Memory
 */
 
-SyxOop syx_nil,
+EXPORT SyxOop syx_nil,
   syx_true,
   syx_false,
 
@@ -80,24 +80,11 @@ SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
-/* Inlines */
-
-//! Returns the number of instance variables held by the object
-/*!
-  This method obtain the size of the instance from the instanceSize of its class
-*/
-inline syx_varsize
-syx_object_vars_size (SyxOop object)
-{
-  SyxOop class = syx_object_get_class (object);
-  return SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
-}
-
 //! Resize SyxObject::data to the given size, being careful of object indexables and byte indexables
 /*!
   Warning, if the new size is lesser than the current, the data at the end of the array will be lost
 */
-inline void
+EXPORT void
 syx_object_resize (SyxOop object, syx_varsize size)
 {
   if (SYX_OBJECT_HAS_REFS (object))
@@ -110,58 +97,6 @@ syx_object_resize (SyxOop object, syx_varsize size)
   SYX_OBJECT_DATA_SIZE(object) = size;
 }
 
-//! Get the class of an object
-/*!
-  \param object can be an SyxOop
-  \return For small integers return SmallInteger and for characters the Character class
-*/
-inline SyxOop 
-syx_object_get_class (SyxOop object)
-{
-  /* ordered by usage */ 
-
-  if (SYX_IS_OBJECT(object))
-    return SYX_OBJECT(object)->class;
-
-  if (SYX_IS_SMALL_INTEGER(object))
-    return syx_small_integer_class;
-
-  if (SYX_IS_NIL(object))
-    return syx_undefined_object_class;
-  
-  if (SYX_IS_CHARACTER(object))
-    return syx_character_class;
-
-  if (SYX_IS_CPOINTER(object))
-    return syx_cpointer_class;
-
-  syx_error ("unknown object\n");
-}
-
-//! Set the class of an object
-/*!
-  If the object is a constant, a small integer or a character, no operation is done
-*/
-inline void
-syx_object_set_class (SyxOop object, SyxOop class)
-{
-  if (!SYX_IS_OBJECT(object))
-    return;
-
-  SYX_OBJECT(object)->class = class;
-}
-
-//! Answer the hash of an Object
-inline syx_int32
-syx_object_hash (SyxOop object)
-{
-  // distinguish between objects and embedded values
-  if (SYX_IS_OBJECT (object))
-    return SYX_MEMORY_INDEX_OF (object);
-
-  // i don't know how to hash C pointers sorry
-  return SYX_SMALL_INTEGER_EMBED (object);
-}
 
 /* Contructors */
 
@@ -171,7 +106,7 @@ syx_object_hash (SyxOop object)
 
   \param supermetaclass the superclass of the new metaclass
 */
-inline SyxOop 
+EXPORT SyxOop 
 syx_metaclass_new (SyxOop supermetaclass)
 {
   SyxOop metaclass = syx_object_new (syx_metaclass_class);
@@ -192,7 +127,7 @@ syx_metaclass_new (SyxOop supermetaclass)
 
   \param superclass the superclass of the new class
 */
-inline SyxOop 
+EXPORT SyxOop 
 syx_class_new (SyxOop superclass)
 {
   SyxOop metaclass = syx_metaclass_new (syx_object_get_class (superclass));
@@ -215,7 +150,7 @@ syx_class_new (SyxOop superclass)
   \param string a textual representation of the number
   \param base the radix of the representation
 */
-SyxOop
+EXPORT SyxOop
 syx_large_integer_new (syx_symbol string, syx_int32 base)
 {
 #ifdef HAVE_LIBGMP
@@ -229,7 +164,7 @@ syx_large_integer_new (syx_symbol string, syx_int32 base)
 }
 
 //! Create a new LargeInteger with the given mpz
-SyxOop
+EXPORT SyxOop
 syx_large_integer_new_mpz (syx_pointer mpz)
 {
 #ifdef HAVE_LIBGMP
@@ -244,7 +179,7 @@ syx_large_integer_new_mpz (syx_pointer mpz)
 /*!
   \b This function is available only if Syx has been linked with the GMP library
 */
-SyxOop
+EXPORT SyxOop
 syx_large_integer_new_integer (syx_int32 i)
 {
 #ifdef HAVE_LIBGMP
@@ -257,31 +192,28 @@ syx_large_integer_new_integer (syx_int32 i)
   return syx_nil;
 }
 
-//! Create a Float object
-inline SyxOop
-syx_float_new (syx_double floating)
+
+//! Create a new suspended Process and schedule it
+/*!
+  \param context a MethodContext or BlockContext
+*/
+EXPORT SyxOop 
+syx_process_new (SyxOop context)
 {
-  SyxOop oop = syx_object_new_size (syx_float_class, FALSE, sizeof (syx_double));
-  SYX_OBJECT_FLOAT(oop) = floating;
-  return oop;
+  SyxOop object = syx_object_new (syx_process_class);
+  SYX_PROCESS_CONTEXT(object) = context;
+  SYX_PROCESS_SUSPENDED(object) = syx_true;
+  SYX_PROCESS_SCHEDULED(object) = syx_false;
+  syx_scheduler_add_process (object);
+  return object;
 }
 
-//! Creates a new ByteArray instance
-/*!
-  \param size the number of elements
-  \param data already initialized data for the byte array
-*/
-inline SyxOop 
-syx_byte_array_new (syx_varsize size, syx_uint8 *data)
-{
-  return syx_object_new_data (syx_byte_array_class, FALSE, size, (SyxOop *)data);
-}
 
 //! Remove an element from an Array
 /*!
   \return TRUE if element was found and removed, else FALSE
 */
-syx_bool
+EXPORT syx_bool
 syx_array_remove (SyxOop array, SyxOop element)
 {
   syx_varsize i, size;
@@ -303,11 +235,13 @@ syx_array_remove (SyxOop array, SyxOop element)
   return found;
 }
 
+
+
 //! Add an element to an Array
 /*!
   \param unique TRUE if the element shouldn't be added if already present in the array
 */
-void
+EXPORT void
 syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
 {
   syx_varsize i, size;
@@ -327,55 +261,12 @@ syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
   SYX_OBJECT_DATA(array)[size] = element;
 }
 
-//! Creates a new ByteArray instance with the given size
-inline SyxOop 
-syx_byte_array_new_size (syx_varsize size)
-{
-  return syx_object_new_size (syx_byte_array_class, FALSE, size);
-}
-
-//! Like syx_byte_array_new but duplicates the data
-inline SyxOop
-syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
-{
-  SyxOop oop = syx_byte_array_new_size (size);
-  memcpy (SYX_OBJECT_DATA (oop), data, size * sizeof (syx_uint8));
-  return oop;
-}
-
-//! Creates a new Array instance
-/*!
-  \param size the number of elements
-  \param data already initialized data for the array
-*/
-inline SyxOop 
-syx_array_new (syx_varsize size, SyxOop *data)
-{
-  return syx_object_new_data (syx_array_class, TRUE, size, data);
-}
-
-//! Creates a sized Array
-inline SyxOop 
-syx_array_new_size (syx_varsize size)
-{
-  return syx_object_new_size (syx_array_class, TRUE, size);
-}
-
-//! Like syx_byte_array_new but duplicates the data
-inline SyxOop
-syx_array_new_ref (syx_varsize size, SyxOop *data)
-{
-  SyxOop oop = syx_array_new_size (size);
-  memcpy (SYX_OBJECT_DATA(oop), data, size * sizeof (SyxOop));
-  return oop;
-}
-
 //! Returns a Symbol instance
 /*!
   Lookups into syx_symbols dictionary to check the existance of the symbol, otherwise create a new one and insert it into the dictionary.
   \param symbol a plain constant string
 */
-inline SyxOop 
+EXPORT SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
   SyxOop obj;
@@ -395,18 +286,8 @@ syx_symbol_new (syx_symbol symbol)
 }
 
 
-//! Returns a new String instance
-inline SyxOop 
-syx_string_new (syx_symbol string)
-{
-  if (!string)
-    return syx_nil;
-
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
-}
-
 //! Returns the hash of a String
-inline syx_int32
+EXPORT syx_int32
 syx_string_hash (syx_symbol string)
 {
   syx_int32 ret;
@@ -417,29 +298,6 @@ syx_string_hash (syx_symbol string)
     ret >>= 2;
 
   return SYX_SMALL_INTEGER_EMBED (ret);
-}
-
-//! Creates a new VariableBinding key -> index on a dictionary
-inline SyxOop
-syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
-{
-  SyxOop object = syx_object_new (syx_variable_binding_class);
-  SYX_ASSOCIATION_KEY(object) = key;
-  SYX_ASSOCIATION_VALUE(object) = syx_small_integer_new (index);
-  SYX_VARIABLE_BINDING_DICTIONARY(object) = dictionary;
-  return object;
-}
-
-//! Creates a new dictionary and its hash table
-/*!
-  The effective size of the hash table is size * 2
-*/
-inline SyxOop 
-syx_dictionary_new (syx_varsize size)
-{
-  SyxOop dict = syx_object_new_size (syx_dictionary_class, TRUE, size * 2);
-  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (0);
-  return dict;
 }
 
 //! Returns the index of the given symbol, the index of an empty entry or -1 if the key was not found
@@ -609,7 +467,7 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 /*!
   Take care the dictionary MUST contain only symbol keys
 */
-SyxOop 
+EXPORT SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
   syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
@@ -623,7 +481,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 /*
   Take care the dictionary MUST contain only key symbols
 */
-SyxOop 
+EXPORT SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
@@ -634,7 +492,7 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 }
 
 //! Grow the dictionary and rehash all data
-void
+EXPORT void
 syx_dictionary_rehash (SyxOop dict)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
@@ -663,7 +521,7 @@ syx_dictionary_rehash (SyxOop dict)
 
 
 //! Insert key -> value in the dictionary
-void
+EXPORT void
 syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
@@ -681,33 +539,6 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (num_elements + 1);
 }
 
-//! Create a new BlockClosure
-/*!
-  \param block a CompiledBlock
-*/
-inline SyxOop 
-syx_block_closure_new (SyxOop block)
-{
-  SyxOop object = syx_object_new (syx_block_closure_class);
-  SYX_BLOCK_CLOSURE_BLOCK(object) = block;
-  return object;
-}
-
-//! Create a new suspended Process and schedule it
-/*!
-  \param context a MethodContext or BlockContext
-*/
-inline SyxOop 
-syx_process_new (SyxOop context)
-{
-  SyxOop object = syx_object_new (syx_process_class);
-  SYX_PROCESS_CONTEXT(object) = context;
-  SYX_PROCESS_SUSPENDED(object) = syx_true;
-  SYX_PROCESS_SCHEDULED(object) = syx_false;
-  syx_scheduler_add_process (object);
-  return object;
-}
-
 //! Create a new MethodContext
 /*!
   \param parent the parent context
@@ -715,7 +546,7 @@ syx_process_new (SyxOop context)
   \param receiver an Object receiving the message
   \param arguments the arguments passed to the message
 */
-SyxOop 
+EXPORT SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
   syx_memory_gc_begin ();
@@ -756,7 +587,7 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 /*!
   \param outer_context a MethodContext or BlockContext for a nested block
 */
-SyxOop 
+EXPORT SyxOop 
 syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
   syx_memory_gc_begin ();
@@ -794,7 +625,7 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   \param class the class of the new instance
   \param vars_size number of instance variables the instance must hold
 */
-SyxOop
+EXPORT SyxOop
 syx_object_new_vars (SyxOop class, syx_varsize vars_size)
 {
   SyxOop oop = syx_memory_alloc ();
@@ -809,19 +640,12 @@ syx_object_new_vars (SyxOop class, syx_varsize vars_size)
   return oop;
 }
 
-//! Create a new object
-inline SyxOop
-syx_object_new (SyxOop class)
-{
-  return syx_object_new_vars (class, SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class)));
-}
-
 //! Create a new object of the given size
 /*!
   \param has_refs specify if the created object must be Object indexable or Byte indexable
   \param size number of objects/bytes to hold
 */
-SyxOop 
+EXPORT SyxOop 
 syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
 {
   SyxObject *object = SYX_OBJECT (syx_object_new (class));
@@ -840,7 +664,7 @@ syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
   \param size number of objects/bytes to hold
   \param data the data of the object (must be an array of SyxOop or syx_int8)
 */
-SyxOop 
+EXPORT SyxOop 
 syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data)
 {
   SyxObject *object = SYX_OBJECT (syx_object_new (class));
@@ -853,7 +677,7 @@ syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *
 }
 
 //! Make a shallow copy of an object
-SyxOop
+EXPORT SyxOop
 syx_object_copy (SyxOop object)
 {
   if (!SYX_IS_OBJECT (object))
@@ -886,7 +710,7 @@ syx_object_copy (SyxOop object)
 /*!
   If the class has finalizationRequest set to true, perform #finalize on the object
 */
-inline void
+EXPORT void
 syx_object_free (SyxOop object)
 {
   SyxOop context, class;
@@ -916,7 +740,7 @@ syx_object_free (SyxOop object)
   \param subclass a class that should be a subclass of the former
   \return TRUE if the first is a superclass of the second
 */
-syx_bool
+EXPORT syx_bool
 syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
 {
   if (SYX_OOP_EQ (class, subclass))
@@ -935,7 +759,7 @@ syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
 
   \return A syx_symbol list or NULL. The list must be freed once unused
 */
-syx_symbol *
+EXPORT syx_symbol *
 syx_class_get_all_instance_variable_names (SyxOop class)
 {
   syx_symbol names[256];
@@ -966,7 +790,7 @@ syx_class_get_all_instance_variable_names (SyxOop class)
 /*!
   \return syx_nil if no method has been found
 */
-SyxOop 
+EXPORT SyxOop 
 syx_class_lookup_method (SyxOop class, syx_symbol selector)
 {
   SyxOop cur;
@@ -989,7 +813,7 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
 /*!
   \return syx_nil if no method has been found
 */
-SyxOop 
+EXPORT SyxOop 
 syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
 {
   SyxOop cur;
@@ -1014,7 +838,7 @@ syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
 /* Small integer overflow checks */
 
 //! TRUE if an overflow occurs when doing b times a
-inline syx_bool
+EXPORT syx_bool
 SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
 {
 #ifdef HAVE_INT64_T
@@ -1054,7 +878,7 @@ SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
 }
 
 //! TRUE if an overflow occurs when shifting a by b
-inline syx_bool
+EXPORT syx_bool
 SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b)
 {
   // Thanks to Sam Philips 

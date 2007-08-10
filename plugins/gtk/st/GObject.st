@@ -22,7 +22,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!GObject class methodsFor: 'instance creation'!
+!GPointer class methodsFor: 'instance creation'!
 
 new
     self subclassResponsibility
@@ -32,22 +32,23 @@ handle: aPointer
     ^self basicNew handle: aPointer
 ! !
 
-!GObject methodsFor: 'initialize-release'!
+!GPointer methodsFor: 'initialize-release'!
 
 handle: aPointer
     handle := aPointer
 ! !
 
-!GObject methodsFor: 'accessing'!
+!GPointer methodsFor: 'accessing'!
 
 handle
     ^handle
 ! !
 
+
 !GObject methodsFor: 'signals'!
 
-primConnect: signalName callback: ignored data: aGCallback destroyData: closureNotify connectFlags: connectFlags
-    <cCall: 'Gtk_g_signal_connect_data' plugin: 'gtk'>
+primConnect: signalName closure: aGClosure after: aBoolean
+    <cCall: 'Gtk_g_signal_connect_closure' plugin: 'gtk'>
 	self primitiveFailed
 !
 
@@ -58,7 +59,37 @@ when: signalName send: aSelector
 when: signalName send: aSelector withArguments: anArray
     | callback id |
     callback := GCallback selector: aSelector withArguments: anArray.
-    id := self primConnect: signalName callback: nil data: callback destroyData: nil connectFlags: 0.
+    id := self primConnect: signalName closure: callback closure after: false.
     callback handlerId: id.
     ^callback
+! !
+
+
+
+!GClosure class methodsFor: 'instance creation'!
+
+primNew: userData destroyData: destroyData
+    <cCall: 'Gtk_g_cclosure_new' plugin: 'gtk'>
+	self primitiveFailed
+!
+
+on: aGCallback
+    ^self handle: (self primNew: aGCallback destroyData: nil)
+! !
+
+!GClosure methodsFor: 'initialize-release'!
+
+marshal: marshal
+    <cCall: 'Gtk_g_closure_set_marshal' plugin: 'gtk'>
+	self primitiveFailed
+!
+
+ref
+    <cCall: 'Gtk_g_closure_ref' plugin: 'gtk'>
+	self primitiveFailed
+!
+
+unref
+    <cCall: 'Gtk_g_closure_unref' plugin: 'gtk'>
+	self primitiveFailed
 ! !

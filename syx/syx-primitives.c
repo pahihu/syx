@@ -50,7 +50,7 @@
 #include <gmp.h>
 #endif
 
-inline SyxOop 
+INLINE SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
   return syx_block_context_new (es->context,
@@ -1435,7 +1435,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_quit)
   exit (status);
 }
 
-SYX_FUNC_PRIMITIVE (Smalltalk_callPlugin)
+SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
 {
   SyxOop *message_arguments;
   syx_varsize message_arguments_count;
@@ -1471,6 +1471,29 @@ SYX_FUNC_PRIMITIVE (Smalltalk_callPlugin)
   return ret;
 }
 
+SYX_FUNC_PRIMITIVE (Smalltalk_pluginSymbol)
+{
+  SYX_PRIM_ARGS(2);
+  SyxOop plugin = es->message_arguments[0];
+  SyxOop func = es->message_arguments[1];
+  syx_symbol func_name;
+  syx_symbol plugin_name = NULL;
+  SyxOop oop;
+
+  if (SYX_IS_NIL (func))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  if (!SYX_IS_NIL (plugin))
+    plugin_name = SYX_OBJECT_SYMBOL (plugin);
+
+  func_name = SYX_OBJECT_SYMBOL (func);
+
+  oop = SYX_POINTER_CAST_OOP (syx_plugin_symbol (plugin_name, func_name));
+  SYX_PRIM_RETURN (oop);
+}
+
 SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
 {
   SYX_PRIM_ARGS(1);
@@ -1488,7 +1511,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
-static SyxPrimitiveEntry primitive_entries[] = {
+EXPORT SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
   /* Common for objects */
@@ -1608,33 +1631,20 @@ static SyxPrimitiveEntry primitive_entries[] = {
   { "Smalltalk_quit", Smalltalk_quit },
   { "Smalltalk_loadPlugin", Smalltalk_loadPlugin },
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
-  { "Smalltalk_callPlugin", Smalltalk_callPlugin },
+  { "Smalltalk_pluginCall", Smalltalk_pluginCall },
+  { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
 
   { NULL }
 };
 
-SYX_FUNC_PRIMITIVE(wewe)
-{
-  SYX_PRIM_RETURN (syx_true);
-}
-
-inline SyxPrimitiveEntry *
-syx_primitive_get_entry (syx_int32 index)
-{
-  if (index < SYX_PRIMITIVES_MAX)
-    return &primitive_entries[index];
-
-  return NULL;
-}
-
-syx_int32
+EXPORT syx_int32
 syx_primitive_get_index (syx_symbol name)
 {
   syx_int32 i;
 
   for (i=0; i < SYX_PRIMITIVES_MAX; i++)
     {
-      if (!strcmp (primitive_entries[i].name, name))
+      if (!strcmp (_syx_primitive_entries[i].name, name))
 	return i;
     }
 

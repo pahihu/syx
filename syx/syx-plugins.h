@@ -37,20 +37,21 @@ struct SyxPluginEntry
 
 /* Dealing with dynamic libraries */
 
-syx_pointer syx_library_open (syx_symbol location);
-syx_pointer syx_library_symbol (syx_pointer handle, syx_symbol name);
-syx_bool syx_library_close (syx_pointer handle);
+EXPORT extern syx_pointer syx_library_open (syx_symbol location);
+EXPORT extern syx_pointer syx_library_symbol (syx_pointer handle, syx_symbol name);
+EXPORT extern syx_bool syx_library_close (syx_pointer handle);
 
 /* Managing plugins */
 
 typedef syx_bool (* SyxPluginInitializeFunc) (void);
 typedef void (* SyxPluginFinalizeFunc) (void);
 
-void syx_plugins_init (void);
-void syx_plugin_finalize_all (void);
-syx_pointer syx_plugin_load (syx_symbol name);
-syx_bool syx_plugin_unload (syx_symbol name);
-syx_bool syx_plugin_call_interp (SyxExecState *es, SyxOop method);
-syx_bool syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method);
+EXPORT extern void syx_plugins_init (void);
+EXPORT extern void syx_plugin_finalize_all (void);
+EXPORT extern syx_pointer syx_plugin_load (syx_symbol name);
+EXPORT extern syx_bool syx_plugin_unload (syx_symbol name);
+EXPORT extern syx_pointer syx_plugin_symbol (syx_symbol plugin_name, syx_symbol func_name);
+EXPORT extern syx_bool syx_plugin_call_interp (SyxExecState *es, SyxOop method);
+EXPORT extern syx_bool syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method);
 
 #endif /* SYX_PLUGINS_H */

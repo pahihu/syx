@@ -44,10 +44,10 @@ struct SyxErrorEntry
   SyxOop class;
 };
 
-void syx_error_init (void);
-void syx_error_clear (void);
-SyxErrorType syx_error_register (syx_symbol name, SyxOop class);
-SyxErrorEntry *syx_error_lookup (SyxErrorType type);
+EXPORT extern void syx_error_init (void);
+EXPORT extern void syx_error_clear (void);
+EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop class);
+EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 //! Signal an error in the Smalltalk environment
 /*!

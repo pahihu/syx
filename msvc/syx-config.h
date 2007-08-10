@@ -6,6 +6,7 @@
 
 #define HAVE_ERRNO_H 1
 #define HAVE_STDARG_H 1
+#define HAVE__INLINE__ 1
 
 /* TODO: this is a hack: class is reserved word in C++ so we need to rename it
    when compiling with C++ compiler. The right fix is to not use 'class' as

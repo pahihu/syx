@@ -34,17 +34,33 @@ Object subclass: #Gtk
        instanceVariableNames: ''
        classVariableNames: ''!
 
-Object subclass: #GCallback
-       instanceVariableNames: 'selfPointer selector arguments handlerId'
-       classVariableNames: 'AllCallbacks'!
-
-Object subclass: #GObject
+Object subclass: #GPointer
        instanceVariableNames: 'handle'
        classVariableNames: ''!
 
-GObject subclass: #GtkWidget
+GPointer subclass: #GCallback
+	 instanceVariableNames: 'selector arguments closure handlerId'
+	 classVariableNames: 'AllCallbacks GClosureMarshal'!
+
+GPointer subclass: #GClosure
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GPointer subclass: #GObject
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GObject subclass: #GtkObject
 	instanceVariableNames: ''
-        classVariableNames: ''!
+	classVariableNames: ''!
+
+GtkObject subclass: #GtkWidget
+	  instanceVariableNames: ''
+	  classVariableNames: ''!
+
+GtkObject subclass: #GtkAdjustment
+	  instanceVariableNames: ''
+	  classVariableNames: ''!
 
 GtkWidget subclass: #GtkContainer
 	  instanceVariableNames: ''
@@ -58,6 +74,10 @@ GtkWidget subclass: #GtkButton
 	  instanceVariableNames: ''
 	  classVariableNames: ''!
 
+GtkContainer subclass: #GtkBin
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
 GtkContainer subclass: #GtkWindow
 	     instanceVariableNames: ''
 	     classVariableNames: ''!
@@ -65,6 +85,10 @@ GtkContainer subclass: #GtkWindow
 GtkContainer subclass: #GtkBox
 	     instanceVariableNames: ''
 	     classVariableNames: ''!
+
+GtkBin subclass: #GtkScrolledWindow
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 GtkBox subclass: #GtkVBox
        instanceVariableNames: ''
@@ -94,6 +118,10 @@ primMain
 	self primitiveFailed
 !
 
+initialize
+    GCallback initialize
+!
+
 main
     | sem |
     "Use a semaphore to keep the process alive but suspended forever"
@@ -110,7 +138,14 @@ mainQuit
 
 "Callbacks"
 
-!GCallback class methodsFor: 'instance creationg'!
+!GCallback class methodsFor: 'initialize-release'!
+
+initialize
+    AllCallbacks := Bag new.
+    GClosureMarshal := GPointer handle: (Smalltalk plugin: 'gtk' cSymbol: 'syx_g_closure_marshal')
+! !
+
+!GCallback class methodsFor: 'instance creation'!
 
 selector: aSelector withArguments: anArray
     ^self basicNew initializeSelector: aSelector arguments: anArray
@@ -121,10 +156,18 @@ selector: aSelector withArguments: anArray
 initializeSelector: aSelector arguments: anArray
     selector := aSelector.
     arguments := anArray.
-    selfPointer := self.
-    AllCallbacks
-	ifNil: [ AllCallbacks := Bag new ].
+    handle := self.
+    
+    self initializeGClosure.
     AllCallbacks add: self
+!
+
+initializeGClosure
+    | callback marshal |
+    marshal := GClosureMarshal.
+    closure := GClosure on: self.
+    closure ref.
+    closure marshal: marshal
 !
 
 handlerId: aSignalHandler
@@ -134,4 +177,22 @@ handlerId: aSignalHandler
 invoke
     "This method is called directly from syx_gtk_callback"
     selector key perform: selector value withArguments: arguments
+! !
+
+!GCallback methodsFor: 'accessing'!
+
+closure
+    ^closure
+!
+
+handlerId
+    ^handlerId
+!
+
+selector
+    ^selector
+!
+
+arguments
+    ^arguments
 ! !

@@ -52,7 +52,7 @@ static SyxOop _syx_default_method = 0;
 /*!
   This function is called internally, usually applications don't need to use this function directly.
 */
-void
+EXPORT void
 syx_plugins_init (void)
 {
   static syx_bool initialized = FALSE;
@@ -77,7 +77,7 @@ syx_plugins_init (void)
   \param location the location of the library
   \return A pointer to the handle or NULL
 */
-syx_pointer
+EXPORT syx_pointer
 syx_library_open (syx_symbol location)
 {
   syx_pointer ret = NULL;
@@ -106,7 +106,7 @@ syx_library_open (syx_symbol location)
   \param name the symbol name
   \return A pointer to the symbol or NULL
 */
-syx_pointer
+EXPORT syx_pointer
 syx_library_symbol (syx_pointer handle, syx_symbol name)
 {
   syx_pointer ret = NULL;
@@ -138,7 +138,7 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
   \param handle the handle retruedn by syx_library_open
   \return FALSE if the handle exists but can't be closed
 */
-syx_bool
+EXPORT syx_bool
 syx_library_close (syx_pointer handle)
 {
 #ifdef WITH_PLUGINS
@@ -166,7 +166,7 @@ syx_library_close (syx_pointer handle)
   \param name the name of the plugin
   \return A pointer to the plugin handle or NULL
 */
-syx_pointer
+EXPORT syx_pointer
 syx_plugin_load (syx_symbol name)
 {
   syx_pointer handle = NULL;
@@ -243,7 +243,7 @@ syx_plugin_load (syx_symbol name)
   \param handler the plugin handler
   \return FALSE if the handler exists but can't be closed
 */
-syx_bool
+EXPORT syx_bool
 syx_plugin_unload (syx_symbol plugin)
 {
 #ifdef WITH_PLUGINS
@@ -285,7 +285,7 @@ syx_plugin_unload (syx_symbol plugin)
 /*!
   This function is usually called internally and user programs don't need to call this manually.
 */
-void
+EXPORT void
 syx_plugin_finalize_all (void)
 {
 #ifdef WITH_PLUGINS
@@ -314,6 +314,44 @@ syx_plugin_finalize_all (void)
 
 }
 
+//! Lookup a symbol of the given plugin
+/*!
+  If the plugin is not loaded yet, then load the plugin.
+
+  \return the pointer to the looked up symbol or NULL
+*/
+EXPORT syx_pointer
+syx_plugin_symbol (syx_symbol plugin_name, syx_symbol symbol_name)
+{
+#ifdef WITH_PLUGINS
+
+  SyxPluginEntry *entry;
+  syx_pointer handle;
+
+  for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
+    {
+      if ((!plugin_name && entry->name) || (plugin_name && !entry->name))
+	continue;
+
+      if (plugin_name && entry->name && strcmp (plugin_name, entry->name))
+	continue;
+
+      return syx_library_symbol (entry->handle, symbol_name);
+    }
+
+  // try loading the plugin if not loaded yet
+  handle = syx_plugin_load (plugin_name);
+  if (!handle)
+    return NULL;
+
+  // finally lookup the symbol again
+  return syx_library_symbol (handle, symbol_name);
+
+#endif /* WITH_PLUGINS */
+
+  return NULL;
+}
+
 //! Calls a function of a plugin from within the interpreter
 /*!
   If the plugin is not loaded yet, then load the plugin and call the requested primitive.
@@ -322,7 +360,7 @@ syx_plugin_finalize_all (void)
   \param method method in which the primitive call has been requested
   \return FALSE to yield the process
 */
-syx_bool
+EXPORT syx_bool
 syx_plugin_call_interp (SyxExecState *es, SyxOop method)
 {
 #ifdef WITH_PLUGINS
@@ -355,50 +393,18 @@ syx_plugin_call_interp (SyxExecState *es, SyxOop method)
   \param method method to execute if the primitive fails or syx_nil
   \return FALSE to yield the process
 */
-syx_bool
+EXPORT syx_bool
 syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method)
 {
 #ifdef WITH_PLUGINS
-  SyxPluginEntry *entry;
   SyxPrimitiveFunc fp;
-  syx_pointer handle;
 
   if (SYX_IS_NIL (method))
     method = _syx_default_method;
 
-  for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
-    {
-      if ((!plugin_name && entry->name) || (plugin_name && !entry->name))
-	continue;
-
-      if (plugin_name && entry->name && strcmp (plugin_name, entry->name))
-	continue;
-
-      fp = syx_library_symbol (entry->handle, func_name);
-      if (!fp)
-	{
-	  SYX_PRIM_FAIL;
-	}
-      
-      return fp (es, method);
-    }
-
-  // try loading the plugin if not loaded yet
-  handle = syx_plugin_load (plugin_name);
-  if (!handle)
-    {
-      SYX_PRIM_FAIL;
-    }
-
-  // call the primitive now
-  fp = syx_library_symbol (handle, func_name);
-  if (!fp)
-    {
-      SYX_PRIM_FAIL;
-    }
-
-  return fp (es, method);
-
+  fp = syx_plugin_symbol (plugin_name, func_name);
+  if (fp)
+    return fp (es, method);
 #endif /* WITH_PLUGINS */
 
   SYX_PRIM_FAIL;

@@ -39,17 +39,16 @@
 
 /* Inline */
 
-#if defined (HAVE_INLINE) && defined (__GNUC__) && defined (__STRICT_ANSI__)
-#  undef inline
-#  define inline __inline__
+#undef INLINE
+#if defined (HAVE_INLINE) && defined (__GNUC__)
+#  define INLINE static __inline__
 #elif !defined (HAVE_INLINE)
-#  undef inline
 #  if defined (HAVE__INLINE__)
-#    define inline __inline__
+#    define INLINE static __inline__
 #  elif defined (HAVE__INLINE)
-#    define inline __inline
+#    define INLINE static __inline
 #  else
-#    define inline
+#    define INLINE static
 #  endif
 #endif
 
@@ -90,32 +89,21 @@
 /* Some platform specific informations */
 
 #ifndef HAVE_ERRNO_H
-extern int errno;
-#define ERANGE -32
+EXPORT extern int errno;
+#  define ERANGE -32
 #endif
 
 #ifdef WINDOWS
-
- #define SYX_PATH_SEPARATOR '\\'
-
- #ifdef BUILD_DLL
-
- // the dll exports
-  #define _SYX_EXPORT __declspec(dllexport)
-
- #else
-
- // the exe imports
-  #define _SYX_EXPORT __declspec(dllimport)
-
- #endif /* BUILD_DLL */
-
-#else
-
- #define SYX_PATH_SEPARATOR '/'
-
- #define _SYX_EXPORT
-
+#  define SYX_PATH_SEPARATOR '\\'
+#  ifdef BUILD_DLL
+#    define EXPORT __declspec(dllexport)
+#  else
+#    define EXPORT __declspec(dllimport)
+#  endif /* BUILD_DLL */
+#else /* WINDOWS */
+#  define SYX_PATH_SEPARATOR '/'
+#  define EXPORT
 #endif /* WINDOWS */
+
 
 #endif /* SYX_PLATFORM_H */

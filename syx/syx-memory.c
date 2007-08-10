@@ -43,21 +43,20 @@
 #define SYX_DEBUG_GC
 #endif
 
-syx_int32 _syx_memory_size;
-SyxObject *syx_memory;
-static SyxOop *_syx_freed_memory;
-static syx_int32 _syx_freed_memory_top;
+EXPORT syx_int32 _syx_memory_size;
+EXPORT SyxObject *syx_memory;
+EXPORT SyxOop *_syx_freed_memory;
+EXPORT syx_int32 _syx_freed_memory_top;
 
 static syx_bool _syx_memory_initialized = FALSE;
 
 #define SYX_MEMORY_TOP (&syx_memory[_syx_memory_size - 1])
 
 // Holds temporary objects that must not be freed during a transaction
-static SyxOop _syx_memory_gc_trans[0x100];
-static syx_int32 _syx_memory_gc_trans_top = 0;
-static syx_int32 _syx_memory_gc_trans_running = 0;
+EXPORT SyxOop _syx_memory_gc_trans[0x100];
+EXPORT syx_int32 _syx_memory_gc_trans_top = 0;
+EXPORT syx_int32 _syx_memory_gc_trans_running = 0;
 
-inline void _syx_memory_gc_mark (SyxOop object);
 static void _syx_memory_gc_sweep ();
 
 /*! \page syx_memory Syx Memory
@@ -76,7 +75,7 @@ static void _syx_memory_gc_sweep ();
 */
 
 //! Initialize or realloc the memory according to the given size
-void
+EXPORT void
 syx_memory_init (syx_int32 mem_size)
 {
   SyxObject *object;
@@ -109,7 +108,7 @@ syx_memory_init (syx_int32 mem_size)
 }
 
 //! Clears all the allocated memory
-void
+EXPORT void
 syx_memory_clear (void)
 {
   if (!_syx_memory_initialized)
@@ -147,7 +146,7 @@ syx_memory_clear (void)
 }
 
 //! Returns a new SyxOop
-SyxOop
+EXPORT SyxOop
 syx_memory_alloc (void)
 {
   SyxOop oop;
@@ -176,23 +175,32 @@ syx_memory_alloc (void)
   return oop;
 }
 
-//! Frees the memory of a SyxOop and saves it to be reused for the next syx_memory_alloc
-inline void
-syx_memory_free (SyxOop oop)
+
+
+INLINE void
+_syx_memory_gc_mark (SyxOop object)
 {
-  memset (SYX_OBJECT(oop), '\0', sizeof (SyxObject));
-  _syx_freed_memory[_syx_freed_memory_top++] = oop;
+  syx_varsize i;
+  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
+    return;
+
+  SYX_OBJECT_IS_MARKED(object) = TRUE;
+
+  _syx_memory_gc_mark (SYX_OBJECT(object)->class);
+
+  for (i=0; i < syx_object_vars_size (object); i++)
+    _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
+
+  if (SYX_OBJECT_HAS_REFS (object))
+    {
+      for (i=0; i < SYX_OBJECT_DATA_SIZE (object); i++)
+	_syx_memory_gc_mark (SYX_OBJECT_DATA(object)[i]);
+    }
 }
 
-//! Returns the size of the memory
-inline syx_int32
-syx_memory_get_size (void)
-{
-  return _syx_memory_size;
-}
 
 //! Calls the Syx garbage collector
-void
+EXPORT void
 syx_memory_gc (void)
 {
 #ifdef SYX_DEBUG_GC
@@ -224,31 +232,6 @@ syx_memory_gc (void)
   memcpy (_syx_memory_gc_trans, trans, sizeof (SyxOop) * 0x100);
 }
 
-//! Begins a garbage collection transaction.
-/*!
-  In this transaction, all objects being allocated must not be freed because marked.
-  The transaction can hold up to 256 objects.
-*/
-inline void
-syx_memory_gc_begin (void)
-{
-  _syx_memory_gc_trans_running++;
-}
-
-//! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
-inline void
-syx_memory_gc_end (void)
-{
-  syx_int32 i;
-  if (--_syx_memory_gc_trans_running > 0)
-    return;
-
-  for (i=0; i < _syx_memory_gc_trans_top; i++)
-    SYX_OBJECT_IS_MARKED(_syx_memory_gc_trans[i]) = FALSE;
-
-  _syx_memory_gc_trans_top = 0;
-  _syx_memory_gc_trans_running = 0;
-}
 
 static void
 _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
@@ -286,7 +269,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
   \param path the file path to put all inside
   \return FALSE if an error occurred
 */
-syx_bool
+EXPORT syx_bool
 syx_memory_save_image (syx_symbol path)
 {
   SyxObject *object;
@@ -425,7 +408,7 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
   \param path the file containing the data dumped by syx_memory_save_image
   \return FALSE if an error occurred
 */
-syx_bool
+EXPORT syx_bool
 syx_memory_load_image (syx_symbol path)
 {
   SyxObject *object;
@@ -519,40 +502,6 @@ syx_memory_load_image (syx_symbol path)
   return TRUE;
 }
 
-
-//! Frees a pointer list
-void
-syx_freev (syx_pointer *ptrv)
-{
-  syx_pointer *ptrv_p = ptrv;
-
-  while (*ptrv_p)
-    syx_free (*ptrv_p++);
-
-  syx_free (ptrv);
-}
-
-inline void
-_syx_memory_gc_mark (SyxOop object)
-{
-  syx_varsize i;
-  if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
-    return;
-
-  SYX_OBJECT_IS_MARKED(object) = TRUE;
-
-  _syx_memory_gc_mark (SYX_OBJECT(object)->class);
-
-  for (i=0; i < syx_object_vars_size (object); i++)
-    _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
-
-  if (SYX_OBJECT_HAS_REFS (object))
-    {
-      for (i=0; i < SYX_OBJECT_DATA_SIZE (object); i++)
-	_syx_memory_gc_mark (SYX_OBJECT_DATA(object)[i]);
-    }
-}
-
 static void
 _syx_memory_gc_sweep ()
 {
@@ -571,76 +520,18 @@ _syx_memory_gc_sweep ()
     }
 }
 
-inline syx_pointer
-syx_malloc (syx_int32 size)
+
+//! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
+EXPORT void
+syx_memory_gc_end (void)
 {
-  syx_pointer ptr;
+  syx_int32 i;
+  if (--_syx_memory_gc_trans_running > 0)
+    return;
 
-  ptr = malloc (size);
-  if (!ptr)
-    syx_error ("out of memory\n");
+  for (i=0; i < _syx_memory_gc_trans_top; i++)
+    SYX_OBJECT_IS_MARKED(_syx_memory_gc_trans[i]) = FALSE;
 
-  return ptr;
+  _syx_memory_gc_trans_top = 0;
+  _syx_memory_gc_trans_running = 0;
 }
-
-inline syx_pointer
-syx_malloc0 (syx_int32 size)
-{
-  syx_pointer ptr;
-
-  ptr = malloc (size);
-  if (!ptr)
-    syx_error ("out of memory\n");
-
-  memset (ptr, '\0', size);
-  return ptr;
-}
-
-inline syx_pointer
-syx_calloc (syx_int32 elements, syx_int32 element_size)
-{
-  syx_pointer ptr;
-
-  ptr = calloc (elements, element_size);
-  if (!ptr)
-    syx_error ("out of memory\n");
-
-  return ptr;
-}
-
-inline syx_pointer
-syx_realloc (syx_pointer ptr, syx_int32 size)
-{
-  syx_pointer nptr;
-
-  nptr = realloc (ptr, size);
-  if (!nptr)
-    syx_error ("out of memory\n");
-
-  return nptr;
-}
-
-//! Return a new allocated memory which is a copy of the given one
-inline syx_pointer
-syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size)
-{
-  syx_pointer nptr;
-
-  nptr = syx_malloc (element_size * elements);
-  memcpy (nptr, ptr, element_size * elements);
-
-  return nptr;
-}
-
-#ifndef HAVE_STRNDUP
-
-inline syx_string
-strndup (syx_symbol src, syx_size n)
-{
-  syx_string ret = (syx_string) syx_malloc (n + 1);
-  memcpy (ret, src, n);
-  ret[n] = '\0';
-  return ret;
-}
-
-#endif /* HAVE_STRNDUP */

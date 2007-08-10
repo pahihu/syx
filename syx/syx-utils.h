@@ -29,25 +29,27 @@
 #include "syx-types.h"
 #include "syx-lexer.h"
 
-syx_bool syx_cold_parse (SyxLexer *lexer);
-syx_bool syx_cold_file_in (syx_symbol filename);
+EXPORT extern syx_bool syx_cold_parse (SyxLexer *lexer);
+EXPORT extern syx_bool syx_cold_file_in (syx_symbol filename);
 
-void syx_semaphore_signal (SyxOop semaphore);
-void syx_semaphore_wait (SyxOop semaphore);
+EXPORT extern void syx_semaphore_signal (SyxOop semaphore);
+EXPORT extern void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
-SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
-SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-SyxOop syx_file_in_blocking (syx_symbol file);
-SyxOop syx_do_it_blocking (syx_symbol code);
+EXPORT extern SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
+EXPORT extern SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
+EXPORT extern SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+EXPORT extern SyxOop syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments);
+
+EXPORT extern SyxOop syx_file_in_blocking (syx_symbol file);
+EXPORT extern SyxOop syx_do_it_blocking (syx_symbol code);
 
 /* Utilities for strings */
 
-syx_wstring syx_to_wstring (syx_symbol s);
-syx_string syx_to_string (syx_wsymbol ws);
-syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+EXPORT extern syx_wstring syx_to_wstring (syx_symbol s);
+EXPORT extern syx_string syx_to_string (syx_wsymbol ws);
+EXPORT extern syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
 
 #ifdef UNICODE
 

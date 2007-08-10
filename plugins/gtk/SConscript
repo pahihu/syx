@@ -30,8 +30,9 @@ import os, glob
 Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c gtk_wrap.c")
-st_sources = Split("st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/GtkWidget.st \
-                         st/GtkContainer.st st/GtkButton.st st/GtkTools.st st/GtkBox.st")
+st_sources = Split("""st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/GtkWidget.st
+                      st/GtkContainer.st st/GtkButton.st st/GtkTools.st st/GtkBox.st
+		      st/GtkAdjustment.st st/GtkScrolledWindow.st""")
 
 if penv['GTK']:
     env = penv.Clone ()

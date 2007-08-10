@@ -32,7 +32,7 @@
 /*!
   \return A SyxBytecode instance
 */
-inline SyxBytecode *
+EXPORT SyxBytecode *
 syx_bytecode_new (void)
 {
   SyxBytecode *bytecode;
@@ -43,16 +43,6 @@ syx_bytecode_new (void)
   bytecode->stack_size = 0;
 
   return bytecode;
-}
-
-//! Frees the memory allocated for a SyxBytecode by syx_bytecode_new
-/*!
-  \param bytecode the SyxBytecode to be freed
-*/
-inline void
-syx_bytecode_free (SyxBytecode *bytecode)
-{
-  syx_free (bytecode);
 }
 
 /*!
@@ -79,7 +69,7 @@ syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "="
   \param high a SyxBytecodeCommand value
   \param low an arbitrary number identifying an argument
 */
-void
+EXPORT void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
   if (low > SYX_BYTECODE_ARGUMENT_MAX)
@@ -102,7 +92,7 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
   \param argument_count the number of arguments the message requires
   \param selector a message pattern
 */
-void
+EXPORT void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
   SyxOop binding;
@@ -157,7 +147,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
   \param literal an object
   \return The position of literal into the literals array
 */
-syx_uint32
+EXPORT syx_uint32
 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 {
   syx_uint16 i;
@@ -172,96 +162,4 @@ syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 
   bytecode->literals[bytecode->literals_top++] = literal;
   return bytecode->literals_top - 1;
-}
-
-SYX_FUNC_BYTECODE (gen_code, syx_uint16 value)
-{
-  bytecode->code[bytecode->code_top++] = SYX_COMPAT_SWAP_16 (value);
-}
-
-SYX_FUNC_BYTECODE (do_special, SyxBytecodeSpecial special)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_DO_SPECIAL, special);
-}
-
-SYX_FUNC_BYTECODE (push_array, syx_uint16 num_elements)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_ARRAY, num_elements);
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_argument, syx_uint16 argument_index)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_ARGUMENT, argument_index);
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_temporary, syx_uint16 temporary_index)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_TEMPORARY, temporary_index);
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_literal, SyxOop instance)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_LITERAL,
-				syx_bytecode_gen_literal (bytecode, instance));
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_block_closure, SyxOop closure)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BLOCK_CLOSURE,
-				syx_bytecode_gen_literal (bytecode, closure));
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_instance, syx_uint16 instance_index)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_INSTANCE, instance_index);
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_CONSTANT, constant);
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (push_binding_variable, SyxOop assoc)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BINDING_VARIABLE,
-				syx_bytecode_gen_literal (bytecode, assoc));
-  bytecode->stack_size++;
-}
-
-SYX_FUNC_BYTECODE (assign_temporary, syx_uint16 temporary_index)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_TEMPORARY, temporary_index);
-}
-
-SYX_FUNC_BYTECODE (assign_instance, syx_uint16 instance_index)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_INSTANCE, instance_index);
-}
-
-SYX_FUNC_BYTECODE (assign_binding_variable, SyxOop link)
-{
-  syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_ASSIGN_BINDING_VARIABLE,
-				syx_bytecode_gen_literal (bytecode, link));
-}
-
-SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
-{
-  syx_uint16 instruction = (SYX_BYTECODE_DO_SPECIAL << SYX_BYTECODE_ARGUMENT_BITS) + SYX_BYTECODE_DUPLICATE;
-  memmove (bytecode->code + index + 1, bytecode->code + index, SYX_BYTECODE_MAX - index);
-  bytecode->code[index] = SYX_COMPAT_SWAP_16 (instruction);
-  bytecode->code_top++;
-  bytecode->stack_size++;
-}
-
-inline void
-syx_bytecode_pop_top (SyxBytecode *bytecode)
-{
-  syx_bytecode_do_special (bytecode, SYX_BYTECODE_POP_TOP);
 }
