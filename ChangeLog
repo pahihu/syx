@@ -1,5 +1,19 @@
 2007-08-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/initialDecl (CompiledCode): argumentCount and temporaryCount have been renamed to argumentStackSize and temporaryStackSize and moved to CompiledMethod
+	(CompiledBlock): argumentsTop has been renamed to argumentStackTop
+
+	* syx/syx-enums.h: instance variables of CompiledCode, CompiledMethod and CompiledBlock have been updated
+
+	* syx/syx-object.c: method and block context creation have been updated according to the above refactoring
+	
+	* st/kernel/PositionableStream.st (peek): answer nil if at the end
+	(skipTo:): added
+
+	* syx/syx-lexer.c (_syx_lexer_token_symbol): support for quoted symbols
+
+	* st/kernel/Compiler.st (initializeStream): support for quoted symbols
+
 	* syx/syx-init.c (syx_set_root_path): save the root path anyway also if it doesn't exist
 
 	* src/main.c (_getopt_do): fixed issue #11
@@ -8,7 +22,7 @@
 
 	* plugins/wingui/SConscript: fixed building
 
-	Renamed all 'class' to 'klass' for C++ compilation support.
+	Renamed all 'class' to 'klass' to support C++ compilation.
 	Applied issue #9 patch
 
 2007-08-10  Luca Bruno  <lethalman88@gmail.com>

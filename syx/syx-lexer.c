@@ -270,6 +270,13 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
   /* if it's not an alpha numeric symbol,
      be sure to return a symbol of length 2 as the ANSI defines */
   lastChar = syx_lexer_forward (self);
+  if (lastChar == '\'')
+    {
+      _syx_lexer_token_string (self, token, lastChar);
+      token->type = SYX_TOKEN_SYM_CONST;
+      return;
+    }
+
   if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
     {
       *str++ = lastChar;

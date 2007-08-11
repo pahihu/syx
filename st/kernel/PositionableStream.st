@@ -47,8 +47,16 @@ position: anInteger
 peek
     self ensureReadable.
     self atEnd
-	ifTrue: [ ^collection at: curPos ].
+	ifTrue: [ ^nil ].
     ^collection at: curPos + 1
+!
+
+skipTo: anObject
+    self ensureReadable.
+    self do: [ :ea |
+	ea = anObject
+	    ifTrue: [ ^true ] ].
+    ^false
 !
 
 next

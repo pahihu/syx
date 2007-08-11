@@ -126,6 +126,10 @@ symbolToken
     | s |
     self next isDigit | (lastChar isWhiteSpace)
 	ifTrue: [ self error: 'Invalid symbol' ].
+
+    lastChar = $'
+	ifTrue: [ ^self stringToken asSymbol ].
+
     s := WriteStream with: lastChar asString.
     
     (self isBinarySecond: lastChar)

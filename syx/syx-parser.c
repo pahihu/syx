@@ -147,15 +147,18 @@ syx_parser_parse (SyxParser *self)
   SYX_CODE_LITERALS(self->method) = syx_array_new_ref (self->bytecode->literals_top,
 						       self->bytecode->literals);
   
-  SYX_CODE_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (self->_argument_names_top);
-  SYX_CODE_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (self->_temporary_names_top);
+  if (self->_in_block)
+    SYX_BLOCK_ARGUMENT_STACK_TOP(self->method) = syx_small_integer_new (self->_argument_scopes.stack[self->_argument_scopes.top-1].start);
+  else
+    {
+      SYX_METHOD_ARGUMENT_STACK_SIZE(self->method) = syx_small_integer_new (self->_argument_names_top);
+      SYX_METHOD_TEMPORARY_STACK_SIZE(self->method) = syx_small_integer_new (self->_temporary_names_top);
+    }
+
   SYX_CODE_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);
   SYX_CODE_TEXT(self->method) = syx_string_new (self->lexer->text +
 						syx_find_first_non_whitespace (self->lexer->text));
   SYX_CODE_CLASS(self->method) = self->klass;
-
-  if (self->_in_block)
-    SYX_BLOCK_ARGUMENTS_TOP(self->method) = syx_small_integer_new (self->_argument_scopes.stack[self->_argument_scopes.top-1].start);
 
   return TRUE;
 }

@@ -109,15 +109,15 @@ Object subclass: #Semaphore
        classVariableNames: ''!
 
 Object subclass: #CompiledCode
-       instanceVariableNames: 'bytecodes literals argumentCount temporaryCount stackSize text class'
+       instanceVariableNames: 'bytecodes literals stackSize text class'
        classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: 'selector primitive'
+	     instanceVariableNames: 'argumentStackSize temporaryStackSize selector primitive'
              classVariableNames: ''!
 
 CompiledCode subclass: #CompiledBlock
-	     instanceVariableNames: 'argumentsTop'
+	     instanceVariableNames: 'argumentStackTop'
 	     classVariableNames: ''!
 
 Object subclass: #BlockClosure

@@ -28,14 +28,6 @@ bytecodes
     ^bytecodes
 !
 
-argumentCount
-    ^argumentCount
-!
-
-temporaryCount
-    ^temporaryCount
-!
-
 stackSize
     ^stackSize
 !
@@ -61,8 +53,6 @@ initializeParser: aCompilerParser
     bytecodes := aCompilerParser bytecode contents.
     stackSize := aCompilerParser bytecode stackSize.
     literals := aCompilerParser bytecode literals.
-    argumentCount := aCompilerParser argumentNames size.
-    temporaryCount := aCompilerParser temporaryNames size.
     text := aCompilerParser lexer text
 ! !
 
@@ -76,11 +66,21 @@ fromParser: aCompilerParser
 
 initializeParser: aCompilerParser
     super initializeParser: aCompilerParser.
+    argumentStackSize := aCompilerParser argumentNames size.
+    temporaryStackSize := aCompilerParser temporaryNames size.
     selector := aCompilerParser methodMessage.
     primitive := aCompilerParser methodPrimitive
 ! !
 
 !CompiledMethod methodsFor: 'accessing'!
+
+argumentStackSize
+    ^argumentStackSize
+!
+
+temporaryStackSize
+    ^temporaryStackSize
+!
 
 selector
     ^selector
@@ -90,5 +90,5 @@ selector
 
 initializeParser: aCompilerParser
     super initializeParser: aCompilerParser.
-    argumentsTop := aCompilerParser argumentScopes peek key - 1
+    argumentStackTop := aCompilerParser argumentScopes peek key - 1
 ! !
