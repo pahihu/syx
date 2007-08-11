@@ -46,8 +46,8 @@ main (int argc, char *argv[])
   syx_lexer_free (lexer, FALSE);
 
 #define SELECTOR_EQ(expected) (!strcmp (SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(method)), expected))
-#define NUM_ARGS (SYX_SMALL_INTEGER(SYX_CODE_ARGUMENTS_COUNT (method)))
-#define NUM_TEMPS (SYX_SMALL_INTEGER(SYX_CODE_TEMPORARIES_COUNT (method)))
+#define NUM_ARGS (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method)))
+#define NUM_TEMPS (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARY_STACK_SIZE (method)))
 
   gettimeofday (&start, NULL);
 
