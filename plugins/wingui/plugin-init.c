@@ -131,6 +131,13 @@ LRESULT CALLBACK WndProcedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	  text[length] = '\0';
 	  SyxOop stext = syx_string_new (SYX_IFDEF_ANSI (text));
 	  syx_free (text);
+	  /* Pop out from the stack the true object previously pushed
+	     by WinGui_IterateLoop. We'll enter another context, which will return
+	     another object (push the object into the stack of this context).
+	     The true object is in other words the default object returned by the
+	     loop iteration, but now we let the new context push its object without growing
+	     the stack versus infinite.
+	  */
 	  syx_interp_stack_pop ();
 	  syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (),
 							     syx_globals_at ("WinWorkspace"),
@@ -225,6 +232,9 @@ SYX_FUNC_PRIMITIVE (WinGui_IterateLoop)
     {
       SYX_PRIM_RETURN (syx_false);
     }
+
+  /* SYX_PRIM_RETURN will push an object then return.
+     Here we push true, dispatch the Windows message and return */
   syx_interp_stack_push (syx_true);
   TranslateMessage (&Msg);
   DispatchMessage (&Msg);
