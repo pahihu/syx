@@ -41,7 +41,7 @@ if penv['GTK']:
         for path in os.environ['PATH'].split(';'):
             if 'GTK' in path:
                 env['LIBPATH'].append (path)
-        env.MergeFlags ("-lglib-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0 -lgobject-2.0-0")
+        env.MergeFlags ("-lsyx -lglib-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0 -lgobject-2.0-0")
     else:
         try:
             env.ParseConfig ("pkg-config glib-2.0 gobject-2.0 gthread-2.0 gtk+-2.0 --libs --cflags")

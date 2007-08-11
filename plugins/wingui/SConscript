@@ -42,6 +42,7 @@ if penv['WINGUI']:
          conf.Finish ()
 
       if go:
+      	 env.MergeFlags("-lsyx")
          lib_objects = env.SharedObject (lib_sources)
          lib_shared = env.SharedLibrary (target='syx-wingui', source=lib_objects)
          Default (lib_shared)

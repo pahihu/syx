@@ -217,7 +217,7 @@ syx_plugin_initialize (void)
 
   return TRUE;
 }
-#define EXPORT __declspec(dllexport)
+
 SYX_FUNC_PRIMITIVE (WinGui_IterateLoop)
 {
   MSG Msg;

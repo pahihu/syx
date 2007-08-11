@@ -1,5 +1,7 @@
 2007-08-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/wingui/SConscript: fixed building
+
 	Renamed all 'class' to 'klass' for C++ compilation support.
 	Applied issue #9 patch
 
