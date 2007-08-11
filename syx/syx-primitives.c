@@ -569,6 +569,11 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 3: // nextPutAll:
       SYX_PRIM_ARGS(3);
+
+      if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+	{
+	  SYX_PRIM_FAIL;
+	}
       
       if (!SYX_IS_NIL (es->message_arguments[2]))
 	{
