@@ -1,5 +1,7 @@
 2007-08-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/gtk/st/GtkTextBuffer.st: added but doesn't work yet because of other Gtk dependencies
+
 	* st/kernel/initialDecl (CompiledCode): argumentCount and temporaryCount have been renamed to argumentStackSize and temporaryStackSize and moved to CompiledMethod
 	(CompiledBlock): argumentsTop has been renamed to argumentStackTop
 
