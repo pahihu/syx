@@ -1,5 +1,9 @@
 2007-08-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-init.c (syx_set_root_path): save the root path anyway also if it doesn't exist
+
+	* src/main.c (_getopt_do): fixed issue #11
+
 	* syx/syx-primitives.c (FileStream_fileOp): assert the object is a string for nextPutAll:
 
 	* plugins/wingui/SConscript: fixed building

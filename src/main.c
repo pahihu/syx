@@ -60,6 +60,7 @@ _getopt_do (int argc, char **argv)
   syx_string image_path = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
+  syx_bool init;
 
 #ifdef HAVE_GETOPT
   syx_char c;
@@ -130,15 +131,16 @@ _getopt_do (int argc, char **argv)
 
     }
 
-  if (!syx_init (argc - optind, argv+optind, root_path))
-    syx_error ("Couldn't initialize Syx for root: %s\n", root_path ? root_path : syx_get_root_path ());
+  init = syx_init (argc - optind, argv+optind, root_path);
 #else
-  if (!syx_init (argc - 1, argv+1, root_path))
-    syx_error ("Couldn't initialize Syx for root: %s\n", syx_get_root_path ());
+  init = syx_init (argc - 1, argv+1, root_path);
 #endif
 
   if (root_path)
     syx_free (root_path);
+
+  if (!init)
+    syx_error ("Couldn't initialize Syx for root: %s\n", syx_get_root_path ());
 
   if (image_path)
     {

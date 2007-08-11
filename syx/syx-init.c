@@ -395,15 +395,16 @@ syx_set_root_path (syx_symbol root_path)
   if (!root_path)
      root_path = SYX_ROOT_PATH;
 
-#ifdef HAVE_ACCESS
-  if (access (root_path, R_OK) < 0)
-     return FALSE;
-#endif
-
   if (_syx_root_path)
      syx_free (_syx_root_path);
 
   _syx_root_path = strdup (root_path);
+
+#ifdef HAVE_ACCESS
+  if (access (_syx_root_path, R_OK) < 0)
+     return FALSE;
+#endif
+
   return TRUE;
 }
 
