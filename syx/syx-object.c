@@ -46,7 +46,7 @@
   \note all objects are allocated in the Syx Memory
 */
 
-EXPORT SyxOop syx_nil,
+SyxOop syx_nil,
   syx_true,
   syx_false,
 
@@ -84,7 +84,7 @@ EXPORT SyxOop syx_nil,
 /*!
   Warning, if the new size is lesser than the current, the data at the end of the array will be lost
 */
-EXPORT void
+void
 syx_object_resize (SyxOop object, syx_varsize size)
 {
   if (SYX_OBJECT_HAS_REFS (object))
@@ -106,7 +106,7 @@ syx_object_resize (SyxOop object, syx_varsize size)
 
   \param supermetaclass the superclass of the new metaclass
 */
-EXPORT SyxOop 
+SyxOop 
 syx_metaclass_new (SyxOop supermetaclass)
 {
   SyxOop metaclass = syx_object_new (syx_metaclass_class);
@@ -127,20 +127,20 @@ syx_metaclass_new (SyxOop supermetaclass)
 
   \param superclass the superclass of the new class
 */
-EXPORT SyxOop 
+SyxOop 
 syx_class_new (SyxOop superclass)
 {
   SyxOop metaclass = syx_metaclass_new (syx_object_get_class (superclass));
-  SyxOop class = syx_object_new (metaclass);
-  SYX_CLASS_SUPERCLASS(class) = superclass;
-  SYX_CLASS_INSTANCE_SIZE(class) = SYX_CLASS_INSTANCE_SIZE(superclass);
-  SYX_CLASS_INSTANCE_VARIABLES(class) = syx_array_new (0, NULL);
-  SYX_METACLASS_INSTANCE_CLASS(metaclass) = class;
-  SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
+  SyxOop klass = syx_object_new (metaclass);
+  SYX_CLASS_SUPERCLASS(klass) = superclass;
+  SYX_CLASS_INSTANCE_SIZE(klass) = SYX_CLASS_INSTANCE_SIZE(superclass);
+  SYX_CLASS_INSTANCE_VARIABLES(klass) = syx_array_new (0, NULL);
+  SYX_METACLASS_INSTANCE_CLASS(metaclass) = klass;
+  SYX_CLASS_METHODS(klass) = syx_dictionary_new (50);
 
-  SYX_CLASS_SUBCLASSES(class) = syx_array_new (0, NULL);
-  syx_array_add (SYX_CLASS_SUBCLASSES(superclass), class, TRUE);
-  return class;
+  SYX_CLASS_SUBCLASSES(klass) = syx_array_new (0, NULL);
+  syx_array_add (SYX_CLASS_SUBCLASSES(superclass), klass, TRUE);
+  return klass;
 }
 
 //! Create a new LargeInteger
@@ -150,7 +150,7 @@ syx_class_new (SyxOop superclass)
   \param string a textual representation of the number
   \param base the radix of the representation
 */
-EXPORT SyxOop
+SyxOop
 syx_large_integer_new (syx_symbol string, syx_int32 base)
 {
 #ifdef HAVE_LIBGMP
@@ -164,7 +164,7 @@ syx_large_integer_new (syx_symbol string, syx_int32 base)
 }
 
 //! Create a new LargeInteger with the given mpz
-EXPORT SyxOop
+SyxOop
 syx_large_integer_new_mpz (syx_pointer mpz)
 {
 #ifdef HAVE_LIBGMP
@@ -179,7 +179,7 @@ syx_large_integer_new_mpz (syx_pointer mpz)
 /*!
   \b This function is available only if Syx has been linked with the GMP library
 */
-EXPORT SyxOop
+SyxOop
 syx_large_integer_new_integer (syx_int32 i)
 {
 #ifdef HAVE_LIBGMP
@@ -197,7 +197,7 @@ syx_large_integer_new_integer (syx_int32 i)
 /*!
   \param context a MethodContext or BlockContext
 */
-EXPORT SyxOop 
+SyxOop 
 syx_process_new (SyxOop context)
 {
   SyxOop object = syx_object_new (syx_process_class);
@@ -213,7 +213,7 @@ syx_process_new (SyxOop context)
 /*!
   \return TRUE if element was found and removed, else FALSE
 */
-EXPORT syx_bool
+syx_bool
 syx_array_remove (SyxOop array, SyxOop element)
 {
   syx_varsize i, size;
@@ -241,7 +241,7 @@ syx_array_remove (SyxOop array, SyxOop element)
 /*!
   \param unique TRUE if the element shouldn't be added if already present in the array
 */
-EXPORT void
+void
 syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
 {
   syx_varsize i, size;
@@ -266,7 +266,7 @@ syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
   Lookups into syx_symbols dictionary to check the existance of the symbol, otherwise create a new one and insert it into the dictionary.
   \param symbol a plain constant string
 */
-EXPORT SyxOop 
+SyxOop 
 syx_symbol_new (syx_symbol symbol)
 {
   SyxOop obj;
@@ -287,7 +287,7 @@ syx_symbol_new (syx_symbol symbol)
 
 
 //! Returns the hash of a String
-EXPORT syx_int32
+syx_int32
 syx_string_hash (syx_symbol string)
 {
   syx_int32 ret;
@@ -467,7 +467,7 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 /*!
   Take care the dictionary MUST contain only symbol keys
 */
-EXPORT SyxOop 
+SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
   syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
@@ -481,7 +481,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 /*
   Take care the dictionary MUST contain only key symbols
 */
-EXPORT SyxOop 
+SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
   syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
@@ -492,7 +492,7 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 }
 
 //! Grow the dictionary and rehash all data
-EXPORT void
+void
 syx_dictionary_rehash (SyxOop dict)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
@@ -521,7 +521,7 @@ syx_dictionary_rehash (SyxOop dict)
 
 
 //! Insert key -> value in the dictionary
-EXPORT void
+void
 syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
@@ -546,7 +546,7 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   \param receiver an Object receiving the message
   \param arguments the arguments passed to the message
 */
-EXPORT SyxOop 
+SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
   syx_memory_gc_begin ();
@@ -587,7 +587,7 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 /*!
   \param outer_context a MethodContext or BlockContext for a nested block
 */
-EXPORT SyxOop 
+SyxOop 
 syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
   syx_memory_gc_begin ();
@@ -625,13 +625,13 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   \param class the class of the new instance
   \param vars_size number of instance variables the instance must hold
 */
-EXPORT SyxOop
-syx_object_new_vars (SyxOop class, syx_varsize vars_size)
+SyxOop
+syx_object_new_vars (SyxOop klass, syx_varsize vars_size)
 {
   SyxOop oop = syx_memory_alloc ();
   SyxObject *object = SYX_OBJECT (oop);
   
-  object->class = class;
+  object->klass = klass;
   object->has_refs = FALSE;
   object->is_constant = FALSE;
   object->vars = (SyxOop *) syx_calloc (vars_size, sizeof (SyxOop));
@@ -645,10 +645,10 @@ syx_object_new_vars (SyxOop class, syx_varsize vars_size)
   \param has_refs specify if the created object must be Object indexable or Byte indexable
   \param size number of objects/bytes to hold
 */
-EXPORT SyxOop 
-syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
+SyxOop 
+syx_object_new_size (SyxOop klass, syx_bool has_refs, syx_varsize size)
 {
-  SyxObject *object = SYX_OBJECT (syx_object_new (class));
+  SyxObject *object = SYX_OBJECT (syx_object_new (klass));
 
   object->has_refs = has_refs;
   object->data_size = size;
@@ -664,10 +664,10 @@ syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size)
   \param size number of objects/bytes to hold
   \param data the data of the object (must be an array of SyxOop or syx_int8)
 */
-EXPORT SyxOop 
-syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data)
+SyxOop 
+syx_object_new_data (SyxOop klass, syx_bool has_refs, syx_varsize size, SyxOop *data)
 {
-  SyxObject *object = SYX_OBJECT (syx_object_new (class));
+  SyxObject *object = SYX_OBJECT (syx_object_new (klass));
 
   object->has_refs = has_refs;
   object->data_size = size;
@@ -677,7 +677,7 @@ syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *
 }
 
 //! Make a shallow copy of an object
-EXPORT SyxOop
+SyxOop
 syx_object_copy (SyxOop object)
 {
   if (!SYX_IS_OBJECT (object))
@@ -687,11 +687,11 @@ syx_object_copy (SyxOop object)
   SyxObject *obj1 = SYX_OBJECT (oop);
   SyxObject *obj2 = SYX_OBJECT (object);
 
-  obj1->class = obj2->class;
+  obj1->klass = obj2->klass;
   obj1->has_refs = obj2->has_refs;
   obj1->is_constant = FALSE;
 
-  obj1->vars = (SyxOop *) syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->class)),
+  obj1->vars = (SyxOop *) syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->klass)),
 				      sizeof (SyxOop));
 
   obj1->data_size = obj2->data_size;
@@ -710,18 +710,18 @@ syx_object_copy (SyxOop object)
 /*!
   If the class has finalizationRequest set to true, perform #finalize on the object
 */
-EXPORT void
+void
 syx_object_free (SyxOop object)
 {
-  SyxOop context, class;
+  SyxOop context, klass;
   if (!SYX_IS_OBJECT (object))
     return;
 
-  class = syx_object_get_class (object);
-  if (SYX_IS_NIL (class))
+  klass = syx_object_get_class (object);
+  if (SYX_IS_NIL (klass))
     return;
 
-  if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (class)))
+  if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (klass)))
     {
       context = syx_send_unary_message (syx_nil, object, "finalize");
       syx_process_execute_blocking (syx_process_new (context));
@@ -740,15 +740,15 @@ syx_object_free (SyxOop object)
   \param subclass a class that should be a subclass of the former
   \return TRUE if the first is a superclass of the second
 */
-EXPORT syx_bool
-syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
+syx_bool
+syx_class_is_superclass_of (SyxOop klass, SyxOop subclass)
 {
-  if (SYX_OOP_EQ (class, subclass))
+  if (SYX_OOP_EQ (klass, subclass))
     return FALSE;
 
   SyxOop cur = SYX_CLASS_SUPERCLASS (subclass);
 
-  for (; !SYX_IS_NIL (cur) && SYX_OOP_NE(cur, class); cur=SYX_CLASS_SUPERCLASS(cur));
+  for (; !SYX_IS_NIL (cur) && SYX_OOP_NE(cur, klass); cur=SYX_CLASS_SUPERCLASS(cur));
 
   return !SYX_IS_NIL (cur);
 }
@@ -759,17 +759,17 @@ syx_class_is_superclass_of (SyxOop class, SyxOop subclass)
 
   \return A syx_symbol list or NULL. The list must be freed once unused
 */
-EXPORT syx_symbol *
-syx_class_get_all_instance_variable_names (SyxOop class)
+syx_symbol *
+syx_class_get_all_instance_variable_names (SyxOop klass)
 {
   syx_symbol names[256];
   syx_symbol *ret_names = NULL;
   SyxOop inst_vars;
   syx_varsize i, size, tot_size;
 
-  for (tot_size=0; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS (class))
+  for (tot_size=0; !SYX_IS_NIL(klass); klass=SYX_CLASS_SUPERCLASS (klass))
     {
-      inst_vars = SYX_CLASS_INSTANCE_VARIABLES (class);
+      inst_vars = SYX_CLASS_INSTANCE_VARIABLES (klass);
       size = SYX_OBJECT_DATA_SIZE (inst_vars);
 
       for (i=size; i > 0; i--)
@@ -790,13 +790,13 @@ syx_class_get_all_instance_variable_names (SyxOop class)
 /*!
   \return syx_nil if no method has been found
 */
-EXPORT SyxOop 
-syx_class_lookup_method (SyxOop class, syx_symbol selector)
+SyxOop 
+syx_class_lookup_method (SyxOop klass, syx_symbol selector)
 {
   SyxOop cur;
   SyxOop method;
 
-  for (cur=class; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
+  for (cur=klass; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
 	continue;
@@ -813,13 +813,13 @@ syx_class_lookup_method (SyxOop class, syx_symbol selector)
 /*!
   \return syx_nil if no method has been found
 */
-EXPORT SyxOop 
-syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
+SyxOop 
+syx_class_lookup_method_binding (SyxOop klass, SyxOop binding)
 {
   SyxOop cur;
   SyxOop method;
 
-  for (cur=class; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
+  for (cur=klass; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
 	continue;
@@ -838,7 +838,7 @@ syx_class_lookup_method_binding (SyxOop class, SyxOop binding)
 /* Small integer overflow checks */
 
 //! TRUE if an overflow occurs when doing b times a
-EXPORT syx_bool
+syx_bool
 SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
 {
 #ifdef HAVE_INT64_T
@@ -878,7 +878,7 @@ SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
 }
 
 //! TRUE if an overflow occurs when shifting a by b
-EXPORT syx_bool
+syx_bool
 SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b)
 {
   // Thanks to Sam Philips 

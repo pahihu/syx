@@ -21,11 +21,12 @@ O=$(OUTDIR)
 
 CFLAGS = $(CFLAGS) /nologo /c /TP
 # standard windows defines
-CFLAGS = $(CFLAGS) /D "WIN32" /D "_WIN32_WINNT=0x0500"
+CFLAGS = $(CFLAGS) /D "WIN32" /D "WINDOWS" /D "_WIN32_WINNT=0x0500"
 #CFLAGS = $(CFLAGS) /D "WIN32_LEAN_AND_MEAN"
 #CFLAGS = $(CFLAGS) /D "UNICODE" /D "_UNICODE"
 #CFLAGS = $(CFLAGS) /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_SECURE_NO_DEPRECATE"
 CFLAGS = $(CFLAGS) /D "_CRT_SECURE_NO_WARNINGS"
+CFLAGS = $(CFLAGS) /D "_DLL"
 
 #CFLAGS = $(CFLAGS) /wd4244 /wd4018
 CFLAGS = $(CFLAGS) /wd4996
@@ -39,16 +40,15 @@ CFLAGS = $(CFLAGS) /GR-
 CFLAGS = $(CFLAGS) /EHsc
 CFLAGS = $(CFLAGS) /Zi
 
-CFLAGS = $(CFLAGS) /Isyx\msvc /I.
+CFLAGS = $(CFLAGS) /Imsvc /I.
 
-LIBS = $(LIBS) kernel32.lib advapi32.lib
+LIBS = $(LIBS) kernel32.lib advapi32.lib wsock32.lib
 
 LDFLAGS = $(LDFLAGS) /nologo /DEBUG
 
 OBJS=$(O)\syx-bytecode.obj $(O)\syx-error.obj $(O)\syx-init.obj $(O)\syx-interp.obj $(O)\syx-lexer.obj \
   $(O)\syx-memory.obj $(O)\syx-object.obj $(O)\syx-parser.obj $(O)\syx-plugins.obj $(O)\syx-primitives.obj \
-#  $(O)\syx-scheduler.obj \
-  $(O)\syx-utils.obj
+  $(O)\syx-scheduler.obj $(O)\syx-utils.obj
 
 SYX_EXE=$(O)\syx.exe
 SYX_PDB=$(O)\syx.pdb

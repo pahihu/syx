@@ -38,12 +38,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-EXPORT SyxOop *_syx_freed_memory;
-EXPORT syx_int32 _syx_freed_memory_top;
+extern EXPORT SyxOop *_syx_freed_memory;
+extern EXPORT syx_int32 _syx_freed_memory_top;
 
-EXPORT SyxOop _syx_memory_gc_trans[0x100];
-EXPORT syx_int32 _syx_memory_gc_trans_top;
-EXPORT syx_int32 _syx_memory_gc_trans_running;
+extern EXPORT SyxOop _syx_memory_gc_trans[0x100];
+extern EXPORT syx_int32 _syx_memory_gc_trans_top;
+extern EXPORT syx_int32 _syx_memory_gc_trans_running;
 
 EXPORT void syx_memory_init (syx_int32 size);
 EXPORT void syx_memory_clear (void);

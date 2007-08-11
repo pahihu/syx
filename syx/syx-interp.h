@@ -54,7 +54,7 @@ struct SyxExecState
   syx_varsize message_arguments_count;
 };
 
-EXPORT SyxExecState *_syx_exec_state;
+extern EXPORT SyxExecState *_syx_exec_state;
 
 EXPORT SyxExecState *syx_exec_state_new (void);
 EXPORT void syx_exec_state_fetch (void);
@@ -107,7 +107,7 @@ syx_exec_state_save (void)
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
-  EXPORT syx_bool						\
+  syx_bool						\
   name (SyxExecState *es, SyxOop method)
 
 typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;
@@ -117,7 +117,7 @@ struct SyxPrimitiveEntry {
   SyxPrimitiveFunc func;
 };
 
-EXPORT SyxPrimitiveEntry _syx_primitive_entries[SYX_PRIMITIVES_MAX];
+extern EXPORT SyxPrimitiveEntry _syx_primitive_entries[SYX_PRIMITIVES_MAX];
 
 //! Returns the entry of a primitive at a given index
 INLINE SyxPrimitiveEntry *
@@ -136,7 +136,7 @@ EXPORT syx_int32 syx_primitive_get_index (syx_symbol name);
 
 typedef syx_bool (* SyxInterpreterFunc) (syx_uint16 argument);
 #define SYX_FUNC_INTERPRETER(name)		\
-  EXPORT syx_bool				\
+  syx_bool				\
   name (syx_uint16 argument)
 
 
@@ -262,24 +262,24 @@ EXPORT void syx_process_execute_blocking (SyxOop process);
 
 /* Interpreter functions */
 
-SYX_FUNC_INTERPRETER (syx_interp_push_instance);
-SYX_FUNC_INTERPRETER (syx_interp_push_argument);
-SYX_FUNC_INTERPRETER (syx_interp_push_temporary);
-SYX_FUNC_INTERPRETER (syx_interp_push_literal);
-SYX_FUNC_INTERPRETER (syx_interp_push_constant);
-SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable);
-SYX_FUNC_INTERPRETER (syx_interp_push_array);
-SYX_FUNC_INTERPRETER (syx_interp_push_block_closure);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_instance);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_argument);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_temporary);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_literal);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_constant);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_array);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_block_closure);
 
-SYX_FUNC_INTERPRETER (syx_interp_assign_instance);
-SYX_FUNC_INTERPRETER (syx_interp_assign_temporary);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_assign_instance);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_assign_temporary);
 
-SYX_FUNC_INTERPRETER (syx_interp_mark_arguments);
-SYX_FUNC_INTERPRETER (syx_interp_send_message);
-SYX_FUNC_INTERPRETER (syx_interp_send_super);
-SYX_FUNC_INTERPRETER (syx_interp_send_unary);
-SYX_FUNC_INTERPRETER (syx_interp_send_binary);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_mark_arguments);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_message);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_super);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_unary);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_binary);
 
-SYX_FUNC_INTERPRETER (syx_interp_do_special);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_do_special);
 
 #endif /* SYX_INTERP_H */

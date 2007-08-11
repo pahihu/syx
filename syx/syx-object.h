@@ -61,9 +61,9 @@
 			      ((oop) < (SyxOop)syx_memory ||		\
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
-#define SYX_OBJECT_IS_STRING(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_string_class)
-#define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_float_class)
-#define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->class == syx_large_integer_class)
+#define SYX_OBJECT_IS_STRING(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_string_class)
+#define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_float_class)
+#define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_large_integer_class)
 
 /* Oop */
 
@@ -72,7 +72,7 @@ typedef struct SyxObject SyxObject;
 struct SyxObject
 {
   //! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop
-  SyxOop class;
+  SyxOop klass;
   
   //! Specify if this object contains references to other objects in its data
   syx_bool has_refs : 1;
@@ -102,7 +102,7 @@ extern syx_int32 _syx_memory_size;
 
 /* References to commonly used oops */
 
-EXPORT SyxOop syx_nil,
+extern EXPORT SyxOop syx_nil,
   syx_true,
   syx_false,
 
@@ -136,10 +136,10 @@ EXPORT SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
-EXPORT SyxOop syx_object_new_vars (SyxOop class, syx_varsize vars_size);
+EXPORT SyxOop syx_object_new_vars (SyxOop klass, syx_varsize vars_size);
 #define syx_object_new(klass) (syx_object_new_vars ((klass), SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE ((klass)))))
-EXPORT SyxOop syx_object_new_size (SyxOop class, syx_bool has_refs, syx_varsize size);
-EXPORT extern SyxOop syx_object_new_data (SyxOop class, syx_bool has_refs, syx_varsize size, SyxOop *data);
+EXPORT SyxOop syx_object_new_size (SyxOop klass, syx_bool has_refs, syx_varsize size);
+EXPORT SyxOop syx_object_new_data (SyxOop klass, syx_bool has_refs, syx_varsize size, SyxOop *data);
 EXPORT SyxOop syx_object_copy (SyxOop object);
 EXPORT void syx_object_free (SyxOop oop);
 EXPORT void syx_object_resize (SyxOop oop, syx_varsize size);
@@ -171,7 +171,7 @@ syx_object_get_class (SyxOop object)
   /* ordered by usage */ 
 
   if (SYX_IS_OBJECT(object))
-    return SYX_OBJECT(object)->class;
+    return SYX_OBJECT(object)->klass;
 
   if (SYX_IS_SMALL_INTEGER(object))
     return syx_small_integer_class;
@@ -195,18 +195,18 @@ syx_object_get_class (SyxOop object)
   If the object is a constant, a small integer or a character, no operation is done
 */
 INLINE void
-syx_object_set_class (SyxOop object, SyxOop class)
+syx_object_set_class (SyxOop object, SyxOop klass)
 {
   if (!SYX_IS_OBJECT(object))
     return;
 
-  SYX_OBJECT(object)->class = class;
+  SYX_OBJECT(object)->klass = klass;
 }
 
-EXPORT syx_symbol *syx_class_get_all_instance_variable_names (SyxOop class);
-EXPORT syx_bool syx_class_is_superclass_of (SyxOop class, SyxOop subclass);
-EXPORT SyxOop syx_class_lookup_method (SyxOop class, syx_symbol selector);
-EXPORT SyxOop syx_class_lookup_method_binding (SyxOop class, SyxOop binding);
+EXPORT syx_symbol *syx_class_get_all_instance_variable_names (SyxOop klass);
+EXPORT syx_bool syx_class_is_superclass_of (SyxOop klass, SyxOop subclass);
+EXPORT SyxOop syx_class_lookup_method (SyxOop klass, syx_symbol selector);
+EXPORT SyxOop syx_class_lookup_method_binding (SyxOop klass, SyxOop binding);
 
 EXPORT syx_int32 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index);
 EXPORT void syx_dictionary_rehash (SyxOop dict);
@@ -309,8 +309,8 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 INLINE syx_varsize
 syx_object_vars_size (SyxOop object)
 {
-  SyxOop class = syx_object_get_class (object);
-  return SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (class));
+  SyxOop klass = syx_object_get_class (object);
+  return SYX_SMALL_INTEGER (SYX_CLASS_INSTANCE_SIZE (klass));
 }
 
 

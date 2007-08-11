@@ -43,19 +43,19 @@
 #define SYX_DEBUG_GC
 #endif
 
-EXPORT syx_int32 _syx_memory_size;
-EXPORT SyxObject *syx_memory;
-EXPORT SyxOop *_syx_freed_memory;
-EXPORT syx_int32 _syx_freed_memory_top;
+syx_int32 _syx_memory_size;
+SyxObject *syx_memory;
+SyxOop *_syx_freed_memory;
+syx_int32 _syx_freed_memory_top;
 
 static syx_bool _syx_memory_initialized = FALSE;
 
 #define SYX_MEMORY_TOP (&syx_memory[_syx_memory_size - 1])
 
 // Holds temporary objects that must not be freed during a transaction
-EXPORT SyxOop _syx_memory_gc_trans[0x100];
-EXPORT syx_int32 _syx_memory_gc_trans_top = 0;
-EXPORT syx_int32 _syx_memory_gc_trans_running = 0;
+SyxOop _syx_memory_gc_trans[0x100];
+syx_int32 _syx_memory_gc_trans_top = 0;
+syx_int32 _syx_memory_gc_trans_running = 0;
 
 static void _syx_memory_gc_sweep ();
 
@@ -75,7 +75,7 @@ static void _syx_memory_gc_sweep ();
 */
 
 //! Initialize or realloc the memory according to the given size
-EXPORT void
+void
 syx_memory_init (syx_int32 mem_size)
 {
   SyxObject *object;
@@ -108,7 +108,7 @@ syx_memory_init (syx_int32 mem_size)
 }
 
 //! Clears all the allocated memory
-EXPORT void
+void
 syx_memory_clear (void)
 {
   if (!_syx_memory_initialized)
@@ -120,10 +120,10 @@ syx_memory_clear (void)
   // finalize objects
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
-      if (SYX_IS_NIL (object->class))
+      if (SYX_IS_NIL (object->klass))
 	continue;
 
-      if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (object->class)))
+      if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (object->klass)))
 	{
 	  context = syx_send_unary_message (syx_nil,
 					    SYX_POINTER_CAST_OOP (object), "finalize");
@@ -146,7 +146,7 @@ syx_memory_clear (void)
 }
 
 //! Returns a new SyxOop
-EXPORT SyxOop
+SyxOop
 syx_memory_alloc (void)
 {
   SyxOop oop;
@@ -186,7 +186,7 @@ _syx_memory_gc_mark (SyxOop object)
 
   SYX_OBJECT_IS_MARKED(object) = TRUE;
 
-  _syx_memory_gc_mark (SYX_OBJECT(object)->class);
+  _syx_memory_gc_mark (SYX_OBJECT(object)->klass);
 
   for (i=0; i < syx_object_vars_size (object); i++)
     _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
@@ -200,7 +200,7 @@ _syx_memory_gc_mark (SyxOop object)
 
 
 //! Calls the Syx garbage collector
-EXPORT void
+void
 syx_memory_gc (void)
 {
 #ifdef SYX_DEBUG_GC
@@ -269,7 +269,7 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
   \param path the file path to put all inside
   \return FALSE if an error occurred
 */
-EXPORT syx_bool
+syx_bool
 syx_memory_save_image (syx_symbol path)
 {
   SyxObject *object;
@@ -301,11 +301,11 @@ syx_memory_save_image (syx_symbol path)
 
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
-      if (SYX_IS_NIL (object->class))
+      if (SYX_IS_NIL (object->klass))
 	continue;
 
       _syx_memory_write ((SyxOop *)&object, FALSE, 1, image);
-      _syx_memory_write (&object->class, FALSE, 1, image);
+      _syx_memory_write (&object->klass, FALSE, 1, image);
       fputc (object->has_refs, image);
       fputc (object->is_constant, image);
 
@@ -408,7 +408,7 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
   \param path the file containing the data dumped by syx_memory_save_image
   \return FALSE if an error occurred
 */
-EXPORT syx_bool
+syx_bool
 syx_memory_load_image (syx_symbol path)
 {
   SyxObject *object;
@@ -448,7 +448,7 @@ syx_memory_load_image (syx_symbol path)
       if (!_syx_memory_read ((SyxOop *)&object, FALSE, 1, image))
 	break;
 
-      _syx_memory_read (&object->class, FALSE, 1, image);
+      _syx_memory_read (&object->klass, FALSE, 1, image);
       object->has_refs = fgetc (image);
       object->is_constant = fgetc (image);
 
@@ -510,7 +510,7 @@ _syx_memory_gc_sweep ()
   // skip constants
   for (object=syx_memory+3; object <= SYX_MEMORY_TOP; object++)
     {
-      if (SYX_IS_NIL (object->class))
+      if (SYX_IS_NIL (object->klass))
 	continue;
 
       if (object->is_marked)
@@ -522,7 +522,7 @@ _syx_memory_gc_sweep ()
 
 
 //! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
-EXPORT void
+void
 syx_memory_gc_end (void)
 {
   syx_int32 i;

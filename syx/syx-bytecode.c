@@ -32,7 +32,7 @@
 /*!
   \return A SyxBytecode instance
 */
-EXPORT SyxBytecode *
+SyxBytecode *
 syx_bytecode_new (void)
 {
   SyxBytecode *bytecode;
@@ -69,7 +69,7 @@ syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "="
   \param high a SyxBytecodeCommand value
   \param low an arbitrary number identifying an argument
 */
-EXPORT void
+void
 syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low)
 {
   if (low > SYX_BYTECODE_ARGUMENT_MAX)
@@ -92,7 +92,7 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
   \param argument_count the number of arguments the message requires
   \param selector a message pattern
 */
-EXPORT void
+void
 syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector)
 {
   SyxOop binding;
@@ -147,7 +147,7 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
   \param literal an object
   \return The position of literal into the literals array
 */
-EXPORT syx_uint32
+syx_uint32
 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
 {
   syx_uint16 i;

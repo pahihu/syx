@@ -176,7 +176,7 @@ SYX_FUNC_PRIMITIVE (Object_copy)
 SYX_FUNC_PRIMITIVE (Object_perform)
 {
   SYX_PRIM_ARGS(1);
-  SyxOop class;
+  SyxOop klass;
   SyxOop message_method;
   SyxOop context;
   SyxOop selector = es->message_arguments[0];
@@ -185,8 +185,8 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   syx_int32 primitive;
   syx_bool ret;
 
-  class = syx_object_get_class (es->message_receiver); 
-  message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
+  klass = syx_object_get_class (es->message_receiver); 
+  message_method = syx_class_lookup_method (klass, SYX_OBJECT_SYMBOL (selector));
 
   if (SYX_IS_NIL (message_method))
     {
@@ -233,7 +233,7 @@ SYX_FUNC_PRIMITIVE (Object_perform)
 SYX_FUNC_PRIMITIVE (Object_performWithArguments)
 {
   SYX_PRIM_ARGS(2);
-  SyxOop class;
+  SyxOop klass;
   SyxOop message_method;
   SyxOop context;
   SyxOop selector = es->message_arguments[0];
@@ -244,8 +244,8 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   syx_int32 primitive;
   syx_bool ret;
 
-  class = syx_object_get_class (es->message_receiver); 
-  message_method = syx_class_lookup_method (class, SYX_OBJECT_SYMBOL (selector));
+  klass = syx_object_get_class (es->message_receiver); 
+  message_method = syx_class_lookup_method (klass, SYX_OBJECT_SYMBOL (selector));
 
   if (SYX_IS_NIL (message_method))
     {
@@ -1511,7 +1511,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
-EXPORT SyxPrimitiveEntry _syx_primitive_entries[] = {
+SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
   /* Common for objects */
@@ -1637,7 +1637,7 @@ EXPORT SyxPrimitiveEntry _syx_primitive_entries[] = {
   { NULL }
 };
 
-EXPORT syx_int32
+syx_int32
 syx_primitive_get_index (syx_symbol name)
 {
   syx_int32 i;

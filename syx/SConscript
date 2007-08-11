@@ -31,7 +31,7 @@ Import ('env', 'distdir')
 libenv = env.Clone ()
 
 if libenv['PLATFORM'] == 'win32':
-    libenv.MergeFlags ('-DBUILD_DLL')
+    libenv.MergeFlags ('-D_DLL')
 
 # Build the shared library
 

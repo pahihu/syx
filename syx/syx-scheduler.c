@@ -22,6 +22,14 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#ifdef WINDOWS
+  #ifndef WIN32_LEAN_AND_MEAN
+  #define WIN32_LEAN_AND_MEAN
+  #endif
+  #include <windows.h>
+  #include <winsock2.h>
+#endif
+
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-enums.h"
@@ -32,10 +40,6 @@
 #include "syx-memory.h"
 #include "syx-init.h"
 
-#ifdef WINDOWS
-  #include <windows.h>
-  #include <winsock2.h>
-#endif
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -44,10 +48,10 @@
 #define SYX_DEBUG_PROCESS_SWITCH
 #endif
 
-EXPORT SyxOop syx_processor;
-EXPORT SyxOop *_syx_processor_first_process;
-EXPORT SyxOop *_syx_processor_active_process;
-EXPORT SyxOop *_syx_processor_byteslice;
+SyxOop syx_processor;
+SyxOop *_syx_processor_first_process;
+SyxOop *_syx_processor_active_process;
+SyxOop *_syx_processor_byteslice;
 
 static SyxSchedulerPoll *_syx_scheduler_poll_read = NULL;
 static SyxSchedulerPoll *_syx_scheduler_poll_write = NULL;
@@ -148,7 +152,7 @@ _syx_scheduler_poll_wait (void)
   _syx_scheduler_poll_nfds = nfds;
 }
 
-EXPORT void
+void
 _syx_scheduler_save (FILE *image)
 {
   syx_int32 index, data;
@@ -182,7 +186,7 @@ _syx_scheduler_save (FILE *image)
   fputc (0, image);
 }
 
-EXPORT void
+void
 _syx_scheduler_load (FILE *image)
 {
   syx_int32 index, data;
@@ -193,11 +197,11 @@ _syx_scheduler_load (FILE *image)
     {
       if (p)
 	{
-	  p->next = syx_malloc (sizeof (SyxSchedulerPoll));
+	  p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 	  p = p->next;
 	}
       else
-	p = syx_malloc (sizeof (SyxSchedulerPoll));
+	p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
       p->fd = SYX_COMPAT_SWAP_32 (data);
@@ -215,11 +219,11 @@ _syx_scheduler_load (FILE *image)
     {
       if (p)
 	{
-	  p->next = syx_malloc (sizeof (SyxSchedulerPoll));
+	  p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 	  p = p->next;
 	}
       else
-	p = syx_malloc (sizeof (SyxSchedulerPoll));
+	p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
       p->fd = SYX_COMPAT_SWAP_32 (data);
@@ -237,7 +241,7 @@ _syx_scheduler_load (FILE *image)
 /*!
   If absent, create a ProcessorScheduler instance named Processor and insert it into the Smalltalk dictionary.
 */
-EXPORT void
+void
 syx_scheduler_init (void)
 {
   syx_processor = syx_globals_at_if_absent ("Processor", syx_nil);
@@ -257,7 +261,7 @@ syx_scheduler_init (void)
 }
 
 //! Run the scheduler in blocking mode. Exits once no Process is scheduled
-EXPORT void
+void
 syx_scheduler_run (void)
 {
   static syx_bool running = FALSE;
@@ -287,10 +291,10 @@ syx_scheduler_run (void)
   \param fd the file descriptor
   \param semaphore called when fd is ready for reading
 */
-EXPORT void
+void
 syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
 {
-  SyxSchedulerPoll *p = syx_malloc (sizeof (SyxSchedulerPoll));
+  SyxSchedulerPoll *p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
   p->fd = fd;
   p->semaphore = semaphore;
   p->next = _syx_scheduler_poll_read;
@@ -307,10 +311,10 @@ syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
   \param fd the file descriptor
   \param semaphore called when fd is ready for writing
 */
-EXPORT void
+void
 syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
 {
-  SyxSchedulerPoll *p = syx_malloc (sizeof (SyxSchedulerPoll));
+  SyxSchedulerPoll *p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
   p->fd = fd;
   p->semaphore = semaphore;
   p->next = _syx_scheduler_poll_write;
@@ -323,7 +327,7 @@ syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
 }
 
 //! Stop the scheduler
-EXPORT void
+void
 syx_scheduler_quit (void)
 {
   SyxSchedulerPoll *p, *pp;
@@ -346,7 +350,7 @@ syx_scheduler_quit (void)
 }
 
 //! Add a Process to be scheduled
-EXPORT void
+void
 syx_scheduler_add_process (SyxOop process)
 {
   if (!SYX_IS_OBJECT (process))
@@ -366,7 +370,7 @@ syx_scheduler_add_process (SyxOop process)
 }
 
 //! Remove a Process from being scheduled
-EXPORT void
+void
 syx_scheduler_remove_process (SyxOop process)
 {
   SyxOop inter_process, prev_process;

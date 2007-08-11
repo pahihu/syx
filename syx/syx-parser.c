@@ -65,8 +65,8 @@ static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool sup
   \param method a CompiledMethod or CompiledBlock
   \param instance_names list of instance variable names
 */
-EXPORT SyxParser *
-syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
+SyxParser *
+syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
 {
   SyxParser *self;
   if (!lexer || !SYX_IS_OBJECT (method))
@@ -76,13 +76,13 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
 
   self->lexer = lexer;
   self->method = method;
-  self->class = class;
+  self->klass = klass;
   self->_in_block = FALSE;
 
   self->bytecode = syx_bytecode_new ();
   self->_temporary_names_top = 0;
   self->_argument_names_top = 0;
-  self->instance_names = syx_class_get_all_instance_variable_names (class);
+  self->instance_names = syx_class_get_all_instance_variable_names (klass);
 
   self->_duplicate_indexes_top = 0;
   self->_argument_scopes.top = 0;
@@ -95,7 +95,7 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop class)
 /*!
   \param free_segment TRUE frees the instance_names (not its contents) and the lexer
 */
-EXPORT void
+void
 syx_parser_free (SyxParser *self, syx_bool free_segment)
 {
   syx_size i;
@@ -120,7 +120,7 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
 /*!
   \return TRUE if parsing was successful, otherwise FALSE
 */
-EXPORT syx_bool
+syx_bool
 syx_parser_parse (SyxParser *self)
 {
   SyxToken token;
@@ -152,7 +152,7 @@ syx_parser_parse (SyxParser *self)
   SYX_CODE_STACK_SIZE(self->method) = syx_small_integer_new (self->bytecode->stack_size + 1);
   SYX_CODE_TEXT(self->method) = syx_string_new (self->lexer->text +
 						syx_find_first_non_whitespace (self->lexer->text));
-  SYX_CODE_CLASS(self->method) = self->class;
+  SYX_CODE_CLASS(self->method) = self->klass;
 
   if (self->_in_block)
     SYX_BLOCK_ARGUMENTS_TOP(self->method) = syx_small_integer_new (self->_argument_scopes.stack[self->_argument_scopes.top-1].start);
@@ -225,15 +225,15 @@ _syx_parser_find_instance_name (SyxParser *self, syx_symbol name)
 static SyxOop
 _syx_parser_find_class_variable_name (SyxParser *self, syx_symbol name)
 {
-  SyxOop class = self->class;
+  SyxOop klass = self->klass;
   SyxOop binding;
 
-  if (syx_object_get_class (class) == syx_metaclass_class)
-    class = SYX_METACLASS_INSTANCE_CLASS (class);
+  if (syx_object_get_class (klass) == syx_metaclass_class)
+    klass = SYX_METACLASS_INSTANCE_CLASS (klass);
 
-  for (; !SYX_IS_NIL(class); class=SYX_CLASS_SUPERCLASS(class))
+  for (; !SYX_IS_NIL(klass); klass=SYX_CLASS_SUPERCLASS(klass))
     {
-      binding = syx_dictionary_binding_at_symbol_if_absent (SYX_CLASS_CLASS_VARIABLES (class), name, syx_nil);
+      binding = syx_dictionary_binding_at_symbol_if_absent (SYX_CLASS_CLASS_VARIABLES (klass), name, syx_nil);
       if (!SYX_IS_NIL (binding))
 	return binding;
     }

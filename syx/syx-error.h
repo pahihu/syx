@@ -41,12 +41,12 @@ typedef struct SyxErrorEntry SyxErrorEntry;
 struct SyxErrorEntry
 {
   syx_symbol name;
-  SyxOop class;
+  SyxOop klass;
 };
 
 EXPORT extern void syx_error_init (void);
 EXPORT extern void syx_error_clear (void);
-EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop class);
+EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop klass);
 EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 //! Signal an error in the Smalltalk environment
@@ -55,7 +55,7 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 */
 #define syx_signal(type, ...)						\
   syx_interp_enter_context (syx_send_message (syx_interp_get_current_context (), \
-					      syx_error_lookup (type)->class, \
+					      syx_error_lookup (type)->klass, \
 					      "signal",			\
 					      __VA_ARGS__))
 

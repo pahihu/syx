@@ -1,3 +1,8 @@
+2007-08-11  Luca Bruno  <lethalman88@gmail.com>
+
+	Renamed all 'class' to 'klass' for C++ compilation support.
+	Applied issue #9 patch
+
 2007-08-10  Luca Bruno  <lethalman88@gmail.com>
 
 	Refactored all inline to be inserted into headers (issue #9).

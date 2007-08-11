@@ -35,7 +35,7 @@ static SyxErrorEntry **_syx_error_entries = NULL;
 static SyxErrorType _syx_error_entries_top = 0;
 
 #ifndef HAVE_ERRNO_H
-EXPORT int errno=0;
+int errno=0;
 #endif
 
 //! Initialize the error reporting system
@@ -43,7 +43,7 @@ EXPORT int errno=0;
   This function must be called after the image has been loaded or a new image is built.
   Usually, user programs don't need to call this directly.
 */
-EXPORT void
+void
 syx_error_init (void)
 {
   _syx_error_entries_top = 0;
@@ -58,7 +58,7 @@ syx_error_init (void)
   so that any other call won't report errors.
   Usually, user programs don't need to call this directly.
 */
-EXPORT void
+void
 syx_error_clear (void)
 {
   syx_int32 i;
@@ -74,8 +74,8 @@ syx_error_clear (void)
 
   \return a number identifying the king of error for future lookups
 */
-EXPORT SyxErrorType
-syx_error_register (syx_symbol name, SyxOop class)
+SyxErrorType
+syx_error_register (syx_symbol name, SyxOop klass)
 {
   SyxErrorEntry *entry = (SyxErrorEntry *)syx_malloc (sizeof (SyxErrorEntry));
   if (!_syx_error_entries)
@@ -85,7 +85,7 @@ syx_error_register (syx_symbol name, SyxOop class)
 							(++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
 
   entry->name = name;
-  entry->class = class;
+  entry->klass = klass;
 
   _syx_error_entries[_syx_error_entries_top - 1] = entry;
   return _syx_error_entries_top - 1;
@@ -96,7 +96,7 @@ syx_error_register (syx_symbol name, SyxOop class)
   \param type the type return from syx_error_register
   \return the entry of the error
 */
-EXPORT SyxErrorEntry *
+SyxErrorEntry *
 syx_error_lookup (SyxErrorType type)
 {
   if (type >= _syx_error_entries_top)

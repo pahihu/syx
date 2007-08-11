@@ -95,11 +95,11 @@ EXPORT extern int errno;
 
 #ifdef WINDOWS
 #  define SYX_PATH_SEPARATOR '\\'
-#  ifdef BUILD_DLL
+#  ifdef _DLL
 #    define EXPORT __declspec(dllexport)
 #  else
 #    define EXPORT __declspec(dllimport)
-#  endif /* BUILD_DLL */
+#  endif /* _DLL */
 #else /* WINDOWS */
 #  define SYX_PATH_SEPARATOR '/'
 #  define EXPORT

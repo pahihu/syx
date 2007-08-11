@@ -265,7 +265,7 @@ static syx_bool
 _syx_cold_parse_methods (SyxLexer *lexer)
 {
   SyxToken token;
-  SyxOop class;
+  SyxOop klass;
   SyxParser *parser;
   SyxLexer *method_lexer;
   //syx_symbol category;
@@ -275,13 +275,13 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_NAME_CONST)
     return FALSE;
 
-  class = syx_globals_at (token.value.string);
+  klass = syx_globals_at (token.value.string);
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
   if (token.type == SYX_TOKEN_NAME_CONST && !strcmp (token.value.string, "class"))
     {
-      class = syx_object_get_class (class);
+      klass = syx_object_get_class (klass);
       syx_token_free (token);
       token = syx_lexer_next_token (lexer);
     }
@@ -302,9 +302,9 @@ _syx_cold_parse_methods (SyxLexer *lexer)
     return FALSE;
   syx_token_free (token);
 
-  if (SYX_IS_NIL (SYX_CLASS_METHODS (class)))
+  if (SYX_IS_NIL (SYX_CLASS_METHODS (klass)))
     {
-      SYX_CLASS_METHODS(class) = syx_dictionary_new (50);
+      SYX_CLASS_METHODS(klass) = syx_dictionary_new (50);
     }
 
   while (TRUE)
@@ -314,10 +314,10 @@ _syx_cold_parse_methods (SyxLexer *lexer)
       if (!method_lexer)
 	break;
 
-      parser = syx_parser_new (method_lexer, syx_method_new (), class);
+      parser = syx_parser_new (method_lexer, syx_method_new (), klass);
       syx_parser_parse (parser);
 
-      syx_dictionary_at_symbol_put (SYX_CLASS_METHODS(class),
+      syx_dictionary_at_symbol_put (SYX_CLASS_METHODS(klass),
 				    SYX_METHOD_SELECTOR(parser->method),
 				    parser->method);
 
@@ -331,7 +331,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
 /*!
   \return TRUE if no error has occurred
 */
-EXPORT syx_bool
+syx_bool
 syx_cold_parse (SyxLexer *lexer)
 {
   SyxToken token;
@@ -357,7 +357,7 @@ syx_cold_parse (SyxLexer *lexer)
 /*!
   \return TRUE if no error has occurred
 */
-EXPORT syx_bool
+syx_bool
 syx_cold_file_in (syx_symbol filename)
 {
   SyxLexer *lexer;
@@ -409,7 +409,7 @@ syx_cold_file_in (syx_symbol filename)
 /*!
   The function is thread-safe
 */
-EXPORT void
+void
 syx_semaphore_signal (SyxOop semaphore)
 {
   // wait
@@ -445,7 +445,7 @@ syx_semaphore_signal (SyxOop semaphore)
 /*!
   The function is thread-safe
 */
-EXPORT void
+void
 syx_semaphore_wait (SyxOop semaphore)
 {
   // wait
@@ -468,35 +468,35 @@ syx_semaphore_wait (SyxOop semaphore)
 /* Utilities to interact with Smalltalk */
 
 //! Create a MethodContext for a unary message ready to enter a Process
-EXPORT SyxOop
+SyxOop
 syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
-  SyxOop class;
+  SyxOop klass;
   SyxOop method;
 
-  class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  klass = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
 
   context = syx_method_context_new (parent_context, method, receiver, syx_nil);
   return context;
 }
 
 //! Create a MethodContext for a binary message ready to enter a Process
-EXPORT SyxOop
+SyxOop
 syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;
-  SyxOop class;
+  SyxOop klass;
   SyxOop method;
   SyxOop arguments;
 
-  class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  klass = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
 
   syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
@@ -511,23 +511,23 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
 /*!
   \param num_args number of variadic SyxOop arguments
 */
-EXPORT SyxOop
+SyxOop
 syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
   va_list ap;
   syx_varsize i;
   SyxOop context;
-  SyxOop class;
+  SyxOop klass;
   SyxOop method;
   SyxOop arguments;
 
   if (num_args == 0)
     return syx_send_unary_message (parent_context, receiver, selector);
 
-  class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  klass = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
 
   syx_memory_gc_begin ();
 
@@ -548,17 +548,17 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
 /*!
   \param arguments an Array of arguments
 */
-EXPORT SyxOop
+SyxOop
 syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments)
 {
   SyxOop context;
-  SyxOop class;
+  SyxOop klass;
   SyxOop method;
 
-  class = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (class, selector);
+  klass = syx_object_get_class (receiver);
+  method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(class));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
 
   syx_memory_gc_begin ();
 
@@ -575,7 +575,7 @@ syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, 
 /*!
   \return Return the last returned object from the process
 */
-EXPORT SyxOop
+SyxOop
 syx_file_in_blocking (syx_symbol file)
 {
   SyxOop context;
@@ -595,7 +595,7 @@ syx_file_in_blocking (syx_symbol file)
 /*!
   \return Return the last returned object from the process
 */
-EXPORT SyxOop
+SyxOop
 syx_do_it_blocking (syx_symbol code)
 {
   SyxOop context;
@@ -609,7 +609,7 @@ syx_do_it_blocking (syx_symbol code)
 
 
 //! Returns a syx_wstring from a syx_string
-EXPORT syx_wstring
+syx_wstring
 syx_to_wstring (syx_symbol s)
 {
   syx_size size = strlen (s);
@@ -619,7 +619,7 @@ syx_to_wstring (syx_symbol s)
 }
 
 //! Returns a syx_string from a syx_wstring
-EXPORT syx_string
+syx_string
 syx_to_string (syx_wsymbol ws)
 {
   syx_size size = wcslen (ws);
@@ -629,7 +629,7 @@ syx_to_string (syx_wsymbol ws)
 }
 
 //! Returns the first index in the string that is not a whitespace
-EXPORT syx_uint32
+syx_uint32
 syx_find_first_non_whitespace (syx_symbol string)
 {
   syx_uint32 i;

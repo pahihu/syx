@@ -42,13 +42,13 @@
 
 #endif /* SYX_DEBUG_FULL */
 
-EXPORT SyxExecState *_syx_exec_state = NULL;
+SyxExecState *_syx_exec_state = NULL;
 
 static syx_uint16 _syx_interp_get_next_byte (void);
 static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
 //! Create a new execution state to link the interpreter and the active process
-EXPORT SyxExecState *
+SyxExecState *
 syx_exec_state_new (void)
 {
   SyxExecState *ret = (SyxExecState *) syx_malloc (sizeof (SyxExecState));
@@ -57,7 +57,7 @@ syx_exec_state_new (void)
 }
 
 //! Fetch the execution state of a Process
-EXPORT void
+void
 syx_exec_state_fetch (void)
 {
   SyxOop method;
@@ -87,7 +87,7 @@ syx_exec_state_fetch (void)
 }
 
 //! Frees the SyxExecState
-EXPORT void
+void
 syx_exec_state_free (void)
 {
   if (_syx_exec_state)
@@ -104,7 +104,7 @@ syx_exec_state_free (void)
 /*!
   This function automatically fetch the state of the Process, saves and frees it once it terminated its running time
 */
-EXPORT void
+void
 syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint16 byte;
@@ -131,7 +131,7 @@ syx_process_execute_scheduled (SyxOop process)
 }
 
 //! Same as syx_process_execute_scheduled but does not take care about the byteslice counter
-EXPORT void
+void
 syx_process_execute_blocking (SyxOop process)
 {
   SyxExecState *orig_es;
@@ -337,12 +337,12 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   SyxOop binding;
-  SyxOop class, method, context;
+  SyxOop klass, method, context;
   syx_int32 primitive;
 
   binding = _syx_exec_state->literals[argument];
-  class = syx_object_get_class (_syx_exec_state->message_receiver); 
-  method = syx_class_lookup_method_binding (class, binding);
+  klass = syx_object_get_class (_syx_exec_state->message_receiver); 
+  method = syx_class_lookup_method_binding (klass, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -379,12 +379,12 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   SyxOop binding;
-  SyxOop class, method, context;
+  SyxOop klass, method, context;
   syx_int32 primitive;
 
   binding = _syx_exec_state->literals[argument];
-  class = SYX_CLASS_SUPERCLASS (SYX_CODE_CLASS (SYX_METHOD_CONTEXT_METHOD (_syx_exec_state->context)));
-  method = syx_class_lookup_method_binding (class, binding);
+  klass = SYX_CLASS_SUPERCLASS (SYX_CODE_CLASS (SYX_METHOD_CONTEXT_METHOD (_syx_exec_state->context)));
+  method = syx_class_lookup_method_binding (klass, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s to super\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
@@ -420,7 +420,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 {
-  SyxOop class, method, context;
+  SyxOop klass, method, context;
   syx_int32 primitive;
   syx_int32 index;
   SyxOop binding;
@@ -447,8 +447,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
       return TRUE;
     }
 
-  class = syx_object_get_class (_syx_exec_state->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding);  
+  klass = syx_object_get_class (_syx_exec_state->message_receiver);
+  method = syx_class_lookup_method_binding (klass, binding);  
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send unary message #%s\n", selector);
@@ -483,7 +483,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
-  SyxOop class, method, context, first_argument;
+  SyxOop klass, method, context, first_argument;
   syx_int32 primitive;
   SyxOop binding;
   syx_int32 index;
@@ -526,8 +526,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 	}
     }
 
-  class = syx_object_get_class (_syx_exec_state->message_receiver);
-  method = syx_class_lookup_method_binding (class, binding);
+  klass = syx_object_get_class (_syx_exec_state->message_receiver);
+  method = syx_class_lookup_method_binding (klass, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send binary message #%s\n", selector);

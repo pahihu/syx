@@ -23,6 +23,7 @@
 */
 
 #include <syx/syx.h>
+
 #include <stdio.h>
 
 #ifdef HAVE_GETOPT
@@ -32,7 +33,6 @@
 #ifdef WINDOWS
 #include <windows.h>
 #endif
-
 
 static void
 _help (void)
