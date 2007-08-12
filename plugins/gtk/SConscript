@@ -54,7 +54,7 @@ if penv['GTK']:
         lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
         Default (lib_shared)	   
         
-        instdir = os.path.join (env['datadir'], 'plugins', 'gtk')
+        instdir = os.path.join (env['plugindir'], 'gtk')
         env.SyxInstall (instdir, lib_shared)
 
         path = os.path.join (env['datadir'], 'st', 'gtk')

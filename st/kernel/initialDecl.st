@@ -242,7 +242,7 @@ Dictionary subclass: #IdentityDictionary
 	   classVariableNames: ''!
 
 IdentityDictionary subclass: #SystemDictionary
-		   instanceVariableNames: 'systemInitializationRequests commandLineArguments startupProcess startupObject'
+		   instanceVariableNames: 'systemInitializationRequests commandLineArguments startupProcess startupObject continueStartup'
 		   classVariableNames: ''!
 
 

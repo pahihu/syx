@@ -58,6 +58,9 @@ else:
       PathOption('libdir',
                  'Installation prefix for object code libraries', 
                  '$exec_prefix/lib', PathOption.PathAccept),
+      PathOption('plugindir',
+                 'Installation prefix for object code plugins',
+                 '$libdir/syx', PathOption.PathAccept),
       PathOption('includedir',
                  'Installation prefix for C header files', 
                  '$prefix/include', PathOption.PathAccept))
@@ -320,11 +323,12 @@ if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')
 
 if 'wince' in env['host']:
-   env.MergeFlags ('-DROOT_PATH="" -DIMAGE_PATH="default.sim"')
+   env.MergeFlags ('-DROOT_PATH="" -DIMAGE_PATH="default.sim" -DPLUGIN_PATH="lib"')
 elif env['PLATFORM'] == 'win32':
-   env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim"')
+   env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim" -DPLUGIN_PATH="lib"')
 else:
-   env.MergeFlags ('-DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath"')
+   env.MergeFlags ('-DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath" -DPLUGIN_PATH="$plugindir"')
+
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
 elif env['debug'] == 'normal':

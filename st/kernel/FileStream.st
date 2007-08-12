@@ -98,7 +98,7 @@ fileIn
     | stream lexer parser method context |
     stream := ReadWriteStream with: 'doFileIn ' copy.
     stream
-	nextPutAll: self contents;
+	nextPutAll: self upToEnd;
 	reset.
     lexer := CompilerLexer readFrom: stream.
     parser := CompilerParser on: lexer for: nil class.

@@ -70,7 +70,10 @@ startupSystem: commandLineArguments
 	ea initializeSystem ].
 
     commandLineArguments notEmpty
-	ifTrue: [ FileStream fileIn: commandLineArguments first ].
+	ifTrue: [
+	    FileStream fileIn: commandLineArguments first.
+	    continueStartup
+		ifFalse: [ ^self ] ].
 
     startupProcess := Processor activeProcess.
     startupObject isNil

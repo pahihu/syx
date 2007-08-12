@@ -195,15 +195,18 @@ syx_plugin_load (syx_symbol name)
       strcat (namext, ".so");
 #endif /* WINDOWS */
       
-      location = syx_find_file ("plugins", name, namext);
+      location = (syx_string) syx_calloc (strlen (SYX_PLUGIN_PATH)
+					  + strlen (name)
+					  + strlen (namext) + 3, sizeof (syx_char));
+      sprintf (location, "%s%c%s%c%s",
+	       SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
+	       name, SYX_PATH_SEPARATOR,
+	       namext);
       syx_free (namext);
       
 #ifdef SYX_DEBUG_INFO
       syx_debug ("Loading plugin %s at %s\n", name, location);
 #endif
-
-      if (!location)
-	return NULL;
 
       handle = syx_library_open (location);
       syx_free (location);

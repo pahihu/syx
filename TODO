@@ -3,6 +3,7 @@ Major:
 - Create examples and yet more documentation
 - Image compatibile on both big and little endian machines
 - Fix exception handling sequence
+- Handle "#!/usr/bin/env syx" script header or whatelse for scripting purposes
 - System signal handling
 - Object printing
 - Fix and improve file/IO streams

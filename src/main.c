@@ -45,6 +45,8 @@ _help (void)
 	  "\t\t\t(default: %s)\n\n"
 	  "  -s --scratch\t\tBuild the environment from scratch and save the image.\n"
 	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
+	  "  -c\t\t\tContinue startup process after loading files\n"
+	  "\t\t\tfrom the command line.\n\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"
 	  "  -h --help\t\tPrint this message.\n\n"
 	  "For more informations, please visit the homepage: http://code.google.com/p/syx.\n"
@@ -60,6 +62,7 @@ _getopt_do (int argc, char **argv)
   syx_string image_path = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
+  syx_bool continuestartup = FALSE;
   syx_bool init;
 
 #ifdef HAVE_GETOPT
@@ -77,7 +80,7 @@ _getopt_do (int argc, char **argv)
 
   while (TRUE)
     {
-      c = getopt_long (argc, argv, "r:i:sSvh",
+      c = getopt_long (argc, argv, "r:i:sSvhc",
 		       long_options, &opt_idx);
 
       if (c == (syx_char)-1)
@@ -118,6 +121,9 @@ _getopt_do (int argc, char **argv)
 	  quit = TRUE;
 	case 's':
 	  scratch = TRUE;
+	  break;
+	case 'c':
+	  continuestartup = TRUE;
 	  break;
 	case 'v':
 	  printf ("Syx %s\nVisit the homepage: http://code.google.com/p/syx\n"
@@ -168,9 +174,11 @@ _getopt_do (int argc, char **argv)
       if (!syx_memory_load_image (NULL))
 	syx_error ("Image not found\n");
 
+      SYX_OBJECT_VARS(syx_globals)[5] = syx_boolean_new (continuestartup);
+
       // Force WinWorkspace startup on WinCE
 #ifdef WINCE
-      SYX_OBJECT_VARS(syx_globals)[3] = syx_globals_at ("WinWorkspace");
+      SYX_OBJECT_VARS(syx_globals)[4] = syx_globals_at ("WinWorkspace");
 #endif
     }
 }
