@@ -91,11 +91,6 @@ rehashClass
 
 !SystemDictionary methodsFor: 'accessing'!
 
-haveBigEndianness
-    <primitive: 'Smalltalk_haveBigEndianness'>
-    		self primitiveFailed
-!
-
 commandLineArguments
     ^commandLineArguments
 ! !

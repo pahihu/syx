@@ -1390,7 +1390,7 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
     {
       SYX_PRIM_FAIL;
     }
-  
+
   return FALSE;
 }
 
@@ -1647,7 +1647,6 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
   { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
-  { "Smalltalk_haveBigEndianness", Smalltalk_haveBigEndianness },
 
   { NULL }
 };

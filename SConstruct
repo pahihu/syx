@@ -289,9 +289,9 @@ if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (doub
 if not conf.CheckEndianness ():
    env.Exit (1)
 
-conf.CheckInline ()
-conf.Check__Inline ()
-conf.Check__Inline__ ()
+"Assume we have __inline__"
+if not (conf.CheckInline () or conf.Check__Inline () or conf.Check__Inline__ ()) and env['host']:
+   env.MergeFlags ("-DHAVE__INLINE__")
 
 print
 print 'Optional functions...'

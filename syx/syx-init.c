@@ -293,7 +293,7 @@ syx_initialize_system (void)
   for (i=0; i < _syx_argc; i++)
     SYX_OBJECT_DATA(arguments)[i] = syx_string_new (_syx_argv[i]);
 
-  process = SYX_OBJECT_VARS(syx_globals)[2];
+  process = SYX_OBJECT_VARS(syx_globals)[3];
   if (!SYX_IS_NIL (process))
     syx_scheduler_remove_process (process);
 

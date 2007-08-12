@@ -684,7 +684,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
     }
 
   self->_in_block = block_state;
-  self->bytecode->code[jump] = self->bytecode->code_top;
+  self->bytecode->code[jump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
   return jump;
 }
 
@@ -723,13 +723,13 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      conditionJump = self->bytecode->code_top - 1;
 
 	      // jump here if condition is false
-	      self->bytecode->code[jump] = self->bytecode->code_top;
+	      self->bytecode->code[jump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump after ifFalse:
 	      self->bytecode->code[jump] = 0;
 
 	      // jump here if condition was true
-	      self->bytecode->code[conditionJump] = self->bytecode->code_top;
+	      self->bytecode->code[conditionJump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	    }
 
 	  return FALSE;
@@ -752,13 +752,13 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      conditionJump = self->bytecode->code_top - 1;
 
 	      // jump here if condition is true
-	      self->bytecode->code[jump] = self->bytecode->code_top;
+	      self->bytecode->code[jump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
 	      // We don't need any jump after ifFalse:
 	      self->bytecode->code[jump] = 0;
 
 	      // jump here if condition was false
-	      self->bytecode->code[conditionJump] = self->bytecode->code_top;
+	      self->bytecode->code[conditionJump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	    }
 
 	  return FALSE;
@@ -779,7 +779,7 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	  syx_bytecode_pop_top (self->bytecode);
 	  syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
 	  syx_bytecode_gen_code (self->bytecode, loopJump);
-	  self->bytecode->code[conditionJump] = self->bytecode->code_top;
+	  self->bytecode->code[conditionJump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	  syx_bytecode_pop_top (self->bytecode);
 
 	  return FALSE;
