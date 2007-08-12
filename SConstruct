@@ -36,6 +36,7 @@ if env['PLATFORM'] == 'win32':
                               'Installation prefix',
                               'C:\\\\Syx', PathOption.PathAccept))
    env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
+   env['plugindir'] = '$prefix\\\\lib'
    env['imagepath'] = '$prefix\\\\default.sim'
    env['includedir'] = '$prefix\\\\include'
 else:
