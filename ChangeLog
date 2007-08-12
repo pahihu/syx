@@ -1,5 +1,9 @@
 2007-08-12  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Compiler.st (nextPut:): support big endian machines
+
+	* st/kernel/SystemDictionary.st (haveBigEndianness): added
+
 	* src/main.c (_getopt_do): -c option has been added
 
 	* st/kernel/SystemDictionary.st (continueStartup): a new variable has been added to specify if the startup sequence must continue after fileing in files

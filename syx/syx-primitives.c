@@ -1516,6 +1516,15 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
+SYX_FUNC_PRIMITIVE (Smalltalk_haveBigEndianness)
+{
+#ifdef HAVE_BIG_ENDIANNESS
+  SYX_PRIM_RETURN(syx_true);
+#else
+  SYX_PRIM_RETURN(syx_false);
+#endif
+}
+
 SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1638,6 +1647,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
   { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
+  { "Smalltalk_haveBigEndianness", Smalltalk_haveBigEndianness },
 
   { NULL }
 };

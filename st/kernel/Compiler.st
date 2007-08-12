@@ -263,8 +263,13 @@ initialize
 
 nextPut: anInstruction
     "Write a 16-bit integer into the stream"
-    super nextPut: (anInstruction bitAnd: 16rFF).
-    super nextPut: anInstruction >> 8.
+    Smalltalk haveBigEndianness
+    	ifTrue: [
+	    super nextPut: anInstruction >> 8.
+	    super nextPut: (anInstruction bitAnd: 16rFF) ]
+	ifFalse: [
+	    super nextPut: (anInstruction bitAnd: 16rFF).
+	    super nextPut: anInstruction >> 8 ].
     ^anInstruction
 !
 
