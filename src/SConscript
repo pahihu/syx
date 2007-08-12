@@ -55,9 +55,9 @@ if not env['host']:
 # Distribution
 
 if env['PLATFORM'] != 'win32':
-    bimage = env.Command (os.path.join (distdir, xenv['imagepath']), inst, '$SOURCE -r $distdir/$datadir -i $TARGET -S')
-    env.Depends (bimage, image)
-    env.NoClean (image, bimage)
+    path = os.path.join (distdir, env['datadir'])
+    bimage = env.Command (os.path.join (distdir, xenv['imagepath']), prog, '$SOURCE -r %s -i $TARGET -S' % path.replace('#', ''))
+    env.Depends (bimage, os.path.join (path, 'st', 'kernel'))
     env.Alias ('bdist', bimage)
 
 target = env.Install (os.path.join (distdir, 'src'), prog_sources + prog_resources + ['SConscript'])

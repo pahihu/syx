@@ -121,5 +121,5 @@ unloadPlugin: name
 !SystemDictionary methodsFor: 'platform'!
 
 version
-    ^'Smalltalk YX 0.1.3'
+    ^'Smalltalk YX 0.1.4'
 ! !
