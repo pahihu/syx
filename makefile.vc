@@ -48,7 +48,7 @@ LDFLAGS = $(LDFLAGS) /nologo /DEBUG
 
 OBJS=$(O)\syx-bytecode.obj $(O)\syx-error.obj $(O)\syx-init.obj $(O)\syx-interp.obj $(O)\syx-lexer.obj \
   $(O)\syx-memory.obj $(O)\syx-object.obj $(O)\syx-parser.obj $(O)\syx-plugins.obj $(O)\syx-primitives.obj \
-  $(O)\syx-scheduler.obj $(O)\syx-utils.obj
+  $(O)\syx-scheduler.obj $(O)\syx-signal.obj $(O)\syx-utils.obj
 
 SYX_EXE=$(O)\syx.exe
 SYX_PDB=$(O)\syx.pdb

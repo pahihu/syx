@@ -1,5 +1,7 @@
 2007-08-13  Luca Bruno  <lethalman88@gmail.com>
 
+	* makefile.vc (OBJS): missed new syx-signal.obj
+
 	* st/kernel/FileStream.st (fileIn): handle scripting header
 
 	* syx/syx-utils.c (syx_show_traceback): added
