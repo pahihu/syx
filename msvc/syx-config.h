@@ -6,7 +6,7 @@
 
 #define HAVE_ERRNO_H 1
 #define HAVE_STDARG_H 1
-#define HAVE__INLINE__ 1
+#define HAVE__INLINE 1
 
 #define open _open
 #define read _read

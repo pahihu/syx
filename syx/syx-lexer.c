@@ -70,8 +70,8 @@ syx_lexer_new (syx_symbol text)
   self = (SyxLexer *) syx_malloc (sizeof (SyxLexer));
 
   self->text = self->_current_text = text;
-  self->_pushed_back = -1;
-  self->last_char = -1;
+  self->_pushed_back = 0;
+  self->last_char = 0;
 
   return self;
 }
@@ -215,7 +215,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	}
       else
 	{
-	  self->_pushed_back = -1;
+	  self->_pushed_back = 0;
 	  self->_current_text -= 2;
 	}
     }
@@ -243,7 +243,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	}
       else
 	{
-	  self->_pushed_back = -1;
+	  self->_pushed_back = 0;
 	  self->_current_text--;
 	  if (sign) self->_current_text--;
 	  self->_current_text--;
@@ -372,10 +372,10 @@ syx_lexer_forward (SyxLexer *lexer)
 {
   syx_char cc;
 
-  if (lexer->_pushed_back != -1)
+  if (lexer->_pushed_back)
     {
       cc = lexer->_pushed_back;
-      lexer->_pushed_back = -1;
+      lexer->_pushed_back = 0;
     }
   else if (*(lexer->_current_text))
     cc = *(lexer->_current_text++);

@@ -513,7 +513,7 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 {
   SYX_PRIM_ARGS(2);
   syx_int32 fd = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  syx_bool t = es->message_arguments[1];
+  syx_bool t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
   if (t == syx_true)
     syx_scheduler_poll_write_register (fd,
@@ -1373,7 +1373,7 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
   SYX_PRIM_ARGS(1);
-
+  *(char*)0 = 'a';
   SyxOop filename = es->message_arguments[0];
   syx_bool ret;
 

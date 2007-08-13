@@ -26,6 +26,7 @@
 NOFS(GtkAdjustment *hadjustment);
 %include gtk/gtkscrolledwindow.h
 
+%include gtk/gtktextiter.h
 %include gtk/gtktexttagtable.h
 
 NOFS(GtkTextTagTable *table);

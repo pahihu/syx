@@ -307,6 +307,10 @@ VMError subclass: #PrimitiveFailed
 	instanceVariableNames: ''
         classVariableNames: ''!
 
+VMError subclass: #SystemSignal
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
 Halt subclass: #MessageNotUnderstood
      instanceVariableNames: 'message receiver'
      classVariableNames: ''!
@@ -334,3 +338,19 @@ InvalidValue subclass: #InvalidArgument
 InvalidArgument subclass: #NotFound
 		instanceVariableNames: ''
                 classVariableNames: ''!
+
+SystemSignal subclass: #UserInterrupt
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
+SystemSignal subclass: #TerminationSignal
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
+SystemSignal subclass: #AbnormalTermination
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
+SystemSignal subclass: #FloatingPointException
+	     instanceVariableNames: ''
+	     classVariableNames: ''!

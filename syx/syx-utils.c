@@ -641,3 +641,95 @@ syx_find_first_non_whitespace (syx_symbol string)
 
   return 0;
 }
+
+//! Print to stdout the current execution state of the interpreter and the context traceback
+void
+syx_show_traceback (void)
+{
+  SyxExecState *es = _syx_exec_state;
+  SyxOop context, homecontext;
+  syx_symbol traceformat;
+  SyxOop classname;
+  syx_symbol extraclass;
+  SyxOop receiver;
+
+  if (!syx_memory)
+    {
+      puts ("Can't print the memory state");
+      return;
+    }
+
+  puts ("Memory state:");
+  printf("Memory size: %d\n", _syx_memory_size);
+  printf("Freed memory top: %d\n", _syx_freed_memory_top);
+  if (!_syx_memory_gc_trans_running)
+    puts ("No GC transaction");
+  else
+    printf("GC transaction top: %d\n", _syx_memory_gc_trans_top);
+
+  if (!es)
+    {
+      puts ("Can't print the execution state");
+      return;
+    }
+
+  puts ("\nExecution state:");
+  printf("Process: %p (memory index: %ld)\n",
+	 SYX_OOP_CAST_POINTER (es->process),
+	 SYX_MEMORY_INDEX_OF (es->process));
+  printf("Context: %p (memory index: %ld)\n",
+	 SYX_OOP_CAST_POINTER (es->context),
+	 SYX_MEMORY_INDEX_OF (es->context));
+  printf("Receiver: %p (memory index: %ld)\n",
+	 SYX_OOP_CAST_POINTER (es->receiver),
+	 SYX_MEMORY_INDEX_OF (es->receiver));
+  printf("Arguments: %p\n", es->arguments);
+  printf("Temporaries: %p\n", es->temporaries);
+  printf("Stack: %p\n", es->stack);
+  printf("Literals: %p\n", es->literals);
+  printf("Bytecodes: %p (size: %d)\n", es->bytecodes, es->bytecodes_count);
+  printf("Byteslice: %d\n", es->byteslice);
+  printf("Instruction pointer: %d\n", es->ip);
+  printf("Stack pointer: %d\n", es->sp);
+  printf("Message receiver: %p (memory index: %ld)\n",
+	 SYX_OOP_CAST_POINTER (es->message_receiver),
+	 SYX_MEMORY_INDEX_OF (es->message_receiver));
+  printf("Message arguments: %p (size: %d)\n", es->message_arguments, es->message_arguments_count);
+
+  puts ("\nTraceback:");
+  context = syx_interp_get_current_context ();
+  while (!SYX_IS_NIL (context))
+    {
+      if (syx_object_get_class (context) == syx_block_context_class)
+	{
+	  homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(context);
+	  while (syx_object_get_class (homecontext) != syx_method_context_class)
+	    homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(homecontext);
+	  traceformat = "%s%s>>%s[]\n";
+	}
+      else
+	{
+	  homecontext = context;
+	  traceformat = "%s%s>>%s\n";
+	}
+
+      receiver = SYX_METHOD_CONTEXT_RECEIVER(context);
+      classname = SYX_CLASS_NAME(syx_object_get_class(receiver));
+      if (SYX_IS_NIL (classname))
+	{
+	  classname = SYX_CLASS_NAME(SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class(receiver)));
+	  extraclass = " class";
+	}
+      else
+	extraclass = "";
+
+      printf (traceformat,
+	      SYX_OBJECT_SYMBOL(classname),
+	      extraclass,
+	      SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(SYX_METHOD_CONTEXT_METHOD(homecontext))));
+
+      context = SYX_METHOD_CONTEXT_PARENT (context);
+    }
+
+  puts ("\nPlease send the above bug report to \"lethalman88@gmail.com\".");
+}

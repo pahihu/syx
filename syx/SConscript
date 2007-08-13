@@ -39,7 +39,7 @@ lib_sources = Split ("""
 	    syx-bytecode.c syx-init.c syx-interp.c
 	    syx-lexer.c syx-memory.c syx-object.c syx-parser.c
 	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
-            syx-plugins.c
+            syx-plugins.c syx-signal.c
 	    """)
 
 if env['shared']:
@@ -71,7 +71,7 @@ env.Alias ('sdist', target)
 includes = ['syx.h', 'syx-interp.h', 'syx-config.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error.h',
             'syx-lexer.h', 'syx-memory.h', 'syx-object.h', 'syx-init.h',
             'syx-parser.h', 'syx-platform.h', 'syx-scheduler.h', 'syx-utils.h',
-            'syx-types.h', 'syx-plugins.h']
+            'syx-types.h', 'syx-plugins.h', 'syx-signal.h']
 incdir = os.path.join (env['includedir'], 'syx')
 env.Install (incdir, includes)
 env.Alias ('install', incdir)

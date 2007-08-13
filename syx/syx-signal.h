@@ -22,23 +22,9 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SYX_H
-#define SYX_H
+#ifndef SYX_SIGNAL_H
+#define SYX_SIGNAL_H
 
-#include "syx-config.h"
-#include "syx-enums.h"
-#include "syx-types.h"
-#include "syx-object.h"
-#include "syx-init.h"
-#include "syx-lexer.h"
-#include "syx-parser.h"
-#include "syx-plugins.h"
-#include "syx-bytecode.h"
-#include "syx-utils.h"
-#include "syx-memory.h"
-#include "syx-error.h"
-#include "syx-signal.h"
-#include "syx-interp.h"
-#include "syx-scheduler.h"
+extern EXPORT void syx_signal_init (void);
 
-#endif /* SYX_H */
+#endif /* SYX_SIGNAL_H */

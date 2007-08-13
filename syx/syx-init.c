@@ -42,6 +42,7 @@
 #include "syx-error.h"
 #include "syx-plugins.h"
 #include "syx-init.h"
+#include "syx-signal.h"
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-object.h"
@@ -112,7 +113,7 @@ _syx_file_in_basic (void)
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",
     "True.st", "False.st",
-    "Signal.st",
+    "Signal.st", "SystemSignal.st",
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
     "Association.st",
@@ -279,6 +280,7 @@ syx_fetch_basic (void)
   syx_error_init ();
   syx_scheduler_init ();
   syx_plugins_init ();
+  syx_signal_init ();
 }
 
 //! Remove Smalltalk startupProcess from being scheduled and call Smalltalk>>#startupSystem: in a scheduled process

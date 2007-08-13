@@ -95,8 +95,12 @@ atEnd
 !
 
 fileIn
-    | stream lexer parser method context |
+    | stream lexer parser method context peek |
     stream := ReadWriteStream with: 'doFileIn ' copy.
+    peek := self next.
+    peek = $#
+	ifTrue: [ self skipTo: Character nl ]
+	ifFalse: [ stream nextPut: peek ].
     stream
 	nextPutAll: self upToEnd;
 	reset.

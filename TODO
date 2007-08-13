@@ -1,13 +1,10 @@
 Major:
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
-- Image compatibile on both big and little endian machines
 - Fix exception handling sequence
-- Handle "#!/usr/bin/env syx" script header or whatelse for scripting purposes
-- System signal handling
-- Object printing
+- Get rid of getopt
+- Add argumentCount checks to methods and blocks
 - Fix and improve file/IO streams
-- Do not continue after fileing in files from command line. Create a -c option instead
 
 Minor:
 - Add pool dictionaries

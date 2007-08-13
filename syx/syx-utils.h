@@ -25,31 +25,32 @@
 #ifndef SYX_UTILS_H
 #define SYX_UTILS_H
 
-#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-lexer.h"
 
-EXPORT extern syx_bool syx_cold_parse (SyxLexer *lexer);
-EXPORT extern syx_bool syx_cold_file_in (syx_symbol filename);
+extern EXPORT syx_bool syx_cold_parse (SyxLexer *lexer);
+extern EXPORT syx_bool syx_cold_file_in (syx_symbol filename);
 
-EXPORT extern void syx_semaphore_signal (SyxOop semaphore);
-EXPORT extern void syx_semaphore_wait (SyxOop semaphore);
+extern EXPORT void syx_semaphore_signal (SyxOop semaphore);
+extern EXPORT void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-EXPORT extern SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
-EXPORT extern SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
-EXPORT extern SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-EXPORT extern SyxOop syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments);
+extern EXPORT SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
+extern EXPORT SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
+extern EXPORT SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+extern EXPORT SyxOop syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments);
 
-EXPORT extern SyxOop syx_file_in_blocking (syx_symbol file);
-EXPORT extern SyxOop syx_do_it_blocking (syx_symbol code);
+extern EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
+extern EXPORT SyxOop syx_do_it_blocking (syx_symbol code);
+
+extern EXPORT void syx_show_traceback (void);
 
 /* Utilities for strings */
 
-EXPORT extern syx_wstring syx_to_wstring (syx_symbol s);
-EXPORT extern syx_string syx_to_string (syx_wsymbol ws);
-EXPORT extern syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
+extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
+extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
 
 #ifdef UNICODE
 
