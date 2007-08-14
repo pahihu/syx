@@ -51,20 +51,29 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
 //! Signal an error in the Smalltalk environment
 /*!
-  \param type the type return from syx_error_register
+  \param type the type returned by syx_error_register
 */
 #define syx_signal(type, ...)						\
-  syx_interp_enter_context (syx_send_message (syx_interp_get_current_context (), \
-					      syx_error_lookup (type)->klass, \
-					      "signal",			\
-					      __VA_ARGS__))
+  (syx_interp_enter_context (syx_send_message (syx_interp_get_current_context (), \
+					       syx_error_lookup (type)->klass, \
+					       "signal",		\
+					       __VA_ARGS__)))
+//! Create an error Context in the Smalltalk environment ready to enter a Process
+/*!
+  \param type the type returned by syx_error_register
+*/
+#define syx_signal_create_context(type, ...)				\
+  (syx_send_message (syx_interp_get_current_context (),			\
+		     syx_error_lookup (type)->klass,			\
+		     "signal",						\
+		     __VA_ARGS__))
 
 //! Send receiver>>#doesNotUnderstand: with selector
 #define syx_signal_does_not_understand(receiver, selector)		\
-  syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (), \
-						     receiver,		\
-						     "doesNotUnderstand:", \
-						     selector))
+  (syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (), \
+						      receiver,		\
+						      "doesNotUnderstand:", \
+						      selector)))
 
 //! Display an error then exits
 /*!

@@ -22,26 +22,32 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!UserInterrupt methodsFor: 'signaling'!
+!SystemSignal methodsFor: 'signaling'!
 
 description
-    ^'User interrupt (SIGINT)'
+    ^'The application received a signal from the system.'
 ! !
 
-!FloatingPointException methodsFor: 'signaling'!
+!UserInterrupt class methodsFor: 'signaling'!
 
-description
-    ^'Floating point exception (SIGFPE)'
+signal
+    ^self signal: 'User interrupt (SIGINT)'
 ! !
 
-!TerminationSignal methodsFor: 'signaling'!
+!FloatingPointException class methodsFor: 'signaling'!
 
-description
-    ^'Termination signal (SIGTERM)'
+signal
+    ^self signal: 'Floating point exception (SIGFPE)'
 ! !
 
-!AbnormalTermination methodsFor: 'signaling'!
+!TerminationSignal class methodsFor: 'signaling'!
 
-description
-    ^'Abnormal termination (SIGABRT)'
+signal
+    ^self signal: 'Termination signal (SIGTERM)'
+! !
+
+!AbnormalTermination class methodsFor: 'signaling'!
+
+signal
+    ^self signal: 'Abnormal termination (SIGABRT)'
 ! !

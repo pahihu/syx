@@ -109,7 +109,7 @@ Object subclass: #Semaphore
        classVariableNames: ''!
 
 Object subclass: #CompiledCode
-       instanceVariableNames: 'bytecodes literals stackSize text class'
+       instanceVariableNames: 'bytecodes argumentCount literals stackSize text class'
        classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
@@ -310,6 +310,10 @@ VMError subclass: #PrimitiveFailed
 VMError subclass: #SystemSignal
 	instanceVariableNames: ''
 	classVariableNames: ''!
+
+PrimitiveFailed subclass: #WrongArgumentCount
+		instanceVariableNames: ''
+		classVariableNames: ''!
 
 Halt subclass: #MessageNotUnderstood
      instanceVariableNames: 'message receiver'

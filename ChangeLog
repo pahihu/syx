@@ -1,3 +1,22 @@
+2007-08-14  Luca Bruno  <lethalman88@gmail.com>
+
+	* plugins/gtk/st/GtkTextView.st: added
+
+	* plugins/gtk/st/GtkTextMark.st: added
+
+	* plugins/gtk/st/GtkTextTag.st: added
+
+	* plugins/gtk/st/GtkTextTagTable.st: added
+
+	* st/kernel/Object.st (perform methods): check argument count
+
+	* syx/syx-error.h (syx_signal_create_context): added
+
+	* syx/syx-parser.c (_syx_parser_parse_block_message_pattern): save argumentCount
+	(_syx_parser_parse_method_message_pattern): save argumentCount
+
+	* syx/syx-object.h (SYX_CODE_ARGUMENT_COUNT): instance variable added do CompiledCode
+
 2007-08-13  Luca Bruno  <lethalman88@gmail.com>
 
 	* makefile.vc (OBJS): missed new syx-signal.obj

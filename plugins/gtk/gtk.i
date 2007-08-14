@@ -31,3 +31,9 @@ NOFS(GtkAdjustment *hadjustment);
 
 NOFS(GtkTextTagTable *table);
 %include gtk/gtktextbuffer.h
+
+%include gtk/gtktexttag.h
+%include gtk/gtktextmark.h
+
+NOFS(GtkTextBuffer *buffer);
+%include gtk/gtktextview.h

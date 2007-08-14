@@ -965,12 +965,14 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
   switch (token.type)
     {
     case SYX_TOKEN_NAME_CONST:
+      /* Unary message pattern */
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (token.value.string);
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
       break;
     case SYX_TOKEN_BINARY:
+      /* Binary message pattern */
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (token.value.string);
       syx_token_free (token);
 
@@ -983,6 +985,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       syx_lexer_next_token (self->lexer);
       break;
     case SYX_TOKEN_NAME_COLON:
+      /* Keyword message pattern */
       while (token.type == SYX_TOKEN_NAME_COLON)
 	{
 	  strcat (selector, token.value.string);
@@ -1004,6 +1007,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
     }
 
   self->_argument_scopes.stack[(syx_int32) self->_argument_scopes.top++] = scope;
+  SYX_CODE_ARGUMENT_COUNT(self->method) = syx_small_integer_new (scope.end - scope.start);
 }
 
 static void
@@ -1015,6 +1019,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":")))
     {
       self->_argument_scopes.stack[(syx_int32) self->_argument_scopes.top++] = scope;
+      SYX_CODE_ARGUMENT_COUNT(self->method) = syx_small_integer_new (0);
       return;
     }
 
@@ -1036,13 +1041,15 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
   syx_lexer_next_token (self->lexer);
 
   self->_argument_scopes.stack[(syx_int32) self->_argument_scopes.top++] = scope;
+  SYX_CODE_ARGUMENT_COUNT(self->method) = syx_small_integer_new (scope.end - scope.start);
   return;
 }
 
 static void
 _syx_parser_parse_message_pattern (SyxParser *self)
 {
-  self->_in_block
-    ? _syx_parser_parse_block_message_pattern (self)
-    : _syx_parser_parse_method_message_pattern (self);
+  if (self->_in_block)
+    _syx_parser_parse_block_message_pattern (self);
+  else
+    _syx_parser_parse_method_message_pattern (self);
 }

@@ -86,18 +86,19 @@ valueWithArguments: anArray
     "Call my block with anArray as arguments"
     <primitive: 'BlockClosure_valueWithArguments'>
 	self primitiveFailed
+    WrongArgumentCount signal
 !
 
 value
     "Call my block without arguments"
     <primitive: 'BlockClosure_value'>
-	self primitiveFailed
+	WrongArgumentCount signal
 !
 
 value: anObject
     "Call my block with anObject as single argument"
     <primitive: 'BlockClosure_valueWith'>
-	self primitiveFailed
+	WrongArgumentCount signal
 !
 
 value: firstObject value: secondObject

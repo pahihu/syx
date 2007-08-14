@@ -36,6 +36,10 @@ methodClass
     ^class
 !
 
+argumentCount
+    ^argumentCount
+!
+
 text
     ^text
 !
@@ -47,10 +51,13 @@ selector
 !CompiledCode methodsFor: 'initialize-release'!
 
 initializeParser: aCompilerParser
+    | scope |
     bytecodes
 	ifNotNil: [ ^self error: 'Already initialized' ].
 
     bytecodes := aCompilerParser bytecode contents.
+    scope := aCompilerParser argumentScopes peek.
+    argumentCount := scope value - scope key + 1.
     stackSize := aCompilerParser bytecode stackSize.
     literals := aCompilerParser bytecode literals.
     text := aCompilerParser lexer text

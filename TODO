@@ -3,7 +3,6 @@ Major:
 - Create examples and yet more documentation
 - Fix exception handling sequence
 - Get rid of getopt
-- Add argumentCount checks to methods and blocks
 - Fix and improve file/IO streams
 
 Minor:

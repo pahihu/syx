@@ -53,10 +53,14 @@
 INLINE SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop arguments)
 {
-  return syx_block_context_new (es->context,
-				SYX_BLOCK_CLOSURE_BLOCK (es->message_receiver),
-				arguments,
-				SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
+  SyxOop block = SYX_BLOCK_CLOSURE_BLOCK (es->message_receiver);
+  if (SYX_SMALL_INTEGER(SYX_CODE_ARGUMENT_COUNT(block)) != SYX_OBJECT_DATA_SIZE (arguments))
+    return syx_nil;
+  else
+    return syx_block_context_new (es->context,
+				  block,
+				  arguments,
+				  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
 }
 
 /* This method is inlined in syx_interp_call_primitive */
@@ -193,6 +197,11 @@ SYX_FUNC_PRIMITIVE (Object_perform)
       SYX_PRIM_FAIL;
     }
 
+  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENT_COUNT (message_method)) != es->message_arguments_count - 1)
+    {
+      SYX_PRIM_FAIL;
+    }
+
   // save the real state
   message_arguments = es->message_arguments;
   message_arguments_count = es->message_arguments_count;
@@ -248,6 +257,11 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   message_method = syx_class_lookup_method (klass, SYX_OBJECT_SYMBOL (selector));
 
   if (SYX_IS_NIL (message_method))
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENT_COUNT (message_method)) != SYX_OBJECT_DATA_SIZE (arguments))
     {
       SYX_PRIM_FAIL;
     }
@@ -384,12 +398,20 @@ SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
   args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
   SYX_PRIM_RETURN (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
   SyxOop ctx = _syx_block_context_new_from_closure (es, syx_nil);
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
   return syx_interp_enter_context (ctx);
 }
 
@@ -404,6 +426,10 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   SYX_OBJECT_DATA(args)[0] = es->message_arguments[0];
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
   return syx_interp_enter_context (ctx);
 }
   
@@ -415,6 +441,10 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
   args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
   syx_memory_gc_end ();
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
   return syx_interp_enter_context (ctx);
 }
 
@@ -422,6 +452,10 @@ SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
 {
   SYX_PRIM_ARGS(2);
   SyxOop ctx = _syx_block_context_new_from_closure (es, syx_nil);
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
 
   SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx) = es->message_arguments[0];
   SYX_BLOCK_CONTEXT_HANDLER_BLOCK (ctx) = es->message_arguments[1];
@@ -440,6 +474,10 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = syx_nil;
   proc = syx_process_new (ctx);
   syx_memory_gc_end ();
+  if (SYX_IS_NIL(ctx))
+    {
+      SYX_PRIM_FAIL;
+    }
 
   SYX_PRIM_RETURN (proc);
 }

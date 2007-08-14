@@ -223,24 +223,28 @@ perform: selector
     <primitive: 'Object_perform'>
 	(self respondsTo: selector)
 	ifFalse: [ self doesNotUnderstand: selector ]
+	ifTrue: [ WrongArgumentCount signal ]
 !
 
 perform: selector with: argument1
     <primitive: 'Object_perform'>
 	(self respondsTo: selector)
 	ifFalse: [ self doesNotUnderstand: selector ]
+	ifTrue: [ WrongArgumentCount signal ]
 !
 
 perform: selector with: argument1 with: argument2
     <primitive: 'Object_perform'>
 	(self respondsTo: selector)
 	ifFalse: [ self doesNotUnderstand: selector ]
+	ifTrue: [ WrongArgumentCount signal ]
 !
 
 perform: selector with: argument1 with: argument2 with: argument3
     <primitive: 'Object_perform'>
 	(self respondsTo: selector)
 	ifFalse: [ self doesNotUnderstand: selector ]
+	ifTrue: [ WrongArgumentCount signal ]
 !
 
 perform: selector withArguments: arguments
@@ -248,6 +252,7 @@ perform: selector withArguments: arguments
     <primitive: 'Object_performWithArguments'>
 	(self respondsTo: selector)
 	ifFalse: [ self doesNotUnderstand: selector ]
+	ifTrue: [ WrongArgumentCount signal ]
 !
 
 -> anObject

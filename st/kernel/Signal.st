@@ -162,3 +162,9 @@ signal
 signal
     ^self signal: 'This method is not responsibility of this class. A subclass must implement this method.'
 ! !
+
+!WrongArgumentCount class methodsFor: 'instance creation'!
+
+signal
+    ^self signal: 'Wrong number of arguments.'
+! !

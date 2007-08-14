@@ -21487,7 +21487,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_buffer)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GtkTextBuffer *)gtk_text_iter_get_buffer((GtkTextIter const *)arg1);
+  result = (GtkTextBuffer *)gtk_text_iter_get_buffer((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21502,7 +21502,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_copy)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GtkTextIter *)gtk_text_iter_copy((GtkTextIter const *)arg1);
+  result = (GtkTextIter *)gtk_text_iter_copy((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21544,7 +21544,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_offset)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_offset((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_offset((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21559,7 +21559,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_line)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_line((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_line((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21574,7 +21574,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_line_offset)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_line_offset((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_line_offset((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21589,7 +21589,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_line_index)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_line_index((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_line_index((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21604,7 +21604,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_visible_line_offset)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_visible_line_offset((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_visible_line_offset((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21619,7 +21619,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_visible_line_index)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_visible_line_index((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_visible_line_index((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21634,7 +21634,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_char)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gunichar)gtk_text_iter_get_char((GtkTextIter const *)arg1);
+  result = (gunichar)gtk_text_iter_get_char((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21651,7 +21651,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_slice)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_iter_get_slice((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = (gchar *)gtk_text_iter_get_slice((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21668,7 +21668,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_text)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_iter_get_text((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = (gchar *)gtk_text_iter_get_text((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21685,7 +21685,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_visible_slice)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_iter_get_visible_slice((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = (gchar *)gtk_text_iter_get_visible_slice((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21702,7 +21702,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_visible_text)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_iter_get_visible_text((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = (gchar *)gtk_text_iter_get_visible_text((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21717,7 +21717,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_pixbuf)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GdkPixbuf *)gtk_text_iter_get_pixbuf((GtkTextIter const *)arg1);
+  result = (GdkPixbuf *)gtk_text_iter_get_pixbuf((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21732,7 +21732,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_marks)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GSList *)gtk_text_iter_get_marks((GtkTextIter const *)arg1);
+  result = (GSList *)gtk_text_iter_get_marks((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21747,7 +21747,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_child_anchor)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GtkTextChildAnchor *)gtk_text_iter_get_child_anchor((GtkTextIter const *)arg1);
+  result = (GtkTextChildAnchor *)gtk_text_iter_get_child_anchor((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21770,7 +21770,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_toggled_tags)
   arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   
   gdk_threads_enter ();
-  result = (GSList *)gtk_text_iter_get_toggled_tags((GtkTextIter const *)arg1,arg2);
+  result = (GSList *)gtk_text_iter_get_toggled_tags((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21787,7 +21787,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_begins_tag)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextTag *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_begins_tag((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_begins_tag((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21804,7 +21804,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_ends_tag)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextTag *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_ends_tag((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_ends_tag((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21821,7 +21821,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_toggles_tag)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextTag *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_toggles_tag((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_toggles_tag((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21838,7 +21838,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_has_tag)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextTag *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_has_tag((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_has_tag((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21853,7 +21853,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_tags)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (GSList *)gtk_text_iter_get_tags((GtkTextIter const *)arg1);
+  result = (GSList *)gtk_text_iter_get_tags((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -21876,7 +21876,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_editable)
   arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   
   gdk_threads_enter ();
-  result = gtk_text_iter_editable((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_editable((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21899,7 +21899,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_can_insert)
   arg2 = SYX_IS_TRUE(es->message_arguments[0]);
   
   gdk_threads_enter ();
-  result = gtk_text_iter_can_insert((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_can_insert((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21914,7 +21914,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_starts_word)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_starts_word((GtkTextIter const *)arg1);
+  result = gtk_text_iter_starts_word((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21929,7 +21929,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_ends_word)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_ends_word((GtkTextIter const *)arg1);
+  result = gtk_text_iter_ends_word((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21944,7 +21944,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_inside_word)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_inside_word((GtkTextIter const *)arg1);
+  result = gtk_text_iter_inside_word((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21959,7 +21959,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_starts_sentence)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_starts_sentence((GtkTextIter const *)arg1);
+  result = gtk_text_iter_starts_sentence((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21974,7 +21974,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_ends_sentence)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_ends_sentence((GtkTextIter const *)arg1);
+  result = gtk_text_iter_ends_sentence((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -21989,7 +21989,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_inside_sentence)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_inside_sentence((GtkTextIter const *)arg1);
+  result = gtk_text_iter_inside_sentence((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22004,7 +22004,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_starts_line)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_starts_line((GtkTextIter const *)arg1);
+  result = gtk_text_iter_starts_line((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22019,7 +22019,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_ends_line)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_ends_line((GtkTextIter const *)arg1);
+  result = gtk_text_iter_ends_line((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22034,7 +22034,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_is_cursor_position)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_is_cursor_position((GtkTextIter const *)arg1);
+  result = gtk_text_iter_is_cursor_position((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22049,7 +22049,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_chars_in_line)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_chars_in_line((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_chars_in_line((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22064,7 +22064,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_bytes_in_line)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_get_bytes_in_line((GtkTextIter const *)arg1);
+  result = (gint)gtk_text_iter_get_bytes_in_line((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22081,7 +22081,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_attributes)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextAttributes *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_get_attributes((GtkTextIter const *)arg1,arg2);
+  result = gtk_text_iter_get_attributes((struct _GtkTextIter const *)arg1,arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22096,7 +22096,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_get_language)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = (PangoLanguage *)gtk_text_iter_get_language((GtkTextIter const *)arg1);
+  result = (PangoLanguage *)gtk_text_iter_get_language((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -22111,7 +22111,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_is_end)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_is_end((GtkTextIter const *)arg1);
+  result = gtk_text_iter_is_end((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22126,7 +22126,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_is_start)
   
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   gdk_threads_enter ();
-  result = gtk_text_iter_is_start((GtkTextIter const *)arg1);
+  result = gtk_text_iter_is_start((struct _GtkTextIter const *)arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22950,7 +22950,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_forward_find_char)
   SWIG_FIRST_SELF(arg3, gpointer, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  result = gtk_text_iter_forward_find_char(arg1,arg2,arg3,(GtkTextIter const *)arg4);
+  result = gtk_text_iter_forward_find_char(arg1,arg2,arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -22971,7 +22971,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_backward_find_char)
   SWIG_FIRST_SELF(arg3, gpointer, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  result = gtk_text_iter_backward_find_char(arg1,arg2,arg3,(GtkTextIter const *)arg4);
+  result = gtk_text_iter_backward_find_char(arg1,arg2,arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23008,7 +23008,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_forward_search)
   SWIG_FIRST_SELF(arg5, GtkTextIter *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, GtkTextIter *, es->message_arguments[4])
   gdk_threads_enter ();
-  result = gtk_text_iter_forward_search((GtkTextIter const *)arg1,(char const *)arg2,arg3,arg4,arg5,(GtkTextIter const *)arg6);
+  result = gtk_text_iter_forward_search((struct _GtkTextIter const *)arg1,(char const *)arg2,arg3,arg4,arg5,(struct _GtkTextIter const *)arg6);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23045,7 +23045,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_backward_search)
   SWIG_FIRST_SELF(arg5, GtkTextIter *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, GtkTextIter *, es->message_arguments[4])
   gdk_threads_enter ();
-  result = gtk_text_iter_backward_search((GtkTextIter const *)arg1,(char const *)arg2,arg3,arg4,arg5,(GtkTextIter const *)arg6);
+  result = gtk_text_iter_backward_search((struct _GtkTextIter const *)arg1,(char const *)arg2,arg3,arg4,arg5,(struct _GtkTextIter const *)arg6);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23062,7 +23062,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_equal)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = gtk_text_iter_equal((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = gtk_text_iter_equal((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23079,7 +23079,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_compare)
   SWIG_FIRST_SELF(arg1, GtkTextIter *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  result = (gint)gtk_text_iter_compare((GtkTextIter const *)arg1,(GtkTextIter const *)arg2);
+  result = (gint)gtk_text_iter_compare((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23098,7 +23098,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_iter_in_range)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   gdk_threads_enter ();
-  result = gtk_text_iter_in_range((GtkTextIter const *)arg1,(GtkTextIter const *)arg2,(GtkTextIter const *)arg3);
+  result = gtk_text_iter_in_range((struct _GtkTextIter const *)arg1,(struct _GtkTextIter const *)arg2,(struct _GtkTextIter const *)arg3);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23605,7 +23605,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_insert_range)
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  gtk_text_buffer_insert_range(arg1,arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4);
+  gtk_text_buffer_insert_range(arg1,arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -23634,7 +23634,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_insert_range_interactive)
   arg5 = SYX_IS_TRUE(es->message_arguments[3]);
   
   gdk_threads_enter ();
-  result = gtk_text_buffer_insert_range_interactive(arg1,arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4,arg5);
+  result = gtk_text_buffer_insert_range_interactive(arg1,arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4,arg5);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23815,7 +23815,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_get_text)
   arg4 = SYX_IS_TRUE(es->message_arguments[2]);
   
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_buffer_get_text(arg1,(GtkTextIter const *)arg2,(GtkTextIter const *)arg3,arg4);
+  result = (gchar *)gtk_text_buffer_get_text(arg1,(struct _GtkTextIter const *)arg2,(struct _GtkTextIter const *)arg3,arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23842,7 +23842,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_get_slice)
   arg4 = SYX_IS_TRUE(es->message_arguments[2]);
   
   gdk_threads_enter ();
-  result = (gchar *)gtk_text_buffer_get_slice(arg1,(GtkTextIter const *)arg2,(GtkTextIter const *)arg3,arg4);
+  result = (gchar *)gtk_text_buffer_get_slice(arg1,(struct _GtkTextIter const *)arg2,(struct _GtkTextIter const *)arg3,arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
@@ -23928,7 +23928,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_create_mark)
   arg4 = SYX_IS_TRUE(es->message_arguments[2]);
   
   gdk_threads_enter ();
-  result = (GtkTextMark *)gtk_text_buffer_create_mark(arg1,(char const *)arg2,(GtkTextIter const *)arg3,arg4);
+  result = (GtkTextMark *)gtk_text_buffer_create_mark(arg1,(char const *)arg2,(struct _GtkTextIter const *)arg3,arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
@@ -23946,7 +23946,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_move_mark)
   SWIG_FIRST_SELF(arg2, GtkTextMark *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   gdk_threads_enter ();
-  gtk_text_buffer_move_mark(arg1,arg2,(GtkTextIter const *)arg3);
+  gtk_text_buffer_move_mark(arg1,arg2,(struct _GtkTextIter const *)arg3);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24009,7 +24009,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_move_mark_by_name)
   
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   gdk_threads_enter ();
-  gtk_text_buffer_move_mark_by_name(arg1,(char const *)arg2,(GtkTextIter const *)arg3);
+  gtk_text_buffer_move_mark_by_name(arg1,(char const *)arg2,(struct _GtkTextIter const *)arg3);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24077,7 +24077,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_place_cursor)
   SWIG_FIRST_SELF(arg1, GtkTextBuffer *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   gdk_threads_enter ();
-  gtk_text_buffer_place_cursor(arg1,(GtkTextIter const *)arg2);
+  gtk_text_buffer_place_cursor(arg1,(struct _GtkTextIter const *)arg2);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24095,7 +24095,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_select_range)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   gdk_threads_enter ();
-  gtk_text_buffer_select_range(arg1,(GtkTextIter const *)arg2,(GtkTextIter const *)arg3);
+  gtk_text_buffer_select_range(arg1,(struct _GtkTextIter const *)arg2,(struct _GtkTextIter const *)arg3);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24115,7 +24115,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_apply_tag)
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  gtk_text_buffer_apply_tag(arg1,arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4);
+  gtk_text_buffer_apply_tag(arg1,arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24135,7 +24135,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_remove_tag)
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  gtk_text_buffer_remove_tag(arg1,arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4);
+  gtk_text_buffer_remove_tag(arg1,arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24161,7 +24161,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_apply_tag_by_name)
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  gtk_text_buffer_apply_tag_by_name(arg1,(char const *)arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4);
+  gtk_text_buffer_apply_tag_by_name(arg1,(char const *)arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24187,7 +24187,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_remove_tag_by_name)
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
   gdk_threads_enter ();
-  gtk_text_buffer_remove_tag_by_name(arg1,(char const *)arg2,(GtkTextIter const *)arg3,(GtkTextIter const *)arg4);
+  gtk_text_buffer_remove_tag_by_name(arg1,(char const *)arg2,(struct _GtkTextIter const *)arg3,(struct _GtkTextIter const *)arg4);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24205,7 +24205,7 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_remove_all_tags)
   SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, GtkTextIter *, es->message_arguments[1])
   gdk_threads_enter ();
-  gtk_text_buffer_remove_all_tags(arg1,(GtkTextIter const *)arg2,(GtkTextIter const *)arg3);
+  gtk_text_buffer_remove_all_tags(arg1,(struct _GtkTextIter const *)arg2,(struct _GtkTextIter const *)arg3);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
@@ -24694,6 +24694,1818 @@ SYX_FUNC_PRIMITIVE(Gtk_gtk_text_buffer_get_paste_target_list)
   SWIG_FIRST_SELF(arg1, GtkTextBuffer *, es->message_receiver)
   gdk_threads_enter ();
   result = (GtkTargetList *)gtk_text_buffer_get_paste_target_list(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextTag)
+{
+  struct _GtkTextTag *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextTag *)(struct _GtkTextTag *) calloc(1, sizeof(struct _GtkTextTag));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextTag)
+{
+  struct _GtkTextTag *arg1 = (struct _GtkTextTag *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextTag *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextTagClass)
+{
+  struct _GtkTextTagClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextTagClass *)(struct _GtkTextTagClass *) calloc(1, sizeof(struct _GtkTextTagClass));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextTagClass)
+{
+  struct _GtkTextTagClass *arg1 = (struct _GtkTextTagClass *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextTagClass *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_tag_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_text_tag_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_tag_new)
+{
+  gchar *arg1 = (gchar *) 0 ;
+  GtkTextTag *result = 0 ;
+  SyxOop result_oop;
+  
+  
+  if (!SYX_OBJECT_IS_STRING(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  result = (GtkTextTag *)gtk_text_tag_new((char const *)arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_tag_get_priority)
+{
+  GtkTextTag *arg1 = (GtkTextTag *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextTag *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_tag_get_priority(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_tag_set_priority)
+{
+  GtkTextTag *arg1 = (GtkTextTag *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextTag *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_tag_set_priority(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_tag_event)
+{
+  GtkTextTag *arg1 = (GtkTextTag *) 0 ;
+  GObject *arg2 = (GObject *) 0 ;
+  GdkEvent *arg3 = (GdkEvent *) 0 ;
+  GtkTextIter *arg4 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextTag *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GObject *, es->message_arguments[0])
+  SWIG_FIRST_SELF(arg3, GdkEvent *, es->message_arguments[1])
+  SWIG_FIRST_SELF(arg4, GtkTextIter *, es->message_arguments[2])
+  gdk_threads_enter ();
+  result = gtk_text_tag_event(arg1,arg2,arg3,(struct _GtkTextIter const *)arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextAppearance)
+{
+  struct _GtkTextAppearance *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextAppearance *)(struct _GtkTextAppearance *) calloc(1, sizeof(struct _GtkTextAppearance));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextAppearance)
+{
+  struct _GtkTextAppearance *arg1 = (struct _GtkTextAppearance *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextAppearance *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextAttributes)
+{
+  struct _GtkTextAttributes *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextAttributes *)(struct _GtkTextAttributes *) calloc(1, sizeof(struct _GtkTextAttributes));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextAttributes)
+{
+  struct _GtkTextAttributes *arg1 = (struct _GtkTextAttributes *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextAttributes *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_new)
+{
+  GtkTextAttributes *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GtkTextAttributes *)gtk_text_attributes_new();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_copy)
+{
+  GtkTextAttributes *arg1 = (GtkTextAttributes *) 0 ;
+  GtkTextAttributes *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextAttributes *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkTextAttributes *)gtk_text_attributes_copy(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_copy_values)
+{
+  GtkTextAttributes *arg1 = (GtkTextAttributes *) 0 ;
+  GtkTextAttributes *arg2 = (GtkTextAttributes *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextAttributes *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextAttributes *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_text_attributes_copy_values(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_unref)
+{
+  GtkTextAttributes *arg1 = (GtkTextAttributes *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextAttributes *, es->message_receiver)
+  gdk_threads_enter ();
+  gtk_text_attributes_unref(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_ref)
+{
+  GtkTextAttributes *arg1 = (GtkTextAttributes *) 0 ;
+  GtkTextAttributes *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextAttributes *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkTextAttributes *)gtk_text_attributes_ref(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_attributes_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_text_attributes_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextMark)
+{
+  struct _GtkTextMark *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextMark *)(struct _GtkTextMark *) calloc(1, sizeof(struct _GtkTextMark));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextMark)
+{
+  struct _GtkTextMark *arg1 = (struct _GtkTextMark *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextMarkClass)
+{
+  struct _GtkTextMarkClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextMarkClass *)(struct _GtkTextMarkClass *) calloc(1, sizeof(struct _GtkTextMarkClass));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextMarkClass)
+{
+  struct _GtkTextMarkClass *arg1 = (struct _GtkTextMarkClass *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextMarkClass *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_text_mark_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_set_visible)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_mark_set_visible(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_visible)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_mark_get_visible(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_name)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  gchar *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gchar *)gtk_text_mark_get_name(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_string_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_deleted)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_mark_get_deleted(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_buffer)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  GtkTextBuffer *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkTextBuffer *)gtk_text_mark_get_buffer(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_mark_get_left_gravity)
+{
+  GtkTextMark *arg1 = (GtkTextMark *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextMark *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_mark_get_left_gravity(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextView)
+{
+  struct _GtkTextView *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextView *)(struct _GtkTextView *) calloc(1, sizeof(struct _GtkTextView));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextView)
+{
+  struct _GtkTextView *arg1 = (struct _GtkTextView *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_new__GtkTextViewClass)
+{
+  struct _GtkTextViewClass *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (struct _GtkTextViewClass *)(struct _GtkTextViewClass *) calloc(1, sizeof(struct _GtkTextViewClass));
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_delete__GtkTextViewClass)
+{
+  struct _GtkTextViewClass *arg1 = (struct _GtkTextViewClass *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, struct _GtkTextViewClass *, es->message_receiver)
+  gdk_threads_enter ();
+  free((char *) arg1);
+  
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_type)
+{
+  GType result;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GType)gtk_text_view_get_type();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_new)
+{
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_text_view_new();
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_new_with_buffer)
+{
+  GtkTextBuffer *arg1 = (GtkTextBuffer *) 0 ;
+  GtkWidget *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextBuffer *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = (GtkWidget *)gtk_text_view_new_with_buffer(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_buffer)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextBuffer *arg2 = (GtkTextBuffer *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextBuffer *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_text_view_set_buffer(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_buffer)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextBuffer *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkTextBuffer *)gtk_text_view_get_buffer(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_scroll_to_iter)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gdouble arg3 ;
+  gboolean arg4 ;
+  gdouble arg5 ;
+  gdouble arg6 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_IS_TRUE(es->message_arguments[2]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[3]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg5 = SYX_OBJECT_FLOAT(es->message_arguments[3]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[4]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg6 = SYX_OBJECT_FLOAT(es->message_arguments[4]);
+  
+  gdk_threads_enter ();
+  result = gtk_text_view_scroll_to_iter(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_scroll_to_mark)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextMark *arg2 = (GtkTextMark *) 0 ;
+  gdouble arg3 ;
+  gboolean arg4 ;
+  gdouble arg5 ;
+  gdouble arg6 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextMark *, es->message_arguments[0])
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_OBJECT_FLOAT(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_IS_TRUE(es->message_arguments[2]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[3]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg5 = SYX_OBJECT_FLOAT(es->message_arguments[3]);
+  
+  
+  if (!SYX_OBJECT_IS_FLOAT(es->message_arguments[4]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg6 = SYX_OBJECT_FLOAT(es->message_arguments[4]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_scroll_to_mark(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_scroll_mark_onscreen)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextMark *arg2 = (GtkTextMark *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextMark *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_text_view_scroll_mark_onscreen(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_move_mark_onscreen)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextMark *arg2 = (GtkTextMark *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextMark *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_move_mark_onscreen(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_place_cursor_onscreen)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_view_place_cursor_onscreen(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_visible_rect)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GdkRectangle *arg2 = (GdkRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GdkRectangle *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_text_view_get_visible_rect(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_cursor_visible)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_cursor_visible(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_cursor_visible)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_view_get_cursor_visible(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_iter_location)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  GdkRectangle *arg3 = (GdkRectangle *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  SWIG_FIRST_SELF(arg3, GdkRectangle *, es->message_arguments[1])
+  gdk_threads_enter ();
+  gtk_text_view_get_iter_location(arg1,(struct _GtkTextIter const *)arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_iter_at_location)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_get_iter_at_location(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_iter_at_position)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gint arg4 ;
+  gint arg5 ;
+  int temp3 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+  arg3 = &temp3;
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  gtk_text_view_get_iter_at_position(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_line_yrange)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gint *arg3 = (gint *) 0 ;
+  gint *arg4 = (gint *) 0 ;
+  int temp3 ;
+  int temp4 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
+  arg3 = &temp3;
+  
+  
+  temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+  arg4 = &temp4;
+  
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gtk_text_view_get_line_yrange(arg1,(struct _GtkTextIter const *)arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_line_at_y)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gint arg3 ;
+  gint *arg4 = (gint *) 0 ;
+  int temp4 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  temp4 = (int) SYX_SMALL_INTEGER(es->message_arguments[2]);
+  arg4 = &temp4;
+  
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (2);
+  gdk_threads_enter ();
+  gtk_text_view_get_line_at_y(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_buffer_to_window_coords)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextWindowType arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint *arg5 = (gint *) 0 ;
+  gint *arg6 = (gint *) 0 ;
+  int temp5 ;
+  int temp6 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  
+  temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+  arg5 = &temp5;
+  
+  
+  temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+  arg6 = &temp6;
+  
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gtk_text_view_buffer_to_window_coords(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_window_to_buffer_coords)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextWindowType arg2 ;
+  gint arg3 ;
+  gint arg4 ;
+  gint *arg5 = (gint *) 0 ;
+  gint *arg6 = (gint *) 0 ;
+  int temp5 ;
+  int temp6 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  
+  temp5 = (int) SYX_SMALL_INTEGER(es->message_arguments[3]);
+  arg5 = &temp5;
+  
+  
+  temp6 = (int) SYX_SMALL_INTEGER(es->message_arguments[4]);
+  arg6 = &temp6;
+  
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
+  int num_values = 0;
+  result_oop = syx_array_new_size (3);
+  gdk_threads_enter ();
+  gtk_text_view_window_to_buffer_coords(arg1,arg2,arg3,arg4,arg5,arg6);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
+  SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
+  SYX_PRIM_RETURN (result_oop);
+#undef SWIG_APPEND_VALUE
+#define SWIG_APPEND_VALUE _SWIG_SET_RESULT
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_window)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextWindowType arg2 ;
+  GdkWindow *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  result = (GdkWindow *)gtk_text_view_get_window(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_window_type)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GdkWindow *arg2 = (GdkWindow *) 0 ;
+  GtkTextWindowType result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GdkWindow *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = (GtkTextWindowType)gtk_text_view_get_window_type(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_border_window_size)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextWindowType arg2 ;
+  gint arg3 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_border_window_size(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_border_window_size)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextWindowType arg2 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_border_window_size(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_forward_display_line)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_forward_display_line(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_backward_display_line)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_backward_display_line(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_forward_display_line_end)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_forward_display_line_end(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_backward_display_line_start)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_backward_display_line_start(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_starts_display_line)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  gdk_threads_enter ();
+  result = gtk_text_view_starts_display_line(arg1,(struct _GtkTextIter const *)arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_move_visually)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextIter *arg2 = (GtkTextIter *) 0 ;
+  gint arg3 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkTextIter *, es->message_arguments[0])
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  gdk_threads_enter ();
+  result = gtk_text_view_move_visually(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_add_child_at_anchor)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  GtkTextChildAnchor *arg3 = (GtkTextChildAnchor *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkWidget *, es->message_arguments[0])
+  SWIG_FIRST_SELF(arg3, GtkTextChildAnchor *, es->message_arguments[1])
+  gdk_threads_enter ();
+  gtk_text_view_add_child_at_anchor(arg1,arg2,arg3);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_add_child_in_window)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  GtkTextWindowType arg3 ;
+  gint arg4 ;
+  gint arg5 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkWidget *, es->message_arguments[0])
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_add_child_in_window(arg1,arg2,arg3,arg4,arg5);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_move_child)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkWidget *arg2 = (GtkWidget *) 0 ;
+  gint arg3 ;
+  gint arg4 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, GtkWidget *, es->message_arguments[0])
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_move_child(arg1,arg2,arg3,arg4);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_wrap_mode)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkWrapMode arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_wrap_mode(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_wrap_mode)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkWrapMode result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkWrapMode)gtk_text_view_get_wrap_mode(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_editable)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_editable(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_editable)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_view_get_editable(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_overwrite)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_overwrite(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_overwrite)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_view_get_overwrite(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_accepts_tab)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_BOOLEAN(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_IS_TRUE(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_accepts_tab(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_accepts_tab)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gboolean result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = gtk_text_view_get_accepts_tab(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_boolean_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_pixels_above_lines)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_pixels_above_lines(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_pixels_above_lines)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_pixels_above_lines(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_pixels_below_lines)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_pixels_below_lines(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_pixels_below_lines)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_pixels_below_lines(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_pixels_inside_wrap)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_pixels_inside_wrap(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_pixels_inside_wrap)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_pixels_inside_wrap(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_justification)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkJustification arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_justification(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_justification)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkJustification result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkJustification)gtk_text_view_get_justification(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_left_margin)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_left_margin(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_left_margin)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_left_margin(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_right_margin)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_right_margin(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_right_margin)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_right_margin(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_indent)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint arg2 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  
+  if (!SYX_IS_SMALL_INTEGER(es->message_arguments[0]))
+  {
+    SYX_PRIM_FAIL;
+  }	   
+  arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  
+  gdk_threads_enter ();
+  gtk_text_view_set_indent(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_indent)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  gint result;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (gint)gtk_text_view_get_indent(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (syx_small_integer_new(result));
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_set_tabs)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  PangoTabArray *arg2 = (PangoTabArray *) 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  SWIG_FIRST_SELF(arg2, PangoTabArray *, es->message_arguments[0])
+  gdk_threads_enter ();
+  gtk_text_view_set_tabs(arg1,arg2);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE (es->message_receiver);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_tabs)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  PangoTabArray *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (PangoTabArray *)gtk_text_view_get_tabs(arg1);
+  gdk_threads_leave ();
+  SWIG_APPEND_VALUE ((SyxOop) result);
+  SYX_PRIM_RETURN (result_oop);
+}
+
+
+SYX_FUNC_PRIMITIVE(Gtk_gtk_text_view_get_default_attributes)
+{
+  GtkTextView *arg1 = (GtkTextView *) 0 ;
+  GtkTextAttributes *result = 0 ;
+  SyxOop result_oop;
+  
+  SWIG_FIRST_SELF(arg1, GtkTextView *, es->message_receiver)
+  gdk_threads_enter ();
+  result = (GtkTextAttributes *)gtk_text_view_get_default_attributes(arg1);
   gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);

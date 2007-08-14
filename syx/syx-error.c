@@ -48,8 +48,9 @@ syx_error_init (void)
 {
   _syx_error_entries_top = 0;
   assert (syx_error_register ("interpreter", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
-  assert (syx_error_register ("not found",
-			      syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
+  assert (syx_error_register ("not found", syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
+  assert (syx_error_register ("wrong number of arguments",
+			      syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
 }
 
 //! Clear all memory allocated to by the error reporting system
