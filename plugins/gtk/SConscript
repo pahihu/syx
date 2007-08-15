@@ -57,7 +57,7 @@ if penv['GTK']:
         instdir = os.path.join (env['plugindir'], 'gtk')
         env.SyxInstall (instdir, lib_shared)
 
-        path = os.path.join (env['datadir'], 'st', 'gtk')
+        path = os.path.join (env['rootdir'], 'st', 'gtk')
         env.SyxInstall (path, st_sources)
 
 target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + ['SConscript'])

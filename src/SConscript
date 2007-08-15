@@ -47,15 +47,15 @@ inst = env.SyxInstall (env['bindir'], prog)
 # Create the image once installed
 
 if not env['host']:
-    image = env.Command (xenv['imagepath'], inst, '$SOURCE -r $datadir -S')
+    image = env.Command (xenv['imagepath'], inst, '$SOURCE -r $rootdir -S')
     env.Alias ('install', image)
     env.AlwaysBuild (image)
-    env.Depends (image, os.path.join(xenv['datadir'], 'st'))
+    env.Depends (image, os.path.join(xenv['rootdir'], 'st'))
 
 # Distribution
 
 if env['PLATFORM'] != 'win32':
-    path = os.path.join (distdir, env['datadir'])
+    path = os.path.join (distdir, env['rootdir'])
     bimage = env.Command (os.path.join (distdir, xenv['imagepath']), prog, '$SOURCE -r %s -i $TARGET -S' % path.replace('#', ''))
     env.Depends (bimage, os.path.join (path, 'st', 'kernel'))
     env.Alias ('bdist', bimage)

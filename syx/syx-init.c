@@ -29,7 +29,7 @@
 
         - Readable code 
         - Flexibility trough easy creations of plugins 
-        - Portable to most important platforms 
+        - Highly portable
         - Optimized 
         - Modern 
         - Embedding in C applications 

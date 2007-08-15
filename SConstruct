@@ -35,10 +35,11 @@ if env['PLATFORM'] == 'win32':
    opts.AddOptions (PathOption('prefix',
                               'Installation prefix',
                               'C:\\\\Syx', PathOption.PathAccept))
-   env['bindir'] = env['datadir'] = env['libdir'] = '$prefix'
+   env['bindir'] = env['datadir'] = env['rootdir'] = env['libdir'] = '$prefix'
    env['plugindir'] = '$prefix\\\\lib'
    env['imagepath'] = '$prefix\\\\default.sim'
    env['includedir'] = '$prefix\\\\include'
+   env['docdir'] = '$prefix\\\\doc'
 else:
    opts.AddOptions (
       PathOption('prefix', 
@@ -51,11 +52,17 @@ else:
                  'Installation prefix for user executables', 
                  '$exec_prefix/bin', PathOption.PathAccept),
       PathOption('datadir',
-                 'Installation prefix for packages',
-                 '$prefix/share/syx', PathOption.PathAccept),
+                 'Installation prefix for machine-independent data',
+                 '$prefix/share', PathOption.PathAccept),
+      PathOption('rootdir',
+                 'Installation prefix for all smalltalk data',
+                 '$datadir/syx', PathOption.PathAccept),
       PathOption('imagepath',
                  'Installation path for the default binary image',
-                 '$datadir/default.sim', PathOption.PathAccept),
+                 '$rootdir/default.sim', PathOption.PathAccept),
+      PathOption('docdir',
+                 'Installation prefix for documentation',
+                 '$datadir/doc', PathOption.PathAccept),
       PathOption('libdir',
                  'Installation prefix for object code libraries', 
                  '$exec_prefix/lib', PathOption.PathAccept),
@@ -328,7 +335,7 @@ if 'wince' in env['host']:
 elif env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DROOT_PATH="." -DIMAGE_PATH="default.sim" -DPLUGIN_PATH="lib"')
 else:
-   env.MergeFlags ('-DROOT_PATH="$datadir" -DIMAGE_PATH="$imagepath" -DPLUGIN_PATH="$plugindir"')
+   env.MergeFlags ('-DROOT_PATH="$rootdir" -DIMAGE_PATH="$imagepath" -DPLUGIN_PATH="$plugindir"')
 
 if env['debug'] == 'no':
    env.MergeFlags ('-O3')
@@ -341,12 +348,6 @@ elif env['debug'] == 'full':
 
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DWINDOWS')
-
-# Doc builder
-
-env.Alias ('doc', env.Command ('build/docs', 'Doxyfile',
-                               'doxygen $SOURCES'))
-env.Clean ('doc', 'build/doc')
 
 distdir = '#syx-0.1.4'
 
@@ -361,6 +362,17 @@ def builder_syxinstall (target, sources):
    return t1
 
 setattr (env, 'SyxInstall', builder_syxinstall)
+
+# Doc builder
+
+target = env.Command ('build/doc', 'Doxyfile', 'doxygen $SOURCES')
+env.Alias ('doc', target)
+path = os.path.join (env['docdir'], distdir[1:])
+t1 = env.SyxInstall (path, target)
+env.Alias ('install', t1)
+env.Clean ('install', t1)
+env.Clean ('doc', target)
+
 
 # Build
 
@@ -379,7 +391,7 @@ env.SConscript (dirs=['tests'], exports=['env', 'distdir'])
 # Install data
 
 sources = glob.glob ('st/kernel/*.st')
-path = os.path.join (env['datadir'], 'st', 'kernel')
+path = os.path.join (env['rootdir'], 'st', 'kernel')
 env.SyxInstall (path, sources)
 
 # Source distribution

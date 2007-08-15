@@ -68,9 +68,9 @@ main (int argc, char *argv[])
   INTERPRET ("method"\
 	     "| s |"\
 	     "s := Semaphore new."\
-	     "[ 1.0 to: 5 do: [ s wait. 'Process 1' printNl. s signal ] ] fork."\
-	     "[ 1 to: 5.0 do: [ s wait. 'Process 2' printNl. s signal ] ] fork."\
-	     "[ 1.3 to: 5.6 do: [ s wait. 'Process 3' printNl. s signal ] ] fork."\
+	     "[ 1.0 to: 5 do: [ :i | s wait. 'Process 1' printNl. s signal ] ] fork."\
+	     "[ 1 to: 5.0 do: [ :i | s wait. 'Process 2' printNl. s signal ] ] fork."\
+	     "[ 1.3 to: 5.6 do: [ :i | s wait. 'Process 3' printNl. s signal ] ] fork."\
 	     "s signal");
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
