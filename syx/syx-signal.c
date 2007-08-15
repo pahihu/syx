@@ -25,6 +25,7 @@
 #include "syx-types.h"
 #include "syx-utils.h"
 #include "syx-interp.h"
+#include "syx-memory.h"
 #include "syx-signal.h"
 #include "syx-init.h"
 
@@ -66,6 +67,27 @@ _syx_smalltalk_sighandler (int signum)
 }
 
 static void
+_syx_save_recovered_image (void)
+{
+  SyxOop process = syx_processor_active_process;
+  syx_string image_path;
+  syx_symbol cur_image_path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
+  
+  image_path = syx_calloc (strlen (cur_image_path) + 9, sizeof (syx_char));
+  sprintf(image_path, "%s.recover", cur_image_path);
+
+  SYX_PROCESS_CONTEXT(process) = syx_nil;
+  SYX_PROCESS_SUSPENDED(process) = syx_true;
+  SYX_PROCESS_SCHEDULED(process) = syx_false;
+  syx_scheduler_remove_process (process);
+
+  if (!syx_memory_save_image (image_path))
+    printf("\nCan't save a recovered copy of the image at %s.\n", image_path);
+  else
+    printf("\nRecovered copy of the image has been created at %s.\n", image_path);
+}
+
+static void
 _syx_internal_sighandler (int signum)
 {
   switch (signum)
@@ -82,6 +104,8 @@ _syx_internal_sighandler (int signum)
     }
   
   syx_show_traceback ();
+  _syx_save_recovered_image ();
+  puts ("\nPlease send the above bug report to \"lethalman88@gmail.com\".");
   exit (EXIT_FAILURE);
 }
 

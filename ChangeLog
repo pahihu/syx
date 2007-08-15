@@ -1,3 +1,12 @@
+2007-08-16  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-scheduler.c (syx_scheduler_add_process): fixed process scheduling
+
+	* syx/syx-signal.c (_syx_internal_sighandler): save a recovered copy of the image on SIGSEGV or SIGILL
+	(_syx_save_recovered_image): added
+
+	* src/main.c (_do_recovery): added for recovering an image from a possibly broken Process
+
 2007-08-15  Luca Bruno  <lethalman88@gmail.com>
 
 	* tests/testscheduler.c: fixed blocks to use the right number of arguments
@@ -6,6 +15,7 @@
 
 	* SConstruct: rootdir option has been added
 	support for documentation installation/clean has been added
+	replaced doc command with doc option
 
 2007-08-14  Luca Bruno  <lethalman88@gmail.com>
 

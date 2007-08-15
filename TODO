@@ -1,4 +1,6 @@
 Major:
+- Use sudo when creating the image with scons install
+- Fix assignments such as test:='test'
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Fix exception handling sequence

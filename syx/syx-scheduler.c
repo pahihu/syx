@@ -362,8 +362,8 @@ syx_scheduler_add_process (SyxOop process)
 	syx_processor_first_process = syx_processor_active_process = process;
       else
 	{
-	  SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
-	  SYX_PROCESS_NEXT(syx_processor_active_process) = process;
+	  SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_first_process);
+	  SYX_PROCESS_NEXT(syx_processor_first_process) = process;
 	}
       SYX_PROCESS_SCHEDULED(process) = syx_true;
     }

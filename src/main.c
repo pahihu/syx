@@ -56,10 +56,32 @@ _help (void)
 }
 
 static void
+_do_recovery (const char *rim_path)
+{
+  SyxOop process = syx_processor_active_process;
+  SYX_PROCESS_CONTEXT(process) = syx_nil;
+  SYX_PROCESS_SUSPENDED(process) = syx_true;
+  SYX_PROCESS_SCHEDULED(process) = syx_false;
+  syx_scheduler_remove_process (process);
+
+  if (!syx_memory_save_image (rim_path))
+    {
+      printf("Can't save a recovered copy of the image at %s.\n", rim_path);
+      exit (EXIT_FAILURE);
+    }
+  else
+    {
+      printf("Recovered copy of the image has been created at %s.\n", rim_path);
+      exit (EXIT_SUCCESS);
+    }
+}
+
+static void
 _getopt_do (int argc, char **argv)
 {
   syx_string root_path = NULL;
   syx_string image_path = NULL;
+  syx_symbol recovery = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
   syx_bool continuestartup = FALSE;
@@ -74,6 +96,7 @@ _getopt_do (int argc, char **argv)
     {"image", 1, 0, 0},
     {"scratch", 0, 0, 0},
     {"version", 0, 0, 0},
+    {"recovery", 1, 0, 0},
     {"help", 0, 0, 0},
     {0, 0, 0, 0}
   };
@@ -106,10 +129,14 @@ _getopt_do (int argc, char **argv)
 		      SYX_VERSION);
 	      exit (EXIT_SUCCESS);
 	    case 4:
+	      recovery = optarg;
+	      break;
+	    case 5:
 	    default:
 	      _help ();
 	      exit (EXIT_FAILURE);
 	    }
+	  break;
 
 	case 'r':
 	  root_path = strdup (optarg);
@@ -153,7 +180,7 @@ _getopt_do (int argc, char **argv)
       syx_set_image_path (image_path);
       syx_free (image_path);
     }
-   
+  
   if (scratch)
     {
       syx_build_basic ();
@@ -173,6 +200,9 @@ _getopt_do (int argc, char **argv)
     {
       if (!syx_memory_load_image (NULL))
 	syx_error ("Image not found\n");
+
+      if (recovery)
+	_do_recovery (recovery);
 
       SYX_OBJECT_VARS(syx_globals)[5] = syx_boolean_new (continuestartup);
 

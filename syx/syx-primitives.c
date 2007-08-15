@@ -1411,7 +1411,6 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
   SYX_PRIM_ARGS(1);
-  *(char*)0 = 'a';
   SyxOop filename = es->message_arguments[0];
   syx_bool ret;
 

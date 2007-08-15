@@ -86,6 +86,7 @@ opts.AddOptions (
    EnumOption ('debug', """Debug output and symbols""", 'normal',
                allowed_values=('no', 'normal', 'info', 'full'),
                ignorecase=True),
+   BoolOption ('doc', """Build reference documentation (needs Doxygen)""", True),
 
    BoolOption ('GTK', """Build the syx-gtk plugin to support graphical user interfaces""", True),
    BoolOption ('WINGUI', """Build the syx-wingui plugin to support native windows user interfaces""", True),
@@ -104,8 +105,8 @@ env['tools'] = ['default', 'mingw']
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
   Type: 'scons'               to build Syx.
-        'scons doc'           to create the reference
-                              documentation (requires Doxygen).
+        'scons doc=no'        to create disable building the reference
+                              documentation.
 
         'scons endianness=auto,big,little'
                               specify the endianness of the target
@@ -365,14 +366,14 @@ setattr (env, 'SyxInstall', builder_syxinstall)
 
 # Doc builder
 
-target = env.Command ('build/doc', 'Doxyfile', 'doxygen $SOURCES')
-env.Alias ('doc', target)
-path = os.path.join (env['docdir'], distdir[1:])
-t1 = env.SyxInstall (path, target)
-env.Alias ('install', t1)
-env.Clean ('install', t1)
-env.Clean ('doc', target)
-
+env['doxygen'] = env.WhereIs ('doxygen')
+if env['doc'] and env['doxygen']:
+   target = env.Command ('build/doc', 'Doxyfile', '$doxygen $SOURCES')
+   Default (target)
+   path = os.path.join (env['docdir'], distdir[1:])
+   t1 = env.SyxInstall (path, target)
+   env.Alias ('install', t1)
+   env.Clean ('install', t1)
 
 # Build
 

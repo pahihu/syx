@@ -730,6 +730,4 @@ syx_show_traceback (void)
 
       context = SYX_METHOD_CONTEXT_PARENT (context);
     }
-
-  puts ("\nPlease send the above bug report to \"lethalman88@gmail.com\".");
 }
