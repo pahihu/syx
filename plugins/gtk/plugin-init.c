@@ -110,6 +110,7 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
   context = syx_send_unary_message (syx_nil, callback, "invoke");
   process = syx_process_new (context);
   SYX_PROCESS_SUSPENDED (process) = syx_false;
+  gdk_threads_leave ();
   g_thread_yield ();
   while (!SYX_IS_NIL (SYX_PROCESS_CONTEXT (process))) { g_thread_yield (); };
 
@@ -148,6 +149,8 @@ syx_plugin_initialize (void)
     "GtkWidget.st", "GtkLabel.st", "GtkContainer.st",
     "GtkWindow.st", "GtkButton.st", "GtkTools.st", "GtkBox.st",
     "GtkAdjustment.st", "GtkScrolledWindow.st",
+    "GtkTextIter.st", "GtkTextView.st", "GtkTextBuffer.st", "GtkTextMark.st",
+    "GtkTextTag.st", "GtkTextTagTable.st",
     NULL
   };
 

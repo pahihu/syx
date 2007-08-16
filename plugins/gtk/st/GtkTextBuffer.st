@@ -119,9 +119,13 @@ at: aTextIter interactiveBackspace: interactiveBoolean defaultEditable: editable
 	self primitiveFailed
 !
 
-text: aString
+primText: aString len: len
     <cCall: 'Gtk_gtk_text_buffer_set_text' plugin: 'gtk'>
 	self primitiveFailed
+!
+
+text: aString
+    ^self primText: aString len: aString size
 !
 
 textFrom: startIter to: endIter includeHiddenChars: aBoolean
@@ -287,7 +291,7 @@ primIter: iter atLine: lineNumber index: byteIndex
 	self primitiveFailed
 !
 
-iterAtLine: lineNumber index: byteOffset
+iterAtLine: lineNumber index: byteIndex
     | iter |
     iter := GtkTextIter new.
     self primIter: iter atLine: lineNumber index: byteIndex.
@@ -311,7 +315,7 @@ primIter: iter atChildAnchor: textChildAnchor
 	self primitiveFailed
 !
 
-iterAtChildAnchor: textMark
+iterAtChildAnchor: textChildAnchor
     | iter |
     iter := GtkTextIter new.
     self primIter: iter atChildAnchor: textChildAnchor.
@@ -330,15 +334,15 @@ startIter
     ^iter
 !
 
-primStopIter: iter
-    <cCall: 'Gtk_gtk_text_buffer_get_stop_iter' plugin: 'gtk'>
+primEndIter: iter
+    <cCall: 'Gtk_gtk_text_buffer_get_end_iter' plugin: 'gtk'>
 	self primitiveFailed
 !
 
-stopIter
+endIter
     | iter |
     iter := GtkTextIter new.
-    self primStopIter: iter.
+    self primEndIter: iter.
     ^iter
 !
 

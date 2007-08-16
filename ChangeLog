@@ -1,5 +1,21 @@
 2007-08-16  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/gtk/plugin-init.c (syx_plugin_initialize): parse all remaining st files
+	(syx_g_closure_marshal): leave gdk threads before entering the smalltalk callback
+
+	* plugins/gtk/st/GtkTools.st: added a textview for evaluating code
+
+	* plugins/gtk/st/Gtk.st: added missing GTK+ classes
+
+	* st/kernel/YXTools.st (onDoIt): evaluate code
+
+	* st/kernel/Compiler.st (identifierToken): handle identifier:= as an assigment
+
+	* st/kernel/FileStream.st (StdIOStream): added class and methods for standard I/O
+	(open:for:): support append mode, read and write create (w+)
+
+	* syx/syx-primitives.c (FileStream_fileOp): added more checks, use O_CREAT flags for write, support w+ and append mode
+
 	* syx/syx-scheduler.c (syx_scheduler_add_process): fixed process scheduling
 
 	* syx/syx-signal.c (_syx_internal_sighandler): save a recovered copy of the image on SIGSEGV or SIGILL

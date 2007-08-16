@@ -22,6 +22,17 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+!GtkTextIter class methodsFor: 'instance creation'!
+
+primNew
+    <cCall: 'Gtk_new__GtkTextIter' plugin: 'gtk'>
+	self primitiveFailed
+!
+
+new
+    ^self handle: self primNew
+! !
+
 !GtkTextIter methodsFor: 'primitives'!
 
 buffer

@@ -114,7 +114,10 @@ identifierToken
 	    s nextPut: lastChar ].
 
     lastChar = $:
-	ifTrue: [ s nextPut: $: ]
+	ifTrue: [ 
+	    self next = $=
+		ifTrue: [ stream skip: -2 ]
+		ifFalse: [ s nextPut: $:. stream skip: -1 ] ]
 	ifFalse: [ 
 	    stream atEnd
 		ifFalse: [ stream skip: -1 ] ].
@@ -210,7 +213,7 @@ expect: aToken toBe: discriminatorBlock instanceOf: aClass otherwise: exceptionB
 !
 
 expect: aToken equalTo: anObject instanceOf: aClass otherwise: exceptionBlock
-    ^self expect: aToken toBe: [ :t | t = (aClass withAll: anObject) ] instanceOf: aClass otherwise: exceptionBlock
+    ^self expect: aToken toBe: [ :t | t sameAs: anObject ] instanceOf: aClass otherwise: exceptionBlock
 !
 
 expect: aToken equalTo: anObject instanceOf: aClass
@@ -820,7 +823,7 @@ parseExpression
     (token class = CompilerIdentifierToken and: [ token isNameConst ])
 	ifTrue: [
 	    assignName := token.
-	    ((token := lexer nextToken) class = CompilerBinaryToken and: [ token asSymbol = #:= ] )
+	    ((token := lexer nextToken) class = CompilerBinaryToken and: [ token sameAs: ':=' ] )
 		ifTrue: [
 		    lexer nextToken.
 		    self parseAssignment: assignName ]
@@ -954,10 +957,10 @@ doKeyContinuation: toSuper
 	    | numArgs message |
 	    duplicateIndexes peekPut: bytecode size.
 
-	    token asSymbol = #ifTrue:
+	    (token sameAs: 'ifTrue:')
 		ifTrue: [
 		    conditionalBranch := #branchIfTrue ].
-	    token asSymbol = #ifFalse:
+	    (token sameAs: 'ifFalse:')
 		ifTrue: [
 		    conditionalBranch := #branchIfFalse ].
 	    conditionalBranch
@@ -967,8 +970,8 @@ doKeyContinuation: toSuper
 		    jump := self parseOptimizedBlock: conditionalBranch doPop: false.
 		    token := lexer lastToken.
 		    (token class = CompilerIdentifierToken
-			 and: [ conditionalBranch = #branchIfTrue & (token asSymbol = #ifFalse:)
-				    or: [ conditionalBranch = #branchIfFalse & (token asSymbol = #ifTrue:) ] ] )
+			 and: [ conditionalBranch = #branchIfTrue & (token sameAs: 'ifFalse:')
+				    or: [ conditionalBranch = #branchIfFalse & (token sameAs: 'ifTrue:') ] ] )
 			ifTrue: [
 			    lexer nextToken.
 			    
@@ -992,10 +995,10 @@ doKeyContinuation: toSuper
 				nextPut: bytecode size / 2;
 				setToEnd ].
 		    ^false ].
-	    token asSymbol = #whileTrue:
+	    (token sameAs: 'whileTrue:')
 		ifTrue: [
 		    conditionalBranch := #branchIfTrue ].
-	    token asSymbol = #whileFalse:
+	    (token sameAs: 'whileFalse:')
 		ifTrue: [
 		    conditionalBranch := #branchIfFalse ].
 	    conditionalBranch

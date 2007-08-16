@@ -47,6 +47,8 @@ _help (void)
 	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
 	  "  -c\t\t\tContinue startup process after loading files\n"
 	  "\t\t\tfrom the command line.\n\n"
+	  "  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
+	  "\t\t\tof it to IMAGEFILE.\n\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"
 	  "  -h --help\t\tPrint this message.\n\n"
 	  "For more informations, please visit the homepage: http://code.google.com/p/syx.\n"

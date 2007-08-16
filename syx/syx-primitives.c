@@ -567,10 +567,15 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 {
   SYX_PRIM_ARGS(2);
+  syx_int32 op = SYX_SMALL_INTEGER (es->message_arguments[0]);
   syx_int32 fd = SYX_SMALL_INTEGER (es->message_arguments[1]);
   syx_int32 ret = 0;
+  if (op != 0 && fd < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
 
-  switch (SYX_SMALL_INTEGER (es->message_arguments[0]))
+  switch (op)
     {
     case 0: // open
       {
@@ -585,9 +590,21 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	      flags |= O_RDONLY;
 	  }
 	else if (*mode == 'w')
-	  flags |= O_WRONLY;
+	  {
+	    flags |= O_CREAT | O_TRUNC;
+	    if (mode[1] == '+')
+	      flags |= O_RDWR;
+	    else
+	      flags |= O_WRONLY;
+	  }
+	else if (*mode == 'a')
+	  {
+	    flags |= O_APPEND | O_WRONLY | O_CREAT;
+	  }
 	else
-	  syx_error ("Unknown open mode %s\n", mode);
+	  {
+	    SYX_PRIM_FAIL;
+	  }
 	
 	ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
       }
@@ -600,6 +617,11 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     case 2: // nextPut:
       SYX_PRIM_ARGS(3);
       {
+	if (!SYX_IS_CHARACTER (es->message_arguments[2]))
+	  {
+	    SYX_PRIM_FAIL;
+	  }
+
 	syx_char c = SYX_CHARACTER (es->message_arguments[2]);
 	ret = write (fd, &c, 1);
       }
@@ -680,7 +702,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     default: // unknown
-      syx_error ("Unknown file operation: %d\n", SYX_SMALL_INTEGER (es->message_arguments[0]));
+      SYX_PRIM_FAIL;
 
     }
 

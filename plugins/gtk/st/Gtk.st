@@ -46,13 +46,57 @@ GPointer subclass: #GClosure
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
 
+GPointer subclass: #GtkTextIter
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GPointer subclass: #GtkTextAttributes
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GPointer subclass: #PangoLanguage
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
 GPointer subclass: #GObject
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GPointer subclass: #GdkRectangle
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
 
 GObject subclass: #GtkObject
 	instanceVariableNames: ''
 	classVariableNames: ''!
+
+GObject subclass: #GtkTextBuffer
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GObject subclass: #GdkDrawable
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GObject subclass: #GtkTextTagTable
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GObject subclass: #GtkTextChildAnchor
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GObject subclass: #GtkTextMark
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GObject subclass: #GtkTextTag
+	instanceVariableNames: ''
+	classVariableNames: ''!
+
+GdkDrawable subclass: #GdkWindow
+	    instanceVariableNames: ''
+	    classVariableNames: ''!
 
 GtkObject subclass: #GtkWidget
 	  instanceVariableNames: ''
@@ -86,6 +130,10 @@ GtkContainer subclass: #GtkBox
 	     instanceVariableNames: ''
 	     classVariableNames: ''!
 
+GtkContainer subclass: #GtkTextView
+	     instanceVariableNames: ''
+	     classVariableNames: ''!
+
 GtkBin subclass: #GtkScrolledWindow
        instanceVariableNames: ''
        classVariableNames: ''!
@@ -101,7 +149,7 @@ GtkBox subclass: #GtkHBox
 "GUI Tools"
 
 WorkspaceView subclass: #GtkWorkspaceView
-	      instanceVariableNames: ''
+	      instanceVariableNames: 'textView'
 	      classVariableNames: ''!
 
 Workspace subclass: #GtkWorkspace

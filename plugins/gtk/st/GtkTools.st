@@ -28,7 +28,9 @@ setupUi
     mainWidget := GtkWindow new.
     mainContainer := GtkVBox new.
     mainWidget add: mainContainer.
-    self setupToolbar
+    mainWidget when: 'destroy' send: self -> #close.
+    self setupToolbar.
+    self setupText
 !
 
 setupToolbar
@@ -36,29 +38,47 @@ setupToolbar
     hbox := GtkHBox new.
 
     button := GtkButton fromStock: 'gtk-execute'.
-    button when: 'clicked' send: self -> #execute.
+    button when: 'clicked' send: self -> #onExecute.
     hbox packStart: button.
 
     button := GtkButton fromStock: 'gtk-clear'.
+    button when: 'clicked' send: self -> #onClear.
     hbox packStart: button.
 
     button := GtkButton fromStock: 'gtk-quit'.
-    button when: 'clicked' send: self -> #close.
+    button when: 'clicked' send: self -> #onClose.
     hbox packStart: button.
 
     mainContainer packStart: hbox
 !
 
-execute
-    'Execute' printNl
-!
-
-close
-    'Close' printNl
+setupText
+    | buffer scrolled |
+    buffer := GtkTextBuffer new.
+    textView := GtkTextView buffer: buffer.
+    scrolled := GtkScrolledWindow new add: textView; yourself.
+    mainContainer packStart: scrolled
 !
 
 open
     mainWidget showAll
+! !
+
+!GtkWorkspaceView methodsFor: 'mvc-events'!
+
+onExecute
+    | text buffer |
+    buffer := textView buffer.
+    text := buffer textFrom: buffer startIter to: buffer endIter includeHiddenChars: false.
+    eventDispatcher dispatch: #doIt with: text
+!
+
+onClose
+    eventDispatcher dispatch: #quit
+!
+
+onClear
+    textView buffer text: ''
 ! !
 
 !GtkWorkspace class methodsFor: 'instance creation'!

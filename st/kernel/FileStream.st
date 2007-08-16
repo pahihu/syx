@@ -41,9 +41,11 @@ open: aFilename for: aMode
     inst := self basicNew fd: (self fileOp: 0 with: aFilename with: aMode).
     aMode
 	caseOf: {
+	    [ self append ] -> [ inst allowWriteOnly ].
 	    [ self read ] -> [ inst allowReadOnly ].
 	    [ self write ] -> [ inst allowWriteOnly ].
-	    [ self readWrite ] -> [ inst allowReadAndWrite ] }.
+	    [ self readWrite ] -> [ inst allowReadAndWrite ].
+	    [ self readWriteCreate ] -> [ inst allowReadAndWrite ] }.
     ^inst
 !
 
@@ -57,6 +59,10 @@ fileIn: aFilename
     ^(self open: aFilename) fileIn; yourself
 !
 
+append
+    ^'a'
+!
+
 write
     ^'w'
 !
@@ -67,6 +73,10 @@ read
 
 readWrite
     ^'r+'
+!
+
+readWriteCreate
+    ^'w+'
 ! !
 
 !FileStream methodsFor: 'accessing'!
@@ -149,19 +159,20 @@ nextPutBuffer: aByteArray
 !FileStream methodsFor: 'basic'!
 
 close
-    self fileOp: 1 on: fd
+    self fileOp: 1 on: fd.
+    fd := -1.
 !
 
 nextPut: aCharacter
     self ensureWriteable.
     self fileOp: 2 on: fd with: aCharacter.
-"    self nextPutBuffer: aCharacter asString"
+    self nextPutBuffer: aCharacter asString
 !
 
 nextPutAll: aByteArray
     self ensureWriteable.
     self fileOp: 3 on: fd with: aByteArray.
-"    self nextPutBuffer: aByteArray"
+    self nextPutBuffer: aByteArray
 !
 
 flush
@@ -182,4 +193,16 @@ next: numBytes
     s := self fileOp: 6 on: fd with: numBytes.
     self nextPutBuffer: s.
     ^s
+! !
+
+!StdIOStream methodsFor: 'basic'!
+
+upToEnd
+    | w |
+    w := WriteStream on: String new.
+    [ w nextPut: self next ] repeat.
+    ^w contents
+!
+
+nextPutBuffer: aString
 ! !

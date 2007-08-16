@@ -88,6 +88,7 @@ nextPutAll: aCollection
 !
 
 collection
+    self ensureReadability.
     ^collection
 ! !
 

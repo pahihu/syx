@@ -216,13 +216,12 @@ setupDispatcher
 
 setupView
     view
-	when: #doIt send: self -> #onDoIt;
-	when: #clear send: view -> #clearText;
+	when: #doIt send: self -> #onDoIt:;
 	when: #quit send: Smalltalk -> #quit
 ! !
 
 !Workspace methodsFor: 'events'!
 
-onDoIt
-    'you do it' printNl
+onDoIt: aString
+    [ aString doIt ] on: Error do: [ :ex | ex debug ]
 ! !

@@ -50,9 +50,9 @@ initializeFirstSystem
     systemInitializationRequests := Set new.
 
     self
-	at: #stdin put: (FileStream on: 0) allowReadOnly;
-	at: #stdout put: (FileStream on: 1) allowWriteOnly;
-	at: #stderr put: (FileStream on: 2) allowWriteOnly;
+	at: #stdin put: (StdIOStream on: 0) allowReadOnly;
+	at: #stdout put: (StdIOStream on: 1) allowWriteOnly;
+	at: #stderr put: (StdIOStream on: 2) allowWriteOnly;
 	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     Object allSubclassesDo: [ :ea |

@@ -1,6 +1,5 @@
 Major:
-- Use sudo when creating the image with scons install
-- Fix assignments such as test:='test'
+- C layer for number operations
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Fix exception handling sequence
@@ -8,13 +7,16 @@ Major:
 - Fix and improve file/IO streams
 
 Minor:
-- Add pool dictionaries
 - Use radix for floats in the lexer
 - Object inspecting
 
 Later:
+- Add pool dictionaries
 - Create a series of Smalltalk tests and benchmarks
 - Create a SWIG module (partially done)
 
 Finally:
 - Method inlining
+- JIT
+- Implement another kind of hash probing
+- Other optimizations

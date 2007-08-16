@@ -165,6 +165,10 @@ ByteStream subclass: #FileStream
 	   instanceVariableNames: 'fd name filePtr peek'
            classVariableNames: ''!
 
+FileStream subclass: #StdIOStream
+	   instanceVariableNames: ''
+	   classVariableNames: ''!
+
 "Basic data types"
 
 ByteArray subclass: #String
