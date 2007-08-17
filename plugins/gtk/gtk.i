@@ -1,7 +1,6 @@
 %module Gtk
 
 %include glib.i
-%include pango.i
 %include gdk.i  
 
 %{

@@ -1,3 +1,13 @@
+2007-08-17  Luca Bruno  <lethalman88@gmail.com>
+
+	* plugins/gtk/gtk.i: remove pango dependency temporarly
+
+	* plugins/gtk/pango.i: removed temporarly
+
+	* plugins/gtk/st/PangoAttrList.st: removed temporarly
+
+	* plugins/gtk/SConscript: link to gdk-win32
+
 2007-08-16  Luca Bruno  <lethalman88@gmail.com>
 
 	* plugins/gtk/plugin-init.c (syx_plugin_initialize): parse all remaining st files

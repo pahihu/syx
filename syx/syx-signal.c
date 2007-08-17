@@ -76,6 +76,12 @@ _syx_save_recovered_image (void)
   image_path = syx_calloc (strlen (cur_image_path) + 9, sizeof (syx_char));
   sprintf(image_path, "%s.recover", cur_image_path);
 
+  if (SYX_IS_NIL (process))
+    {
+      printf("\nCan't save a recovered copy of the image at %s.\n", image_path);
+      return;
+    }
+
   SYX_PROCESS_CONTEXT(process) = syx_nil;
   SYX_PROCESS_SUSPENDED(process) = syx_true;
   SYX_PROCESS_SCHEDULED(process) = syx_false;

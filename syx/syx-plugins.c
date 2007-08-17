@@ -41,12 +41,12 @@
   #include <winbase.h>
 #endif
 
-#endif /* WITH_PLUGINS */
-
 static SyxPluginEntry *_syx_plugins = NULL;
 static syx_int32 _syx_plugins_top = 0;
 
 static SyxOop _syx_default_method = 0;
+
+#endif /* WITH_PLUGINS */
 
 //! Initialize the plugin system
 /*!
@@ -55,6 +55,7 @@ static SyxOop _syx_default_method = 0;
 void
 syx_plugins_init (void)
 {
+#ifdef WITH_PLUGINS
   static syx_bool initialized = FALSE;
 
   if (initialized)
@@ -70,6 +71,7 @@ syx_plugins_init (void)
 
   syx_lexer_free (lexer, FALSE);
   syx_parser_free (parser, FALSE);
+#endif
 }
 
 //! Load a dynamic library and return its handle

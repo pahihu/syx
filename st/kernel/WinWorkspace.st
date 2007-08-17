@@ -44,7 +44,8 @@ nextPutAll: aString
 !
 
 startup
-	Smalltalk loadPlugin: 'wingui'.
+	(Smalltalk loadPlugin: 'wingui')
+	     ifFalse: [ self error: 'Can''t load wingui plugin' ].
 	Transcript proxyMessage: self -> #nextPutAll:.
 	[ self primIterate ] whileTrue
 ! !
