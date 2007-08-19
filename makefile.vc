@@ -60,6 +60,7 @@ $(OUTDIR): force
 	@if not exist $(OUTDIR) mkdir $(OUTDIR)
 clean: force
 	-rmdir /S /Q $(OUTDIR)
+rebuild: clean all
 !else
 all clean: force
 	@echo TARGET must be set to dbg or rel
@@ -72,9 +73,9 @@ $(SYX_EXE): $(SYX_OBJS)
 	/SUBSYSTEM:CONSOLE /MACHINE:X86
 
 {syx\}.c{$(OUTDIR)}.obj::
-	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ $<
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb $<
 
 {src\}.c{$(OUTDIR)}.obj::
-	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ $<
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb $<
 
 force: ;

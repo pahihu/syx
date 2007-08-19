@@ -30,7 +30,7 @@ Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c")
 
-if penv['WINGUI']:
+if penv['plugins'] and penv['WINGUI']:
    env = penv.Clone ()
    if env['PLATFORM'] == 'win32':
       go = True

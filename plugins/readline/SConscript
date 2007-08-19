@@ -30,7 +30,7 @@ Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c")
 
-if penv['READLINE']:
+if penv['plugins'] and penv['READLINE']:
    env = penv.Clone ()
    if env['PLATFORM'] != 'win32':
       conf = Configure (env)

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Smalltalk YX
+Name[it]=Smalltalk YX
+Comment=Smalltalk-80 language implementation
+Comment[it]=Implementazione del linguaggio Smalltalk-80
+Exec=syx %F
+Icon=syx.png
+Terminal=true
+Type=Application
+Categories=Application;Development;
+StartupNotify=true

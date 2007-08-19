@@ -10,14 +10,14 @@ xx August 2007
 	- Running blocking processes inside the scheduler has been fixed
 	- Major fixes to the garbage collector, object finalization, number parsing and to the scheduler
 	- Rehashing support for hashed collections such as Dictinoary, Set and Bag
-	- #perform: and #copyReplace ANSI methods have been added
+	- #perform: and #copyReplace family ANSI methods have been added
 	- Interval and StdIOStream classes have been added
 	- Missing lexer rules for quoted symbols and double quotes in strings have been added
 	- ZeroDivide exception check for number division
 	- Comparing methods to String have been added
 	- A bunch of improvements for the SyxGtk plugin
 	- Rehash dictionaries from C
-	- MSVC compilation support
+	- Visual Studio 2005 compilation and debugging support
 	- Useful functions for embedding Syx have been added
 	- Reorganized inline functions to support other compilers and use dllexport and dllimport when
 	  building the library on Windows
@@ -36,9 +36,12 @@ xx August 2007
 	- Documentation installation and uninstallation is now supported
 	- Support for 'a' and 'w+' mode with O_CREAT flag have been added to FileStream
 	- Several issues have been fixed for packaging binary distributions of Syx using Scons
+	- Getopt dependency has been removed
+	- Desktop files for Posix systems have been added
 	
 	Syx changed its logo since previous version. The Windows installer will handle .st and .sim files.
-	Windows CE installer will be available instead of a binary archive.
+	Roadmap for 0.5 version includes both internal and OS-level threads based schedulers,
+	with possibly parallel computing support.
 	
 	Thanks for all critiques and suggestions, and a special thank to everyone who's contributing to Syx.
 

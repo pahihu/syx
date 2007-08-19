@@ -3,8 +3,8 @@ Major:
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Fix exception handling sequence
-- Get rid of getopt
 - Fix and improve file/IO streams
+- Create extra GC roots
 
 Minor:
 - Use radix for floats in the lexer

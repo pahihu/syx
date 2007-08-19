@@ -44,8 +44,6 @@
 static SyxPluginEntry *_syx_plugins = NULL;
 static syx_int32 _syx_plugins_top = 0;
 
-static SyxOop _syx_default_method = 0;
-
 #endif /* WITH_PLUGINS */
 
 //! Initialize the plugin system
@@ -55,23 +53,29 @@ static SyxOop _syx_default_method = 0;
 void
 syx_plugins_init (void)
 {
+}
+
+static SyxOop
+_syx_plugin_default_method (void)
+{
 #ifdef WITH_PLUGINS
-  static syx_bool initialized = FALSE;
-
-  if (initialized)
-    return;
-
-  SyxParser *parser;
+  SyxOop method;
   SyxLexer *lexer;
+  SyxParser *parser;
 
-  _syx_default_method = syx_method_new ();
+  syx_memory_gc_begin ();
+
+  method = syx_method_new ();
   lexer = syx_lexer_new ("defaultPluginsFailMethod self primitiveFailed");
-  parser = syx_parser_new (lexer, _syx_default_method, syx_nil);
+  parser = syx_parser_new (lexer, method, syx_nil);
   syx_parser_parse (parser);
 
   syx_lexer_free (lexer, FALSE);
   syx_parser_free (parser, FALSE);
-#endif
+
+  syx_memory_gc_end ();
+  return method;
+#endif /* WITH_PLUGINS */
 }
 
 //! Load a dynamic library and return its handle
@@ -405,7 +409,7 @@ syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name,
   SyxPrimitiveFunc fp;
 
   if (SYX_IS_NIL (method))
-    method = _syx_default_method;
+    method = _syx_plugin_default_method ();
 
   fp = syx_plugin_symbol (plugin_name, func_name);
   if (fp)

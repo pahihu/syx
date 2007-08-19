@@ -1,3 +1,22 @@
+2007-08-19  Luca Bruno  <lethalman88@gmail.com>
+
+	* src/main.c (_parse_args): an comand line option parser was created to replace getopt
+
+	* examples/console/SConscript (target): added
+
+	* examples/SConscript: added
+
+	* examples/embedding/SConscript: added
+
+	* syx.desktop: added
+
+	* syx.sln: added for MSVC support
+
+	* syx.vcproj: added for MSVC support
+
+	* syx/syx-plugins.c (_syx_plugin_default_method): added
+	(syx_plugins_init): do not create a static method on initialization because it's not being inserted in a GC root
+
 2007-08-17  Luca Bruno  <lethalman88@gmail.com>
 
 	* plugins/gtk/gtk.i: remove pango dependency temporarly

@@ -73,7 +73,7 @@ _syx_save_recovered_image (void)
   syx_string image_path;
   syx_symbol cur_image_path = SYX_OBJECT_SYMBOL (syx_globals_at ("ImageFileName"));
   
-  image_path = syx_calloc (strlen (cur_image_path) + 9, sizeof (syx_char));
+  image_path = (syx_string) syx_calloc (strlen (cur_image_path) + 9, sizeof (syx_char));
   sprintf(image_path, "%s.recover", cur_image_path);
 
   if (SYX_IS_NIL (process))

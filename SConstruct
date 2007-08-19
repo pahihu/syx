@@ -304,7 +304,7 @@ if not (conf.CheckInline () or conf.Check__Inline () or conf.Check__Inline__ ())
 print
 print 'Optional functions...'
 
-for f in ['strndup', 'getopt', 'fstat', 'access', 'getenv', 'perror']:
+for f in ['strndup', 'fstat', 'access', 'getenv', 'perror']:
    conf.CheckFunc (f)
 
 if env['bignum']:
@@ -388,6 +388,7 @@ env.BuildDir ('build/plugins', 'plugins', False)
 env.SConscript (dirs=['build/plugins'], exports=['env', 'distdir'])
 
 env.SConscript (dirs=['tests'], exports=['env', 'distdir'])
+env.SConscript (dirs=['examples'], exports=['env', 'distdir'])
 
 # Install data
 
@@ -395,18 +396,20 @@ sources = glob.glob ('st/kernel/*.st')
 path = os.path.join (env['rootdir'], 'st', 'kernel')
 env.SyxInstall (path, sources)
 
+if env['PLATFORM'] == 'posix':
+   path = os.path.join (env['datadir'], 'applications')
+   env.SyxInstall (path, 'syx.desktop')
+   path = os.path.join (env['datadir'], 'pixmaps')
+   env.SyxInstall (path, 'syx.png')
+
 # Source distribution
 
 path = os.path.join (distdir, 'st', 'kernel')
 target = env.Install (path, sources)
 env.Alias ('sdist', target)
 
-sources = glob.glob ('examples/*.st')
-path = os.path.join (distdir, 'examples')
-target = env.Install (path, sources);
-env.Alias ('sdist', target)
-
-sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile']
+sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile',
+           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc', 'syx.desktop']
 target = env.Install (distdir, sources)
 env.Alias ('sdist', target)
 

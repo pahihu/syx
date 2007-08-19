@@ -76,5 +76,6 @@ incdir = os.path.join (env['includedir'], 'syx')
 env.Install (incdir, includes)
 env.Alias ('install', incdir)
 
+includes.remove('syx-config.h')
 target = env.Install (os.path.join (distdir, 'syx'), includes)
 env.Alias ('sdist', target)

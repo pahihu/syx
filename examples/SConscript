@@ -24,48 +24,12 @@
 #                                                                               #
 #################################################################################
 
+import os
 
-import os, glob
+Import ('env', 'distdir')
 
-Import ('penv', 'distdir')
+path = os.path.join (distdir, 'examples')
+target = env.Install (path, ['SConscript'])
+env.Alias ('sdist', target)
 
-lib_sources = Split ("plugin-init.c gtk_wrap.c")
-st_sources = Split("""st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/GtkWidget.st
-                      st/GtkContainer.st st/GtkButton.st st/GtkTools.st st/GtkBox.st
-		      st/GtkAdjustment.st st/GtkScrolledWindow.st
-		      st/GtkTextIter.st st/GtkTextView.st st/GtkTextBuffer.st st/GtkTextMark.st
-                      st/GtkTextTag.st st/GtkTextTagTable.st""")
-extras = Split("""SConscript geninterface.sh""")
-
-if penv['plugins'] and penv['GTK']:
-    env = penv.Clone ()
-    go = True
-    if env['PLATFORM'] == 'win32':
-        for path in os.environ['PATH'].split(';'):
-            if 'GTK' in path:
-                env['LIBPATH'].append (path)
-        env.MergeFlags ("-lsyx -lglib-2.0-0 -lgdk-win32-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0 -lgobject-2.0-0")
-    else:
-        try:
-            env.ParseConfig ("pkg-config glib-2.0 gobject-2.0 gthread-2.0 gtk+-2.0 --libs --cflags")
-        except:
-            print "WARNING: GTK+ not found, plugin won't be built"
-            go = False
-
-    if go: 
-        lib_objects = env.SharedObject (lib_sources)
-        lib_shared = env.SharedLibrary (target='syx-gtk', source=lib_objects)
-        Default (lib_shared)	   
-        
-        instdir = os.path.join (env['plugindir'], 'gtk')
-        env.SyxInstall (instdir, lib_shared)
-
-        path = os.path.join (env['rootdir'], 'st', 'gtk')
-        env.SyxInstall (path, st_sources)
-
-target = penv.Install (os.path.join (distdir, 'plugins', 'gtk'), lib_sources + extras)
-penv.Alias ('sdist', target)
-
-path = os.path.join (distdir, 'plugins', 'gtk', 'st')
-target = penv.Install (path, st_sources)
-penv.Alias ('sdist', target)
+env.SConscript (dirs=['console', 'embedding'], exports=['env', 'distdir'])
