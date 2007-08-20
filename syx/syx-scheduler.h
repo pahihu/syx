@@ -37,9 +37,12 @@ EXPORT extern SyxOop *_syx_processor_byteslice;
 
 typedef struct SyxSchedulerPoll SyxSchedulerPoll;
 
+//! Each scheduler poll is a linked list which nodes contain a file descriptor and a Semaphore.
 struct SyxSchedulerPoll
 {
+  //! File descriptor to wait for reading or writing
   syx_int32 fd;
+  //! Semaphore to signal once ready to read or write
   SyxOop semaphore;
   SyxSchedulerPoll *next;
 };

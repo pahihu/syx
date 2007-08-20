@@ -29,9 +29,12 @@
 
 typedef struct SyxPluginEntry SyxPluginEntry;
 
+//! A simple structure that contains informations about loaded plugins
 struct SyxPluginEntry
 {
+  //! Name of the plugin
   syx_string name;
+  //! Handle to the library
   syx_pointer handle;
 };
 

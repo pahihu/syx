@@ -69,6 +69,7 @@
 
 typedef struct SyxObject SyxObject;
 
+//! The core class of Syx holding necessary informations for each concrete object.
 struct SyxObject
 {
   //! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop

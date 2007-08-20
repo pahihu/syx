@@ -1,3 +1,9 @@
+2007-08-20  Luca Bruno  <lethalman88@gmail.com>
+	
+	== Released 0.1.4 version ==
+
+	* Missing documentation was covered for Doxygen
+
 2007-08-19  Luca Bruno  <lethalman88@gmail.com>
 
 	* src/main.c (_parse_args): an comand line option parser was created to replace getopt

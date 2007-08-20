@@ -642,7 +642,7 @@ syx_find_first_non_whitespace (syx_symbol string)
   return 0;
 }
 
-//! Print to stdout the current execution state of the interpreter and the context traceback
+//! Print to stdout the current execution state of the interpreter and the Process traceback
 void
 syx_show_traceback (void)
 {

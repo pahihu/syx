@@ -35,7 +35,7 @@ st_sources = Split("""st/Gtk.st st/GtkWindow.st st/GtkLabel.st st/GObject.st st/
 		      st/GtkAdjustment.st st/GtkScrolledWindow.st
 		      st/GtkTextIter.st st/GtkTextView.st st/GtkTextBuffer.st st/GtkTextMark.st
                       st/GtkTextTag.st st/GtkTextTagTable.st""")
-extras = Split("""SConscript geninterface.sh""")
+extras = Split("""SConscript syx-gobject.h geninterface.sh""")
 
 if penv['plugins'] and penv['GTK']:
     env = penv.Clone ()

@@ -66,8 +66,10 @@ typedef struct SyxBytecode SyxBytecode;
 
 //! A struct containing method bytecodes and literals
 struct SyxBytecode {
+  //! Hold 16-bit wide bytecodes
   syx_uint16 code[SYX_BYTECODE_MAX + 1];
   syx_uint16 code_top;
+  //! An Array of literals
   SyxOop literals[SYX_BYTECODE_MAX + 1];
   syx_uint16 literals_top;
 

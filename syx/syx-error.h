@@ -38,6 +38,7 @@ typedef syx_uint32 SyxErrorType;
 
 typedef struct SyxErrorEntry SyxErrorEntry;
 
+//! Hold the name and the Error subclass to invoke in the Smalltalk environment
 struct SyxErrorEntry
 {
   syx_symbol name;

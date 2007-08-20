@@ -89,11 +89,6 @@
 
 /* Some platform specific informations */
 
-#ifndef HAVE_ERRNO_H
-EXPORT extern int errno;
-#  define ERANGE -32
-#endif
-
 #ifdef WINDOWS
 #  define SYX_PATH_SEPARATOR '\\'
 #  ifdef _DLL
@@ -106,5 +101,9 @@ EXPORT extern int errno;
 #  define EXPORT
 #endif /* WINDOWS */
 
+#ifndef HAVE_ERRNO_H
+EXPORT extern int errno;
+#  define ERANGE -32
+#endif
 
 #endif /* SYX_PLATFORM_H */

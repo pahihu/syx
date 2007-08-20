@@ -304,7 +304,7 @@ if not (conf.CheckInline () or conf.Check__Inline () or conf.Check__Inline__ ())
 print
 print 'Optional functions...'
 
-for f in ['strndup', 'fstat', 'access', 'getenv', 'perror']:
+for f in ['strndup', 'fstat', 'access', 'getenv', 'perror', 'signal']:
    conf.CheckFunc (f)
 
 if env['bignum']:
@@ -409,7 +409,7 @@ target = env.Install (path, sources)
 env.Alias ('sdist', target)
 
 sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile',
-           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc', 'syx.desktop']
+           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc', 'syx.desktop', 'syx.png']
 target = env.Install (distdir, sources)
 env.Alias ('sdist', target)
 

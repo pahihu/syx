@@ -30,6 +30,8 @@
 #include "syx-init.h"
 
 #include <stdio.h>
+
+#ifdef HAVE_SIGNAL
 #include <signal.h>
 
 static SyxOop sigint_class,
@@ -114,10 +116,21 @@ _syx_internal_sighandler (int signum)
   puts ("\nPlease send the above bug report to \"lethalman88@gmail.com\".");
   exit (EXIT_FAILURE);
 }
+#endif /* HAVE_SIGNAL */
 
+//! Initialize the system signal handling system
+/*!
+  This function is called internally by Syx and should not be used by applications.
+
+  Register SIGINT, SIGFPE, SIGTERM and SIGABRT to be signaled in the Smalltalk environment
+  respectively with UserInterrupt, FloatingPointException, TerminationSignal and AbornmalTermination.
+
+  SIGILL and SIGSEGV, are handled internally and control shouldn't be given to the Smalltalk environment
+*/
 void
 syx_signal_init (void)
 {
+#ifdef HAVE_SIGNAL
   sigint_class = syx_globals_at ("UserInterrupt");
   sigfpe_class = syx_globals_at ("FloatingPointException");
   sigterm_class = syx_globals_at ("TerminationSignal");
@@ -132,4 +145,5 @@ syx_signal_init (void)
   signal (SIGFPE, _syx_smalltalk_sighandler);
   signal (SIGTERM, _syx_smalltalk_sighandler);
   signal (SIGABRT, _syx_smalltalk_sighandler);
+#endif /* HAVE_SIGNAL */
 }

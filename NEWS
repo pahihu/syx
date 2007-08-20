@@ -1,11 +1,11 @@
-xx August 2007
+20 August 2007
 --------------
 
 	Released Syx 0.1.4 version.
 
 	A more stable VM has been reached with this version. Many features have been added for both
 	the embedding and the environment. This version also includes the "image endianness compatibility"
-	target of the 0.2 roadmap and a lot of wrapper methods for GTK+.
+	target of the 0.2 roadmap and a lot of wrapper methods for GTK+ with a basic GtkWorkspace.
 	This is the list of the major changes:
 	- Running blocking processes inside the scheduler has been fixed
 	- Major fixes to the garbage collector, object finalization, number parsing and to the scheduler
@@ -17,7 +17,7 @@ xx August 2007
 	- Comparing methods to String have been added
 	- A bunch of improvements for the SyxGtk plugin
 	- Rehash dictionaries from C
-	- Visual Studio 2005 compilation and debugging support
+	- Visual Studio compilation and debugging support
 	- Useful functions for embedding Syx have been added
 	- Reorganized inline functions to support other compilers and use dllexport and dllimport when
 	  building the library on Windows

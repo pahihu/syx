@@ -33,6 +33,7 @@
 
 typedef struct SyxExecState SyxExecState;
 
+//! The execution state of the interpreter
 struct SyxExecState
 {
   SyxOop process;
@@ -45,12 +46,16 @@ struct SyxExecState
   syx_uint16 *bytecodes;
   syx_int32 bytecodes_count;
   syx_int32 byteslice;
-  syx_int32 ip, sp;
+  //! The instruction pointer to the next method bytecode to execute
+  syx_int32 ip;
+  //! The stack pointer of the context
+  syx_int32 sp;
 
   //! Holds the receiver of a new message
   SyxOop message_receiver;
-  //! Holds the arguments of a new message
+  //! Holds the arguments of a new message. NULL if no arguments were given
   SyxOop *message_arguments;
+  //! The number of arguments
   syx_varsize message_arguments_count;
 };
 
@@ -112,6 +117,7 @@ typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 
 typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;
 
+//! Used for keeping primitive informations into a static table to be used by the interpreter for primitive class
 struct SyxPrimitiveEntry {
   syx_symbol name;
   SyxPrimitiveFunc func;
