@@ -42,7 +42,9 @@
 
 
 #include <sys/types.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #ifdef SYX_DEBUG_FULL
 #define SYX_DEBUG_PROCESS_SWITCH

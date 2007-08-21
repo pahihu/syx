@@ -48,7 +48,10 @@
 #include "syx-object.h"
 #include "syx-interp.h"
 
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include <stdio.h>
 
 static syx_string _syx_root_path;

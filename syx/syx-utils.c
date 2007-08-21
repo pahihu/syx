@@ -38,7 +38,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
 #include <fcntl.h>
 #include <sys/types.h>

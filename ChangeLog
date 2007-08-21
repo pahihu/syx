@@ -1,3 +1,11 @@
+2007-08-21  Luca Bruno  <lethalman88@gmail.com>
+
+	* examples/embedding/SConscript: fix use of -rdynamic
+
+	* Applied patch of issue #13
+
+	* syx/syx-signal.c: signal function to be optional
+
 2007-08-20  Luca Bruno  <lethalman88@gmail.com>
 	
 	== Released 0.1.4 version ==

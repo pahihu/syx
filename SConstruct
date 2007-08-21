@@ -251,7 +251,7 @@ if env['host']:
 
 print 'Mandatory headers...'
 
-for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
+for h in ['string.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
           'sys/types.h']:
    if not conf.CheckCHeader (h):
       print "Can't build Syx without %s header!" % h
@@ -260,7 +260,7 @@ for h in ['string.h', 'stdint.h', 'unistd.h', 'sys/stat.h', 'time.h', 'stdio.h',
 print
 print 'Optional headers...'
 
-for h in ['stdarg.h', 'byteswap.h', 'errno.h']:
+for h in ['stdarg.h', 'byteswap.h', 'errno.h', 'unistd.h', 'stdint.h']:
    conf.CheckCHeader (h)
 for t in ['int64_t']:
    conf.CheckType (t, '#include <stdint.h>', 'c')

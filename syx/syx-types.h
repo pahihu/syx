@@ -30,7 +30,9 @@
 #include "syx-platform.h"
 
 #include <limits.h>
+#ifdef HAVE_STDINT_H
 #include <stdint.h>
+#endif
 #include <wchar.h>
 
 /*! \page syx_types Syx Types
@@ -72,27 +74,46 @@ typedef unsigned char syx_uchar;
 
 typedef wchar_t syx_wchar;
 
-typedef int8_t syx_int8;
-typedef uint8_t syx_uint8;
 
 typedef syx_char * syx_string;
 typedef const syx_char * syx_symbol;
 typedef syx_wchar * syx_wstring;
 typedef const syx_wchar * syx_wsymbol;
 
-typedef int16_t syx_int16;
-typedef uint16_t syx_uint16;
-
-typedef int32_t syx_int32;
-typedef uint32_t syx_uint32;
+#ifdef HAVE_STDINT_H
+  typedef int8_t syx_int8;
+  typedef uint8_t syx_uint8;
+  
+  typedef int16_t syx_int16;
+  typedef uint16_t syx_uint16;
+  
+  typedef int32_t syx_int32;
+  typedef uint32_t syx_uint32;
+  
+  #ifdef HAVE_INT64_T
+    typedef int64_t syx_int64;
+    typedef uint64_t syx_uint64;
+  #endif
+#else
+  #ifdef _MSC_VER
+    typedef signed char syx_int8;
+    typedef unsigned char syx_uint8;
+    
+    typedef short syx_int16;
+    typedef unsigned short syx_uint16;
+    /* Note: this might not be true for 64-bit compilers */
+    typedef int syx_int32;
+    typedef unsigned int syx_uint32;
+    
+    typedef long long syx_int64;
+    typedef unsigned long long syx_uint64;
+  #else
+   #error "don't know how to define types for this compiler"
+  #endif
+#endif
 
 typedef long syx_nint;
 typedef unsigned long syx_unint;
-
-#ifdef HAVE_INT64_T
-typedef int64_t syx_int64;
-typedef uint64_t syx_uint64;
-#endif
 
 typedef long syx_size;
 typedef syx_int32 syx_varsize;

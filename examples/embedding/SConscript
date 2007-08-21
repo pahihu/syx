@@ -31,10 +31,9 @@ Import ('env', 'distdir')
 ex_sources = Split("""add.c average.c init.c do-me.c""")
 xenv = env.Clone ()
 xenv.MergeFlags ('-lsyx')
-xenv['LINKFLAGS'] += ' -rdynamic'
+xenv['LINKFLAGS'].append ('-rdynamic')
 
 for source in ex_sources:
-    
     Default (xenv.Program (target=source[:-2], source=source))
 
 path = os.path.join (distdir, 'examples', 'embedding')
