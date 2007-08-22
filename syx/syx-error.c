@@ -62,7 +62,7 @@ syx_error_init (void)
 void
 syx_error_clear (void)
 {
-  syx_int32 i;
+  SyxErrorType i;
   for (i=0; i < _syx_error_entries_top; i++)
     syx_free (_syx_error_entries[i]);
 

@@ -17,6 +17,10 @@ CFLAGS = $(CFLAGS) /D "_DEBUG" /MDd /Od
 VALID_TARGET=yes
 !endif
 
+!if "$(ANALYZE)"=="yes"
+CFLAGS = $(CFLAGS) /analyze
+!endif
+
 O=$(OUTDIR)
 
 CFLAGS = $(CFLAGS) /nologo /c /TP
@@ -26,19 +30,19 @@ CFLAGS = $(CFLAGS) /D "WIN32" /D "WINDOWS" /D "_WIN32_WINNT=0x0500"
 #CFLAGS = $(CFLAGS) /D "UNICODE" /D "_UNICODE"
 #CFLAGS = $(CFLAGS) /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_SECURE_NO_DEPRECATE"
 CFLAGS = $(CFLAGS) /D "_CRT_SECURE_NO_WARNINGS"
-CFLAGS = $(CFLAGS) /D "_DLL"
+#CFLAGS = $(CFLAGS) /D "_DLL"
 
-#CFLAGS = $(CFLAGS) /wd4244 /wd4018
 CFLAGS = $(CFLAGS) /wd4996
-CFLAGS = $(CFLAGS) /wd4273
-CFLAGS = $(CFLAGS) /wd4018
 
 CFLAGS = $(CFLAGS) /W3
+#CFLAGS = $(CFLAGS) /Wall
 # /GR- : disable C++ RTTI
 CFLAGS = $(CFLAGS) /GR-
-# TODO: disable exceptions
-CFLAGS = $(CFLAGS) /EHsc
 CFLAGS = $(CFLAGS) /Zi
+# /Gr - __fastcall calling convention
+#CFLAGS = $(CFLAGS) /Gr
+# /FAscu - generate assembly listings
+CFLAGS = $(CFLAGS) /FAscu
 
 CFLAGS = $(CFLAGS) /Imsvc /I.
 
@@ -73,9 +77,9 @@ $(SYX_EXE): $(SYX_OBJS)
 	/SUBSYSTEM:CONSOLE /MACHINE:X86
 
 {syx\}.c{$(OUTDIR)}.obj::
-	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb $<
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb /Fa$(OUTDIR)\ $<
 
 {src\}.c{$(OUTDIR)}.obj::
-	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb $<
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb /Fa$(OUTDIR)\ $<
 
 force: ;

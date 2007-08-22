@@ -134,25 +134,25 @@ arg_enum_from_name (int argc, const char** argv, const char** arg_val)
   *arg_val = NULL;
   for (i=0; arg_defs[i].arg_name; i++)
     {
-      int len = strlen(arg_defs[i].arg_name);
+      size_t len = strlen(arg_defs[i].arg_name);
       if (!strncmp(arg, arg_defs[i].arg_name, len))
         {
-	  curr_arg++;
-	  if (arg_defs[i].need_param)
-	    {
-	      if ((strlen(arg) > len) && ('=' == arg[len]))
-		*arg_val = arg + len + 1;
-	      else if (curr_arg < argc && *argv[curr_arg] != '-')
-		{
-		  *arg_val = argv[curr_arg];
-		  curr_arg++;
-		}
-	      else
-		{
-		  printf("Error: %s option expects an argument\n", arg_defs[i].arg_name);
-		  return ARG_ERROR;
-		}
-	    }
+          curr_arg++;
+          if (arg_defs[i].need_param)
+            {
+              if ((strlen(arg) > len) && ('=' == arg[len]))
+                *arg_val = arg + len + 1;
+              else if (curr_arg < argc && *argv[curr_arg] != '-')
+                {
+                  *arg_val = argv[curr_arg];
+                  curr_arg++;
+                }
+              else
+                {
+                  printf("Error: %s option expects an argument\n", arg_defs[i].arg_name);
+                  return ARG_ERROR;
+                }
+            }
           return arg_defs[i].arg_enum;
         }
     }

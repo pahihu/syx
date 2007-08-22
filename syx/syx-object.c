@@ -312,24 +312,24 @@ syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_uint32 i = 2 * (syx_string_hash (key) % (size / 2));
+  syx_varsize i = 2 * (syx_string_hash (key) % (size / 2));
   syx_int32 num_elements = SYX_SMALL_INTEGER (SYX_DICTIONARY_NUM_ELEMENTS (dict)) + return_nil_index;
 
   for (; num_elements; i+=2)
     {
       if (i >= size)
-	i = 0;
+        i = 0;
       entry = table[i];
       if (SYX_IS_NIL (entry))
-	{
-	  if (return_nil_index)
-	    return i;
-	  else
-	    return -1;
-	}
+        {
+          if (return_nil_index)
+            return i;
+          else
+            return -1;
+        }
       num_elements--;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	return i;
+        return i;
       
     }
 
