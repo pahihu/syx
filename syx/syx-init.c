@@ -63,8 +63,9 @@ static void _syx_file_in_basic (void);
 static void _syx_file_in_basic_decl (void);
 static SyxOop _syx_create_class (syx_varsize instanceSize);
 
-//! Creates a file path inside the Syx environment
 /*!
+  Creates a file path inside the Syx environment
+
   For example if you want a Smalltalk file of a package, specify the domain "st", the package name
   and the file name.
 */
@@ -148,8 +149,9 @@ _syx_create_class (syx_varsize instanceSize)
   return object;
 }
 
-//! Builds a basic running image from scratch
 /*!
+  Builds a basic running image from scratch.
+
   This functions first reinitialize the memory with the size defined in SYX_INIT_MEMORY_SIZE.
   After, creates the 3 common constants syx_nil, syx_true and syx_false.
   Then creates all the classes needed by the VM, the Smalltalk dictionary and a dictionary containing all the symbols.
@@ -163,6 +165,8 @@ syx_build_basic (void)
   SyxOop Object, Behavior, Class;
   SyxOop context;
   SyxOop process;
+  static char *symbols[] = {"Transcript", "stdin", "stdout", NULL};
+  char **sym;
 
   syx_memory_clear ();
   syx_memory_init (SYX_INIT_MEMORY_SIZE);
@@ -187,7 +191,7 @@ syx_build_basic (void)
   syx_metaclass_class = _syx_create_class (SYX_VARS_METACLASS_ALL);
 
   syx_globals = syx_dictionary_new (200);
-  // hold SystemDictionary instance variables
+  /* hold SystemDictionary instance variables */
   syx_free (SYX_OBJECT_VARS(syx_globals));
   SYX_OBJECT_VARS(syx_globals) = (SyxOop *) syx_calloc (SYX_VARS_DICTIONARY_ALL + 5, sizeof (SyxOop));
 
@@ -230,10 +234,7 @@ syx_build_basic (void)
 
   syx_fetch_basic ();
   
-  // these will be filled later, now we'll create a binding for method declarations
-  static char *symbols[] = {"Transcript", "stdin", "stdout", NULL};
-  char **sym;
-
+  /* these will be filled later, now we'll create a binding for method declarations */
   for (sym=symbols; *sym; sym++)
     syx_globals_at_put (syx_symbol_new (*sym), syx_nil);
    
@@ -244,8 +245,9 @@ syx_build_basic (void)
   syx_process_execute_blocking (process);
 }
 
-//! Fetch all the things needed by the VM to run accordly to the image
-/*!
+/*
+  Fetch all the things needed by the VM to run accordly to the image
+
   Sets up syx_nil, syx_true and syx_false constants.
   Lookup all classes from the Smalltalk dictionary and insert them into the VM.
   Then initialize the interpreter, the errors system and the scheduler.
@@ -288,7 +290,8 @@ syx_fetch_basic (void)
   syx_signal_init ();
 }
 
-//! Remove Smalltalk startupProcess from being scheduled and call Smalltalk>>#startupSystem: in a scheduled process
+/*! Remove Smalltalk startupProcess from being scheduled and
+  send #startupSystem: to Smalltalk in a scheduled process */
 void
 syx_initialize_system (void)
 {
@@ -309,8 +312,9 @@ syx_initialize_system (void)
   SYX_PROCESS_SUSPENDED (process) = syx_false;
 }
 
-//! Setup the basic external environment of Syx, such as the root and the image path
 /*!
+  Setup the basic external environment of Syx, such as the root and the image path.
+
   \param root_path an arbitrary root directory for Syx or NULL
 */
 syx_bool
@@ -328,7 +332,7 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
   goto end;
 #endif
 
-  // first look in the working directory
+  /* first look in the working directory */
 #ifdef HAVE_ACCESS
   if (access ("default.sim", R_OK) == 0)
 #else
@@ -339,13 +343,13 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
       goto end;
     }
 
-  // then look in the environment
+  /* then look in the environment */
 #ifdef HAVE_GETENV
   _syx_image_path = getenv ("SYX_IMAGE_PATH");
   if (_syx_image_path)
     goto end;
 #endif
-  // look in the root directory
+  /* look in the root directory */
   if (root_path && !strcmp (root_path, _syx_root_path))
     {
       _syx_image_path = (syx_string) syx_malloc (strlen (_syx_root_path) + 13);
@@ -354,18 +358,19 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
       return TRUE;
     }
 
-  // return the default path defined by the installation
+  /* return the default path defined by the installation */
   _syx_image_path = SYX_IMAGE_PATH;
 
  end:
    
-  _syx_image_path = strdup (_syx_image_path);
+  _syx_image_path = syx_strdup (_syx_image_path);
   initialized = TRUE;
   return TRUE;
 }
 
-//! Finalize Syx
 /*!
+  Finalize Syx.
+
   Run special tasks to finalize the Syx process, such as clearing all the allocated memory
 */
 void
@@ -381,8 +386,9 @@ syx_quit (void)
   syx_free (_syx_root_path);
 }
 
-//! Returns the root directory of Syx
 /*!
+  Returns the root directory of Syx.
+
   \return a constant string containing the path of the root directory
 */
 syx_symbol 
@@ -391,8 +397,9 @@ syx_get_root_path (void)
   return _syx_root_path;
 }
 
-//! Sets the root directory of Syx
 /*!
+  Sets the root directory of Syx.
+
   \param root_path the new path
   \return TRUE if the path exists and is readable
 */
@@ -405,7 +412,7 @@ syx_set_root_path (syx_symbol root_path)
   if (_syx_root_path)
      syx_free (_syx_root_path);
 
-  _syx_root_path = strdup (root_path);
+  _syx_root_path = syx_strdup (root_path);
 
 #ifdef HAVE_ACCESS
   if (access (_syx_root_path, R_OK) < 0)
@@ -415,7 +422,7 @@ syx_set_root_path (syx_symbol root_path)
   return TRUE;
 }
 
-//! Sets the initial image path
+/*! Sets the initial image path */
 syx_bool
 syx_set_image_path (syx_symbol image_path)
 {
@@ -425,12 +432,13 @@ syx_set_image_path (syx_symbol image_path)
   if (_syx_image_path)
     syx_free (_syx_image_path);
 
-  _syx_image_path = strdup (image_path);
+  _syx_image_path = syx_strdup (image_path);
   return TRUE;
 }
 
-//! Returns the initial image path
 /*!
+  Returns the initial image path.
+
  This path won't be used once Syx is initialized. The image path will be obtained from the ImageFileName global
 */
 syx_symbol

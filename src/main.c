@@ -42,14 +42,15 @@ _help (void)
 	  "  -s --scratch\t\tBuild the environment from scratch and save the image.\n"
 	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
 	  "  -c\t\t\tContinue startup process after loading files\n"
-	  "\t\t\tfrom the command line.\n\n"
-	  "  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
+	  "\t\t\tfrom the command line.\n\n",
+	  SYX_ROOT_PATH, SYX_IMAGE_PATH);
+
+  printf ("  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
 	  "\t\t\tof it to IMAGEFILE.\n\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"
 	  "  -h --help\t\tPrint this message.\n\n"
 	  "For more informations, please visit the homepage: http://code.google.com/p/syx.\n"
-	  "Report bugs to \"lethalman88@gmail.com\".\n",
-	  SYX_ROOT_PATH, SYX_IMAGE_PATH);
+	  "Report bugs to \"lethalman88@gmail.com\".\n");
   exit (EXIT_SUCCESS);
 }
 
@@ -81,6 +82,8 @@ _do_recovery (const char *rim_path)
       exit (EXIT_SUCCESS);
     }
 }
+
+/* Thanks to Krzysztof Kowalczyk for this getopt */
 
 enum {
   ARG_UNKNOWN,
@@ -177,17 +180,17 @@ _parse_args (int argc, char **argv)
       switch (arg_enum)
         {
 	case ARG_UNKNOWN:
-	  // exit loop
+	  /* exit loop */
 	  goto end_of_arg;
 	case ARG_ROOT:
-	  root_path = strdup (arg_val);
+	  root_path = syx_strdup (arg_val);
 	  break;
 	case ARG_IMAGE:
-	  image_path = strdup (arg_val);
+	  image_path = syx_strdup (arg_val);
 	  break;
 	case ARG_SCRATCH_AND_QUIT:
 	  quit = TRUE;
-	  // fall through
+	  /* fall through */
 	case ARG_SCRATCH:
 	  scratch = TRUE;
 	  break;
@@ -247,7 +250,7 @@ _parse_args (int argc, char **argv)
 
       SYX_OBJECT_VARS(syx_globals)[5] = syx_boolean_new (continuestartup);
 
-      // Force WinWorkspace startup on WinCE
+      /* Force WinWorkspace startup on WinCE */
 #ifdef WINCE
       SYX_OBJECT_VARS(syx_globals)[4] = syx_globals_at ("WinWorkspace");
 #endif

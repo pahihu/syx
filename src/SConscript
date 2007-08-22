@@ -31,6 +31,9 @@ if env['PLATFORM'] == 'darwin':
     xenv.MergeFlags ("-bundle -flat_namespace")
 xenv.MergeFlags ("-lsyx")
 
+if not 'wince' in xenv['host']:
+    xenv.MergeFlags ('-ansi -pedantic')
+
 prog_resources = Split ("syx.ico resources.rc")
 prog_sources = Split ("main.c")
 

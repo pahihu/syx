@@ -78,15 +78,17 @@ SYX_FUNC_PRIMITIVE (Behavior_new)
 
 SYX_FUNC_PRIMITIVE (Behavior_newColon)
 {
+  syx_varsize size;
   SYX_PRIM_ARGS(1);
-  syx_varsize size = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  size = SYX_SMALL_INTEGER (es->message_arguments[0]);
   SYX_PRIM_RETURN(syx_object_new_size (es->message_receiver, TRUE, size));
 }
 
 SYX_FUNC_PRIMITIVE (ByteArray_newColon)
 {
+  syx_varsize size;
   SYX_PRIM_ARGS(1);
-  syx_varsize size = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  size = SYX_SMALL_INTEGER (es->message_arguments[0]);
   SYX_PRIM_RETURN(syx_object_new_size (es->message_receiver, FALSE, size));
 }
 
@@ -97,8 +99,8 @@ SYX_FUNC_PRIMITIVE (Object_class)
 
 SYX_FUNC_PRIMITIVE (Object_at)
 {
-  SYX_PRIM_ARGS(1);
   syx_varsize index;
+  SYX_PRIM_ARGS(1);
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
   if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
     {
@@ -109,10 +111,10 @@ SYX_FUNC_PRIMITIVE (Object_at)
 
 SYX_FUNC_PRIMITIVE (Object_at_put)
 {
-  SYX_PRIM_ARGS(2);
   syx_varsize index;
   SyxOop object;
-
+  SYX_PRIM_ARGS(2);
+  
   if (SYX_OBJECT_IS_CONSTANT (es->message_receiver))
     {
       SYX_PRIM_FAIL;
@@ -132,8 +134,8 @@ SYX_FUNC_PRIMITIVE (Object_at_put)
 
 SYX_FUNC_PRIMITIVE (Object_resize)
 {
-  SYX_PRIM_ARGS(1);
   syx_varsize size;
+  SYX_PRIM_ARGS(1);
 
   size = SYX_SMALL_INTEGER(es->message_arguments[0]);
   syx_object_resize (es->message_receiver, size);
@@ -181,16 +183,17 @@ SYX_FUNC_PRIMITIVE (Object_copy)
 
 SYX_FUNC_PRIMITIVE (Object_perform)
 {
-  SYX_PRIM_ARGS(1);
   SyxOop klass;
   SyxOop message_method;
   SyxOop context;
-  SyxOop selector = es->message_arguments[0];
+  SyxOop selector;
   SyxOop *message_arguments;
   syx_varsize message_arguments_count;
   syx_int32 primitive;
   syx_bool ret;
+  SYX_PRIM_ARGS(1);
 
+  selector = es->message_arguments[0];
   klass = syx_object_get_class (es->message_receiver); 
   message_method = syx_class_lookup_method (klass, SYX_OBJECT_SYMBOL (selector));
 
@@ -204,7 +207,7 @@ SYX_FUNC_PRIMITIVE (Object_perform)
       SYX_PRIM_FAIL;
     }
 
-  // save the real state
+  /* save the real state */
   message_arguments = es->message_arguments;
   message_arguments_count = es->message_arguments_count;
   es->message_arguments_count--;
@@ -234,7 +237,7 @@ SYX_FUNC_PRIMITIVE (Object_perform)
       ret = syx_interp_enter_context (context);
     }
 
-  // restore the state
+  /* restore the state */
   es->message_arguments = message_arguments;
   es->message_arguments_count = message_arguments_count;
 
@@ -243,17 +246,20 @@ SYX_FUNC_PRIMITIVE (Object_perform)
 
 SYX_FUNC_PRIMITIVE (Object_performWithArguments)
 {
-  SYX_PRIM_ARGS(2);
   SyxOop klass;
   SyxOop message_method;
   SyxOop context;
-  SyxOop selector = es->message_arguments[0];
-  SyxOop arguments = es->message_arguments[1];
+  SyxOop selector;
+  SyxOop arguments;
   SyxOop args;
   SyxOop *message_arguments;
   syx_varsize message_arguments_count;
   syx_int32 primitive;
   syx_bool ret;
+  SYX_PRIM_ARGS(2);
+
+  selector = es->message_arguments[0];
+  arguments = es->message_arguments[1];
 
   klass = syx_object_get_class (es->message_receiver); 
   message_method = syx_class_lookup_method (klass, SYX_OBJECT_SYMBOL (selector));
@@ -268,7 +274,7 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
       SYX_PRIM_FAIL;
     }
 
-  // save the real state
+  /* save the real state */
   message_arguments = es->message_arguments;
   message_arguments_count = es->message_arguments_count;
   es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
@@ -298,7 +304,7 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
       ret = syx_interp_enter_context (context);
     }
 
-  // restore the state
+  /* restore the state */
   es->message_arguments = message_arguments;
   es->message_arguments_count = message_arguments_count;
 
@@ -307,11 +313,16 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
 
 SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
 {
+  syx_varsize start;
+  SyxOop coll;
+  syx_varsize end;
+  syx_varsize length;
   SYX_PRIM_ARGS(3);
-  syx_varsize start = SYX_SMALL_INTEGER (es->message_arguments[0]) - 1;
-  SyxOop coll = es->message_arguments[2];
-  syx_varsize end = SYX_SMALL_INTEGER(es->message_arguments[1]);
-  syx_varsize length = end - start;
+
+  start = SYX_SMALL_INTEGER (es->message_arguments[0]) - 1;
+  coll = es->message_arguments[2];
+  end = SYX_SMALL_INTEGER(es->message_arguments[1]);
+  length = end - start;
 
   if (!SYX_IS_OBJECT (coll) || !SYX_OBJECT_DATA (coll))
     {
@@ -328,7 +339,7 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
       SYX_PRIM_FAIL;
     }
 
-  // distinguish between arrays and bytearrays
+  /* distinguish between arrays and bytearrays */
   if (SYX_OBJECT_HAS_REFS (es->message_receiver))
     {
       if (SYX_OBJECT_HAS_REFS (coll))
@@ -354,8 +365,8 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWith)
 
 SYX_FUNC_PRIMITIVE (ByteArray_at)
 {
-  SYX_PRIM_ARGS(1);
   syx_varsize index;
+  SYX_PRIM_ARGS(1);
 
   index = SYX_SMALL_INTEGER(es->message_arguments[0]) - 1;
   if (index < 0 || index >= SYX_OBJECT_DATA_SIZE(es->message_receiver))
@@ -367,9 +378,9 @@ SYX_FUNC_PRIMITIVE (ByteArray_at)
 
 SYX_FUNC_PRIMITIVE (ByteArray_at_put)
 {
-  SYX_PRIM_ARGS(2);
   syx_varsize index;
   SyxOop oop;
+  SYX_PRIM_ARGS(2);
 
   if (SYX_OBJECT_IS_CONSTANT (es->message_receiver))
     {
@@ -393,9 +404,10 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 {
-  SYX_PRIM_ARGS(1);
   SyxOop args;
   SyxOop ctx;
+  SYX_PRIM_ARGS(1);
+
   syx_memory_gc_begin ();
   args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
@@ -419,9 +431,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_value)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
 {
-  SYX_PRIM_ARGS(1);
   SyxOop args;
   SyxOop ctx;
+  SYX_PRIM_ARGS(1);
 
   syx_memory_gc_begin ();
   args = syx_array_new_size (1);
@@ -437,8 +449,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 {
-  SYX_PRIM_ARGS(1);
   SyxOop args, ctx;
+  SYX_PRIM_ARGS(1);
+
   syx_memory_gc_begin ();
   args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
   ctx = _syx_block_context_new_from_closure (es, args);
@@ -452,8 +465,10 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
 {
+  SyxOop ctx;
   SYX_PRIM_ARGS(2);
-  SyxOop ctx = _syx_block_context_new_from_closure (es, syx_nil);
+
+  ctx = _syx_block_context_new_from_closure (es, syx_nil);
   if (SYX_IS_NIL(ctx))
     {
       SYX_PRIM_FAIL;
@@ -551,9 +566,12 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 
 SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 {
+  syx_int32 fd;
+  syx_bool t;
   SYX_PRIM_ARGS(2);
-  syx_int32 fd = SYX_SMALL_INTEGER(es->message_arguments[0]);
-  syx_bool t = SYX_IS_TRUE (es->message_arguments[1]);
+
+  fd = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
   if (t == syx_true)
     syx_scheduler_poll_write_register (fd,
@@ -568,10 +586,21 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 
 SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 {
+  syx_int32 op;
+  syx_int32 fd;
+  syx_int32 ret;
+  syx_symbol mode;
+  syx_int32 flags;
+  syx_char c;
+  syx_int32 count;
+  syx_string s;
+  SyxOop string;
   SYX_PRIM_ARGS(2);
-  syx_int32 op = SYX_SMALL_INTEGER (es->message_arguments[0]);
-  syx_int32 fd = SYX_SMALL_INTEGER (es->message_arguments[1]);
-  syx_int32 ret = 0;
+
+  op = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  fd = SYX_SMALL_INTEGER (es->message_arguments[1]);
+  ret = 0;
+
   if (op != 0 && fd < 0)
     {
       SYX_PRIM_FAIL;
@@ -579,57 +608,53 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
   switch (op)
     {
-    case 0: // open
-      {
-	syx_symbol mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
-	syx_int32 flags = 0;
-
-	if (*mode == 'r')
-	  {
-	    if (mode[1] == '+')
-	      flags |= O_RDWR;
-	    else
-	      flags |= O_RDONLY;
-	  }
-	else if (*mode == 'w')
-	  {
-	    flags |= O_CREAT | O_TRUNC;
-	    if (mode[1] == '+')
-	      flags |= O_RDWR;
-	    else
-	      flags |= O_WRONLY;
-	  }
-	else if (*mode == 'a')
-	  {
-	    flags |= O_APPEND | O_WRONLY | O_CREAT;
-	  }
-	else
-	  {
-	    SYX_PRIM_FAIL;
-	  }
+    case 0: /* open */
+      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
+      flags = 0;
+      
+      if (*mode == 'r')
+	{
+	  if (mode[1] == '+')
+	    flags |= O_RDWR;
+	  else
+	    flags |= O_RDONLY;
+	}
+      else if (*mode == 'w')
+	{
+	  flags |= O_CREAT | O_TRUNC;
+	  if (mode[1] == '+')
+	    flags |= O_RDWR;
+	  else
+	    flags |= O_WRONLY;
+	}
+      else if (*mode == 'a')
+	{
+	  flags |= O_APPEND | O_WRONLY | O_CREAT;
+	}
+      else
+	{
+	  SYX_PRIM_FAIL;
+	}
 	
-	ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
-      }
+      ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
       break;
 
-    case 1: // close
+    case 1: /* close */
       ret = close (fd);
       break;
       
-    case 2: // nextPut:
+    case 2: /* nextPut: */
       SYX_PRIM_ARGS(3);
-      {
-	if (!SYX_IS_CHARACTER (es->message_arguments[2]))
-	  {
-	    SYX_PRIM_FAIL;
-	  }
+      if (!SYX_IS_CHARACTER (es->message_arguments[2]))
+	{
+	  SYX_PRIM_FAIL;
+	}
 
-	syx_char c = SYX_CHARACTER (es->message_arguments[2]);
-	ret = write (fd, &c, 1);
-      }
+      c = SYX_CHARACTER (es->message_arguments[2]);
+      ret = write (fd, &c, 1);
       break;
 
-    case 3: // nextPutAll:
+    case 3: /* nextPutAll: */
       SYX_PRIM_ARGS(3);
 
       if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
@@ -646,48 +671,42 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	ret = 0;
       break;
 
-    case 4: // flush
-//      ret = fsync (fd);
+    case 4: /* flush */
+/*      ret = fsync (fd); */
       break;
 
-    case 5: // next
-      {
-	syx_char c;
-	if (!read (fd, &c, 1))
-	  {
-	    // EOF
-	    SYX_PRIM_RETURN (syx_nil);
-	  }
-
-	SYX_PRIM_RETURN (syx_character_new (c));
-      }
+    case 5: /* next */
+      if (!read (fd, &c, 1))
+	{
+	  /* EOF */
+	  SYX_PRIM_RETURN (syx_nil);
+	}
+      
+      SYX_PRIM_RETURN (syx_character_new (c));
       break;
 
-    case 6: // next:
+    case 6: /* next: */
       SYX_PRIM_ARGS(3);
-      {
-	syx_int32 count = SYX_SMALL_INTEGER (es->message_arguments[2]);
-	syx_string s = (syx_string) syx_malloc (count+1);
-	SyxOop string;
+      count = SYX_SMALL_INTEGER (es->message_arguments[2]);
+      s = (syx_string) syx_malloc (count+1);
 
-	count = read (fd, s, count);
-
-	if (!count)
-	  {
-	    // maybe EOF
-	    SYX_PRIM_RETURN (syx_nil);
-	  }
-
-	s[count] = '\0';
-
-	string = syx_string_new (s);
-	syx_free (s);
-
-	SYX_PRIM_RETURN (string);
-      }
+      count = read (fd, s, count);
+      
+      if (!count)
+	{
+	  /* maybe EOF */
+	  SYX_PRIM_RETURN (syx_nil);
+	}
+      
+      s[count] = '\0';
+      
+      string = syx_string_new (s);
+      syx_free (s);
+      
+      SYX_PRIM_RETURN (string);
       break;
 
-    case 7: // size
+    case 7: /* size */
       {
 	#ifdef HAVE_FSTAT
 	struct stat statbuf;
@@ -703,7 +722,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       }
       break;
 
-    default: // unknown
+    default: /* unknown */
       SYX_PRIM_FAIL;
 
     }
@@ -719,11 +738,10 @@ SYX_FUNC_PRIMITIVE (String_hash)
 /* Small integers */
 
 SYX_FUNC_PRIMITIVE (SmallInteger_plus)
-{
-  SYX_PRIM_ARGS(1);
-  
+{ 
   SyxOop first, second;
   syx_int32 a, b, result;
+  SYX_PRIM_ARGS(1);
 
   first = es->message_receiver;
   second = es->message_arguments[0];
@@ -749,11 +767,10 @@ SYX_FUNC_PRIMITIVE (SmallInteger_plus)
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_minus)
-{
-  SYX_PRIM_ARGS(1);
-  
+{ 
   SyxOop first, second;
   syx_int32 a, b, result;
+  SYX_PRIM_ARGS(1);
 
   first = es->message_receiver;
   second = es->message_arguments[0];
@@ -780,9 +797,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_minus)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_lt)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -795,9 +812,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_lt)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_gt)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -810,9 +827,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_gt)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_le)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -825,9 +842,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_le)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ge)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -840,9 +857,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ge)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -854,9 +871,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_eq)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -868,10 +885,10 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ne)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_div)
 {
-  SYX_PRIM_ARGS(1);
-
   SyxOop second;
   syx_int32 a, b;
+  SYX_PRIM_ARGS(1);
+
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
     {
@@ -898,10 +915,10 @@ SYX_FUNC_PRIMITIVE (SmallInteger_div)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_mul)
 {
-  SYX_PRIM_ARGS(1);
-
   SyxOop first, second;
   syx_int32 a, b, result;
+  SYX_PRIM_ARGS(1);
+
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -928,9 +945,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_mul)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_mod)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -943,9 +960,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_mod)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -958,9 +975,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitOr)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -973,9 +990,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitOr)
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_IS_SMALL_INTEGER (second))
@@ -989,10 +1006,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
 /* Thanks to Sam Philiphs for this contribute */
 SYX_FUNC_PRIMITIVE (SmallInteger_bitShift)
 {
-  SYX_PRIM_ARGS(1);
-
   SyxOop arg;
   syx_int32 val, shift;
+  SYX_PRIM_ARGS(1);
 
   val = SYX_SMALL_INTEGER(es->message_receiver);
   arg = es->message_arguments[0];
@@ -1042,19 +1058,22 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
 
 /* Large integers */
 
-#define _GET_Z mpz_t *z = (mpz_t *)SYX_OBJECT_DATA (es->message_receiver)
+#define _GET_Z mpz_t *z = (mpz_t *)SYX_OBJECT_DATA (es->message_receiver);
+#define _GET_Z2 mpz_t *op2; _GET_Z
+#define _GET_Z2R mpz_t *r; syx_int32 ret; _GET_Z2
+#define _GET_ZR mpz_t *r; syx_int32 ret; _GET_Z
 #define _GET_OP2 SYX_PRIM_ARGS(1); if (!SYX_OBJECT_IS_LARGE_INTEGER (es->message_arguments[0])) { SYX_PRIM_FAIL; } \
-  mpz_t *op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
-#define _NEW_R mpz_t *r = syx_calloc (1, sizeof (mpz_t)); mpz_init (*r)
+  op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
+#define _NEW_R r = syx_calloc (1, sizeof (mpz_t)); mpz_init (*r)
 #define _RET_R if (mpz_fits_sint_p (*r) && SYX_SMALL_INTEGER_CAN_EMBED (mpz_get_si (*r))) \
-    { syx_int32 ret = mpz_get_si (*r); mpz_clear (*r); syx_free (r);	\
+    { ret = mpz_get_si (*r); mpz_clear (*r); syx_free (r);	\
       SYX_PRIM_RETURN (syx_small_integer_new (ret)); }			\
   else									\
     { SYX_PRIM_RETURN (syx_large_integer_new_mpz (r)); }
 
 #ifdef HAVE_LIBGMP
 #define _DO_OP(op)				\
-  _GET_Z;					\
+  _GET_Z2R;					\
   _GET_OP2;					\
   _NEW_R;					\
   op (*r, *z, *op2);				\
@@ -1065,7 +1084,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
 
 #ifdef HAVE_LIBGMP
 #define _CMP_OP(op)						\
-  _GET_Z;							\
+  _GET_Z2;							\
   _GET_OP2;							\
   SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) op 0));
 #else
@@ -1118,8 +1137,7 @@ SYX_FUNC_PRIMITIVE(LargeInteger_ne)
 SYX_FUNC_PRIMITIVE(LargeInteger_div)
 {
 #ifdef HAVE_LIBGMP
-  SYX_PRIM_ARGS(1);
-  _GET_Z;
+  _GET_Z2R;
   _GET_OP2;
   _NEW_R;
   if (!mpz_divisible_p (*z, *op2))
@@ -1172,9 +1190,8 @@ SYX_FUNC_PRIMITIVE(LargeInteger_bitXor)
 SYX_FUNC_PRIMITIVE(LargeInteger_bitShift)
 {
 #ifdef HAVE_LIBGMP
-  SYX_PRIM_ARGS(1);
   syx_int32 shift;
-  _GET_Z;
+  _GET_ZR;
   _NEW_R;
   if (!SYX_IS_SMALL_INTEGER (es->message_arguments[0]))
     {
@@ -1227,9 +1244,9 @@ SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 
 SYX_FUNC_PRIMITIVE (Float_plus)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
   
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1242,9 +1259,9 @@ SYX_FUNC_PRIMITIVE (Float_plus)
 
 SYX_FUNC_PRIMITIVE (Float_minus)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1257,9 +1274,9 @@ SYX_FUNC_PRIMITIVE (Float_minus)
 
 SYX_FUNC_PRIMITIVE (Float_div)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS (1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1272,9 +1289,9 @@ SYX_FUNC_PRIMITIVE (Float_div)
 
 SYX_FUNC_PRIMITIVE (Float_mul)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS (1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1287,9 +1304,9 @@ SYX_FUNC_PRIMITIVE (Float_mul)
 
 SYX_FUNC_PRIMITIVE (Float_lt)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1302,9 +1319,9 @@ SYX_FUNC_PRIMITIVE (Float_lt)
 
 SYX_FUNC_PRIMITIVE (Float_gt)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1317,9 +1334,9 @@ SYX_FUNC_PRIMITIVE (Float_gt)
 
 SYX_FUNC_PRIMITIVE (Float_le)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1332,9 +1349,9 @@ SYX_FUNC_PRIMITIVE (Float_le)
 
 SYX_FUNC_PRIMITIVE (Float_ge)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1347,9 +1364,9 @@ SYX_FUNC_PRIMITIVE (Float_ge)
 
 SYX_FUNC_PRIMITIVE (Float_eq)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1362,9 +1379,9 @@ SYX_FUNC_PRIMITIVE (Float_eq)
 
 SYX_FUNC_PRIMITIVE (Float_ne)
 {
+  SyxOop first, second;
   SYX_PRIM_ARGS(1);
 
-  SyxOop first, second;
   first = es->message_receiver;
   second = es->message_arguments[0];
   if (!SYX_OBJECT_IS_FLOAT (second))
@@ -1382,6 +1399,7 @@ SYX_FUNC_PRIMITIVE (Float_ceil)
   if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
     {
 #ifdef HAVE_LIBGMP
+      mpz_t *r;
       _NEW_R;
       mpz_init_set_d (*r, ret);
       SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
@@ -1400,6 +1418,7 @@ SYX_FUNC_PRIMITIVE (Float_floor)
   if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
     {
 #ifdef HAVE_LIBGMP
+      mpz_t *r;
       _NEW_R;
       mpz_init_set_d (*r, ret);
       SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
@@ -1413,11 +1432,12 @@ SYX_FUNC_PRIMITIVE (Float_floor)
 
 SYX_FUNC_PRIMITIVE (Float_trunc)
 {
-  double ret = trunc (SYX_OBJECT_FLOAT (es->message_receiver));
+  int ret = (int) SYX_OBJECT_FLOAT (es->message_receiver);
 
   if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
     {
 #ifdef HAVE_LIBGMP
+      mpz_t *r;
       _NEW_R;
       mpz_init_set_d (*r, ret);
       SYX_PRIM_RETURN (syx_large_integer_new_mpz (r));
@@ -1434,11 +1454,13 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
 {
-  SYX_PRIM_ARGS(1);
-  SyxOop filename = es->message_arguments[0];
+  SyxOop filename;
   syx_bool ret;
+  SYX_PRIM_ARGS(1);
+  
+  filename = es->message_arguments[0];
 
-  // save the current execution state
+  /* save the current execution state */
   syx_interp_stack_push (es->message_receiver);
   syx_exec_state_save ();
 
@@ -1463,10 +1485,15 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_garbageCollect)
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_atDataPut)
 {
+  SyxOop source;
+  SyxOop dest;
+  syx_bool has_refs;
   SYX_PRIM_ARGS(2);
-  SyxOop source = es->message_arguments[1];
-  SyxOop dest = es->message_arguments[0];
-  syx_bool has_refs = SYX_OBJECT_HAS_REFS(source);
+
+  source = es->message_arguments[1];
+  dest = es->message_arguments[0];
+  has_refs = SYX_OBJECT_HAS_REFS(source);
+
   if (has_refs != SYX_OBJECT_HAS_REFS(dest))
     {
       SYX_PRIM_FAIL;
@@ -1484,8 +1511,8 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_atDataPut)
 
 SYX_FUNC_PRIMITIVE (ObjectMemory_setConstant)
 {
-  SYX_PRIM_ARGS(1);
   SyxOop oop = es->message_arguments[0];
+  SYX_PRIM_ARGS(1);
   if (SYX_IS_OBJECT (oop))
     {
       SYX_OBJECT_IS_CONSTANT(oop) = TRUE;
@@ -1495,8 +1522,8 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_setConstant)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_quit)
 {
-  SYX_PRIM_ARGS(1);
   syx_int32 status = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  SYX_PRIM_ARGS(1);
   syx_quit ();
   exit (status);
 }
@@ -1519,7 +1546,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
   if (!SYX_IS_NIL (plugin))
     plugin_name = SYX_OBJECT_SYMBOL (plugin);
 
-  // save the real state
+  /* save the real state */
   message_arguments = es->message_arguments;
   message_arguments_count = es->message_arguments_count;
   es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
@@ -1530,7 +1557,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
 
   ret = syx_plugin_call (es, plugin_name, SYX_OBJECT_SYMBOL (func), syx_nil);
 
-  // restore the state
+  /* restore the state */
   es->message_arguments = message_arguments;
   es->message_arguments_count = message_arguments_count;
 
@@ -1539,12 +1566,16 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_pluginSymbol)
 {
-  SYX_PRIM_ARGS(2);
-  SyxOop plugin = es->message_arguments[0];
-  SyxOop func = es->message_arguments[1];
+  SyxOop plugin;
+  SyxOop func;
   syx_symbol func_name;
-  syx_symbol plugin_name = NULL;
+  syx_symbol plugin_name;
   SyxOop oop;
+  SYX_PRIM_ARGS(2);
+
+  plugin = es->message_arguments[0];
+  func = es->message_arguments[1];
+  plugin_name = NULL;
 
   if (SYX_IS_NIL (func))
     {
@@ -1562,9 +1593,13 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginSymbol)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
 {
+  SyxOop oop;
+  syx_symbol name;
   SYX_PRIM_ARGS(1);
-  SyxOop oop = es->message_arguments[0];
-  syx_symbol name = NULL;
+
+  oop = es->message_arguments[0];
+  name = NULL;
+
   if (!SYX_IS_NIL (oop))
     name = SYX_OBJECT_SYMBOL (oop);
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_load (name)));
@@ -1572,8 +1607,8 @@ SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
 {
-  SYX_PRIM_ARGS(1);
   syx_symbol name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  SYX_PRIM_ARGS(1);
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 

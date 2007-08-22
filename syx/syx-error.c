@@ -38,8 +38,9 @@ static SyxErrorType _syx_error_entries_top = 0;
 int errno=0;
 #endif
 
-//! Initialize the error reporting system
 /*!
+  Initialize the error reporting system.
+
   This function must be called after the image has been loaded or a new image is built.
   Usually, user programs don't need to call this directly.
 */
@@ -53,8 +54,9 @@ syx_error_init (void)
 			      syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
 }
 
-//! Clear all memory allocated to by the error reporting system
 /*!
+  Clear all memory allocated to by the error reporting system.
+
   This function must be called after all other memory has been released and we're really ready to quit,
   so that any other call won't report errors.
   Usually, user programs don't need to call this directly.
@@ -69,8 +71,9 @@ syx_error_clear (void)
   syx_free (_syx_error_entries);
 }
 
-//! Register a kind of error
 /*!
+  Register a kind of error.
+
   Create a new hook for reporting errors from C to the Smalltalk environment.
 
   \return a number identifying the king of error for future lookups
@@ -92,8 +95,9 @@ syx_error_register (syx_symbol name, SyxOop klass)
   return _syx_error_entries_top - 1;
 }
 
-//! Lookup for an error
 /*!
+  Lookup for an error.
+
   \param type the type return from syx_error_register
   \return the entry of the error
 */

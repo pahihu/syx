@@ -38,7 +38,7 @@ typedef syx_uint32 SyxErrorType;
 
 typedef struct SyxErrorEntry SyxErrorEntry;
 
-//! Hold the name and the Error subclass to invoke in the Smalltalk environment
+/*! Hold the name and the Error subclass to invoke in the Smalltalk environment */
 struct SyxErrorEntry
 {
   syx_symbol name;
@@ -50,8 +50,9 @@ EXPORT extern void syx_error_clear (void);
 EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop klass);
 EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 
-//! Signal an error in the Smalltalk environment
 /*!
+  Signal an error in the Smalltalk environment.
+
   \param type the type returned by syx_error_register
 */
 #define syx_signal(type, ...)						\
@@ -59,8 +60,9 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 					       syx_error_lookup (type)->klass, \
 					       "signal",		\
 					       __VA_ARGS__)))
-//! Create an error Context in the Smalltalk environment ready to enter a Process
 /*!
+  Create an error Context in the Smalltalk environment ready to enter a Process.
+
   \param type the type returned by syx_error_register
 */
 #define syx_signal_create_context(type, ...)				\
@@ -69,15 +71,16 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 		     "signal",						\
 		     __VA_ARGS__))
 
-//! Send receiver>>#doesNotUnderstand: with selector
+/*! Send receiver>>#doesNotUnderstand: with selector */
 #define syx_signal_does_not_understand(receiver, selector)		\
   (syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (), \
 						      receiver,		\
 						      "doesNotUnderstand:", \
 						      selector)))
 
-//! Display an error then exits
 /*!
+  Display an error then exits.
+
   This function will show an error MessageBox on Windows CE
 */
 #ifndef WINCE
@@ -105,14 +108,14 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 #endif /* WINCE */
 
 
-//! Display a warning message
+/*! Display a warning message */
 #define syx_warning(...)			\
   {						\
     fprintf (stderr, "WARNING: ");		\
     fprintf (stderr, __VA_ARGS__);		\
   }
 
-//! Display perror message and exit
+/*! Display perror message and exit */
 #ifdef HAVE_PERROR
 #define syx_perror(...)				\
   {						\
@@ -123,7 +126,7 @@ EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
 #define syx_perror syx_error
 #endif
 
-//! Display debugging messages
+/*! Display debugging messages */
 #define syx_debug printf
     
 

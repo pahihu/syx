@@ -46,7 +46,7 @@ struct SyxParserScopeStack
 
 typedef struct SyxParser SyxParser;
 
-//! Parses the grammar of Smalltalk code into bytecode-commands for creating CompiledMethods
+/*! Parses the grammar of Smalltalk code into bytecode-commands for creating CompiledMethods */
 struct SyxParser
 {
   SyxLexer *lexer;

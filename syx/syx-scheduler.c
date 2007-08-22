@@ -40,7 +40,7 @@
 #include "syx-memory.h"
 #include "syx-init.h"
 
-
+#include <sys/time.h>
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -68,7 +68,7 @@ _syx_scheduler_find_next_process ()
 {
   SyxOop process;
 
-  // no processes have been scheduled
+  /* no processes have been scheduled */
   if (SYX_IS_NIL (syx_processor_first_process))
     return syx_nil;
 
@@ -239,8 +239,9 @@ _syx_scheduler_load (FILE *image)
     }
 }
 
-//! Initialize the scheduler
 /*!
+  Initialize the scheduler.
+
   If absent, create a ProcessorScheduler instance named Processor and insert it into the Smalltalk dictionary.
 */
 void
@@ -262,7 +263,7 @@ syx_scheduler_init (void)
   _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
 }
 
-//! Run the scheduler in blocking mode. Exits once no Process is scheduled
+/*! Run the scheduler in blocking mode. Exits once no Process is scheduled */
 void
 syx_scheduler_run (void)
 {
@@ -288,8 +289,9 @@ syx_scheduler_run (void)
   running = FALSE;
 }
 
-//! Watch a file descriptor for reading
 /*!
+  Watch a file descriptor for reading
+
   \param fd the file descriptor
   \param semaphore called when fd is ready for reading
 */
@@ -308,8 +310,9 @@ syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
   FD_SET(fd, &_syx_scheduler_poll_rfds);
 }
 
-//! Watch a file descriptor for writing
 /*!
+  Watch a file descriptor for writing
+
   \param fd the file descriptor
   \param semaphore called when fd is ready for writing
 */
@@ -328,7 +331,7 @@ syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
   FD_SET(fd, &_syx_scheduler_poll_wfds);
 }
 
-//! Stop the scheduler
+/*! Stop the scheduler */
 void
 syx_scheduler_quit (void)
 {
@@ -351,7 +354,7 @@ syx_scheduler_quit (void)
   _syx_scheduler_poll_write = NULL;
 }
 
-//! Add a Process to be scheduled
+/*! Add a Process to be scheduled */
 void
 syx_scheduler_add_process (SyxOop process)
 {
@@ -371,7 +374,7 @@ syx_scheduler_add_process (SyxOop process)
     }
 }
 
-//! Remove a Process from being scheduled
+/*! Remove a Process from being scheduled */
 void
 syx_scheduler_remove_process (SyxOop process)
 {

@@ -1,5 +1,18 @@
 2007-08-22  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-platform.h (syx_strdup): added
+	(strndup): renamed to syx_strndup and moved from syx-types.h
+	(malloc, malloc0, calloc, free): moved from syx-types.h
+	All calls have been updated
+	
+	* All mixed declarations and code changed to for strict ISO C
+	
+	* All comments changed to complain ANSI C
+	
+	* syx/syx-object.h (struct SyxObject): bit-fields were removed for -pedantic, the size didn't vary
+
+	* syx/syx-utils.c: issue #15 (Krzysztof Kowalczyk)
+
 	* Fixed issue #14 (kkowalczyk)
 
 2007-08-21  Luca Bruno  <lethalman88@gmail.com>

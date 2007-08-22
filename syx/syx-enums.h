@@ -25,17 +25,18 @@
 #ifndef SYX_ENUMS_H
 #define SYX_ENUMS_H
 
-//! The type of SyxOop contained in SyxOop::c::type
+/*! The type of SyxOop contained in SyxOop::c::type */
 typedef enum
   {
-    //! This means SyxOop indexes an object into the syx memory
+    /*! This means SyxOop indexes an object into the syx memory */
     SYX_TYPE_POINTER,
     SYX_TYPE_SMALL_INTEGER,
-    SYX_TYPE_CHARACTER,
+    SYX_TYPE_CHARACTER
   } SyxType;
 
-//! Indexes of known instance variables
 /*!
+  Indexes of known instance variables.
+
   Each known class has default instance variables used by the VM that are mandatory.
   These indexes are used to facilitate the access these variables and are contained in SyxObject::data
 */
@@ -126,11 +127,11 @@ typedef enum
     SYX_VARS_PROCESSOR_SCHEDULER_BYTESLICE = SYX_VARS_OBJECT_ALL,
     SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS,
     SYX_VARS_PROCESSOR_SCHEDULER_ACTIVE_PROCESS,
-    SYX_VARS_PROCESSOR_SCHEDULER_ALL,
+    SYX_VARS_PROCESSOR_SCHEDULER_ALL
 
   } SyxVariables;
 
-//! The type of the token in SyxToken::type
+/*! The type of the token in SyxToken::type */
 typedef enum
   {
     SYX_TOKEN_END,
@@ -146,10 +147,10 @@ typedef enum
     SYX_TOKEN_NAME_COLON,
     SYX_TOKEN_SYM_CONST,
     SYX_TOKEN_STR_CONST,
-    SYX_TOKEN_BINARY,
+    SYX_TOKEN_BINARY
   } SyxTokenType;
 
-//! List of commands of a bytecode in SyxBytecode::code
+/*! List of commands of a bytecode in SyxBytecode::code */
 typedef enum
   {
     SYX_BYTECODE_PUSH_INSTANCE,
@@ -176,7 +177,7 @@ typedef enum
     SYX_BYTECODE_EXTENDED = 0x1F
   } SyxBytecodeCommand;
 
-//! Special commands performed by the command SYX_BYTECODE_DO_SPECIAL
+/*! Special commands performed by the command SYX_BYTECODE_DO_SPECIAL */
 typedef enum
   {
     SYX_BYTECODE_POP_TOP,
@@ -185,30 +186,31 @@ typedef enum
     SYX_BYTECODE_DUPLICATE,
     SYX_BYTECODE_BRANCH,
     SYX_BYTECODE_BRANCH_IF_TRUE,
-    SYX_BYTECODE_BRANCH_IF_FALSE,
+    SYX_BYTECODE_BRANCH_IF_FALSE
   } SyxBytecodeSpecial;
 
-//! Constants pushed by SYX_BYTECODE_PUSH_CONSTANT
+/*! Constants pushed by SYX_BYTECODE_PUSH_CONSTANT */
 typedef enum
   {
     SYX_BYTECODE_CONST_NIL,
     SYX_BYTECODE_CONST_TRUE,
     SYX_BYTECODE_CONST_FALSE,
 
-    //! This constant is resolved at runtime by the interpreter
-    SYX_BYTECODE_CONST_CONTEXT,
+    /*! This constant is resolved at runtime by the interpreter */
+    SYX_BYTECODE_CONST_CONTEXT
   } SyxBytecodeConstant;
 
 
-//! Type of signals emitted in the Smalltalk environment
 /*!
+  Type of signals emitted in the Smalltalk environment.
+
   Each type is relative to a class defined in syx-error.c
 */
 typedef enum
   {
     SYX_ERROR_INTERP,
     SYX_ERROR_NOT_FOUND,
-    SYX_ERROR_WRONG_ARGUMENT_COUNT,
+    SYX_ERROR_WRONG_ARGUMENT_COUNT
   } SyxSignalInternal;
 
 #endif /* SYX_ENUMS_H */

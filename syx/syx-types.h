@@ -35,6 +35,10 @@
 #endif
 #include <wchar.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /*! \page syx_types Syx Types
   Contains various C data types definition, including SyxOop
 */
@@ -46,20 +50,20 @@
 #define SYX_OOP_EQ(oop1, oop2) ((oop1) == (oop2))
 #define SYX_OOP_NE(oop1, oop2) ((oop1) != (oop2))
 
-//! Cast a SyxOop to a native pointer type
+/*! Cast a SyxOop to a native pointer type */
 #define SYX_OOP_CAST_POINTER(oop) ((syx_pointer) (oop))
-//! Cast a pointer to a SyxOop
+/*! Cast a pointer to a SyxOop */
 #define SYX_POINTER_CAST_OOP(ptr) ((SyxOop) (ptr))
 
-//! TRUE if the number can be embedded
+/*! TRUE if the number can be embedded */
 #define SYX_SMALL_INTEGER_CAN_EMBED(num) ((num) >= (-1 << 30) && (num) < (1 << 30))
-//! TRUE if an overflow occurs when doing the sum of a and b
+/*! TRUE if an overflow occurs when doing the sum of a and b */
 #define SYX_SMALL_INTEGER_SUM_OVERFLOW(a,b) (((a ^ b) | (((a ^ (~(a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) + b) ^ b)) >= 0)
-//! TRUE if an overflow occurs when doing the difference between a and b
+/*! TRUE if an overflow occurs when doing the difference between a and b */
 #define SYX_SMALL_INTEGER_DIFF_OVERFLOW(a,b) (((a ^ b) & (((a ^ ((a ^ b) & (1 << (sizeof(syx_int32) * CHAR_BIT - 1)))) - b) ^ b)) < 0)
-//! TRUE if an overflow occurs when doing division between a and b
+/*! TRUE if an overflow occurs when doing division between a and b */
 #define SYX_SMALL_INTEGER_DIV_OVERFLOW(a,b) ((b == 0) || ((a == INT_MIN) && (b == -1)))
-//! Force the embedding of an integer
+/*! Force the embedding of an integer */
 #define SYX_SMALL_INTEGER_EMBED(num) ((syx_int32)(num) & ~(3 << 30))
 
 #if !defined FALSE || !defined TRUE
@@ -124,25 +128,121 @@ typedef void * syx_pointer;
 
 typedef syx_nint SyxOop;
 
+typedef long fd_mask;
 
 /* Basic instance types */
 
-//! Expands to syx_true or syx_false depending on the given condition
+/*! Expands to syx_true or syx_false depending on the given condition */
 #define syx_boolean_new(cond) ((cond) ? syx_true : syx_false)
-//! Create a new SmallInteger
+/*! Create a new SmallInteger */
 #define syx_small_integer_new(num) (((SyxOop)(num) << 1) + SYX_TYPE_SMALL_INTEGER)
-//! Create a new Character
+/*! Create a new Character */
 #define syx_character_new(ch) (((SyxOop)(ch) << 2) + SYX_TYPE_CHARACTER)
 
-//! Retrieve a syx_int32 from a SyxOop
+/*! Retrieve a syx_int32 from a SyxOop */
 #define SYX_SMALL_INTEGER(oop) ((syx_int32)(oop) >> 1)
-//! Retrieve a syx_uchar from a SyxOop
+/*! Retrieve a syx_uchar from a SyxOop */
 #define SYX_CHARACTER(oop) ((syx_uchar)((oop) >> 2))
 
 
-//! TRUE if an overflow occurs when doing b times a
+/*! TRUE if an overflow occurs when doing b times a */
 extern EXPORT syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
-//! TRUE if an overflow occurs when shifting a on the left by b
+/*! TRUE if an overflow occurs when shifting a on the left by b */
 extern EXPORT syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
+
+
+
+#define syx_free free
+
+
+INLINE syx_pointer
+syx_malloc (syx_int32 size)
+{
+  syx_pointer ptr;
+
+  ptr = malloc (size);
+  if (!ptr)
+    {
+      puts ("out of memory\n");
+      exit (-1);
+    }
+
+  return ptr;
+}
+
+INLINE syx_pointer
+syx_malloc0 (syx_int32 size)
+{
+  syx_pointer ptr;
+
+  ptr = malloc (size);
+  if (!ptr)
+    {
+      puts ("out of memory\n");
+      exit (-1);
+    }
+
+  memset (ptr, '\0', size);
+  return ptr;
+}
+
+INLINE syx_pointer
+syx_calloc (syx_int32 elements, syx_int32 element_size)
+{
+  syx_pointer ptr;
+
+  ptr = calloc (elements, element_size);
+  if (!ptr)
+    {
+      puts ("out of memory\n");
+      exit (-1);
+    }
+
+  return ptr;
+}
+
+INLINE syx_pointer
+syx_realloc (syx_pointer ptr, syx_int32 size)
+{
+  syx_pointer nptr;
+
+  nptr = realloc (ptr, size);
+  if (!nptr)
+    {
+      puts ("out of memory\n");
+      exit (-1);
+    }
+
+  return nptr;
+}
+
+/*! Return a new allocated memory which is a copy of the given one */
+INLINE syx_pointer
+syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size)
+{
+  syx_pointer nptr;
+
+  nptr = syx_malloc (element_size * elements);
+  memcpy (nptr, ptr, element_size * elements);
+
+  return nptr;
+}
+
+
+INLINE syx_string
+syx_strndup (syx_symbol src, syx_size n)
+{
+  syx_string ret = (syx_string) syx_malloc (n + 1);
+  memcpy (ret, src, n);
+  ret[n] = '\0';
+  return ret;
+}
+
+INLINE syx_string
+syx_strdup (syx_symbol src)
+{
+  return syx_strndup (src, strlen (src));
+}
+
 
 #endif /* SYX_TYPES_H */

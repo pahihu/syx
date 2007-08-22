@@ -54,7 +54,7 @@ static syx_bool _syx_memory_initialized = FALSE;
 
 #define SYX_MEMORY_TOP (&syx_memory[_syx_memory_size - 1])
 
-// Holds temporary objects that must not be freed during a transaction
+/* Holds temporary objects that must not be freed during a transaction */
 SyxOop _syx_memory_gc_trans[0x100];
 syx_int32 _syx_memory_gc_trans_top = 0;
 syx_int32 _syx_memory_gc_trans_running = 0;
@@ -76,7 +76,7 @@ static void _syx_memory_gc_sweep ();
     \note the SyxObject::data field, containing SyxObject pointers, is allocated outside this memory.
 */
 
-//! Initialize or realloc the memory according to the given size
+/*! Initialize or realloc the memory according to the given size */
 void
 syx_memory_init (syx_int32 mem_size)
 {
@@ -98,7 +98,7 @@ syx_memory_init (syx_int32 mem_size)
   syx_memory = (SyxObject *) syx_calloc (_syx_memory_size, sizeof (SyxObject));
   _syx_freed_memory = (SyxOop *) syx_calloc (_syx_memory_size, sizeof (SyxOop));
 
-  // fill freed memory with all memory oops
+  /* fill freed memory with all memory oops */
   for (_syx_freed_memory_top=0, object=SYX_MEMORY_TOP;
        _syx_freed_memory_top < _syx_memory_size;
        _syx_freed_memory_top++, object--)
@@ -109,17 +109,19 @@ syx_memory_init (syx_int32 mem_size)
   _syx_memory_initialized = TRUE;
 }
 
-//! Clears all the allocated memory
+/*! Clears all the allocated memory */
 void
 syx_memory_clear (void)
 {
-  if (!_syx_memory_initialized)
-    return;
-
   SyxObject *object = syx_memory;
   SyxOop context;
 
-  // finalize objects
+  if (!_syx_memory_initialized)
+    return;
+
+  object = syx_memory;
+
+  /* finalize objects */
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
       if (SYX_IS_NIL (object->klass))
@@ -133,7 +135,7 @@ syx_memory_clear (void)
 	}
     }
 
-  // free memory used by objects
+  /* free memory used by objects */
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
       if (object->vars)
@@ -147,7 +149,7 @@ syx_memory_clear (void)
   _syx_memory_initialized = FALSE;
 }
 
-//! Returns a new SyxOop
+/*! Returns a new SyxOop */
 SyxOop
 syx_memory_alloc (void)
 {
@@ -201,7 +203,7 @@ _syx_memory_gc_mark (SyxOop object)
 }
 
 
-//! Calls the Syx garbage collector
+/*! Calls the Syx garbage collector */
 void
 syx_memory_gc (void)
 {
@@ -228,7 +230,7 @@ syx_memory_gc (void)
   syx_debug ("GC: reclaimed %d (%d%%); available %d; used %d; total %d\n", reclaimed, reclaimed * 100 / _syx_memory_size, _syx_freed_memory_top, _syx_memory_size - _syx_freed_memory_top, _syx_memory_size);
 #endif
 
-  // Restore the normal transaction
+  /* Restore the normal transaction */
   _syx_memory_gc_trans_top = trans_top;
   _syx_memory_gc_trans_running = trans_running;
   memcpy (_syx_memory_gc_trans, trans, sizeof (SyxOop) * 0x100);
@@ -266,8 +268,9 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 }
 
 
-//! Dumps all the memory
 /*!
+  Dumps all the memory.
+
   \param path the file path to put all inside
   \return FALSE if an error occurred
 */
@@ -311,13 +314,13 @@ syx_memory_save_image (syx_symbol path)
       fputc (object->has_refs, image);
       fputc (object->is_constant, image);
 
-      // store instance variables
+      /* store instance variables */
       data = syx_object_vars_size ((SyxOop)object);
       data = SYX_COMPAT_SWAP_32(data);
       fwrite (&data, sizeof (syx_varsize), 1, image);
       _syx_memory_write (object->vars, TRUE, SYX_COMPAT_SWAP_32(data), image);
 
-      // store data
+      /* store data */
       data = SYX_COMPAT_SWAP_32 (object->data_size);
       fwrite (&data, sizeof (syx_varsize), 1, image);
       if (object->data_size > 0)
@@ -335,25 +338,25 @@ syx_memory_save_image (syx_symbol path)
 
 		  syx_int32 offset = 0;
 		  syx_nint start, end;
-		  // specify that's a large integer
+		  /* specify that's a large integer */
 		  fputc (1, image);
-		  // make space to hold the offset
+		  /* make space to hold the offset */
 		  fwrite (&offset, sizeof (syx_int32), 1, image);
 		  start = ftell (image);
 		  mpz_out_raw (image, SYX_OBJECT_LARGE_INTEGER ((SyxOop)object));
 		  end = ftell (image);
 		  offset = end - start;
-		  // go back to the offset
+		  /* go back to the offset */
 		  fseek (image, - offset - sizeof (syx_int32), SEEK_CUR);
 		  data = SYX_COMPAT_SWAP_32 (offset);
 		  fwrite (&data, sizeof (syx_int32), 1, image);
-		  // return again to continue normal writing
+		  /* return again to continue normal writing */
 		  fseek (image, offset, SEEK_CUR);
 		}
 	      else
 #endif
 		{
-		  // it's not a large integer
+		  /* it's not a large integer */
 		  fputc (0, image);
 		  fwrite (object->data, sizeof (syx_int8), object->data_size, image);
 		}
@@ -405,8 +408,9 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 }
 
 
-//! Loads the memory
 /*!
+  Loads the memory.
+
   \param path the file containing the data dumped by syx_memory_save_image
   \return FALSE if an error occurred
 */
@@ -454,7 +458,7 @@ syx_memory_load_image (syx_symbol path)
       object->has_refs = fgetc (image);
       object->is_constant = fgetc (image);
 
-      // fetch instance variables
+      /* fetch instance variables */
       fread (&data, sizeof (syx_varsize), 1, image);
       data = SYX_COMPAT_SWAP_32 (data);
       if (object->vars)
@@ -462,7 +466,7 @@ syx_memory_load_image (syx_symbol path)
       object->vars = (SyxOop *) syx_calloc (data, sizeof (SyxOop));
       _syx_memory_read (object->vars, TRUE, data, image);
 
-      // fetch data
+      /* fetch data */
       fread (&data, sizeof (syx_varsize), 1, image);
       object->data_size = SYX_COMPAT_SWAP_32 (data);
       if (object->data_size > 0)
@@ -486,7 +490,7 @@ syx_memory_load_image (syx_symbol path)
 		  mpz_init (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object));
 		  mpz_inp_raw (SYX_OBJECT_LARGE_INTEGER ((SyxOop)object), image);
 #else
-		  // skip GMP data since we can't handle it
+		  /* skip GMP data since we can't handle it */
 		  fseek (image, data, SEEK_CUR);
 #endif
 		}
@@ -509,7 +513,7 @@ _syx_memory_gc_sweep ()
 {
   SyxObject *object;
 
-  // skip constants
+  /* skip constants */
   for (object=syx_memory+3; object <= SYX_MEMORY_TOP; object++)
     {
       if (SYX_IS_NIL (object->klass))
@@ -523,7 +527,7 @@ _syx_memory_gc_sweep ()
 }
 
 
-//! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
+/*! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction */
 void
 syx_memory_gc_end (void)
 {

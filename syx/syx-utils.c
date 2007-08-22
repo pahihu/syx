@@ -153,7 +153,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
       return FALSE;
     }
 
-  subclass_name = strdup (token.value.string);
+  subclass_name = syx_strdup (token.value.string);
   syx_token_free (token);
   subclass = syx_globals_at_if_absent (subclass_name, syx_nil);
 
@@ -233,11 +233,11 @@ _syx_cold_parse_class (SyxLexer *lexer)
     }
   syx_free (subclass_name);
 
-  // Parse instance variables
+  /* Parse instance variables */
   inst_vars = _syx_cold_parse_vars (inst_vars_lexer, FALSE);
   syx_lexer_free (inst_vars_lexer, TRUE);
 
-  // Fetch superclass instanceSize
+  /* Fetch superclass instanceSize */
   if (SYX_IS_NIL (superclass))
     super_inst_vars_size = 0;
   else
@@ -247,17 +247,17 @@ _syx_cold_parse_class (SyxLexer *lexer)
   SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (super_inst_vars_size
 							     + SYX_OBJECT_DATA_SIZE (inst_vars));
 
-  // Now parse class variables
+  /* Now parse class variables */
   class_vars = _syx_cold_parse_vars (class_vars_lexer, TRUE);
   syx_lexer_free (class_vars_lexer, TRUE);
 
   SYX_CLASS_CLASS_VARIABLES(subclass) = syx_dictionary_new (SYX_OBJECT_DATA_SIZE (class_vars) + 10); 
 
-  // translate from array to dictionary
+  /* translate from array to dictionary */
   for (i=0; i < SYX_OBJECT_DATA_SIZE(class_vars); i++)
     syx_dictionary_at_symbol_put (SYX_CLASS_CLASS_VARIABLES(subclass),
 				  SYX_OBJECT_DATA(class_vars)[i], syx_nil);
-  // get rid of this
+  /* get rid of this */
   syx_object_free (class_vars);
 
   return TRUE;
@@ -270,7 +270,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   SyxOop klass;
   SyxParser *parser;
   SyxLexer *method_lexer;
-  //syx_symbol category;
+  /*syx_symbol category; */
   syx_string chunk;
 
   token = syx_lexer_next_token (lexer);
@@ -296,7 +296,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   if (token.type != SYX_TOKEN_STR_CONST)
     return FALSE;
 
-  //  category = strdup (token.value.string);
+  /*  category = syx_strdup (token.value.string); */
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
@@ -329,8 +329,9 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   return TRUE;
 }
 
-//! Parse simple declarations like classes and methods
 /*!
+  Parse simple declarations like classes and methods.
+
   \return TRUE if no error has occurred
 */
 syx_bool
@@ -355,8 +356,9 @@ syx_cold_parse (SyxLexer *lexer)
   return parseOk;
 }
 
-//! Parse a declaration file
 /*!
+  Parse a declaration file.
+
   \return TRUE if no error has occurred
 */
 syx_bool
@@ -366,6 +368,9 @@ syx_cold_file_in (syx_symbol filename)
   syx_string buffer;
   syx_int32 fd, count;
   syx_size size;
+#ifdef HAVE_FSTAT
+  struct stat statbuf;
+#endif
   
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
@@ -373,7 +378,6 @@ syx_cold_file_in (syx_symbol filename)
 	return FALSE;
      }
 #ifdef HAVE_FSTAT
-  struct stat statbuf;
   if ((fstat (fd, &statbuf)) < 0)
      {
 	syx_error ("can't obtain size of %s\n", filename);
@@ -407,21 +411,22 @@ syx_cold_file_in (syx_symbol filename)
   return TRUE;
 }
 
-//! Send a signal to a Semaphore to wake up waiting processes
 /*!
+  Send a signal to a Semaphore to wake up waiting processes.
+
   The function is thread-safe
 */
 void
 syx_semaphore_signal (SyxOop semaphore)
 {
-  // wait
-  while (_syx_sem_lock != 0);
-  // acquire
-  _syx_sem_lock++;
-
   SyxOop signals;
   SyxOop list;
   syx_int32 i=0;
+    
+  /* wait */
+  while (_syx_sem_lock != 0);
+  /* acquire */
+  _syx_sem_lock++;
 
   list = SYX_SEMAPHORE_LIST(semaphore);
   signals = SYX_SMALL_INTEGER (SYX_SEMAPHORE_SIGNALS(semaphore));
@@ -434,42 +439,45 @@ syx_semaphore_signal (SyxOop semaphore)
       i++;
     }
 
-  // create a new array without signaled processes
+  /* create a new array without signaled processes */
   SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(list) - i,
 						     SYX_OBJECT_DATA(list) + i);
   SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
 
-  // release
+  /* release */
   _syx_sem_lock--;
 }
 
-//! Put the active process in waiting state until semaphore is signaled
 /*!
+  Put the active process in waiting state until semaphore is signaled.
+
   The function is thread-safe
 */
 void
 syx_semaphore_wait (SyxOop semaphore)
 {
-  // wait
+  SyxOop process;
+  SyxOop list;
+
+  /* wait */
   while (_syx_sem_lock != 0);
-  // acquire
+  /* acquire */
   _syx_sem_lock++;
 
-  SyxOop process;
-  SyxOop list = SYX_SEMAPHORE_LIST (semaphore);
+  list = SYX_SEMAPHORE_LIST (semaphore);
   
   process = syx_processor_active_process;
   SYX_PROCESS_SUSPENDED (process) = syx_true;
   syx_object_grow_by (list, 1);
   SYX_OBJECT_DATA(list)[SYX_OBJECT_DATA_SIZE(list) - 1] = process;
 
-  // release
+  /* release */
   _syx_sem_lock--;
 }
 
 /* Utilities to interact with Smalltalk */
 
-//! Create a MethodContext for a unary message ready to enter a Process
+/*! Create a MethodContext for a unary message ready to enter a Process */
 SyxOop
 syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
@@ -480,13 +488,13 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
   context = syx_method_context_new (parent_context, method, receiver, syx_nil);
   return context;
 }
 
-//! Create a MethodContext for a binary message ready to enter a Process
+/*! Create a MethodContext for a binary message ready to enter a Process */
 SyxOop
 syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
@@ -498,7 +506,7 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
   syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
@@ -509,8 +517,9 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   return context;
 }
 
-//! Create a MethodContext for an arbitrary message ready to enter a Process
 /*!
+  Create a MethodContext for an arbitrary message ready to enter a Process.
+
   \param num_args number of variadic SyxOop arguments
 */
 SyxOop
@@ -529,7 +538,7 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
   syx_memory_gc_begin ();
 
@@ -546,8 +555,9 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
 }
 
 
-//! Create a MethodContext for an arbitrary message ready to enter a Process
 /*!
+  Create a MethodContext for an arbitrary message ready to enter a Process.
+
   \param arguments an Array of arguments
 */
 SyxOop
@@ -560,7 +570,7 @@ syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, 
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OBJECT(klass));
+    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
   syx_memory_gc_begin ();
 
@@ -573,8 +583,9 @@ syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, 
 
 
 
-//! Files in a file in blocking mode. This function send a message to FileStream>>#fileIn:
 /*!
+  Files in a file in blocking mode. This function send a message to FileStream>>#fileIn:.
+
   \return Return the last returned object from the process
 */
 SyxOop
@@ -593,8 +604,9 @@ syx_file_in_blocking (syx_symbol file)
 }
 
 
-//! Do it in blocking mode. This function send a message to String>>#doIt
 /*!
+  Do it in blocking mode. This function send a message to String>>#doIt.
+
   \return Return the last returned object from the process
 */
 SyxOop
@@ -610,7 +622,7 @@ syx_do_it_blocking (syx_symbol code)
 }
 
 
-//! Returns a syx_wstring from a syx_string
+/*! Returns a syx_wstring from a syx_string */
 syx_wstring
 syx_to_wstring (syx_symbol s)
 {
@@ -620,7 +632,7 @@ syx_to_wstring (syx_symbol s)
   return ws;
 }
 
-//! Returns a syx_string from a syx_wstring
+/*! Returns a syx_string from a syx_wstring */
 syx_string
 syx_to_string (syx_wsymbol ws)
 {
@@ -630,7 +642,7 @@ syx_to_string (syx_wsymbol ws)
   return s;
 }
 
-//! Returns the first index in the string that is not a whitespace
+/*! Returns the first index in the string that is not a whitespace */
 syx_uint32
 syx_find_first_non_whitespace (syx_symbol string)
 {
@@ -644,11 +656,11 @@ syx_find_first_non_whitespace (syx_symbol string)
   return 0;
 }
 
-//! Print to stdout the current execution state of the interpreter and the Process traceback
+/*! Print to stdout the current execution state of the interpreter and the Process traceback */
 void
 syx_show_traceback (void)
 {
-  SyxExecState *es = _syx_exec_state;
+  SyxExecState *es;
   SyxOop context, homecontext;
   syx_symbol traceformat;
   SyxOop classname;
@@ -660,6 +672,8 @@ syx_show_traceback (void)
       puts ("Can't print the memory state");
       return;
     }
+
+  es = _syx_exec_state;
 
   puts ("Memory state:");
   printf("Memory size: %d\n", _syx_memory_size);
@@ -685,18 +699,20 @@ syx_show_traceback (void)
   printf("Receiver: %p (memory index: %ld)\n",
 	 SYX_OOP_CAST_POINTER (es->receiver),
 	 SYX_MEMORY_INDEX_OF (es->receiver));
-  printf("Arguments: %p\n", es->arguments);
-  printf("Temporaries: %p\n", es->temporaries);
-  printf("Stack: %p\n", es->stack);
-  printf("Literals: %p\n", es->literals);
-  printf("Bytecodes: %p (size: %d)\n", es->bytecodes, es->bytecodes_count);
+  printf("Arguments: %p\n", (syx_pointer) es->arguments);
+  printf("Temporaries: %p\n", (syx_pointer) es->temporaries);
+  printf("Stack: %p\n", (syx_pointer) es->stack);
+  printf("Literals: %p\n", (syx_pointer) es->literals);
+  printf("Bytecodes: %p (size: %d)\n", (syx_pointer) es->bytecodes, es->bytecodes_count);
   printf("Byteslice: %d\n", es->byteslice);
   printf("Instruction pointer: %d\n", es->ip);
   printf("Stack pointer: %d\n", es->sp);
   printf("Message receiver: %p (memory index: %ld)\n",
 	 SYX_OOP_CAST_POINTER (es->message_receiver),
 	 SYX_MEMORY_INDEX_OF (es->message_receiver));
-  printf("Message arguments: %p (size: %d)\n", es->message_arguments, es->message_arguments_count);
+  printf("Message arguments: %p (size: %d)\n",
+	 (syx_pointer) es->message_arguments,
+	 es->message_arguments_count);
 
   puts ("\nTraceback:");
   context = syx_interp_get_current_context ();

@@ -28,8 +28,9 @@
 #include "syx-object.h"
 #include "syx-bytecode.h"
 
-//! Creates a new bytecode holder
 /*!
+  Creates a new bytecode holder.
+
   \return A SyxBytecode instance
 */
 SyxBytecode *
@@ -58,8 +59,10 @@ syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "="
 					     "do:", "value:", "valueWithArguments:",
 					     "new:", "to:", "basicAt:", NULL};
 
-//! Manually generate an instruction
 /*!
+  Manually generate an instruction.
+  
+
   This function creates an instruction and insert it into the code array.
   If the low argument is higher than the max value, then generate a SYX_BYTECODE_EXTENDED instruction
   with the command as argument. The low argument is put to the next code slot.
@@ -81,8 +84,9 @@ syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 
     syx_bytecode_gen_code (bytecode, (high << SYX_BYTECODE_ARGUMENT_BITS) + low);
 }
 
-//! Generate a message instruction
 /*!
+  Generate a message instruction.
+
   If the message shouldn't be sent to super and the selector is known to be a common unary or binary message,
   send SYX_BYTECODE_SEND_UNARY or SYX_BYTECODE_SEND_BINARY with its relative index into syx_bytecode_unary_messages or syx_bytecode_binary_messages.
 
@@ -140,8 +144,9 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
 				  syx_bytecode_gen_literal (bytecode, binding));
 }
 
-//! Generate a literal
 /*!
+  Generate a literal.
+
   Insert the given literal into the literals array if it's not already there.
 
   \param literal an object

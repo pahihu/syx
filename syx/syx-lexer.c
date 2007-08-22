@@ -55,8 +55,9 @@ static syx_bool _syx_char_is_binary_second (syx_char c);
   Take look at syx-lexer.c for more detailed informations.
 */
 
-//! Creates a new lexer to parse the code
 /*!
+  Creates a new lexer to parse the code.
+
   \param text the code
   \return A new SyxLexer
 */
@@ -76,8 +77,9 @@ syx_lexer_new (syx_symbol text)
   return self;
 }
 
-//! Frees the memory allocated by syx_lexer_new
 /*!
+  Frees the memory allocated by syx_lexer_new.
+
   \param free_text TRUE frees the text
 */
 void
@@ -89,8 +91,9 @@ syx_lexer_free (SyxLexer *lexer, syx_bool free_text)
   syx_free (lexer);
 }
 
-//! Frees the memory allocated for a SyxToken
 /*!
+  Frees the memory allocated for a SyxToken.
+
   The only way the token can be freed is only when it holds a string.
   In that case, the string is freed
 */
@@ -123,7 +126,7 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
       token->type = SYX_TOKEN_NAME_CONST;
     }
 
-  token->value.string = strdup (sstr);
+  token->value.string = syx_strdup (sstr);
 }
 
 static void
@@ -161,7 +164,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
       token->type = SYX_TOKEN_INT_CONST;
     }
 
-  // a radix?
+  /* a radix? */
   if (tolower (lastChar) == 'r')
     {
       radix = token->value.integer;
@@ -200,7 +203,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	}
     }
 
-  // a float?
+  /* a float? */
   if (lastChar == '.')
     {
       if ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
@@ -220,7 +223,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
 	}
     }
 
-  // float e?
+  /* float e? */
   if (lastChar == 'e')
     {
       if ((lastChar = syx_lexer_forward (self)) == '-')
@@ -297,7 +300,7 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
     }
   
   token->type = SYX_TOKEN_SYM_CONST;
-  token->value.string = strdup (sstr);
+  token->value.string = syx_strdup (sstr);
 }
 
 static void
@@ -322,7 +325,7 @@ _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
     }
 
   token->type = SYX_TOKEN_STR_CONST;
-  token->value.string = strdup (sstr);
+  token->value.string = syx_strdup (sstr);
 }
 
 static syx_bool
@@ -366,7 +369,7 @@ _syx_char_is_binary_second (syx_char c)
   return !(isalnum (c) || isspace (c) || c == '-' || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
 }
 
-//! Get the next character or 0
+/*! Get the next character or 0 */
 syx_char
 syx_lexer_forward (SyxLexer *lexer)
 {
@@ -386,7 +389,7 @@ syx_lexer_forward (SyxLexer *lexer)
   return cc;
 }
 
-//! Returns the next token parsed by the lexer
+/*! Returns the next token parsed by the lexer */
 SyxToken
 syx_lexer_next_token (SyxLexer *lexer)
 {
@@ -456,8 +459,9 @@ syx_lexer_next_token (SyxLexer *lexer)
   return token;
 }
 
-//! Get the next chunk of code separated ending with an exlamation mark (!)
 /*!
+  Get the next chunk of code separated ending with an exlamation mark (!).
+
   \return A string containing the chunk without the exlamation mark. It must be freed once it's not needed anymore
 */
 syx_string
@@ -487,18 +491,18 @@ syx_lexer_next_chunk (SyxLexer *lexer)
   syx_token_free (token);
 
   length = lexer->_current_text - start_text;
-  chunk = strndup (start_text, length - 1);
+  chunk = syx_strndup (start_text, length - 1);
   return chunk;
 }
 
-//! Returns the last token returned by syx_lexer_next_token
+/*! Returns the last token returned by syx_lexer_next_token */
 SyxToken
 syx_lexer_get_last_token (SyxLexer *lexer)
 {
   return lexer->last_token;
 }
 
-//! Returns the last character returned by syx_lexer_forward
+/*! Returns the last character returned by syx_lexer_forward */
 syx_char
 syx_lexer_get_last_char (SyxLexer *lexer)
 {

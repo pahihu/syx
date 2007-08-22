@@ -35,7 +35,7 @@
 #ifdef SYX_DEBUG_FULL
 
 #define SYX_DEBUG_CONTEXT
-//#define SYX_DEBUG_CONTEXT_STACK
+/* #define SYX_DEBUG_CONTEXT_STACK */
 #define SYX_DEBUG_BYTECODE
 /* #define SYX_DEBUG_TRACE_IP */
 /* #define SYX_DEBUG_BYTECODE_PROFILE */
@@ -47,7 +47,7 @@ SyxExecState *_syx_exec_state = NULL;
 static syx_uint16 _syx_interp_get_next_byte (void);
 static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
-//! Create a new execution state to link the interpreter and the active process
+/*! Create a new execution state to link the interpreter and the active process */
 SyxExecState *
 syx_exec_state_new (void)
 {
@@ -56,7 +56,7 @@ syx_exec_state_new (void)
   return ret;
 }
 
-//! Fetch the execution state of a Process
+/*! Fetch the execution state of a Process */
 void
 syx_exec_state_fetch (void)
 {
@@ -86,7 +86,7 @@ syx_exec_state_fetch (void)
   _syx_exec_state->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (_syx_exec_state->context));
 }
 
-//! Frees the SyxExecState
+/*! Frees the SyxExecState */
 void
 syx_exec_state_free (void)
 {
@@ -100,8 +100,9 @@ syx_exec_state_free (void)
     }
 }
 
-//! Executes the given process and returnes once the byteslice is reached
 /*!
+  Executes the given process and returnes once the byteslice is reached.
+
   This function automatically fetch the state of the Process, saves and frees it once it terminated its running time
 */
 void
@@ -130,7 +131,7 @@ syx_process_execute_scheduled (SyxOop process)
   syx_exec_state_save ();
 }
 
-//! Same as syx_process_execute_scheduled but does not take care about the byteslice counter
+/*! Same as syx_process_execute_scheduled but does not take care about the byteslice counter */
 void
 syx_process_execute_blocking (SyxOop process)
 {
@@ -329,7 +330,7 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   _syx_exec_state->message_receiver = syx_interp_stack_pop ();
   if (_syx_exec_state->sp < 0)
     puts ("ASD");
-  _syx_exec_state->byteslice++; // be sure we send the message
+  _syx_exec_state->byteslice++; /* be sure we send the message */
 
   return TRUE;
 }
@@ -433,13 +434,13 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 
   switch (index)
     {
-    case 0: // isNil
+    case 0: /* isNil */
       #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Send unary message isNil\n");
       #endif
       syx_interp_stack_push (syx_boolean_new (SYX_IS_NIL (_syx_exec_state->message_receiver)));
       return TRUE;
-    case 1: // notNil
+    case 1: /* notNil */
       #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Send unary message notNil\n");
       #endif
@@ -499,28 +500,28 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     {
       switch (index)
 	{
-	case 0: // +
+	case 0: /* + */
 	  syx_interp_stack_push (syx_small_integer_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) + SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 1: // -
+	case 1: /* - */
 	  syx_interp_stack_push (syx_small_integer_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) - SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 2: // <
+	case 2: /* < */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) < SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 3: // >
+	case 3: /* > */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) > SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 4: // <=
+	case 4: /* <= */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) <= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 5: // >=
+	case 5: /* >= */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) >= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 6: // =
+	case 6: /* = */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) == SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 7: // ~=
+	case 7: /* ~= */
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) != SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	}
@@ -602,7 +603,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       if (!SYX_IS_BOOLEAN (condition))
 	syx_signal (SYX_ERROR_INTERP, 0);
 
-      // Check for jump to the other conditional branch
+      /* Check for jump to the other conditional branch */
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))
 	{
 	  syx_interp_stack_push (syx_nil);

@@ -33,6 +33,9 @@ libenv = env.Clone ()
 if libenv['PLATFORM'] == 'win32':
     libenv.MergeFlags ('-D_DLL')
 
+if not 'wince' in libenv['host']:
+   libenv.MergeFlags ('-ansi -pedantic')
+
 # Build the shared library
 
 lib_sources = Split ("""

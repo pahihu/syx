@@ -27,16 +27,10 @@
 
 #include "syx-config.h"
 
-#ifdef HAVE_STRNDUP
-  #define _GNU_SOURCE
-#endif
-
-#include "syx-types.h"
+#include "syx-platform.h"
 #include "syx-object.h"
 #include "syx-init.h"
 
-#include <stdlib.h>
-#include <string.h>
 
 extern EXPORT SyxOop *_syx_freed_memory;
 extern EXPORT syx_int32 _syx_freed_memory_top;
@@ -53,8 +47,7 @@ EXPORT void syx_memory_gc (void);
 EXPORT syx_bool syx_memory_save_image (syx_symbol path);
 EXPORT syx_bool syx_memory_load_image (syx_symbol path);
 
-
-//! Frees the memory of a SyxOop and saves it to be reused for the next syx_memory_alloc
+/*! Frees the memory of a SyxOop and saves it to be reused for the next syx_memory_alloc */
 INLINE void
 syx_memory_free (SyxOop oop)
 {
@@ -63,15 +56,16 @@ syx_memory_free (SyxOop oop)
 }
 
 
-//! Returns the size of the memory
+/*! Returns the size of the memory */
 INLINE syx_int32
 syx_memory_get_size (void)
 {
   return _syx_memory_size;
 }
 
-//! Begins a garbage collection transaction.
 /*!
+  Begins a garbage collection transaction.
+
   In this transaction, all objects being allocated must not be freed because marked.
   The transaction can hold up to 256 objects.
 */
@@ -81,84 +75,7 @@ syx_memory_gc_begin (void)
   _syx_memory_gc_trans_running++;
 }
 
-//! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction
+/*! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction */
 EXPORT void syx_memory_gc_end (void);
-
-#define syx_free free
-
-
-INLINE syx_pointer
-syx_malloc (syx_int32 size)
-{
-  syx_pointer ptr;
-
-  ptr = malloc (size);
-  if (!ptr)
-    syx_error ("out of memory\n");
-
-  return ptr;
-}
-
-INLINE syx_pointer
-syx_malloc0 (syx_int32 size)
-{
-  syx_pointer ptr;
-
-  ptr = malloc (size);
-  if (!ptr)
-    syx_error ("out of memory\n");
-
-  memset (ptr, '\0', size);
-  return ptr;
-}
-
-INLINE syx_pointer
-syx_calloc (syx_int32 elements, syx_int32 element_size)
-{
-  syx_pointer ptr;
-
-  ptr = calloc (elements, element_size);
-  if (!ptr)
-    syx_error ("out of memory\n");
-
-  return ptr;
-}
-
-INLINE syx_pointer
-syx_realloc (syx_pointer ptr, syx_int32 size)
-{
-  syx_pointer nptr;
-
-  nptr = realloc (ptr, size);
-  if (!nptr)
-    syx_error ("out of memory\n");
-
-  return nptr;
-}
-
-//! Return a new allocated memory which is a copy of the given one
-INLINE syx_pointer
-syx_memdup (syx_pointer ptr, syx_int32 elements, syx_int32 element_size)
-{
-  syx_pointer nptr;
-
-  nptr = syx_malloc (element_size * elements);
-  memcpy (nptr, ptr, element_size * elements);
-
-  return nptr;
-}
-
-#ifndef HAVE_STRNDUP
-
-INLINE syx_string
-strndup (syx_symbol src, syx_size n)
-{
-  syx_string ret = (syx_string) syx_malloc (n + 1);
-  memcpy (ret, src, n);
-  ret[n] = '\0';
-  return ret;
-}
-
-#endif /* HAVE_STRNDUP */
 
 #endif /* SYX_MEMORY_H */

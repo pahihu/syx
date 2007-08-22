@@ -118,8 +118,9 @@ _syx_internal_sighandler (int signum)
 }
 #endif /* HAVE_SIGNAL */
 
-//! Initialize the system signal handling system
 /*!
+  Initialize the system signal handling system.
+
   This function is called internally by Syx and should not be used by applications.
 
   Register SIGINT, SIGFPE, SIGTERM and SIGABRT to be signaled in the Smalltalk environment

@@ -25,7 +25,7 @@
 #ifndef SYX_OBJECT_H
 #define SYX_OBJECT_H
 
-#include "syx-types.h"
+#include "syx-platform.h"
 #include "syx-enums.h"
 #include "syx-error.h"
 
@@ -69,35 +69,35 @@
 
 typedef struct SyxObject SyxObject;
 
-//! The core class of Syx holding necessary informations for each concrete object.
+/*! The core class of Syx holding necessary informations for each concrete object. */
 struct SyxObject
 {
-  //! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop
+  /*! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop */
   SyxOop klass;
   
-  //! Specify if this object contains references to other objects in its data
-  syx_bool has_refs : 1;
+  /*! Specify if this object contains references to other objects in its data */
+  syx_bool has_refs;
 
-  //! Used to mark the object by the garbage collector
-  syx_bool is_marked : 1;
+  /*! Used to mark the object by the garbage collector */
+  syx_bool is_marked;
 
-  //! Set to TRUE if data shouldn't be modified
-  syx_bool is_constant : 1;
+  /*! Set to TRUE if data shouldn't be modified */
+  syx_bool is_constant;
 
-  //! A list of SyxOop containing instance variables.
+  /*! A list of SyxOop containing instance variables. */
   SyxOop *vars;
 
-  //! The number of data elements held by the object
+  /*! The number of data elements held by the object */
   syx_varsize data_size;
 
-  //! This holds the data stored for the object. These can be oops, bytes, doubles and so on.
+  /*! This holds the data stored for the object. These can be oops, bytes, doubles and so on. */
   SyxOop *data;
 };
 
 extern EXPORT SyxObject *syx_memory;
 extern EXPORT syx_int32 _syx_memory_size;
 
-//! Returns the index of the oop in the object table
+/*! Returns the index of the oop in the object table */
 #define SYX_MEMORY_INDEX_OF(oop) (((oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
 
 
@@ -149,20 +149,21 @@ EXPORT syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
 
 
 
-//! Answer the hash of an Object
+/*! Answer the hash of an Object */
 INLINE syx_int32
 syx_object_hash (SyxOop object)
 {
-  // distinguish between objects and embedded values
+  /* distinguish between objects and embedded values */
   if (SYX_IS_OBJECT (object))
     return SYX_MEMORY_INDEX_OF (object);
 
-  // i don't know how to hash C pointers sorry
+  /* i don't know how to hash C pointers sorry */
   return SYX_SMALL_INTEGER_EMBED (object);
 }
 
-//! Get the class of an object
 /*!
+  Get the class of an object.
+
   \param object can be an SyxOop
   \return For small integers return SmallInteger and for characters the Character class
 */
@@ -191,8 +192,9 @@ syx_object_get_class (SyxOop object)
 
 
 
-//! Set the class of an object
 /*!
+  Set the class of an object.
+
   If the object is a constant, a small integer or a character, no operation is done
 */
 INLINE void
@@ -304,8 +306,9 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 
 
 
-//! Returns the number of instance variables held by the object
 /*!
+  Returns the number of instance variables held by the object.
+
   This method obtain the size of the instance from the instanceSize of its class
 */
 INLINE syx_varsize
@@ -319,7 +322,7 @@ syx_object_vars_size (SyxOop object)
 /* Inlined constructors */
 
 
-//! Create a Float object
+/*! Create a Float object */
 INLINE SyxOop
 syx_float_new (syx_double floating)
 {
@@ -329,8 +332,9 @@ syx_float_new (syx_double floating)
 }
 
 
-//! Creates a new ByteArray instance
 /*!
+  Creates a new ByteArray instance.
+
   \param size the number of elements
   \param data already initialized data for the byte array
 */
@@ -340,14 +344,14 @@ syx_byte_array_new (syx_varsize size, syx_uint8 *data)
   return syx_object_new_data (syx_byte_array_class, FALSE, size, (SyxOop *)data);
 }
 
-//! Creates a new ByteArray instance with the given size
+/*! Creates a new ByteArray instance with the given size */
 INLINE SyxOop 
 syx_byte_array_new_size (syx_varsize size)
 {
   return syx_object_new_size (syx_byte_array_class, FALSE, size);
 }
 
-//! Like syx_byte_array_new but duplicates the data
+/*! Like syx_byte_array_new but duplicates the data */
 INLINE SyxOop
 syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
 {
@@ -356,8 +360,9 @@ syx_byte_array_new_ref (syx_varsize size, syx_uint8 *data)
   return oop;
 }
 
-//! Creates a new Array instance
 /*!
+  Creates a new Array instance.
+
   \param size the number of elements
   \param data already initialized data for the array
 */
@@ -367,14 +372,14 @@ syx_array_new (syx_varsize size, SyxOop *data)
   return syx_object_new_data (syx_array_class, TRUE, size, data);
 }
 
-//! Creates a sized Array
+/*! Creates a sized Array */
 INLINE SyxOop 
 syx_array_new_size (syx_varsize size)
 {
   return syx_object_new_size (syx_array_class, TRUE, size);
 }
 
-//! Like syx_byte_array_new but duplicates the data
+/*! Like syx_byte_array_new but duplicates the data */
 INLINE SyxOop
 syx_array_new_ref (syx_varsize size, SyxOop *data)
 {
@@ -384,17 +389,17 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 }
 
 
-//! Returns a new String instance
+/*! Returns a new String instance */
 INLINE SyxOop 
 syx_string_new (syx_symbol string)
 {
   if (!string)
     return syx_nil;
 
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)syx_strdup (string));
 }
 
-//! Creates a new VariableBinding key -> index on a dictionary
+/*! Creates a new VariableBinding key -> index on a dictionary */
 INLINE SyxOop
 syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
 {
@@ -405,8 +410,9 @@ syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
   return object;
 }
 
-//! Creates a new dictionary and its hash table
 /*!
+  Creates a new dictionary and its hash table.
+
   The effective size of the hash table is size * 2
 */
 INLINE SyxOop 
@@ -417,8 +423,9 @@ syx_dictionary_new (syx_varsize size)
   return dict;
 }
 
-//! Create a new BlockClosure
 /*!
+  Create a new BlockClosure.
+
   \param block a CompiledBlock
 */
 INLINE SyxOop 
@@ -430,10 +437,10 @@ syx_block_closure_new (SyxOop block)
 }
 
 
-//! Create a new raw CompiledMethod
+/*! Create a new raw CompiledMethod */
 #define syx_method_new() (syx_object_new (syx_compiled_method_class))
 
-//! Create a new raw CompiledBlock
+/*! Create a new raw CompiledBlock */
 #define syx_block_new() (syx_object_new (syx_compiled_block_class))
 
 

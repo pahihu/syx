@@ -36,7 +36,7 @@
 
 typedef struct SyxToken SyxToken;
 
-//! Token data returned by the lexer
+/*! Token data returned by the lexer */
 struct SyxToken {
   SyxTokenType type;
   union SyxTokenValue
@@ -57,7 +57,7 @@ extern EXPORT void syx_token_free (SyxToken token);
 
 typedef struct SyxLexer SyxLexer;
 
-//! The C lexical analyzer that performs Smalltalk-specific pattern-matching on text
+/*! The C lexical analyzer that performs Smalltalk-specific pattern-matching on text */
 struct SyxLexer {
   syx_symbol text;
   SyxToken last_token;
@@ -76,7 +76,7 @@ extern EXPORT syx_char *syx_lexer_next_chunk (SyxLexer *lexer);
 extern EXPORT SyxToken syx_lexer_get_last_token (SyxLexer *lexer);
 extern EXPORT syx_char syx_lexer_get_last_char (SyxLexer *lexer);
 
-//! Move backward the text pointer
+/*! Move backward the text pointer */
 INLINE syx_char
 syx_lexer_push_back (SyxLexer *lexer)
 {

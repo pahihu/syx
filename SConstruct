@@ -324,9 +324,7 @@ conf.Finish ()
 
 
 # Flags
-env.MergeFlags ('-Wall -Wno-strict-aliasing -U__STRICT_ANSI__ -I#.')
-if not 'wince' in env['host']:
-   env.MergeFlags ('-std=c99')
+env.MergeFlags ('-Wall -Wno-strict-aliasing -I#.')
 
 if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')

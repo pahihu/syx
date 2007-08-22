@@ -80,8 +80,9 @@ SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
-//! Resize SyxObject::data to the given size, being careful of object indexables and byte indexables
 /*!
+  Resize SyxObject::data to the given size, being careful of object indexables and byte indexables.
+
   Warning, if the new size is lesser than the current, the data at the end of the array will be lost
 */
 void
@@ -100,8 +101,9 @@ syx_object_resize (SyxOop object, syx_varsize size)
 
 /* Contructors */
 
-//! Creates a new metaclass
 /*!
+  Creates a new metaclass.
+
   The metaclass will be an instance of the Metaclass class. Instance size is inherited by superclass
 
   \param supermetaclass the superclass of the new metaclass
@@ -120,8 +122,9 @@ syx_metaclass_new (SyxOop supermetaclass)
   return metaclass;
 }
 
-//! Creates a new class
 /*!
+  Creates a new class.
+
   This function automatically creates the metaclass for the new class with syx_metaclass_new.
   The new class is an instance of the metaclass.
 
@@ -143,8 +146,9 @@ syx_class_new (SyxOop superclass)
   return klass;
 }
 
-//! Create a new LargeInteger
 /*!
+  Create a new LargeInteger.
+
   \b This function is available only if Syx has been linked with the GMP library
 
   \param string a textual representation of the number
@@ -163,7 +167,7 @@ syx_large_integer_new (syx_symbol string, syx_int32 base)
   return syx_nil;
 }
 
-//! Create a new LargeInteger with the given mpz
+/*! Create a new LargeInteger with the given mpz */
 SyxOop
 syx_large_integer_new_mpz (syx_pointer mpz)
 {
@@ -175,8 +179,9 @@ syx_large_integer_new_mpz (syx_pointer mpz)
   return syx_nil;
 }
 
-//! Transform a 32-bit integer to a multiple precision integer
 /*!
+  Transform a 32-bit integer to a multiple precision integer.
+
   \b This function is available only if Syx has been linked with the GMP library
 */
 SyxOop
@@ -193,8 +198,9 @@ syx_large_integer_new_integer (syx_int32 i)
 }
 
 
-//! Create a new suspended Process and schedule it
 /*!
+  Create a new suspended Process and schedule it.
+
   \param context a MethodContext or BlockContext
 */
 SyxOop 
@@ -209,8 +215,9 @@ syx_process_new (SyxOop context)
 }
 
 
-//! Remove an element from an Array
 /*!
+  Remove an element from an Array.
+
   \return TRUE if element was found and removed, else FALSE
 */
 syx_bool
@@ -237,8 +244,9 @@ syx_array_remove (SyxOop array, SyxOop element)
 
 
 
-//! Add an element to an Array
 /*!
+  Add an element to an Array.
+
   \param unique TRUE if the element shouldn't be added if already present in the array
 */
 void
@@ -261,8 +269,9 @@ syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
   SYX_OBJECT_DATA(array)[size] = element;
 }
 
-//! Returns a Symbol instance
 /*!
+  Returns a Symbol instance.
+
   Lookups into syx_symbols dictionary to check the existance of the symbol, otherwise create a new one and insert it into the dictionary.
   \param symbol a plain constant string
 */
@@ -278,7 +287,7 @@ syx_symbol_new (syx_symbol symbol)
 
   if (SYX_IS_NIL (obj))
     {
-      obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)strdup (symbol));
+      obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)syx_strdup (symbol));
       syx_dictionary_at_symbol_put (syx_symbols, obj, obj);
     }
 
@@ -286,7 +295,7 @@ syx_symbol_new (syx_symbol symbol)
 }
 
 
-//! Returns the hash of a String
+/*! Returns the hash of a String */
 syx_int32
 syx_string_hash (syx_symbol string)
 {
@@ -300,8 +309,9 @@ syx_string_hash (syx_symbol string)
   return SYX_SMALL_INTEGER_EMBED (ret);
 }
 
-//! Returns the index of the given symbol, the index of an empty entry or -1 if the key was not found
 /*!
+  Returns the index of the given symbol, the index of an empty entry or -1 if the key was not found.
+
   Take care the dictionary MUST contain only key symbols
 
   \param return_nil_index if TRUE returns the index of the first nil entry
@@ -336,8 +346,9 @@ syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
   return -1;
 }
 
-//! Create an association key -> index to be used as binding. Raise an error if not found
 /*!
+  Create an association key -> index to be used as binding. Raise an error if not found.
+
   Take care the dictionary MUST contain only key symbols
 
   \return An Association
@@ -354,8 +365,9 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
   return syx_variable_binding_new (table[index], index, dict);
 }
 
-//! Create an association key -> index to be used as binding. Return the given object if not found
 /*!
+  Create an association key -> index to be used as binding. Return the given object if not found.
+
   Take care the dictionary MUST contain only symbol keys
 
   \return An Association
@@ -372,8 +384,9 @@ syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop 
   return syx_variable_binding_new (table[index], index, dict);
 }
 
-//! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Raise an exception if not bound
 /*!
+  Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Raise an exception if not bound.
+
   The function get the dictionary entry at the index (the value of the given association) then compare the two keys. If they're equal, then return the value of the dictionary entry; if not, lookup the key and change the the index of the binding.
 
   \return The bound Object
@@ -382,13 +395,18 @@ SyxOop
 syx_dictionary_bind (SyxOop binding)
 {
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  SyxOop *table;
+  SyxOop key;
+  syx_int32 index;
+  SyxOop entry;
+
   if (SYX_IS_NIL (dict))
     return syx_nil;
 
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[index];
+  table = SYX_OBJECT_DATA (dict);
+  key = SYX_ASSOCIATION_KEY (binding);
+  index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  entry = table[index];
 
   if (SYX_OOP_EQ (entry, key))
     return table[index+1];
@@ -404,8 +422,9 @@ syx_dictionary_bind (SyxOop binding)
   return table[index+1];
 }
 
-//! Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Return the given object if not found
 /*!
+  Binds a VariableBinding returned by syx_dictionary_binding_at_symbol. Return the given object if not found.
+
   The function get the dictionary entry at the index (the value of the given association) then compare the two keys. If they're equal, then return the value of the dictionary entry; if not, lookup the key and change the the index of the binding.
 
   \return The bound Object
@@ -414,13 +433,17 @@ SyxOop
 syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
 {
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  SyxOop *table;
+  SyxOop key;
+  syx_int32 index;
+  SyxOop entry;
   if (SYX_IS_NIL (dict))
     return object;
 
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[index];
+  table = SYX_OBJECT_DATA (dict);
+  key = SYX_ASSOCIATION_KEY (binding);
+  index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  entry = table[index];
 
   if (SYX_OOP_EQ (entry, key))
     return table[index+1];
@@ -433,21 +456,28 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
   return table[index+1];
 }
 
-//! Set the object value of the binding returned by syx_dictionary_binding_at_symbol. Raise an exception if not found
 /*!
+  Set the object value of the binding returned by syx_dictionary_binding_at_symbol.
+  Raise an exception if not found.
+
   The function does the same thing ot syx_dictionary_bind, except that it sets the value in the Dictionary entry
 */
 void
 syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 {
   SyxOop dict = SYX_VARIABLE_BINDING_DICTIONARY (binding);
+  SyxOop *table;
+  SyxOop key;
+  syx_int32 index;
+  SyxOop entry;
+
   if (SYX_IS_NIL (dict))
     return;
-
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  SyxOop key = SYX_ASSOCIATION_KEY (binding);
-  syx_int32 index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  SyxOop entry = table[index];
+  
+  table = SYX_OBJECT_DATA (dict);
+  key = SYX_ASSOCIATION_KEY (binding);
+  index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
+  entry = table[index];
 
   if (SYX_OOP_NE (entry, key))
     {
@@ -463,8 +493,9 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
   table[index+1] = value;
 }
 
-//! Lookup a key by symbol in the dictionary. Raise an error if not found
 /*!
+  Lookup a key by symbol in the dictionary. Raise an error if not found.
+
   Take care the dictionary MUST contain only symbol keys
 */
 SyxOop 
@@ -477,8 +508,9 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
   return SYX_OBJECT_DATA(dict)[index+1];
 }
 
-//! Lookup a key by symbol in the dictionary. Return the given object if not found
-/*
+/*!
+  Lookup a key by symbol in the dictionary. Return the given object if not found.
+
   Take care the dictionary MUST contain only key symbols
 */
 SyxOop 
@@ -491,7 +523,7 @@ syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
   return SYX_OBJECT_DATA(dict)[index+1];
 }
 
-//! Grow the dictionary and rehash all data
+/*! Grow the dictionary and rehash all data */
 void
 syx_dictionary_rehash (SyxOop dict)
 {
@@ -520,27 +552,32 @@ syx_dictionary_rehash (SyxOop dict)
 }
 
 
-//! Insert key -> value in the dictionary
+/*! Insert key -> value in the dictionary */
 void
 syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   syx_int32 num_elements = SYX_SMALL_INTEGER (SYX_DICTIONARY_NUM_ELEMENTS (dict));
+  SyxOop *table;
+  syx_int32 index;
+
   if (num_elements >= size / 2)
     syx_dictionary_rehash (dict);
 
-  SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_int32 index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), TRUE);
+  table = SYX_OBJECT_DATA (dict);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), TRUE);
+
   if (index < 0)
-    syx_error ("Not enough space for dictionary %p\n", SYX_OBJECT (dict));
+    syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (dict));
 
   table[index] = key;
   table[index+1] = value;
   SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (num_elements + 1);
 }
 
-//! Create a new MethodContext
 /*!
+  Create a new MethodContext.
+
   \param parent the parent context
   \param method a CompiledMethod
   \param receiver an Object receiving the message
@@ -549,11 +586,13 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 SyxOop 
 syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
-  syx_memory_gc_begin ();
-
-  SyxOop object = syx_object_new (syx_method_context_class);
+  SyxOop object;
   SyxOop ctx_args;
   syx_int32 argument_stack_size, temporary_stack_size;
+
+  syx_memory_gc_begin ();
+
+  object = syx_object_new (syx_method_context_class);
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
   SYX_METHOD_CONTEXT_METHOD(object) = method;
@@ -583,17 +622,20 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   return object;
 }
 
-//! Same as syx_method_context_new but for BlockContexts
 /*!
+  Same as syx_method_context_new but for BlockContexts.
+
   \param outer_context a MethodContext or BlockContext for a nested block
 */
 SyxOop 
 syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
+  SyxOop object;
+  SyxOop ctx_args;
+
   syx_memory_gc_begin ();
 
-  SyxOop object = syx_object_new (syx_block_context_class);
-  SyxOop ctx_args;
+  object = syx_object_new (syx_block_context_class);
 
   SYX_METHOD_CONTEXT_PARENT(object) = parent;
   SYX_METHOD_CONTEXT_METHOD(object) = block;
@@ -620,8 +662,9 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 
 /* Object */
 
-//! Create a new object specifying an arbitrary number of instance variables
 /*!
+  Create a new object specifying an arbitrary number of instance variables.
+
   \param class the class of the new instance
   \param vars_size number of instance variables the instance must hold
 */
@@ -640,8 +683,9 @@ syx_object_new_vars (SyxOop klass, syx_varsize vars_size)
   return oop;
 }
 
-//! Create a new object of the given size
 /*!
+  Create a new object of the given size.
+
   \param has_refs specify if the created object must be Object indexable or Byte indexable
   \param size number of objects/bytes to hold
 */
@@ -658,8 +702,9 @@ syx_object_new_size (SyxOop klass, syx_bool has_refs, syx_varsize size)
   return (SyxOop)object;
 }
 
-//! Create a new object of the given size with the given data
 /*!
+  Create a new object of the given size with the given data.
+
   \param has_refs specify if the created object must be Object indexable or Byte indexable
   \param size number of objects/bytes to hold
   \param data the data of the object (must be an array of SyxOop or syx_int8)
@@ -676,16 +721,20 @@ syx_object_new_data (SyxOop klass, syx_bool has_refs, syx_varsize size, SyxOop *
   return (SyxOop)object;
 }
 
-//! Make a shallow copy of an object
+/*! Make a shallow copy of an object */
 SyxOop
 syx_object_copy (SyxOop object)
 {
+  SyxOop oop;
+  SyxObject *obj1;
+  SyxObject *obj2;
+
   if (!SYX_IS_OBJECT (object))
     return object;
 
-  SyxOop oop = syx_memory_alloc ();
-  SyxObject *obj1 = SYX_OBJECT (oop);
-  SyxObject *obj2 = SYX_OBJECT (object);
+  oop = syx_memory_alloc ();
+  obj1 = SYX_OBJECT (oop);
+  obj2 = SYX_OBJECT (object);
 
   obj1->klass = obj2->klass;
   obj1->has_refs = obj2->has_refs;
@@ -706,8 +755,9 @@ syx_object_copy (SyxOop object)
   return oop;
 }
 
-//! Frees all the memory used by the object
 /*!
+  Frees all the memory used by the object.
+
   If the class has finalizationRequest set to true, perform #finalize on the object
 */
 void
@@ -734,8 +784,9 @@ syx_object_free (SyxOop object)
   syx_memory_free (object);
 }
 
-//! Check if a class is a superclass of another one
 /*!
+  Check if a class is a superclass of another one.
+
   \param class a class
   \param subclass a class that should be a subclass of the former
   \return TRUE if the first is a superclass of the second
@@ -743,18 +794,20 @@ syx_object_free (SyxOop object)
 syx_bool
 syx_class_is_superclass_of (SyxOop klass, SyxOop subclass)
 {
+  SyxOop cur;
   if (SYX_OOP_EQ (klass, subclass))
     return FALSE;
 
-  SyxOop cur = SYX_CLASS_SUPERCLASS (subclass);
+  cur = SYX_CLASS_SUPERCLASS (subclass);
 
   for (; !SYX_IS_NIL (cur) && SYX_OOP_NE(cur, klass); cur=SYX_CLASS_SUPERCLASS(cur));
 
   return !SYX_IS_NIL (cur);
 }
 
-//! Get a list of all instance variable names defined in a class
 /*!
+  Get a list of all instance variable names defined in a class.
+
   The returned list is ordered to be used by the interpreter to access the variables directly using the list index.
 
   \return A syx_symbol list or NULL. The list must be freed once unused
@@ -786,8 +839,9 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
   return ret_names;
 }
 
-//! Returns a method in a class having a given selector
 /*!
+  Returns a method in a class having a given selector.
+
   \return syx_nil if no method has been found
 */
 SyxOop 
@@ -809,8 +863,9 @@ syx_class_lookup_method (SyxOop klass, syx_symbol selector)
   return syx_nil;
 }
 
-//! A mix between syx_class_lookup_method and syx_dictionary_bind_if_absent
 /*!
+  A mix between syx_class_lookup_method and syx_dictionary_bind_if_absent.
+
   \return syx_nil if no method has been found
 */
 SyxOop 
@@ -837,7 +892,7 @@ syx_class_lookup_method_binding (SyxOop klass, SyxOop binding)
 
 /* Small integer overflow checks */
 
-//! TRUE if an overflow occurs when doing b times a
+/*! TRUE if an overflow occurs when doing b times a */
 syx_bool
 SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
 {
@@ -877,17 +932,19 @@ SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
   return FALSE;
 }
 
-//! TRUE if an overflow occurs when shifting a by b
+/*! TRUE if an overflow occurs when shifting a by b */
 syx_bool
 SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b)
 {
-  // Thanks to Sam Philips 
+  /* Thanks to Sam Philips */
+  syx_int32 i;
+  syx_int32 sval;
 
   if (b <= 0)
     return FALSE;
 
-  syx_int32 i = 0;
-  syx_int32 sval = abs(a);
+  i = 0;
+  sval = abs(a);
 
   while (sval >= 16)
     {

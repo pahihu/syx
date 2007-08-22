@@ -46,8 +46,9 @@ static syx_int32 _syx_plugins_top = 0;
 
 #endif /* WITH_PLUGINS */
 
-//! Initialize the plugin system
 /*!
+  Initialize the plugin system.
+
   This function is called internally, usually applications don't need to use this function directly.
 */
 void
@@ -78,8 +79,9 @@ _syx_plugin_default_method (void)
 #endif /* WITH_PLUGINS */
 }
 
-//! Load a dynamic library and return its handle
 /*!
+  Load a dynamic library and return its handle.
+
   \param location the location of the library
   \return A pointer to the handle or NULL
 */
@@ -106,8 +108,9 @@ syx_library_open (syx_symbol location)
   return ret;
 }
 
-//! Resolve a symbol in a library
 /*!
+  Resolve a symbol in a library.
+
   \param handle the handle returned by syx_library_open
   \param name the symbol name
   \return A pointer to the symbol or NULL
@@ -139,8 +142,9 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
   return ret;
 }
 
-//! Close a library handle
 /*!
+  Close a library handle.
+
   \param handle the handle retruedn by syx_library_open
   \return FALSE if the handle exists but can't be closed
 */
@@ -167,8 +171,9 @@ syx_library_close (syx_pointer handle)
   return TRUE;
 }
 
-//! Open a dynamic library and initialize the plugin
 /*!
+  Open a dynamic library and initialize the plugin.
+
   \param name the name of the plugin
   \return A pointer to the plugin handle or NULL
 */
@@ -187,7 +192,7 @@ syx_plugin_load (syx_symbol name)
     {
       namext = syx_calloc (strlen (name) + 15, sizeof (syx_char));
       
-      // use syx-name.dll instead of libsyx-name.dll on Windows
+      /* use syx-name.dll instead of libsyx-name.dll on Windows */
 #ifndef WINDOWS
       strcpy (namext, "lib");
 #endif
@@ -225,7 +230,7 @@ syx_plugin_load (syx_symbol name)
 
   if (name)
     {
-      func = syx_library_symbol (handle, "syx_plugin_initialize");
+      func = (SyxPluginInitializeFunc)(long) syx_library_symbol (handle, "syx_plugin_initialize");
       if (!func)
 	return NULL;
       
@@ -235,7 +240,7 @@ syx_plugin_load (syx_symbol name)
 
   _syx_plugins = syx_realloc (_syx_plugins, ++_syx_plugins_top * sizeof (SyxPluginEntry));
   entry = _syx_plugins + _syx_plugins_top - 1;
-  entry->name = (name ? strdup (name) : NULL);
+  entry->name = (name ? syx_strdup (name) : NULL);
   entry->handle = handle;
 
 #endif /* WITH_PLUGINS */
@@ -245,8 +250,9 @@ syx_plugin_load (syx_symbol name)
 
 
 
-//! Close the library handle and finalize the plugin
 /*!
+  Close the library handle and finalize the plugin.
+
   This function finalize the plugin but it's not sure it closes the library handler.
 
   \param handler the plugin handler
@@ -271,7 +277,7 @@ syx_plugin_unload (syx_symbol plugin)
     {
       if (!strcmp (entry->name, plugin))
 	{
-	  func = syx_library_symbol (entry->handle, "syx_plugin_finalize");
+	  func = (SyxPluginFinalizeFunc)(long) syx_library_symbol (entry->handle, "syx_plugin_finalize");
 	  if (!func)
 	    return FALSE;
 
@@ -290,8 +296,9 @@ syx_plugin_unload (syx_symbol plugin)
   return TRUE;
 }
 
-//! Finalize all plugins
 /*!
+  Finalize all plugins.
+
   This function is usually called internally and user programs don't need to call this manually.
 */
 void
@@ -306,7 +313,7 @@ syx_plugin_finalize_all (void)
       if (!entry->name)
 	continue;
 
-      func = syx_library_symbol (entry->handle, "syx_plugin_finalize");
+      func = (SyxPluginFinalizeFunc)(long) syx_library_symbol (entry->handle, "syx_plugin_finalize");
       if (!func)
 	return;
 
@@ -323,8 +330,9 @@ syx_plugin_finalize_all (void)
 
 }
 
-//! Lookup a symbol of the given plugin
 /*!
+  Lookup a symbol of the given plugin.
+
   If the plugin is not loaded yet, then load the plugin.
 
   \return the pointer to the looked up symbol or NULL
@@ -348,12 +356,12 @@ syx_plugin_symbol (syx_symbol plugin_name, syx_symbol symbol_name)
       return syx_library_symbol (entry->handle, symbol_name);
     }
 
-  // try loading the plugin if not loaded yet
+  /* try loading the plugin if not loaded yet */
   handle = syx_plugin_load (plugin_name);
   if (!handle)
     return NULL;
 
-  // finally lookup the symbol again
+  /* finally lookup the symbol again */
   return syx_library_symbol (handle, symbol_name);
 
 #endif /* WITH_PLUGINS */
@@ -361,8 +369,9 @@ syx_plugin_symbol (syx_symbol plugin_name, syx_symbol symbol_name)
   return NULL;
 }
 
-//! Calls a function of a plugin from within the interpreter
 /*!
+  Calls a function of a plugin from within the interpreter.
+
   If the plugin is not loaded yet, then load the plugin and call the requested primitive.
 
   \param es the execution state
@@ -380,7 +389,7 @@ syx_plugin_call_interp (SyxExecState *es, SyxOop method)
 
   literals = SYX_OBJECT_DATA(SYX_CODE_LITERALS(method));
   plugin_oop = literals[1];
-  // if plugin is NULL, the function is looked up in the main program
+  /* if plugin is NULL, the function is looked up in the main program */
   if (!SYX_IS_NIL (plugin_oop))
     plugin = SYX_OBJECT_SYMBOL(plugin_oop);
   func = SYX_OBJECT_SYMBOL(literals[0]);
@@ -392,8 +401,9 @@ syx_plugin_call_interp (SyxExecState *es, SyxOop method)
   SYX_PRIM_FAIL;
 }
 
-//! Calls a function of a plugin from within the interpreter
 /*!
+  Calls a function of a plugin from within the interpreter.
+
   If the plugin is not loaded yet, then load the plugin and call the requested primitive.
 
   \param es the execution state
@@ -411,7 +421,7 @@ syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name,
   if (SYX_IS_NIL (method))
     method = _syx_plugin_default_method ();
 
-  fp = syx_plugin_symbol (plugin_name, func_name);
+  fp = (SyxPrimitiveFunc)(long) syx_plugin_symbol (plugin_name, func_name);
   if (fp)
     return fp (es, method);
 #endif /* WITH_PLUGINS */

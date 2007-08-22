@@ -60,8 +60,9 @@ static syx_bool _syx_parser_do_key_continuation (SyxParser *self, syx_bool super
 static syx_bool _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
 static syx_bool _syx_parser_do_unary_continuation (SyxParser *self, syx_bool super_receiver, syx_bool do_cascade);
 
-//! Create a new SyxParser to parse the code later
 /*!
+  Create a new SyxParser to parse the code later.
+
   \param method a CompiledMethod or CompiledBlock
   \param instance_names list of instance variable names
 */
@@ -91,8 +92,9 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
   return self;
 }
 
-//! Free all memory used by the parser
 /*!
+  Free all memory used by the parser.
+
   \param free_segment TRUE frees the instance_names (not its contents) and the lexer
 */
 void
@@ -116,8 +118,9 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
   syx_free (self);
 }
 
-//! Do parse
 /*!
+  Do parse.
+
   \return TRUE if parsing was successful, otherwise FALSE
 */
 syx_bool
@@ -492,7 +495,9 @@ static void
 _syx_parser_parse_temporaries (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  SyxParserScope scope = {self->_temporary_names_top, self->_temporary_names_top};
+  SyxParserScope scope;
+  scope.start = self->_temporary_names_top;
+  scope.end = self->_temporary_names_top;
 
   if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|"))
     {
@@ -571,7 +576,7 @@ _syx_parser_parse_expression (SyxParser *self)
 
   if (token.type == SYX_TOKEN_NAME_CONST)
     {
-      assign_name = strdup (token.value.string);
+      assign_name = syx_strdup (token.value.string);
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
@@ -581,7 +586,7 @@ _syx_parser_parse_expression (SyxParser *self)
 	  syx_lexer_next_token (self->lexer);
 	  _syx_parser_parse_assignment (self, assign_name);
 	}
-      else // Not an assignment, let it be a name term then
+      else /* Not an assignment, let it be a name term then */
 	super_term = _syx_parser_parse_name_term (self, assign_name);
 
       syx_free (assign_name);
@@ -717,18 +722,18 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      syx_token_free (token);
 	      token = syx_lexer_next_token (self->lexer);
 	      
-	      // skip ifFalse: block if condition is true
+	      /* skip ifFalse: block if condition is true */
 	      syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
 	      syx_bytecode_gen_code (self->bytecode, 0);
 	      conditionJump = self->bytecode->code_top - 1;
 
-	      // jump here if condition is false
+	      /* jump here if condition is false */
 	      self->bytecode->code[jump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
-	      // We don't need any jump after ifFalse:
+	      /* We don't need any jump after ifFalse: */
 	      self->bytecode->code[jump] = 0;
 
-	      // jump here if condition was true
+	      /* jump here if condition was true */
 	      self->bytecode->code[conditionJump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	    }
 
@@ -746,18 +751,18 @@ _syx_parser_do_key_continuation (SyxParser *self, syx_bool super_receiver)
 	      syx_token_free (token);
 	      token = syx_lexer_next_token (self->lexer);
 
-	      // skip ifTrue: block if condition is false
+	      /* skip ifTrue: block if condition is false */
 	      syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_BRANCH);
 	      syx_bytecode_gen_code (self->bytecode, 0);
 	      conditionJump = self->bytecode->code_top - 1;
 
-	      // jump here if condition is true
+	      /* jump here if condition is true */
 	      self->bytecode->code[jump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	      jump = _syx_parser_parse_optimized_block (self, SYX_BYTECODE_BRANCH, TRUE);
-	      // We don't need any jump after ifFalse:
+	      /* We don't need any jump after ifFalse: */
 	      self->bytecode->code[jump] = 0;
 
-	      // jump here if condition was false
+	      /* jump here if condition was false */
 	      self->bytecode->code[conditionJump] = SYX_COMPAT_SWAP_16 (self->bytecode->code_top);
 	    }
 
@@ -818,7 +823,7 @@ _syx_parser_do_binary_continuation (SyxParser *self, syx_bool super_receiver, sy
   token = syx_lexer_get_last_token (self->lexer);
   while (token.type == SYX_TOKEN_BINARY)
     {
-      selector = strdup (token.value.string);
+      selector = syx_strdup (token.value.string);
       
       if (do_cascade)
 	{
@@ -960,7 +965,9 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
   syx_char selector[256] = {0};
-  SyxParserScope scope = {self->_argument_names_top, self->_argument_names_top};
+  SyxParserScope scope;
+  scope.start = self->_argument_names_top;
+  scope.end = self->_argument_names_top;
 
   switch (token.type)
     {
@@ -1014,7 +1021,9 @@ static void
 _syx_parser_parse_block_message_pattern (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  SyxParserScope scope = {self->_argument_names_top, self->_argument_names_top};
+  SyxParserScope scope;
+  scope.start = self->_argument_names_top;
+  scope.end = self->_argument_names_top;
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":")))
     {
