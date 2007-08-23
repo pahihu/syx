@@ -40,7 +40,9 @@
 #include "syx-memory.h"
 #include "syx-init.h"
 
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

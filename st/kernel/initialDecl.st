@@ -195,6 +195,14 @@ Magnitude subclass: #CPointer
 	  instanceVariableNames: ''
           classVariableNames: ''!
 
+Magnitude subclass: #DateTime
+	  instanceVariableNames: 'offset second minute hour mday month year wday yday'
+	  classVariableNames: ''!
+
+Magnitude subclass: #Duration
+	  instanceVariableNames: 'seconds'
+	  classVariableNames: ''!
+
 Number subclass: #Integer
        instanceVariableNames: ''
        classVariableNames: ''!

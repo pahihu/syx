@@ -22,10 +22,6 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-/* TODO: because of the class => my_class renaming in syx-config.h,
-   in msvc we need to include this before including syx-config.h */
-#include <math.h>
-
 #include "syx-memory.h"
 #include "syx-error.h"
 #include "syx-types.h"
@@ -40,6 +36,7 @@
 
 #include <stdio.h>
 #include <fcntl.h>
+#include <math.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -47,6 +44,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
@@ -1449,6 +1447,36 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
   SYX_PRIM_RETURN (syx_small_integer_new (ret));
 }
 
+
+/* Date and time */
+
+SYX_FUNC_PRIMITIVE (DateTime_gmTime)
+{
+  time_t t;
+  struct tm *gm;
+  SyxOop ret;
+  
+  t = time (NULL);
+  gm = gmtime (&t);
+  if (!gm)
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  ret = syx_array_new_size (8);
+  SYX_OBJECT_DATA(ret)[0] = syx_small_integer_new (gm->tm_sec);
+  SYX_OBJECT_DATA(ret)[1] = syx_small_integer_new (gm->tm_min);
+  SYX_OBJECT_DATA(ret)[2] = syx_small_integer_new (gm->tm_hour);
+  SYX_OBJECT_DATA(ret)[3] = syx_small_integer_new (gm->tm_mday);
+  SYX_OBJECT_DATA(ret)[4] = syx_small_integer_new (gm->tm_mon);
+  SYX_OBJECT_DATA(ret)[5] = syx_small_integer_new (gm->tm_year);
+  SYX_OBJECT_DATA(ret)[6] = syx_small_integer_new (gm->tm_wday);
+  SYX_OBJECT_DATA(ret)[7] = syx_small_integer_new (gm->tm_yday);
+  
+  SYX_PRIM_RETURN (ret);
+}
+
+
 /* Object memory and Smalltalk */
 
 
@@ -1731,6 +1759,9 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Float_floor", Float_floor },
   { "Float_trunc", Float_trunc },
 
+  /* Date and time */
+  { "DateTime_gmTime", DateTime_gmTime },
+
   /* Object memory */
   { "ObjectMemory_snapshot", ObjectMemory_snapshot },
   { "ObjectMemory_garbageCollect", ObjectMemory_garbageCollect },
@@ -1744,7 +1775,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
   { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
 
-  { NULL }
+  { NULL, NULL }
 };
 
 syx_int32

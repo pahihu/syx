@@ -23,7 +23,7 @@ CFLAGS = $(CFLAGS) /analyze
 
 O=$(OUTDIR)
 
-CFLAGS = $(CFLAGS) /nologo /c /TP
+CFLAGS = $(CFLAGS) /nologo /c
 # standard windows defines
 CFLAGS = $(CFLAGS) /D "WIN32" /D "WINDOWS" /D "_WIN32_WINNT=0x0500"
 #CFLAGS = $(CFLAGS) /D "WIN32_LEAN_AND_MEAN"

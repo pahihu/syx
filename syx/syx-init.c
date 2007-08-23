@@ -126,6 +126,7 @@ _syx_file_in_basic (void)
     "Interval.st",
     "Set.st", "Bag.st",
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
+    "DateTime.st",
     "Compiler.st",
     "YXTools.st",
     "Console.st",

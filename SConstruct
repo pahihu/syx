@@ -260,7 +260,7 @@ for h in ['string.h', 'sys/stat.h', 'time.h', 'stdio.h', 'assert.h', 'fcntl.h',
 print
 print 'Optional headers...'
 
-for h in ['stdarg.h', 'byteswap.h', 'errno.h', 'unistd.h', 'stdint.h']:
+for h in ['stdarg.h', 'byteswap.h', 'errno.h', 'unistd.h', 'stdint.h', 'sys/time.h']:
    conf.CheckCHeader (h)
 for t in ['int64_t']:
    conf.CheckType (t, '#include <stdint.h>', 'c')
@@ -304,7 +304,7 @@ if not (conf.CheckInline () or conf.Check__Inline () or conf.Check__Inline__ ())
 print
 print 'Optional functions...'
 
-for f in ['strndup', 'fstat', 'access', 'getenv', 'perror', 'signal']:
+for f in ['fstat', 'access', 'getenv', 'perror', 'signal']:
    conf.CheckFunc (f)
 
 if env['bignum']:
