@@ -1773,9 +1773,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_loadPlugin", Smalltalk_loadPlugin },
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
-  { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
-
-  { NULL, NULL }
+  { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol }
 };
 
 syx_int32
