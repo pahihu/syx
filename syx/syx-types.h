@@ -39,6 +39,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+SYX_BEGIN_DECLS
+
 /*! \page syx_types Syx Types
   Contains various C data types definition, including SyxOop
 */
@@ -244,5 +246,6 @@ syx_strdup (syx_symbol src)
   return syx_strndup (src, strlen (src));
 }
 
+SYX_END_DECLS
 
 #endif /* SYX_TYPES_H */

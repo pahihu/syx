@@ -25,6 +25,10 @@
 #ifndef SYX_ENUMS_H
 #define SYX_ENUMS_H
 
+#include "syx-platform.h"
+
+SYX_BEGIN_DECLS
+
 /*! The type of SyxOop contained in SyxOop::c::type */
 typedef enum
   {
@@ -212,5 +216,7 @@ typedef enum
     SYX_ERROR_NOT_FOUND,
     SYX_ERROR_WRONG_ARGUMENT_COUNT
   } SyxSignalInternal;
+
+SYX_END_DECLS
 
 #endif /* SYX_ENUMS_H */

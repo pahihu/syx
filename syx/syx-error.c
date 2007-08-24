@@ -26,6 +26,7 @@
 #include "syx-platform.h"
 #include "syx-config.h"
 #include "syx-error.h"
+#include "syx-interp.h"
 #include "syx-types.h"
 #include "syx-object.h"
 
@@ -108,4 +109,104 @@ syx_error_lookup (SyxErrorType type)
     return NULL;
 
   return _syx_error_entries[type];
+}
+
+/*!
+  Signal an error in the Smalltalk environment, sending #signal to he requested class.
+
+  \param type the type returned by syx_error_register
+  \return TRUE if signal succeeded, otherwise FALSE
+*/
+syx_bool
+syx_signal (SyxErrorType type, syx_int32 num_args, ...)
+{
+  SyxOop context;
+  va_list ap;
+  SyxErrorEntry *entry;
+  
+  entry = syx_error_lookup (type);
+  if (!entry)
+    return FALSE;
+
+  va_start (ap, num_args);
+  context = syx_send_message (syx_interp_get_current_context (),       
+			      entry->klass, "signal", num_args, ap);
+  va_end (ap);
+
+  syx_interp_enter_context (context);
+
+  return TRUE;
+}
+
+/*!
+  Create an error Context in the Smalltalk environment ready to enter a Process.
+
+  \param type the type returned by syx_error_register
+*/
+SyxOop
+syx_signal_create_context (SyxErrorType type, syx_int32 num_args, ...)
+{
+  SyxOop context;
+  va_list ap;
+  SyxErrorEntry *entry;
+  
+  entry = syx_error_lookup (type);
+  if (!entry)
+    return syx_nil;
+
+  va_start (ap, num_args);
+  context = syx_send_message (syx_interp_get_current_context (),       
+			      entry->klass, "signal", num_args, ap);
+  va_end (ap);
+
+  return context;
+}
+
+/*!
+  Display an error then exits.
+
+  This function will show an error MessageBox on Windows CE
+*/
+#ifndef WINCE
+void
+syx_error (syx_symbol fmt, ...)
+{
+  va_list ap;
+  fprintf (stderr, "ERROR: ");
+  va_start (ap, fmt);
+  vfprintf (stderr, fmt, ap);
+  va_end (ap);
+  exit (EXIT_FAILURE);
+}
+#else /* WINCE */
+void
+syx_error (syx_symbol fmt, ...)
+{
+  MessageBox (0, SYX_IFDEF_UNICODE (message), "Error", 0);
+  exit (EXIT_FAILURE);
+}
+#endif /* WINCE */
+
+/*! Display a warning message */
+void
+syx_warning (syx_symbol fmt, ...)
+{
+  va_list ap;
+  fprintf (stderr, "WARNING: ");	       
+  va_start (ap, fmt);
+  vfprintf (stderr, fmt, ap);
+  va_end (ap);
+}
+
+/*! Display perror message and exit */
+void
+syx_perror (syx_symbol message)
+{
+#ifdef HAVE_PERROR
+  perror (message);
+#else
+  fputs (message, stderr);
+#endif
+
+  exit (EXIT_FAILURE);
 }

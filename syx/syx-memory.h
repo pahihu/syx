@@ -31,6 +31,7 @@
 #include "syx-object.h"
 #include "syx-init.h"
 
+SYX_BEGIN_DECLS
 
 extern EXPORT SyxOop *_syx_freed_memory;
 extern EXPORT syx_int32 _syx_freed_memory_top;
@@ -77,5 +78,7 @@ syx_memory_gc_begin (void)
 
 /*! Release a transaction started with syx_memory_gc_begin and unmark all objects in the transaction */
 EXPORT void syx_memory_gc_end (void);
+
+SYX_END_DECLS
 
 #endif /* SYX_MEMORY_H */

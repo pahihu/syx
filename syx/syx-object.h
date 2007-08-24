@@ -31,12 +31,16 @@
 
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_LIBGMP
+#include <gmp.h>
+#endif
+
+SYX_BEGIN_DECLS
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
 #define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
 
 #ifdef HAVE_LIBGMP
-#include <gmp.h>
 #define SYX_OBJECT_LARGE_INTEGER(oop) (*(mpz_t *)(SYX_OBJECT(oop)->data))
 #endif
 
@@ -188,6 +192,7 @@ syx_object_get_class (SyxOop object)
     return syx_cpointer_class;
 
   syx_error ("unknown object\n");
+  return syx_nil;
 }
 
 
@@ -443,6 +448,6 @@ syx_block_closure_new (SyxOop block)
 /*! Create a new raw CompiledBlock */
 #define syx_block_new() (syx_object_new (syx_compiled_block_class))
 
-
+SYX_END_DECLS
 
 #endif /* SYX_OBJECT_H */

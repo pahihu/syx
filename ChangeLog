@@ -1,3 +1,11 @@
+2007-08-24  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-error.h: got rid of varargs macros
+
+	* syx/syx-platform.h (SYX_BEGIN_DECLS): begins declarations for cplusplus
+	(SYX_END_DECLS): ends declarations for cplusplus
+	All headers have been updated
+
 2007-08-22  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-platform.h (syx_strdup): added

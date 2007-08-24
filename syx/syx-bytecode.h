@@ -29,6 +29,8 @@
 #include "syx-object.h"
 #include "syx-memory.h"
 
+SYX_BEGIN_DECLS
+
 /*!
   \page syx_bytecode Syx Bytecode
   Binary representation of a bytecode. Command is b while the argument is k.
@@ -158,7 +160,7 @@ SYX_FUNC_BYTECODE (push_constant, SyxBytecodeConstant constant)
   bytecode->stack_size++;
 }
 
-/*! Does SYX_BYTECODE_PUSH_BINDING_VARIABLE by specifying the Link instance of a Dictionary */
+/*! Does SYX_BYTECODE_PUSH_BINDING_VARIABLE by specifying a VariableBinding instance of a Dictionary */
 SYX_FUNC_BYTECODE (push_binding_variable, SyxOop assoc)
 {
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_PUSH_BINDING_VARIABLE,
@@ -188,7 +190,7 @@ SYX_FUNC_BYTECODE (assign_binding_variable, SyxOop link)
 /*!
   Does SYX_BYTECODE_DUPLICATE at a given code array position.
 
-  Take care this operation moves the code by 1 entry on the right, increases the code_top and the stack_size
+  This operation moves the code by 1 entry on the right, increases the code_top and the stack_size
 */
 SYX_FUNC_BYTECODE (duplicate_at, syx_int32 index)
 {
@@ -205,5 +207,7 @@ syx_bytecode_pop_top (SyxBytecode *bytecode)
 {
   syx_bytecode_do_special (bytecode, SYX_BYTECODE_POP_TOP);
 }
+
+SYX_END_DECLS
 
 #endif /* _SYX_BYTECODE_H */

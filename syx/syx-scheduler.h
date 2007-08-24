@@ -25,10 +25,13 @@
 #ifndef SYX_SCHEDULER_H
 #define SYX_SCHEDULER_H
 
+#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-object.h"
 
 #include <stdio.h>
+
+SYX_BEGIN_DECLS
 
 EXPORT extern SyxOop syx_processor;
 EXPORT extern SyxOop *_syx_processor_first_process;
@@ -71,5 +74,6 @@ EXPORT extern void syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semap
 EXPORT extern void _syx_scheduler_save (FILE *image);
 EXPORT extern void _syx_scheduler_load (FILE *image);
 
+SYX_END_DECLS
 
 #endif /* SYX_SCHEDULER_H */

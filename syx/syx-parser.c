@@ -330,12 +330,12 @@ _syx_parser_parse_term (SyxParser *self)
 
     default:
       if (token.type == SYX_TOKEN_END)
-	syx_error ("End of input unexpected\n")
-	else if (token.type > SYX_TOKEN_STRING_ENTRY)
-	  syx_error ("Invalid expression start %s\n", token.value.string)
-	  else
-	    syx_error ("Excepted expression\n")
-	      }
+	syx_error ("End of input unexpected\n");
+      else if (token.type > SYX_TOKEN_STRING_ENTRY)
+	syx_error ("Invalid expression start %s\n", token.value.string);
+      else
+	syx_error ("Excepted expression\n");
+    }
 
   syx_lexer_next_token (self->lexer);
   return super_term;

@@ -18,5 +18,7 @@ Later:
 Finally:
 - Method inlining
 - JIT
+- OS-threads scheduler
 - Implement another kind of hash probing
+
 - Other optimizations

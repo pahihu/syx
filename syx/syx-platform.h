@@ -42,15 +42,15 @@
 
 #undef INLINE
 #if defined (HAVE_INLINE) && defined (__GNUC__)
-#  define INLINE static __inline__
+# define INLINE static __inline__
 #elif !defined (HAVE_INLINE)
-#  if defined (HAVE__INLINE__)
-#    define INLINE static __inline__
-#  elif defined (HAVE__INLINE)
-#    define INLINE static __inline
-#  else
-#    define INLINE static
-#  endif
+# if defined (HAVE__INLINE__)
+#  define INLINE static __inline__
+# elif defined (HAVE__INLINE)
+#  define INLINE static __inline
+# else
+#  define INLINE static
+# endif
 #endif
 
 /* Byte swapping */
@@ -90,20 +90,31 @@
 /* Some platform specific informations */
 
 #ifdef WINDOWS
-#  define SYX_PATH_SEPARATOR '\\'
-#  ifdef _DLL
-#    define EXPORT __declspec(dllexport)
-#  else
-#    define EXPORT __declspec(dllimport)
-#  endif /* _DLL */
+# define SYX_PATH_SEPARATOR '\\'
+# ifdef _DLL
+#  define EXPORT __declspec(dllexport)
+# else
+#  define EXPORT __declspec(dllimport)
+# endif /* _DLL */
 #else /* WINDOWS */
-#  define SYX_PATH_SEPARATOR '/'
-#  define EXPORT
+# define SYX_PATH_SEPARATOR '/'
+# define EXPORT
 #endif /* WINDOWS */
 
 #ifndef HAVE_ERRNO_H
 EXPORT extern int errno;
-#  define ERANGE -32
+# define ERANGE -32
+#endif
+
+
+/* C++ specific */
+
+#ifdef __cplusplus
+# define SYX_BEGIN_DECLS  extern "C" {
+# define SYX_END_DECLS    }
+#else
+# define SYX_BEGIN_DECLS
+# define SYX_END_DECLS
 #endif
 
 

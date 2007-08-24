@@ -29,6 +29,8 @@
 #include "syx-object.h"
 #include "syx-scheduler.h"
 
+SYX_BEGIN_DECLS
+
 /* Execution state of a Process */
 
 typedef struct SyxExecState SyxExecState;
@@ -294,5 +296,7 @@ EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_unary);
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_binary);
 
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_do_special);
+
+SYX_END_DECLS
 
 #endif /* SYX_INTERP_H */

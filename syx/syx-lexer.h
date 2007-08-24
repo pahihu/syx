@@ -25,12 +25,15 @@
 #ifndef SYX_LEXER_H
 #define SYX_LEXER_H
 
+#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-enums.h"
 
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
 #endif
+
+SYX_BEGIN_DECLS
 
 /* Token */
 
@@ -84,5 +87,6 @@ syx_lexer_push_back (SyxLexer *lexer)
   return lexer->_pushed_back;
 }
 
+SYX_END_DECLS
 
 #endif

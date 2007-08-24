@@ -25,8 +25,11 @@
 #ifndef SYX_INIT_H
 #define SYX_INIT_H
 
+#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-object.h"
+
+SYX_BEGIN_DECLS
 
 /*! Default initial memory size */
 #define SYX_INIT_MEMORY_SIZE 100000
@@ -52,5 +55,7 @@ EXPORT extern syx_symbol syx_get_image_path (void);
 
 /*! Insert a SyxOop into the Smalltalk dictionary */
 #define syx_globals_at_put(symbol,value) (syx_dictionary_at_symbol_put (syx_globals, (symbol), (value)))
+
+SYX_END_DECLS
 
 #endif /* SYX_INIT_H */

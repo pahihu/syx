@@ -25,7 +25,10 @@
 #ifndef SYX_PLUGINS_H
 #define SYX_PLUGINS_H
 
+#include "syx-platform.h"
 #include "syx-interp.h"
+
+SYX_BEGIN_DECLS
 
 typedef struct SyxPluginEntry SyxPluginEntry;
 
@@ -56,5 +59,7 @@ EXPORT extern syx_bool syx_plugin_unload (syx_symbol name);
 EXPORT extern syx_pointer syx_plugin_symbol (syx_symbol plugin_name, syx_symbol func_name);
 EXPORT extern syx_bool syx_plugin_call_interp (SyxExecState *es, SyxOop method);
 EXPORT extern syx_bool syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method);
+
+SYX_END_DECLS
 
 #endif /* SYX_PLUGINS_H */

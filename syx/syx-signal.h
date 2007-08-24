@@ -25,6 +25,10 @@
 #ifndef SYX_SIGNAL_H
 #define SYX_SIGNAL_H
 
+SYX_BEGIN_DECLS
+
 extern EXPORT void syx_signal_init (void);
+
+SYX_END_DECLS
 
 #endif /* SYX_SIGNAL_H */

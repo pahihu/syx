@@ -525,7 +525,25 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
 SyxOop
 syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
+  SyxOop context;
   va_list ap;
+
+  va_start (ap, num_args);
+  context = syx_vsend_message (parent_context, receiver, selector, num_args, ap);
+  va_end (ap);
+
+  return context;
+}
+
+
+/*!
+  Create a MethodContext for an arbitrary message ready to enter a Process.
+
+  \param arguments an Array of arguments
+*/
+SyxOop
+syx_vsend_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
+{
   syx_varsize i;
   SyxOop context;
   SyxOop klass;
@@ -543,36 +561,8 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   syx_memory_gc_begin ();
 
   arguments = syx_array_new_size (num_args);
-  va_start (ap, num_args);
   for (i=0; i < num_args; i++)
     SYX_OBJECT_DATA(arguments)[i] = va_arg (ap, SyxOop);
-
-  context = syx_method_context_new (parent_context, method, receiver, arguments);
-
-  syx_memory_gc_end ();
-
-  return context;
-}
-
-
-/*!
-  Create a MethodContext for an arbitrary message ready to enter a Process.
-
-  \param arguments an Array of arguments
-*/
-SyxOop
-syx_send_messagev (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop arguments)
-{
-  SyxOop context;
-  SyxOop klass;
-  SyxOop method;
-
-  klass = syx_object_get_class (receiver);
-  method = syx_class_lookup_method (klass, selector);
-  if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
-
-  syx_memory_gc_begin ();
 
   context = syx_method_context_new (parent_context, method, receiver, arguments);
 
