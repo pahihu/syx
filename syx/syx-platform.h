@@ -106,6 +106,19 @@ EXPORT extern int errno;
 # define ERANGE -32
 #endif
 
+/* Standard C calling conventions aren't the fastest possible, so for fastests
+   possible code, it's good to compile with e.g. fast call conventions.
+   If we're compiling with non-standard calling conventions, some functions
+   need to be explicitly marked as using standard c calling conventions.
+   Those functions are:
+   * main()
+   * those that use vararg (...) arguments
+*/
+#ifdef _MSC_VER
+#define SYX_CDECL __cdecl
+#else
+#define SYX_CDECL
+#endif
 
 /* C++ specific */
 

@@ -46,7 +46,7 @@
 				BuildCommandLine="nmake -f makefile.vc TARGET=rel"
 				ReBuildCommandLine="nmake -f makefile.vc TARGET=rel rebuild"
 				CleanCommandLine="nmake -f makefile.vc TARGET=rel clean"
-				Output="syx.exe"
+				Output="obj-rel-win\syx.exe"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				IncludeSearchPath=""
 				ForcedIncludes=""

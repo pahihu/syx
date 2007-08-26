@@ -7,7 +7,15 @@ LD = link.exe
 VALID_TARGET=no
 !if "$(TARGET)"=="rel"
 OUTDIR=obj-rel-win
-CFLAGS = $(CFLAGS) /D "NDEBUG" /D "_SECURE_CSL=0" /MD /Ox /Os
+#/Gy - separate functions for linker. Generates smaller code.
+#/GL - enables link-time code generation. Requires /LTCG in linker.
+#      generates smaller and faster code
+CFLAGS = $(CFLAGS) /D "NDEBUG" /D "_SECURE_CSL=0" /MD /Ox /Os /Gy /GL
+# /Gr - __fastcall calling convention. Generates smaller and faster code.
+CFLAGS = $(CFLAGS) /Gr
+# /Oy - omits frame pointers. Should generate smaller code but I'm not seeing that,
+#       so I'm not enabling this function.
+#CFLAGS = $(CFLAGS) /Oy
 VALID_TARGET=yes
 !endif
 
@@ -39,8 +47,6 @@ CFLAGS = $(CFLAGS) /W3
 # /GR- : disable C++ RTTI
 CFLAGS = $(CFLAGS) /GR-
 CFLAGS = $(CFLAGS) /Zi
-# /Gr - __fastcall calling convention
-#CFLAGS = $(CFLAGS) /Gr
 # /FAscu - generate assembly listings
 CFLAGS = $(CFLAGS) /FAscu
 
@@ -49,6 +55,13 @@ CFLAGS = $(CFLAGS) /Imsvc /I.
 LIBS = $(LIBS) kernel32.lib advapi32.lib wsock32.lib
 
 LDFLAGS = $(LDFLAGS) /nologo /DEBUG
+
+!if "$(TARGET)"=="rel"
+# /opt:ref - removes unused functions
+# /opt:icf - removes duplicate functions
+# /ltcg - link-time code generation. Generates smaller and faster code. Requires /GL when compiling.
+LDFLAGS = $(LDFLAGS) /opt:ref /opt:icf /opt:nowin98 /ltcg
+!endif
 
 OBJS=$(O)\syx-bytecode.obj $(O)\syx-error.obj $(O)\syx-init.obj $(O)\syx-interp.obj $(O)\syx-lexer.obj \
   $(O)\syx-memory.obj $(O)\syx-object.obj $(O)\syx-parser.obj $(O)\syx-plugins.obj $(O)\syx-primitives.obj \

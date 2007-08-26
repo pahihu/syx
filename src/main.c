@@ -257,7 +257,7 @@ _parse_args (int argc, char **argv)
     }
 }
 
-int main(int argc, char **argv)
+int SYX_CDECL main(int argc, char **argv)
 {
   _parse_args(argc, argv);
 
