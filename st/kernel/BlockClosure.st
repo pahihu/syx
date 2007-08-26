@@ -37,7 +37,7 @@ initializeBlock: aBlock
 !BlockClosure methodsFor: 'executing'!
 
 block
-    "Answer the CompiledBlock that i hold"
+    "Answer the CompiledBlock which i'm holding"
     ^block
 !
 
@@ -83,7 +83,7 @@ ensure: aBlock
 !
 
 valueWithArguments: anArray
-    "Call my block with anArray as arguments"
+    "Call my block with the elements of anArray as arguments of the message"
     <primitive: 'BlockClosure_valueWithArguments'>
 	self primitiveFailed
     WrongArgumentCount signal

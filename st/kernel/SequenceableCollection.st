@@ -190,7 +190,7 @@ atAllPut: newElement
 
 with: otherCollection do: aBlock
     "Evaluate aBlock with the elements of the receiver and otherCollection.
-     The two collections must have the same size"
+     Both collections must have the same size"
     self size ~= otherCollection size
 	ifTrue: [ self error: 'The size of the two collections is not equal' ].
 

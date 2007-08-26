@@ -51,8 +51,8 @@ isNameColon
 !CompilerLexer class methodsFor: 'initialize-release'!
 
 initialize
-    ClosingTokenTable := { $.. $]. $). $}. $;. $". $\ }.
-    SingleBinaryTable := { ${. $[. $(. $). $]. $}. $!. $^ }
+    ClosingTokenTable := { $.. $]. $). $}. $;. $". $\. $! }.
+    SingleBinaryTable := { ${. $[. $(. $). $]. $}. $^ }
 ! !
 
 !CompilerLexer class methodsFor: 'instance creation'!
@@ -252,7 +252,6 @@ nextToken
 		ifFalse: [ stream skip: -1 ] ].
     ^lastToken := binary
 ! !
-
 
 " THE BYTECODE "
 
@@ -536,16 +535,19 @@ on: aCompilerLexer for: aClass
 initializeLexer: aCompilerLexer class: aClass
     lexer := aCompilerLexer.
     class := aClass.
+    instanceNames := Array new.
+    class allSuperclassesDo: [ :ea |
+	instanceNames := ea instanceVariableNames, instanceNames ].
+    instanceNames := instanceNames, class instanceVariableNames.
+    self initialize
+!
+
+initialize
     bytecode := CompilerParser compilerBytecodeClass on: ByteArray new.
 
     temporaryNames := OrderedCollection new.
 
     argumentNames := OrderedCollection new.
-
-    instanceNames := Array new.
-    class allSuperclassesDo: [ :ea |
-	instanceNames := ea instanceVariableNames, instanceNames ].
-    instanceNames := instanceNames, class instanceVariableNames.
 
     inBlock := false.
 
@@ -616,12 +618,30 @@ indexOfInstance: aSymbol ifPresent: aBlock
 
 !CompilerParser methodsFor: 'parsing'!
 
+primParseChunk: text startingAt: pos
+    <primitive: 'Compiler_parseChunk'>
+    	self primitiveFailed
+!
+
+runMultipleAndDeclarations
+    | pos text size |
+    text := lexer stream contents.
+    size := text size.
+    pos := #(0).
+    [ pos first < size ]
+      whileTrue:
+	[ self primParseChunk: text startingAt: pos ]
+!
+
 parse
     lexer nextToken
 	ifNil: [ ^self ].
-    
-    self parseMessagePattern.
 
+    self parseMessagePattern.
+    self parseAfterMessagePattern
+!
+
+parseAfterMessagePattern
     inBlock
 	ifFalse: [ self parsePrimitive ].
 
@@ -797,10 +817,11 @@ parseBody
 	    token := lexer lastToken.
 
 	    (token class = CompilerClosingToken and: [ token first = $. ])
-	        ifTrue: [
+		ifTrue: [
 		    token := lexer nextToken.
 		    token isNil | token class = CompilerClosingToken
 			ifFalse: [ bytecode doSpecial: #popTop ] ] ].
+
     inBlock
 	ifTrue: [ self error: 'Expected ] after block' ]
 !

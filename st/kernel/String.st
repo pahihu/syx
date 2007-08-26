@@ -91,11 +91,15 @@ subStrings: separators
 
 !String methodsFor: 'utilities'!
 
+primParse: aString on: aMethod for: aClass
+    <primitive: 'Compiler_parse'>
+	self primitiveFailed
+!
+
 compileFor: aClass
-    | parser method |
-    parser := CompilerParser text: self for: aClass.
-    parser parse.
-    ^CompiledMethod fromParser: parser
+    | method |
+    method := CompiledMethod new.
+    ^self primParse: self on: method for: aClass    
 !
 
 doIt

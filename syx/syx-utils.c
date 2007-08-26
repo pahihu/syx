@@ -65,7 +65,6 @@
     syx-utils.c: This module collects some useful functions like parsing class declarations and interfacing Smalltalk from C
 */
 
-static syx_bool _syx_cold_parse_methods (SyxLexer *lexer);
 static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
 static SyxOop _syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized);
 static syx_uint8 _syx_sem_lock = 0;
@@ -263,8 +262,8 @@ _syx_cold_parse_class (SyxLexer *lexer)
   return TRUE;
 }
 
-static syx_bool
-_syx_cold_parse_methods (SyxLexer *lexer)
+syx_bool
+syx_cold_parse_methods (SyxLexer *lexer)
 {
   SyxToken token;
   SyxOop klass;
@@ -272,10 +271,14 @@ _syx_cold_parse_methods (SyxLexer *lexer)
   SyxLexer *method_lexer;
   /*syx_symbol category; */
   syx_string chunk;
+  SyxLexer saved_lexer = *lexer;
 
   token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_NAME_CONST)
-    return FALSE;
+    {
+      *lexer = saved_lexer;
+      return FALSE;
+    }
 
   klass = syx_globals_at (token.value.string);
   syx_token_free (token);
@@ -289,19 +292,28 @@ _syx_cold_parse_methods (SyxLexer *lexer)
     }
 
   if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "methodsFor:")))
-    return FALSE;
+    {
+      *lexer = saved_lexer;
+      return FALSE;
+    }
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
   if (token.type != SYX_TOKEN_STR_CONST)
-    return FALSE;
+    {
+      *lexer = saved_lexer;
+      return FALSE;
+    }
 
   /*  category = syx_strdup (token.value.string); */
   syx_token_free (token);
 
   token = syx_lexer_next_token (lexer);
   if (!_IS_EXL_MARK (token))
-    return FALSE;
+    {
+      *lexer = saved_lexer;
+      return FALSE;
+    }
   syx_token_free (token);
 
   if (SYX_IS_NIL (SYX_CLASS_METHODS (klass)))
@@ -317,7 +329,7 @@ _syx_cold_parse_methods (SyxLexer *lexer)
 	break;
 
       parser = syx_parser_new (method_lexer, syx_method_new (), klass);
-      syx_parser_parse (parser);
+      syx_parser_parse (parser, FALSE);
 
       syx_dictionary_at_symbol_put (SYX_CLASS_METHODS(klass),
 				    SYX_METHOD_SELECTOR(parser->method),
@@ -344,7 +356,7 @@ syx_cold_parse (SyxLexer *lexer)
   while (parseOk && token.type != SYX_TOKEN_END)
     {
       if (_IS_EXL_MARK (token))
-	parseOk = _syx_cold_parse_methods (lexer);
+	parseOk = syx_cold_parse_methods (lexer);
       else
 	parseOk = _syx_cold_parse_class (lexer);
 

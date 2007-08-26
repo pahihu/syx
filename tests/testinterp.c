@@ -38,7 +38,7 @@ _interpret (syx_symbol text)
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
   parser = syx_parser_new (lexer, method, syx_undefined_object_class);
-  assert (syx_parser_parse (parser) == TRUE);
+  assert (syx_parser_parse (parser, FALSE) == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);

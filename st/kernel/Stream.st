@@ -119,7 +119,7 @@ isEmpty
 !
 
 atEnd
-    "Return true if i'm at the end"
+    "Return true if I'm at the end"
     self subclassResponsibility
 ! !
 

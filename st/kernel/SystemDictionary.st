@@ -46,7 +46,7 @@ registerForSystemInitialization: anObject
 !
 
 initializeFirstSystem
-    "This method is called once when creating the image"
+    "This method is called on image creation"
     systemInitializationRequests := Set new.
 
     self

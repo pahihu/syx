@@ -135,7 +135,7 @@ includes: anObject
 !
 
 occurrencesOf: anObject
-    "Answer the number of times anObject is present in the collection"
+    "Answer how many times anObject occurred in the collection"
     | occurs |
     occurs := 0.
     self do: [ :ea |

@@ -88,7 +88,7 @@ nextPutAll: aCollection
 !
 
 collection
-    self ensureReadability.
+    self ensureReadable.
     ^collection
 ! !
 

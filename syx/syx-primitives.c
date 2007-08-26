@@ -1649,6 +1649,93 @@ SYX_FUNC_PRIMITIVE (Smalltalk_haveBigEndianness)
 #endif
 }
 
+SYX_FUNC_PRIMITIVE (Compiler_parse)
+{
+  SyxLexer *lexer;
+  SyxParser *parser;
+  SyxOop string;
+  SyxOop meth;
+  SyxOop klass;
+  SYX_PRIM_ARGS (3);
+  
+  string = es->message_arguments[0];
+  meth = es->message_arguments[1];
+  klass = es->message_arguments[2];
+  lexer = syx_lexer_new (SYX_OBJECT_SYMBOL (string));
+  parser = syx_parser_new (lexer, meth, klass);
+  if (!syx_parser_parse (parser, FALSE))
+    {
+      syx_lexer_free (lexer, FALSE);
+      syx_parser_free (parser, FALSE);
+      SYX_PRIM_FAIL;
+    }
+
+  syx_lexer_free (lexer, FALSE);
+  syx_parser_free (parser, FALSE);
+
+  SYX_PRIM_RETURN (meth);
+}
+
+SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
+{
+  SyxLexer *lexer;
+  SyxParser *parser;
+  SyxOop meth;
+  SyxOop pos;
+  SyxOop context;
+  SyxToken token;
+  SyxLexer saved_lexer;
+  syx_symbol all_text;
+  syx_int32 index;
+  syx_string text;
+  SYX_PRIM_ARGS (2);
+
+  all_text = SYX_OBJECT_SYMBOL (es->message_arguments[0]);
+  pos = es->message_arguments[1];
+  index = SYX_SMALL_INTEGER (SYX_OBJECT_DATA(pos)[0]);
+
+  lexer = syx_lexer_new (all_text);
+  lexer->_current_text += index;
+
+  /* check for methods definition */
+  saved_lexer = *lexer;
+  token = syx_lexer_next_token (lexer);
+  while (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
+    {
+      syx_cold_parse_methods (lexer);
+      saved_lexer = *lexer;
+      token = syx_lexer_next_token (lexer);
+    }
+  *lexer = saved_lexer;
+
+  /* get the next chunk */
+  text = syx_lexer_next_chunk (lexer);
+  SYX_OBJECT_DATA(pos)[0] = syx_small_integer_new (lexer->_current_text - lexer->text);
+  syx_lexer_free (lexer, FALSE);
+
+  if (!text)
+    {
+      SYX_PRIM_RETURN (es->message_receiver);
+    }
+
+  /* now parse */
+  lexer = syx_lexer_new (text);
+  meth = syx_method_new ();
+  parser = syx_parser_new (lexer, meth, syx_nil);
+  if (!syx_parser_parse (parser, TRUE))
+    {
+      SYX_PRIM_FAIL;
+    }
+  syx_parser_free (parser, TRUE);
+  SYX_METHOD_SELECTOR(meth) = syx_symbol_new ("goDoIt");
+
+  /* finally execute */
+  context = syx_method_context_new (syx_interp_get_current_context (), meth, syx_nil, syx_nil);
+  syx_interp_enter_context (context);
+
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1773,7 +1860,11 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_loadPlugin", Smalltalk_loadPlugin },
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
-  { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol }
+  { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
+
+  /* Compiler */
+  { "Compiler_parse", Compiler_parse },
+  { "Compiler_parseChunk", Compiler_parseChunk }
 };
 
 syx_int32

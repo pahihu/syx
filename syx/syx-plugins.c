@@ -69,7 +69,7 @@ _syx_plugin_default_method (void)
   method = syx_method_new ();
   lexer = syx_lexer_new ("defaultPluginsFailMethod self primitiveFailed");
   parser = syx_parser_new (lexer, method, syx_nil);
-  syx_parser_parse (parser);
+  syx_parser_parse (parser, FALSE);
 
   syx_lexer_free (lexer, FALSE);
   syx_parser_free (parser, FALSE);

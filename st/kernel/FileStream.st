@@ -106,7 +106,7 @@ atEnd
 
 fileIn
     | stream lexer parser method context peek |
-    stream := ReadWriteStream with: 'doFileIn ' copy.
+    stream := ReadWriteStream with: String new.
     peek := self next.
     peek = $#
 	ifTrue: [ self skipTo: Character nl ]
@@ -116,10 +116,7 @@ fileIn
 	reset.
     lexer := CompilerLexer readFrom: stream.
     parser := CompilerParser on: lexer for: nil class.
-    parser parse.
-    method := CompiledMethod fromParser: parser.
-    context := MethodContext on: method parent: thisContext receiver: nil arguments: #().
-    Processor enter: context
+    parser runMultipleAndDeclarations
 !
 
 fd: aFD

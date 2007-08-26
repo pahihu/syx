@@ -124,15 +124,23 @@ syx_parser_free (SyxParser *self, syx_bool free_segment)
   \return TRUE if parsing was successful, otherwise FALSE
 */
 syx_bool
-syx_parser_parse (SyxParser *self)
+syx_parser_parse (SyxParser *self, syx_bool skip_message_pattern)
 {
   SyxToken token;
+  SyxParserScope scope;
 
   token = syx_lexer_next_token (self->lexer);
   if (token.type == SYX_TOKEN_END)
     return TRUE;
 
-  _syx_parser_parse_message_pattern (self);
+  if (skip_message_pattern)
+    {
+      scope.start = self->_argument_names_top;
+      scope.end = self->_argument_names_top;
+      self->_argument_scopes.stack[(syx_int32) self->_argument_scopes.top++] = scope;
+    }
+  else
+    _syx_parser_parse_message_pattern (self);
 
   if (!self->_in_block)
     _syx_parser_parse_primitive (self);
@@ -878,7 +886,7 @@ _syx_parser_parse_block (SyxParser *self)
   self->bytecode = syx_bytecode_new ();
   self->_in_block = TRUE;
 
-  syx_parser_parse (self);
+  syx_parser_parse (self, FALSE);
 
   closure = syx_block_closure_new (self->method);
   self->method = old_method;

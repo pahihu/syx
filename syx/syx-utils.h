@@ -36,6 +36,7 @@
 SYX_BEGIN_DECLS
 
 extern EXPORT syx_bool syx_cold_parse (SyxLexer *lexer);
+extern EXPORT syx_bool syx_cold_parse_methods (SyxLexer *lexer);
 extern EXPORT syx_bool syx_cold_file_in (syx_symbol filename);
 
 extern EXPORT void syx_semaphore_signal (SyxOop semaphore);

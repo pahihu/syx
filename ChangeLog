@@ -1,3 +1,19 @@
+2007-08-26  Luca Bruno  <lethalman88@gmail.com>
+
+	Fixed English for some comments, thanks to billijoex.
+	
+	* syx/syx-utils.c (syx_cold_parse_methods): restore the lexer if the syntax is not the expected for parsing method definitions
+
+	Default compiler is now the C compiler, not the ST anymore. The ST compiler will be mantained
+	for reference only.
+	
+	* syx/syx-lexer.c (syx_lexer_next_chunk): do not truncate the text by one char if it's at the end
+
+	* syx/syx-parser.c (syx_parser_parse): be able to skip message pattern
+	All calls have been updated
+
+	* st/kernel/Compiler.st (runMultipleAndDeclarations): added
+
 2007-08-24  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-error.h: got rid of varargs macros

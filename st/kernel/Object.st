@@ -266,8 +266,8 @@ caseOf: anArrayOfAssociations
 
 caseOf: anArrayOfAssociations otherwise: aBlock
     "
-     Switch case between the keys of the array. If a block evaluates to the be equal of the receiver
-     then the value of the association is evaluated.
+     Switch case between the keys of the array. If one of the block evaluation is the same as the receiver
+     then the value of the association (a block) is evaluated.
      
      123 caseOf: {
        [123] -> ['This is 123'].

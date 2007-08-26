@@ -491,7 +491,10 @@ syx_lexer_next_chunk (SyxLexer *lexer)
   syx_token_free (token);
 
   length = lexer->_current_text - start_text;
-  chunk = syx_strndup (start_text, length - 1);
+  if (token.type != SYX_TOKEN_END)
+    length--;
+
+  chunk = syx_strndup (start_text, length);
   return chunk;
 }
 
