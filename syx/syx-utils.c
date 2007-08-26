@@ -46,6 +46,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef HAVE_SYS_TIME_H
+  #include <sys/time.h>
+#endif
+
 #ifdef HAVE_STDARG_H
   #include <stdarg.h>
 #endif
@@ -750,4 +754,25 @@ syx_show_traceback (void)
 
       context = SYX_METHOD_CONTEXT_PARENT (context);
     }
+}
+
+/* Return current time seconds in nanoseconds */
+syx_uint64
+syx_nanotime (void)
+{
+#ifdef WINDOWS
+
+  syx_uint64 value;
+  GetSystemTimeAsFileTime ((FILETIME *)&value);
+  value = (value - (syx_uint64) 116444736000000000) * 100;
+  return value;
+
+#else /* WINDOWS */
+
+  struct timeval tv;
+  gettimeofday (&tv, NULL);
+  /* convert timeval to nanoseconds */
+  return ((syx_uint64) tv.tv_sec * SYX_NSEC_PER_SEC) + tv.tv_usec * SYX_NSEC_PER_USEC;
+
+#endif
 }

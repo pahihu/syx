@@ -33,7 +33,7 @@ _interpret (syx_symbol text)
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
-  struct timeval start, end;
+  syx_uint64 start, end;
 
   lexer = syx_lexer_new (text);						
   method = syx_method_new ();						
@@ -44,10 +44,10 @@ _interpret (syx_symbol text)
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);
   process = syx_process_new (context);
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
   syx_process_execute_blocking (process);
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
 
   return SYX_PROCESS_RETURNED_OBJECT(process);
 }

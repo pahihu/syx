@@ -33,7 +33,7 @@ main (int argc, char *argv[])
   SyxLexer *lexer;
   SyxOop method;
   SyxParser *parser;
-  struct timeval start, end;
+  syx_uint64 start, end;
   
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
@@ -49,7 +49,7 @@ main (int argc, char *argv[])
 #define NUM_ARGS (SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method)))
 #define NUM_TEMPS (SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARY_STACK_SIZE (method)))
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
 
   PARSE ("unary");
   assert (SELECTOR_EQ ("unary"));
@@ -74,8 +74,8 @@ main (int argc, char *argv[])
 
   PARSE ("meth 1, 2, 3 test. (1, 2, 3) test");
 
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n", end - start);
 
   syx_quit ();
   

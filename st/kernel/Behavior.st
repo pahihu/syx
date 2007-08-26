@@ -87,10 +87,18 @@ subclass: classSymbol instanceVariableNames: instanceVariables
 
 subclass: classSymbol instanceVariableNames: instanceVariables classVariableNames: classVariables
     | metaclass class |
-    metaclass := Metaclass newSubclassOf: self class named: nil.
-    class := metaclass newSubclassOf: self named: classSymbol.
-    Smalltalk at: classSymbol put: class.
+    classSymbol first isUppercase
+	ifFalse: [ self error: 'Class names must be capitalized' ].
+
+    class := Smalltalk at: classSymbol ifAbsent: [
+	metaclass := Metaclass new.
+	class := metaclass initializeSubclassOf: self class named: nil.
+	Smalltalk at: classSymbol put: class ].
+
     ^class
+	initializeSubclassOf: self named: classSymbol;
+"	setInstanceVariableNames: instanceVariables;"
+	yourself
 ! !
 
 !Behavior methodsFor: 'compiling'!
@@ -105,15 +113,18 @@ compile: aString
 
 !Behavior methodsFor: 'private'!
 
-instanceSize
-    ^instanceSize
+updateInstanceSize
+    instanceSize := superclass instanceSize + instanceVariableNames size.
+    self allSubclassesDo: [ :ea | ea updateInstanceSize ]
 !
 
-newSubclassOf: aClass named: classSymbol
-    | class |
-    class := self new.
-    class initializeSubclassOf: aClass named: classSymbol.
-    ^class
+setInstanceVariableNames: anArray
+    instanceVariableNames := anArray.
+    self updateInstanceSize
+!
+
+instanceSize
+    ^instanceSize
 !
 
 initializeSubclassOf: aClass named: classSymbol
@@ -168,10 +179,4 @@ allSuperclassesDo: aBlock
     class := self.
     [ (class := class superclass) notNil ]
 	whileTrue: [ aBlock value: class ]
-! !
-
-!Class methodsFor: 'initialize-release'!
-
-initialize
-
 ! !

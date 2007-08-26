@@ -30,22 +30,22 @@
 int
 main (int argc, char *argv[])
 {
-  struct timeval start, end;
+  syx_uint64 start, end;
 
   syx_init (0, NULL, ".");
-  syx_build_basic ();
 
   puts ("- Test saving image");
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
+  syx_build_basic ();
   assert (syx_memory_save_image ("test.sim") == TRUE);
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
 
   puts ("- Test loading image");
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
   assert (syx_memory_load_image ("test.sim") == TRUE);
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
 
   syx_quit ();
 

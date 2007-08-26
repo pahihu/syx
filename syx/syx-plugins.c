@@ -126,7 +126,7 @@ syx_library_symbol (syx_pointer handle, syx_symbol name)
     return NULL;
 
 #ifndef HAVE_LIBDL
-  ret = GetProcAddress (handle, SYX_IFDEF_UNICODE (name));
+  ret = (syx_pointer)(syx_nint) GetProcAddress (handle, SYX_IFDEF_UNICODE (name));
 #else /* HAVE_LIBDL */
   ret = dlsym (handle, name);
 

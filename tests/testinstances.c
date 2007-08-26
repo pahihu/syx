@@ -31,12 +31,12 @@ int
 main (int argc, char *argv[])
 {
   SyxOop obj, instobj;
-  struct timeval start, end;
+  syx_uint64 start, end;
 
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
 
   obj = syx_small_integer_new (123);
   assert (SYX_SMALL_INTEGER(obj) == 123);
@@ -80,8 +80,8 @@ main (int argc, char *argv[])
   obj = syx_string_new ("string");
   assert (!strcmp (SYX_OBJECT_SYMBOL (obj), "string"));
 
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n", end - start);
 
   syx_quit ();
 

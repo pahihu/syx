@@ -32,12 +32,12 @@ main (int argc, char *argv[])
 {
   SyxLexer *lexer;
   SyxOop temp;
-  struct timeval start, end;
+  syx_uint64 start, end;
 
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
 
   /*  lexer = syx_lexer_new ("undefined subclass: #Object!");
   assert (syx_cold_parse (lexer, &error) == FALSE);
@@ -62,8 +62,8 @@ main (int argc, char *argv[])
   assert (syx_cold_parse (lexer) == TRUE);
   syx_lexer_free (lexer, FALSE);
 
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n", end - start);
 
   syx_quit ();
 

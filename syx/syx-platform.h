@@ -112,9 +112,9 @@ EXPORT extern int errno;
    need to be explicitly marked as using standard c calling conventions.
    Those functions are:
    * main()
-   * those that use vararg (...) arguments
+   * those that use vararg (...) argument
 */
-#ifdef _MSC_VER
+#ifdef WINDOWS
 #define SYX_CDECL __cdecl
 #else
 #define SYX_CDECL
@@ -130,5 +130,9 @@ EXPORT extern int errno;
 # define SYX_END_DECLS
 #endif
 
+/* Time */
+
+#define SYX_NSEC_PER_USEC   1000L
+#define SYX_NSEC_PER_SEC 1000000000L
 
 #endif /* SYX_PLATFORM_H */

@@ -1,5 +1,15 @@
 2007-08-26  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Behavior.st (setInstanceVariableNames): added
+	
+	* st/kernel/Metaclass.st: fixed metaclass creation
+
+	* st/kernel/Behavior.st: fixed class creation
+	
+	* st/kernel/Dictionary.st (at:ifAbsent:): added
+
+	* syx/syx-utils.c (syx_nanotime): added
+
 	Fixed English for some comments, thanks to billijoex.
 	
 	* syx/syx-utils.c (syx_cold_parse_methods): restore the lexer if the syntax is not the expected for parsing method definitions

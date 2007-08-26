@@ -113,10 +113,14 @@ associationAt: aKey
 !
 
 at: aKey
+    ^self at: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+!
+
+at: aKey ifAbsent: exceptionBlock
     | index |
     index := self indexOf: aKey.
     (self basicAt: index) isNil
-	ifTrue: [ NotFound signal: 'Key not found: ', aKey ].
+	ifTrue: [ ^exceptionBlock value ].
     ^self basicAt: index + 1
 !
 

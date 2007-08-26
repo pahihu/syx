@@ -33,7 +33,7 @@ main (int argc, char *argv[])
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
-  struct timeval start, end;
+  syx_uint64 start, end;
 
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
@@ -59,10 +59,10 @@ main (int argc, char *argv[])
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
   syx_scheduler_run ();
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n", end - start);
 
   puts ("- Test semaphores and number coercing too");
   INTERPRET ("method"\
@@ -75,10 +75,10 @@ main (int argc, char *argv[])
 
   SYX_PROCESS_SUSPENDED(process) = syx_false;
 
-  gettimeofday (&start, NULL);
+  start = syx_nanotime ();
   syx_scheduler_run ();
-  gettimeofday (&end, NULL);
-  printf ("Time elapsed: %ld microseconds\n", end.tv_usec - start.tv_usec);
+  end = syx_nanotime ();
+  printf ("Time elapsed: %ld nanoseconds\n", end - start);
 
   syx_quit ();
 

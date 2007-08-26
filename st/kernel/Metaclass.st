@@ -24,11 +24,9 @@ DEALINGS IN THE SOFTWARE.
 
 !Metaclass methodsFor: 'class creation'!
 
-newSubclassOf: aClass named: classSymbol
-    | class |
-    class := super newSubclassOf: aClass named: classSymbol.
-    instanceClass := class.
-    ^class
+initializeSubclassOf: aClass named: classSymbol
+    super initializeSubclassOf: aClass named: classSymbol.
+    ^instanceClass := self new
 ! !
 
 !Metaclass methodsFor: 'printing'!
