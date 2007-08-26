@@ -110,9 +110,9 @@ typedef const syx_wchar * syx_wsymbol;
     /* Note: this might not be true for 64-bit compilers */
     typedef int syx_int32;
     typedef unsigned int syx_uint32;
-    
-    typedef long long syx_int64;
-    typedef unsigned long long syx_uint64;
+
+    typedef _int64 syx_int64;
+    typedef unsigned _int64 syx_uint64;
   #else
    #error "don't know how to define types for this compiler"
   #endif
@@ -129,8 +129,6 @@ typedef double syx_double;
 typedef void * syx_pointer;
 
 typedef syx_nint SyxOop;
-
-typedef long fd_mask;
 
 /* Basic instance types */
 
