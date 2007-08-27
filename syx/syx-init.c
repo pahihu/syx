@@ -54,6 +54,8 @@
 
 #include <stdio.h>
 
+syx_bool syx_system_initialized = FALSE;
+
 static syx_string _syx_root_path;
 static syx_string _syx_image_path;
 static syx_varsize _syx_argc;
@@ -128,7 +130,7 @@ _syx_file_in_basic (void)
     "Dictionary.st", "IdentityDictionary.st", "SystemDictionary.st",
     "DateTime.st",
     "Compiler.st",
-    "YXTools.st",
+    "MVC.st",
     "Console.st",
     "WinWorkspace.st",
     NULL
@@ -311,6 +313,8 @@ syx_initialize_system (void)
   context = syx_send_binary_message (syx_nil, syx_globals, "startupSystem:", arguments);
   process = syx_process_new (context);
   SYX_PROCESS_SUSPENDED (process) = syx_false;
+  
+  syx_system_initialized = TRUE;
 }
 
 /*!

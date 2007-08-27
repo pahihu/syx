@@ -362,17 +362,6 @@ def builder_syxinstall (target, sources):
 
 setattr (env, 'SyxInstall', builder_syxinstall)
 
-# Doc builder
-
-env['doxygen'] = env.WhereIs ('doxygen')
-if env['doc'] and env['doxygen']:
-   target = env.Command ('build/doc', 'Doxyfile', '$doxygen $SOURCES')
-   Default (target)
-   path = os.path.join (env['docdir'], distdir[1:])
-   t1 = env.SyxInstall (path, target)
-   env.Alias ('install', t1)
-   env.Clean ('install', t1)
-
 # Build
 
 env.MergeFlags ('-L#build/lib')
@@ -388,6 +377,17 @@ env.SConscript (dirs=['build/plugins'], exports=['env', 'distdir'])
 env.SConscript (dirs=['tests'], exports=['env', 'distdir'])
 env.SConscript (dirs=['examples'], exports=['env', 'distdir'])
 
+# Doc builder
+
+env['doxygen'] = env.WhereIs ('doxygen')
+if env['doc'] and env['doxygen']:
+   target = env.Command ('build/doc', '#Doxyfile', '$doxygen $SOURCES')
+   Default (target)
+   path = os.path.join (env['docdir'], distdir[1:])
+   t1 = env.SyxInstall (path, target)
+   env.Alias ('install', t1)
+   env.Clean ('install', t1)
+
 # Install data
 
 sources = glob.glob ('st/kernel/*.st')
@@ -395,10 +395,32 @@ path = os.path.join (env['rootdir'], 'st', 'kernel')
 env.SyxInstall (path, sources)
 
 if env['PLATFORM'] == 'posix':
-   path = os.path.join (env['datadir'], 'applications')
-   env.SyxInstall (path, 'syx.desktop')
+   desktoppath = os.path.join (env['datadir'], 'applications')
+   desktopapps = [os.path.join ('#share', 'syx.desktop'), os.path.join ('#share', 'syximage.desktop')]
+   env.SyxInstall (desktoppath, desktopapps)
+
    path = os.path.join (env['datadir'], 'pixmaps')
-   env.SyxInstall (path, 'syx.png')
+   env.SyxInstall (path, os.path.join ('#share', 'syx.png'))
+   env.SyxInstall (path, os.path.join ('#share', 'gnome-application-syx.png'))
+
+   path = os.path.join (env['datadir'], 'application-registry')
+   env.SyxInstall (path, os.path.join ('#share', 'syx.applications'))
+
+   path = os.path.join (env['datadir'], 'mime-info')
+   env.SyxInstall (path, os.path.join ('#share', 'syx.keys'))
+   mimepath = os.path.join (env['datadir'], 'mime')
+   mimesource = os.path.join ('#share', 'syx.xml')
+   env.SyxInstall (os.path.join (mimepath, 'packages'), mimesource)
+
+   update_mime_database = env.WhereIs ('update-mime-database')
+   if update_mime_database:
+      target = env.Command (mimepath, mimesource, 'update-mime-database $TARGET')
+      env.Alias ('install', target)
+
+   update_desktop_database = env.WhereIs ('update-desktop-database')
+   if update_desktop_database:
+      target = env.Command (desktoppath, desktopapps, 'update-desktop-database')
+      env.Alias ('install', target)
 
 # Source distribution
 
@@ -407,8 +429,13 @@ target = env.Install (path, sources)
 env.Alias ('sdist', target)
 
 sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile',
-           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc', 'syx.desktop', 'syx.png']
+           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc']
 target = env.Install (distdir, sources)
+env.Alias ('sdist', target)
+
+sources = ['#share/syx.desktop', '#share/syx.png', '#share/gnome-application-syx.png',
+           '#share/syx.applications', '#share/syx.keys', '#share/syx.xml', '#share/syximage.desktop']
+target = env.Install (os.path.join (distdir, 'share'), sources)
 env.Alias ('sdist', target)
 
 target = env.Install (os.path.join (distdir, 'doc', 'html', 'extras'), '#doc/html/extras/footer.html')

@@ -50,9 +50,9 @@ handles: anException
     ^anException isKindOf: handledException
 !
 
-showTraceback
+tracebackString
     "Shows my single traceback"
-    (self receiver class printString, '>>', self homeContext method selector printString, '[]') printNl.
+    ^self homeContext tracebackString, '[]'
 !
 
 homeContext

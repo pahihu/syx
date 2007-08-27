@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-syx-file">
+    <comment xml:lang="en">Smalltalk YX File</comment>
+    <glob pattern="*.st"/>
+  </mime-type>
+  
+  <mime-type type="application/x-syx-image">
+    <comment xml:lang="en">Smalltalk YX Image File</comment>
+    <glob pattern="*.sim"/>
+  </mime-type>
+</mime-info>

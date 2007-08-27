@@ -64,25 +64,34 @@ open
     mainWidget showAll
 ! !
 
-!GtkWorkspaceView methodsFor: 'mvc-events'!
+!GtkWorkspaceView methodsFor: 'accessing'!
 
-onExecute
+getText
     | text buffer |
     buffer := textView buffer.
-    text := buffer textFrom: buffer startIter to: buffer endIter includeHiddenChars: false.
-    eventDispatcher dispatch: #doIt with: text
+    ^text := buffer textFrom: buffer startIter to: buffer endIter includeHiddenChars: false
+! !
+
+!GtkWorkspaceView methodsFor: 'updating'!
+
+displayText
+    textView buffer text: model text
+!
+
+onExecute
+    self changed: #doIt
 !
 
 onClose
-    eventDispatcher dispatch: #quit
+    self changed: #quit
 !
 
 onClear
-    textView buffer text: ''
+    self changed: #clear
 ! !
 
 !GtkWorkspace class methodsFor: 'instance creation'!
 
-defaultView
-    ^GtkWorkspaceView new
+defaultViewClass
+    ^GtkWorkspaceView
 ! !

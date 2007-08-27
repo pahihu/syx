@@ -85,7 +85,7 @@ subclass: classSymbol instanceVariableNames: instanceVariables
     ^self subclass: classSymbol instanceVariableNames: instanceVariables classVariableNames: ''
 !
 
-subclass: classSymbol instanceVariableNames: instanceVariables classVariableNames: classVariables
+subclass: classSymbol instanceVariableNames: instanceVariableNames classVariableNames: classVariableNames
     | metaclass class |
     classSymbol first isUppercase
 	ifFalse: [ self error: 'Class names must be capitalized' ].
@@ -97,7 +97,8 @@ subclass: classSymbol instanceVariableNames: instanceVariables classVariableName
 
     ^class
 	initializeSubclassOf: self named: classSymbol;
-"	setInstanceVariableNames: instanceVariables;"
+	setInstanceVariableNames: instanceVariableNames;
+	setClassVariableNames: classVariableNames;
 	yourself
 ! !
 
@@ -118,10 +119,27 @@ updateInstanceSize
     self allSubclassesDo: [ :ea | ea updateInstanceSize ]
 !
 
-setInstanceVariableNames: anArray
-    instanceVariableNames := anArray.
+parseVariableNames: aString
+    | lexer token coll |
+    aString isString
+	ifFalse: [ self error: 'Expected a string containing variable names' ].
+    lexer := CompilerLexer text: aString.
+    coll := OrderedCollection new.
+    [ (token := lexer nextToken) notNil ]
+	whileTrue: [
+	    token class = CompilerIdentifierToken
+		ifFalse: [ self error: 'Instance variables must be valid identifiers' ].
+	    token first isLowercase
+		ifFalse: [ self error: 'Instance variables must not be capitalized' ].
+	    coll add: token asSymbol ].
+    ^coll asArray
+!
+
+setInstanceVariableNames: aString
+    instanceVariableNames := self parseVariableNames: aString.
     self updateInstanceSize
 !
+
 
 instanceSize
     ^instanceSize
@@ -180,3 +198,18 @@ allSuperclassesDo: aBlock
     [ (class := class superclass) notNil ]
 	whileTrue: [ aBlock value: class ]
 ! !
+
+!Class methodsFor: 'accessing'!
+
+classVariables
+    ^classVariables
+!
+
+setClassVariableNames: aString
+    | array |
+    array := self parseVariableNames: aString.
+    classVariables := IdentityDictionary new: array size.
+    array do: [ :ea |
+	classVariables at: ea put: nil ]
+! !
+

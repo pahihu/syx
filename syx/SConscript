@@ -45,6 +45,12 @@ lib_sources = Split ("""
             syx-plugins.c syx-signal.c
 	    """)
 
+if env['static']:
+    lib_objects = libenv.StaticObject (lib_sources)
+    lib = libenv.StaticLibrary (target='syx', source=lib_objects)
+    Default (lib)
+    env.SyxInstall (env['libdir'], lib)
+
 if env['shared']:
     lib_objects = libenv.SharedObject (lib_sources)
     lib = libenv.SharedLibrary (target='syx', source=lib_objects)
@@ -59,12 +65,6 @@ if env['shared']:
                                                          '@ldconfig',
                                                          '@echo " done"']))
         env.Depends (targetdep, target)
-
-if env['static']:
-    lib_objects = libenv.StaticObject (lib_sources)
-    lib = libenv.StaticLibrary (target='syx', source=lib_objects)
-    Default (lib)
-    env.SyxInstall (env['libdir'], lib)
 
 target = env.Install (os.path.join (distdir, 'syx'), lib_sources + ['SConscript'])
 env.Alias ('sdist', target)

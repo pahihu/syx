@@ -51,7 +51,7 @@ Object subclass: #Collection
        classVariableNames: ''!
 
 Collection subclass: #Set
-	   instanceVariableNames: 'numElements'
+	   instanceVariableNames: 'tally'
 	   classVariableNames: ''!
 
 Collection subclass: #SequenceableCollection
@@ -75,7 +75,7 @@ ArrayedCollection subclass: #ByteArray
                   classVariableNames: ''!
 
 SequenceableCollection subclass: #OrderedCollection
-		       instanceVariableNames: 'numElements'
+		       instanceVariableNames: 'tally'
                        classVariableNames: ''!
 
 Object subclass: #Stack
@@ -246,7 +246,7 @@ Association subclass: #VariableBinding
 	    classVariableNames: ''!
 
 Collection subclass: #Dictionary
-	   instanceVariableNames: 'numElements'
+	   instanceVariableNames: 'tally'
 	   classVariableNames: ''!
 
 Dictionary subclass: #IdentityDictionary
@@ -278,6 +278,18 @@ WriteStream subclass: #CompilerBytecode
 Object subclass: #CompilerParser
        instanceVariableNames: 'lexer class bytecode argumentScopes temporaryScopes duplicateIndexes methodPrimitive methodMessage inBlock temporaryNames argumentNames instanceNames'
        classVariableNames: 'PrimitiveTable'!
+
+String subclass: #CompilerIdentifierToken
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
+String subclass: #CompilerClosingToken
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
+String subclass: #CompilerBinaryToken
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
 "Console"
 

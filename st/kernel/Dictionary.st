@@ -33,7 +33,7 @@ new: size
 !Dictionary methodsFor: 'initialize-release'!
 
 initialize
-    numElements := 0
+    tally := 0
 ! !
 
 !Dictionary methodsFor: 'private'!
@@ -45,7 +45,7 @@ rehashClass
 !Dictionary methodsFor: 'accessing'!
 
 size
-    ^numElements
+    ^tally
 !
 
 growTo: anInteger
@@ -61,9 +61,9 @@ rehashToSize: anInteger
 !
 
 incrementNumElements
-    numElements >= (self basicSize // 2)
-	ifTrue: [ self rehashToSize: self basicSize + numElements ].
-    numElements := numElements + 1
+    tally >= (self basicSize // 2)
+	ifTrue: [ self rehashToSize: self basicSize + tally ].
+    tally := tally + 1
 !
 
 removeKey: aKey ifAbsent: exceptionHandler
@@ -72,7 +72,7 @@ removeKey: aKey ifAbsent: exceptionHandler
     (self basicAt: index) isNil
 	ifTrue: [ ^exceptionHandler value ].
     self basicAt: index put: nil.
-    numElements := numElements - 1.
+    tally := tally - 1.
     ^aKey
 !
 
@@ -92,7 +92,7 @@ indexOf: aKey
     | i n size |
     size := self basicSize.
     i := 2 * (aKey hash \\ (size // 2)).
-    n := numElements + 2.
+    n := tally + 2.
     [ (n := n - 1) = 0 ]
 	whileFalse: [
 	    | key |

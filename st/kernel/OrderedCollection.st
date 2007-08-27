@@ -11,23 +11,23 @@ new
 !OrderedCollection methodsFor: 'initialize-release'!
 
 initialize
-    numElements := 0
+    tally := 0
 ! !
 
 !OrderedCollection methodsFor: 'basic'!
 
 incrementNumElements
-    (numElements := numElements + 1) > (self basicSize // 2)
-	ifTrue: [ self growTo: self basicSize + numElements ]
+    (tally := tally + 1) > (self basicSize // 2)
+	ifTrue: [ self growTo: self basicSize + tally ]
 !
 
 size
-    ^numElements
+    ^tally
 !
 
 add: anObject
     self incrementNumElements.
-    self at: numElements put: anObject
+    self at: tally put: anObject
 !
 
 addAll: aCollection

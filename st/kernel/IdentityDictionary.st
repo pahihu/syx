@@ -4,7 +4,7 @@ indexOf: aKey
     | i n size |
     size := self basicSize.
     i := 2 * (aKey hash \\ (size // 2)).
-    n := numElements + 2.
+    n := tally + 2.
     [ (n := n - 1) = 0 ]
 	whileFalse: [
 	    | key |

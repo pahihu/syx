@@ -89,7 +89,7 @@ contents
 !
 
 upToEnd
-    "Answer the contents of the stream from current position on"
+    "Answer the contents of the stream from current position"
     | stream |
     stream := WriteStream on: (self collectionClass new: 10).
     self do: [ :ea | stream nextPut: ea ].
@@ -126,7 +126,7 @@ atEnd
 !Stream methodsFor: 'enumerating'!
 
 do: aBlock
-    "Call a block for each element of the stream from the current position on, until the end."
+    "Call a block for each element of the stream from the current position, until the end."
     [ self atEnd ] whileFalse:
         [ aBlock value: self next ]
 

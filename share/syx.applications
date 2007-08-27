@@ -1,0 +1,16 @@
+syx
+	command=syx
+	name=Smalltalk YX
+	can_open_multiple_files=false
+	expects_uris=false
+	requires_terminal=true
+	uses_gnomevfs=true
+	mime_types=application/x-syx-file
+
+syximage
+	command=syx -i
+	name=Smalltalk YX Image
+	can_open_multiple_files=false
+	expects_uris=false
+	requires_terminal=true
+	mime_types=application/x-syx-image

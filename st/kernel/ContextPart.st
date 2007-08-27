@@ -24,9 +24,13 @@ DEALINGS IN THE SOFTWARE.
 
 !MethodContext methodsFor: 'testing'!
 
-showTraceback
+tracebackString
     "Shows my single traceback"
-    (self receiver class printString, '>>', self method selector printString) printNl
+    | class |
+    class := method methodClass = receiver class
+	ifTrue: [ receiver class printString ]
+	ifFalse: [ receiver class printString, '(', method methodClass printString, ')' ].
+    ^class, '>>', self method selector printString
 !
 
 handles: anException
@@ -73,7 +77,7 @@ traceback
     context := self.
     [ context notNil ]
 	whileTrue: [
-	    context showTraceback.
+	    context tracebackString printNl.
 	    context := context parent ]
 ! !
 

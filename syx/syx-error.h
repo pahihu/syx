@@ -30,6 +30,8 @@
 #include "syx-config.h"
 #include "syx-utils.h"
 
+#include <stdarg.h>
+
 #ifdef WINCE
 #include <windows.h>
 #endif
@@ -51,7 +53,8 @@ EXPORT extern void syx_error_init (void);
 EXPORT extern void syx_error_clear (void);
 EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop klass);
 EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
-EXPORT extern syx_bool syx_signal (SyxErrorType, syx_int32 num_args, ...);
+EXPORT extern syx_bool syx_signal (SyxErrorType type, SyxOop message);
+EXPORT extern SyxOop syx_signal_create_context (SyxErrorType type, SyxOop message);
 EXPORT extern void syx_warning (syx_symbol fmt, ...);
 EXPORT extern void syx_error (syx_symbol fmt, ...);
 EXPORT extern void syx_perror (syx_symbol message);

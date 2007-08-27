@@ -226,7 +226,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
       syx_interp_stack_push (_syx_exec_state->context);
       break;
     default:
-      syx_signal (SYX_ERROR_INTERP, 2, syx_small_integer_new (__LINE__), syx_small_integer_new (argument));
+      syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown constant"));
       return FALSE;
     }
   
@@ -601,7 +601,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       condition = syx_interp_stack_pop ();
       jump = _syx_interp_get_next_byte ();
       if (!SYX_IS_BOOLEAN (condition))
-	syx_signal (SYX_ERROR_INTERP, 0);
+	syx_signal (SYX_ERROR_INTERP, syx_string_new ("Condition must be boolean"));
 
       /* Check for jump to the other conditional branch */
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))
@@ -628,7 +628,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE ------- UNKNOWN --------\n");
 #endif
-      syx_signal (SYX_ERROR_INTERP, 0);
+      syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown bytecode"));
       return FALSE;
     }
 

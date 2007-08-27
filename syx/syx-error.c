@@ -49,9 +49,9 @@ void
 syx_error_init (void)
 {
   _syx_error_entries_top = 0;
-  assert (syx_error_register ("interpreter", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
-  assert (syx_error_register ("not found", syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
-  assert (syx_error_register ("wrong number of arguments",
+  assert (syx_error_register ("Interpreter internal fail", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
+  assert (syx_error_register ("Not found", syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
+  assert (syx_error_register ("Wrong number of arguments",
 			      syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
 }
 
@@ -118,20 +118,29 @@ syx_error_lookup (SyxErrorType type)
   \return TRUE if signal succeeded, otherwise FALSE
 */
 syx_bool
-syx_signal (SyxErrorType type, syx_int32 num_args, ...)
+syx_signal (SyxErrorType type, SyxOop message)
 {
   SyxOop context;
-  va_list ap;
   SyxErrorEntry *entry;
   
   entry = syx_error_lookup (type);
   if (!entry)
     return FALSE;
 
-  va_start (ap, num_args);
-  context = syx_send_message (syx_interp_get_current_context (),       
-			      entry->klass, "signal", num_args, ap);
-  va_end (ap);
+  if (!syx_system_initialized)
+    {
+      if (SYX_OBJECT_IS_STRING (message) || SYX_OBJECT_IS_SYMBOL (message))
+	syx_error ("%s %s\n", entry->name, SYX_OBJECT_SYMBOL (message));
+      else
+	syx_error (entry->name);
+    }
+
+  if (SYX_IS_NIL (message))
+    context = syx_send_unary_message (syx_interp_get_current_context (),       
+				      entry->klass, "signal");
+  else
+    context = syx_send_binary_message (syx_interp_get_current_context (),
+				       entry->klass, "signal:", message);
 
   syx_interp_enter_context (context);
 
@@ -144,20 +153,21 @@ syx_signal (SyxErrorType type, syx_int32 num_args, ...)
   \param type the type returned by syx_error_register
 */
 SyxOop
-syx_signal_create_context (SyxErrorType type, syx_int32 num_args, ...)
+syx_signal_create_context (SyxErrorType type, SyxOop message)
 {
   SyxOop context;
-  va_list ap;
   SyxErrorEntry *entry;
   
   entry = syx_error_lookup (type);
   if (!entry)
     return syx_nil;
 
-  va_start (ap, num_args);
-  context = syx_send_message (syx_interp_get_current_context (),       
-			      entry->klass, "signal", num_args, ap);
-  va_end (ap);
+  if (SYX_IS_NIL (message))
+    context = syx_send_unary_message (syx_interp_get_current_context (),       
+				      entry->klass, "signal");
+  else
+    context = syx_send_binary_message (syx_interp_get_current_context (),
+				       entry->klass, "signal:", message);
 
   return context;
 }
@@ -176,6 +186,7 @@ syx_error (syx_symbol fmt, ...)
   va_start (ap, fmt);
   vfprintf (stderr, fmt, ap);
   va_end (ap);
+  fprintf (stderr, "\n");
   exit (EXIT_FAILURE);
 }
 #else /* WINCE */

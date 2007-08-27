@@ -66,6 +66,7 @@ SYX_BEGIN_DECLS
 			       (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
 
 #define SYX_OBJECT_IS_STRING(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_string_class)
+#define SYX_OBJECT_IS_SYMBOL(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_symbol_class)
 #define SYX_OBJECT_IS_FLOAT(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_float_class)
 #define SYX_OBJECT_IS_LARGE_INTEGER(oop) (SYX_IS_OBJECT(oop) && SYX_OBJECT(oop)->klass == syx_large_integer_class)
 
@@ -257,7 +258,7 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 
 #define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_CLASS_VARIABLES])
 
-#define SYX_DICTIONARY_NUM_ELEMENTS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_DICTIONARY_NUM_ELEMENTS])
+#define SYX_DICTIONARY_TALLY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_DICTIONARY_TALLY])
 
 #define SYX_ASSOCIATION_KEY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_KEY])
 #define SYX_ASSOCIATION_VALUE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_ASSOCIATION_VALUE])
@@ -424,7 +425,7 @@ INLINE SyxOop
 syx_dictionary_new (syx_varsize size)
 {
   SyxOop dict = syx_object_new_size (syx_dictionary_class, TRUE, size * 2);
-  SYX_DICTIONARY_NUM_ELEMENTS (dict) = syx_small_integer_new (0);
+  SYX_DICTIONARY_TALLY (dict) = syx_small_integer_new (0);
   return dict;
 }
 

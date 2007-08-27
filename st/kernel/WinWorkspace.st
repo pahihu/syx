@@ -25,27 +25,27 @@ DEALINGS IN THE SOFTWARE.
 !WinWorkspace class methodsFor: 'startup'!
 
 primIterate
-	<cCall: 'WinGui_IterateLoop' plugin: 'wingui'>
+    <cCall: 'WinGui_IterateLoop' plugin: 'wingui'>
 	self primitiveFailed
 !
-
+    
 doIt: aString
-      [ aString doIt ] on: Error do: [ :ex | ex debug ].
-      ^true
+    [ aString doIt ] on: Error do: [ :ex | ex debug ].
+    ^true
 !
 
 nextPut: aCharacter
-	 ^self nextPutAll: aCharacter asString
+    ^self nextPutAll: aCharacter asString
 !
 
 nextPutAll: aString
-	<cCall: 'WinGui_TranscriptNextPutAll' plugin: 'wingui'>
+    <cCall: 'WinGui_TranscriptNextPutAll' plugin: 'wingui'>
 	self primitiveFailed
 !
 
 startup
-	(Smalltalk loadPlugin: 'wingui')
-	     ifFalse: [ self error: 'Can''t load wingui plugin' ].
-	Transcript proxyMessage: self -> #nextPutAll:.
-	[ self primIterate ] whileTrue
+    (Smalltalk loadPlugin: 'wingui')
+	ifFalse: [ self error: 'Can''t load wingui plugin' ].
+    Transcript proxyMessage: self -> #nextPutAll:.
+    [ self primIterate ] whileTrue
 ! !

@@ -1,0 +1,15 @@
+application/x-syx-file
+        description=Smalltalk YX File
+        default_action=application
+        icon_filename=gnome-application-syx.png
+        short_list_application_ids_for_novice_user_level=syx
+        short_list_application_ids_for_intermediate_user_level=syx
+        short_list_application_ids_for_advanced_user_level=syx
+
+application/x-syx-image
+        description=Smalltalk YX Image File
+        default_action=application
+        icon_filename=gnome-application-syx.png
+        short_list_application_ids_for_novice_user_level=syximage
+        short_list_application_ids_for_intermediate_user_level=syximage
+        short_list_application_ids_for_advanced_user_level=syximage

@@ -26,18 +26,6 @@ DEALINGS IN THE SOFTWARE.
 " THE LEXER "
 
 
-String subclass: #CompilerIdentifierToken
-       instanceVariableNames: ''
-       classVariableNames: ''!
-
-String subclass: #CompilerClosingToken
-       instanceVariableNames: ''
-       classVariableNames: ''!
-
-String subclass: #CompilerBinaryToken
-       instanceVariableNames: ''
-       classVariableNames: ''!
-
 !CompilerIdentifierToken methodsFor: 'testing'!
 
 isNameConst

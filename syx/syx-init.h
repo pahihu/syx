@@ -34,6 +34,8 @@ SYX_BEGIN_DECLS
 /*! Default initial memory size */
 #define SYX_INIT_MEMORY_SIZE 100000
 
+EXPORT extern syx_bool syx_system_initialized;
+
 EXPORT extern syx_bool syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path);
 EXPORT extern void syx_quit (void);
 EXPORT extern void syx_build_basic (void);

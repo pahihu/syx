@@ -83,8 +83,10 @@ EXCLUDE                = syx/syx.h syx/syx-config.h
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 			 
 EXCLUDE_SYMBOLS        = _*
-EXAMPLE_PATH           = 
-EXAMPLE_PATTERNS       = 
+EXAMPLE_PATH           = examples/embedding
+EXAMPLE_PATTERNS       = *.h \
+			 *.c \
+			 *.st
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = 
 INPUT_FILTER           = 
