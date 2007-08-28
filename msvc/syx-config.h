@@ -15,7 +15,8 @@
 #define write _write
 #define close _close
 
-/* TODO: not sure what trunc() does, this might be wrong */
-#define trunc(x) (double)(int)(x)
+#define ROOT_PATH "."
+#define IMAGE_PATH "default.sim"
+#define PLUGIN_PATH "lib"
 
 #endif
