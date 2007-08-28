@@ -51,7 +51,7 @@ processByteslice
 !
 
 processByteslice: anInteger
-    processByteslice: anInteger
+    processByteslice := anInteger
 !
 
 activeProcess

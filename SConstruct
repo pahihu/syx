@@ -136,9 +136,9 @@ def check_endianness (ctx):
    ctx.Message ("Checking for machine endianness...")
    if env['endianness'] != 'auto':
       if env['endianness'] == 'big':
-         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 1)
+         Conftest._Have (ctx, 'WORDS_BIGENDIAN', 1)
       else:
-         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
+         Conftest._Have (ctx, 'WORDS_BIGENDIAN', 0)
       ctx.Result (env['endianness'])
       return True
 
@@ -157,9 +157,9 @@ int main (int argc, char **argv)
 """, '.c')
    if ret[0]:
       if ret[1] == 'big':
-         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 1)
+         Conftest._Have (ctx, 'WORDS_BIGENDIAN', 1)
       else:
-         Conftest._Have (ctx, 'HAVE_BIG_ENDIANNESS', 0)
+         Conftest._Have (ctx, 'WORDS_BIGENDIAN', 0)
       ctx.Result (ret[1])
       return True
    else:
@@ -290,7 +290,7 @@ else:
       print "Can't build Syx without select function!"
       env.Exit (1)
 
-if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'trunc((double)3.4) == (double)3.0;'):
+if not conf.CheckLibWithHeader ('m', 'math.h', 'c', 'floor((double)3.4) == (double)3.0;'):
    print "Can't build Syx without the math library!"
    env.Exit (1)
 

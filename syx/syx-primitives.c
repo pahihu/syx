@@ -1640,15 +1640,6 @@ SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
 }
 
-SYX_FUNC_PRIMITIVE (Smalltalk_haveBigEndianness)
-{
-#ifdef HAVE_BIG_ENDIANNESS
-  SYX_PRIM_RETURN(syx_true);
-#else
-  SYX_PRIM_RETURN(syx_false);
-#endif
-}
-
 SYX_FUNC_PRIMITIVE (Compiler_parse)
 {
   SyxLexer *lexer;

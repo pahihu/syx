@@ -1,3 +1,7 @@
+2007-08-28  Luca Bruno  <lethalman88@gmail.com>
+
+	* Added support for GNU building system
+
 2007-08-27  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/SConscript: compile static objects before shared
@@ -16,8 +20,6 @@
 	* Renamed numElements variable to tally as designed by Smalltalk-80
 
 	* st/kernel/Behavior.st (setInstanceVariableNames): fixed to scan the given string of variable names
-
-	* st/kernel/Behavior.st (setClassVariableNames): added
 
 	* st/kernel/YXTools.st: renamed to MVC.st
 

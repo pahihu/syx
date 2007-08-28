@@ -62,7 +62,7 @@ if env['shared']:
         senv['ENV'] = os.environ
         targetdep = env.Alias ('install', senv.Command ('ldconfig', lib,
                                                         ['@echo -n Updating ld cache...',
-                                                         '@ldconfig',
+                                                         '@ldconfig -n $libdir',
                                                          '@echo " done"']))
         env.Depends (targetdep, target)
 
@@ -71,10 +71,10 @@ env.Alias ('sdist', target)
 
 # Install includes
 
-includes = ['syx.h', 'syx-interp.h', 'syx-config.h', 'syx-bytecode.h', 'syx-enums.h', 'syx-error.h',
-            'syx-lexer.h', 'syx-memory.h', 'syx-object.h', 'syx-init.h',
-            'syx-parser.h', 'syx-platform.h', 'syx-scheduler.h', 'syx-utils.h',
-            'syx-types.h', 'syx-plugins.h', 'syx-signal.h']
+includes = Split("""syx.h syx-interp.h syx-config.h syx-bytecode.h syx-enums.h syx-error.h
+            syx-lexer.h syx-memory.h syx-object.h syx-init.h
+            syx-parser.h syx-platform.h syx-scheduler.h syx-utils.h
+            syx-types.h syx-plugins.h syx-signal.h""")
 incdir = os.path.join (env['includedir'], 'syx')
 env.Install (incdir, includes)
 env.Alias ('install', incdir)
