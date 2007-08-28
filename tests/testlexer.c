@@ -25,7 +25,7 @@
 #include <assert.h>
 #include "../syx/syx.h"
 
-int
+int SYX_CDECL
 main (int argc, char *argv[])
 {
   SyxLexer *lexer;

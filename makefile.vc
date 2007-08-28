@@ -71,17 +71,52 @@ SYX_EXE=$(O)\syx.exe
 SYX_PDB=$(O)\syx.pdb
 SYX_OBJS=$(OBJS) $(O)\main.obj
 
+TESTCOLDPARSER_EXE=$(O)\testcoldparser.exe
+TESTCOLDPARSER_PDB=$(O)\testcoldparser.pdb
+TESTCOLDPARSER_OBJS=$(OBJS) $(O)\testcoldparser.obj
+
 TESTIMAGE_EXE=$(O)\testimage.exe
 TESTIMAGE_PDB=$(O)\testimage.pdb
 TESTIMAGE_OBJS=$(OBJS) $(O)\testimage.obj
 
+TESTINSTANCES_EXE=$(O)\testinstances.exe
+TESTINSTANCES_PDB=$(O)\testinstances.pdb
+TESTINSTANCES_OBJS=$(OBJS) $(O)\testinstances.obj
+
+TESTINTERP_EXE=$(O)\testinterp.exe
+TESTINTERP_PDB=$(O)\testinterp.pdb
+TESTINTERP_OBJS=$(OBJS) $(O)\testinterp.obj
+
+TESTLEXER_EXE=$(O)\testlexer.exe
+TESTLEXER_PDB=$(O)\testlexer.pdb
+TESTLEXER_OBJS=$(OBJS) $(O)\testlexer.obj
+
+TESTPARSER_EXE=$(O)\testparser.exe
+TESTPARSER_PDB=$(O)\testparser.pdb
+TESTPARSER_OBJS=$(OBJS) $(O)\testparser.obj
+
+TESTSCHEDULER_EXE=$(O)\testscheduler.exe
+TESTSCHEDULER_PDB=$(O)\testscheduler.pdb
+TESTSCHEDULER_OBJS=$(OBJS) $(O)\testscheduler.obj
+
 !if "$(VALID_TARGET)"=="yes"
-all: $(OUTDIR) $(SYX_EXE) $(TESTIMAGE_EXE)
+all: $(OUTDIR) $(SYX_EXE) $(TESTCOLDPARSER_EXE) $(TESTIMAGE_EXE) $(TESTINSTANCES_EXE) \
+  $(TESTINTERP_EXE) $(TESTLEXER_EXE) $(TESTPARSER_EXE) $(TESTSCHEDULER_EXE)
+
 $(OUTDIR): force
 	@if not exist $(OUTDIR) mkdir $(OUTDIR)
 clean: force
 	-rmdir /S /Q $(OUTDIR)
 rebuild: clean all
+runtests: all
+  $(O)\testlexer.exe
+  $(O)\testimage.exe
+  $(O)\testcoldparser.exe
+  $(O)\testinstances.exe
+  $(O)\testparser.exe
+  $(O)\testinterp.exe
+  $(O)\testscheduler.exe
+
 !else
 all clean: force
 	@echo TARGET must be set to dbg or rel
@@ -93,9 +128,45 @@ $(SYX_EXE): $(SYX_OBJS)
 	$** $(LIBS) \
 	/SUBSYSTEM:CONSOLE /MACHINE:X86
 
+$(TESTCOLDPARSER_EXE): $(TESTCOLDPARSER_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTCOLDPARSER_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
 $(TESTIMAGE_EXE): $(TESTIMAGE_OBJS)
 	$(LD) $(LDFLAGS) /OUT:$@ \
 	/PDB:$(TESTIMAGE_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+$(TESTINSTANCES_EXE): $(TESTINSTANCES_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTINSTANCES_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+$(TESTINTERP_EXE): $(TESTINTERP_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTINTERP_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+$(TESTLEXER_EXE): $(TESTLEXER_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTLEXER_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+$(TESTPARSER_EXE): $(TESTPARSER_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTPARSER_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
+$(TESTSCHEDULER_EXE): $(TESTSCHEDULER_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTSCHEDULER_PDB) \
 	$** $(LIBS) \
 	/SUBSYSTEM:CONSOLE /MACHINE:X86
 

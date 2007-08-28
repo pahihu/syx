@@ -29,7 +29,7 @@
 #endif
 #include "../syx/syx.h"
 
-int
+int SYX_CDECL
 main (int argc, char *argv[])
 {
   syx_uint64 start, end;

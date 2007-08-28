@@ -24,16 +24,19 @@
 
 #include <assert.h>
 #include <stdio.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include "../syx/syx.h"
 
-int
+int SYX_CDECL
 main (int argc, char *argv[])
 {
   SyxParser *parser;
   SyxLexer *lexer;
   SyxOop method, context, process;
   syx_uint64 start, end;
+  syx_bool ok;
 
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
@@ -43,7 +46,8 @@ main (int argc, char *argv[])
   lexer = syx_lexer_new (text);						\
   method = syx_method_new ();						\
   parser = syx_parser_new (lexer, method, syx_undefined_object_class);	\
-  assert (syx_parser_parse (parser, FALSE) == TRUE);			\
+  ok = syx_parser_parse (parser, FALSE);				\
+  assert (ok == TRUE);							\
   syx_lexer_free (lexer, FALSE);					\
   syx_parser_free (parser, FALSE);					\
   context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil); \

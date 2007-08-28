@@ -24,10 +24,12 @@
 
 #include <assert.h>
 #include <stdio.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include "../syx/syx.h"
 
-int
+int SYX_CDECL
 main (int argc, char *argv[])
 {
   SyxOop obj, instobj;

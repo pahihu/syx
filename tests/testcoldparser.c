@@ -24,15 +24,18 @@
 
 #include <assert.h>
 #include <stdio.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include "../syx/syx.h"
 
-int
+int SYX_CDECL
 main (int argc, char *argv[])
 {
   SyxLexer *lexer;
   SyxOop temp;
   syx_uint64 start, end;
+  syx_bool ok;
 
   syx_init (0, NULL, ".");
   syx_memory_load_image ("test.sim");
@@ -53,13 +56,15 @@ main (int argc, char *argv[])
   
   temp = syx_globals_at ("Object");
   lexer = syx_lexer_new ("nil subclass: #Object instanceVariableNames: 'a b' classVariableNames: 'C'!");
-  assert (syx_cold_parse (lexer) == TRUE);
+  ok = syx_cold_parse (lexer);
+  assert (ok == TRUE);
   assert (SYX_OOP_EQ (syx_globals_at ("Object"), temp));
   assert (SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE(syx_globals_at("Object"))) == 2);
   syx_lexer_free (lexer, FALSE);
 
   lexer = syx_lexer_new ("!Object methodsFor: 'test'! testMethod ^nil! !");
-  assert (syx_cold_parse (lexer) == TRUE);
+  ok = syx_cold_parse (lexer);
+  assert (ok == TRUE);
   syx_lexer_free (lexer, FALSE);
 
   end = syx_nanotime ();
