@@ -24,26 +24,30 @@
 
 #include <assert.h>
 #include <stdio.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include "../syx/syx.h"
 
 int
 main (int argc, char *argv[])
 {
   syx_uint64 start, end;
-
+  syx_bool saved, loaded;
   syx_init (0, NULL, ".");
 
   puts ("- Test saving image");
   start = syx_nanotime ();
   syx_build_basic ();
-  assert (syx_memory_save_image ("test.sim") == TRUE);
+  saved = syx_memory_save_image ("test.sim");
+  assert (saved == TRUE);
   end = syx_nanotime ();
   printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
 
   puts ("- Test loading image");
   start = syx_nanotime ();
-  assert (syx_memory_load_image ("test.sim") == TRUE);
+  loaded = syx_memory_load_image ("test.sim");
+  assert (loaded == TRUE);
   end = syx_nanotime ();
   printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
 

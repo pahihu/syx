@@ -6,7 +6,7 @@ LD = link.exe
 
 VALID_TARGET=no
 !if "$(TARGET)"=="rel"
-OUTDIR=obj-rel-win
+OUTDIR=rel
 #/Gy - separate functions for linker. Generates smaller code.
 #/GL - enables link-time code generation. Requires /LTCG in linker.
 #      generates smaller and faster code
@@ -20,7 +20,7 @@ VALID_TARGET=yes
 !endif
 
 !if "$(TARGET)"=="dbg"
-OUTDIR=obj-dbg-win
+OUTDIR=dbg
 CFLAGS = $(CFLAGS) /D "_DEBUG" /MDd /Od
 VALID_TARGET=yes
 !endif
@@ -71,8 +71,12 @@ SYX_EXE=$(O)\syx.exe
 SYX_PDB=$(O)\syx.pdb
 SYX_OBJS=$(OBJS) $(O)\main.obj
 
+TESTIMAGE_EXE=$(O)\testimage.exe
+TESTIMAGE_PDB=$(O)\testimage.pdb
+TESTIMAGE_OBJS=$(OBJS) $(O)\testimage.obj
+
 !if "$(VALID_TARGET)"=="yes"
-all: $(OUTDIR) $(SYX_EXE)
+all: $(OUTDIR) $(SYX_EXE) $(TESTIMAGE_EXE)
 $(OUTDIR): force
 	@if not exist $(OUTDIR) mkdir $(OUTDIR)
 clean: force
@@ -89,10 +93,19 @@ $(SYX_EXE): $(SYX_OBJS)
 	$** $(LIBS) \
 	/SUBSYSTEM:CONSOLE /MACHINE:X86
 
+$(TESTIMAGE_EXE): $(TESTIMAGE_OBJS)
+	$(LD) $(LDFLAGS) /OUT:$@ \
+	/PDB:$(TESTIMAGE_PDB) \
+	$** $(LIBS) \
+	/SUBSYSTEM:CONSOLE /MACHINE:X86
+
 {syx\}.c{$(OUTDIR)}.obj::
 	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb /Fa$(OUTDIR)\ $<
 
 {src\}.c{$(OUTDIR)}.obj::
+	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb /Fa$(OUTDIR)\ $<
+
+{tests\}.c{$(OUTDIR)}.obj::
 	$(CC) $(CFLAGS) -Fo$(OUTDIR)\ /Fd$(OUTDIR)\vc80.pdb /Fa$(OUTDIR)\ $<
 
 force: ;
