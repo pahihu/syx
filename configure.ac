@@ -27,27 +27,7 @@ AC_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 
-CFLAGS="$CFLAGS -ansi -pedantic -Wall -Wno-strict-aliasing"
-
-native_win32=no 
-
-DEFCFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -DROOT_PATH=\"$datadir/syx\" -DIMAGE_PATH=\"$datadir/syx/default.sim\" -DPLUGIN_PATH=\"$libdir/syx\""
-
-case "$target" in 
-*-darwin*) 
-        CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
-        ;;
-*-wince*)
-	native_win32=yes
-	CFLAGS="$DEFCFLAGS -DWINDOWS -D_DLL -DWINCE -DROOT_PATH=\"\" -DIMAGE_PATH=\"default.sim\" -DPLUGIN_PATH=\"lib\""
-	;;
-*-*-mingw*)
-        native_win32=yes
-        CFLAGS="$DEFCFLAGS -DWINDOWS -D_DLL -DROOT_PATH=\"\" -DIMAGE_PATH=\"default.sim\" -DPLUGIN_PATH=\"lib\""  
-        ;;
-esac
-
+CFLAGS="$CFLAGS -ansi -pedantic -Wall -Wno-strict-aliasing -DROOT_PATH=\"$datadir/syx\" -DIMAGE_PATH=\"$datadir/syx/default.sim\" -DPLUGIN_PATH=\"$libdir/syx\""
 
 dnl check for standard header files
 AC_HEADER_STDC
@@ -68,6 +48,30 @@ if test "$ac_cv_c_inline" != no; then
    AC_DEFINE(HAVE_INLINE, 1, [Define to 1 if you have 'inline'.])
 fi
 AC_C_BIGENDIAN
+
+dnl target specific
+
+native_win32=no 
+
+case "$target" in 
+*-darwin*) 
+        CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
+        ;;
+*-wince*)
+	native_win32=yes
+	CFLAGS="$CFLAGS -DWINCE"
+	;;
+*-*-mingw*)
+        native_win32=yes
+        ;;
+esac
+
+dnl windows specific
+if test "$native_win32" == yes; then
+   CFLAGS="$CFLAGS -DWINDOWS -D_DLL"
+   LIBS="$LIBS -lwsock32"
+   AC_CHECK_HEADERS([windows.h])
+fi
 
 dnl check for math library
 AC_CHECK_LIB(m, floor, [LIBS="$LIBS -lm"])
