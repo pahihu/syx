@@ -1,5 +1,11 @@
 2007-08-29  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-object.h (SYX_BLOCK_CONTEXT_ENSURE_BLOCK): added instance variable
+
+	* st/kernel/BlockClosure.st (ensure:): fixed block ensuring
+
+	* syx/syx-interp.c (syx_interp_do_special): support block ensuring on self-return and stack-return
+
 	* configure.ac: support build under MSYS
 
 2007-08-28  Luca Bruno  <lethalman88@gmail.com>

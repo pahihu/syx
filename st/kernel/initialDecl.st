@@ -97,7 +97,7 @@ ContextPart subclass: #MethodContext
             classVariableNames: ''!
 
 MethodContext subclass: #BlockContext
-	    instanceVariableNames: 'outerContext handledException handlerBlock'
+	    instanceVariableNames: 'outerContext handledException handlerBlock ensureBlock'
             classVariableNames: ''!
 
 Object subclass: #Process

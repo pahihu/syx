@@ -34,6 +34,15 @@ handlerBlock: aBlock
     handlerBlock := aBlock
 !
 
+ensureBlock: aBlock
+    "Set the block to be evaluted"
+    ensureBlock := aBlock
+!
+
+ensureBlock
+    ^ensureBlock
+!
+
 handledException: anExceptionClass
     "Set the exception handled by handlerBlock"
     handledException := anExceptionClass

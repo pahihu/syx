@@ -62,11 +62,11 @@ on: anExceptionClass do: aBlock
     "If anExceptionClass, or its subclasses, are signaled, aBlock is evaluated with the exception as argument"
     <primitive: 'BlockClosure_on_do'>
     | ctx | 
-    ctx := self asContext: #().
+    ctx := self asContextWithArguments: #().
     ctx
 	handledException: anExceptionClass;
 	handlerBlock: aBlock.
-    ^thisContext enter: ctx
+    ^Processor activeProcess enterContext: ctx
 !
 
 ifCurtailed: aBlock
@@ -76,10 +76,13 @@ ifCurtailed: aBlock
 
 ensure: aBlock
     "Be sure aBlock is called if an error occurs or not"
-    | ret |
-    ret := self on: Signal do: [ :ex | aBlock value. ex pass. ^nil ].
-    aBlock value.
-    ^ret
+    | ctx |
+    ctx := self asContextWithArguments: #().
+    ctx
+	handledException: Signal;
+	handlerBlock: [ :ex | aBlock value. ex pass. ^nil ];
+	ensureBlock: aBlock.
+    ^Processor enter: ctx
 !
 
 valueWithArguments: anArray

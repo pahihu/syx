@@ -568,6 +568,8 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
   SyxOop returned_object;
   SyxOop condition;
   syx_uint16 jump;
+  SyxOop ensure_block;
+  SyxOop ensure_block_context;
 
   switch (argument)
     {
@@ -582,15 +584,69 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       syx_debug ("BYTECODE - Self return\n");
 #endif
       if (SYX_OOP_EQ (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
-	returned_object = syx_interp_stack_pop ();
+	{
+	  /* check for ensure blocks */
+	  ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_exec_state->context);
+	  if (SYX_IS_TRUE (ensure_block))
+	    {
+	      /* ensured block has been called,
+		 so pop its returned object */
+	      _syx_exec_state->sp--;
+	      SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_nil;
+	      returned_object = syx_interp_stack_pop ();
+	    }
+	  else if (!SYX_IS_NIL (ensure_block))
+	    {
+	      /* create the context and enter it */
+	      ensure_block_context = syx_block_context_new (_syx_exec_state->context,
+							    SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
+							    syx_nil,
+							    SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));
+	      /* decrease instruction pointer for future execution of self-return */
+	      _syx_exec_state->ip--;
+	      /* set the ensure block to true, so that next time self-return bytecode is executed */
+	      SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_true;
+	      return syx_interp_enter_context (ensure_block_context);
+	    }
+	  else
+	    returned_object = syx_interp_stack_pop ();
+	}
       else
 	returned_object = _syx_exec_state->receiver;
 
       return syx_interp_leave_context_and_answer (returned_object, FALSE);
+
     case SYX_BYTECODE_STACK_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Stack return\n");
 #endif
+
+      if (SYX_OOP_EQ (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
+	{
+	  /* check for ensure blocks */
+	  ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_exec_state->context);
+	  if (SYX_IS_TRUE (ensure_block))
+	    {
+	      /* ensured block has been called,
+		 so pop its returned object */
+	      _syx_exec_state->sp--;
+	      SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_nil;
+	    }
+	  else if (!SYX_IS_NIL (ensure_block))
+	    {
+	      /* create the context and enter it */
+	      ensure_block_context = syx_block_context_new (_syx_exec_state->context,
+							    SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
+							    syx_nil,
+							    SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));
+	      /* decrease instruction pointer for future execution of self-return */
+	      _syx_exec_state->ip--;
+	      /* set the ensure block to true, so that next time self-return bytecode is executed */
+	      SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_true;
+	      return syx_interp_enter_context (ensure_block_context);
+	    }
+	}
+
       returned_object = syx_interp_stack_pop ();
       return syx_interp_leave_context_and_answer (returned_object, TRUE);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
