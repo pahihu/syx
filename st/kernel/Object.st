@@ -116,6 +116,10 @@ isMemberOf: candidateClass
     ^self class = candidateClass
 !
 
+isClass
+    ^false
+!
+
 isNumber
     ^false
 !

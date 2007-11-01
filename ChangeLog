@@ -1,3 +1,10 @@
+2007-11-01  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/Dictionary.st: fixed rehashing
+	renamed incrementNumElements to incrementTally
+
+	* examples/web: added
+
 2007-08-29  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-object.h (SYX_BLOCK_CONTEXT_ENSURE_BLOCK): added instance variable

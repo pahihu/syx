@@ -60,10 +60,10 @@ rehashToSize: anInteger
     ObjectMemory atData: self put: d
 !
 
-incrementNumElements
+incrementTally
+    tally := tally + 1.
     tally >= (self basicSize // 2)
 	ifTrue: [ self rehashToSize: self basicSize + tally ].
-    tally := tally + 1
 !
 
 removeKey: aKey ifAbsent: exceptionHandler
@@ -130,7 +130,7 @@ at: aKey put: aValue
     self
 	basicAt: index put: aKey;
 	basicAt: index + 1 put: aValue.
-    self incrementNumElements.
+    self incrementTally.
     ^aValue
 ! !
 
@@ -194,6 +194,6 @@ select: discriminatorBlock
     coll := self copyEmpty.
     self keysAndValuesDo: [ :key :value |
 	(discriminatorBlock value: value)
-	    ifFalse: [ coll at: key put: value ] ].
+	    ifTrue: [ coll at: key put: value ] ].
     ^coll
 ! !

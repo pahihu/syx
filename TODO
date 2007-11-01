@@ -5,6 +5,7 @@ Major:
 - Fix exception handling sequence
 - Fix and improve file/IO streams
 - Create extra GC roots
+- Cover most of the standard
 
 Minor:
 - Use radix for floats in the lexer

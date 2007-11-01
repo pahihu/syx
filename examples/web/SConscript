@@ -28,8 +28,12 @@ import os
 
 Import ('env', 'distdir')
 
-path = os.path.join (distdir, 'examples')
-target = env.Install (path, ['SConscript'])
-env.Alias ('sdist', target)
+sources = Split("""browser.c""")
+xenv = env.Clone ()
+xenv.MergeFlags ('-lsyx')
 
-env.SConscript (dirs=['console', 'embedding', 'web'], exports=['env', 'distdir'])
+Default (xenv.Program (sources))
+
+path = os.path.join (distdir, 'examples', 'web')
+target = env.Install (path, sources + ['SConscript', 'browser.st'])
+env.Alias ('sdist', target)
