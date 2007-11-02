@@ -123,6 +123,11 @@ unloadPlugin: name
 
 !SystemDictionary methodsFor: 'platform'!
 
+environmentVariableAt: aStringOrSymbol
+    <primitive: 'Smalltalk_environmentVariableAt'>
+	self primitiveFailed
+!
+
 version
     ^'Smalltalk YX 0.1.4'
 ! !

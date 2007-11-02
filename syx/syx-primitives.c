@@ -1635,9 +1635,20 @@ SYX_FUNC_PRIMITIVE (Smalltalk_loadPlugin)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_unloadPlugin)
 {
-  syx_symbol name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  syx_symbol name;
   SYX_PRIM_ARGS(1);
+
+  name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
   SYX_PRIM_RETURN(syx_boolean_new (syx_plugin_unload (name)));
+}
+
+SYX_FUNC_PRIMITIVE (Smalltalk_environmentVariableAt)
+{
+  syx_symbol name;
+  SYX_PRIM_ARGS(1);
+
+  name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
+  SYX_PRIM_RETURN(syx_string_new (getenv(name)));
 }
 
 SYX_FUNC_PRIMITIVE (Compiler_parse)
@@ -1852,6 +1863,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Smalltalk_unloadPlugin", Smalltalk_unloadPlugin },
   { "Smalltalk_pluginCall", Smalltalk_pluginCall },
   { "Smalltalk_pluginSymbol", Smalltalk_pluginSymbol },
+  { "Smalltalk_environmentVariableAt", Smalltalk_environmentVariableAt },
 
   /* Compiler */
   { "Compiler_parse", Compiler_parse },

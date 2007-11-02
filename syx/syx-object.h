@@ -396,7 +396,7 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 }
 
 
-/*! Returns a new String instance */
+/*! Returns a new String instance. Duplicates the string in input. */
 INLINE SyxOop 
 syx_string_new (syx_symbol string)
 {
@@ -404,6 +404,16 @@ syx_string_new (syx_symbol string)
     return syx_nil;
 
   return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)syx_strdup (string));
+}
+
+/*! Returns a new String instance. */
+INLINE SyxOop
+syx_string_new_unref (syx_string string)
+{
+  if (!string)
+    return syx_nil;
+
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)string);
 }
 
 /*! Creates a new VariableBinding key -> index on a dictionary */

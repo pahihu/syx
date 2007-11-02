@@ -75,7 +75,7 @@ ArrayedCollection subclass: #ByteArray
                   classVariableNames: ''!
 
 SequenceableCollection subclass: #OrderedCollection
-		       instanceVariableNames: 'tally'
+		       instanceVariableNames: 'firstIndex lastIndex'
                        classVariableNames: ''!
 
 Object subclass: #Stack

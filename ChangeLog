@@ -1,3 +1,14 @@
+2007-11-02  Luca Bruno  <lethalman88@gmail.com>
+
+	* examples/web/coldbrowser.st: embedding example of Syx into a CGI application
+
+	* syx/syx-object.h (syx_string_new_unref): added
+
+	* st/kernel/OrderedCollection.st: remove tally and implement relative indexes
+	(removeAtIndex:): implemented
+	(at:): reimplemented
+	(at:put:): reimplemented
+
 2007-11-01  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/Dictionary.st: fixed rehashing
@@ -52,7 +63,7 @@
 
 	* syx/syx-utils.c (syx_nanotime): added
 
-	Fixed English for some comments, thanks to billijoex.
+	Fixed English in some comments, thanks to billijoex.
 	
 	* syx/syx-utils.c (syx_cold_parse_methods): restore the lexer if the syntax is not the expected for parsing method definitions
 
@@ -81,7 +92,7 @@
 	(malloc, malloc0, calloc, free): moved from syx-types.h
 	All calls have been updated
 	
-	* All mixed declarations and code changed to for strict ISO C
+	* All mixed declarations and code changed to allow strict ISO C compilation
 	
 	* All comments changed to complain ANSI C
 	

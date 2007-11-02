@@ -7,6 +7,7 @@ int main (int argc, char *argv[])
 {
    SyxOop context;
    SyxOop process;
+   SyxOop instance;
 
    /* initialize Syx */
    syx_init (argc, argv, NULL);
@@ -15,11 +16,14 @@ int main (int argc, char *argv[])
    syx_memory_load_image (NULL);
 
    /* now file in class and method declarations from our ST file */
-   syx_cold_file_in ("browser.st");
+   syx_cold_file_in ("coldbrowser.st");
+
+   /* create a WebBrowser instance */
+   instance = syx_object_new(syx_globals_at("WebBrowser"));
 
    /* create a MethodContext which sends the #with:and: message */
    context = syx_send_binary_message(syx_nil, // the parent context
-				     syx_globals_at("WebBrowser"), // the receiver
+				     instance, // the receiver
 				     "run:", // the selector
 				     syx_string_new(getenv("QUERY_STRING")));
 

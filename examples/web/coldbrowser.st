@@ -1,4 +1,3 @@
-#!/usr/bin/env syx
 "Thanks to Dominic Letz for this example"
 
 Object subclass: #WebBrowser
@@ -95,5 +94,3 @@ run: queryString
     '<p><small>Mailme: dominic.letz AT berlin.de</small></p>' printNl.
     '</body></html>' printNl.
 ! !
-
-WebBrowser run

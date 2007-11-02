@@ -5,34 +5,53 @@ new: size
 !
 
 new
-    ^self new: 11
+    ^self new: 16
 ! !
 
 !OrderedCollection methodsFor: 'initialize-release'!
 
 initialize
-    tally := 0
+    firstIndex := self basicSize // 2.
+    lastIndex := firstIndex - 1
+! !
+
+!OrderedCollection methodsFor: 'private'!
+
+incrementLastIndex
+    (lastIndex := lastIndex + 1) > self basicSize
+	ifTrue: [ self growTo: lastIndex * 2 ]
 ! !
 
 !OrderedCollection methodsFor: 'basic'!
 
-incrementNumElements
-    (tally := tally + 1) > (self basicSize // 2)
-	ifTrue: [ self growTo: self basicSize + tally ]
+at: anIndex
+    ^self basicAt: anIndex + firstIndex - 1
+!
+
+at: anIndex put: anObject
+    ^self basicAt: anIndex + firstIndex - 1 put: anObject
+!
+
+firstIndex
+    ^firstIndex
+!
+
+lastIndex
+    ^lastIndex
 !
 
 size
-    ^tally
+    ^lastIndex - firstIndex + 1
 !
 
 add: anObject
-    self incrementNumElements.
-    self at: tally put: anObject
+    self incrementLastIndex.
+    ^self basicAt: lastIndex put: anObject
 !
 
 addAll: aCollection
-    aCollection do: [ :ea |
-	self add: ea ]
+    aCollection
+	do: [ :ea | self add: ea ]
 !
 
 remove: anObject ifAbsent: aBlock
@@ -41,7 +60,17 @@ remove: anObject ifAbsent: aBlock
 !
 
 removeAtIndex: anIndex
-    ^self notYetImplemented
+    | answer |
+    answer := self at: anIndex.
+    
+    anIndex = 1
+	ifTrue: [ firstIndex := firstIndex + 1. ^answer ].
+    anIndex = self size
+	ifTrue: [ lastIndex := lastIndex - 1. ^answer ].
+
+    anIndex + firstIndex - 1 to: (lastIndex := lastIndex - 1) do: [ :index |
+	self basicAt: index put: (self basicAt: index + 1) ].
+    ^answer
 ! !
 
 !OrderedCollection methodsFor: 'converting'!
