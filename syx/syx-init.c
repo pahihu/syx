@@ -47,6 +47,7 @@
 #include "syx-scheduler.h"
 #include "syx-object.h"
 #include "syx-interp.h"
+#include "syx-profile.h"
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -389,6 +390,8 @@ syx_quit (void)
 
   syx_free (_syx_image_path);
   syx_free (_syx_root_path);
+
+  syx_profile_print ();
 }
 
 /*!

@@ -20,6 +20,8 @@ AM_CONFIG_HEADER(syx/syx-config.h)
 dnl with args
 AC_ARG_WITH(gmp, [  --without-gmp           do not support big numbers])
 AC_ARG_ENABLE(plugins, [  --disable-plugins       do not support plugins],:, enable_plugins=yes)
+AC_ARG_ENABLE(profile, [  --enable-profile        compile and link with -pg],:, disable_profile=yes)
+AC_ARG_ENABLE(iprofile, [  --enable-iprofile        enable internal profiling],:, disable_iprofile=yes)
 
 dnl check for basic programs
 AC_PROG_CC
@@ -71,6 +73,17 @@ if test "$native_win32" == yes; then
    CFLAGS="$CFLAGS -DWINDOWS -D_DLL"
    LIBS="$LIBS -lwsock32"
    AC_CHECK_HEADERS([windows.h])
+fi
+
+dnl check for profiling
+if test "$enable_profile" == yes; then
+   CFLAGS="$CFLAGS -pg"
+   LIBS="$LIBS -pg"
+fi
+
+dnl check for internal profiling
+if test "$enable_iprofile" == yes; then
+   CFLAGS="$CFLAGS -DSYX_PROFILE"
 fi
 
 dnl check for math library

@@ -86,6 +86,8 @@ opts.AddOptions (
    EnumOption ('debug', """Debug output and symbols""", 'normal',
                allowed_values=('no', 'normal', 'info', 'full'),
                ignorecase=True),
+   BoolOption ('profile', """Compile and link statically with -pg (gprof)""", False),
+   BoolOption ('iprofile', """Enable internal profiling""", False),
    BoolOption ('doc', """Build reference documentation (needs Doxygen)""", True),
 
    BoolOption ('GTK', """Build the syx-gtk plugin to support graphical user interfaces""", True),
@@ -119,6 +121,7 @@ env.Help (opts.GenerateHelpText (env) + """
         'scons debug=normal'  add debug symbols (default).
         'scons debug=info'    display more messages.
         'scons debug=full'    trace the entire execution stack of Smalltalk.
+        'scons profile=yes'   compile and link statically with -pg (gprof).
         'scons test'          to test Syx.
         'scons test attach=yes'
                               to test Syx and attach a debugger if a
@@ -329,6 +332,9 @@ env.MergeFlags ('-Wall -Wno-strict-aliasing -I#.')
 if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')
 
+if env['iprofile']:
+   env.MergeFlags ('-DSYX_PROFILE')
+
 if 'wince' in env['host']:
    env.MergeFlags ('-DROOT_PATH="" -DIMAGE_PATH="default.sim" -DPLUGIN_PATH="lib"')
 elif env['PLATFORM'] == 'win32':
@@ -365,6 +371,13 @@ setattr (env, 'SyxInstall', builder_syxinstall)
 # Build
 
 env.MergeFlags ('-L#build/lib')
+
+if (env['profile']):
+   env['LINKFLAGS'].append('-pg')
+   env.MergeFlags ('-pg')
+   env['shared'] = False
+   env['static'] = True
+
 env.BuildDir ('build/lib', 'syx', False)
 env.SConscript (dirs=['build/lib'], exports=['env', 'distdir'])
 

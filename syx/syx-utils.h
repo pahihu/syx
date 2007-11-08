@@ -60,9 +60,6 @@ extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
 extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
 extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
 
-/* Wrap time */
-
-extern EXPORT syx_uint64 syx_nanotime (void);
 
 #ifdef UNICODE
 

@@ -1,3 +1,11 @@
+2007-11-08  Luca Bruno  <lethalman88@gmail.com>
+
+	* SCons and GNU build: added support for gprof and internal profiling
+
+	* syx/syx-profile.h: added
+
+	* syx/syx-profile.c: added
+
 2007-11-02  Luca Bruno  <lethalman88@gmail.com>
 
 	* examples/web/coldbrowser.st: embedding example of Syx into a CGI application

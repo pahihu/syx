@@ -33,6 +33,7 @@
 #include "syx-lexer.h"
 #include "syx-interp.h"
 #include "syx-utils.h"
+#include "syx-profile.h"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -189,6 +190,9 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   syx_varsize message_arguments_count;
   syx_int32 primitive;
   syx_bool ret;
+
+  SYX_START_PROFILE;
+
   SYX_PRIM_ARGS(1);
 
   selector = es->message_arguments[0];
@@ -239,6 +243,8 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   es->message_arguments = message_arguments;
   es->message_arguments_count = message_arguments_count;
 
+  SYX_END_PROFILE(perform_message);
+
   return ret;
 }
 
@@ -254,6 +260,9 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   syx_varsize message_arguments_count;
   syx_int32 primitive;
   syx_bool ret;
+  
+  SYX_START_PROFILE;
+
   SYX_PRIM_ARGS(2);
 
   selector = es->message_arguments[0];
@@ -305,6 +314,8 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   /* restore the state */
   es->message_arguments = message_arguments;
   es->message_arguments_count = message_arguments_count;
+
+  SYX_END_PROFILE(perform_message);
 
   return ret;
 }
@@ -593,6 +604,9 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
   syx_int32 count;
   syx_string s;
   SyxOop string;
+
+  SYX_START_PROFILE;
+
   SYX_PRIM_ARGS(2);
 
   op = SYX_SMALL_INTEGER (es->message_arguments[0]);
@@ -659,7 +673,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 	{
 	  SYX_PRIM_FAIL;
 	}
-      
+
       if (!SYX_IS_NIL (es->message_arguments[2]))
 	{
 	  ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
@@ -722,8 +736,9 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     default: /* unknown */
       SYX_PRIM_FAIL;
-
     }
+
+  SYX_END_PROFILE(fileop);
 
   SYX_PRIM_RETURN (syx_small_integer_new (ret));
 }

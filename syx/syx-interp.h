@@ -28,6 +28,7 @@
 #include "syx-types.h"
 #include "syx-object.h"
 #include "syx-scheduler.h"
+#include "syx-init.h"
 
 SYX_BEGIN_DECLS
 
@@ -255,6 +256,7 @@ INLINE syx_bool
 syx_interp_call_primitive (syx_int16 primitive, SyxOop method)
 {
   SyxPrimitiveEntry *prim_entry;
+  syx_bool result;
 
   /* yield */
   if (primitive == 0)
@@ -267,7 +269,8 @@ syx_interp_call_primitive (syx_int16 primitive, SyxOop method)
     }
 
   prim_entry = syx_primitive_get_entry (primitive);
-  return prim_entry->func (_syx_exec_state, method);
+  result = prim_entry->func (_syx_exec_state, method);
+  return result;
 }
 
 /* Process execution */

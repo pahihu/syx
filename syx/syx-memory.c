@@ -29,6 +29,7 @@
 #include "syx-scheduler.h"
 #include "syx-utils.h"
 #include "syx-interp.h"
+#include "syx-profile.h"
 
 #include <assert.h>
 #ifdef HAVE_UNISTD_H
@@ -421,6 +422,8 @@ syx_memory_load_image (syx_symbol path)
   FILE *image;
   syx_int32 data;
   
+  SYX_START_PROFILE;
+
   if (!path)
     {
       if (SYX_IS_NIL (syx_globals))
@@ -503,6 +506,9 @@ syx_memory_load_image (syx_symbol path)
   fclose (image);
 
   syx_fetch_basic ();
+  
+  SYX_END_PROFILE(load_image);
+
   syx_initialize_system ();
 
   return TRUE;

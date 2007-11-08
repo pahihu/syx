@@ -31,6 +31,7 @@
 #include "syx-memory.h"
 #include "syx-bytecode.h"
 #include "syx-error.h"
+#include "syx-profile.h"
 
 #ifdef SYX_DEBUG_FULL
 
@@ -38,7 +39,6 @@
 /* #define SYX_DEBUG_CONTEXT_STACK */
 #define SYX_DEBUG_BYTECODE
 /* #define SYX_DEBUG_TRACE_IP */
-/* #define SYX_DEBUG_BYTECODE_PROFILE */
 
 #endif /* SYX_DEBUG_FULL */
 
@@ -61,6 +61,9 @@ void
 syx_exec_state_fetch (void)
 {
   SyxOop method;
+  
+  SYX_START_PROFILE;
+
   _syx_exec_state->context = SYX_PROCESS_CONTEXT (_syx_exec_state->process);
   if (SYX_IS_NIL (_syx_exec_state->context))
     {
@@ -84,6 +87,8 @@ syx_exec_state_fetch (void)
   _syx_exec_state->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_CODE_BYTECODES (method)) / 2;
   _syx_exec_state->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (_syx_exec_state->context));
   _syx_exec_state->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (_syx_exec_state->context));
+
+  SYX_END_PROFILE(exec_state_fetch);
 }
 
 /*! Frees the SyxExecState */
@@ -139,6 +144,8 @@ syx_process_execute_blocking (SyxOop process)
   syx_uint16 byte;
   SyxOop orig_process;
 
+  SYX_START_PROFILE;
+
   if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
     {
       syx_scheduler_remove_process (process);
@@ -163,6 +170,8 @@ syx_process_execute_blocking (SyxOop process)
 
   _syx_exec_state = orig_es;
   syx_processor_active_process = orig_process;
+
+  SYX_END_PROFILE(blocking);
 }
 
 
@@ -328,8 +337,6 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
     _syx_exec_state->message_arguments = NULL;
 
   _syx_exec_state->message_receiver = syx_interp_stack_pop ();
-  if (_syx_exec_state->sp < 0)
-    puts ("ASD");
   _syx_exec_state->byteslice++; /* be sure we send the message */
 
   return TRUE;
@@ -340,6 +347,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   SyxOop binding;
   SyxOop klass, method, context;
   syx_int32 primitive;
+
+  SYX_START_PROFILE;
 
   binding = _syx_exec_state->literals[argument];
   klass = syx_object_get_class (_syx_exec_state->message_receiver); 
@@ -373,6 +382,8 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
     }
   else
     context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver, syx_nil);
+
+  SYX_END_PROFILE(send_message);
 
   return syx_interp_enter_context (context);
 }
@@ -643,11 +654,13 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	      _syx_exec_state->ip--;
 	      /* set the ensure block to true, so that next time self-return bytecode is executed */
 	      SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_true;
+
 	      return syx_interp_enter_context (ensure_block_context);
 	    }
 	}
 
       returned_object = syx_interp_stack_pop ();
+
       return syx_interp_leave_context_and_answer (returned_object, TRUE);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
     case SYX_BYTECODE_BRANCH_IF_FALSE:
@@ -665,6 +678,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	  syx_interp_stack_push (syx_nil);
 	  _syx_exec_state->ip = jump;
 	}
+
       return TRUE;
     case SYX_BYTECODE_BRANCH:
 #ifdef SYX_DEBUG_BYTECODE
@@ -673,6 +687,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       jump = _syx_interp_get_next_byte ();
       if (jump)
 	_syx_exec_state->ip = jump;
+
       return TRUE;
     case SYX_BYTECODE_DUPLICATE:
 #ifdef SYX_DEBUG_BYTECODE
@@ -742,17 +757,7 @@ _syx_interp_execute_byte (syx_uint16 byte)
 
   handler = handlers[command];
 
-#ifdef SYX_DEBUG_BYTECODE_PROFILE
-  GTimer *timer = g_timer_new ();
-#endif
-
   res = handler (argument);
 
-#ifdef SYX_DEBUG_BYTECODE_PROFILE
-  g_timer_stop (timer);
-  syx_debug("BYTECODE PROFILE - Command %d with arguments %d: %fs\n", command, argument, g_timer_elapsed (timer, NULL));
-  g_timer_destroy (timer);
-#endif
-  
   return res;
 }

@@ -39,6 +39,7 @@
 #include "syx-interp.h"
 #include "syx-memory.h"
 #include "syx-init.h"
+#include "syx-profile.h"
 
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
@@ -271,6 +272,8 @@ syx_scheduler_run (void)
 {
   static syx_bool running = FALSE;
 
+  SYX_START_PROFILE;
+
   if (running)
     return;
 
@@ -289,6 +292,8 @@ syx_scheduler_run (void)
     }
 
   running = FALSE;
+
+  SYX_END_PROFILE(scheduler);
 }
 
 /*!

@@ -22,24 +22,37 @@
    DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef SYX_H
-#define SYX_H
+/*!
+  Macros to profile Syx sections execution time in microseconds
+*/
 
-#include "syx-config.h"
-#include "syx-enums.h"
-#include "syx-types.h"
-#include "syx-object.h"
-#include "syx-init.h"
-#include "syx-lexer.h"
-#include "syx-parser.h"
-#include "syx-plugins.h"
-#include "syx-bytecode.h"
-#include "syx-utils.h"
-#include "syx-memory.h"
-#include "syx-error.h"
-#include "syx-signal.h"
-#include "syx-interp.h"
-#include "syx-scheduler.h"
-#include "syx-profile.h"
+#include "syx-platform.h"
 
-#endif /* SYX_H */
+EXPORT extern syx_uint64 syx_nanotime (void);
+EXPORT extern void syx_profile_print (void);
+
+#define SYX_PROFILE_ETYPE(p) EXPORT extern syx_uint64 _p_ ## p
+
+SYX_PROFILE_ETYPE(load_image);
+SYX_PROFILE_ETYPE(exec_state_fetch);
+SYX_PROFILE_ETYPE(block_context);
+SYX_PROFILE_ETYPE(method_context);
+SYX_PROFILE_ETYPE(send_message);
+SYX_PROFILE_ETYPE(perform_message);
+SYX_PROFILE_ETYPE(dict_access);
+SYX_PROFILE_ETYPE(fileop);
+SYX_PROFILE_ETYPE(blocking);
+SYX_PROFILE_ETYPE(scheduler);
+
+#ifdef SYX_PROFILE
+#define SYX_START_PROFILE syx_uint64 _p_start = syx_nanotime() / 1000
+#else
+#define SYX_START_PROFILE
+#endif
+
+#ifdef SYX_PROFILE
+#define SYX_END_PROFILE(p) _p_ ## p = _p_ ## p + syx_nanotime() / 1000 - _p_start
+#else
+#define SYX_END_PROFILE(p)
+#endif
+

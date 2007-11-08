@@ -30,6 +30,7 @@
 #include "syx-utils.h"
 #include "syx-types.h"
 #include "syx-scheduler.h"
+#include "syx-profile.h"
 
 #include <stdio.h>
 
@@ -320,6 +321,7 @@ syx_int32
 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
 {
   SyxOop entry;
+  SYX_START_PROFILE;
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_varsize i = 2 * (syx_string_hash (key) % (size / 2));
@@ -333,16 +335,24 @@ syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
       if (SYX_IS_NIL (entry))
         {
           if (return_nil_index)
-            return i;
+	    {
+	      SYX_END_PROFILE(dict_access);
+	      return i;
+	    }
           else
-            return -1;
+	    {
+	      SYX_END_PROFILE(dict_access);
+	      return -1;
+	    }
         }
       tally--;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-        return i;
-      
+	{
+	  SYX_END_PROFILE(dict_access);
+	  return i;
+	}
     }
-
+  SYX_END_PROFILE(dict_access);
   return -1;
 }
 
@@ -596,6 +606,8 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   SyxOop ctx_args;
   syx_int32 argument_stack_size, temporary_stack_size;
 
+  SYX_START_PROFILE;
+
   syx_memory_gc_begin ();
 
   object = syx_object_new (syx_method_context_class);
@@ -625,6 +637,8 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 
   syx_memory_gc_end ();
 
+  SYX_END_PROFILE(method_context);
+
   return object;
 }
 
@@ -638,6 +652,8 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 {
   SyxOop object;
   SyxOop ctx_args;
+
+  SYX_START_PROFILE;
 
   syx_memory_gc_begin ();
 
@@ -663,6 +679,8 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
 
   syx_memory_gc_end ();
 
+  SYX_END_PROFILE(block_context);
+
   return object;
 }
 
@@ -686,6 +704,7 @@ syx_object_new_vars (SyxOop klass, syx_varsize vars_size)
   object->vars = (SyxOop *) syx_calloc (vars_size, sizeof (SyxOop));
   object->data_size = 0;
   object->data = NULL;
+
   return oop;
 }
 

@@ -395,7 +395,7 @@ syx_lexer_next_token (SyxLexer *lexer)
 {
   syx_char lastChar, secondChar;
   syx_string str;
-  SyxToken token;
+  SyxToken token = {0};
 
   do
     {

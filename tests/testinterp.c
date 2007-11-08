@@ -51,7 +51,7 @@ _interpret (syx_symbol text)
   start = syx_nanotime ();
   syx_process_execute_blocking (process);
   end = syx_nanotime ();
-  printf ("Time elapsed: %ld nanoseconds\n\n", end - start);
+  printf ("Time elapsed: %lu nanoseconds\n\n", end - start);
 
   return SYX_PROCESS_RETURNED_OBJECT(process);
 }
