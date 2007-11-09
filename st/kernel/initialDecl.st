@@ -89,7 +89,7 @@ Set subclass: #Bag
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method stack sp ip receiver arguments temporaries returnContext'
+       instanceVariableNames: 'parent method stack sp tp ip receiver returnContext'
        classVariableNames: ''!
 
 ContextPart subclass: #MethodContext

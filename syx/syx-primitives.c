@@ -677,7 +677,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       if (!SYX_IS_NIL (es->message_arguments[2]))
 	{
 	  ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
-		       SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
+	  SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
 	}
       else
 	ret = 0;

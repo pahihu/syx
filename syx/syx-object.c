@@ -604,7 +604,7 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
 {
   SyxOop object;
   SyxOop ctx_args;
-  syx_int32 argument_stack_size, temporary_stack_size;
+  syx_int32 argument_stack_size;
 
   SYX_START_PROFILE;
 
@@ -617,21 +617,14 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
   argument_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method));
-  if (argument_stack_size > 0)
-    {
-      SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = syx_array_new_size (argument_stack_size);
-      
-      if (!SYX_IS_NIL (arguments))
-	memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
-    }
+  SYX_METHOD_CONTEXT_STACK(object) = ctx_args = syx_array_new_size (100);
 
-  temporary_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARY_STACK_SIZE (method));
-  if (temporary_stack_size > 0)
-    SYX_METHOD_CONTEXT_TEMPORARIES(object) = syx_array_new_size (temporary_stack_size);
+  if (argument_stack_size > 0 && !SYX_IS_NIL (arguments))
+    memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
+  SYX_METHOD_CONTEXT_TP(object) = syx_small_integer_new (argument_stack_size);
   SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_CODE_STACK_SIZE (method)));
 
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = parent;
 
@@ -663,16 +656,15 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_METHOD(object) = block;
   SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
 
-  SYX_METHOD_CONTEXT_ARGUMENTS(object) = ctx_args = SYX_METHOD_CONTEXT_ARGUMENTS (outer_context);
+  SYX_METHOD_CONTEXT_STACK(object) = ctx_args = SYX_METHOD_CONTEXT_STACK (outer_context);
 
   if (!SYX_IS_NIL(ctx_args) && !SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENT_STACK_TOP(block)),
 	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
-  SYX_METHOD_CONTEXT_TEMPORARIES(object) = SYX_METHOD_CONTEXT_TEMPORARIES(outer_context);
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_STACK(object) = syx_array_new_size (SYX_SMALL_INTEGER(SYX_CODE_STACK_SIZE (block)) + 1);
+  SYX_METHOD_CONTEXT_TP(object) = SYX_METHOD_CONTEXT_TP(outer_context);
+  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (50);
 
   SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) = outer_context;
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = SYX_METHOD_CONTEXT_RETURN_CONTEXT (outer_context);

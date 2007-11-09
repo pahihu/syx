@@ -254,7 +254,7 @@ syx_scheduler_init (void)
   if (SYX_IS_NIL (syx_processor))
     {
       syx_processor = syx_object_new (syx_processor_scheduler_class);
-      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (20);
+      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (50);
       syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);
 
       FD_ZERO(&_syx_scheduler_poll_rfds);

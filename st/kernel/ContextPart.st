@@ -96,7 +96,7 @@ method
 
 method: aMethod parent: aContext receiver: anObject arguments: anArray
     "if method is not nil then this context has been initialized"
-    method notNil ifTrue: [^self].
+"    method notNil ifTrue: [^self].
 
     method := aMethod.
     returnContext := parent := aContext.
@@ -112,11 +112,7 @@ method: aMethod parent: aContext receiver: anObject arguments: anArray
 	ifTrue: [ temporaries := Array new: method temporaryStackSize ].
 
     ip := sp := 0.
-    stack := Array new: method stackSize
-!
-
-arguments
-    ^arguments
+    stack := Array new: method stackSize"
 !
 
 receiver

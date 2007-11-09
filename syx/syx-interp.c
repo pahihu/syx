@@ -1,3 +1,4 @@
+
 /* 
    Copyright (c) 2007 Luca Bruno
 
@@ -61,27 +62,24 @@ void
 syx_exec_state_fetch (void)
 {
   SyxOop method;
+  SyxOop ctx;
   
   SYX_START_PROFILE;
 
-  _syx_exec_state->context = SYX_PROCESS_CONTEXT (_syx_exec_state->process);
-  if (SYX_IS_NIL (_syx_exec_state->context))
+  _syx_exec_state->context = ctx = SYX_PROCESS_CONTEXT (_syx_exec_state->process);
+  if (SYX_IS_NIL (ctx))
     {
       _syx_exec_state->ip = 0;
       _syx_exec_state->bytecodes_count = 0;
       return;
     }
 
-  method = SYX_METHOD_CONTEXT_METHOD (_syx_exec_state->context);
+  method = SYX_METHOD_CONTEXT_METHOD (ctx);
 
-  _syx_exec_state->receiver = SYX_METHOD_CONTEXT_RECEIVER (_syx_exec_state->context);
-  if (!SYX_IS_NIL (SYX_METHOD_CONTEXT_ARGUMENTS (_syx_exec_state->context)))
-    _syx_exec_state->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_ARGUMENTS (_syx_exec_state->context));
-
-  if (!SYX_IS_NIL (SYX_METHOD_CONTEXT_TEMPORARIES (_syx_exec_state->context)))
-    _syx_exec_state->temporaries = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_TEMPORARIES (_syx_exec_state->context));
-
-  _syx_exec_state->stack = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (_syx_exec_state->context));
+  _syx_exec_state->receiver = SYX_METHOD_CONTEXT_RECEIVER (ctx);
+  _syx_exec_state->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (ctx));
+  _syx_exec_state->temporaries = _syx_exec_state->arguments + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_TP (ctx));
+  _syx_exec_state->stack = _syx_exec_state->temporaries + 20;
   _syx_exec_state->literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
   _syx_exec_state->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_CODE_BYTECODES (method));
   _syx_exec_state->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_CODE_BYTECODES (method)) / 2;
