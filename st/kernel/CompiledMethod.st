@@ -81,6 +81,11 @@ initializeParser: aCompilerParser
 
 !CompiledMethod methodsFor: 'accessing'!
 
+runOn: aReceiver withArguments: anArray
+    <primitive: 'CompiledMethod_runOn'>
+	self primitiveFailed
+!
+
 argumentStackSize
     ^argumentStackSize
 !

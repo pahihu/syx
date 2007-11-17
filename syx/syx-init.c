@@ -244,8 +244,8 @@ syx_build_basic (void)
    
   _syx_file_in_basic ();
 
-  context = syx_send_unary_message (syx_nil, syx_globals, "initializeFirstSystem");
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_send_unary_message (process, syx_nil, syx_globals, "initializeFirstSystem");
   syx_process_execute_blocking (process);
 }
 
@@ -311,8 +311,8 @@ syx_initialize_system (void)
   if (!SYX_IS_NIL (process))
     syx_scheduler_remove_process (process);
 
-  context = syx_send_binary_message (syx_nil, syx_globals, "startupSystem:", arguments);
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_send_binary_message (process, syx_nil, syx_globals, "startupSystem:", arguments);
   SYX_PROCESS_SUSPENDED (process) = syx_false;
   
   syx_system_initialized = TRUE;

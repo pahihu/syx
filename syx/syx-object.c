@@ -205,10 +205,10 @@ syx_large_integer_new_integer (syx_int32 i)
   \param context a MethodContext or BlockContext
 */
 SyxOop 
-syx_process_new (SyxOop context)
+syx_process_new (void)
 {
   SyxOop object = syx_object_new (syx_process_class);
-  SYX_PROCESS_CONTEXT(object) = context;
+  SYX_PROCESS_STACK(object) = syx_array_new_size (1000);
   SYX_PROCESS_SUSPENDED(object) = syx_true;
   SYX_PROCESS_SCHEDULED(object) = syx_false;
   syx_scheduler_add_process (object);
@@ -321,11 +321,12 @@ syx_int32
 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
 {
   SyxOop entry;
-  SYX_START_PROFILE;
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   SyxOop *table = SYX_OBJECT_DATA (dict);
   syx_varsize i = 2 * (syx_string_hash (key) % (size / 2));
   syx_int32 tally = SYX_SMALL_INTEGER (SYX_DICTIONARY_TALLY (dict)) + return_nil_index;
+  SYX_START_PROFILE;
+
 
   for (; tally; i+=2)
     {
@@ -592,7 +593,10 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 }
 
 /*!
-  Create a new MethodContext.
+  Create a new MethodContext and setup the frame in the Process stack:
+  - arguments
+  - temporaries
+  - stack
 
   \param parent the parent context
   \param method a CompiledMethod
@@ -600,15 +604,14 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   \param arguments the arguments passed to the message
 */
 SyxOop 
-syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
+syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
 {
   SyxOop object;
-  SyxOop ctx_args;
+  syx_int32 sp;
   syx_int32 argument_stack_size;
+  syx_int32 temporary_stack_size;
 
   SYX_START_PROFILE;
-
-  syx_memory_gc_begin ();
 
   object = syx_object_new (syx_method_context_class);
 
@@ -616,19 +619,38 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   SYX_METHOD_CONTEXT_METHOD(object) = method;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
-  argument_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method));
-  SYX_METHOD_CONTEXT_STACK(object) = ctx_args = syx_array_new_size (100);
+  /* argument pointer, which is the bottom of the local frame, is the stack pointer of the parent context */
+  if (SYX_IS_NIL (parent))
+    {
+      sp = 0;
+      SYX_METHOD_CONTEXT_AP(object) = syx_small_integer_new (0);
+    }
+  else if (SYX_OOP_EQ (parent, _syx_exec_state->context))
+    {
+      sp = _syx_exec_state->sp;
+      SYX_METHOD_CONTEXT_AP(object) = syx_small_integer_new (sp);
+    }
+  else
+    {
+      SYX_METHOD_CONTEXT_AP(object) = SYX_METHOD_CONTEXT_SP(parent);
+      sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_AP(object));
+    }
 
-  if (argument_stack_size > 0 && !SYX_IS_NIL (arguments))
-    memcpy (SYX_OBJECT_DATA(ctx_args), SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
+  argument_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method));
+  temporary_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARY_STACK_SIZE (method));
+
+  if (!SYX_IS_NIL (arguments))
+    memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process))+sp,
+	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_TP(object) = syx_small_integer_new (argument_stack_size);
-  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
+  SYX_METHOD_CONTEXT_TP(object) = syx_small_integer_new (sp + argument_stack_size);
+  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (sp + argument_stack_size + temporary_stack_size);
 
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = parent;
 
-  syx_memory_gc_end ();
+  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
+    SYX_PROCESS_CONTEXT(process) = object;
 
   SYX_END_PROFILE(method_context);
 
@@ -641,14 +663,11 @@ syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop ar
   \param outer_context a MethodContext or BlockContext for a nested block
 */
 SyxOop 
-syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
+syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
 {
   SyxOop object;
-  SyxOop ctx_args;
 
   SYX_START_PROFILE;
-
-  syx_memory_gc_begin ();
 
   object = syx_object_new (syx_block_context_class);
 
@@ -656,20 +675,27 @@ syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop out
   SYX_METHOD_CONTEXT_METHOD(object) = block;
   SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
 
-  SYX_METHOD_CONTEXT_STACK(object) = ctx_args = SYX_METHOD_CONTEXT_STACK (outer_context);
+  SYX_METHOD_CONTEXT_AP(object) = SYX_METHOD_CONTEXT_AP(outer_context);
 
-  if (!SYX_IS_NIL(ctx_args) && !SYX_IS_NIL (arguments))
-    memcpy (SYX_OBJECT_DATA(ctx_args) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENT_STACK_TOP(block)),
+  if (!SYX_IS_NIL (arguments))
+    memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process)) + SYX_SMALL_INTEGER(SYX_METHOD_CONTEXT_AP(object)) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENT_STACK_TOP(block)),
 	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_TP(object) = SYX_METHOD_CONTEXT_TP(outer_context);
-  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (50);
+
+  if (SYX_IS_NIL (parent))
+    SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
+  else if (SYX_OOP_EQ (parent, _syx_exec_state->context))
+    SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (_syx_exec_state->sp);
+  else
+    SYX_METHOD_CONTEXT_SP(object) = SYX_METHOD_CONTEXT_SP(parent);
 
   SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) = outer_context;
   SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = SYX_METHOD_CONTEXT_RETURN_CONTEXT (outer_context);
 
-  syx_memory_gc_end ();
+  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
+    SYX_PROCESS_CONTEXT(process) = object;
 
   SYX_END_PROFILE(block_context);
 
@@ -689,7 +715,7 @@ syx_object_new_vars (SyxOop klass, syx_varsize vars_size)
 {
   SyxOop oop = syx_memory_alloc ();
   SyxObject *object = SYX_OBJECT (oop);
-  
+
   object->klass = klass;
   object->has_refs = FALSE;
   object->is_constant = FALSE;
@@ -780,7 +806,7 @@ syx_object_copy (SyxOop object)
 void
 syx_object_free (SyxOop object)
 {
-  SyxOop context, klass;
+  SyxOop process, context, klass;
   if (!SYX_IS_OBJECT (object))
     return;
 
@@ -790,8 +816,9 @@ syx_object_free (SyxOop object)
 
   if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (klass)))
     {
-      context = syx_send_unary_message (syx_nil, object, "finalize");
-      syx_process_execute_blocking (syx_process_new (context));
+      process = syx_process_new ();
+      context = syx_send_unary_message (process, syx_nil, object, "finalize");
+      syx_process_execute_blocking (process);
     }
 
   if (SYX_OBJECT_VARS (object))
@@ -835,6 +862,7 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
   syx_symbol names[256];
   syx_symbol *ret_names = NULL;
   SyxOop inst_vars;
+  SyxOop inst_var;
   syx_varsize i, size, tot_size;
 
   for (tot_size=0; !SYX_IS_NIL(klass); klass=SYX_CLASS_SUPERCLASS (klass))
@@ -844,8 +872,12 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
 
       for (i=size; i > 0; i--)
 	{
-	  tot_size++;
-	  names[255-tot_size+1] = SYX_OBJECT_SYMBOL (SYX_OBJECT_DATA(inst_vars)[i-1]);
+	  inst_var = SYX_OBJECT_DATA(inst_vars)[i-1];
+	  if (!SYX_IS_NIL (inst_var))
+	    {
+	      tot_size++;
+	      names[255-tot_size+1] = SYX_OBJECT_SYMBOL (inst_var);
+	    }
 	}
     }
   if (tot_size > 0)
@@ -890,21 +922,20 @@ syx_class_lookup_method_binding (SyxOop klass, SyxOop binding)
 {
   SyxOop cur;
   SyxOop method;
-
+  
   for (cur=klass; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
 	continue;
-
+      
       SYX_VARIABLE_BINDING_DICTIONARY (binding) = SYX_CLASS_METHODS (cur);
       method = syx_dictionary_bind_if_absent (binding, syx_nil);
       if (!SYX_IS_NIL (method))
 	return method;
     }
-
+  
   return syx_nil;
 }
-
 
 
 /* Small integer overflow checks */

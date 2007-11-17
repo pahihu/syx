@@ -96,7 +96,7 @@ syx_exec_state_save (void)
 /*! Enter the method which contains the primitive call */
 #define SYX_PRIM_FAIL							\
   syx_memory_gc_begin ();						\
-  syx_interp_enter_context (syx_method_context_new (es->context, method, \
+  syx_interp_enter_context (syx_method_context_new (es->process, es->context, method, \
 						    es->message_receiver, \
 						    syx_array_new_ref (es->message_arguments_count, \
 								       es->message_arguments))); \
@@ -111,7 +111,7 @@ syx_exec_state_save (void)
     }
 
 /*! The number of primitives */
-#define SYX_PRIMITIVES_MAX 99
+#define SYX_PRIMITIVES_MAX 102
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -222,6 +222,7 @@ syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_c
 			   : SYX_METHOD_CONTEXT_PARENT(_syx_exec_state->context));
 
   SYX_PROCESS_RETURNED_OBJECT(_syx_exec_state->process) = return_object;
+
   if (syx_interp_swap_context (return_context))
     {
       syx_interp_stack_push (return_object);
@@ -240,8 +241,20 @@ syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_c
 INLINE syx_bool
 syx_interp_enter_context (SyxOop context)
 {
+  syx_bool res;
+  syx_int32 length;
+
   _syx_exec_state->byteslice--; /* incremented by "mark arguments" bytecode */
-  return syx_interp_swap_context (context);
+  res = syx_interp_swap_context (context);
+  
+  /* clear temporaries stack frame */
+  if (SYX_OOP_NE (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
+    {
+      length = _syx_exec_state->sp * sizeof (SyxOop) - ((syx_nint)_syx_exec_state->temporaries - (syx_nint)_syx_exec_state->stack);
+      memset (_syx_exec_state->temporaries, '\0', length);
+    }
+
+  return res;
 }
 
 

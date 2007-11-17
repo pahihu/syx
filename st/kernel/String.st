@@ -105,8 +105,7 @@ compileFor: aClass
 doIt
     | method context |
     method := ('goDoIt ', self) compileFor: nil class.
-    context := MethodContext on: method parent: thisContext receiver: nil arguments: #().
-    ^Processor enter: context
+    ^method runOn: nil withArguments: #()
 ! !
 
 !String methodsFor: 'converting'!

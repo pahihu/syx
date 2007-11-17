@@ -77,6 +77,10 @@ removeAtIndex: anIndex
 
 asOrderedCollection
     ^self
+!
+
+asArray
+    ^Array withAll: self startingAt: firstIndex
 ! !
 
 !OrderedCollection methodsFor: 'testing'!

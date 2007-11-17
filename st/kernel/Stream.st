@@ -150,6 +150,11 @@ nl
     self nextPut: Character nl
 !
 
+tab
+    "Write a tab character"
+    self nextPut: Character tab
+!
+
 cr 
     "Write a carriage return"
     self nextPut: Character cr

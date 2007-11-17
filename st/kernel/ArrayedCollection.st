@@ -61,6 +61,15 @@ new: aSize withAll: aCollection
 withAll: aCollection
     "Answer an arrayed collection with the same elements of aCollection"
     ^self new: aCollection size withAll: aCollection
+!
+
+withAll: aCollection startingAt: anIndex
+    "Answer an arrayed collection with the same elements of aCollection starting at the given index"
+    | size |
+    size := aCollection size.
+    ^(self new: size)
+	replaceFrom: 1 to: size with: aCollection startingAt: anIndex;
+	yourself
 ! !
 
 !ArrayedCollection methodsFor: 'basic'!
@@ -120,8 +129,12 @@ reverse
 !ArrayedCollection methodsFor: 'replacing'!
 
 replaceFrom: startIndex to: stopIndex with: aCollection
-    <primitive: 'ArrayedCollection_replaceFromToWith'>
-	^super replaceFrom: startIndex to: stopIndex with: aCollection
+    ^self replaceFrom: startIndex to: stopIndex with: aCollection startingAt: 1
+!
+
+replaceFrom: startIndex to: stopIndex with: aCollection startingAt: anIndex
+    <primitive: 'ArrayedCollection_replaceFromToWithStartingAt'>
+	^super replaceFrom: startIndex to: stopIndex with: aCollection startingAt: anIndex
 ! !
 
 !ArrayedCollection methodsFor: 'enumerating'!

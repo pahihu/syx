@@ -44,10 +44,10 @@ extern EXPORT void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-extern EXPORT SyxOop syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector);
-extern EXPORT SyxOop syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
-extern EXPORT SyxOop syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-extern EXPORT SyxOop syx_vsend_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
+extern EXPORT SyxOop syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector);
+extern EXPORT SyxOop syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
+extern EXPORT SyxOop syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+extern EXPORT SyxOop syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
 
 extern EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
 extern EXPORT SyxOop syx_do_it_blocking (syx_symbol code);

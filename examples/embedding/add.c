@@ -19,16 +19,17 @@ int main (int argc, char *argv[])
   /* create a Sum instance */
   instance = syx_object_new (syx_globals_at ("Sum"));
   
+  /* create a Process */
+  process = syx_process_new ();
+
   /* create a MethodContext which sends the #with:and: message */
-  context = syx_send_message (syx_nil,                     // the parent context
+  context = syx_send_message (process,
+			      syx_nil,                     // the parent context
 			      instance,                    // the receiver
 			      "with:and:",                 // the selector
 			      2,                           // the number of arguments
 			      syx_small_integer_new (41),   // first argument
 			      syx_small_integer_new (22));
-
-  /* now create a Process with that context */
-  process = syx_process_new (context);
 
   /* execute the process in blocking mode */
   syx_process_execute_blocking (process);

@@ -237,9 +237,9 @@ EXPORT SyxOop syx_large_integer_new (syx_symbol string, syx_int32 base);
 EXPORT SyxOop syx_large_integer_new_integer (syx_int32 integer);
 EXPORT SyxOop syx_large_integer_new_mpz (syx_pointer mpz);
 EXPORT SyxOop syx_symbol_new (syx_symbol symbol);
-EXPORT SyxOop syx_method_context_new (SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
-EXPORT SyxOop syx_block_context_new (SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
-EXPORT SyxOop syx_process_new (SyxOop context);
+EXPORT SyxOop syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
+EXPORT SyxOop syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
+EXPORT SyxOop syx_process_new (void);
 
 EXPORT syx_bool syx_array_remove (SyxOop array, SyxOop element);
 EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
@@ -285,7 +285,7 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 
 #define SYX_METHOD_CONTEXT_PARENT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_PARENT])
 #define SYX_METHOD_CONTEXT_METHOD(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_METHOD])
-#define SYX_METHOD_CONTEXT_STACK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_STACK])
+#define SYX_METHOD_CONTEXT_AP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_AP])
 #define SYX_METHOD_CONTEXT_SP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_SP])
 #define SYX_METHOD_CONTEXT_TP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_TP])
 #define SYX_METHOD_CONTEXT_IP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_IP])
@@ -298,6 +298,7 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 #define SYX_BLOCK_CONTEXT_ENSURE_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_ENSURE_BLOCK])
 
 #define SYX_PROCESS_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_CONTEXT])
+#define SYX_PROCESS_STACK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_STACK])
 #define SYX_PROCESS_SUSPENDED(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_SUSPENDED])
 #define SYX_PROCESS_RETURNED_OBJECT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_RETURNED_OBJECT])
 #define SYX_PROCESS_NEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_NEXT])

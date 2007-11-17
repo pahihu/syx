@@ -115,7 +115,7 @@ void
 syx_memory_clear (void)
 {
   SyxObject *object = syx_memory;
-  SyxOop context;
+  SyxOop context, process;
 
   if (!_syx_memory_initialized)
     return;
@@ -130,9 +130,10 @@ syx_memory_clear (void)
 
       if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (object->klass)))
 	{
-	  context = syx_send_unary_message (syx_nil,
+	  process = syx_process_new ();
+	  context = syx_send_unary_message (process, syx_nil,
 					    SYX_POINTER_CAST_OOP (object), "finalize");
-	  syx_process_execute_blocking (syx_process_new (context));
+	  syx_process_execute_blocking (process);
 	}
     }
 

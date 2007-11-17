@@ -75,11 +75,10 @@ syx_exec_state_fetch (void)
     }
 
   method = SYX_METHOD_CONTEXT_METHOD (ctx);
-
+  
   _syx_exec_state->receiver = SYX_METHOD_CONTEXT_RECEIVER (ctx);
-  _syx_exec_state->arguments = SYX_OBJECT_DATA (SYX_METHOD_CONTEXT_STACK (ctx));
-  _syx_exec_state->temporaries = _syx_exec_state->arguments + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_TP (ctx));
-  _syx_exec_state->stack = _syx_exec_state->temporaries + 20;
+  _syx_exec_state->arguments = _syx_exec_state->stack + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_AP (ctx));
+  _syx_exec_state->temporaries = _syx_exec_state->stack + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_TP (ctx));
   _syx_exec_state->literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
   _syx_exec_state->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_CODE_BYTECODES (method));
   _syx_exec_state->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_CODE_BYTECODES (method)) / 2;
@@ -120,6 +119,7 @@ syx_process_execute_scheduled (SyxOop process)
     }
 
   _syx_exec_state->process = process;
+  _syx_exec_state->stack = SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
   syx_exec_state_fetch ();
   _syx_exec_state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
 
@@ -154,6 +154,7 @@ syx_process_execute_blocking (SyxOop process)
   orig_es = _syx_exec_state;
   _syx_exec_state = syx_exec_state_new ();
   _syx_exec_state->process = process;
+  _syx_exec_state->stack = SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
   syx_exec_state_fetch ();
   syx_processor_active_process = process;
 
@@ -351,7 +352,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   binding = _syx_exec_state->literals[argument];
   klass = syx_object_get_class (_syx_exec_state->message_receiver); 
   method = syx_class_lookup_method_binding (klass, binding);
-
+  SYX_END_PROFILE(send_message);
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
@@ -373,15 +374,17 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   if (_syx_exec_state->message_arguments_count > 0)
     {
       syx_memory_gc_begin ();
-      context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver,
+      context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
+					method, _syx_exec_state->message_receiver,
 					syx_array_new (_syx_exec_state->message_arguments_count, _syx_exec_state->message_arguments));
       syx_memory_gc_end ();
       _syx_exec_state->message_arguments = NULL;
     }
   else
-    context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver, syx_nil);
+    context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
+				      method, _syx_exec_state->message_receiver, syx_nil);
 
-  SYX_END_PROFILE(send_message);
+
 
   return syx_interp_enter_context (context);
 }
@@ -417,19 +420,22 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   if (_syx_exec_state->message_arguments_count > 0)
     {
       syx_memory_gc_begin ();
-      context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver,
+      context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
+					method, _syx_exec_state->message_receiver,
 					syx_array_new (_syx_exec_state->message_arguments_count, _syx_exec_state->message_arguments));
       syx_memory_gc_end ();
       _syx_exec_state->message_arguments = NULL;
     }
   else
-    context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver, syx_nil);
+    context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
+				      method, _syx_exec_state->message_receiver, syx_nil);
 
   return syx_interp_enter_context (context);
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 {
+  /*
   SyxOop klass, method, context;
   syx_int32 primitive;
   syx_int32 index;
@@ -443,13 +449,13 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 
   switch (index)
     {
-    case 0: /* isNil */
+    case 0:
       #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Send unary message isNil\n");
       #endif
       syx_interp_stack_push (syx_boolean_new (SYX_IS_NIL (_syx_exec_state->message_receiver)));
       return TRUE;
-    case 1: /* notNil */
+    case 1:
       #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Send unary message notNil\n");
       #endif
@@ -478,9 +484,10 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
   else if (primitive == -2)
     return syx_plugin_call_interp (_syx_exec_state, method);
 
-  context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver, syx_nil);
+    context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver, syx_nil);
 
-  return syx_interp_enter_context (context);
+    return syx_interp_enter_context (context);*/
+  return 0;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
@@ -493,6 +500,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 
 SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 {
+  /*
   SyxOop klass, method, context, first_argument;
   syx_int32 primitive;
   SyxOop binding;
@@ -509,28 +517,28 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
     {
       switch (index)
 	{
-	case 0: /* + */
+	case 0:
 	  syx_interp_stack_push (syx_small_integer_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) + SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 1: /* - */
+	case 1:
 	  syx_interp_stack_push (syx_small_integer_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) - SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 2: /* < */
+	case 2:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) < SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 3: /* > */
+	case 3:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) > SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 4: /* <= */
+	case 4:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) <= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 5: /* >= */
+	case 5:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) >= SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 6: /* = */
+	case 6:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) == SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
-	case 7: /* ~= */
+	case 7:
 	  syx_interp_stack_push (syx_boolean_new (SYX_SMALL_INTEGER(_syx_exec_state->message_receiver) != SYX_SMALL_INTEGER(first_argument)));
 	  return TRUE;
 	}
@@ -565,11 +573,12 @@ SYX_FUNC_INTERPRETER (syx_interp_send_binary)
 
   syx_memory_gc_begin ();
   context = syx_method_context_new (_syx_exec_state->context, method, _syx_exec_state->message_receiver,
-				    syx_array_new (1, _syx_exec_state->message_arguments));
+    syx_array_new (1, _syx_exec_state->message_arguments));
   syx_memory_gc_end ();
   _syx_exec_state->message_arguments = NULL;
 
-  return syx_interp_enter_context (context);
+  return syx_interp_enter_context (context);*/
+  return 0;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_do_special)
@@ -594,7 +603,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       if (SYX_OOP_EQ (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
 	{
-	  /* check for ensure blocks */
+	  /* check for ensured blocks */
 	  ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_exec_state->context);
 	  if (SYX_IS_TRUE (ensure_block))
 	    {
@@ -607,7 +616,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	  else if (!SYX_IS_NIL (ensure_block))
 	    {
 	      /* create the context and enter it */
-	      ensure_block_context = syx_block_context_new (_syx_exec_state->context,
+	      ensure_block_context = syx_block_context_new (_syx_exec_state->process, _syx_exec_state->context,
 							    SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
 							    syx_nil,
 							    SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));
@@ -622,7 +631,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	}
       else
 	returned_object = _syx_exec_state->receiver;
-
+      
       return syx_interp_leave_context_and_answer (returned_object, FALSE);
 
     case SYX_BYTECODE_STACK_RETURN:
@@ -644,7 +653,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 	  else if (!SYX_IS_NIL (ensure_block))
 	    {
 	      /* create the context and enter it */
-	      ensure_block_context = syx_block_context_new (_syx_exec_state->context,
+	      ensure_block_context = syx_block_context_new (_syx_exec_state->process, _syx_exec_state->context,
 							    SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
 							    syx_nil,
 							    SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));

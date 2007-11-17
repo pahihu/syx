@@ -45,18 +45,6 @@ isMethodContext
     ^true
 ! !
 
-!ContextPart class methodsFor: 'instance creation'!
-
-on: aMethod parent: aContext receiver: anObject arguments: anArray
-    "Create a new execution context"
-    ^self new
-	method: aMethod
-	parent: aContext
-	receiver: anObject
-	arguments: anArray;
-	yourself
-! !
-
 !ContextPart methodsFor: 'debugging'!
 
 handles: anException
@@ -92,27 +80,6 @@ isMethodContext
 
 method
     ^method
-!
-
-method: aMethod parent: aContext receiver: anObject arguments: anArray
-    "if method is not nil then this context has been initialized"
-"    method notNil ifTrue: [^self].
-
-    method := aMethod.
-    returnContext := parent := aContext.
-    receiver := anObject.
-
-    method argumentStackSize > 0
-	ifTrue: [ arguments := Array new: method argumentStackSize ].
-
-    anArray notEmpty
-	ifTrue: [ arguments replaceFrom: 1 with: anArray ].
-
-    method temporaryStackSize > 0
-	ifTrue: [ temporaries := Array new: method temporaryStackSize ].
-
-    ip := sp := 0.
-    stack := Array new: method stackSize"
 !
 
 receiver

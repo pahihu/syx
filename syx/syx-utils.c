@@ -495,7 +495,7 @@ syx_semaphore_wait (SyxOop semaphore)
 
 /*! Create a MethodContext for a unary message ready to enter a Process */
 SyxOop
-syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector)
+syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
   SyxOop klass;
@@ -506,13 +506,13 @@ syx_send_unary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selec
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
-  context = syx_method_context_new (parent_context, method, receiver, syx_nil);
+  context = syx_method_context_new (process, parent_context, method, receiver, syx_nil);
   return context;
 }
 
 /*! Create a MethodContext for a binary message ready to enter a Process */
 SyxOop
-syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
+syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;
   SyxOop klass;
@@ -527,7 +527,7 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = argument;
-  context = syx_method_context_new (parent_context, method, receiver, arguments);
+  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
   syx_memory_gc_end ();
 
   return context;
@@ -539,13 +539,13 @@ syx_send_binary_message (SyxOop parent_context, SyxOop receiver, syx_symbol sele
   \param num_args number of variadic SyxOop arguments
 */
 SyxOop
-syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
+syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
   SyxOop context;
   va_list ap;
 
   va_start (ap, num_args);
-  context = syx_vsend_message (parent_context, receiver, selector, num_args, ap);
+  context = syx_vsend_message (process, parent_context, receiver, selector, num_args, ap);
   va_end (ap);
 
   return context;
@@ -558,7 +558,7 @@ syx_send_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, s
   \param arguments an Array of arguments
 */
 SyxOop
-syx_vsend_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
+syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
 {
   syx_varsize i;
   SyxOop context;
@@ -567,7 +567,7 @@ syx_vsend_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, 
   SyxOop arguments;
 
   if (num_args == 0)
-    return syx_send_unary_message (parent_context, receiver, selector);
+    return syx_send_unary_message (process, parent_context, receiver, selector);
 
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
@@ -580,7 +580,7 @@ syx_vsend_message (SyxOop parent_context, SyxOop receiver, syx_symbol selector, 
   for (i=0; i < num_args; i++)
     SYX_OBJECT_DATA(arguments)[i] = va_arg (ap, SyxOop);
 
-  context = syx_method_context_new (parent_context, method, receiver, arguments);
+  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
 
   syx_memory_gc_end ();
 
@@ -600,11 +600,11 @@ syx_file_in_blocking (syx_symbol file)
   SyxOop context;
   SyxOop process;
 
-  context = syx_send_binary_message (syx_nil,
+  process = syx_process_new ();
+  context = syx_send_binary_message (process, syx_nil,
 				     syx_globals_at ("FileStream"),
 				     "fileIn:",
 				     syx_string_new (file));
-  process = syx_process_new (context);
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -621,8 +621,9 @@ syx_do_it_blocking (syx_symbol code)
   SyxOop context;
   SyxOop process;
 
-  context = syx_send_unary_message (syx_nil, syx_string_new (code), "doIt");
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_send_unary_message (process, syx_nil, syx_string_new (code), "doIt");
+  
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }

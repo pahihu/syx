@@ -89,7 +89,7 @@ Set subclass: #Bag
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method stack sp tp ip receiver returnContext'
+       instanceVariableNames: 'parent method ap tp sp ip receiver returnContext'
        classVariableNames: ''!
 
 ContextPart subclass: #MethodContext
@@ -101,7 +101,7 @@ MethodContext subclass: #BlockContext
             classVariableNames: ''!
 
 Object subclass: #Process
-       instanceVariableNames: 'context suspended returnedObject next scheduled'
+       instanceVariableNames: 'context stack suspended returnedObject next scheduled'
        classVariableNames: ''!
 
 Object subclass: #Semaphore

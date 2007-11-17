@@ -167,9 +167,15 @@ replaceFrom: startIndex with: aCollection
 !
 
 replaceFrom: startIndex to: stopIndex with: aCollection
+    "Replace items from startIndex to stopIndex with the elements of aCollection starting at 1."
+    self replaceFrom: startIndex to: stopIndex with: aCollection startingAt: 1
+!
+
+
+replaceFrom: startIndex to: stopIndex with: aCollection startingAt: anIndex
     "Replace items from startIndex to stopIndex with the elements of aCollection"
     | j |
-    j := 0.
+    j := anIndex - 1.
     startIndex to: stopIndex do: [ :i |
 	self at: i put: (aCollection at: (j := j + 1)) ]
 !

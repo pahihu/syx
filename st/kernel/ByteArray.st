@@ -69,10 +69,10 @@ byteAt: anIndex put: aSmallInteger
 
 !ByteArray methodsFor: 'replacing'!
 
-replaceFrom: startIndex to: stopIndex with: aCollection
-    <primitive: 'ArrayedCollection_replaceFromToWith'>
+replaceFrom: startIndex to: stopIndex with: aCollection startingAt: anIndex
+    <primitive: 'ArrayedCollection_replaceFromToWithStartingAt'>
 	| element j |
-	j := 0.
+	j := anIndex.
 	startIndex to: (stopIndex min: aCollection size) do: [ :i |
 	    element := aCollection at: (j := j + 1).
 	    (element isCharacter or: [ element isSmallInteger & (element >= 0) & (element <= 255) ])

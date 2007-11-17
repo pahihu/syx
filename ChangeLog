@@ -1,3 +1,25 @@
+2007-11-18  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/ArrayedCollection.st (withAll:startingAt): added
+
+	* st/kernel/OrderedCollection.st (asArray): added
+
+	* syx/syx-interp.c (syx_exec_state_fetch): updated to complain new process execution
+
+	* syx/syx-object.c (syx_process_new): do not require a context anymore
+	(syx_method_context_new): setup the Process to hold the new context and copy arguments into the stack
+	(syx_block_context_new): same as method context, and use the same frame of the outer context
+	All calls have been updated
+
+	* Removed all stacks from contexts and created a stack per process
+
+	* Gave an important speed boost up
+
+	* syx/syx-primitives.c (ArrayedCollection_replaceFromToWithStartingAt): in substitution of ArrayedCollection_replaceFromToWith
+	(StdIOStream_nextPut): added
+	(StdIOStream_nextPutAll): added
+	(CompiledMethod_runOn): added in substitution of manual method context creation from Smalltalk	
+
 2007-11-08  Luca Bruno  <lethalman88@gmail.com>
 
 	* SCons and GNU build: added support for gprof and internal profiling

@@ -136,10 +136,10 @@ syx_signal (SyxErrorType type, SyxOop message)
     }
 
   if (SYX_IS_NIL (message))
-    context = syx_send_unary_message (syx_interp_get_current_context (),       
+    context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
 				      entry->klass, "signal");
   else
-    context = syx_send_binary_message (syx_interp_get_current_context (),
+    context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
 				       entry->klass, "signal:", message);
 
   syx_interp_enter_context (context);
@@ -163,10 +163,10 @@ syx_signal_create_context (SyxErrorType type, SyxOop message)
     return syx_nil;
 
   if (SYX_IS_NIL (message))
-    context = syx_send_unary_message (syx_interp_get_current_context (),       
+    context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
 				      entry->klass, "signal");
   else
-    context = syx_send_binary_message (syx_interp_get_current_context (),
+    context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
 				       entry->klass, "signal:", message);
 
   return context;

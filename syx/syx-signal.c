@@ -64,7 +64,7 @@ _syx_smalltalk_sighandler (int signum)
       return;
     }
   
-  context = syx_send_unary_message (syx_interp_get_current_context (), klass, "signal");
+  context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (), klass, "signal");
   syx_interp_enter_context (context);
 }
 

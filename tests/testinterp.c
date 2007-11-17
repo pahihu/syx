@@ -45,8 +45,8 @@ _interpret (syx_symbol text)
   assert (ok == TRUE);
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
-  context = syx_method_context_new (syx_nil, method, syx_nil, syx_nil);
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_method_context_new (process, syx_nil, method, syx_nil, syx_nil);
 
   start = syx_nanotime ();
   syx_process_execute_blocking (process);
