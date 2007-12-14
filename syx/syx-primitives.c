@@ -1686,8 +1686,12 @@ SYX_FUNC_PRIMITIVE (Smalltalk_environmentVariableAt)
   syx_symbol name;
   SYX_PRIM_ARGS(1);
 
+#ifndef WINCE
   name = SYX_OBJECT_SYMBOL(es->message_arguments[0]);
   SYX_PRIM_RETURN(syx_string_new (getenv(name)));
+#else /* WINCE */
+  SYX_PRIM_RETURN(syx_nil);
+#endif
 }
 
 SYX_FUNC_PRIMITIVE (CompiledMethod_runOn)

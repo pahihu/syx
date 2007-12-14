@@ -193,7 +193,7 @@ syx_error (syx_symbol fmt, ...)
 void
 syx_error (syx_symbol fmt, ...)
 {
-  MessageBox (0, SYX_IFDEF_UNICODE (message), "Error", 0);
+  MessageBox (0, SYX_IFDEF_UNICODE (fmt), "Error", 0);
   exit (EXIT_FAILURE);
 }
 #endif /* WINCE */

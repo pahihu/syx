@@ -49,14 +49,14 @@
 syx_uint64
 syx_nanotime (void)
 {
-#ifdef WINDOWS
+#if defined(WINDOWS) && !defined(WINCE)
 
   syx_uint64 value;
   GetSystemTimeAsFileTime ((FILETIME *)&value);
   value = (value - (syx_uint64) 116444736000000000) * 100;
   return value;
 
-#else /* WINDOWS */
+#elseif !defined(WINDOWS) /* WINDOWS */
 
   struct timeval tv;
   gettimeofday (&tv, NULL);

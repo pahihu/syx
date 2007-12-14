@@ -28,11 +28,11 @@ import os
 
 Import ('env', 'distdir')
 
-sources = Split("""browser.c""")
-xenv = env.Clone ()
-xenv.MergeFlags ('-lsyx')
-
-Default (xenv.Program (sources))
+sources = Split("""browser.c""")	
+if not 'wince' in env['host']:
+    xenv = env.Clone ()
+    xenv.MergeFlags ('-lsyx')
+    Default (xenv.Program (sources))
 
 path = os.path.join (distdir, 'examples', 'web')
 target = env.Install (path, sources + ['SConscript', 'browser.st'])
