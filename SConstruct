@@ -442,7 +442,10 @@ target = env.Install (path, sources)
 env.Alias ('sdist', target)
 
 sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile',
-           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc']
+           'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc',
+           'autogen.sh', 'libtool', 'missing', 'mkinstalldirs', 'ltmain.sh', 'install-sh',
+           'configure', 'configure.ac', 'aclocal.m4', 'config.guess', 'config.sub', 'depcomp',
+           'Makefile.in', 'Makefile.am']
 target = env.Install (distdir, sources)
 env.Alias ('sdist', target)
 

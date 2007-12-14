@@ -63,5 +63,6 @@ if env['PLATFORM'] != 'win32':
     env.Depends (bimage, os.path.join (path, 'st', 'kernel'))
     env.Alias ('bdist', bimage)
 
-target = env.Install (os.path.join (distdir, 'src'), prog_sources + prog_resources + ['SConscript'])
+target = env.Install (os.path.join (distdir, 'src'),
+                      prog_sources + prog_resources + ['SConscript', 'Makefile.am', 'Makefile.in'])
 env.Alias ('sdist', target)
