@@ -24,53 +24,54 @@ xx December 2007
         - Created one stack per process against one stack per context
 
         This version breaks the API for creating new processes and contexts from C and ST too.
+        Thanks for anyone who contributed to Syx.
 
 20 August 2007
 --------------
 
-	Released Syx 0.1.4 version.
+        Released Syx 0.1.4 version.
 
-	A more stable VM has been reached with this version. Many features have been added for both
-	the embedding and the environment. This version also includes the "image endianness compatibility"
-	target of the 0.2 roadmap and a lot of wrapper methods for GTK+ with a basic GtkWorkspace.
-	This is the list of the major changes:
-	- Running blocking processes inside the scheduler has been fixed
-	- Major fixes to the garbage collector, object finalization, number parsing and to the scheduler
-	- Rehashing support for hashed collections such as Dictinoary, Set and Bag
-	- #perform: and #copyReplace family ANSI methods have been added
-	- Interval and StdIOStream classes have been added
-	- Missing lexer rules for quoted symbols and double quotes in strings have been added
-	- ZeroDivide exception check for number division
-	- Comparing methods to String have been added
-	- A bunch of improvements for the SyxGtk plugin
-	- Rehash dictionaries from C
-	- Visual Studio compilation and debugging support
-	- Useful functions for embedding Syx have been added
-	- Reorganized inline functions to support other compilers and use dllexport and dllimport when
-	  building the library on Windows
-	- Inheritance for method and block objects has been fixed
-	- rootdir and plugindir Scons options have been added
-	- Install dependent-machine object files into libdir instead of sharedir
-	- Option -c has been added to syx to continue the startup sequence once filed in files
-	  from the command line
-	- Support for big endian machines has been completed
-	- System signal handling has been added
-	- Print a bug report to the stdout on SIGSEGV or SIGILL containing informations on the memory state,
-	  the execution state and the traceback of the active broken Process
-	- Image recovery on SIGSEGV and SIGILL or through the syx --recovery option
-	- Scripting header (e.g. #!/usr/bin/env syx) support on fileIn
-	- argumentCount check for methods and blocks has been introduced
-	- Documentation installation and uninstallation is now supported
-	- Support for 'a' and 'w+' mode with O_CREAT flag have been added to FileStream
-	- Several issues have been fixed for packaging binary distributions of Syx using Scons
-	- Getopt dependency has been removed
-	- Desktop files for Posix systems have been added
-	
-	Syx changed its logo since previous version. The Windows installer will handle .st and .sim files.
-	Roadmap for 0.5 version includes both internal and OS-level threads based schedulers,
-	with possibly parallel computing support.
-	
-	Thanks for all critiques and suggestions, and a special thank to everyone who's contributing to Syx.
+        A more stable VM has been reached with this version. Many features have been added for both
+        the embedding and the environment. This version also includes the "image endianness compatibility"
+        target of the 0.2 roadmap and a lot of wrapper methods for GTK+ with a basic GtkWorkspace.
+        This is the list of the major changes:
+        - Running blocking processes inside the scheduler has been fixed
+        - Major fixes to the garbage collector, object finalization, number parsing and to the scheduler
+        - Rehashing support for hashed collections such as Dictinoary, Set and Bag
+        - #perform: and #copyReplace family ANSI methods have been added
+        - Interval and StdIOStream classes have been added
+        - Missing lexer rules for quoted symbols and double quotes in strings have been added
+        - ZeroDivide exception check for number division
+        - Comparing methods to String have been added
+        - A bunch of improvements for the SyxGtk plugin
+        - Rehash dictionaries from C
+        - Visual Studio compilation and debugging support
+        - Useful functions for embedding Syx have been added
+        - Reorganized inline functions to support other compilers and use dllexport and dllimport when
+          building the library on Windows
+        - Inheritance for method and block objects has been fixed
+        - rootdir and plugindir Scons options have been added
+        - Install dependent-machine object files into libdir instead of sharedir
+        - Option -c has been added to syx to continue the startup sequence once filed in files
+          from the command line
+        - Support for big endian machines has been completed
+        - System signal handling has been added
+        - Print a bug report to the stdout on SIGSEGV or SIGILL containing informations on the memory state,
+          the execution state and the traceback of the active broken Process
+        - Image recovery on SIGSEGV and SIGILL or through the syx --recovery option
+        - Scripting header (e.g. #!/usr/bin/env syx) support on fileIn
+        - argumentCount check for methods and blocks has been introduced
+        - Documentation installation and uninstallation is now supported
+        - Support for 'a' and 'w+' mode with O_CREAT flag have been added to FileStream
+        - Several issues have been fixed for packaging binary distributions of Syx using Scons
+        - Getopt dependency has been removed
+        - Desktop files for Posix systems have been added
+        
+        Syx changed its logo since previous version. The Windows installer will handle .st and .sim files.
+        Roadmap for 0.5 version includes both internal and OS-level threads based schedulers,
+        with possibly parallel computing support.
+        
+        Thanks for all critiques and suggestions, and a special thank to everyone who's contributing to Syx.
 
 (Luca Bruno)
 
@@ -78,40 +79,40 @@ xx December 2007
 30 July 2007
 ------------
 
-	Released Syx 0.1.3 version.
+        Released Syx 0.1.3 version.
 
-	This release adds yet more support for other platforms (Windows CE), a bunch of bug fixes,
-	and many features like the ST compiler. This is a list of what changed
-	since previous release:
-	- Fractions, division methods and some other match functions
-	  (floor, ceiling, quo, trunc, ...) have been added
-	- Some lexer issues (quotes, minus, ...) have been fixed
-	- Fixed garbage collection while finalizing objects
-	- Many ANSI methods for Character have been covered
-	- First attempt to reach endianness image compatibility
-	- String to Number methods and viceversa have been added
-	- Super messages have been fixed
-	- Syntax shortucts such as Object>>#caseOf:otherwise: have been added
-	- Fixed cascading parsing
-	- A complete Smalltalk compiler has been added
-	- Support for cross-compiling and with more options have been added to Scons
-	- Save text of methods
-	- Increased initial memory size from 20000 objects to 100000 objects
-	- More C functions have been documented
-	- An important issue in ArrayedCollection>>#replace:From:To:With: primitive has been fixed
-	- Access mode (read, write, read and write) to Streams and more methods
-	  to FileStreams have been added
-	- CompiledMethod and CompiledBlock inheritance has been reorganized
-	- Run Smalltalk scripts from command line
-	- New plugin to wrap native Win API to create a simple WinWorkspace
-	- Build Syx for Windows CE with WinWorkspace running on the device
-	- Support for user-defined startup sequence has been added
-	- Support for wide-character strings has been added
-	- getopt, errno, fstat, access, getenv and perror are now optional functions
+        This release adds yet more support for other platforms (Windows CE), a bunch of bug fixes,
+        and many features like the ST compiler. This is a list of what changed
+        since previous release:
+        - Fractions, division methods and some other match functions
+          (floor, ceiling, quo, trunc, ...) have been added
+        - Some lexer issues (quotes, minus, ...) have been fixed
+        - Fixed garbage collection while finalizing objects
+        - Many ANSI methods for Character have been covered
+        - First attempt to reach endianness image compatibility
+        - String to Number methods and viceversa have been added
+        - Super messages have been fixed
+        - Syntax shortucts such as Object>>#caseOf:otherwise: have been added
+        - Fixed cascading parsing
+        - A complete Smalltalk compiler has been added
+        - Support for cross-compiling and with more options have been added to Scons
+        - Save text of methods
+        - Increased initial memory size from 20000 objects to 100000 objects
+        - More C functions have been documented
+        - An important issue in ArrayedCollection>>#replace:From:To:With: primitive has been fixed
+        - Access mode (read, write, read and write) to Streams and more methods
+          to FileStreams have been added
+        - CompiledMethod and CompiledBlock inheritance has been reorganized
+        - Run Smalltalk scripts from command line
+        - New plugin to wrap native Win API to create a simple WinWorkspace
+        - Build Syx for Windows CE with WinWorkspace running on the device
+        - Support for user-defined startup sequence has been added
+        - Support for wide-character strings has been added
+        - getopt, errno, fstat, access, getenv and perror are now optional functions
 
-	Cross-compiling to Windows CE has been done with host=arm-wince-mingw32ce using CeGCC
-	by disabling all configuration options.
-	Endianness compatibility is not perfectly reached yet.
+        Cross-compiling to Windows CE has been done with host=arm-wince-mingw32ce using CeGCC
+        by disabling all configuration options.
+        Endianness compatibility is not perfectly reached yet.
 
 (Luca Bruno)
 
@@ -119,23 +120,23 @@ xx December 2007
 13 July 2007
 ------------
 
-	Released Syx 0.1.2 version.
+        Released Syx 0.1.2 version.
 
-	This version has a bunch of new features added to the Smalltalk environment,
-	and a more stable VM. Major enhancements includes:
-	- New compiler flags to build Syx on Mac OS
-	- Added Sets and Bags
-	- Refactored objects to hold both instance variables and indexed variables
-	- Literals in methods are now constant
-	- Added basic WriteStream
-	- Doubled initial memory size to hold 20000 objects
-	- Fixed ByteArray/String small integer to character conversion
-	- Added object finalization by fixing GC transactions
-	- Added support for infinite-precision numbers using GMP
-	- Integer overflow checks when doing sum, difference, multiplication and bit-shift
+        This version has a bunch of new features added to the Smalltalk environment,
+        and a more stable VM. Major enhancements includes:
+        - New compiler flags to build Syx on Mac OS
+        - Added Sets and Bags
+        - Refactored objects to hold both instance variables and indexed variables
+        - Literals in methods are now constant
+        - Added basic WriteStream
+        - Doubled initial memory size to hold 20000 objects
+        - Fixed ByteArray/String small integer to character conversion
+        - Added object finalization by fixing GC transactions
+        - Added support for infinite-precision numbers using GMP
+        - Integer overflow checks when doing sum, difference, multiplication and bit-shift
 
-	Note that Syx can be compiled also without GMP. Eventough you use an image containing
-	LargeIntegers, Syx will run without problems but won't understand that numbers.
+        Note that Syx can be compiled also without GMP. Eventough you use an image containing
+        LargeIntegers, Syx will run without problems but won't understand that numbers.
 
 (Luca Bruno)
 
@@ -143,19 +144,19 @@ xx December 2007
 05 July 2007
 ------------
 
-	Released Syx 0.1.1 version.
+        Released Syx 0.1.1 version.
 
-	This second version of Syx includes as many bug fixes as feature enhancements.
-	I wanted to release this version just after 3 days because i think these
-	changes are very important.
-	- Implemented linear hash tables, similiar to double hash
-	- Added method caching to unary and binary messages too
-	- Added bdist command to create a binary distribution
-	- Improved exception handling and tracebacks
-	- Added Integer class with basic bit-wise operations
-	- Inline whileFalse: block
-	- Covered most of PositionableStream standard
-	- Added basic subclassing at runtime
+        This second version of Syx includes as many bug fixes as feature enhancements.
+        I wanted to release this version just after 3 days because i think these
+        changes are very important.
+        - Implemented linear hash tables, similiar to double hash
+        - Added method caching to unary and binary messages too
+        - Added bdist command to create a binary distribution
+        - Improved exception handling and tracebacks
+        - Added Integer class with basic bit-wise operations
+        - Inline whileFalse: block
+        - Covered most of PositionableStream standard
+        - Added basic subclassing at runtime
 
 (Luca Bruno)
 
@@ -163,32 +164,32 @@ xx December 2007
 02 July 2007
 ------------
 
-	Released Syx 0.1 version.
+        Released Syx 0.1 version.
 
-	This is the first version of Syx and includes an almost
-	stable VM without memory leaks till now (we hope).
-	- Added a simple garbage collector.
-	- Covered a limited number of Smalltalk-80 standards.
-	- Image compatible with both 32-bit and 64-bit platforms.
-	- The VM works indifferently on Win32 and Posix.
-	- Use Scons as building system
-	- Interactive console from whithin Smalltalk itself
-	- Immediate SmallIntegers and Characters
-	- A basic plugin system
-	- Support for Floats and LargeIntegers
-	- Fixed operations between different numbers
-	- Easy C to Smalltalk interaction
-	- Added class variables
-	- Variable bindings for globals and class variables
-	- Added OrderedCollection
-	- Very simple method caching
-	- Still limited exceptions and tracebacks
-	- Remove Glib dependency
-	- Syncronous I/O multi-plexing trough Semaphores
-	- Use direct pointers instead of indexes for oops
-	- Organized better debugging informations
-	- Documented using Doxygen
-	- Reorganized Syx initialization
+        This is the first version of Syx and includes an almost
+        stable VM without memory leaks till now (we hope).
+        - Added a simple garbage collector.
+        - Covered a limited number of Smalltalk-80 standards.
+        - Image compatible with both 32-bit and 64-bit platforms.
+        - The VM works indifferently on Win32 and Posix.
+        - Use Scons as building system
+        - Interactive console from whithin Smalltalk itself
+        - Immediate SmallIntegers and Characters
+        - A basic plugin system
+        - Support for Floats and LargeIntegers
+        - Fixed operations between different numbers
+        - Easy C to Smalltalk interaction
+        - Added class variables
+        - Variable bindings for globals and class variables
+        - Added OrderedCollection
+        - Very simple method caching
+        - Still limited exceptions and tracebacks
+        - Remove Glib dependency
+        - Syncronous I/O multi-plexing trough Semaphores
+        - Use direct pointers instead of indexes for oops
+        - Organized better debugging informations
+        - Documented using Doxygen
+        - Reorganized Syx initialization
 
 (Luca Bruno)
 
@@ -196,9 +197,9 @@ xx December 2007
 28 May 2007
 -----------
 
-	After i defined how the VM should become in the time,
-	i created a google code account at: http://code.google.com/p/syx.
-	Now Syx is officially opened to Internet as an open source project under MIT license.
-	I hope to release the first 0.1 version very soon.
+        After i defined how the VM should become in the time,
+        i created a google code account at: http://code.google.com/p/syx.
+        Now Syx is officially opened to Internet as an open source project under MIT license.
+        I hope to release the first 0.1 version very soon.
 
 (Luca Bruno)
