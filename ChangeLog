@@ -1,3 +1,12 @@
+2007-12-14  Luca Bruno  <lethalman88@gmail.com>
+
+	New process/context API
+
+	* plugins/wingui/plugin-init.c (WndProcedure): 
+	* plugins/gtk/plugin-init.c (syx_g_closure_marshal):
+	* plugins/gtk/plugin-init.c (syx_plugin_initialize): 
+	* syx/syx-interp.h (syx_interp_get_current_process): added
+	
 2007-11-18  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/ArrayedCollection.st (withAll:startingAt): added

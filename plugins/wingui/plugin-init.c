@@ -139,7 +139,8 @@ LRESULT CALLBACK WndProcedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	     the stack versus infinite.
 	  */
 	  syx_interp_stack_pop ();
-	  syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_context (),
+	  syx_interp_enter_context (syx_send_binary_message (syx_interp_get_current_process ();
+                                                             syx_interp_get_current_context (),
 							     syx_globals_at ("WinWorkspace"),
 							     "doIt:",
 							     stext));

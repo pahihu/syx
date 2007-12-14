@@ -36,7 +36,7 @@
 
 /* Version */
 
-#define SYX_VERSION "0.1.4"
+#define SYX_VERSION "0.1.5"
 
 /* Inline */
 

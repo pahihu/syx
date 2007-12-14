@@ -354,7 +354,7 @@ elif env['debug'] == 'full':
 if env['PLATFORM'] == 'win32':
    env.MergeFlags ('-DWINDOWS')
 
-distdir = '#syx-0.1.4'
+distdir = '#syx-0.1.5'
 
 # Installation
 

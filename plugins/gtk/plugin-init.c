@@ -36,11 +36,11 @@ _syx_gtk_main (gpointer data)
 }
 
 EXPORT void syx_g_closure_marshal (GClosure *closure,
-			    GValue *return_value,
-			    guint n_param_values,
-			    const GValue *param_values,
-			    gpointer invocation_hint,
-			    gpointer marshal_data)
+                                   GValue *return_value,
+                                   guint n_param_values,
+                                   const GValue *param_values,
+                                   gpointer invocation_hint,
+                                   gpointer marshal_data)
 {
   SyxOop array = syx_array_new_size (n_param_values);
   SyxOop context;
@@ -107,12 +107,11 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 	}
     }
 
-  context = syx_send_unary_message (syx_nil, callback, "invoke");
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_send_unary_message (process, syx_nil, callback, "invoke");
   SYX_PROCESS_SUSPENDED (process) = syx_false;
   gdk_threads_leave ();
-  g_thread_yield ();
-  while (!SYX_IS_NIL (SYX_PROCESS_CONTEXT (process))) { g_thread_yield (); };
+  do { g_thread_yield (); } while (!SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)));
 
   return;
 }
@@ -166,8 +165,8 @@ syx_plugin_initialize (void)
 
   _syx_gtk_initialized = TRUE;
   
-  context = syx_send_unary_message (syx_nil, syx_globals_at ("Gtk"), "initialize");
-  process = syx_process_new (context);
+  process = syx_process_new ();
+  context = syx_send_unary_message (process, syx_nil, syx_globals_at ("Gtk"), "initialize");
   syx_process_execute_blocking (process);
   
   g_thread_init (NULL);

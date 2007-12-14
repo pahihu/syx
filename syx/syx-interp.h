@@ -184,6 +184,9 @@ syx_interp_quit (void)
 /*! Peek the last object pushed into the stack */
 #define syx_interp_stack_peek() (_syx_exec_state->stack[_syx_exec_state->sp - 1])
 
+/*! Get the current running process */
+#define syx_interp_get_current_process() (_syx_exec_state->process)
+
 /*! Get the current context being executed */
 #define syx_interp_get_current_context() (_syx_exec_state->context)
 
