@@ -56,7 +56,7 @@ syx_nanotime (void)
   value = (value - (syx_uint64) 116444736000000000) * 100;
   return value;
 
-#elseif !defined(WINDOWS) /* WINDOWS */
+#elif !defined(WINDOWS) /* WINDOWS */
 
   struct timeval tv;
   gettimeofday (&tv, NULL);
