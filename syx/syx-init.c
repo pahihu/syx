@@ -114,6 +114,7 @@ _syx_file_in_basic (void)
     "Symbol.st",
     "Magnitude.st", "Number.st", "Integer.st", "SmallInteger.st", "LargeInteger.st", "Fraction.st", "Float.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
+    "CObject.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Stack.st",
     "Character.st", "ByteArray.st", "String.st",

@@ -183,6 +183,10 @@ Object subclass: #Magnitude
        instanceVariableNames: ''
        classVariableNames: ''!
 
+Object subclass: #CObject
+       instanceVariableNames: 'handle'
+       classVariableNames: ''!
+
 Magnitude subclass: #Character
 	  instanceVariableNames: ''
           classVariableNames: 'WhiteSpaceTable XDigitsTable'!
