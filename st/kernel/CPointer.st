@@ -22,35 +22,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!CObject class methodsFor: 'instance creation'!
+Object subclass: #CPointer
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
-new
-    self subclassResponsibility
-!
-
-handle: aCPointer
-    ^self basicNew handle: aCPointer
-! !
-
-!CObject methodsFor: 'initialize-release'!
-
-handle: aCPointer
-    handle := aCPointer
-! !
-
-!CObject methodsFor: 'accessing'!
-
-handle
-    ^handle
-! !
-
-!CObject methodsFor: 'finalization'!
+!CPointer methodsFor: 'finalization'!
 
 free
-    handle free.
-    handle := nil
-!
-
-finalize
-    self free
+    <primitive: 'CPointer_free'>
+         self primitiveFailed
 ! !

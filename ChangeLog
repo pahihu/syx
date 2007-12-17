@@ -1,3 +1,28 @@
+2007-12-17  Luca Bruno  <lethalman88@gmail.com>
+
+	* plugins/x11: added (thanks to Rahul aka blufox)
+
+	* SConstruct: build x11 plugin
+
+	* st/kernel/CPointer.st: added
+
+	* st/kernel/CObject.st (free): added
+	(finalize): added
+
+	* syx/syx-object.h: 
+
+	* syx/syx-object.c (syx_class_initialize): added
+
+	* syx/syx-interp.h (syx_interp_is_initialized): added
+
+	* syx/syx-init.c (_syx_file_in_basic): file in CPointer.st and CObject.st
+
+	* syx/syx-primitives.c (CPointer_free): added
+
+	* plugins/SConscript: add x11 plugin
+
+	* plugins/gtk/SConscript: add Swig interface files
+
 2007-12-16  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/CObject.st: added

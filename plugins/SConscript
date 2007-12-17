@@ -33,7 +33,7 @@ penv = env.Clone ()
 if penv[ 'PLATFORM'] == 'win32':
    penv.MergeFlags ('-DBUILD_DLL')
    
-SConscript (dirs=['gtk', 'readline', 'wingui'], exports=['penv', 'distdir'])
+SConscript (dirs=['gtk', 'readline', 'wingui', 'x11'], exports=['penv', 'distdir'])
 
 target = env.Install (os.path.join (distdir, 'plugins'), 'SConscript')
 env.Alias ('sdist', target)

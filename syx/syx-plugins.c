@@ -205,7 +205,7 @@ syx_plugin_load (syx_symbol name)
 #else
       strcat (namext, ".so");
 #endif /* WINDOWS */
-      
+
       location = (syx_string) syx_calloc (strlen (SYX_PLUGIN_PATH)
 					  + strlen (name)
 					  + strlen (namext) + 3, sizeof (syx_char));
@@ -213,6 +213,7 @@ syx_plugin_load (syx_symbol name)
 	       SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
 	       name, SYX_PATH_SEPARATOR,
 	       namext);
+
       syx_free (namext);
       
 #ifdef SYX_DEBUG_INFO

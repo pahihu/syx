@@ -233,6 +233,7 @@ EXPORT syx_int32 syx_string_hash (syx_symbol string);
 
 EXPORT SyxOop syx_metaclass_new (SyxOop supermetaclass);
 EXPORT SyxOop syx_class_new (SyxOop superclass);
+EXPORT void syx_class_initialize (SyxOop class);
 EXPORT SyxOop syx_large_integer_new (syx_symbol string, syx_int32 base);
 EXPORT SyxOop syx_large_integer_new_integer (syx_int32 integer);
 EXPORT SyxOop syx_large_integer_new_mpz (syx_pointer mpz);

@@ -92,7 +92,8 @@ opts.AddOptions (
 
    BoolOption ('GTK', """Build the syx-gtk plugin to support graphical user interfaces""", True),
    BoolOption ('WINGUI', """Build the syx-wingui plugin to support native windows user interfaces""", True),
-   BoolOption ('READLINE', """Build the syx-readline plugin to add more console features""", True))
+   BoolOption ('READLINE', """Build the syx-readline plugin to add more console features""", True),
+   BoolOption ('X11', """Build the syx-x11 plugin to wrap the X11 library""", True))
 
 opts.Update (env)
 opts.Save ('options.cache', env)

@@ -111,7 +111,7 @@ syx_exec_state_save (void)
     }
 
 /*! The number of primitives */
-#define SYX_PRIMITIVES_MAX 102
+#define SYX_PRIMITIVES_MAX 103
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)					\
@@ -160,6 +160,17 @@ syx_interp_init (void)
 {
   if (!_syx_exec_state)
     _syx_exec_state = syx_exec_state_new ();
+}
+
+/*!
+  Check whether the interpreter is running.
+
+  \return TRUE if the interpreter has been initialized
+*/
+INLINE syx_bool
+syx_interp_is_initialized (void)
+{
+  return _syx_exec_state != NULL;
 }
 
 /*!

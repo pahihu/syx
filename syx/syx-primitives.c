@@ -1794,6 +1794,18 @@ SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+/* CPointer */
+
+SYX_FUNC_PRIMITIVE (CPointer_free)
+{
+  SyxOop ptr;
+  ptr = es->message_receiver;
+  if (!SYX_IS_NIL (ptr))
+    syx_free (SYX_OOP_CAST_POINTER (ptr));
+  
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1926,7 +1938,10 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   /* Compiler */
   { "CompiledMethod_runOn", CompiledMethod_runOn },
   { "Compiler_parse", Compiler_parse },
-  { "Compiler_parseChunk", Compiler_parseChunk }
+  { "Compiler_parseChunk", Compiler_parseChunk },
+
+  /* CPointer */
+  { "CPointer_free", CPointer_free }
 };
 
 syx_int32

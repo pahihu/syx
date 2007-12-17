@@ -148,6 +148,29 @@ syx_class_new (SyxOop superclass)
 }
 
 /*!
+  Initialize a class from the Smalltalk-side
+
+  Create a new process, a new context and send the #initialize message to the class.
+  The process is executed in blocking mode.
+
+  \param class the class to be initialized
+*/
+void
+syx_class_initialize (SyxOop class)
+{
+  SyxOop process;
+  SyxOop context;
+
+  /* initialize the class only if the interpreter is running */
+  if (syx_interp_is_initialized ())
+    {
+      process = syx_process_new ();
+      context = syx_send_unary_message (process, syx_nil, class, "initialize");
+      syx_process_execute_blocking (process);
+    }
+}
+
+/*!
   Create a new LargeInteger.
 
   \b This function is available only if Syx has been linked with the GMP library
