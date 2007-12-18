@@ -133,6 +133,10 @@ asNumber
 
 !String methodsFor: 'testing'!
 
+isCapitalized
+    ^self first isUppercase
+!
+
 isString
     ^true
 ! !

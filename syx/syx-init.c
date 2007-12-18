@@ -138,9 +138,22 @@ _syx_file_in_basic (void)
     NULL
   };
 
+  static syx_symbol foreign_filenames[] = {
+    "CPointer.st", "CObject.st",
+    "CStructFieldType.st", "CStructFieldSpec.st", "CStructGenerator", "CStruct.st",
+    NULL
+  };
+
   for (filename = kernel_filenames; *filename; filename++)
     {
       full_filename = syx_find_file ("st", "kernel", *filename);
+      syx_cold_file_in (full_filename);
+      syx_free (full_filename);
+    }
+
+  for (filename = foreign_filenames; *filename; filename++)
+    {
+      full_filename = syx_find_file ("st", "foreign", *filename);
       syx_cold_file_in (full_filename);
       syx_free (full_filename);
     }
