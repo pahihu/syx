@@ -114,7 +114,6 @@ _syx_file_in_basic (void)
     "Symbol.st",
     "Magnitude.st", "Number.st", "Integer.st", "SmallInteger.st", "LargeInteger.st", "Fraction.st", "Float.st",
     "Object.st", "UndefinedObject.st", "ObjectMemory.st",
-    "CPointer.st", "CObject.st",
     "Collection.st", "ArrayedCollection.st", "SequenceableCollection.st", "OrderedCollection.st",
     "Stack.st",
     "Character.st", "ByteArray.st", "String.st",
@@ -140,7 +139,7 @@ _syx_file_in_basic (void)
 
   static syx_symbol foreign_filenames[] = {
     "CPointer.st", "CObject.st",
-    "CStructFieldType.st", "CStructFieldSpec.st", "CStructGenerator", "CStruct.st",
+    "CStructFieldType.st", "CStructFieldSpec.st", "CStructGenerator.st", "CStruct.st",
     NULL
   };
 

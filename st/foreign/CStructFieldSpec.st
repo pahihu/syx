@@ -60,6 +60,6 @@ alignAccordingToPreviousField: aFieldSpec
          ifNil: [ ^self ].
 
      diff := type bytes - aFieldSpec type bytes.
-     diff positive
+     diff > 0
          ifTrue: [ offset := offset + diff ]
 ! !

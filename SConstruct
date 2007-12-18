@@ -408,6 +408,10 @@ sources = glob.glob ('st/kernel/*.st')
 path = os.path.join (env['rootdir'], 'st', 'kernel')
 env.SyxInstall (path, sources)
 
+sources = glob.glob ('st/foreign/*.st')
+path = os.path.join (env['rootdir'], 'st', 'foreign')
+env.SyxInstall (path, sources)
+
 if env['PLATFORM'] == 'posix':
    desktoppath = os.path.join (env['datadir'], 'applications')
    desktopapps = [os.path.join ('#share', 'syx.desktop'), os.path.join ('#share', 'syximage.desktop')]
@@ -439,6 +443,10 @@ if env['PLATFORM'] == 'posix':
 # Source distribution
 
 path = os.path.join (distdir, 'st', 'kernel')
+target = env.Install (path, sources)
+env.Alias ('sdist', target)
+
+path = os.path.join (distdir, 'st', 'foreign')
 target = env.Install (path, sources)
 env.Alias ('sdist', target)
 

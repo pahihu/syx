@@ -30,7 +30,7 @@ CObject subclass: #CStruct
 
 initialize
     (CStructGenerator new: self fields)
-         compileAccessors on: self
+         compileAccessorsOn: self
 !
 
 fields

@@ -1,5 +1,13 @@
 2007-12-18  Luca Bruno  <lethalman88@gmail.com>
 
+	Moved CPointer and CObject to st/foreign.
+
+	* SConstruct: install st/foreign files
+	
+	* st/kernel/String.st (isCapitalized): added
+
+	* syx/syx-init.c (_syx_file_in_basic): file in st/foreign files
+
 	* st/foreign: added foreign structure interface support for C
 
 2007-12-17  Luca Bruno  <lethalman88@gmail.com>

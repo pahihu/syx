@@ -36,8 +36,7 @@ new: anArrayOfFields
 
 fields: anArrayOfFields
     fields := anArrayOfFields.
-    fieldSpecs := self generateFieldSpecs.
-    self alignFields
+    fieldSpecs := self generateFieldSpecs
 !
 
 fields
@@ -55,21 +54,28 @@ fieldSpecs
 !CStructGenerator methodsFor: 'generator'!
 
 generateFieldSpecs
-    ^fields collect: [ :field |
-          CStructFieldSpec new
-               name: field first;
-               type: (CStructFieldType fromName: field second) ].
+    | specs |
+    specs := fields collect: [ :field |
+                    CStructFieldSpec new
+                    name: field first;
+                    type: (CStructFieldType fromName: field second) ].
+    self alignFields: specs.
+    ^specs
+!
+
+compileAccessorsOn: aClass
+    ^self
 ! !
 
 !CStructGenerator methodsFor: 'alignment'!
 
-alignFields
+alignFields: specs
     | prevField offset |
     offset := 0.
-    fieldSpecs := fieldSpecs collect: [ :spec |
+    specs collect: [ :spec |
           spec
                 offset: offset;
                 alignAccordingToPreviousField: prevField.
-          offset := field offset + field type bytes.
-          prevField := field ]
+          offset := spec offset + spec type bytes.
+          prevField := spec ]
 ! !

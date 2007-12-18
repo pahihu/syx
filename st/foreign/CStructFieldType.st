@@ -29,8 +29,8 @@ Object subclass: #CStructFieldType
 !CStructFieldType class methodsFor: 'initialize-release'!
 
 initialize
-     CStructFieldSizes := IdentityDictionary new.
-     CStructFieldSizes
+     CStructFieldBytes := IdentityDictionary new.
+     CStructFieldBytes
           at: #char put: 1;
           at: #shortInt put: 2;
           at: #int put: 4;
