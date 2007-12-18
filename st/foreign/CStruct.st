@@ -35,12 +35,12 @@ initialize
 
 fields
     "Example:
-     ^#(#(field1 char)
-        #(field2 shortInt)
-        #(field3 int)
-        #(field4 largeInt)
-        #(field5 pointer)
-        #(field6 NestedCStruct))"
+     ^#((field1 char)
+        (field2 shortInt)
+        (field3 int)
+        (field4 largeInt)
+        (field5 pointer)
+        (field6 NestedCStruct))"
 
     ^#()
 ! !

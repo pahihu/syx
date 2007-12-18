@@ -35,7 +35,7 @@ initialize
           at: #shortInt put: 2;
           at: #int put: 4;
           at: #largeInteger put: 8;
-          at: #pointer put: 4
+          at: #pointer put: 8
 ! !
 
 !CStructFieldType class methodsFor: 'instance creation'!

@@ -70,12 +70,9 @@ compileAccessorsOn: aClass
 !CStructGenerator methodsFor: 'alignment'!
 
 alignFields: specs
-    | prevField offset |
-    offset := 0.
+    | prevField |
+    specs ifNil: [ ^self ].
     specs collect: [ :spec |
-          spec
-                offset: offset;
-                alignAccordingToPreviousField: prevField.
-          offset := spec offset + spec type bytes.
+          spec alignAccordingToPreviousField: prevField.
           prevField := spec ]
 ! !

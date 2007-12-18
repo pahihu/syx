@@ -1,5 +1,12 @@
 2007-12-18  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/foreign/CStructGenerator.st (alignFields): cleaned the code
+
+	* st/foreign/CStructFieldSpec.st (alignAccordingToPreviousField): fixed
+	(nextAlignedOffset): added
+
+	* tests/testforeignstruct.c: added
+
 	Moved CPointer and CObject to st/foreign.
 
 	* SConstruct: install st/foreign files

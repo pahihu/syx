@@ -54,12 +54,22 @@ offset: anOffset
 
 !CStructFieldSpec methodsFor: 'alignment'!
 
-alignAccordingToPreviousField: aFieldSpec
-     | diff |
-     aFieldSpec
-         ifNil: [ ^self ].
+nextAlignedOffset
+     | bytes |
+     bytes := type bytes.
+     offset to: offset + bytes do: [ :i |
+         (i \\ bytes) = 0
+              ifTrue: [ ^i ] ]
+!
 
-     diff := type bytes - aFieldSpec type bytes.
-     diff > 0
-         ifTrue: [ offset := offset + diff ]
+alignAccordingToPreviousField: aFieldSpec
+     | diff myBytes prevBytes |
+     aFieldSpec
+         ifNil: [ offset := 0. ^self ].
+
+     myBytes := type bytes.
+     prevBytes := aFieldSpec type bytes.
+     offset := aFieldSpec offset + prevBytes.
+     myBytes > prevBytes
+         ifTrue: [ offset := self nextAlignedOffset ]
 ! !
