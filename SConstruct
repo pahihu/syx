@@ -102,8 +102,8 @@ opts.Save ('options.cache', env)
 if env['PLATFORM'] == 'posix':
    env['ENV']['PATH'] = '/tools64/bin:' + env['ENV']['PATH']
 
-# Specify the alternative toolchain for Windows
-env['tools'] = ['default', 'mingw']
+# Specify the toolchain
+env['tools'] = ['gcc', 'mingw']
    
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
