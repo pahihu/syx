@@ -105,17 +105,17 @@ if env['PLATFORM'] == 'posix':
 # Specify the toolchain
 env['tools'] = ['default', 'mingw']
 
-CC=os.getenv('CC')
-LINK=os.getenv('LINK')
-AR=os.getenv
+CC=os.getenv ('CC')
+LINK=os.getenv ('LINK')
+AR=os.getenv ('AR')
 if CC:
-   env.Replace(CC = CC)
+   env.Replace(CC = env.WhereIs (CC))
    if not LINK:
-      env.Replace(LINK = CC)
+      env.Replace(LINK = env.WhereIs (CC))
 if LINK:
-   env.Replace(LINK = LINK)
+   env.Replace(LINK = env.WhereIs (LINK))
 if AR:
-   env.Replace(AR = AR)
+   env.Replace(AR = env.WhereIs (AR))
    
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """
@@ -342,6 +342,7 @@ conf.Finish ()
 # Flags
 env.MergeFlags ('-Wall -Wno-strict-aliasing -I#.')
 env.MergeFlags (os.getenv('CFLAGS'))
+env['LINKFLAGS'].append (os.getenv('CFLAGS'))
 
 if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')
