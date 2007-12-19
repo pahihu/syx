@@ -82,6 +82,29 @@ SyxOop syx_nil,
   syx_globals;
 
 /*!
+  Initialize a class from the Smalltalk-side
+
+  Create a new process, a new context and send the #initialize message to the class.
+  The process is executed in blocking mode.
+
+  \param class the class to be initialized
+*/
+void
+syx_object_initialize (SyxOop oop)
+{
+  SyxOop process;
+  SyxOop context;
+
+  /* initialize only if the interpreter is running */
+  if (syx_interp_is_initialized ())
+    {
+      process = syx_process_new ();
+      context = syx_send_unary_message (process, syx_nil, oop, "initialize");
+      syx_process_execute_blocking (process);
+    }
+}
+
+/*!
   Resize SyxObject::data to the given size, being careful of object indexables and byte indexables.
 
   Warning, if the new size is lesser than the current, the data at the end of the array will be lost
@@ -145,29 +168,6 @@ syx_class_new (SyxOop superclass)
   SYX_CLASS_SUBCLASSES(klass) = syx_array_new (0, NULL);
   syx_array_add (SYX_CLASS_SUBCLASSES(superclass), klass, TRUE);
   return klass;
-}
-
-/*!
-  Initialize a class from the Smalltalk-side
-
-  Create a new process, a new context and send the #initialize message to the class.
-  The process is executed in blocking mode.
-
-  \param class the class to be initialized
-*/
-void
-syx_class_initialize (SyxOop class)
-{
-  SyxOop process;
-  SyxOop context;
-
-  /* initialize the class only if the interpreter is running */
-  if (syx_interp_is_initialized ())
-    {
-      process = syx_process_new ();
-      context = syx_send_unary_message (process, syx_nil, class, "initialize");
-      syx_process_execute_blocking (process);
-    }
 }
 
 /*!

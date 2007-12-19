@@ -14,7 +14,6 @@ AC_CANONICAL_TARGET
 
 dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
-AM_INIT_AUTOMAKE([AC_PACKAGE_TARNAME()], [AC_PACKAGE_VERSION()])
 AM_CONFIG_HEADER(syx/syx-config.h)
 
 dnl with args

@@ -64,7 +64,8 @@ generateFieldSpecs
 !
 
 compileAccessorsOn: aClass
-    ^self
+    fieldSpecs do: [ :spec |
+          spec compileAccessorsOn: aClass ]
 ! !
 
 !CStructGenerator methodsFor: 'alignment'!

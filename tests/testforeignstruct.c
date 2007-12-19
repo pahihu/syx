@@ -67,6 +67,7 @@ main (int argc, char *argv[])
 {
   SyxOop process, context;
   SyxOop arguments;
+  SyxOop structTestClass;
   SyxOop structTest;
 
   // use build to find plugins
@@ -75,7 +76,9 @@ main (int argc, char *argv[])
   syx_scheduler_init ();
 
   syx_cold_file_in ("tests/stsupport/TestCStruct.st");
-  structTest = syx_object_new (syx_globals_at ("TestCStruct"));
+  structTestClass = syx_globals_at ("TestCStruct");
+  syx_object_initialize (structTestClass);
+  structTest = syx_object_new (structTestClass);
 
   puts ("- Test fields alignment 1");
   arguments = syx_array_new_size (6);
@@ -88,8 +91,8 @@ main (int argc, char *argv[])
   process = syx_process_new ();
   context = syx_send_message (process, syx_nil,
                               structTest,
-                              "expectOffsets:from:",
-                              2, arguments, syx_symbol_new ("test1Fields"));
+                              "testOffsets:from:",
+                              2, arguments, syx_symbol_new ("Test1Struct"));
   syx_process_execute_blocking (process);
 
   puts ("- Test fields alignment 2");
@@ -111,8 +114,8 @@ main (int argc, char *argv[])
   process = syx_process_new ();
   context = syx_send_message (process, syx_nil,
                               structTest,
-                              "expectOffsets:from:",
-                              2, arguments, syx_symbol_new ("test2Fields"));
+                              "testOffsets:from:",
+                              2, arguments, syx_symbol_new ("Test2Struct"));
   syx_process_execute_blocking (process);
 
   puts ("- Test fields alignment 3");
@@ -124,9 +127,33 @@ main (int argc, char *argv[])
   process = syx_process_new ();
   context = syx_send_message (process, syx_nil,
                               structTest,
-                              "expectOffsets:from:",
-                              2, arguments, syx_symbol_new ("test3Fields"));
+                              "testOffsets:from:",
+                              2, arguments, syx_symbol_new ("Test3Struct"));
   syx_process_execute_blocking (process);
+
+  puts ("- Test reading");
+  test3.f1 = 240;
+  test3.f2 = 7143;
+  test3.f3 = 'R';
+  test3.f4 = 0; /* won't read yet */
+  process = syx_process_new ();
+  context = syx_send_binary_message (process, syx_nil,
+                                     structTest,
+                                     "testRead:",
+                                     SYX_POINTER_CAST_OOP (&test3));
+  syx_process_execute_blocking (process);
+
+  puts ("- Test writing");
+  process = syx_process_new ();
+  context = syx_send_binary_message (process, syx_nil,
+                                     structTest,
+                                     "testWrite:",
+                                     SYX_POINTER_CAST_OOP (&test3));
+  syx_process_execute_blocking (process);
+  assert(test3.f1 == 320);
+  assert(test3.f2 == 10293);
+  assert(test3.f3 == ',');
+  /* won't write longs yet */
 
   syx_quit ();
   return 0;

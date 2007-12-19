@@ -26,7 +26,7 @@ CObject subclass: #CStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!CObject class methodsFor: 'initialize-release'!
+!CStruct class methodsFor: 'initialize-release'!
 
 initialize
     (CStructGenerator new: self fields)
@@ -38,9 +38,21 @@ fields
      ^#((field1 char)
         (field2 shortInt)
         (field3 int)
-        (field4 largeInt)
+        (field4 long)
         (field5 pointer)
         (field6 NestedCStruct))"
 
     ^#()
+! !
+
+!CStruct methodsFor: 'primitives'!
+
+primOn: handle type: type at: offset
+    <primitive: 'CStruct_on_type_at'>
+        self primitiveFailed
+!
+
+primOn: handle type: type at: offset put: anObject
+    <primitive: 'CStruct_on_type_at_put'>
+        self primitiveFailed
 ! !

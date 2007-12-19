@@ -1806,6 +1806,106 @@ SYX_FUNC_PRIMITIVE (CPointer_free)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+/* CStruct */
+
+static SyxOop type_char;
+static SyxOop type_short_int;
+static SyxOop type_int;
+static SyxOop type_long;
+static SyxOop type_pointer;
+
+SYX_FUNC_PRIMITIVE (CStruct_on_type_at)
+{
+  SyxOop type;
+  SyxOop ret;
+  char *handle;
+  syx_int32 offset;
+  SYX_PRIM_ARGS(2);
+
+  if (SYX_IS_NIL (type_char))
+    {
+      type_char = syx_symbol_new("char");
+      type_short_int = syx_symbol_new("shortInt");
+      type_int = syx_symbol_new("int");
+      type_long = syx_symbol_new("long");
+      type_pointer = syx_symbol_new("pointer");
+    }
+
+  handle = SYX_OOP_CAST_POINTER (es->message_arguments[0]);
+  type = es->message_arguments[1];
+  offset = SYX_SMALL_INTEGER (es->message_arguments[2]);
+  
+  if (SYX_OOP_EQ (type, type_char))
+    ret = syx_character_new (*(handle+offset));
+  else if (SYX_OOP_EQ (type, type_short_int))
+    ret = syx_small_integer_new (*(short int *)(handle+offset));
+  else if (SYX_OOP_EQ (type, type_int))
+    {
+      ret = syx_small_integer_new (*(int *)(handle+offset));
+      if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
+        {
+          /* FIXME: turn into LargeInteger */
+          SYX_PRIM_FAIL;
+        }
+    }
+  else if (SYX_OOP_EQ (type, type_long))
+    {
+      SYX_PRIM_FAIL;
+    }
+  else if (SYX_OOP_EQ (type, type_pointer))
+    ret = SYX_POINTER_CAST_OOP (*(syx_pointer *)(handle+offset));
+  else
+    {
+      /* It's a nested struct */
+      ret = SYX_POINTER_CAST_OOP (handle+offset);
+    }
+
+  SYX_PRIM_RETURN (ret);
+}
+
+SYX_FUNC_PRIMITIVE (CStruct_on_type_at_put)
+{
+  SyxOop type;
+  SyxOop value;
+  char *handle;
+  syx_int32 offset;
+  SYX_PRIM_ARGS(2);
+  handle = SYX_OOP_CAST_POINTER (es->message_arguments[0]);
+  type = es->message_arguments[1];
+  offset = SYX_SMALL_INTEGER (es->message_arguments[2]);
+  value = es->message_arguments[3];
+  
+  if (SYX_IS_NIL (type_char))
+    {
+      type_char = syx_symbol_new("char");
+      type_short_int = syx_symbol_new("shortInt");
+      type_int = syx_symbol_new("int");
+      type_long = syx_symbol_new("long");
+      type_pointer = syx_symbol_new("pointer");
+    }
+
+  if (SYX_OOP_EQ (type, type_char))
+    *(handle+offset) = SYX_CHARACTER (value);
+  else if (SYX_OOP_EQ (type, type_short_int))
+    *(short int *)(handle+offset) = SYX_SMALL_INTEGER (value);
+  else if (SYX_OOP_EQ (type, type_int))
+    *(int *)(handle+offset) = SYX_SMALL_INTEGER (value);
+  else if (SYX_OOP_EQ (type, type_long))
+    {
+      /* TODO */
+      SYX_PRIM_FAIL;
+    }
+  else if (SYX_OOP_EQ (type, type_pointer))
+    *(syx_pointer *)(handle+offset) = SYX_OOP_CAST_POINTER (value);
+  else
+    {
+      /* TODO: nested structures */
+      SYX_PRIM_FAIL;
+    }
+
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
 
@@ -1941,7 +2041,11 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Compiler_parseChunk", Compiler_parseChunk },
 
   /* CPointer */
-  { "CPointer_free", CPointer_free }
+  { "CPointer_free", CPointer_free },
+
+  /* CStruct */
+  { "CStruct_on_type_at", CStruct_on_type_at },
+  { "CStruct_on_type_at_put", CStruct_on_type_at_put }
 };
 
 syx_int32

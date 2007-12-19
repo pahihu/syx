@@ -128,7 +128,7 @@ syx_plugin_initialize (void)
       }
     
     for (array_it = x11_initialize_request_classes; *array_it; array_it++)
-      syx_class_initialize (syx_globals_at (*array_it));
+      syx_object_initialize (syx_globals_at (*array_it));
 
     _syx_x11_initialized = TRUE;
     return TRUE;

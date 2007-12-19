@@ -151,7 +151,7 @@ EXPORT void syx_object_free (SyxOop oop);
 EXPORT void syx_object_resize (SyxOop oop, syx_varsize size);
 #define syx_object_grow_by(oop,size) (syx_object_resize((oop),SYX_OBJECT_DATA_SIZE(oop)+size))
 EXPORT syx_int32 syx_object_get_variable_index (SyxOop self, syx_symbol name);
-
+EXPORT void syx_object_initialize (SyxOop oop);
 
 
 /*! Answer the hash of an Object */
@@ -233,7 +233,6 @@ EXPORT syx_int32 syx_string_hash (syx_symbol string);
 
 EXPORT SyxOop syx_metaclass_new (SyxOop supermetaclass);
 EXPORT SyxOop syx_class_new (SyxOop superclass);
-EXPORT void syx_class_initialize (SyxOop class);
 EXPORT SyxOop syx_large_integer_new (syx_symbol string, syx_int32 base);
 EXPORT SyxOop syx_large_integer_new_integer (syx_int32 integer);
 EXPORT SyxOop syx_large_integer_new_mpz (syx_pointer mpz);

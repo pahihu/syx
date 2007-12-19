@@ -73,3 +73,9 @@ alignAccordingToPreviousField: aFieldSpec
      myBytes > prevBytes
          ifTrue: [ offset := self nextAlignedOffset ]
 ! !
+
+!CStructFieldSpec methodsFor: 'generator'!
+
+compileAccessorsOn: aClass
+     type compileAccessorsOn: aClass named: name withOffset: offset
+! !

@@ -34,7 +34,7 @@ initialize
           at: #char put: 1;
           at: #shortInt put: 2;
           at: #int put: 4;
-          at: #largeInteger put: 8;
+          at: #long put: 8;
           at: #pointer put: 8
 ! !
 
@@ -73,3 +73,35 @@ nestedStruct: aClass
      name := nestedStruct name.
      bytes := nestedStruct bytes
 ! !
+
+!CStructFieldType methodsFor: 'generator'!
+
+compileAccessorsOn: aClass named: aSymbol withOffset: anOffset
+     | writeSelector |
+     writeSelector := (aSymbol asString copyWith: $:) asSymbol.
+     self
+        compileReadAccessorOn: aClass named: aSymbol withOffset: anOffset;
+        compileWriteAccessorOn: aClass named: writeSelector withOffset: anOffset
+!
+
+compileReadAccessorOn: aClass named: aSymbol withOffset: anOffset
+     | stream |
+     stream := WriteStream on: String new.
+     stream
+        nextPutAll: aSymbol; nl;
+        nextPutAll: '^self primOn: handle type: #'; nextPutAll: name;
+        nextPutAll: ' at: '; nextPutAll: anOffset printString.
+     aClass compile: stream contents
+!
+
+compileWriteAccessorOn: aClass named: aSymbol withOffset: anOffset
+     | stream |
+     stream := WriteStream on: String new.
+     stream
+        nextPutAll: aSymbol; nextPutAll: ' anObject'; nl;
+        nextPutAll: 'self primOn: handle type: #'; nextPutAll: name;
+        nextPutAll: ' at: '; nextPutAll: anOffset printString;
+        nextPutAll: ' put: anObject'.
+     aClass compile: stream contents
+! !
+     

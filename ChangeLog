@@ -1,3 +1,36 @@
+2007-12-19  Luca Bruno  <lethalman88@gmail.com>
+
+	* configure.ac: removed unuseful line
+
+	* tests/stsupport/TestCStruct.st:
+	Created Test1Struct, Test2Struct and Test3Struct for testing read/write accessors.
+	(expectOffsets:from:): renamed to testOffsets:from:
+	(testOffsets:from:):
+	(testRead): added
+	(testWrite): added
+
+	* tests/testforeignstruct.c (main): create read/write tests
+
+	* st/foreign/CStruct.st (primOn:type:at): added
+	(primOn:type:at:put): added
+	
+	* st/foreign/CStructFieldSpec.st (compileAccessorsOn): added
+
+	* st/foreign/CStructGenerator.st (compileAccessorsOn): implemented
+
+	* st/foreign/CStructFieldType.st (compileAccessorsOn:named:atOffset): added
+	(compileReadAccessorsOn:named:atOffset): added
+	(compileWriteAccessorsOn:named:atOffset): added
+        (initialize): largeInteger renamed to long
+
+	* syx/syx-primitives.c (CStruct_on_type_at): added
+	(CStruct_on_type_at_put): added
+
+	* syx/syx-object.h: 
+
+	* syx/syx-object.c (syx_class_initialize): renamed to syx_object_initialize
+	(syx_object_initialize): added
+	
 2007-12-18  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/foreign/CStructGenerator.st (alignFields): cleaned the code

@@ -26,14 +26,28 @@ Object subclass: #TestCStruct
        instanceVariableNames: 'generator'
        classVariableNames: ''!
 
-!TestCStruct methodsFor: 'test'!
+CStruct subclass: #Test1Struct
+        instanceVariableNames: ''
+        classVariableNames: ''!
 
-test1Fields
+CStruct subclass: #Test2Struct
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+CStruct subclass: #Test3Struct
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!Test1Struct class methodsFor: 'initialize-release'!
+
+fields
     ^#((f1 char) (f2 char) (f3 char) (f4 char)
-       (f5 int) (f6 largeInteger))
-!
+      (f5 int) (f6 long))
+! !
 
-test2Fields
+!Test2Struct class methodsFor: 'initialize-release'!
+
+fields
     ^#((f1 char) (f2 char)
        (f3 shortInt) (f4 shortInt)
        (f5 int) (f6 int)
@@ -41,18 +55,60 @@ test2Fields
        (f9 char) (f10 int)
        (f11 char) (f12 pointer)
        (f13 shortInt) (f14 pointer))
+! !
+
+!Test3Struct class methodsFor: 'initialize-release'!
+
+fields
+    ^#((f1 shortInt) (f2 int) (f3 char) (f4 long))
+! !
+
+!Test3Struct methodsFor: 'assertion'!
+
+assertField: aSymbol toBe: anObject
+   | gotObject |
+   gotObject := self perform: aSymbol.
+   anObject = gotObject
+       ifFalse: [ self error: aSymbol asString, ' is ', gotObject printString, ' expected ', anObject printString ]
+! !
+
+!Test3Struct methodsFor: 'test'!
+
+testRead
+   self assertField: #f1 toBe: 240.
+   self assertField: #f2 toBe: 7143.
+   self assertField: #f3 toBe: $R
 !
 
-test3Fields
-    ^#((f1 shortInt) (f2 int) (f3 char) (f4 largeInteger))
-!
+testWrite
+   self
+        f1: 320;
+        f2: 10293;
+        f3: $,
+! !
 
-expectOffsets: anArray from: aTest
+!TestCStruct class methodsFor: 'initialize-release'!
+
+initialize
+   Test3Struct initialize
+! !
+
+!TestCStruct methodsFor: 'test'!
+
+testOffsets: anArray from: aCStructSymbol
     | generator fields |
-    fields := self perform: aTest.
+    fields := (Smalltalk at: aCStructSymbol) fields.
     generator := CStructGenerator new: fields.
     generator fieldSpecs with: anArray do: [ :spec :offset |
          self assertOffsetOf: spec toBe: offset ]
+!
+
+testRead: cPointer
+    (Test3Struct handle: cPointer) testRead
+!
+
+testWrite: cPointer
+    (Test3Struct handle: cPointer) testWrite
 ! !
 
 !TestCStruct methodsFor: 'assertion'!
