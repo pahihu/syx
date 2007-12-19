@@ -103,7 +103,19 @@ if env['PLATFORM'] == 'posix':
    env['ENV']['PATH'] = '/tools64/bin:' + env['ENV']['PATH']
 
 # Specify the toolchain
-env['tools'] = ['gcc', 'mingw']
+env['tools'] = ['default', 'mingw']
+
+CC=os.getenv('CC')
+LINK=os.getenv('LINK')
+AR=os.getenv
+if CC:
+   env.Replace(CC = CC)
+   if not LINK:
+      env.Replace(LINK = CC)
+if LINK:
+   env.Replace(LINK = LINK)
+if AR:
+   env.Replace(AR = AR)
    
 # Custimize the help message
 env.Help (opts.GenerateHelpText (env) + """

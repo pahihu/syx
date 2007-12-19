@@ -2,6 +2,7 @@
 
 	* SConstruct: merge CFLAGS
 	use gcc as preferred compiler
+	merge CC LINK and AR
 
 	* share/syximage.desktop: added comment translation, updated to latest standards and do not display the entry in the menus (thanks to Thilo Pfennig)
 
