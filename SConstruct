@@ -329,6 +329,7 @@ conf.Finish ()
 
 # Flags
 env.MergeFlags ('-Wall -Wno-strict-aliasing -I#.')
+env.MergeFlags (os.getenv('CFLAGS'))
 
 if env['PLATFORM'] == 'darwin':
    env.MergeFlags ('-fno-common')

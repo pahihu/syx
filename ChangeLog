@@ -1,5 +1,7 @@
 2007-12-19  Luca Bruno  <lethalman88@gmail.com>
 
+	* SConstruct: merge CFLAGS
+
 	* share/syximage.desktop: added comment translation, updated to latest standards and do not display the entry in the menus (thanks to Thilo Pfennig)
 
 	* share/syx.desktop: added comment translation and updated to latest standards (thanks to Thilo Pfennig)
