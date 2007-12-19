@@ -1,5 +1,11 @@
 2007-12-19  Luca Bruno  <lethalman88@gmail.com>
 
+	* share/syximage.desktop: added comment translation, updated to latest standards and do not display the entry in the menus (thanks to Thilo Pfennig)
+
+	* share/syx.desktop: added comment translation and updated to latest standards (thanks to Thilo Pfennig)
+
+	* syx/syx-init.c (syx_init): give precedence to the given root directory
+
 	* configure.ac: removed unuseful line
 
 	* tests/stsupport/TestCStruct.st:

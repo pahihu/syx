@@ -351,6 +351,15 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
   goto end;
 #endif
 
+  /* first look in the root directory */
+  if (root_path && !strcmp (root_path, _syx_root_path))
+    {
+      _syx_image_path = (syx_string) syx_malloc (strlen (_syx_root_path) + 13);
+      sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
+      initialized = TRUE;
+      return TRUE;
+    }
+
   /* first look in the working directory */
 #ifdef HAVE_ACCESS
   if (access ("default.sim", R_OK) == 0)
@@ -368,15 +377,7 @@ syx_init (syx_varsize argc, syx_string *argv, syx_symbol root_path)
   if (_syx_image_path)
     goto end;
 #endif
-  /* look in the root directory */
-  if (root_path && !strcmp (root_path, _syx_root_path))
-    {
-      _syx_image_path = (syx_string) syx_malloc (strlen (_syx_root_path) + 13);
-      sprintf ((syx_string) _syx_image_path, "%s%c%s", _syx_root_path, SYX_PATH_SEPARATOR, "default.sim");
-      initialized = TRUE;
-      return TRUE;
-    }
-
+  
   /* return the default path defined by the installation */
   _syx_image_path = SYX_IMAGE_PATH;
 
