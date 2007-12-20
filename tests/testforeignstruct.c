@@ -59,7 +59,9 @@ struct _test3
   short int f1;
   int f2;
   char f3;
-  long f4;
+  double f4;
+  float f5;
+  long f6;
 } test3;
 
 int SYX_CDECL
@@ -119,11 +121,13 @@ main (int argc, char *argv[])
   syx_process_execute_blocking (process);
 
   puts ("- Test fields alignment 3");
-  arguments = syx_array_new_size (4);
+  arguments = syx_array_new_size (6);
   SYX_OBJECT_DATA(arguments)[0] = syx_small_integer_new ((syx_nint)&test3.f1 - (syx_nint)&test3);
   SYX_OBJECT_DATA(arguments)[1] = syx_small_integer_new ((syx_nint)&test3.f2 - (syx_nint)&test3);
   SYX_OBJECT_DATA(arguments)[2] = syx_small_integer_new ((syx_nint)&test3.f3 - (syx_nint)&test3);
   SYX_OBJECT_DATA(arguments)[3] = syx_small_integer_new ((syx_nint)&test3.f4 - (syx_nint)&test3);
+  SYX_OBJECT_DATA(arguments)[4] = syx_small_integer_new ((syx_nint)&test3.f5 - (syx_nint)&test3);
+  SYX_OBJECT_DATA(arguments)[5] = syx_small_integer_new ((syx_nint)&test3.f6 - (syx_nint)&test3);
   process = syx_process_new ();
   context = syx_send_message (process, syx_nil,
                               structTest,
@@ -135,7 +139,8 @@ main (int argc, char *argv[])
   test3.f1 = 240;
   test3.f2 = 7143;
   test3.f3 = 'R';
-  test3.f4 = 0; /* won't read yet */
+  test3.f4 = 199.11822;
+  test3.f5 = 23.5; /* won't read yet */
   process = syx_process_new ();
   context = syx_send_binary_message (process, syx_nil,
                                      structTest,
@@ -153,6 +158,10 @@ main (int argc, char *argv[])
   assert(test3.f1 == 320);
   assert(test3.f2 == 10293);
   assert(test3.f3 == ',');
+  assert(test3.f4 == 291.4837);
+  /* Double to float conversion
+     assert(test3.f5 == 76.119);
+  */
   /* won't write longs yet */
 
   syx_quit ();

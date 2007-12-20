@@ -1,3 +1,15 @@
+2007-12-20  Luca Bruno  <lethalman88@gmail.com>
+
+	* tests/stsupport/TestCStruct.st (assertField): test float and doubles
+
+	* tests/testforeignstruct.c (main): test float and doubles
+
+	* syx/syx-primitives.c (CStructFieldType_sizeOfPointer): added
+	(CStructFieldType_sizeOfLong): added
+
+	* st/foreign/CStructFieldType.st: added C types sizes in bytes and long/pointer primitives to retrieve the size.
+        * st/foreign/CStruct.st
+
 2007-12-19  Luca Bruno  <lethalman88@gmail.com>
 
 	* SConstruct: merge CFLAGS

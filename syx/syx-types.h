@@ -124,6 +124,7 @@ typedef unsigned long syx_unint;
 typedef long syx_size;
 typedef syx_int32 syx_varsize;
 
+typedef float syx_float;
 typedef double syx_double;
 
 typedef void * syx_pointer;

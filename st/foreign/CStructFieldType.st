@@ -26,16 +26,50 @@ Object subclass: #CStructFieldType
        instanceVariableNames: 'name bytes nestedStruct'
        classVariableNames: 'CStructFieldBytes'!
 
+!CStructFieldType class methodsFor: 'C types bytes'!
+
+sizeOfChar
+     ^1
+!
+
+sizeOfShortInt
+     ^2
+!
+
+sizeOfInt
+     ^4
+!
+
+sizeOfLong
+     <primitive: 'CStructFieldType_sizeOfLong'>
+          self primitiveFailed
+!
+
+sizeOfPointer
+     <primitive: 'CStructFieldType_sizeOfPointer'>
+          self primitiveFailed
+!
+
+sizeOfFloat
+     ^4
+!
+
+sizeOfDouble
+     ^8
+! !
+
 !CStructFieldType class methodsFor: 'initialize-release'!
 
 initialize
      CStructFieldBytes := IdentityDictionary new.
      CStructFieldBytes
-          at: #char put: 1;
-          at: #shortInt put: 2;
-          at: #int put: 4;
-          at: #long put: 8;
-          at: #pointer put: 8
+          at: #char put: self sizeOfChar;
+          at: #shortInt put: self sizeOfShortInt;
+          at: #int put: self sizeOfInt;
+          at: #long put: self sizeOfLong;
+          at: #pointer put: self sizeOfPointer;
+          at: #float put: self sizeOfFloat;
+          at: #double put: self sizeOfDouble
 ! !
 
 !CStructFieldType class methodsFor: 'instance creation'!

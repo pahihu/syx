@@ -1813,6 +1813,27 @@ static SyxOop type_short_int;
 static SyxOop type_int;
 static SyxOop type_long;
 static SyxOop type_pointer;
+static SyxOop type_float;
+static SyxOop type_double;
+
+INLINE void
+_CStruct_initialize_types (void)
+{
+  static syx_bool _initialized = FALSE;
+
+  if (!_initialized)
+    {
+      type_char = syx_symbol_new ("char");
+      type_short_int = syx_symbol_new ("shortInt");
+      type_int = syx_symbol_new ("int");
+      type_long = syx_symbol_new ("long");
+      type_pointer = syx_symbol_new ("pointer");
+      type_float = syx_symbol_new ("float");
+      type_double = syx_symbol_new ("double");
+
+      _initialized = TRUE;
+    }
+}
 
 SYX_FUNC_PRIMITIVE (CStruct_on_type_at)
 {
@@ -1822,14 +1843,7 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at)
   syx_int32 offset;
   SYX_PRIM_ARGS(2);
 
-  if (SYX_IS_NIL (type_char))
-    {
-      type_char = syx_symbol_new("char");
-      type_short_int = syx_symbol_new("shortInt");
-      type_int = syx_symbol_new("int");
-      type_long = syx_symbol_new("long");
-      type_pointer = syx_symbol_new("pointer");
-    }
+  _CStruct_initialize_types ();
 
   handle = SYX_OOP_CAST_POINTER (es->message_arguments[0]);
   type = es->message_arguments[1];
@@ -1838,10 +1852,10 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at)
   if (SYX_OOP_EQ (type, type_char))
     ret = syx_character_new (*(handle+offset));
   else if (SYX_OOP_EQ (type, type_short_int))
-    ret = syx_small_integer_new (*(short int *)(handle+offset));
+    ret = syx_small_integer_new (*(syx_int16 *)(handle+offset));
   else if (SYX_OOP_EQ (type, type_int))
     {
-      ret = syx_small_integer_new (*(int *)(handle+offset));
+      ret = syx_small_integer_new (*(syx_int32 *)(handle+offset));
       if (!SYX_SMALL_INTEGER_CAN_EMBED (ret))
         {
           /* FIXME: turn into LargeInteger */
@@ -1854,6 +1868,12 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at)
     }
   else if (SYX_OOP_EQ (type, type_pointer))
     ret = SYX_POINTER_CAST_OOP (*(syx_pointer *)(handle+offset));
+  else if (SYX_OOP_EQ (type, type_pointer))
+    ret = SYX_POINTER_CAST_OOP (*(syx_pointer *)(handle+offset));
+  else if (SYX_OOP_EQ (type, type_float))
+    ret = syx_float_new ((syx_double)(*(syx_float *)(handle+offset)));
+  else if (SYX_OOP_EQ (type, type_double))
+    ret = syx_float_new (*(syx_double *)(handle+offset));
   else
     {
       /* It's a nested struct */
@@ -1875,21 +1895,14 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at_put)
   offset = SYX_SMALL_INTEGER (es->message_arguments[2]);
   value = es->message_arguments[3];
   
-  if (SYX_IS_NIL (type_char))
-    {
-      type_char = syx_symbol_new("char");
-      type_short_int = syx_symbol_new("shortInt");
-      type_int = syx_symbol_new("int");
-      type_long = syx_symbol_new("long");
-      type_pointer = syx_symbol_new("pointer");
-    }
+  _CStruct_initialize_types ();
 
   if (SYX_OOP_EQ (type, type_char))
     *(handle+offset) = SYX_CHARACTER (value);
   else if (SYX_OOP_EQ (type, type_short_int))
-    *(short int *)(handle+offset) = SYX_SMALL_INTEGER (value);
+    *(syx_int16 *)(handle+offset) = SYX_SMALL_INTEGER (value);
   else if (SYX_OOP_EQ (type, type_int))
-    *(int *)(handle+offset) = SYX_SMALL_INTEGER (value);
+    *(syx_int32 *)(handle+offset) = SYX_SMALL_INTEGER (value);
   else if (SYX_OOP_EQ (type, type_long))
     {
       /* TODO */
@@ -1897,6 +1910,10 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at_put)
     }
   else if (SYX_OOP_EQ (type, type_pointer))
     *(syx_pointer *)(handle+offset) = SYX_OOP_CAST_POINTER (value);
+  else if (SYX_OOP_EQ (type, type_float))
+    *(syx_float *)(handle+offset) = (syx_float) SYX_OBJECT_FLOAT (value);
+  else if (SYX_OOP_EQ (type, type_double))
+    *(syx_double *)(handle+offset) = SYX_OBJECT_FLOAT (value);
   else
     {
       /* TODO: nested structures */
@@ -1905,6 +1922,19 @@ SYX_FUNC_PRIMITIVE (CStruct_on_type_at_put)
 
   SYX_PRIM_RETURN (es->message_receiver);
 }
+
+/* CStructFieldType */
+
+SYX_FUNC_PRIMITIVE (CStructFieldType_sizeOfLong)
+{
+  SYX_PRIM_RETURN (syx_small_integer_new (sizeof (syx_nint)));
+}
+
+SYX_FUNC_PRIMITIVE (CStructFieldType_sizeOfPointer)
+{
+  SYX_PRIM_RETURN (syx_small_integer_new (sizeof (syx_pointer)));
+}
+
 
 SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Processor_yield", Processor_yield },
@@ -2045,7 +2075,11 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
 
   /* CStruct */
   { "CStruct_on_type_at", CStruct_on_type_at },
-  { "CStruct_on_type_at_put", CStruct_on_type_at_put }
+  { "CStruct_on_type_at_put", CStruct_on_type_at_put },
+
+  /* CStructFieldType */
+  { "CStructFieldType_sizeOfLong", CStructFieldType_sizeOfLong },
+  { "CStructFieldType_sizeOfPointer", CStructFieldType_sizeOfPointer }
 };
 
 syx_int32

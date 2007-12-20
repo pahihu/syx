@@ -60,7 +60,7 @@ fields
 !Test3Struct class methodsFor: 'initialize-release'!
 
 fields
-    ^#((f1 shortInt) (f2 int) (f3 char) (f4 long))
+    ^#((f1 shortInt) (f2 int) (f3 char) (f4 double) (f5 float) (f6 long))
 ! !
 
 !Test3Struct methodsFor: 'assertion'!
@@ -77,14 +77,18 @@ assertField: aSymbol toBe: anObject
 testRead
    self assertField: #f1 toBe: 240.
    self assertField: #f2 toBe: 7143.
-   self assertField: #f3 toBe: $R
+   self assertField: #f3 toBe: $R.
+   self assertField: #f4 toBe: 199.11822.
+   self assertField: #f5 toBe: 23.5.
 !
 
 testWrite
    self
         f1: 320;
         f2: 10293;
-        f3: $,
+        f3: $,;
+        f4: 291.4837;
+        f5: 76.119
 ! !
 
 !TestCStruct class methodsFor: 'initialize-release'!

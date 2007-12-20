@@ -40,7 +40,9 @@ fields
         (field3 int)
         (field4 long)
         (field5 pointer)
-        (field6 NestedCStruct))"
+        (field6 float)
+        (field7 double)
+        (field8 NestedCStruct))"
 
     ^#()
 ! !
