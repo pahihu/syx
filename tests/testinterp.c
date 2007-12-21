@@ -79,7 +79,7 @@ main (int argc, char *argv[])
   puts ("- Test large integers");
   ret_obj = _interpret ("method ^16rFFFFFFFFFFFF - 16rFFFFFFFFFFF0");
   assert (SYX_SMALL_INTEGER(ret_obj) == 0xF);
-  // 30 bits + 30 bits
+  /* 30 bits + 30 bits */
   ret_obj = _interpret ("method ^2r1111111111111111111111111111111 + 2r1111111111111111111111111111111 = 4294967294");
   assert (SYX_IS_TRUE (ret_obj));
 #endif  

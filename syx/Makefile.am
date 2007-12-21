@@ -2,6 +2,8 @@ INCLUDES		=	\
 	-I$(top_srcdir) 	\
 	$(SYX_DEP_CFLAGS)
 
+EXTRA_DIST = SConscript
+
 lib_LTLIBRARIES= libsyx.la
 
 libsyx_la_SOURCES	= 	\

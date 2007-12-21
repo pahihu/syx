@@ -1,123 +1,135 @@
 2007-12-21  Luca Bruno  <lethalman88@gmail.com>
 
-	Run tests into the tests directory.
+	Build plugins and install desktop files using the GNU build system.
 	
-	* tests/SConscript (builder_test): use abspath and build into the tests directory
+	* plugins/wingui/Makefile.am: added
 
-	* Makefile.am (SUBDIRS): add tests
+	* plugins/gtk/Makefile.am: added
 
-	* tests/Makefile.am: added
+	* plugins/readline/Makefile.am: added
 
-	* configure.ac: add st files for the C foreign interface
+	* plugins/x11/Makefile.am: added
+
+	* share/Makefile.am: added
+	
+        Run tests into the tests directory.
+        
+        * tests/SConscript (builder_test): use abspath and build into the tests directory
+
+        * Makefile.am (SUBDIRS): add tests
+
+        * tests/Makefile.am: added
+
+        * configure.ac: add st files for the C foreign interface
 
 2007-12-20  Luca Bruno  <lethalman88@gmail.com>
 
-	* tests/stsupport/TestCStruct.st (assertField): test float and doubles
+        * tests/stsupport/TestCStruct.st (assertField): test float and doubles
 
-	* tests/testforeignstruct.c (main): test float and doubles
+        * tests/testforeignstruct.c (main): test float and doubles
 
-	* syx/syx-primitives.c (CStructFieldType_sizeOfPointer): added
-	(CStructFieldType_sizeOfLong): added
+        * syx/syx-primitives.c (CStructFieldType_sizeOfPointer): added
+        (CStructFieldType_sizeOfLong): added
 
-	* st/foreign/CStructFieldType.st: added C types sizes in bytes and long/pointer primitives to retrieve the size.
+        * st/foreign/CStructFieldType.st: added C types sizes in bytes and long/pointer primitives to retrieve the size.
         * st/foreign/CStruct.st
 
 2007-12-19  Luca Bruno  <lethalman88@gmail.com>
 
-	* SConstruct: merge CFLAGS
-	use gcc as preferred compiler
-	merge CC LINK and AR
+        * SConstruct: merge CFLAGS
+        use gcc as preferred compiler
+        merge CC LINK and AR
 
-	* share/syximage.desktop: added comment translation, updated to latest standards and do not display the entry in the menus (thanks to Thilo Pfennig)
+        * share/syximage.desktop: added comment translation, updated to latest standards and do not display the entry in the menus (thanks to Thilo Pfennig)
 
-	* share/syx.desktop: added comment translation and updated to latest standards (thanks to Thilo Pfennig)
+        * share/syx.desktop: added comment translation and updated to latest standards (thanks to Thilo Pfennig)
 
-	* syx/syx-init.c (syx_init): give precedence to the given root directory
+        * syx/syx-init.c (syx_init): give precedence to the given root directory
 
-	* configure.ac: removed unuseful line
+        * configure.ac: removed unuseful line
 
-	* tests/stsupport/TestCStruct.st:
-	Created Test1Struct, Test2Struct and Test3Struct for testing read/write accessors.
-	(expectOffsets:from:): renamed to testOffsets:from:
-	(testOffsets:from:):
-	(testRead): added
-	(testWrite): added
+        * tests/stsupport/TestCStruct.st:
+        Created Test1Struct, Test2Struct and Test3Struct for testing read/write accessors.
+        (expectOffsets:from:): renamed to testOffsets:from:
+        (testOffsets:from:):
+        (testRead): added
+        (testWrite): added
 
-	* tests/testforeignstruct.c (main): create read/write tests
+        * tests/testforeignstruct.c (main): create read/write tests
 
-	* st/foreign/CStruct.st (primOn:type:at): added
-	(primOn:type:at:put): added
-	
-	* st/foreign/CStructFieldSpec.st (compileAccessorsOn): added
+        * st/foreign/CStruct.st (primOn:type:at): added
+        (primOn:type:at:put): added
+        
+        * st/foreign/CStructFieldSpec.st (compileAccessorsOn): added
 
-	* st/foreign/CStructGenerator.st (compileAccessorsOn): implemented
+        * st/foreign/CStructGenerator.st (compileAccessorsOn): implemented
 
-	* st/foreign/CStructFieldType.st (compileAccessorsOn:named:atOffset): added
-	(compileReadAccessorsOn:named:atOffset): added
-	(compileWriteAccessorsOn:named:atOffset): added
+        * st/foreign/CStructFieldType.st (compileAccessorsOn:named:atOffset): added
+        (compileReadAccessorsOn:named:atOffset): added
+        (compileWriteAccessorsOn:named:atOffset): added
         (initialize): largeInteger renamed to long
 
-	* syx/syx-primitives.c (CStruct_on_type_at): added
-	(CStruct_on_type_at_put): added
+        * syx/syx-primitives.c (CStruct_on_type_at): added
+        (CStruct_on_type_at_put): added
 
-	* syx/syx-object.h: 
+        * syx/syx-object.h: 
 
-	* syx/syx-object.c (syx_class_initialize): renamed to syx_object_initialize
-	(syx_object_initialize): added
-	
+        * syx/syx-object.c (syx_class_initialize): renamed to syx_object_initialize
+        (syx_object_initialize): added
+        
 2007-12-18  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/foreign/CStructGenerator.st (alignFields): cleaned the code
+        * st/foreign/CStructGenerator.st (alignFields): cleaned the code
 
-	* st/foreign/CStructFieldSpec.st (alignAccordingToPreviousField): fixed
-	(nextAlignedOffset): added
+        * st/foreign/CStructFieldSpec.st (alignAccordingToPreviousField): fixed
+        (nextAlignedOffset): added
 
-	* tests/testforeignstruct.c: added
+        * tests/testforeignstruct.c: added
 
-	Moved CPointer and CObject to st/foreign.
+        Moved CPointer and CObject to st/foreign.
 
-	* SConstruct: install st/foreign files
-	
-	* st/kernel/String.st (isCapitalized): added
+        * SConstruct: install st/foreign files
+        
+        * st/kernel/String.st (isCapitalized): added
 
-	* syx/syx-init.c (_syx_file_in_basic): file in st/foreign files
+        * syx/syx-init.c (_syx_file_in_basic): file in st/foreign files
 
-	* st/foreign: added foreign structure interface support for C
+        * st/foreign: added foreign structure interface support for C
 
 2007-12-17  Luca Bruno  <lethalman88@gmail.com>
 
-	* plugins/x11: added (thanks to Rahul aka blufox)
+        * plugins/x11: added (thanks to Rahul aka blufox)
 
-	* SConstruct: build x11 plugin
+        * SConstruct: build x11 plugin
 
-	* st/kernel/CPointer.st: added
+        * st/kernel/CPointer.st: added
 
-	* st/kernel/CObject.st (free): added
-	(finalize): added
+        * st/kernel/CObject.st (free): added
+        (finalize): added
 
-	* syx/syx-object.h: 
+        * syx/syx-object.h: 
 
-	* syx/syx-object.c (syx_class_initialize): added
+        * syx/syx-object.c (syx_class_initialize): added
 
-	* syx/syx-interp.h (syx_interp_is_initialized): added
+        * syx/syx-interp.h (syx_interp_is_initialized): added
 
-	* syx/syx-init.c (_syx_file_in_basic): file in CPointer.st and CObject.st
+        * syx/syx-init.c (_syx_file_in_basic): file in CPointer.st and CObject.st
 
-	* syx/syx-primitives.c (CPointer_free): added
+        * syx/syx-primitives.c (CPointer_free): added
 
-	* plugins/SConscript: add x11 plugin
+        * plugins/SConscript: add x11 plugin
 
-	* plugins/gtk/SConscript: add Swig interface files
+        * plugins/gtk/SConscript: add Swig interface files
 
 2007-12-16  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/kernel/CObject.st: added
+        * st/kernel/CObject.st: added
 
-	* syx/syx-init.c (_syx_file_in_basic): file in CObject.st
+        * syx/syx-init.c (_syx_file_in_basic): file in CObject.st
 
 2007-12-14  Luca Bruno  <lethalman88@gmail.com>
 
-	== Released 0.1.5 version ==	
+        == Released 0.1.5 version ==
 
         New process/context API
 

@@ -1,11 +1,8 @@
-INCLUDES = 			\
-	-I$(top_srcdir)/syx
+INCLUDES = -I$(top_srcdir)/syx
 
-DEPS =					\	
-	$(top_builddir)/syx/libsyx.la
+DEPS = $(top_builddir)/syx/libsyx.la
 
-LDADDS =				\
-	$(top_builddir)/syx/libsyx.la
+LDADDS = $(top_builddir)/syx/libsyx.la
 
 TESTS = testlexer testimage testcoldparser testinstances testparser	\
 	testinterp testforeignstruct testscheduler
@@ -40,4 +37,5 @@ testinterp_SOURCES = testinterp.c
 testforeignstruct_SOURCES = testforeignstruct.c
 testscheduler_SOURCES = testscheduler.c
 
-EXTRA_DIST = stsupport/*.st
+EXTRA_DIST = SConscript stsupport/*.st
+CONFIG_CLEAN_FILES = test.sim

@@ -95,11 +95,11 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 	  value = SYX_POINTER_CAST_OOP (g_value_get_boxed (v));
 	case G_TYPE_OBJECT:
 	  value = SYX_POINTER_CAST_OOP (g_value_get_object (v));
-	  // get the class name
+	  /* get the class name */
 	  name = G_VALUE_TYPE_NAME (v);
-	  // lookup the class and create the object
+	  /* lookup the class and create the object */
 	  oop = syx_object_new (syx_globals_at (name));
-	  // set the first instance variable (handle) to hold the CPointer
+	  /* set the first instance variable (handle) to hold the CPointer */
 	  SYX_OBJECT_VARS(oop)[0] = value;
 	  
 	  SYX_OBJECT_DATA(array)[i] = oop;
