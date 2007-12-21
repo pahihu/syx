@@ -37,7 +37,7 @@ main (int argc, char *argv[])
   SyxParser *parser;
   syx_uint64 start, end;
   
-  syx_init (0, NULL, ".");
+  syx_init (0, NULL, "..");
   syx_memory_load_image ("test.sim");
 
 #define PARSE(text) lexer = syx_lexer_new (text);			\

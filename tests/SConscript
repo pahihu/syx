@@ -36,7 +36,9 @@ else:
 # Test builder
 def builder_test (target, source, env):
    print
-   app = str (source[0].path)
+   tenv = env.Clone()
+   
+   app = str (source[0].abspath)
    relapp = os.path.splitext (os.path.basename (str (source[0].abspath)))[0]
    f = open(target[0].abspath, 'w')
    if env.Execute (app) == 0:
@@ -51,7 +53,7 @@ def builder_test (target, source, env):
 	  env.Exit (0)
    f.close ()
 
-action = env.Action (builder_test, lambda *args, **kwargs: '')
+action = env.Action (builder_test, lambda *args, **kwargs: '', chdir='tests')
 builder = env.Builder (action=action)
 env.Append(BUILDERS = { 'Test' : builder })
 
@@ -91,11 +93,12 @@ def builder_test_summary (env, target, source):
         except:
             failed += 1
     total = passed + failed
-    print
+    print '=================='
     if not failed:
-        print 'All %d tests passed.' % total
+       print 'All %d tests passed' % total
     else:
-        print '%d of %d tests failed.' % (failed, total)
+       print '%d of %d tests failed.' % (failed, total)
+    print '=================='
 
 action = env.Action (builder_test_summary, lambda *args, **kwargs: '')
 summary = env.Command ('tests.out', targets, action)

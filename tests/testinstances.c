@@ -35,7 +35,7 @@ main (int argc, char *argv[])
   SyxOop obj, instobj;
   syx_uint64 start, end;
 
-  syx_init (0, NULL, ".");
+  syx_init (0, NULL, "..");
   syx_memory_load_image ("test.sim");
 
   start = syx_nanotime ();
@@ -57,7 +57,7 @@ main (int argc, char *argv[])
   obj = syx_float_new (123.321);
   assert (SYX_OBJECT_FLOAT(obj) == 123.321);
 
-  // Now test basic inheritance between classes and metaclasses
+  /* Now test basic inheritance between classes and metaclasses */
   instobj = syx_globals_at ("Signal");
   obj = SYX_CLASS_SUPERCLASS (instobj);
   assert (!strcmp (SYX_OBJECT_SYMBOL(SYX_CLASS_NAME(obj)), "Object"));

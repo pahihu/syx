@@ -72,12 +72,11 @@ main (int argc, char *argv[])
   SyxOop structTestClass;
   SyxOop structTest;
 
-  // use build to find plugins
-  syx_init (0, NULL, "build");
+  syx_init (0, NULL, "..");
   syx_memory_load_image ("test.sim");
   syx_scheduler_init ();
 
-  syx_cold_file_in ("tests/stsupport/TestCStruct.st");
+  syx_cold_file_in ("stsupport/TestCStruct.st");
   structTestClass = syx_globals_at ("TestCStruct");
   syx_object_initialize (structTestClass);
   structTest = syx_object_new (structTestClass);

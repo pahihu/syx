@@ -1,3 +1,15 @@
+2007-12-21  Luca Bruno  <lethalman88@gmail.com>
+
+	Run tests into the tests directory.
+	
+	* tests/SConscript (builder_test): use abspath and build into the tests directory
+
+	* Makefile.am (SUBDIRS): add tests
+
+	* tests/Makefile.am: added
+
+	* configure.ac: add st files for the C foreign interface
+
 2007-12-20  Luca Bruno  <lethalman88@gmail.com>
 
 	* tests/stsupport/TestCStruct.st (assertField): test float and doubles

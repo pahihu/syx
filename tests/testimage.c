@@ -34,7 +34,7 @@ main (int argc, char *argv[])
 {
   syx_uint64 start, end;
   syx_bool saved, loaded;
-  syx_init (0, NULL, ".");
+  syx_init (0, NULL, "..");
 
   puts ("- Test saving image");
   start = syx_nanotime ();

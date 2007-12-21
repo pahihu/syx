@@ -37,7 +37,7 @@ main (int argc, char *argv[])
   syx_uint64 start, end;
   syx_bool ok;
 
-  syx_init (0, NULL, ".");
+  syx_init (0, NULL, "..");
   syx_memory_load_image ("test.sim");
 
   start = syx_nanotime ();

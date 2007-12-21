@@ -118,9 +118,14 @@ if test "$enable_plugins" != no; then
                 LIBS="$LIBS -ldl"])
 fi
 
+
 dnl set syx/st/kernel dir
 stkerneldatadir="$datadir/syx/st/kernel"
 AC_SUBST(stkerneldatadir)
+
+dnl set syx/st/foreign dir
+stforeigndatadir="$datadir/syx/st/foreign"
+AC_SUBST(stforeigndatadir)
 
 dnl stuff to go in the syx-config.h file
 AH_TOP(
@@ -133,4 +138,5 @@ AC_OUTPUT([
 Makefile
 syx/Makefile
 src/Makefile
+tests/Makefile
 ])
