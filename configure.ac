@@ -34,11 +34,11 @@ dnl check for standard header files
 AC_HEADER_STDC
 
 AC_CHECK_HEADERS([string.h sys/stat.h time.h stdio.h assert.h fcntl.h],,
-		AC_MSG_ERROR(cannot build Syx without $ac_header header))
+                AC_MSG_ERROR(cannot build Syx without $ac_header header))
 AC_CHECK_HEADERS([stdarg.h byteswap.h errno.h unistd.h stdint.h sys/time.h])
 
 AC_CHECK_FUNCS([strtol strtod],,
-	      AC_MSG_ERROR(cannot build Syx without $ac_func function))
+                AC_MSG_ERROR(cannot build Syx without $ac_func function))
 AC_CHECK_FUNCS([fstat access getenv perror signal select])
 
 AC_CHECK_TYPES(int64_t)
@@ -59,9 +59,9 @@ case "$target" in
         CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
         ;;
 *-wince*)
-	native_win32=yes
-	CFLAGS="$CFLAGS -DWINCE"
-	;;
+        native_win32=yes
+        CFLAGS="$CFLAGS -DWINCE"
+        ;;
 *-*-mingw*)
         native_win32=yes
         ;;
@@ -96,12 +96,12 @@ if test "$with_gmp" != no; then
      LIBS="$LIBS $syx_cv_gmp_libs"
 
      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-	    #include <stdio.h>
-	    #include <gmp.h>
-	]], [[
-	    mpz_t z;
-	    mpz_init (z);
-     	]])],, [syx_cv_gmp_libs="not found"])
+            #include <stdio.h>
+            #include <gmp.h>
+        ]], [[
+            mpz_t z;
+            mpz_init (z);
+        ]])],, [syx_cv_gmp_libs="not found"])
      LIBS="$ac_save_LIBS"
    ])
 
@@ -114,8 +114,8 @@ fi
 dnl check for plugins
 if test "$enable_plugins" != no; then
    AC_CHECK_LIB(dl, dlopen, [
-   		    AC_DEFINE(HAVE_LIBDL, 1, [Define to 1 if you have the 'ltdl' library (-ldl).])
-		    LIBS="$LIBS -ldl"])
+                AC_DEFINE(HAVE_LIBDL, 1, [Define to 1 if you have the 'ltdl' library (-ldl).])
+                LIBS="$LIBS -ldl"])
 fi
 
 dnl set syx/st/kernel dir

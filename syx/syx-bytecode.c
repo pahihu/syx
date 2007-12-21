@@ -50,14 +50,14 @@ syx_bytecode_new (void)
   Contains common unary messages avoiding them to be inserted into method literals.
 */
 syx_symbol syx_bytecode_unary_messages[] = {"isNil", "notNil", "value", "new", "class", "superclass",
-					    "print", "printNl", "printString", "unity", NULL};
+                                            "print", "printNl", "printString", "unity", NULL};
 
 /*!
   Same as syx_bytecode_unary_messages but contains binary messages and keyword messages with a single argument
 */
 syx_symbol syx_bytecode_binary_messages[] = {"+", "-", "<", ">", "<=", ">=", "=", "~=", "at:",
-					     "do:", "value:", "valueWithArguments:",
-					     "new:", "to:", "basicAt:", NULL};
+                                             "do:", "value:", "valueWithArguments:",
+                                             "new:", "to:", "basicAt:", NULL};
 
 /*!
   Manually generate an instruction.
@@ -106,42 +106,42 @@ syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 a
   if (!to_super)
     {
       for (i=0; syx_bytecode_unary_messages[i]; i++)
-	{
-	  if (!strcmp (syx_bytecode_unary_messages[i], selector))
-	    {
-	      binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
-	      selbinding = syx_object_new (syx_globals_at ("Association"));
-	      SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
-	      SYX_ASSOCIATION_VALUE (selbinding) = binding;
-	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_UNARY,
-					    syx_bytecode_gen_literal (bytecode, selbinding));
-	      return;
-	    }
-	}
+        {
+          if (!strcmp (syx_bytecode_unary_messages[i], selector))
+            {
+              binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
+              selbinding = syx_object_new (syx_globals_at ("Association"));
+              SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
+              SYX_ASSOCIATION_VALUE (selbinding) = binding;
+              syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_UNARY,
+                                            syx_bytecode_gen_literal (bytecode, selbinding));
+              return;
+            }
+        }
       
       for (i=0; syx_bytecode_binary_messages[i]; i++)
-	{
-	  if (!strcmp (syx_bytecode_binary_messages[i], selector))
-	    {
-	      binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
-	      selbinding = syx_object_new (syx_globals_at ("Association"));
-	      SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
-	      SYX_ASSOCIATION_VALUE (selbinding) = binding;
-	      syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_BINARY,
-					    syx_bytecode_gen_literal (bytecode, selbinding));
-	      return;
-	    }
-	} 
+        {
+          if (!strcmp (syx_bytecode_binary_messages[i], selector))
+            {
+              binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
+              selbinding = syx_object_new (syx_globals_at ("Association"));
+              SYX_ASSOCIATION_KEY (selbinding) = syx_small_integer_new (i);
+              SYX_ASSOCIATION_VALUE (selbinding) = binding;
+              syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_BINARY,
+                                            syx_bytecode_gen_literal (bytecode, selbinding));
+              return;
+            }
+        } 
     }
   */
   binding = syx_variable_binding_new (syx_symbol_new (selector), 0, syx_nil);
   syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_MARK_ARGUMENTS, argument_count);
   if (to_super)
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_SUPER,
-				  syx_bytecode_gen_literal (bytecode, binding));
+                                  syx_bytecode_gen_literal (bytecode, binding));
   else
     syx_bytecode_gen_instruction (bytecode, SYX_BYTECODE_SEND_MESSAGE,
-				  syx_bytecode_gen_literal (bytecode, binding));
+                                  syx_bytecode_gen_literal (bytecode, binding));
 }
 
 /*!
@@ -159,7 +159,7 @@ syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal)
   for (i=0; i < bytecode->literals_top; i++)
     {
       if (SYX_OOP_EQ (bytecode->literals[i], literal))
-	return i;
+        return i;
     }
 
   if (SYX_IS_OBJECT (literal))

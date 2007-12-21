@@ -60,9 +60,9 @@
 #define syx_bswap_16(x) bswap_16(x)
 #define syx_bswap_32(x) bswap_32(x)
 #else
-#define syx_bswap_16(x)					     \
+#define syx_bswap_16(x)                                 \
   ((((x) & 0xff00) >> 8) | (((x) & 0x00ff) << 8))
-#define syx_bswap_32(x)					     \
+#define syx_bswap_32(x)                                      \
   ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >> 8) |  \
    (((x) & 0x0000ff00) << 8) | (((x) & 0x000000ff) << 24))
 #endif /* HAVE_BYTESWAP_H */

@@ -81,15 +81,15 @@ syx_find_file (syx_symbol domain, syx_symbol package, syx_symbol filename)
     return NULL;
 
   full_path = (syx_string) syx_calloc (strlen (_syx_root_path)
-				       + strlen (domain)
-				       + strlen (package)
-				       + strlen (filename) + 4, sizeof (syx_char));
+                                       + strlen (domain)
+                                       + strlen (package)
+                                       + strlen (filename) + 4, sizeof (syx_char));
 
   sprintf (full_path, "%s%c%s%c%s%c%s",
-	   _syx_root_path, SYX_PATH_SEPARATOR,
-	   domain, SYX_PATH_SEPARATOR,
-	   package, SYX_PATH_SEPARATOR,
-	   filename);
+           _syx_root_path, SYX_PATH_SEPARATOR,
+           domain, SYX_PATH_SEPARATOR,
+           package, SYX_PATH_SEPARATOR,
+           filename);
 
   return full_path;
 }
@@ -215,12 +215,12 @@ syx_build_basic (void)
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);
 
-#define _SETUP_CLASS(name, klass, superclass)				\
+#define _SETUP_CLASS(name, klass, superclass)                           \
   syx_object_set_class (klass, syx_metaclass_new (syx_object_get_class (superclass))); \
-  SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (klass)) = klass;	\
-  SYX_CLASS_SUPERCLASS(klass) = superclass;				\
-  SYX_CLASS_NAME(klass) = syx_symbol_new (name);			\
-  SYX_CLASS_SUBCLASSES(klass) = syx_array_new (0, NULL);		\
+  SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class (klass)) = klass;   \
+  SYX_CLASS_SUPERCLASS(klass) = superclass;                             \
+  SYX_CLASS_NAME(klass) = syx_symbol_new (name);                        \
+  SYX_CLASS_SUBCLASSES(klass) = syx_array_new (0, NULL);                \
   syx_globals_at_put (SYX_CLASS_NAME(klass), klass)
 
   SYX_CLASS_SUBCLASSES(Class) = syx_array_new (0, NULL);

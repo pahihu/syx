@@ -51,9 +51,9 @@ EXPORT extern syx_symbol syx_get_image_path (void);
 /*! Looks up a symbol from the Smalltalk dictionary. Raises an error if not found */
 #define syx_globals_at(name) (syx_dictionary_at_symbol (syx_globals, (syx_symbol)(name)))
 /*! Looks up a symbol from the Smalltalk dictionary and return a given SyxOop if not found */
-#define syx_globals_at_if_absent(name,object) (syx_dictionary_at_symbol_if_absent (syx_globals,	\
-										   (syx_symbol)(name), \
-										   object))
+#define syx_globals_at_if_absent(name,object) (syx_dictionary_at_symbol_if_absent (syx_globals, \
+                                                                                   (syx_symbol)(name), \
+                                                                                   object))
 
 /*! Insert a SyxOop into the Smalltalk dictionary */
 #define syx_globals_at_put(symbol,value) (syx_dictionary_at_symbol_put (syx_globals, (symbol), (value)))

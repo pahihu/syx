@@ -59,9 +59,9 @@ _syx_block_context_new_from_closure (SyxExecState *es, SyxOop process, SyxOop co
     return syx_nil;
   else
     return syx_block_context_new (process, context,
-				  block,
-				  arguments,
-				  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
+                                  block,
+                                  arguments,
+                                  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
 }
 
 /* This method is inlined in syx_interp_call_primitive */
@@ -172,7 +172,7 @@ SYX_FUNC_PRIMITIVE (Object_equal)
 {
   SYX_PRIM_ARGS(1);
   SYX_PRIM_RETURN (syx_boolean_new (syx_object_hash (es->message_receiver) ==
-				    syx_object_hash (es->message_arguments[0])));
+                                    syx_object_hash (es->message_arguments[0])));
 }
 
 SYX_FUNC_PRIMITIVE (Object_copy)
@@ -226,15 +226,15 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   else
     {
       if (es->message_arguments_count > 0)
-	{
-	  syx_memory_gc_begin ();
-	  context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver,
-					    syx_array_new_ref (es->message_arguments_count,
-							       es->message_arguments));
-	  syx_memory_gc_end ();
-	}
+        {
+          syx_memory_gc_begin ();
+          context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver,
+                                            syx_array_new_ref (es->message_arguments_count,
+                                                               es->message_arguments));
+          syx_memory_gc_end ();
+        }
       else
-	context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
+        context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
       
       ret = syx_interp_enter_context (context);
     }
@@ -298,15 +298,15 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   else
     {
       if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
-	{
-	  syx_memory_gc_begin ();
-	  args = syx_array_new_ref (es->message_arguments_count, es->message_arguments);
-	  context = syx_method_context_new (es->process, es->context, message_method,
-					    es->message_receiver, args);
-	  syx_memory_gc_end ();
-	}
+        {
+          syx_memory_gc_begin ();
+          args = syx_array_new_ref (es->message_arguments_count, es->message_arguments);
+          context = syx_method_context_new (es->process, es->context, message_method,
+                                            es->message_receiver, args);
+          syx_memory_gc_end ();
+        }
       else
-	context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
+        context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
 
       ret = syx_interp_enter_context (context);
     }
@@ -354,22 +354,22 @@ SYX_FUNC_PRIMITIVE (ArrayedCollection_replaceFromToWithStartingAt)
   if (SYX_OBJECT_HAS_REFS (es->message_receiver))
     {
       if (SYX_OBJECT_HAS_REFS (coll))
-	memcpy (SYX_OBJECT_DATA (es->message_receiver) + start, SYX_OBJECT_DATA (coll) + collstart,
-		length * sizeof (SyxOop));
+        memcpy (SYX_OBJECT_DATA (es->message_receiver) + start, SYX_OBJECT_DATA (coll) + collstart,
+                length * sizeof (SyxOop));
       else
-	{
-	  SYX_PRIM_FAIL;
-	}
+        {
+          SYX_PRIM_FAIL;
+        }
     }
   else
     {
       if (!SYX_OBJECT_HAS_REFS (coll))
-	memcpy (SYX_OBJECT_BYTE_ARRAY (es->message_receiver) + start,
-		SYX_OBJECT_BYTE_ARRAY (coll) + collstart, length * sizeof (syx_int8));
+        memcpy (SYX_OBJECT_BYTE_ARRAY (es->message_receiver) + start,
+                SYX_OBJECT_BYTE_ARRAY (coll) + collstart, length * sizeof (syx_int8));
       else
-	{
-	  SYX_PRIM_FAIL;
-	}
+        {
+          SYX_PRIM_FAIL;
+        }
     }
 
   SYX_PRIM_RETURN (es->message_receiver);
@@ -587,10 +587,10 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
   syx_semaphore_wait (es->message_receiver);
   if (t == syx_true)
     syx_scheduler_poll_write_register (fd,
-				       es->message_receiver);
+                                       es->message_receiver);
   else
     syx_scheduler_poll_read_register (fd,
-				      es->message_receiver);
+                                      es->message_receiver);
   SYX_PRIM_YIELD (es->message_receiver);
 }
 
@@ -649,29 +649,29 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       flags = 0;
       
       if (*mode == 'r')
-	{
-	  if (mode[1] == '+')
-	    flags |= O_RDWR;
-	  else
-	    flags |= O_RDONLY;
-	}
+        {
+          if (mode[1] == '+')
+            flags |= O_RDWR;
+          else
+            flags |= O_RDONLY;
+        }
       else if (*mode == 'w')
-	{
-	  flags |= O_CREAT | O_TRUNC;
-	  if (mode[1] == '+')
-	    flags |= O_RDWR;
-	  else
-	    flags |= O_WRONLY;
-	}
+        {
+          flags |= O_CREAT | O_TRUNC;
+          if (mode[1] == '+')
+            flags |= O_RDWR;
+          else
+            flags |= O_WRONLY;
+        }
       else if (*mode == 'a')
-	{
-	  flags |= O_APPEND | O_WRONLY | O_CREAT;
-	}
+        {
+          flags |= O_APPEND | O_WRONLY | O_CREAT;
+        }
       else
-	{
-	  SYX_PRIM_FAIL;
-	}
-	
+        {
+          SYX_PRIM_FAIL;
+        }
+        
       ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
       break;
 
@@ -682,9 +682,9 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     case 2: /* nextPut: */
       SYX_PRIM_ARGS(3);
       if (!SYX_IS_CHARACTER (es->message_arguments[2]))
-	{
-	  SYX_PRIM_FAIL;
-	}
+        {
+          SYX_PRIM_FAIL;
+        }
 
       c = SYX_CHARACTER (es->message_arguments[2]);
       ret = write (fd, &c, 1);
@@ -694,17 +694,17 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       SYX_PRIM_ARGS(3);
 
       if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
-	{
-	  SYX_PRIM_FAIL;
-	}
+        {
+          SYX_PRIM_FAIL;
+        }
 
       if (!SYX_IS_NIL (es->message_arguments[2]))
-	{
-	  ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
-		       SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
-	}
+        {
+          ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
+                       SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
+        }
       else
-	ret = 0;
+        ret = 0;
       break;
 
     case 4: /* flush */
@@ -713,10 +713,10 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 5: /* next */
       if (!read (fd, &c, 1))
-	{
-	  /* EOF */
-	  SYX_PRIM_RETURN (syx_nil);
-	}
+        {
+          /* EOF */
+          SYX_PRIM_RETURN (syx_nil);
+        }
       
       SYX_PRIM_RETURN (syx_character_new (c));
       break;
@@ -729,10 +729,10 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       count = read (fd, s, count);
       
       if (!count)
-	{
-	  /* maybe EOF */
-	  SYX_PRIM_RETURN (syx_nil);
-	}
+        {
+          /* maybe EOF */
+          SYX_PRIM_RETURN (syx_nil);
+        }
       
       s[count] = '\0';
       
@@ -744,17 +744,17 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 7: /* size */
       {
-	#ifdef HAVE_FSTAT
-	struct stat statbuf;
-	if ((fstat (fd, &statbuf)) < 0)
-	  {
-	    SYX_PRIM_FAIL;
-	  }
+        #ifdef HAVE_FSTAT
+        struct stat statbuf;
+        if ((fstat (fd, &statbuf)) < 0)
+          {
+            SYX_PRIM_FAIL;
+          }
 
-	SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
-	#else
-	SYX_PRIM_RETURN (syx_small_integer_new (0));
-	#endif
+        SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
+        #else
+        SYX_PRIM_RETURN (syx_small_integer_new (0));
+        #endif
       }
       break;
 
@@ -844,7 +844,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_lt)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) <
-				    SYX_SMALL_INTEGER (second)));
+                                    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_gt)
@@ -859,7 +859,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_gt)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) >
-				    SYX_SMALL_INTEGER (second)));
+                                    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_le)
@@ -874,7 +874,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_le)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) <=
-				    SYX_SMALL_INTEGER (second)));
+                                    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_ge)
@@ -889,7 +889,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_ge)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_SMALL_INTEGER (first) >=
-				    SYX_SMALL_INTEGER (second)));
+                                    SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_eq)
@@ -992,7 +992,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_mod)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) %
-					  SYX_SMALL_INTEGER (second)));
+                                          SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
@@ -1007,7 +1007,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitAnd)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) &
-					  SYX_SMALL_INTEGER (second)));
+                                          SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitOr)
@@ -1022,7 +1022,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitOr)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) |
-					  SYX_SMALL_INTEGER (second)));
+                                          SYX_SMALL_INTEGER (second)));
 }
 
 SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
@@ -1037,7 +1037,7 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitXor)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_small_integer_new (SYX_SMALL_INTEGER (first) ^
-					  SYX_SMALL_INTEGER (second)));
+                                          SYX_SMALL_INTEGER (second)));
 }
 
 /* Thanks to Sam Philiphs for this contribute */
@@ -1065,9 +1065,9 @@ SYX_FUNC_PRIMITIVE (SmallInteger_bitShift)
     {
       val <<= shift;
       if (!SYX_SMALL_INTEGER_CAN_EMBED (val))
-	{
-	  SYX_PRIM_FAIL;
-	}
+        {
+          SYX_PRIM_FAIL;
+        }
       
       SYX_PRIM_RETURN (syx_small_integer_new (val));
     }
@@ -1103,26 +1103,26 @@ SYX_FUNC_PRIMITIVE (SmallInteger_asLargeInteger)
   op2 = (mpz_t *)SYX_OBJECT_DATA (es->message_arguments[0]);
 #define _NEW_R r = syx_calloc (1, sizeof (mpz_t)); mpz_init (*r)
 #define _RET_R if (mpz_fits_sint_p (*r) && SYX_SMALL_INTEGER_CAN_EMBED (mpz_get_si (*r))) \
-    { ret = mpz_get_si (*r); mpz_clear (*r); syx_free (r);	\
-      SYX_PRIM_RETURN (syx_small_integer_new (ret)); }			\
-  else									\
+    { ret = mpz_get_si (*r); mpz_clear (*r); syx_free (r);        \
+      SYX_PRIM_RETURN (syx_small_integer_new (ret)); }                        \
+  else                                                                        \
     { SYX_PRIM_RETURN (syx_large_integer_new_mpz (r)); }
 
 #ifdef HAVE_LIBGMP
-#define _DO_OP(op)				\
-  _GET_Z2R;					\
-  _GET_OP2;					\
-  _NEW_R;					\
-  op (*r, *z, *op2);				\
+#define _DO_OP(op)                                \
+  _GET_Z2R;                                        \
+  _GET_OP2;                                        \
+  _NEW_R;                                        \
+  op (*r, *z, *op2);                                \
   _RET_R
 #else
 #define _DO_OP(op) SYX_PRIM_FAIL
 #endif /* HAVE_LIBGMP */
 
 #ifdef HAVE_LIBGMP
-#define _CMP_OP(op)						\
-  _GET_Z2;							\
-  _GET_OP2;							\
+#define _CMP_OP(op)                                                \
+  _GET_Z2;                                                        \
+  _GET_OP2;                                                        \
   SYX_PRIM_RETURN (syx_boolean_new (mpz_cmp (*z, *op2) op 0));
 #else
 #define _CMP_OP(op) SYX_PRIM_FAIL
@@ -1291,7 +1291,7 @@ SYX_FUNC_PRIMITIVE (Float_plus)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) +
-				  SYX_OBJECT_FLOAT (second)));
+                                  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_minus)
@@ -1306,7 +1306,7 @@ SYX_FUNC_PRIMITIVE (Float_minus)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) -
-				  SYX_OBJECT_FLOAT (second)));
+                                  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_div)
@@ -1321,7 +1321,7 @@ SYX_FUNC_PRIMITIVE (Float_div)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) /
-				  SYX_OBJECT_FLOAT (second)));
+                                  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_mul)
@@ -1336,7 +1336,7 @@ SYX_FUNC_PRIMITIVE (Float_mul)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_float_new (SYX_OBJECT_FLOAT (first) *
-				  SYX_OBJECT_FLOAT (second)));
+                                  SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_lt)
@@ -1351,7 +1351,7 @@ SYX_FUNC_PRIMITIVE (Float_lt)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) <
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_gt)
@@ -1366,7 +1366,7 @@ SYX_FUNC_PRIMITIVE (Float_gt)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) >
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_le)
@@ -1381,7 +1381,7 @@ SYX_FUNC_PRIMITIVE (Float_le)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) <=
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_ge)
@@ -1396,7 +1396,7 @@ SYX_FUNC_PRIMITIVE (Float_ge)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) >=
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_eq)
@@ -1411,7 +1411,7 @@ SYX_FUNC_PRIMITIVE (Float_eq)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) ==
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_ne)
@@ -1426,7 +1426,7 @@ SYX_FUNC_PRIMITIVE (Float_ne)
       SYX_PRIM_FAIL;
     }
   SYX_PRIM_RETURN (syx_boolean_new (SYX_OBJECT_FLOAT (first) !=
-				    SYX_OBJECT_FLOAT (second)));
+                                    SYX_OBJECT_FLOAT (second)));
 }
 
 SYX_FUNC_PRIMITIVE (Float_ceil)
@@ -1568,10 +1568,10 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_atDataPut)
   syx_free (SYX_OBJECT_DATA(dest));
   if (has_refs)
     SYX_OBJECT_DATA(dest) = (SyxOop *) syx_memdup (SYX_OBJECT_DATA(source),
-						   SYX_OBJECT_DATA_SIZE(source), sizeof (SyxOop));
+                                                   SYX_OBJECT_DATA_SIZE(source), sizeof (SyxOop));
   else
     SYX_OBJECT_DATA(dest) = (SyxOop *) syx_memdup (SYX_OBJECT_DATA(source),
-						   SYX_OBJECT_DATA_SIZE(source), sizeof (syx_int8));
+                                                   SYX_OBJECT_DATA_SIZE(source), sizeof (syx_int8));
   SYX_OBJECT_DATA_SIZE(dest) = SYX_OBJECT_DATA_SIZE(source);
   SYX_PRIM_RETURN (es->message_receiver);
 }
@@ -1700,9 +1700,9 @@ SYX_FUNC_PRIMITIVE (CompiledMethod_runOn)
   SYX_PRIM_ARGS(2);
 
   context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-				    es->message_receiver,
-				    es->message_arguments[0],
-				    es->message_arguments[1]);
+                                    es->message_receiver,
+                                    es->message_arguments[0],
+                                    es->message_arguments[1]);
 
   return syx_interp_enter_context (context);
 }
@@ -2090,7 +2090,7 @@ syx_primitive_get_index (syx_symbol name)
   for (i=0; i < SYX_PRIMITIVES_MAX; i++)
     {
       if (!strcmp (_syx_primitive_entries[i].name, name))
-	return i;
+        return i;
     }
 
   return -1;

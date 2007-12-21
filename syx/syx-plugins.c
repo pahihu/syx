@@ -207,12 +207,12 @@ syx_plugin_load (syx_symbol name)
 #endif /* WINDOWS */
 
       location = (syx_string) syx_calloc (strlen (SYX_PLUGIN_PATH)
-					  + strlen (name)
-					  + strlen (namext) + 3, sizeof (syx_char));
+                                          + strlen (name)
+                                          + strlen (namext) + 3, sizeof (syx_char));
       sprintf (location, "%s%c%s%c%s",
-	       SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
-	       name, SYX_PATH_SEPARATOR,
-	       namext);
+               SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
+               name, SYX_PATH_SEPARATOR,
+               namext);
 
       syx_free (namext);
       
@@ -233,10 +233,10 @@ syx_plugin_load (syx_symbol name)
     {
       func = (SyxPluginInitializeFunc)(long) syx_library_symbol (handle, "syx_plugin_initialize");
       if (!func)
-	return NULL;
+        return NULL;
       
       if (!func ())
-	return NULL;
+        return NULL;
     }
 
   _syx_plugins = syx_realloc (_syx_plugins, ++_syx_plugins_top * sizeof (SyxPluginEntry));
@@ -277,19 +277,19 @@ syx_plugin_unload (syx_symbol plugin)
   for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
     {
       if (!strcmp (entry->name, plugin))
-	{
-	  func = (SyxPluginFinalizeFunc)(long) syx_library_symbol (entry->handle, "syx_plugin_finalize");
-	  if (!func)
-	    return FALSE;
+        {
+          func = (SyxPluginFinalizeFunc)(long) syx_library_symbol (entry->handle, "syx_plugin_finalize");
+          if (!func)
+            return FALSE;
 
-	  func ();
+          func ();
 
-	  ret = syx_library_close (entry->handle);
-	  syx_free (entry->name);
-	  entry->name = entry->handle = NULL;
+          ret = syx_library_close (entry->handle);
+          syx_free (entry->name);
+          entry->name = entry->handle = NULL;
 
-	  return ret;
-	}
+          return ret;
+        }
     }
 
 #endif /* WITH_PLUGINS */
@@ -312,11 +312,11 @@ syx_plugin_finalize_all (void)
   for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
     {
       if (!entry->name)
-	continue;
+        continue;
 
       func = (SyxPluginFinalizeFunc)(long) syx_library_symbol (entry->handle, "syx_plugin_finalize");
       if (!func)
-	return;
+        return;
 
       func ();
 
@@ -349,10 +349,10 @@ syx_plugin_symbol (syx_symbol plugin_name, syx_symbol symbol_name)
   for (entry=_syx_plugins; entry < _syx_plugins + _syx_plugins_top; entry++)
     {
       if ((!plugin_name && entry->name) || (plugin_name && !entry->name))
-	continue;
+        continue;
 
       if (plugin_name && entry->name && strcmp (plugin_name, entry->name))
-	continue;
+        continue;
 
       return syx_library_symbol (entry->handle, symbol_name);
     }

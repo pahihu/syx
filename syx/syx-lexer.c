@@ -170,87 +170,87 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
       radix = token->value.integer;
       stop = 0;
       while ((lastChar = syx_lexer_forward (self)) && isxdigit (lastChar))
-	s[stop++] = lastChar;
+        s[stop++] = lastChar;
 
       if (stop == 0)
-	{
-	  syx_lexer_push_back (self);
-	  return;
-	}
+        {
+          syx_lexer_push_back (self);
+          return;
+        }
 
       s[stop] = '\0';
 
       errno = 0;
       tol = strtol (s, (char **)NULL, radix);
       if (errno == ERANGE || tol < 0 || !SYX_SMALL_INTEGER_CAN_EMBED (tol))
-	{
+        {
 #ifdef HAVE_LIBGMP
-	  token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
-	  mpz_init_set_str (*token->value.large_integer, s, radix);
-	  token->type = SYX_TOKEN_LARGE_INT_CONST;
+          token->value.large_integer = syx_calloc (1, sizeof (mpz_t));
+          mpz_init_set_str (*token->value.large_integer, s, radix);
+          token->type = SYX_TOKEN_LARGE_INT_CONST;
 #else
-	  syx_error ("Integer too large\n");
+          syx_error ("Integer too large\n");
 #endif /* HAVE_LIBGMP */
-	}
+        }
       else if (errno != 0)
-	{
-	  syx_perror ("LEXER");
-	}
+        {
+          syx_perror ("LEXER");
+        }
       else
-	{
-	  token->value.integer = tol;
-	  token->type = SYX_TOKEN_INT_CONST;
-	}
+        {
+          token->value.integer = tol;
+          token->type = SYX_TOKEN_INT_CONST;
+        }
     }
 
   /* a float? */
   if (lastChar == '.')
     {
       if ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar))
-	{
-	  s[stop++] = '.';
-	  do
-	    s[stop++] = lastChar;
-	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
+        {
+          s[stop++] = '.';
+          do
+            s[stop++] = lastChar;
+          while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
-	  token->type = SYX_TOKEN_FLOAT_CONST;
-	  token->value.floating = strtod (s, (char **)NULL);
-	}
+          token->type = SYX_TOKEN_FLOAT_CONST;
+          token->value.floating = strtod (s, (char **)NULL);
+        }
       else
-	{
-	  self->_pushed_back = 0;
-	  self->_current_text -= 2;
-	}
+        {
+          self->_pushed_back = 0;
+          self->_current_text -= 2;
+        }
     }
 
   /* float e? */
   if (lastChar == 'e')
     {
       if ((lastChar = syx_lexer_forward (self)) == '-')
-	{
-	  sign = TRUE;
-	  lastChar = syx_lexer_forward (self);
-	}
+        {
+          sign = TRUE;
+          lastChar = syx_lexer_forward (self);
+        }
 
       if (lastChar && isdigit (lastChar))
-	{
-	  s[stop++] = 'e';
-	  if (sign) s[stop++] = '-';
-	  do
-	    s[stop++] = lastChar;
-	  while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
+        {
+          s[stop++] = 'e';
+          if (sign) s[stop++] = '-';
+          do
+            s[stop++] = lastChar;
+          while ((lastChar = syx_lexer_forward (self)) && isdigit (lastChar));
 
-	  syx_lexer_push_back (self);
-	  token->type = SYX_TOKEN_FLOAT_CONST;
-	  token->value.floating = strtod (s, (char **)NULL);
-	}
+          syx_lexer_push_back (self);
+          token->type = SYX_TOKEN_FLOAT_CONST;
+          token->value.floating = strtod (s, (char **)NULL);
+        }
       else
-	{
-	  self->_pushed_back = 0;
-	  self->_current_text--;
-	  if (sign) self->_current_text--;
-	  self->_current_text--;
-	}
+        {
+          self->_pushed_back = 0;
+          self->_current_text--;
+          if (sign) self->_current_text--;
+          self->_current_text--;
+        }
     }
   else
     syx_lexer_push_back (self);
@@ -285,17 +285,17 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
       *str++ = lastChar;
       lastChar = syx_lexer_forward (self);
       if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
-	*str++ = lastChar;
+        *str++ = lastChar;
       else
-	syx_lexer_push_back (self);
+        syx_lexer_push_back (self);
     }
   else
     {
       while (lastChar && (isalnum (lastChar) || lastChar == ':'))
-	{
-	  *str++ = lastChar;
-	  lastChar = syx_lexer_forward (self);
-	}
+        {
+          *str++ = lastChar;
+          lastChar = syx_lexer_forward (self);
+        }
       syx_lexer_push_back (self);
     }
   
@@ -312,16 +312,16 @@ _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
   while (TRUE)
     {
       while ((lastChar = syx_lexer_forward (self)) && lastChar != '\'')
-	*str++ = lastChar;
+        *str++ = lastChar;
       
       lastChar = syx_lexer_forward (self);
       if (lastChar == '\'')
-	*str++ = '\'';
+        *str++ = '\'';
       else
-	{
-	  syx_lexer_push_back (self);
-	  break;
-	}
+        {
+          syx_lexer_push_back (self);
+          break;
+        }
     }
 
   token->type = SYX_TOKEN_STR_CONST;
@@ -401,11 +401,11 @@ syx_lexer_next_token (SyxLexer *lexer)
     {
       lastChar = syx_lexer_forward (lexer);
       if (lastChar == '"')
-	{
-	  lastChar = syx_lexer_forward (lexer);
-	  while (lastChar && lastChar != '"')
-	    lastChar = syx_lexer_forward (lexer);
-	}
+        {
+          lastChar = syx_lexer_forward (lexer);
+          while (lastChar && lastChar != '"')
+            lastChar = syx_lexer_forward (lexer);
+        }
     }
   while (lastChar && (isspace (lastChar) || lastChar == '"'));
 
@@ -420,12 +420,12 @@ syx_lexer_next_token (SyxLexer *lexer)
   else if (lastChar == '#')
     {
       if (syx_lexer_forward (lexer) == '(')
-	token.type = SYX_TOKEN_ARRAY_BEGIN;
+        token.type = SYX_TOKEN_ARRAY_BEGIN;
       else
-	{
-	  syx_lexer_push_back (lexer);
-	  _syx_lexer_token_symbol (lexer, &token, lastChar);
-	}
+        {
+          syx_lexer_push_back (lexer);
+          _syx_lexer_token_symbol (lexer, &token, lastChar);
+        }
     }
   else if (lastChar == '\'')
     _syx_lexer_token_string (lexer, &token, lastChar);
@@ -447,9 +447,9 @@ syx_lexer_next_token (SyxLexer *lexer)
       *str = lastChar;
       
       if (_syx_char_is_binary_second ((secondChar = syx_lexer_forward (lexer))))
-	*(str+1) = secondChar;
+        *(str+1) = secondChar;
       else
-	syx_lexer_push_back (lexer);
+        syx_lexer_push_back (lexer);
 
       token.type = SYX_TOKEN_BINARY;
       token.value.string = str;
@@ -482,7 +482,7 @@ syx_lexer_next_chunk (SyxLexer *lexer)
     }
 
   while (! (token.type == SYX_TOKEN_END || (token.type == SYX_TOKEN_BINARY
-					    && !strcmp (token.value.string, "!"))))
+                                            && !strcmp (token.value.string, "!"))))
     {
       syx_token_free (token);
       token = syx_lexer_next_token (lexer);

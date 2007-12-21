@@ -84,38 +84,38 @@ syx_exec_state_save (void)
 /* Primitives */
 
 /*! Back to the interpreter and push object into the stack */
-#define SYX_PRIM_RETURN(object)						\
-  syx_interp_stack_push (object);					\
+#define SYX_PRIM_RETURN(object)                                         \
+  syx_interp_stack_push (object);                                       \
   return TRUE
 
 /*! Same as SYX_PRIM_RETURN but the process yield the control */
-#define SYX_PRIM_YIELD(object)			\
-  syx_interp_stack_push (object);		\
+#define SYX_PRIM_YIELD(object)                   \
+  syx_interp_stack_push (object);                \
   return FALSE
 
 /*! Enter the method which contains the primitive call */
-#define SYX_PRIM_FAIL							\
-  syx_memory_gc_begin ();						\
+#define SYX_PRIM_FAIL                                                   \
+  syx_memory_gc_begin ();                                               \
   syx_interp_enter_context (syx_method_context_new (es->process, es->context, method, \
-						    es->message_receiver, \
-						    syx_array_new_ref (es->message_arguments_count, \
-								       es->message_arguments))); \
-  syx_memory_gc_end ();							\
+                                                    es->message_receiver, \
+                                                    syx_array_new_ref (es->message_arguments_count, \
+                                                                       es->message_arguments))); \
+  syx_memory_gc_end ();                                                 \
   return FALSE
 
 /*! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails */
-#define SYX_PRIM_ARGS(count)				\
-  if (count > _syx_exec_state->message_arguments_count)	\
-    {							\
-      SYX_PRIM_FAIL;					\
+#define SYX_PRIM_ARGS(count)                                   \
+  if (count > _syx_exec_state->message_arguments_count)        \
+    {                                                          \
+      SYX_PRIM_FAIL;                                           \
     }
 
 /*! The number of primitives */
 #define SYX_PRIMITIVES_MAX 107
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
-#define SYX_FUNC_PRIMITIVE(name)					\
-  syx_bool						\
+#define SYX_FUNC_PRIMITIVE(name)                          \
+  syx_bool                                                \
   name (SyxExecState *es, SyxOop method)
 
 typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;
@@ -145,8 +145,8 @@ EXPORT syx_int32 syx_primitive_get_index (syx_symbol name);
 /* Interpreter */
 
 typedef syx_bool (* SyxInterpreterFunc) (syx_uint16 argument);
-#define SYX_FUNC_INTERPRETER(name)		\
-  syx_bool				\
+#define SYX_FUNC_INTERPRETER(name)        \
+  syx_bool                                \
   name (syx_uint16 argument)
 
 
@@ -232,8 +232,8 @@ INLINE syx_bool
 syx_interp_leave_context_and_answer (SyxOop return_object, syx_bool use_return_context)
 {
   SyxOop return_context = (use_return_context
-			   ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(_syx_exec_state->context)
-			   : SYX_METHOD_CONTEXT_PARENT(_syx_exec_state->context));
+                           ? SYX_METHOD_CONTEXT_RETURN_CONTEXT(_syx_exec_state->context)
+                           : SYX_METHOD_CONTEXT_PARENT(_syx_exec_state->context));
 
   SYX_PROCESS_RETURNED_OBJECT(_syx_exec_state->process) = return_object;
 

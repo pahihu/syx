@@ -81,17 +81,17 @@ _syx_scheduler_find_next_process ()
   for (process=SYX_PROCESS_NEXT (syx_processor_active_process); ; process = SYX_PROCESS_NEXT (process))
     {
       if (SYX_IS_NIL (process))
-	{
-	  process = syx_processor_first_process;
-	  if (SYX_IS_NIL (process))
-	    return syx_nil;
-	}
+        {
+          process = syx_processor_first_process;
+          if (SYX_IS_NIL (process))
+            return syx_nil;
+        }
 
       if (_syx_scheduler_poll_nfds != -1)
-	_syx_scheduler_poll_wait ();
+        _syx_scheduler_poll_wait ();
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
-	return process;
+        return process;
     }
 }
 
@@ -115,43 +115,43 @@ _syx_scheduler_poll_wait (void)
   for (oldp=NULL,p=_syx_scheduler_poll_read; p;)
     {
       if (FD_ISSET (p->fd, &r))
-	{
-	  if (oldp)
-	    oldp->next = p->next;
-	  else
-	    _syx_scheduler_poll_read = p->next;
-	  syx_semaphore_signal (p->semaphore);
-	  fp = p;
-	  p = p->next;
-	  syx_free (fp);
-	}
+        {
+          if (oldp)
+            oldp->next = p->next;
+          else
+            _syx_scheduler_poll_read = p->next;
+          syx_semaphore_signal (p->semaphore);
+          fp = p;
+          p = p->next;
+          syx_free (fp);
+        }
       else
-	{
-	  nfds = (nfds < p->fd ? p->fd : nfds);
-	  oldp = p;
-	  p = p->next;
-	}
+        {
+          nfds = (nfds < p->fd ? p->fd : nfds);
+          oldp = p;
+          p = p->next;
+        }
     }
 
   for (oldp=NULL,p=_syx_scheduler_poll_write; p;)
     {
       if (FD_ISSET (p->fd, &w))
-	{
-	  if (oldp)
-	    oldp->next = p->next;
-	  else
-	    _syx_scheduler_poll_write = p->next;
-	  syx_semaphore_signal (p->semaphore);
-	  fp = p;
-	  p = p->next;
-	  syx_free (fp);
-	}
+        {
+          if (oldp)
+            oldp->next = p->next;
+          else
+            _syx_scheduler_poll_write = p->next;
+          syx_semaphore_signal (p->semaphore);
+          fp = p;
+          p = p->next;
+          syx_free (fp);
+        }
       else
-	{
-	  nfds = (nfds < p->fd ? p->fd : nfds);
-	  oldp = p;
-	  p = p->next;
-	}
+        {
+          nfds = (nfds < p->fd ? p->fd : nfds);
+          oldp = p;
+          p = p->next;
+        }
     }
 
   _syx_scheduler_poll_nfds = nfds;
@@ -201,12 +201,12 @@ _syx_scheduler_load (FILE *image)
   while (fgetc (image))
     {
       if (p)
-	{
-	  p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-	  p = p->next;
-	}
+        {
+          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+          p = p->next;
+        }
       else
-	p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
       p->fd = SYX_COMPAT_SWAP_32 (data);
@@ -216,19 +216,19 @@ _syx_scheduler_load (FILE *image)
       p->next = NULL;
 
       if (!_syx_scheduler_poll_read)
-	_syx_scheduler_poll_read = p;
+        _syx_scheduler_poll_read = p;
     }
 
   _syx_scheduler_poll_write = NULL;
   while (fgetc (image))
     {
       if (p)
-	{
-	  p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-	  p = p->next;
-	}
+        {
+          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+          p = p->next;
+        }
       else
-	p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
 
       fread (&data, sizeof (syx_int32), 1, image);
       p->fd = SYX_COMPAT_SWAP_32 (data);
@@ -238,7 +238,7 @@ _syx_scheduler_load (FILE *image)
       p->next = NULL;
 
       if (!_syx_scheduler_poll_write)
-	_syx_scheduler_poll_write = p;
+        _syx_scheduler_poll_write = p;
     }
 }
 
@@ -371,12 +371,12 @@ syx_scheduler_add_process (SyxOop process)
   if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))
     {
       if (SYX_IS_NIL (syx_processor_first_process))
-	syx_processor_first_process = syx_processor_active_process = process;
+        syx_processor_first_process = syx_processor_active_process = process;
       else
-	{
-	  SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_first_process);
-	  SYX_PROCESS_NEXT(syx_processor_first_process) = process;
-	}
+        {
+          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_first_process);
+          SYX_PROCESS_NEXT(syx_processor_first_process) = process;
+        }
       SYX_PROCESS_SCHEDULED(process) = syx_true;
     }
 }
@@ -398,11 +398,11 @@ syx_scheduler_remove_process (SyxOop process)
     {
       inter_process = SYX_PROCESS_NEXT(prev_process);
       if (SYX_OOP_EQ (inter_process, process))
-	{
-	  SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
-	  SYX_PROCESS_SCHEDULED(process) = syx_false;
-	  break;
-	}
+        {
+          SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
+          SYX_PROCESS_SCHEDULED(process) = syx_false;
+          break;
+        }
     }
 
   if (SYX_OOP_EQ (process, syx_processor_active_process))

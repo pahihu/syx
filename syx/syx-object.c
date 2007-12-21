@@ -114,10 +114,10 @@ syx_object_resize (SyxOop object, syx_varsize size)
 {
   if (SYX_OBJECT_HAS_REFS (object))
     SYX_OBJECT_DATA(object) = (SyxOop *) syx_realloc (SYX_OBJECT_DATA(object),
-						      size * sizeof (SyxOop));
+                                                      size * sizeof (SyxOop));
   else
     SYX_OBJECT_DATA(object) = (SyxOop *) syx_realloc (SYX_OBJECT_DATA(object),
-						      size * sizeof (syx_int8));
+                                                      size * sizeof (syx_int8));
 
   SYX_OBJECT_DATA_SIZE(object) = size;
 }
@@ -254,10 +254,10 @@ syx_array_remove (SyxOop array, SyxOop element)
   for (i=0; i < size; i++)
     {
       if (found)
-	SYX_OBJECT_DATA(array)[i-1] = SYX_OBJECT_DATA(array)[i];
+        SYX_OBJECT_DATA(array)[i-1] = SYX_OBJECT_DATA(array)[i];
 
       if (SYX_OOP_EQ (SYX_OBJECT_DATA (array)[i], element))
-	found = TRUE;
+        found = TRUE;
     }
 
   if (found)
@@ -283,10 +283,10 @@ syx_array_add (SyxOop array, SyxOop element, syx_bool unique)
   if (unique)
     {
       for (i=0; i < size; i++)
-	{
-	  if (SYX_OOP_EQ (SYX_OBJECT_DATA(array)[i], element))
-	    return;
-	}
+        {
+          if (SYX_OOP_EQ (SYX_OBJECT_DATA(array)[i], element))
+            return;
+        }
     }
 
   syx_object_grow_by (array, 1);
@@ -359,22 +359,22 @@ syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
       if (SYX_IS_NIL (entry))
         {
           if (return_nil_index)
-	    {
-	      SYX_END_PROFILE(dict_access);
-	      return i;
-	    }
+            {
+              SYX_END_PROFILE(dict_access);
+              return i;
+            }
           else
-	    {
-	      SYX_END_PROFILE(dict_access);
-	      return -1;
-	    }
+            {
+              SYX_END_PROFILE(dict_access);
+              return -1;
+            }
         }
       tally--;
       if (!strcmp (SYX_OBJECT_SYMBOL (entry), key))
-	{
-	  SYX_END_PROFILE(dict_access);
-	  return i;
-	}
+        {
+          SYX_END_PROFILE(dict_access);
+          return i;
+        }
     }
   SYX_END_PROFILE(dict_access);
   return -1;
@@ -520,10 +520,10 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
     {
       index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
       if (index < 0)
-	{
-	  syx_signal (SYX_ERROR_NOT_FOUND, key);
-	  return;
-	}
+        {
+          syx_signal (SYX_ERROR_NOT_FOUND, key);
+          return;
+        }
     }
 
   SYX_ASSOCIATION_VALUE (binding) = syx_small_integer_new (index);
@@ -579,10 +579,10 @@ syx_dictionary_rehash (SyxOop dict)
     {
       entry = table[i];
       if (!SYX_IS_NIL (entry))
-	{
-	  syx_dictionary_at_symbol_put (newdict, entry, table[i+1]);
-	  tally--;
-	}
+        {
+          syx_dictionary_at_symbol_put (newdict, entry, table[i+1]);
+          tally--;
+        }
     }
 
   syx_free (SYX_OBJECT_DATA (dict));
@@ -664,7 +664,7 @@ syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop rec
 
   if (!SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process))+sp,
-	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
+            SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_TP(object) = syx_small_integer_new (sp + argument_stack_size);
@@ -702,7 +702,7 @@ syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop argum
 
   if (!SYX_IS_NIL (arguments))
     memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process)) + SYX_SMALL_INTEGER(SYX_METHOD_CONTEXT_AP(object)) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENT_STACK_TOP(block)),
-	    SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
+            SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
 
   SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
   SYX_METHOD_CONTEXT_TP(object) = SYX_METHOD_CONTEXT_TP(outer_context);
@@ -763,8 +763,8 @@ syx_object_new_size (SyxOop klass, syx_bool has_refs, syx_varsize size)
   object->has_refs = has_refs;
   object->data_size = size;
   object->data = (SyxOop *) (has_refs
-			     ? syx_calloc (size, sizeof (SyxOop))
-			     : syx_calloc (size, sizeof (syx_int8)));
+                             ? syx_calloc (size, sizeof (SyxOop))
+                             : syx_calloc (size, sizeof (syx_int8)));
   return (SyxOop)object;
 }
 
@@ -807,15 +807,15 @@ syx_object_copy (SyxOop object)
   obj1->is_constant = FALSE;
 
   obj1->vars = (SyxOop *) syx_memdup (obj2->vars, SYX_SMALL_INTEGER(SYX_CLASS_INSTANCE_SIZE (obj1->klass)),
-				      sizeof (SyxOop));
+                                      sizeof (SyxOop));
 
   obj1->data_size = obj2->data_size;
   if (obj2->data)
     {
       if (obj1->has_refs)
-	obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));
+        obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (SyxOop));
       else
-	obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (syx_int8));
+        obj1->data = (SyxOop *) syx_memdup (obj2->data, obj1->data_size, sizeof (syx_int8));
     }
 
   return oop;
@@ -894,14 +894,14 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
       size = SYX_OBJECT_DATA_SIZE (inst_vars);
 
       for (i=size; i > 0; i--)
-	{
-	  inst_var = SYX_OBJECT_DATA(inst_vars)[i-1];
-	  if (!SYX_IS_NIL (inst_var))
-	    {
-	      tot_size++;
-	      names[255-tot_size+1] = SYX_OBJECT_SYMBOL (inst_var);
-	    }
-	}
+        {
+          inst_var = SYX_OBJECT_DATA(inst_vars)[i-1];
+          if (!SYX_IS_NIL (inst_var))
+            {
+              tot_size++;
+              names[255-tot_size+1] = SYX_OBJECT_SYMBOL (inst_var);
+            }
+        }
     }
   if (tot_size > 0)
     {
@@ -925,11 +925,11 @@ syx_class_lookup_method (SyxOop klass, syx_symbol selector)
   for (cur=klass; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
-	continue;
+        continue;
 
       method = syx_dictionary_at_symbol_if_absent (SYX_CLASS_METHODS (cur), selector, syx_nil);
       if (!SYX_IS_NIL (method))
-	return method;
+        return method;
     }
 
   return syx_nil;
@@ -949,12 +949,12 @@ syx_class_lookup_method_binding (SyxOop klass, SyxOop binding)
   for (cur=klass; !SYX_IS_NIL (cur); cur = SYX_CLASS_SUPERCLASS (cur))
     {
       if (SYX_IS_NIL (SYX_CLASS_METHODS (cur)))
-	continue;
+        continue;
       
       SYX_VARIABLE_BINDING_DICTIONARY (binding) = SYX_CLASS_METHODS (cur);
       method = syx_dictionary_bind_if_absent (binding, syx_nil);
       if (!SYX_IS_NIL (method))
-	return method;
+        return method;
     }
   
   return syx_nil;
@@ -975,28 +975,28 @@ SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b)
   if (a > 0) 
     {
       if (b > 0)
-	{
-	  if (a > (INT_MAX / b))
-	    return TRUE;
-	} 
+        {
+          if (a > (INT_MAX / b))
+            return TRUE;
+        } 
       else
-	{
-	  if (b < (INT_MIN / a))
-	    return TRUE;
-	} 
+        {
+          if (b < (INT_MIN / a))
+            return TRUE;
+        } 
     } 
   else
     { 
       if (b > 0)
-	{ 
-	  if (a < (INT_MIN / b))
-	    return TRUE;
-	} 
+        { 
+          if (a < (INT_MIN / b))
+            return TRUE;
+        } 
       else
-	{ 
-	  if ( (a != 0) && (b < (INT_MAX / a)))
-	    return TRUE;
-	} 
+        { 
+          if ( (a != 0) && (b < (INT_MAX / a)))
+            return TRUE;
+        } 
     }
 #endif
 

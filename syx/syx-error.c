@@ -52,7 +52,7 @@ syx_error_init (void)
   assert (syx_error_register ("Interpreter internal fail", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
   assert (syx_error_register ("Not found", syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
   assert (syx_error_register ("Wrong number of arguments",
-			      syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
+                              syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
 }
 
 /*!
@@ -87,7 +87,7 @@ syx_error_register (syx_symbol name, SyxOop klass)
     _syx_error_entries = (SyxErrorEntry **)syx_calloc (++_syx_error_entries_top, sizeof (SyxErrorEntry *));
   else
     _syx_error_entries = (SyxErrorEntry **)syx_realloc (_syx_error_entries,
-							(++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
+                                                        (++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
 
   entry->name = name;
   entry->klass = klass;
@@ -130,17 +130,17 @@ syx_signal (SyxErrorType type, SyxOop message)
   if (!syx_system_initialized)
     {
       if (SYX_OBJECT_IS_STRING (message) || SYX_OBJECT_IS_SYMBOL (message))
-	syx_error ("%s %s\n", entry->name, SYX_OBJECT_SYMBOL (message));
+        syx_error ("%s %s\n", entry->name, SYX_OBJECT_SYMBOL (message));
       else
-	syx_error (entry->name);
+        syx_error (entry->name);
     }
 
   if (SYX_IS_NIL (message))
     context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
-				      entry->klass, "signal");
+                                      entry->klass, "signal");
   else
     context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
-				       entry->klass, "signal:", message);
+                                       entry->klass, "signal:", message);
 
   syx_interp_enter_context (context);
 
@@ -164,10 +164,10 @@ syx_signal_create_context (SyxErrorType type, SyxOop message)
 
   if (SYX_IS_NIL (message))
     context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
-				      entry->klass, "signal");
+                                      entry->klass, "signal");
   else
     context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
-				       entry->klass, "signal:", message);
+                                       entry->klass, "signal:", message);
 
   return context;
 }
@@ -203,7 +203,7 @@ void
 syx_warning (syx_symbol fmt, ...)
 {
   va_list ap;
-  fprintf (stderr, "WARNING: ");	       
+  fprintf (stderr, "WARNING: ");       
   va_start (ap, fmt);
   vfprintf (stderr, fmt, ap);
   va_end (ap);

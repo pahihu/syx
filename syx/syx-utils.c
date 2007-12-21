@@ -90,16 +90,16 @@ _syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized)
   for (vars_size=0; token.type != SYX_TOKEN_END; vars_size++)
     {
       if (token.type != SYX_TOKEN_NAME_CONST)
-	{
-	  syx_token_free (token);
-	  syx_error ("Expected names for variables\n");
-	}
+        {
+          syx_token_free (token);
+          syx_error ("Expected names for variables\n");
+        }
 
       if (capitalized && !isupper (token.value.string[0]))
-	{
-	  syx_token_free (token);
-	  syx_error ("First letter must be uppercase\n");
-	}
+        {
+          syx_token_free (token);
+          syx_error ("First letter must be uppercase\n");
+        }
 
       vars_raw[vars_size] = syx_symbol_new (token.value.string);
       syx_token_free (token);
@@ -163,24 +163,24 @@ _syx_cold_parse_class (SyxLexer *lexer)
   if (strcmp (subclass_name, "Object"))
     {
       if (SYX_IS_NIL (subclass))
-	existing_class = FALSE;
+        existing_class = FALSE;
       else
-	{
-	  existing_class = TRUE;
-	  if (SYX_OOP_NE (SYX_CLASS_SUPERCLASS(subclass), superclass))
-	    {
-	      syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS (subclass)),
-				subclass);
-	      SYX_CLASS_SUPERCLASS(subclass) = superclass;
-	      syx_array_add (SYX_CLASS_SUBCLASSES (superclass), subclass, TRUE);
+        {
+          existing_class = TRUE;
+          if (SYX_OOP_NE (SYX_CLASS_SUPERCLASS(subclass), superclass))
+            {
+              syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS (subclass)),
+                                subclass);
+              SYX_CLASS_SUPERCLASS(subclass) = superclass;
+              syx_array_add (SYX_CLASS_SUBCLASSES (superclass), subclass, TRUE);
 
-	      syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass))),
-				syx_object_get_class (subclass));
-	      SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass)) = syx_object_get_class (superclass);
-	      syx_array_add (SYX_CLASS_SUBCLASSES (syx_object_get_class (superclass)),
-			     syx_object_get_class (subclass), TRUE);
-	    }
-	}
+              syx_array_remove (SYX_CLASS_SUBCLASSES (SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass))),
+                                syx_object_get_class (subclass));
+              SYX_CLASS_SUPERCLASS(syx_object_get_class (subclass)) = syx_object_get_class (superclass);
+              syx_array_add (SYX_CLASS_SUBCLASSES (syx_object_get_class (superclass)),
+                             syx_object_get_class (subclass), TRUE);
+            }
+        }
     }
 
   token = syx_lexer_next_token (lexer);
@@ -248,7 +248,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
 
   SYX_CLASS_INSTANCE_VARIABLES(subclass) = inst_vars;
   SYX_CLASS_INSTANCE_SIZE(subclass) = syx_small_integer_new (super_inst_vars_size
-							     + SYX_OBJECT_DATA_SIZE (inst_vars));
+                                                             + SYX_OBJECT_DATA_SIZE (inst_vars));
 
   /* Now parse class variables */
   class_vars = _syx_cold_parse_vars (class_vars_lexer, TRUE);
@@ -259,7 +259,7 @@ _syx_cold_parse_class (SyxLexer *lexer)
   /* translate from array to dictionary */
   for (i=0; i < SYX_OBJECT_DATA_SIZE(class_vars); i++)
     syx_dictionary_at_symbol_put (SYX_CLASS_CLASS_VARIABLES(subclass),
-				  SYX_OBJECT_DATA(class_vars)[i], syx_nil);
+                                  SYX_OBJECT_DATA(class_vars)[i], syx_nil);
   /* get rid of this */
   syx_object_free (class_vars);
 
@@ -330,14 +330,14 @@ syx_cold_parse_methods (SyxLexer *lexer)
       chunk = syx_lexer_next_chunk (lexer);
       method_lexer = syx_lexer_new (chunk);
       if (!method_lexer)
-	break;
+        break;
 
       parser = syx_parser_new (method_lexer, syx_method_new (), klass);
       syx_parser_parse (parser, FALSE);
 
       syx_dictionary_at_symbol_put (SYX_CLASS_METHODS(klass),
-				    SYX_METHOD_SELECTOR(parser->method),
-				    parser->method);
+                                    SYX_METHOD_SELECTOR(parser->method),
+                                    parser->method);
 
       syx_parser_free (parser, TRUE);
     }
@@ -360,9 +360,9 @@ syx_cold_parse (SyxLexer *lexer)
   while (parseOk && token.type != SYX_TOKEN_END)
     {
       if (_IS_EXL_MARK (token))
-	parseOk = syx_cold_parse_methods (lexer);
+        parseOk = syx_cold_parse_methods (lexer);
       else
-	parseOk = _syx_cold_parse_class (lexer);
+        parseOk = _syx_cold_parse_class (lexer);
 
       syx_token_free (token);
       token = syx_lexer_next_token (lexer);
@@ -390,14 +390,14 @@ syx_cold_file_in (syx_symbol filename)
   
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
-	syx_error ("can't open %s\n", filename);
-	return FALSE;
+        syx_error ("can't open %s\n", filename);
+        return FALSE;
      }
 #ifdef HAVE_FSTAT
   if ((fstat (fd, &statbuf)) < 0)
      {
-	syx_error ("can't obtain size of %s\n", filename);
-	return FALSE;
+        syx_error ("can't obtain size of %s\n", filename);
+        return FALSE;
      }
   size = statbuf.st_size;
 #else
@@ -457,7 +457,7 @@ syx_semaphore_signal (SyxOop semaphore)
 
   /* create a new array without signaled processes */
   SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(list) - i,
-						     SYX_OBJECT_DATA(list) + i);
+                                                     SYX_OBJECT_DATA(list) + i);
   SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
 
   /* release */
@@ -602,9 +602,9 @@ syx_file_in_blocking (syx_symbol file)
 
   process = syx_process_new ();
   context = syx_send_binary_message (process, syx_nil,
-				     syx_globals_at ("FileStream"),
-				     "fileIn:",
-				     syx_string_new (file));
+                                     syx_globals_at ("FileStream"),
+                                     "fileIn:",
+                                     syx_string_new (file));
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -657,7 +657,7 @@ syx_find_first_non_whitespace (syx_symbol string)
   for (i=0; *(string+i); i++)
     {
       if (!isspace (*(string+i)))
-	return i;
+        return i;
     }
 
   return 0;
@@ -698,14 +698,14 @@ syx_show_traceback (void)
 
   puts ("\nExecution state:");
   printf("Process: %p (memory index: %ld)\n",
-	 SYX_OOP_CAST_POINTER (es->process),
-	 SYX_MEMORY_INDEX_OF (es->process));
+         SYX_OOP_CAST_POINTER (es->process),
+         SYX_MEMORY_INDEX_OF (es->process));
   printf("Context: %p (memory index: %ld)\n",
-	 SYX_OOP_CAST_POINTER (es->context),
-	 SYX_MEMORY_INDEX_OF (es->context));
+         SYX_OOP_CAST_POINTER (es->context),
+         SYX_MEMORY_INDEX_OF (es->context));
   printf("Receiver: %p (memory index: %ld)\n",
-	 SYX_OOP_CAST_POINTER (es->receiver),
-	 SYX_MEMORY_INDEX_OF (es->receiver));
+         SYX_OOP_CAST_POINTER (es->receiver),
+         SYX_MEMORY_INDEX_OF (es->receiver));
   printf("Arguments: %p\n", (syx_pointer) es->arguments);
   printf("Temporaries: %p\n", (syx_pointer) es->temporaries);
   printf("Stack: %p\n", (syx_pointer) es->stack);
@@ -715,43 +715,43 @@ syx_show_traceback (void)
   printf("Instruction pointer: %d\n", es->ip);
   printf("Stack pointer: %d\n", es->sp);
   printf("Message receiver: %p (memory index: %ld)\n",
-	 SYX_OOP_CAST_POINTER (es->message_receiver),
-	 SYX_MEMORY_INDEX_OF (es->message_receiver));
+         SYX_OOP_CAST_POINTER (es->message_receiver),
+         SYX_MEMORY_INDEX_OF (es->message_receiver));
   printf("Message arguments: %p (size: %d)\n",
-	 (syx_pointer) es->message_arguments,
-	 es->message_arguments_count);
+         (syx_pointer) es->message_arguments,
+         es->message_arguments_count);
 
   puts ("\nTraceback:");
   context = syx_interp_get_current_context ();
   while (!SYX_IS_NIL (context))
     {
       if (syx_object_get_class (context) == syx_block_context_class)
-	{
-	  homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(context);
-	  while (syx_object_get_class (homecontext) != syx_method_context_class)
-	    homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(homecontext);
-	  traceformat = "%s%s>>%s[]\n";
-	}
+        {
+          homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(context);
+          while (syx_object_get_class (homecontext) != syx_method_context_class)
+            homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(homecontext);
+          traceformat = "%s%s>>%s[]\n";
+        }
       else
-	{
-	  homecontext = context;
-	  traceformat = "%s%s>>%s\n";
-	}
+        {
+          homecontext = context;
+          traceformat = "%s%s>>%s\n";
+        }
 
       receiver = SYX_METHOD_CONTEXT_RECEIVER(context);
       classname = SYX_CLASS_NAME(syx_object_get_class(receiver));
       if (SYX_IS_NIL (classname))
-	{
-	  classname = SYX_CLASS_NAME(SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class(receiver)));
-	  extraclass = " class";
-	}
+        {
+          classname = SYX_CLASS_NAME(SYX_METACLASS_INSTANCE_CLASS(syx_object_get_class(receiver)));
+          extraclass = " class";
+        }
       else
-	extraclass = "";
+        extraclass = "";
 
       printf (traceformat,
-	      SYX_OBJECT_SYMBOL(classname),
-	      extraclass,
-	      SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(SYX_METHOD_CONTEXT_METHOD(homecontext))));
+              SYX_OBJECT_SYMBOL(classname),
+              extraclass,
+              SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(SYX_METHOD_CONTEXT_METHOD(homecontext))));
 
       context = SYX_METHOD_CONTEXT_PARENT (context);
     }
