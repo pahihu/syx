@@ -5,7 +5,9 @@ INCLUDES		=	\
 
 CFLAGS+="-std=c99"
 
-plugin_LTLIBRARIES= libsyx-gtk.la
+plugingtkdir = $(plugindir)/gtk
+
+plugingtk_LTLIBRARIES= libsyx-gtk.la
 
 libsyx_gtk_la_SOURCES	= 	\
 	plugin-init.c gtk_wrap.c

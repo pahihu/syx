@@ -22,25 +22,25 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-Object subclass: #CPointer
-       instanceVariableNames: ''
-       classVariableNames: ''!
+!CStructFieldTypePointer methodsFor: 'accessing'!
 
-!CPointer methodsFor: 'finalization'!
-
-free
-    <primitive: 'CPointer_free'>
-         self primitiveFailed
-! !
-
-!CPointer methodsFor: 'converting'!
-
-asString
-    <primitive: 'CPointer_asString'>
-         self primitiveFailed
+bytes
+     <primitive: 'CStructFieldType_sizeOfPointer'>
+          self primitiveFailed
 !
 
-asByteArray: size
-    <primitive: 'CPointer_asByteArray'>
-         self primitiveFailed
+bytes: anInteger
+     self shouldNotImplement
+!
+
+name: aSymbol
+     aSymbol isCapitalized
+           ifTrue: [ self nestedStruct: (Smalltalk at: aSymbol) ]
+           ifFalse: [ name := aSymbol ]
+! !
+     
+!CStructFieldTypePointer methodsFor: 'testing'!
+
+isPointer
+     ^true
 ! !

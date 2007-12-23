@@ -64,6 +64,14 @@ struct _test3
   long f6;
 } test3;
 
+union _test4
+{
+  char f1;
+  short int f2;
+  int f3;
+  long f4;
+} test4;
+
 int SYX_CDECL
 main (int argc, char *argv[])
 {
@@ -162,6 +170,16 @@ main (int argc, char *argv[])
      assert(test3.f5 == 76.119);
   */
   /* won't write longs yet */
+
+  puts ("- Test unions");
+  test4.f1 = 'S';
+  process = syx_process_new ();
+  context = syx_send_binary_message (process, syx_nil,
+                                     structTest,
+                                     "testUnion:",
+                                     SYX_POINTER_CAST_OOP (&test4));
+  syx_process_execute_blocking (process);
+  assert(test4.f1 == 'T');
 
   syx_quit ();
   return 0;

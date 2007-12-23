@@ -57,8 +57,8 @@ generateFieldSpecs
     | specs |
     specs := fields collect: [ :field |
                     CStructFieldSpec new
-                    name: field first;
-                    type: (CStructFieldType fromName: field second) ].
+                    type: (CStructFieldType fromFieldArray: field);
+                    name: field last ].
     self alignFields: specs.
     ^specs
 !

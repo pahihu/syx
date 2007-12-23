@@ -38,32 +38,51 @@ CStruct subclass: #Test3Struct
         instanceVariableNames: ''
         classVariableNames: ''!
 
+CUnion subclass: #Test4Union
+       instanceVariableNames: ''
+       classVariableNames: ''!
+
 !Test1Struct class methodsFor: 'initialize-release'!
 
 fields
-    ^#((f1 char) (f2 char) (f3 char) (f4 char)
-      (f5 int) (f6 long))
+    ^#((char f1) (char f2) (char f3) (char f4)
+      (int f5) (long f6))
 ! !
 
 !Test2Struct class methodsFor: 'initialize-release'!
 
 fields
-    ^#((f1 char) (f2 char)
-       (f3 shortInt) (f4 shortInt)
-       (f5 int) (f6 int)
-       (f7 pointer) (f8 pointer)
-       (f9 char) (f10 int)
-       (f11 char) (f12 pointer)
-       (f13 shortInt) (f14 pointer))
+    ^#((char f1) (char f2)
+       (shortInt f3) (shortInt f4)
+       (int f5) (int f6)
+       (void* f7) (void* f8)
+       (char f9) (int f10)
+       (char f11) (void* f12)
+       (shortInt f13) (void* f14))
 ! !
 
 !Test3Struct class methodsFor: 'initialize-release'!
 
 fields
-    ^#((f1 shortInt) (f2 int) (f3 char) (f4 double) (f5 float) (f6 long))
+    ^#((shortInt f1) (int f2) (char f3) (double f4) (float f5) (long f6))
+! !
+
+!Test4Union class methodsFor: 'initialize-release'!
+
+fields
+    ^#((char f1) (shortInt f2) (int f3) (long f4))
 ! !
 
 !Test3Struct methodsFor: 'assertion'!
+
+assertField: aSymbol toBe: anObject
+   | gotObject |
+   gotObject := self perform: aSymbol.
+   anObject = gotObject
+       ifFalse: [ self error: aSymbol asString, ' is ', gotObject printString, ' expected ', anObject printString ]
+! !
+
+!Test4Union methodsFor: 'assertion'!
 
 assertField: aSymbol toBe: anObject
    | gotObject |
@@ -91,10 +110,26 @@ testWrite
         f5: 76.119
 ! !
 
+!Test4Union methodsFor: 'test'!
+
+testUnion
+   self
+        assertField: #f1 toBe: $S;
+        assertField: #f2 toBe: $S codePoint;
+        assertField: #f3 toBe: $S codePoint;
+        f2: 16r4567;
+        assertField: #f3 toBe: 16r4567;
+        assertField: #f1 toBe: (Character codePoint: 16r67);
+        f3: 1928;
+        assertField: #f2 toBe: 1928;
+        f1: $T
+! !
+
 !TestCStruct class methodsFor: 'initialize-release'!
 
 initialize
-   Test3Struct initialize
+   Test3Struct initialize.
+   Test4Union initialize
 ! !
 
 !TestCStruct methodsFor: 'test'!
@@ -113,6 +148,10 @@ testRead: cPointer
 
 testWrite: cPointer
     (Test3Struct handle: cPointer) testWrite
+!
+
+testUnion: cPointer
+    (Test4Union handle: cPointer) testUnion
 ! !
 
 !TestCStruct methodsFor: 'assertion'!

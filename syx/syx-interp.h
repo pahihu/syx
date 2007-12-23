@@ -111,7 +111,7 @@ syx_exec_state_save (void)
     }
 
 /*! The number of primitives */
-#define SYX_PRIMITIVES_MAX 107
+#define SYX_PRIMITIVES_MAX 110
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxExecState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)                          \

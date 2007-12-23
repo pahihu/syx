@@ -1806,6 +1806,36 @@ SYX_FUNC_PRIMITIVE (CPointer_free)
   SYX_PRIM_RETURN (es->message_receiver);
 }
 
+SYX_FUNC_PRIMITIVE (CPointer_asString)
+{
+  SyxOop ptr;
+  SyxOop ret;
+  ptr = es->message_receiver;
+  if (!SYX_IS_NIL (ptr))
+    ret = syx_string_new (SYX_OOP_CAST_POINTER (ptr));
+  else
+    ret = syx_nil;
+
+  SYX_PRIM_RETURN (ret);
+}
+
+SYX_FUNC_PRIMITIVE (CPointer_asByteArray)
+{
+  SyxOop ptr;
+  SyxOop ret;
+  syx_int32 size;
+  SYX_PRIM_ARGS(1);
+
+  ptr = es->message_receiver;
+  size = SYX_SMALL_INTEGER(es->message_arguments[0]);
+  if (!SYX_IS_NIL (ptr))
+    ret = syx_byte_array_new (size, SYX_OOP_CAST_POINTER (ptr));
+  else
+    ret = syx_nil;
+
+  SYX_PRIM_RETURN (ret);
+}
+
 /* CStruct */
 
 static SyxOop type_char;
@@ -2072,6 +2102,8 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
 
   /* CPointer */
   { "CPointer_free", CPointer_free },
+  { "CPointer_asString", CPointer_asString },
+  { "CPointer_asByteArray", CPointer_asByteArray },
 
   /* CStruct */
   { "CStruct_on_type_at", CStruct_on_type_at },

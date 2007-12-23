@@ -26,6 +26,10 @@ Object subclass: #CStructFieldType
        instanceVariableNames: 'name bytes nestedStruct'
        classVariableNames: 'CStructFieldBytes'!
 
+CStructFieldType subclass: #CStructFieldTypePointer
+                 instanceVariableNames: ''
+                 classVariableNames: ''!
+
 !CStructFieldType class methodsFor: 'C types bytes'!
 
 sizeOfChar
@@ -42,11 +46,6 @@ sizeOfInt
 
 sizeOfLong
      <primitive: 'CStructFieldType_sizeOfLong'>
-          self primitiveFailed
-!
-
-sizeOfPointer
-     <primitive: 'CStructFieldType_sizeOfPointer'>
           self primitiveFailed
 !
 
@@ -67,15 +66,16 @@ initialize
           at: #shortInt put: self sizeOfShortInt;
           at: #int put: self sizeOfInt;
           at: #long put: self sizeOfLong;
-          at: #pointer put: self sizeOfPointer;
           at: #float put: self sizeOfFloat;
           at: #double put: self sizeOfDouble
 ! !
 
 !CStructFieldType class methodsFor: 'instance creation'!
 
-fromName: aSymbol
-     ^CStructFieldType new name: aSymbol
+fromFieldArray: anArray
+     anArray second = #*
+          ifTrue: [ ^CStructFieldTypePointer new name: anArray first ]
+          ifFalse: [ ^CStructFieldType new name: anArray first ]
 ! !
 
 !CStructFieldType methodsFor: 'accessing'!
@@ -139,3 +139,9 @@ compileWriteAccessorOn: aClass named: aSymbol withOffset: anOffset
      aClass compile: stream contents
 ! !
      
+
+!CStructFieldType methodsFor: 'testing'!
+
+isPointer
+     ^false
+! !

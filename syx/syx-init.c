@@ -139,7 +139,9 @@ _syx_file_in_basic (void)
 
   static syx_symbol foreign_filenames[] = {
     "CPointer.st", "CObject.st",
-    "CStructFieldType.st", "CStructFieldSpec.st", "CStructGenerator.st", "CStruct.st",
+    "CStructFieldType.st", "CStructFieldTypePointer.st", "CStructFieldSpec.st",
+    "CStructGenerator.st", "CStruct.st",
+    "CUnionGenerator.st", "CUnion.st",
     NULL
   };
 

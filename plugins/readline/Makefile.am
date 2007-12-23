@@ -3,7 +3,9 @@ INCLUDES		=	\
 	$(SYX_DEP_CFLAGS)       \
 	$(READLINE_DEP_CFLAGS)
 
-plugin_LTLIBRARIES= libsyx-readline.la
+pluginreadlinedir = $(plugindir)/readline
+
+pluginreadline_LTLIBRARIES= libsyx-readline.la
 
 libsyx_readline_la_SOURCES	= 	\
 	plugin-init.c

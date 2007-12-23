@@ -1,3 +1,36 @@
+2007-12-23  Luca Bruno  <lethalman88@gmail.com>
+
+	* tests/stsupport/TestCStruct.st: update according to the latest changes and add tests for unions
+
+	* tests/testforeignstruct.c (main): test unions
+
+	Specify CStruct/CUnion fields with the same order as real C structs/unions
+	for instance #(char f1) instead of the old #(f1 char).
+	
+	* st/foreign/CPointer.st (asByteArray): added
+	(asString): added
+
+	* st/foreign/CStructFieldTypePointer.st: added
+
+	* st/foreign/CStructFieldType.st: handle pointers with a different class
+
+	* st/foreign/CUnion.st: added
+
+	* st/foreign/CUnionGenerator.st: added
+
+	* syx/syx-init.c (_syx_file_in_basic): file in CUnion.st and CUnionGenerator.st
+
+	* syx/syx-primitives.c (CPointer_asString): added
+	(CPointer_asByteArray): added
+
+	* plugins/wingui/Makefile.am: fix install dir
+
+	* plugins/readline/Makefile.am: fix install dir
+	
+	* plugins/gtk/Makefile.am: fix install dir
+
+	* plugins/x11/Makefile.am: fix install dir
+
 2007-12-21  Luca Bruno  <lethalman88@gmail.com>
 
 	Build plugins and install desktop files using the GNU build system.

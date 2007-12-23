@@ -22,25 +22,14 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-Object subclass: #CPointer
-       instanceVariableNames: ''
-       classVariableNames: ''!
+CStructGenerator subclass: #CUnionGenerator
+                 instanceVariableNames: ''
+                 classVariableNames: ''!
 
-!CPointer methodsFor: 'finalization'!
+!CUnionGenerator methodsFor: 'alignment'!
 
-free
-    <primitive: 'CPointer_free'>
-         self primitiveFailed
-! !
-
-!CPointer methodsFor: 'converting'!
-
-asString
-    <primitive: 'CPointer_asString'>
-         self primitiveFailed
-!
-
-asByteArray: size
-    <primitive: 'CPointer_asByteArray'>
-         self primitiveFailed
+alignFields: specs
+    "No alignment for unions"
+    specs do: [ :spec |
+          spec offset: 0 ]
 ! !

@@ -35,14 +35,14 @@ initialize
 
 fields
     "Example:
-     ^#((field1 char)
-        (field2 shortInt)
-        (field3 int)
-        (field4 long)
-        (field5 pointer)
-        (field6 float)
-        (field7 double)
-        (field8 NestedCStruct))"
+     ^#((char field1)
+        (shortInt field2)
+        (int field3)
+        (long field4)
+        (pointer field5)
+        (float field6)
+        (double field7)
+        (NestedCStruct field8))"
 
     ^#()
 ! !

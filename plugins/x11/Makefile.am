@@ -3,7 +3,9 @@ INCLUDES		=	\
 	$(SYX_DEP_CFLAGS)       \
 	$(X11_DEP_CFLAGS)
 
-plugin_LTLIBRARIES= libsyx-x11.la
+pluginx11dir = $(plugindir)/x11
+
+pluginx11_LTLIBRARIES= libsyx-x11.la
 
 libsyx_x11_la_SOURCES	= 	\
 	plugin-init.c

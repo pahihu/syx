@@ -3,7 +3,9 @@ INCLUDES		=	\
 	$(SYX_DEP_CFLAGS)       \
 	$(WINGUI_DEP_CFLAGS)
 
-plugin_LTLIBRARIES= libsyx-wingui.la
+pluginwinguidir = $(plugindir)/wingui
+
+pluginwingui_LTLIBRARIES= libsyx-wingui.la
 
 libsyx_wingui_la_SOURCES	= 	\
 	plugin-init.c
