@@ -21,12 +21,31 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-CObject subclass: #XEvent
+XlibXEvent subclass: #XEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XEvent class methodsFor: 'initialize-release'!
+!XEvent class methodsFor: 'instance creation'!
 
-initialize
-    finalizationRequest := true
+create
+    ^self handle: (self primXlibXEventCreate).
+! !
+
+!XEvent methodsFor: 'access'!
+xkey
+    ^XlibXKeyEvent handle: (self primXEventXkey).
+!
+
+xmotion
+    ^XlibXMotionEvent handle: (self primXEventXmotion).
+!
+
+xbutton
+    ^XlibXButtonEvent handle: (self primXEventXbutton).
+! !
+
+!XEvent methodsFor: 'finalization'!
+
+finalize
+    self delete.
 ! !
