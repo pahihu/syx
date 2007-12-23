@@ -2660,10 +2660,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_number_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->number = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2676,9 +2674,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_number_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->number);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2692,10 +2688,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_next_set)
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->next = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2708,9 +2702,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_next_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
-  gdk_threads_enter ();
   result = (struct _XExtData *) ((arg1)->next);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2724,10 +2716,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_free_private_set)
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, int (*)(struct _XExtData *), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->free_private = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2740,9 +2730,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_free_private_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int (*)(struct _XExtData *)) ((arg1)->free_private);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2756,10 +2744,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_private_data_set)
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
   arg2 = (XPointer) es->message_arguments[0];
-  gdk_threads_enter ();
   if (arg1) (arg1)->private_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2772,9 +2758,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtData_private_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XPointer) ((arg1)->private_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2785,9 +2769,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XExtData)
   XExtData *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XExtData *)(XExtData *) calloc(1, sizeof(XExtData));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2799,10 +2781,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XExtData)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtData *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2822,10 +2802,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_extension_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->extension = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2838,9 +2816,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_extension_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtCodes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->extension);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2860,10 +2836,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_major_opcode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->major_opcode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2876,9 +2850,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_major_opcode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtCodes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->major_opcode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2898,10 +2870,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_first_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->first_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2914,9 +2884,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_first_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtCodes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->first_event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2936,10 +2904,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_first_error_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->first_error = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2952,9 +2918,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtCodes_first_error_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtCodes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->first_error);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2965,9 +2929,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XExtCodes)
   XExtCodes *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XExtCodes *)(XExtCodes *) calloc(1, sizeof(XExtCodes));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -2979,10 +2941,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XExtCodes)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExtCodes *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3002,10 +2962,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3018,9 +2976,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPixmapFormatValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3040,10 +2996,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_bits_per_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bits_per_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3056,9 +3010,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_bits_per_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPixmapFormatValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bits_per_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3078,10 +3030,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_scanline_pad_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->scanline_pad = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3094,9 +3044,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPixmapFormatValues_scanline_pad_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPixmapFormatValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->scanline_pad);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3107,9 +3055,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XPixmapFormatValues)
   XPixmapFormatValues *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XPixmapFormatValues *)(XPixmapFormatValues *) calloc(1, sizeof(XPixmapFormatValues));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3121,10 +3067,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XPixmapFormatValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPixmapFormatValues *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3144,10 +3088,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_function_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->function = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3160,9 +3102,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_function_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->function);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3182,10 +3122,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_plane_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->plane_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3198,9 +3136,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_plane_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->plane_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3220,10 +3156,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_foreground_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->foreground = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3236,9 +3170,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_foreground_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->foreground);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3258,10 +3190,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_background_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->background = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3274,9 +3204,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_background_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->background);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3296,10 +3224,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_line_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->line_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3312,9 +3238,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_line_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->line_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3334,10 +3258,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_line_style_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->line_style = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3350,9 +3272,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_line_style_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->line_style);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3372,10 +3292,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_cap_style_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->cap_style = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3388,9 +3306,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_cap_style_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->cap_style);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3410,10 +3326,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_join_style_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->join_style = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3426,9 +3340,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_join_style_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->join_style);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3448,10 +3360,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_fill_style_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->fill_style = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3464,9 +3374,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_fill_style_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->fill_style);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3486,10 +3394,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_fill_rule_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->fill_rule = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3502,9 +3408,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_fill_rule_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->fill_rule);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3524,10 +3428,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_arc_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->arc_mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3540,9 +3442,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_arc_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->arc_mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3562,10 +3462,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_tile_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->tile = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3578,9 +3476,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_tile_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->tile);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3600,10 +3496,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_stipple_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->stipple = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3616,9 +3510,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_stipple_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->stipple);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3638,10 +3530,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_ts_x_origin_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->ts_x_origin = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3654,9 +3544,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_ts_x_origin_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->ts_x_origin);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3676,10 +3564,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_ts_y_origin_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->ts_y_origin = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3692,9 +3578,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_ts_y_origin_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->ts_y_origin);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3714,10 +3598,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_font_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->font = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3730,9 +3612,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_font_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->font);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3752,10 +3632,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_subwindow_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->subwindow_mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3768,9 +3646,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_subwindow_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->subwindow_mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3783,10 +3659,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_graphics_exposures_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->graphics_exposures = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3799,9 +3673,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_graphics_exposures_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->graphics_exposures);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -3820,10 +3692,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_x_origin_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->clip_x_origin = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3836,9 +3706,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_x_origin_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->clip_x_origin);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3858,10 +3726,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_y_origin_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->clip_y_origin = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3874,9 +3740,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_y_origin_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->clip_y_origin);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3896,10 +3760,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->clip_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3912,9 +3774,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_clip_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->clip_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3934,10 +3794,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_dash_offset_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->dash_offset = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3950,9 +3808,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_dash_offset_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->dash_offset);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3972,10 +3828,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_dashes_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->dashes = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -3988,9 +3842,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGCValues_dashes_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char) ((arg1)->dashes);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4001,9 +3853,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XGCValues)
   XGCValues *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XGCValues *)(XGCValues *) calloc(1, sizeof(XGCValues));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4015,10 +3865,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XGCValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGCValues *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4032,10 +3880,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_ext_data_set)
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->ext_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4048,9 +3894,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_ext_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExtData *) ((arg1)->ext_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4070,10 +3914,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_visualid_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->visualid = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4086,9 +3928,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_visualid_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->visualid);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4108,10 +3948,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_class_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->class = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4124,9 +3962,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_class_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->class);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4146,10 +3982,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_red_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->red_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4162,9 +3996,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_red_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->red_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4184,10 +4016,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_green_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->green_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4200,9 +4030,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_green_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->green_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4222,10 +4050,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_blue_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->blue_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4238,9 +4064,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_blue_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->blue_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4260,10 +4084,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_bits_per_rgb_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bits_per_rgb = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4276,9 +4098,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_bits_per_rgb_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bits_per_rgb);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4298,10 +4118,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_map_entries_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->map_entries = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4314,9 +4132,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Visual_map_entries_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->map_entries);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4327,9 +4143,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_Visual)
   Visual *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (Visual *)(Visual *) calloc(1, sizeof(Visual));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4341,10 +4155,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_Visual)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4364,10 +4176,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4380,9 +4190,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Depth *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4402,10 +4210,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_nvisuals_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->nvisuals = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4418,9 +4224,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_nvisuals_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Depth *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->nvisuals);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4434,10 +4238,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_visuals_set)
   
   SWIG_FIRST_SELF(arg1, Depth *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Visual *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->visuals = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4450,9 +4252,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Depth_visuals_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Depth *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Visual *) ((arg1)->visuals);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4463,9 +4263,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_Depth)
   Depth *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (Depth *)(Depth *) calloc(1, sizeof(Depth));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4477,10 +4275,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_Depth)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Depth *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4494,10 +4290,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_ext_data_set)
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->ext_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4510,9 +4304,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_ext_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExtData *) ((arg1)->ext_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4526,10 +4318,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_display_set)
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XDisplay *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4542,9 +4332,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (struct _XDisplay *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4564,10 +4352,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4580,9 +4366,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4602,10 +4386,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4618,9 +4400,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4640,10 +4420,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4656,9 +4434,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4678,10 +4454,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_mwidth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->mwidth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4694,9 +4468,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_mwidth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->mwidth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4716,10 +4488,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_mheight_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->mheight = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4732,9 +4502,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_mheight_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->mheight);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4754,10 +4522,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_ndepths_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->ndepths = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4770,9 +4536,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_ndepths_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->ndepths);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4786,10 +4550,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_depths_set)
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Depth *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->depths = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4802,9 +4564,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_depths_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Depth *) ((arg1)->depths);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4824,10 +4584,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root_depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4840,9 +4598,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->root_depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4856,10 +4612,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_visual_set)
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Visual *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->root_visual = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4872,9 +4626,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_visual_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Visual *) ((arg1)->root_visual);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4888,10 +4640,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_default_gc_set)
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GC, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->default_gc = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4904,9 +4654,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_default_gc_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (GC) ((arg1)->default_gc);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4926,10 +4674,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_cmap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->cmap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4942,9 +4688,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_cmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->cmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4964,10 +4708,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_white_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->white_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -4980,9 +4722,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_white_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->white_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5002,10 +4742,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_black_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->black_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5018,9 +4756,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_black_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->black_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5040,10 +4776,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_max_maps_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_maps = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5056,9 +4790,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_max_maps_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->max_maps);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5078,10 +4810,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_min_maps_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->min_maps = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5094,9 +4824,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_min_maps_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->min_maps);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5116,10 +4844,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_backing_store_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_store = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5132,9 +4858,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_backing_store_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->backing_store);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5147,10 +4871,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_save_unders_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->save_unders = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5163,9 +4885,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_save_unders_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->save_unders);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5184,10 +4904,8 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_input_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root_input_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5200,9 +4918,7 @@ SYX_FUNC_PRIMITIVE(Xlib_Screen_root_input_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->root_input_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5213,9 +4929,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_Screen)
   Screen *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (Screen *)(Screen *) calloc(1, sizeof(Screen));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5227,10 +4941,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_Screen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5244,10 +4956,8 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_ext_data_set)
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->ext_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5260,9 +4970,7 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_ext_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExtData *) ((arg1)->ext_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5282,10 +4990,8 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5298,9 +5004,7 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5320,10 +5024,8 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_bits_per_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bits_per_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5336,9 +5038,7 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_bits_per_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bits_per_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5358,10 +5058,8 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_scanline_pad_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->scanline_pad = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5374,9 +5072,7 @@ SYX_FUNC_PRIMITIVE(Xlib_ScreenFormat_scanline_pad_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->scanline_pad);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5387,9 +5083,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_ScreenFormat)
   ScreenFormat *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (ScreenFormat *)(ScreenFormat *) calloc(1, sizeof(ScreenFormat));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5401,10 +5095,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_ScreenFormat)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, ScreenFormat *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5424,10 +5116,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_background_pixmap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->background_pixmap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5440,9 +5130,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_background_pixmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->background_pixmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5462,10 +5150,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_background_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->background_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5478,9 +5164,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_background_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->background_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5500,10 +5184,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_border_pixmap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_pixmap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5516,9 +5198,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_border_pixmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->border_pixmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5538,10 +5218,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_border_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5554,9 +5232,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_border_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->border_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5576,10 +5252,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_bit_gravity_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bit_gravity = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5592,9 +5266,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_bit_gravity_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bit_gravity);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5614,10 +5286,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_win_gravity_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->win_gravity = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5630,9 +5300,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_win_gravity_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->win_gravity);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5652,10 +5320,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_store_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_store = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5668,9 +5334,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_store_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->backing_store);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5690,10 +5354,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_planes_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_planes = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5706,9 +5368,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_planes_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->backing_planes);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5728,10 +5388,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5744,9 +5402,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_backing_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->backing_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5759,10 +5415,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_save_under_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->save_under = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5775,9 +5429,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_save_under_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->save_under);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5796,10 +5448,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_event_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5812,9 +5462,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_event_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->event_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5834,10 +5482,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_do_not_propagate_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->do_not_propagate_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5850,9 +5496,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_do_not_propagate_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->do_not_propagate_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5865,10 +5509,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5881,9 +5523,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -5902,10 +5542,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_colormap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->colormap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5918,9 +5556,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_colormap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->colormap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5940,10 +5576,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_cursor_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->cursor = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5956,9 +5590,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowAttributes_cursor_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->cursor);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5969,9 +5601,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XSetWindowAttributes)
   XSetWindowAttributes *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XSetWindowAttributes *)(XSetWindowAttributes *) calloc(1, sizeof(XSetWindowAttributes));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -5983,10 +5613,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XSetWindowAttributes)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSetWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6006,10 +5634,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6022,9 +5648,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6044,10 +5668,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6060,9 +5682,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6082,10 +5702,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6098,9 +5716,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6120,10 +5736,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6136,9 +5750,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6158,10 +5770,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_border_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6174,9 +5784,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_border_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->border_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6196,10 +5804,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6212,9 +5818,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6228,10 +5832,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_visual_set)
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Visual *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->visual = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6244,9 +5846,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_visual_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Visual *) ((arg1)->visual);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6266,10 +5866,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6282,9 +5880,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6304,10 +5900,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_class_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->class = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6320,9 +5914,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_class_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->class);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6342,10 +5934,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_bit_gravity_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bit_gravity = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6358,9 +5948,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_bit_gravity_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bit_gravity);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6380,10 +5968,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_win_gravity_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->win_gravity = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6396,9 +5982,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_win_gravity_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->win_gravity);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6418,10 +6002,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_store_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_store = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6434,9 +6016,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_store_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->backing_store);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6456,10 +6036,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_planes_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_planes = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6472,9 +6050,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_planes_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->backing_planes);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6494,10 +6070,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->backing_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6510,9 +6084,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_backing_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->backing_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6525,10 +6097,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_save_under_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->save_under = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6541,9 +6111,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_save_under_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->save_under);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6562,10 +6130,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_colormap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->colormap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6578,9 +6144,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_colormap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->colormap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6593,10 +6157,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_map_installed_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->map_installed = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6609,9 +6171,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_map_installed_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->map_installed);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6630,10 +6190,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_map_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->map_state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6646,9 +6204,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_map_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->map_state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6668,10 +6224,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_all_event_masks_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->all_event_masks = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6684,9 +6238,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_all_event_masks_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->all_event_masks);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6706,10 +6258,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_your_event_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->your_event_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6722,9 +6272,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_your_event_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->your_event_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6744,10 +6292,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_do_not_propagate_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->do_not_propagate_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6760,9 +6306,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_do_not_propagate_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long) ((arg1)->do_not_propagate_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6775,10 +6319,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6791,9 +6333,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -6806,10 +6346,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_screen_set)
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Screen *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6822,9 +6360,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowAttributes_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Screen *) ((arg1)->screen);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6835,9 +6371,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XWindowAttributes)
   XWindowAttributes *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XWindowAttributes *)(XWindowAttributes *) calloc(1, sizeof(XWindowAttributes));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6849,10 +6383,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XWindowAttributes)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowAttributes *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6872,10 +6404,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_family_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->family = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6888,9 +6418,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_family_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XHostAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->family);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6910,10 +6438,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_length_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->length = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6926,9 +6452,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_length_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XHostAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->length);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6948,7 +6472,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_address_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->address) free((char *)arg1->address);
     if (arg2) {
@@ -6958,7 +6481,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_address_set)
       arg1->address = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6971,9 +6493,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XHostAddress_address_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XHostAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->address);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6984,9 +6504,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XHostAddress)
   XHostAddress *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XHostAddress *)(XHostAddress *) calloc(1, sizeof(XHostAddress));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -6998,10 +6516,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XHostAddress)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XHostAddress *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7021,10 +6537,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_typelength_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->typelength = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7037,9 +6551,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_typelength_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->typelength);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7059,10 +6571,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_valuelength_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->valuelength = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7075,9 +6585,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_valuelength_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->valuelength);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7097,7 +6605,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_type_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->type) free((char *)arg1->type);
     if (arg2) {
@@ -7107,7 +6614,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_type_set)
       arg1->type = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7120,9 +6626,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7142,7 +6646,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_value_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->value) free((char *)arg1->value);
     if (arg2) {
@@ -7152,7 +6655,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_value_set)
       arg1->value = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7165,9 +6667,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerInterpretedAddress_value_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->value);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7178,9 +6678,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XServerInterpretedAddress)
   XServerInterpretedAddress *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XServerInterpretedAddress *)(XServerInterpretedAddress *) calloc(1, sizeof(XServerInterpretedAddress));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7192,10 +6690,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XServerInterpretedAddress)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7215,10 +6711,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7231,9 +6725,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7253,10 +6745,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7269,9 +6759,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7291,10 +6779,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_xoffset_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->xoffset = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7307,9 +6793,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_xoffset_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->xoffset);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7329,10 +6813,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_format_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->format = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7345,9 +6827,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_format_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->format);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7367,7 +6847,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_data_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->data) free((char *)arg1->data);
     if (arg2) {
@@ -7377,7 +6856,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_data_set)
       arg1->data = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7390,9 +6868,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7412,10 +6888,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_byte_order_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->byte_order = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7428,9 +6902,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_byte_order_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->byte_order);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7450,10 +6922,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_unit_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bitmap_unit = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7466,9 +6936,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_unit_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bitmap_unit);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7488,10 +6956,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_bit_order_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bitmap_bit_order = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7504,9 +6970,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_bit_order_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bitmap_bit_order);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7526,10 +6990,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_pad_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bitmap_pad = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7542,9 +7004,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bitmap_pad_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bitmap_pad);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7564,10 +7024,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_depth_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->depth = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7580,9 +7038,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_depth_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->depth);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7602,10 +7058,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bytes_per_line_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bytes_per_line = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7618,9 +7072,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bytes_per_line_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bytes_per_line);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7640,10 +7092,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bits_per_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bits_per_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7656,9 +7106,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_bits_per_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bits_per_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7678,10 +7126,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_red_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->red_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7694,9 +7140,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_red_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->red_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7716,10 +7160,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_green_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->green_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7732,9 +7174,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_green_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->green_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7754,10 +7194,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_blue_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->blue_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7770,9 +7208,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_blue_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->blue_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7786,10 +7222,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_obdata_set)
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
   arg2 = (XPointer) es->message_arguments[0];
-  gdk_threads_enter ();
   if (arg1) (arg1)->obdata = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7802,9 +7236,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_obdata_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XPointer) ((arg1)->obdata);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7817,9 +7249,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XImage_f *)& ((arg1)->f);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7830,9 +7260,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XImage)
   XImage *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XImage *)(XImage *) calloc(1, sizeof(XImage));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7844,10 +7272,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XImage)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7861,10 +7287,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_create_image_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XImage *(*)(struct _XDisplay *,Visual *,unsigned int,int,int,char *,unsigned int,unsigned int,int,int), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->create_image = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7877,9 +7301,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_create_image_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (struct _XImage *(*)(struct _XDisplay *,Visual *,unsigned int,int,int,char *,unsigned int,unsigned int,int,int)) ((arg1)->create_image);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7893,10 +7315,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_destroy_image_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, int (*)(struct _XImage *), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->destroy_image = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7909,9 +7329,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_destroy_image_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int (*)(struct _XImage *)) ((arg1)->destroy_image);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7925,10 +7343,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_get_pixel_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, unsigned long (*)(struct _XImage *,int,int), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->get_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7941,9 +7357,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_get_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long (*)(struct _XImage *,int,int)) ((arg1)->get_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7957,10 +7371,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_put_pixel_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, int (*)(struct _XImage *,int,int,unsigned long), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->put_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7973,9 +7385,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_put_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int (*)(struct _XImage *,int,int,unsigned long)) ((arg1)->put_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -7989,10 +7399,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_sub_image_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XImage *(*)(struct _XImage *,int,int,unsigned int,unsigned int), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->sub_image = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8005,9 +7413,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_sub_image_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (struct _XImage *(*)(struct _XImage *,int,int,unsigned int,unsigned int)) ((arg1)->sub_image);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8021,10 +7427,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_add_pixel_set)
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, int (*)(struct _XImage *,long), es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->add_pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8037,9 +7441,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImage_f_add_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int (*)(struct _XImage *,long)) ((arg1)->add_pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8050,9 +7452,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XImage_f)
   XImage_f *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XImage_f *)(XImage_f *) calloc(1, sizeof(XImage_f));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8064,10 +7464,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XImage_f)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage_f *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8087,10 +7485,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8103,9 +7499,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8125,10 +7519,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8141,9 +7533,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8163,10 +7553,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8179,9 +7567,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8201,10 +7587,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8217,9 +7601,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8239,10 +7621,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_border_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8255,9 +7635,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_border_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->border_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8277,10 +7655,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_sibling_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->sibling = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8293,9 +7669,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_sibling_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->sibling);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8315,10 +7689,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_stack_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->stack_mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8331,9 +7703,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowChanges_stack_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->stack_mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8344,9 +7714,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XWindowChanges)
   XWindowChanges *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XWindowChanges *)(XWindowChanges *) calloc(1, sizeof(XWindowChanges));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8358,10 +7726,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XWindowChanges)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XWindowChanges *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8381,10 +7747,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_pixel_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->pixel = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8397,9 +7761,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_pixel_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->pixel);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8419,10 +7781,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_red_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->red = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8435,9 +7795,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_red_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->red);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8457,10 +7815,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_green_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->green = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8473,9 +7829,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_green_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->green);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8495,10 +7849,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_blue_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->blue = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8511,9 +7863,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_blue_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->blue);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8533,10 +7883,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_flags_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->flags = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8549,9 +7897,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_flags_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char) ((arg1)->flags);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8571,10 +7917,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_pad_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->pad = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8587,9 +7931,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColor_pad_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char) ((arg1)->pad);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8600,9 +7942,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XColor)
   XColor *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XColor *)(XColor *) calloc(1, sizeof(XColor));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8614,10 +7954,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XColor)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColor *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8637,10 +7975,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_x1_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8653,9 +7989,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_x1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSegment *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8675,10 +8009,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_y1_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8691,9 +8023,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_y1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSegment *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8713,10 +8043,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_x2_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8729,9 +8057,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_x2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSegment *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8751,10 +8077,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_y2_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8767,9 +8091,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSegment_y2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSegment *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8780,9 +8102,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XSegment)
   XSegment *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XSegment *)(XSegment *) calloc(1, sizeof(XSegment));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8794,10 +8114,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XSegment)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSegment *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8817,10 +8135,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPoint_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8833,9 +8149,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPoint_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPoint *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8855,10 +8169,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPoint_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8871,9 +8183,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPoint_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPoint *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8884,9 +8194,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XPoint)
   XPoint *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XPoint *)(XPoint *) calloc(1, sizeof(XPoint));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8898,10 +8206,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XPoint)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPoint *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8921,10 +8227,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8937,9 +8241,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XRectangle *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8959,10 +8261,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8975,9 +8275,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XRectangle *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -8997,10 +8295,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9013,9 +8309,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XRectangle *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9035,10 +8329,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9051,9 +8343,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRectangle_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XRectangle *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9064,9 +8354,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XRectangle)
   XRectangle *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XRectangle *)(XRectangle *) calloc(1, sizeof(XRectangle));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9078,10 +8366,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XRectangle)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XRectangle *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9101,10 +8387,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9117,9 +8401,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9139,10 +8421,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9155,9 +8435,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9177,10 +8455,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9193,9 +8469,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9215,10 +8489,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9231,9 +8503,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9253,10 +8523,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_angle1_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->angle1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9269,9 +8537,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_angle1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->angle1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9291,10 +8557,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_angle2_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->angle2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9307,9 +8571,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XArc_angle2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->angle2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9320,9 +8582,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XArc)
   XArc *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XArc *)(XArc *) calloc(1, sizeof(XArc));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9334,10 +8594,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XArc)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XArc *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9357,10 +8615,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_key_click_percent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->key_click_percent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9373,9 +8629,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_key_click_percent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->key_click_percent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9395,10 +8649,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_percent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_percent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9411,9 +8663,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_percent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bell_percent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9433,10 +8683,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_pitch_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_pitch = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9449,9 +8697,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_pitch_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bell_pitch);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9471,10 +8717,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_duration_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_duration = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9487,9 +8731,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_bell_duration_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bell_duration);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9509,10 +8751,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_led_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->led = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9525,9 +8765,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_led_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->led);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9547,10 +8785,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_led_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->led_mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9563,9 +8799,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_led_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->led_mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9585,10 +8819,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_key_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->key = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9601,9 +8833,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_key_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->key);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9623,10 +8853,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_auto_repeat_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->auto_repeat_mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9639,9 +8867,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardControl_auto_repeat_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->auto_repeat_mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9652,9 +8878,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XKeyboardControl)
   XKeyboardControl *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XKeyboardControl *)(XKeyboardControl *) calloc(1, sizeof(XKeyboardControl));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9666,10 +8890,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XKeyboardControl)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardControl *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9689,10 +8911,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_key_click_percent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->key_click_percent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9705,9 +8925,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_key_click_percent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->key_click_percent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9727,10 +8945,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_percent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_percent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9743,9 +8959,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_percent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->bell_percent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9765,10 +8979,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_pitch_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_pitch = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9781,9 +8993,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_pitch_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->bell_pitch);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9803,10 +9013,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_duration_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bell_duration = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9819,9 +9027,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_bell_duration_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->bell_duration);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9841,10 +9047,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_led_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->led_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9857,9 +9061,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_led_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->led_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9879,10 +9081,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_global_auto_repeat_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->global_auto_repeat = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9895,9 +9095,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_global_auto_repeat_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->global_auto_repeat);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9911,12 +9109,10 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_auto_repeats_set)
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, char *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     if (arg2) strncpy((char *)arg1->auto_repeats, (const char *)arg2, 32);
     else arg1->auto_repeats[0] = 0;
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9929,9 +9125,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyboardState_auto_repeats_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)(char *) ((arg1)->auto_repeats);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9942,9 +9136,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XKeyboardState)
   XKeyboardState *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XKeyboardState *)(XKeyboardState *) calloc(1, sizeof(XKeyboardState));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9956,10 +9148,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XKeyboardState)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyboardState *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9979,10 +9169,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -9995,9 +9183,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTimeCoord *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10017,10 +9203,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10033,9 +9217,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTimeCoord *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10055,10 +9237,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10071,9 +9251,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTimeCoord_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTimeCoord *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10084,9 +9262,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XTimeCoord)
   XTimeCoord *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XTimeCoord *)(XTimeCoord *) calloc(1, sizeof(XTimeCoord));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10098,10 +9274,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XTimeCoord)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTimeCoord *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10121,10 +9295,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XModifierKeymap_max_keypermod_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_keypermod = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10137,9 +9309,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XModifierKeymap_max_keypermod_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XModifierKeymap *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->max_keypermod);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10153,10 +9323,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XModifierKeymap_modifiermap_set)
   
   SWIG_FIRST_SELF(arg1, XModifierKeymap *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, KeyCode *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->modifiermap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10169,9 +9337,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XModifierKeymap_modifiermap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XModifierKeymap *, es->message_receiver)
-  gdk_threads_enter ();
   result = (KeyCode *) ((arg1)->modifiermap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10182,9 +9348,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XModifierKeymap)
   XModifierKeymap *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XModifierKeymap *)(XModifierKeymap *) calloc(1, sizeof(XModifierKeymap));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10196,10 +9360,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XModifierKeymap)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XModifierKeymap *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10219,10 +9381,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10235,9 +9395,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10257,10 +9415,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10273,9 +9429,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10288,10 +9442,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10304,9 +9456,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10319,10 +9469,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10335,9 +9483,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10357,10 +9503,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10373,9 +9517,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10395,10 +9537,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10411,9 +9551,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10433,10 +9571,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_subwindow_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->subwindow = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10449,9 +9585,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_subwindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->subwindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10471,10 +9605,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10487,9 +9619,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10509,10 +9639,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10525,9 +9653,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10547,10 +9673,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10563,9 +9687,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10585,10 +9707,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_x_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10601,9 +9721,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_x_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10623,10 +9741,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_y_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10639,9 +9755,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_y_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10661,10 +9775,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10677,9 +9789,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10699,10 +9809,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_keycode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->keycode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10715,9 +9823,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_keycode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->keycode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10730,10 +9836,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_same_screen_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->same_screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10746,9 +9850,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeyEvent_same_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->same_screen);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10758,9 +9860,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XKeyEvent)
   XKeyEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XKeyEvent *)(XKeyEvent *) calloc(1, sizeof(XKeyEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10772,10 +9872,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XKeyEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10795,10 +9893,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10811,9 +9907,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10833,10 +9927,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10849,9 +9941,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10864,10 +9954,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10880,9 +9968,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -10895,10 +9981,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10911,9 +9995,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10933,10 +10015,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10949,9 +10029,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10971,10 +10049,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -10987,9 +10063,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11009,10 +10083,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_subwindow_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->subwindow = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11025,9 +10097,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_subwindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->subwindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11047,10 +10117,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11063,9 +10131,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11085,10 +10151,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11101,9 +10165,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11123,10 +10185,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11139,9 +10199,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11161,10 +10219,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_x_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11177,9 +10233,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_x_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11199,10 +10253,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_y_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11215,9 +10267,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_y_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11237,10 +10287,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11253,9 +10301,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11275,10 +10321,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_button_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->button = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11291,9 +10335,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_button_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->button);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11306,10 +10348,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_same_screen_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->same_screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11322,9 +10362,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XButtonEvent_same_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->same_screen);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11334,9 +10372,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XButtonEvent)
   XButtonEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XButtonEvent *)(XButtonEvent *) calloc(1, sizeof(XButtonEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11348,10 +10384,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XButtonEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XButtonEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11371,10 +10405,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11387,9 +10419,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11409,10 +10439,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11425,9 +10453,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11440,10 +10466,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11456,9 +10480,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11471,10 +10493,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11487,9 +10507,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11509,10 +10527,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11525,9 +10541,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11547,10 +10561,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11563,9 +10575,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11585,10 +10595,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_subwindow_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->subwindow = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11601,9 +10609,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_subwindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->subwindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11623,10 +10629,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11639,9 +10643,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11661,10 +10663,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11677,9 +10677,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11699,10 +10697,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11715,9 +10711,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11737,10 +10731,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_x_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11753,9 +10745,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_x_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11775,10 +10765,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_y_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11791,9 +10779,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_y_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11813,10 +10799,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11829,9 +10813,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11851,10 +10833,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_is_hint_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->is_hint = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11867,9 +10847,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_is_hint_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char) ((arg1)->is_hint);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11882,10 +10860,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_same_screen_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->same_screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11898,9 +10874,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMotionEvent_same_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->same_screen);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -11910,9 +10884,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XMotionEvent)
   XMotionEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XMotionEvent *)(XMotionEvent *) calloc(1, sizeof(XMotionEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11924,10 +10896,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XMotionEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMotionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11947,10 +10917,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11963,9 +10931,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -11985,10 +10951,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12001,9 +10965,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12016,10 +10978,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12032,9 +10992,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -12047,10 +11005,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12063,9 +11019,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12085,10 +11039,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12101,9 +11053,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12123,10 +11073,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12139,9 +11087,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12161,10 +11107,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_subwindow_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->subwindow = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12177,9 +11121,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_subwindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->subwindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12199,10 +11141,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12215,9 +11155,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12237,10 +11175,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12253,9 +11189,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12275,10 +11209,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12291,9 +11223,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12313,10 +11243,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_x_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12329,9 +11257,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_x_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12351,10 +11277,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_y_root_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y_root = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12367,9 +11291,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_y_root_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y_root);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12389,10 +11311,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12405,9 +11325,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12427,10 +11345,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_detail_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->detail = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12443,9 +11359,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_detail_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->detail);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12458,10 +11372,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_same_screen_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->same_screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12474,9 +11386,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_same_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->same_screen);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -12488,10 +11398,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_focus_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->focus = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12504,9 +11412,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_focus_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->focus);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -12525,10 +11431,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12541,9 +11445,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCrossingEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12554,9 +11456,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XCrossingEvent)
   XCrossingEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XCrossingEvent *)(XCrossingEvent *) calloc(1, sizeof(XCrossingEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12568,10 +11468,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XCrossingEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCrossingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12591,10 +11489,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12607,9 +11503,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12629,10 +11523,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12645,9 +11537,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12660,10 +11550,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12676,9 +11564,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -12691,10 +11577,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12707,9 +11591,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12729,10 +11611,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12745,9 +11625,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12767,10 +11645,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_mode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->mode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12783,9 +11659,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_mode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->mode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12805,10 +11679,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_detail_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->detail = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12821,9 +11693,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFocusChangeEvent_detail_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->detail);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12834,9 +11704,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XFocusChangeEvent)
   XFocusChangeEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XFocusChangeEvent *)(XFocusChangeEvent *) calloc(1, sizeof(XFocusChangeEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12848,10 +11716,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XFocusChangeEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFocusChangeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12871,10 +11737,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12887,9 +11751,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12909,10 +11771,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12925,9 +11785,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12940,10 +11798,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12956,9 +11812,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -12971,10 +11825,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -12987,9 +11839,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13009,10 +11859,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13025,9 +11873,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13041,12 +11887,10 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_key_vector_set)
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, char *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     if (arg2) strncpy((char *)arg1->key_vector, (const char *)arg2, 32);
     else arg1->key_vector[0] = 0;
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13059,9 +11903,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeymapEvent_key_vector_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)(char *) ((arg1)->key_vector);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13072,9 +11914,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XKeymapEvent)
   XKeymapEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XKeymapEvent *)(XKeymapEvent *) calloc(1, sizeof(XKeymapEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13086,10 +11926,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XKeymapEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XKeymapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13109,10 +11947,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13125,9 +11961,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13147,10 +11981,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13163,9 +11995,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13178,10 +12008,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13194,9 +12022,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -13209,10 +12035,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13225,9 +12049,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13247,10 +12069,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13263,9 +12083,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13285,10 +12103,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13301,9 +12117,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13323,10 +12137,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13339,9 +12151,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13361,10 +12171,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13377,9 +12185,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13399,10 +12205,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13415,9 +12219,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13437,10 +12239,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_count_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->count = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13453,9 +12253,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExposeEvent_count_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->count);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13466,9 +12264,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XExposeEvent)
   XExposeEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XExposeEvent *)(XExposeEvent *) calloc(1, sizeof(XExposeEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13480,10 +12276,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XExposeEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13503,10 +12297,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13519,9 +12311,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13541,10 +12331,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13557,9 +12345,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13572,10 +12358,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13588,9 +12372,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -13603,10 +12385,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13619,9 +12399,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13641,10 +12419,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_drawable_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->drawable = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13657,9 +12433,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_drawable_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->drawable);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13679,10 +12453,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13695,9 +12467,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13717,10 +12487,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13733,9 +12501,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13755,10 +12521,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13771,9 +12535,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13793,10 +12555,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13809,9 +12569,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13831,10 +12589,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_count_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->count = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13847,9 +12603,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_count_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->count);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13869,10 +12623,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_major_code_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->major_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13885,9 +12637,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_major_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->major_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13907,10 +12657,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_minor_code_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->minor_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13923,9 +12671,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGraphicsExposeEvent_minor_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->minor_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13936,9 +12682,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XGraphicsExposeEvent)
   XGraphicsExposeEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XGraphicsExposeEvent *)(XGraphicsExposeEvent *) calloc(1, sizeof(XGraphicsExposeEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13950,10 +12694,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XGraphicsExposeEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGraphicsExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13973,10 +12715,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -13989,9 +12729,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14011,10 +12749,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14027,9 +12763,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14042,10 +12776,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14058,9 +12790,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -14073,10 +12803,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14089,9 +12817,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14111,10 +12837,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_drawable_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->drawable = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14127,9 +12851,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_drawable_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->drawable);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14149,10 +12871,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_major_code_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->major_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14165,9 +12885,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_major_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->major_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14187,10 +12905,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_minor_code_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->minor_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14203,9 +12919,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoExposeEvent_minor_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->minor_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14216,9 +12930,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XNoExposeEvent)
   XNoExposeEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XNoExposeEvent *)(XNoExposeEvent *) calloc(1, sizeof(XNoExposeEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14230,10 +12942,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XNoExposeEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XNoExposeEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14253,10 +12963,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14269,9 +12977,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14291,10 +12997,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14307,9 +13011,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14322,10 +13024,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14338,9 +13038,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -14353,10 +13051,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14369,9 +13065,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14391,10 +13085,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14407,9 +13099,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14429,10 +13119,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14445,9 +13133,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisibilityEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14458,9 +13144,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XVisibilityEvent)
   XVisibilityEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XVisibilityEvent *)(XVisibilityEvent *) calloc(1, sizeof(XVisibilityEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14472,10 +13156,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XVisibilityEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XVisibilityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14495,10 +13177,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14511,9 +13191,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14533,10 +13211,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14549,9 +13225,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14564,10 +13238,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14580,9 +13252,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -14595,10 +13265,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14611,9 +13279,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14633,10 +13299,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_parent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->parent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14649,9 +13313,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_parent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->parent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14671,10 +13333,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14687,9 +13347,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14709,10 +13367,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14725,9 +13381,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14747,10 +13401,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14763,9 +13415,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14785,10 +13435,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14801,9 +13449,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14823,10 +13469,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14839,9 +13483,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14861,10 +13503,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_border_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14877,9 +13517,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_border_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->border_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14892,10 +13530,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14908,9 +13544,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindowEvent_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -14920,9 +13554,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XCreateWindowEvent)
   XCreateWindowEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XCreateWindowEvent *)(XCreateWindowEvent *) calloc(1, sizeof(XCreateWindowEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14934,10 +13566,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XCreateWindowEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCreateWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14957,10 +13587,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14973,9 +13601,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -14995,10 +13621,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15011,9 +13635,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15026,10 +13648,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15042,9 +13662,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15057,10 +13675,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15073,9 +13689,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15095,10 +13709,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15111,9 +13723,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15133,10 +13743,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15149,9 +13757,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindowEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15162,9 +13768,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XDestroyWindowEvent)
   XDestroyWindowEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XDestroyWindowEvent *)(XDestroyWindowEvent *) calloc(1, sizeof(XDestroyWindowEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15176,10 +13780,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XDestroyWindowEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XDestroyWindowEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15199,10 +13801,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15215,9 +13815,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15237,10 +13835,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15253,9 +13849,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15268,10 +13862,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15284,9 +13876,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15299,10 +13889,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15315,9 +13903,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15337,10 +13923,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15353,9 +13937,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15375,10 +13957,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15391,9 +13971,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15406,10 +13984,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_from_configure_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->from_configure = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15422,9 +13998,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapEvent_from_configure_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->from_configure);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15434,9 +14008,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XUnmapEvent)
   XUnmapEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XUnmapEvent *)(XUnmapEvent *) calloc(1, sizeof(XUnmapEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15448,10 +14020,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XUnmapEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XUnmapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15471,10 +14041,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15487,9 +14055,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15509,10 +14075,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15525,9 +14089,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15540,10 +14102,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15556,9 +14116,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15571,10 +14129,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15587,9 +14143,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15609,10 +14163,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15625,9 +14177,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15647,10 +14197,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15663,9 +14211,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15678,10 +14224,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15694,9 +14238,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapEvent_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15706,9 +14248,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XMapEvent)
   XMapEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XMapEvent *)(XMapEvent *) calloc(1, sizeof(XMapEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15720,10 +14260,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XMapEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15743,10 +14281,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15759,9 +14295,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15781,10 +14315,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15797,9 +14329,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15812,10 +14342,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15828,9 +14356,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -15843,10 +14369,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15859,9 +14383,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15881,10 +14403,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_parent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->parent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15897,9 +14417,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_parent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->parent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15919,10 +14437,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15935,9 +14451,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRequestEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15948,9 +14462,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XMapRequestEvent)
   XMapRequestEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XMapRequestEvent *)(XMapRequestEvent *) calloc(1, sizeof(XMapRequestEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15962,10 +14474,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XMapRequestEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMapRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -15985,10 +14495,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16001,9 +14509,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16023,10 +14529,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16039,9 +14543,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16054,10 +14556,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16070,9 +14570,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -16085,10 +14583,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16101,9 +14597,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16123,10 +14617,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16139,9 +14631,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16161,10 +14651,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16177,9 +14665,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16199,10 +14685,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_parent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->parent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16215,9 +14699,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_parent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->parent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16237,10 +14719,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16253,9 +14733,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16275,10 +14753,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16291,9 +14767,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16306,10 +14780,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16322,9 +14794,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentEvent_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -16334,9 +14804,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XReparentEvent)
   XReparentEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XReparentEvent *)(XReparentEvent *) calloc(1, sizeof(XReparentEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16348,10 +14816,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XReparentEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XReparentEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16371,10 +14837,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16387,9 +14851,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16409,10 +14871,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16425,9 +14885,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16440,10 +14898,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16456,9 +14912,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -16471,10 +14925,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16487,9 +14939,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16509,10 +14959,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16525,9 +14973,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16547,10 +14993,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16563,9 +15007,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16585,10 +15027,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16601,9 +15041,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16623,10 +15061,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16639,9 +15075,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16661,10 +15095,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16677,9 +15109,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16699,10 +15129,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16715,9 +15143,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16737,10 +15163,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_border_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16753,9 +15177,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_border_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->border_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16775,10 +15197,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_above_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->above = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16791,9 +15211,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_above_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->above);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16806,10 +15224,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_override_redirect_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->override_redirect = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16822,9 +15238,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureEvent_override_redirect_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->override_redirect);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -16834,9 +15248,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XConfigureEvent)
   XConfigureEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XConfigureEvent *)(XConfigureEvent *) calloc(1, sizeof(XConfigureEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16848,10 +15260,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XConfigureEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16871,10 +15281,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16887,9 +15295,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16909,10 +15315,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16925,9 +15329,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16940,10 +15342,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16956,9 +15356,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -16971,10 +15369,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -16987,9 +15383,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17009,10 +15403,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17025,9 +15417,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17047,10 +15437,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17063,9 +15451,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17085,10 +15471,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17101,9 +15485,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17123,10 +15505,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17139,9 +15519,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGravityEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17152,9 +15530,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XGravityEvent)
   XGravityEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XGravityEvent *)(XGravityEvent *) calloc(1, sizeof(XGravityEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17166,10 +15542,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XGravityEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XGravityEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17189,10 +15563,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17205,9 +15577,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17227,10 +15597,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17243,9 +15611,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17258,10 +15624,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17274,9 +15638,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -17289,10 +15651,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17305,9 +15665,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17327,10 +15685,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17343,9 +15699,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17365,10 +15719,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17381,9 +15733,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17403,10 +15753,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17419,9 +15767,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeRequestEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17432,9 +15778,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XResizeRequestEvent)
   XResizeRequestEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XResizeRequestEvent *)(XResizeRequestEvent *) calloc(1, sizeof(XResizeRequestEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17446,10 +15790,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XResizeRequestEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XResizeRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17469,10 +15811,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17485,9 +15825,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17507,10 +15845,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17523,9 +15859,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17538,10 +15872,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17554,9 +15886,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -17569,10 +15899,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17585,9 +15913,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17607,10 +15933,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_parent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->parent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17623,9 +15947,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_parent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->parent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17645,10 +15967,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17661,9 +15981,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17683,10 +16001,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_x_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->x = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17699,9 +16015,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_x_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->x);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17721,10 +16035,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_y_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->y = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17737,9 +16049,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_y_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->y);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17759,10 +16069,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17775,9 +16083,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17797,10 +16103,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_height_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->height = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17813,9 +16117,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_height_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->height);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17835,10 +16137,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_border_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->border_width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17851,9 +16151,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_border_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->border_width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17873,10 +16171,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_above_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->above = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17889,9 +16185,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_above_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->above);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17911,10 +16205,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_detail_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->detail = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17927,9 +16219,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_detail_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->detail);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17949,10 +16239,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_value_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->value_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17965,9 +16253,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureRequestEvent_value_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->value_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17978,9 +16264,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XConfigureRequestEvent)
   XConfigureRequestEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XConfigureRequestEvent *)(XConfigureRequestEvent *) calloc(1, sizeof(XConfigureRequestEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -17992,10 +16276,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XConfigureRequestEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XConfigureRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18015,10 +16297,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18031,9 +16311,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18053,10 +16331,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18069,9 +16345,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18084,10 +16358,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18100,9 +16372,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -18115,10 +16385,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18131,9 +16399,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18153,10 +16419,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_event_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18169,9 +16433,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->event);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18191,10 +16453,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18207,9 +16467,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18229,10 +16487,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_place_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->place = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18245,9 +16501,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateEvent_place_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->place);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18258,9 +16512,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XCirculateEvent)
   XCirculateEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XCirculateEvent *)(XCirculateEvent *) calloc(1, sizeof(XCirculateEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18272,10 +16524,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XCirculateEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18295,10 +16545,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18311,9 +16559,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18333,10 +16579,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18349,9 +16593,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18364,10 +16606,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18380,9 +16620,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -18395,10 +16633,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18411,9 +16647,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18433,10 +16667,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_parent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->parent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18449,9 +16681,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_parent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->parent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18471,10 +16701,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18487,9 +16715,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18509,10 +16735,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_place_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->place = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18525,9 +16749,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateRequestEvent_place_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->place);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18538,9 +16760,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XCirculateRequestEvent)
   XCirculateRequestEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XCirculateRequestEvent *)(XCirculateRequestEvent *) calloc(1, sizeof(XCirculateRequestEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18552,10 +16772,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XCirculateRequestEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCirculateRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18575,10 +16793,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18591,9 +16807,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18613,10 +16827,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18629,9 +16841,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18644,10 +16854,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18660,9 +16868,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -18675,10 +16881,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18691,9 +16895,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18713,10 +16915,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18729,9 +16929,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18751,10 +16949,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_atom_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->atom = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18767,9 +16963,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_atom_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->atom);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18789,10 +16983,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18805,9 +16997,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18827,10 +17017,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18843,9 +17031,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPropertyEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18856,9 +17042,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XPropertyEvent)
   XPropertyEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XPropertyEvent *)(XPropertyEvent *) calloc(1, sizeof(XPropertyEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18870,10 +17054,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XPropertyEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XPropertyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18893,10 +17075,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18909,9 +17089,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18931,10 +17109,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18947,9 +17123,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18962,10 +17136,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -18978,9 +17150,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -18993,10 +17163,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19009,9 +17177,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19031,10 +17197,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19047,9 +17211,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19069,10 +17231,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_selection_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->selection = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19085,9 +17245,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_selection_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->selection);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19107,10 +17265,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19123,9 +17279,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionClearEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19136,9 +17290,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XSelectionClearEvent)
   XSelectionClearEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XSelectionClearEvent *)(XSelectionClearEvent *) calloc(1, sizeof(XSelectionClearEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19150,10 +17302,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XSelectionClearEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionClearEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19173,10 +17323,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19189,9 +17337,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19211,10 +17357,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19227,9 +17371,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19242,10 +17384,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19258,9 +17398,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -19273,10 +17411,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19289,9 +17425,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19311,10 +17445,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_owner_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->owner = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19327,9 +17459,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_owner_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->owner);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19349,10 +17479,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_requestor_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->requestor = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19365,9 +17493,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_requestor_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->requestor);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19387,10 +17513,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_selection_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->selection = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19403,9 +17527,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_selection_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->selection);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19425,10 +17547,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_target_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->target = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19441,9 +17561,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_target_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->target);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19463,10 +17581,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_property_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->property = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19479,9 +17595,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_property_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->property);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19501,10 +17615,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19517,9 +17629,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionRequestEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19530,9 +17640,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XSelectionRequestEvent)
   XSelectionRequestEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XSelectionRequestEvent *)(XSelectionRequestEvent *) calloc(1, sizeof(XSelectionRequestEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19544,10 +17652,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XSelectionRequestEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionRequestEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19567,10 +17673,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19583,9 +17687,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19605,10 +17707,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19621,9 +17721,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19636,10 +17734,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19652,9 +17748,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -19667,10 +17761,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19683,9 +17775,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19705,10 +17795,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_requestor_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->requestor = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19721,9 +17809,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_requestor_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->requestor);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19743,10 +17829,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_selection_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->selection = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19759,9 +17843,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_selection_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->selection);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19781,10 +17863,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_target_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->target = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19797,9 +17877,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_target_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->target);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19819,10 +17897,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_property_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->property = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19835,9 +17911,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_property_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->property);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19857,10 +17931,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_time_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->time = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19873,9 +17945,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectionEvent_time_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->time);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19886,9 +17956,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XSelectionEvent)
   XSelectionEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XSelectionEvent *)(XSelectionEvent *) calloc(1, sizeof(XSelectionEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19900,10 +17968,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XSelectionEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XSelectionEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19923,10 +17989,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19939,9 +18003,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19961,10 +18023,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19977,9 +18037,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -19992,10 +18050,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20008,9 +18064,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -20023,10 +18077,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20039,9 +18091,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20061,10 +18111,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20077,9 +18125,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20099,10 +18145,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_colormap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->colormap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20115,9 +18159,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_colormap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->colormap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20130,10 +18172,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_new_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->new = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20146,9 +18186,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_new_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->new);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -20167,10 +18205,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20183,9 +18219,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XColormapEvent_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20196,9 +18230,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XColormapEvent)
   XColormapEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XColormapEvent *)(XColormapEvent *) calloc(1, sizeof(XColormapEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20210,10 +18242,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XColormapEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XColormapEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20233,10 +18263,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20249,9 +18277,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20271,10 +18297,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20287,9 +18311,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20302,10 +18324,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20318,9 +18338,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -20333,10 +18351,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20349,9 +18365,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20371,10 +18385,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20387,9 +18399,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20409,10 +18419,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_message_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->message_type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20425,9 +18433,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_message_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->message_type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20447,10 +18453,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_format_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->format = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20463,9 +18467,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_format_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->format);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20478,9 +18480,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XClientMessageEvent_data *)& ((arg1)->data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20491,9 +18491,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XClientMessageEvent)
   XClientMessageEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XClientMessageEvent *)(XClientMessageEvent *) calloc(1, sizeof(XClientMessageEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20505,10 +18503,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XClientMessageEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20522,12 +18518,10 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_b_set)
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, char *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     if (arg2) strncpy((char *)arg1->b, (const char *)arg2, 20);
     else arg1->b[0] = 0;
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20540,9 +18534,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_b_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)(char *) ((arg1)->b);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20556,13 +18548,11 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_s_set)
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, short *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     size_t ii;
     short *b = (short *) arg1->s;
     for (ii = 0; ii < (size_t)10; ii++) b[ii] = *((short *) arg2 + ii);
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20575,9 +18565,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_s_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short *)(short *) ((arg1)->s);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20591,13 +18579,11 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_l_set)
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, long *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     size_t ii;
     long *b = (long *) arg1->l;
     for (ii = 0; ii < (size_t)5; ii++) b[ii] = *((long *) arg2 + ii);
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20610,9 +18596,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClientMessageEvent_data_l_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long *)(long *) ((arg1)->l);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20623,9 +18607,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XClientMessageEvent_data)
   XClientMessageEvent_data *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XClientMessageEvent_data *)(XClientMessageEvent_data *) calloc(1, sizeof(XClientMessageEvent_data));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20637,10 +18619,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XClientMessageEvent_data)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XClientMessageEvent_data *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20660,10 +18640,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20676,9 +18654,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20698,10 +18674,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20714,9 +18688,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20729,10 +18701,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20745,9 +18715,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -20760,10 +18728,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20776,9 +18742,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20798,10 +18762,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20814,9 +18776,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20836,10 +18796,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_request_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->request = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20852,9 +18810,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_request_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->request);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20874,10 +18830,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_first_keycode_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->first_keycode = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20890,9 +18844,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_first_keycode_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->first_keycode);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20912,10 +18864,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_count_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->count = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20928,9 +18878,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMappingEvent_count_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->count);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20941,9 +18889,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XMappingEvent)
   XMappingEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XMappingEvent *)(XMappingEvent *) calloc(1, sizeof(XMappingEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20955,10 +18901,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XMappingEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20978,10 +18922,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -20994,9 +18936,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21010,10 +18950,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21026,9 +18964,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21048,10 +18984,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_resourceid_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->resourceid = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21064,9 +18998,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_resourceid_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->resourceid);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21086,10 +19018,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21102,9 +19032,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21124,10 +19052,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_error_code_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->error_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21140,9 +19066,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_error_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned char) ((arg1)->error_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21162,10 +19086,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_request_code_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->request_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21178,9 +19100,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_request_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned char) ((arg1)->request_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21200,10 +19120,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_minor_code_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->minor_code = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21216,9 +19134,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XErrorEvent_minor_code_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned char) ((arg1)->minor_code);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21229,9 +19145,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XErrorEvent)
   XErrorEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XErrorEvent *)(XErrorEvent *) calloc(1, sizeof(XErrorEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21243,10 +19157,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XErrorEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XErrorEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21266,10 +19178,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21282,9 +19192,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21304,10 +19212,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_serial_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->serial = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21320,9 +19226,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_serial_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->serial);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21335,10 +19239,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_send_event_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->send_event = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21351,9 +19253,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_send_event_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->send_event);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -21366,10 +19266,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_display_set)
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21382,9 +19280,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21404,10 +19300,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_window_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->window = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21420,9 +19314,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAnyEvent_window_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->window);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21433,9 +19325,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XAnyEvent)
   XAnyEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XAnyEvent *)(XAnyEvent *) calloc(1, sizeof(XAnyEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21447,10 +19337,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XAnyEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XAnyEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21470,10 +19358,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21486,9 +19372,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21502,10 +19386,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xany_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XAnyEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xany = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21518,9 +19400,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xany_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XAnyEvent *)& ((arg1)->xany);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21534,10 +19414,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xkey_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XKeyEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xkey = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21550,9 +19428,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xkey_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XKeyEvent *)& ((arg1)->xkey);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21566,10 +19442,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xbutton_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XButtonEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xbutton = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21582,9 +19456,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xbutton_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XButtonEvent *)& ((arg1)->xbutton);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21598,10 +19470,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmotion_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XMotionEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xmotion = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21614,9 +19484,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmotion_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XMotionEvent *)& ((arg1)->xmotion);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21630,10 +19498,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcrossing_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCrossingEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xcrossing = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21646,9 +19512,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcrossing_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCrossingEvent *)& ((arg1)->xcrossing);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21662,10 +19526,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xfocus_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFocusChangeEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xfocus = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21678,9 +19540,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xfocus_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFocusChangeEvent *)& ((arg1)->xfocus);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21694,10 +19554,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xexpose_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExposeEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xexpose = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21710,9 +19568,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xexpose_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExposeEvent *)& ((arg1)->xexpose);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21726,10 +19582,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xgraphicsexpose_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XGraphicsExposeEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xgraphicsexpose = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21742,9 +19596,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xgraphicsexpose_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XGraphicsExposeEvent *)& ((arg1)->xgraphicsexpose);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21758,10 +19610,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xnoexpose_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XNoExposeEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xnoexpose = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21774,9 +19624,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xnoexpose_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XNoExposeEvent *)& ((arg1)->xnoexpose);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21790,10 +19638,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xvisibility_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XVisibilityEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xvisibility = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21806,9 +19652,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xvisibility_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XVisibilityEvent *)& ((arg1)->xvisibility);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21822,10 +19666,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcreatewindow_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCreateWindowEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xcreatewindow = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21838,9 +19680,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcreatewindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCreateWindowEvent *)& ((arg1)->xcreatewindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21854,10 +19694,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xdestroywindow_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XDestroyWindowEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xdestroywindow = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21870,9 +19708,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xdestroywindow_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XDestroyWindowEvent *)& ((arg1)->xdestroywindow);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21886,10 +19722,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xunmap_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XUnmapEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xunmap = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21902,9 +19736,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xunmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XUnmapEvent *)& ((arg1)->xunmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21918,10 +19750,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmap_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XMapEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xmap = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21934,9 +19764,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XMapEvent *)& ((arg1)->xmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21950,10 +19778,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmaprequest_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XMapRequestEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xmaprequest = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21966,9 +19792,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmaprequest_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XMapRequestEvent *)& ((arg1)->xmaprequest);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21982,10 +19806,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xreparent_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XReparentEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xreparent = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -21998,9 +19820,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xreparent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XReparentEvent *)& ((arg1)->xreparent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22014,10 +19834,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xconfigure_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XConfigureEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xconfigure = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22030,9 +19848,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xconfigure_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XConfigureEvent *)& ((arg1)->xconfigure);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22046,10 +19862,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xgravity_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XGravityEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xgravity = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22062,9 +19876,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xgravity_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XGravityEvent *)& ((arg1)->xgravity);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22078,10 +19890,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xresizerequest_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XResizeRequestEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xresizerequest = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22094,9 +19904,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xresizerequest_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XResizeRequestEvent *)& ((arg1)->xresizerequest);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22110,10 +19918,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xconfigurerequest_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XConfigureRequestEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xconfigurerequest = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22126,9 +19932,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xconfigurerequest_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XConfigureRequestEvent *)& ((arg1)->xconfigurerequest);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22142,10 +19946,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcirculate_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCirculateEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xcirculate = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22158,9 +19960,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcirculate_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCirculateEvent *)& ((arg1)->xcirculate);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22174,10 +19974,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcirculaterequest_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCirculateRequestEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xcirculaterequest = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22190,9 +19988,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcirculaterequest_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCirculateRequestEvent *)& ((arg1)->xcirculaterequest);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22206,10 +20002,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xproperty_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XPropertyEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xproperty = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22222,9 +20016,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xproperty_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XPropertyEvent *)& ((arg1)->xproperty);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22238,10 +20030,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselectionclear_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XSelectionClearEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xselectionclear = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22254,9 +20044,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselectionclear_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XSelectionClearEvent *)& ((arg1)->xselectionclear);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22270,10 +20058,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselectionrequest_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XSelectionRequestEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xselectionrequest = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22286,9 +20072,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselectionrequest_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XSelectionRequestEvent *)& ((arg1)->xselectionrequest);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22302,10 +20086,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselection_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XSelectionEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xselection = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22318,9 +20100,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xselection_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XSelectionEvent *)& ((arg1)->xselection);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22334,10 +20114,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcolormap_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XColormapEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xcolormap = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22350,9 +20128,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xcolormap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XColormapEvent *)& ((arg1)->xcolormap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22366,10 +20142,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xclient_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XClientMessageEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xclient = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22382,9 +20156,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xclient_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XClientMessageEvent *)& ((arg1)->xclient);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22398,10 +20170,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmapping_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XMappingEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xmapping = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22414,9 +20184,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xmapping_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XMappingEvent *)& ((arg1)->xmapping);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22430,10 +20198,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xerror_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XErrorEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xerror = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22446,9 +20212,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xerror_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XErrorEvent *)& ((arg1)->xerror);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22462,10 +20226,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xkeymap_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XKeymapEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->xkeymap = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22478,9 +20240,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_xkeymap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XKeymapEvent *)& ((arg1)->xkeymap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22494,13 +20254,11 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_pad_set)
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, long *, es->message_arguments[0])
-  gdk_threads_enter ();
   {
     size_t ii;
     long *b = (long *) arg1->pad;
     for (ii = 0; ii < (size_t)24; ii++) b[ii] = *((long *) arg2 + ii);
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22513,9 +20271,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEvent_pad_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long *)(long *) ((arg1)->pad);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22526,9 +20282,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XEvent)
   XEvent *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XEvent *)(XEvent *) calloc(1, sizeof(XEvent));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22540,10 +20294,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XEvent)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEvent *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22563,10 +20315,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_lbearing_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->lbearing = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22579,9 +20329,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_lbearing_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->lbearing);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22601,10 +20349,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_rbearing_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->rbearing = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22617,9 +20363,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_rbearing_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->rbearing);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22639,10 +20383,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_width_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->width = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22655,9 +20397,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_width_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->width);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22677,10 +20417,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_ascent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->ascent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22693,9 +20431,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_ascent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->ascent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22715,10 +20451,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_descent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->descent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22731,9 +20465,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_descent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (short) ((arg1)->descent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22753,10 +20485,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_attributes_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->attributes = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22769,9 +20499,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCharStruct_attributes_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->attributes);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22782,9 +20510,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XCharStruct)
   XCharStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XCharStruct *)(XCharStruct *) calloc(1, sizeof(XCharStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22796,10 +20522,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XCharStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XCharStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22819,10 +20543,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontProp_name_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->name = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22835,9 +20557,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontProp_name_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontProp *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->name);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22857,10 +20577,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontProp_card32_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->card32 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22873,9 +20591,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontProp_card32_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontProp *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long) ((arg1)->card32);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22886,9 +20602,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XFontProp)
   XFontProp *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XFontProp *)(XFontProp *) calloc(1, sizeof(XFontProp));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22900,10 +20614,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XFontProp)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontProp *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22917,10 +20629,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_ext_data_set)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->ext_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22933,9 +20643,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_ext_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExtData *) ((arg1)->ext_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22955,10 +20663,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_fid_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->fid = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22971,9 +20677,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_fid_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->fid);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -22993,10 +20697,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_direction_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->direction = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23009,9 +20711,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_direction_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->direction);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23031,10 +20731,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_char_or_byte2_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->min_char_or_byte2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23047,9 +20745,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_char_or_byte2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->min_char_or_byte2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23069,10 +20765,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_char_or_byte2_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_char_or_byte2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23085,9 +20779,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_char_or_byte2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->max_char_or_byte2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23107,10 +20799,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_byte1_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->min_byte1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23123,9 +20813,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_byte1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->min_byte1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23145,10 +20833,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_byte1_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_byte1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23161,9 +20847,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_byte1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->max_byte1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23176,10 +20860,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_all_chars_exist_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->all_chars_exist = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23192,9 +20874,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_all_chars_exist_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->all_chars_exist);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -23213,10 +20893,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_default_char_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->default_char = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23229,9 +20907,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_default_char_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned int) ((arg1)->default_char);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23251,10 +20927,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_n_properties_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->n_properties = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23267,9 +20941,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_n_properties_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->n_properties);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23283,10 +20955,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_properties_set)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontProp *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->properties = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23299,9 +20969,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_properties_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontProp *) ((arg1)->properties);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23315,10 +20983,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_bounds_set)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCharStruct *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->min_bounds = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23331,9 +20997,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_min_bounds_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCharStruct *)& ((arg1)->min_bounds);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23347,10 +21011,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_bounds_set)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCharStruct *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_bounds = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23363,9 +21025,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_max_bounds_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCharStruct *)& ((arg1)->max_bounds);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23379,10 +21039,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_per_char_set)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XCharStruct *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->per_char = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23395,9 +21053,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_per_char_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XCharStruct *) ((arg1)->per_char);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23417,10 +21073,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_ascent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->ascent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23433,9 +21087,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_ascent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->ascent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23455,10 +21107,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_descent_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->descent = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23471,9 +21121,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontStruct_descent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->descent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23484,9 +21132,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XFontStruct)
   XFontStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XFontStruct *)(XFontStruct *) calloc(1, sizeof(XFontStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23498,10 +21144,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XFontStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23521,7 +21165,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_chars_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->chars) free((char *)arg1->chars);
     if (arg2) {
@@ -23531,7 +21174,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_chars_set)
       arg1->chars = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23544,9 +21186,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_chars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->chars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23566,10 +21206,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_nchars_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->nchars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23582,9 +21220,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_nchars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->nchars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23604,10 +21240,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_delta_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->delta = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23620,9 +21254,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_delta_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->delta);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23642,10 +21274,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_font_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->font = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23658,9 +21288,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem_font_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->font);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23671,9 +21299,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XTextItem)
   XTextItem *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XTextItem *)(XTextItem *) calloc(1, sizeof(XTextItem));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23685,10 +21311,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XTextItem)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23708,10 +21332,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XChar2b_byte1_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->byte1 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23724,9 +21346,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChar2b_byte1_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XChar2b *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned char) ((arg1)->byte1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23746,10 +21366,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XChar2b_byte2_set)
   }	   
   arg2 = SYX_CHARACTER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->byte2 = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23762,9 +21380,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChar2b_byte2_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XChar2b *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned char) ((arg1)->byte2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_character_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23775,9 +21391,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XChar2b)
   XChar2b *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XChar2b *)(XChar2b *) calloc(1, sizeof(XChar2b));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23789,10 +21403,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XChar2b)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XChar2b *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23806,10 +21418,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_chars_set)
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XChar2b *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->chars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23822,9 +21432,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_chars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XChar2b *) ((arg1)->chars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23844,10 +21452,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_nchars_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->nchars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23860,9 +21466,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_nchars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->nchars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23882,10 +21486,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_delta_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->delta = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23898,9 +21500,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_delta_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->delta);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23920,10 +21520,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_font_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->font = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23936,9 +21534,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextItem16_font_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->font);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23949,9 +21545,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XTextItem16)
   XTextItem16 *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XTextItem16 *)(XTextItem16 *) calloc(1, sizeof(XTextItem16));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23963,10 +21557,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XTextItem16)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XTextItem16 *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23980,10 +21572,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_display_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Display *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->display = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -23996,9 +21586,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_display_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *) ((arg1)->display);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24012,10 +21600,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_gc_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GC, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->gc = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24028,9 +21614,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_gc_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (GC) ((arg1)->gc);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24044,10 +21628,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_visual_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Visual *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->visual = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24060,9 +21642,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_visual_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Visual *) ((arg1)->visual);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24076,10 +21656,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_screen_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, Screen *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->screen = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24092,9 +21670,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_screen_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Screen *) ((arg1)->screen);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24108,10 +21684,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_pixmap_format_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, ScreenFormat *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->pixmap_format = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24124,9 +21698,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_pixmap_format_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (ScreenFormat *) ((arg1)->pixmap_format);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24140,10 +21712,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_font_set)
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontStruct *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->font = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24156,9 +21726,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEDataObject_font_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontStruct *) ((arg1)->font);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24169,9 +21737,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XEDataObject)
   XEDataObject *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XEDataObject *)(XEDataObject *) calloc(1, sizeof(XEDataObject));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24183,10 +21749,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XEDataObject)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XEDataObject *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24200,10 +21764,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontSetExtents_max_ink_extent_set)
   
   SWIG_FIRST_SELF(arg1, XFontSetExtents *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XRectangle *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_ink_extent = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24216,9 +21778,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontSetExtents_max_ink_extent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSetExtents *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XRectangle *)& ((arg1)->max_ink_extent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24232,10 +21792,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontSetExtents_max_logical_extent_set)
   
   SWIG_FIRST_SELF(arg1, XFontSetExtents *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XRectangle *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->max_logical_extent = *arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24248,9 +21806,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontSetExtents_max_logical_extent_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSetExtents *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XRectangle *)& ((arg1)->max_logical_extent);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24261,9 +21817,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XFontSetExtents)
   XFontSetExtents *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XFontSetExtents *)(XFontSetExtents *) calloc(1, sizeof(XFontSetExtents));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24275,10 +21829,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XFontSetExtents)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSetExtents *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24298,7 +21850,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_chars_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->chars) free((char *)arg1->chars);
     if (arg2) {
@@ -24308,7 +21859,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_chars_set)
       arg1->chars = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24321,9 +21871,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_chars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->chars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24343,10 +21891,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_nchars_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->nchars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24359,9 +21905,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_nchars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->nchars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24381,10 +21925,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_delta_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->delta = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24397,9 +21939,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_delta_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->delta);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24413,10 +21953,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_font_set_set)
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontSet, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->font_set = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24429,9 +21967,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextItem_font_set_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontSet) ((arg1)->font_set);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24442,9 +21978,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XmbTextItem)
   XmbTextItem *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XmbTextItem *)(XmbTextItem *) calloc(1, sizeof(XmbTextItem));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24456,10 +21990,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XmbTextItem)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24473,10 +22005,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_chars_set)
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, wchar_t *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->chars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24489,9 +22019,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_chars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (wchar_t *) ((arg1)->chars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24511,10 +22039,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_nchars_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->nchars = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24527,9 +22053,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_nchars_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->nchars);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24549,10 +22073,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_delta_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->delta = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24565,9 +22087,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_delta_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->delta);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24581,10 +22101,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_font_set_set)
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontSet, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->font_set = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24597,9 +22115,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextItem_font_set_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontSet) ((arg1)->font_set);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24610,9 +22126,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XwcTextItem)
   XwcTextItem *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XwcTextItem *)(XwcTextItem *) calloc(1, sizeof(XwcTextItem));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24624,10 +22138,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XwcTextItem)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XwcTextItem *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24647,10 +22159,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMCharSetList_charset_count_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->charset_count = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24663,9 +22173,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMCharSetList_charset_count_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMCharSetList *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->charset_count);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24687,10 +22195,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMCharSetList_charset_list_set)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   if (arg1) (arg1)->charset_list = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SWIG_APPEND_VALUE (syx_string_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -24706,9 +22212,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMCharSetList_charset_list_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMCharSetList *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char **) ((arg1)->charset_list);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24719,9 +22223,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XOMCharSetList)
   XOMCharSetList *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XOMCharSetList *)(XOMCharSetList *) calloc(1, sizeof(XOMCharSetList));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24733,10 +22235,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XOMCharSetList)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMCharSetList *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24756,10 +22256,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMOrientation_num_orientation_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->num_orientation = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24772,9 +22270,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMOrientation_num_orientation_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMOrientation *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->num_orientation);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24788,10 +22284,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMOrientation_orientation_set)
   
   SWIG_FIRST_SELF(arg1, XOMOrientation *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XOrientation *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->orientation = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24804,9 +22298,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMOrientation_orientation_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMOrientation *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XOrientation *) ((arg1)->orientation);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24817,9 +22309,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XOMOrientation)
   XOMOrientation *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XOMOrientation *)(XOMOrientation *) calloc(1, sizeof(XOMOrientation));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24831,10 +22321,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XOMOrientation)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMOrientation *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24854,10 +22342,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_num_font_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->num_font = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24870,9 +22356,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_num_font_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->num_font);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24886,10 +22370,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_font_struct_list_set)
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontStruct **, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->font_struct_list = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24902,9 +22384,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_font_struct_list_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontStruct **) ((arg1)->font_struct_list);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24926,10 +22406,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_font_name_list_set)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   if (arg1) (arg1)->font_name_list = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SWIG_APPEND_VALUE (syx_string_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -24945,9 +22423,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMFontInfo_font_name_list_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char **) ((arg1)->font_name_list);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24958,9 +22434,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XOMFontInfo)
   XOMFontInfo *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XOMFontInfo *)(XOMFontInfo *) calloc(1, sizeof(XOMFontInfo));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24972,10 +22446,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XOMFontInfo)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -24995,10 +22467,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStyles_count_styles_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->count_styles = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25011,9 +22481,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStyles_count_styles_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStyles *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->count_styles);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25027,10 +22495,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStyles_supported_styles_set)
   
   SWIG_FIRST_SELF(arg1, XIMStyles *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMStyle *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->supported_styles = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25043,9 +22509,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStyles_supported_styles_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStyles *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStyle *) ((arg1)->supported_styles);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25056,9 +22520,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStyles)
   XIMStyles *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStyles *)(XIMStyles *) calloc(1, sizeof(XIMStyles));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25070,10 +22532,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStyles)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStyles *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25087,10 +22547,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMCallback_client_data_set)
   
   SWIG_FIRST_SELF(arg1, XIMCallback *, es->message_receiver)
   arg2 = (XPointer) es->message_arguments[0];
-  gdk_threads_enter ();
   if (arg1) (arg1)->client_data = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25103,9 +22561,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMCallback_client_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMCallback *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XPointer) ((arg1)->client_data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25119,10 +22575,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMCallback_callback_set)
   
   SWIG_FIRST_SELF(arg1, XIMCallback *, es->message_receiver)
   arg2 = (XIMProc) es->message_arguments[0];
-  gdk_threads_enter ();
   if (arg1) (arg1)->callback = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25135,9 +22589,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMCallback_callback_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMCallback *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMProc) ((arg1)->callback);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25148,9 +22600,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMCallback)
   XIMCallback *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMCallback *)(XIMCallback *) calloc(1, sizeof(XIMCallback));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25162,10 +22612,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMCallback)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMCallback *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25185,10 +22633,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_length_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->length = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25201,9 +22647,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_length_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->length);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25217,10 +22661,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_feedback_set)
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMFeedback *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->feedback = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25233,9 +22675,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_feedback_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMFeedback *) ((arg1)->feedback);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25248,10 +22688,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_encoding_is_wchar_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->encoding_is_wchar = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25264,9 +22702,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_encoding_is_wchar_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->encoding_is_wchar);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -25278,9 +22714,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMText_string *)& ((arg1)->string);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25291,9 +22725,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMText)
   XIMText *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMText *)(XIMText *) calloc(1, sizeof(XIMText));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25305,10 +22737,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMText)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25328,7 +22758,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_multi_byte_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->multi_byte) free((char *)arg1->multi_byte);
     if (arg2) {
@@ -25338,7 +22767,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_multi_byte_set)
       arg1->multi_byte = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25351,9 +22779,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_multi_byte_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText_string *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->multi_byte);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25367,10 +22793,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_wide_char_set)
   
   SWIG_FIRST_SELF(arg1, XIMText_string *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, wchar_t *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->wide_char = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25383,9 +22807,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMText_string_wide_char_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText_string *, es->message_receiver)
-  gdk_threads_enter ();
   result = (wchar_t *) ((arg1)->wide_char);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25396,9 +22818,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMText_string)
   XIMText_string *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMText_string *)(XIMText_string *) calloc(1, sizeof(XIMText_string));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25410,10 +22830,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMText_string)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMText_string *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25433,10 +22851,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditStateNotifyCallbackStruct_state_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->state = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25449,9 +22865,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditStateNotifyCallbackStruct_state_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditStateNotifyCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMPreeditState) ((arg1)->state);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25462,9 +22876,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMPreeditStateNotifyCallbackStruct)
   XIMPreeditStateNotifyCallbackStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMPreeditStateNotifyCallbackStruct *)(XIMPreeditStateNotifyCallbackStruct *) calloc(1, sizeof(XIMPreeditStateNotifyCallbackStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25476,10 +22888,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMPreeditStateNotifyCallbackStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditStateNotifyCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25499,10 +22909,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_length_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->length = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25515,9 +22923,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_length_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->length);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25531,10 +22937,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_feedback_set)
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMStringConversionFeedback *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->feedback = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25547,9 +22951,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_feedback_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStringConversionFeedback *) ((arg1)->feedback);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25562,10 +22964,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_encoding_is_wchar_set)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   if (arg1) (arg1)->encoding_is_wchar = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25578,9 +22978,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_encoding_is_wchar_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->encoding_is_wchar);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -25592,9 +22990,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStringConversionText_string *)& ((arg1)->string);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25605,9 +23001,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStringConversionText)
   XIMStringConversionText *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStringConversionText *)(XIMStringConversionText *) calloc(1, sizeof(XIMStringConversionText));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25619,10 +23013,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStringConversionText)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25642,7 +23034,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_mbs_set)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   {
     if (arg1->mbs) free((char *)arg1->mbs);
     if (arg2) {
@@ -25652,7 +23043,6 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_mbs_set)
       arg1->mbs = 0;
     }
   }
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25665,9 +23055,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_mbs_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText_string *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *) ((arg1)->mbs);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25681,10 +23069,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_wcs_set)
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText_string *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, wchar_t *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->wcs = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25697,9 +23083,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionText_string_wcs_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText_string *, es->message_receiver)
-  gdk_threads_enter ();
   result = (wchar_t *) ((arg1)->wcs);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25710,9 +23094,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStringConversionText_string)
   XIMStringConversionText_string *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStringConversionText_string *)(XIMStringConversionText_string *) calloc(1, sizeof(XIMStringConversionText_string));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25724,10 +23106,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStringConversionText_string)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText_string *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25747,10 +23127,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_position_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->position = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25763,9 +23141,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_position_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStringConversionPosition) ((arg1)->position);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25785,10 +23161,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_direction_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->direction = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25801,9 +23175,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_direction_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMCaretDirection) ((arg1)->direction);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25823,10 +23195,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_operation_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->operation = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25839,9 +23209,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_operation_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStringConversionOperation) ((arg1)->operation);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25861,10 +23229,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_factor_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->factor = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25877,9 +23243,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_factor_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->factor);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25893,10 +23257,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_text_set)
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMStringConversionText *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->text = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25909,9 +23271,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStringConversionCallbackStruct_text_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStringConversionText *) ((arg1)->text);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25922,9 +23282,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStringConversionCallbackStruct)
   XIMStringConversionCallbackStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStringConversionCallbackStruct *)(XIMStringConversionCallbackStruct *) calloc(1, sizeof(XIMStringConversionCallbackStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25936,10 +23294,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStringConversionCallbackStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25959,10 +23315,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_caret_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->caret = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25975,9 +23329,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_caret_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->caret);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -25997,10 +23349,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_chg_first_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->chg_first = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26013,9 +23363,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_chg_first_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->chg_first);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26035,10 +23383,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_chg_length_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->chg_length = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26051,9 +23397,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_chg_length_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->chg_length);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26067,10 +23411,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_text_set)
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMText *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->text = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26083,9 +23425,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditDrawCallbackStruct_text_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMText *) ((arg1)->text);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26096,9 +23436,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMPreeditDrawCallbackStruct)
   XIMPreeditDrawCallbackStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMPreeditDrawCallbackStruct *)(XIMPreeditDrawCallbackStruct *) calloc(1, sizeof(XIMPreeditDrawCallbackStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26110,10 +23448,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMPreeditDrawCallbackStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26133,10 +23469,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_position_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->position = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26149,9 +23483,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_position_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditCaretCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->position);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26171,10 +23503,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_direction_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->direction = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26187,9 +23517,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_direction_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditCaretCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMCaretDirection) ((arg1)->direction);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26209,10 +23537,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_style_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->style = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26225,9 +23551,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMPreeditCaretCallbackStruct_style_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditCaretCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMCaretStyle) ((arg1)->style);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26238,9 +23562,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMPreeditCaretCallbackStruct)
   XIMPreeditCaretCallbackStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMPreeditCaretCallbackStruct *)(XIMPreeditCaretCallbackStruct *) calloc(1, sizeof(XIMPreeditCaretCallbackStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26252,10 +23574,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMPreeditCaretCallbackStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMPreeditCaretCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26275,10 +23595,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_type_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->type = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26291,9 +23609,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_type_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStatusDataType) ((arg1)->type);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26306,9 +23622,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_data_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMStatusDrawCallbackStruct_data *)& ((arg1)->data);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26319,9 +23633,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStatusDrawCallbackStruct)
   XIMStatusDrawCallbackStruct *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStatusDrawCallbackStruct *)(XIMStatusDrawCallbackStruct *) calloc(1, sizeof(XIMStatusDrawCallbackStruct));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26333,10 +23645,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStatusDrawCallbackStruct)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26350,10 +23660,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_data_text_set)
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct_data *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMText *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->text = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26366,9 +23674,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_data_text_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct_data *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMText *) ((arg1)->text);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26388,10 +23694,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_data_bitmap_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->bitmap = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26404,9 +23708,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMStatusDrawCallbackStruct_data_bitmap_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct_data *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->bitmap);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26417,9 +23719,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMStatusDrawCallbackStruct_data)
   XIMStatusDrawCallbackStruct_data *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMStatusDrawCallbackStruct_data *)(XIMStatusDrawCallbackStruct_data *) calloc(1, sizeof(XIMStatusDrawCallbackStruct_data));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26431,10 +23731,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMStatusDrawCallbackStruct_data)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMStatusDrawCallbackStruct_data *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26454,10 +23752,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_keysym_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->keysym = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26470,9 +23766,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_keysym_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTrigger *, es->message_receiver)
-  gdk_threads_enter ();
   result =  ((arg1)->keysym);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26492,10 +23786,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_modifier_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->modifier = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26508,9 +23800,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_modifier_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTrigger *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->modifier);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26530,10 +23820,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_modifier_mask_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->modifier_mask = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26546,9 +23834,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTrigger_modifier_mask_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTrigger *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->modifier_mask);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26559,9 +23845,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMHotKeyTrigger)
   XIMHotKeyTrigger *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMHotKeyTrigger *)(XIMHotKeyTrigger *) calloc(1, sizeof(XIMHotKeyTrigger));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26573,10 +23857,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMHotKeyTrigger)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTrigger *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26596,10 +23878,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTriggers_num_hot_key_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->num_hot_key = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26612,9 +23892,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTriggers_num_hot_key_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTriggers *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int) ((arg1)->num_hot_key);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26628,10 +23906,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTriggers_key_set)
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTriggers *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XIMHotKeyTrigger *, es->message_arguments[0])
-  gdk_threads_enter ();
   if (arg1) (arg1)->key = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26644,9 +23920,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMHotKeyTriggers_key_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTriggers *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIMHotKeyTrigger *) ((arg1)->key);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26657,9 +23931,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMHotKeyTriggers)
   XIMHotKeyTriggers *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMHotKeyTriggers *)(XIMHotKeyTriggers *) calloc(1, sizeof(XIMHotKeyTriggers));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26671,10 +23943,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMHotKeyTriggers)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMHotKeyTriggers *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26694,10 +23964,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMValuesList_count_values_set)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   if (arg1) (arg1)->count_values = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26710,9 +23978,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMValuesList_count_values_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMValuesList *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned short) ((arg1)->count_values);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26734,10 +24000,8 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMValuesList_supported_values_set)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   if (arg1) (arg1)->supported_values = arg2;
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SWIG_APPEND_VALUE (syx_string_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -26753,9 +24017,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMValuesList_supported_values_get)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMValuesList *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char **) ((arg1)->supported_values);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26766,9 +24028,7 @@ SYX_FUNC_PRIMITIVE(Xlib_new_XIMValuesList)
   XIMValuesList *result = 0 ;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (XIMValuesList *)(XIMValuesList *) calloc(1, sizeof(XIMValuesList));
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26780,10 +24040,8 @@ SYX_FUNC_PRIMITIVE(Xlib_delete_XIMValuesList)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIMValuesList *, es->message_receiver)
-  gdk_threads_enter ();
   free((char *) arg1);
   
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26804,9 +24062,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLoadQueryFont)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XFontStruct *)XLoadQueryFont(arg1,(char const *)arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26827,9 +24083,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryFont)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XFontStruct *)XQueryFont(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26876,9 +24130,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetMotionEvents)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (XTimeCoord *)XGetMotionEvents(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   SYX_PRIM_RETURN (result_oop);
@@ -26910,9 +24162,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDeleteModifiermapEntry)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (XModifierKeymap *)XDeleteModifiermapEntry(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26925,9 +24175,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetModifierMapping)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XModifierKeymap *)XGetModifierMapping(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26956,9 +24204,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInsertModifiermapEntry)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (XModifierKeymap *)XInsertModifiermapEntry(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -26977,9 +24223,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNewModifiermap)
   }	   
   arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XModifierKeymap *)XNewModifiermap(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27058,9 +24302,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateImage)
   }	   
   arg10 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   
-  gdk_threads_enter ();
   result = (XImage *)XCreateImage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27073,9 +24315,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInitImage)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
-  gdk_threads_enter ();
   result = XInitImage(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27144,9 +24384,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetImage)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   result = (XImage *)XGetImage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27233,9 +24471,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetSubImage)
   }	   
   arg11 = SYX_SMALL_INTEGER(es->message_arguments[9]);
   
-  gdk_threads_enter ();
   result = (XImage *)XGetSubImage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27254,9 +24490,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOpenDisplay)
   }	   
   arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (Display *)XOpenDisplay((char const *)arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27266,9 +24500,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XrmInitialize)
 {
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   XrmInitialize();
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27291,9 +24523,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFetchBytes)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char *)XFetchBytes(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -27327,9 +24557,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFetchBuffer)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char *)XFetchBuffer(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -27353,9 +24581,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetAtomName)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (char *)XGetAtomName(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27388,9 +24614,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetAtomNames)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XGetAtomNames(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -27422,9 +24646,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetDefault)
   }	   
   arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (char *)XGetDefault(arg1,(char const *)arg2,(char const *)arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27443,9 +24665,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayName)
   }	   
   arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (char *)XDisplayName((char const *)arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27464,9 +24684,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeysymToString)
   }	   
   arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (char *)XKeysymToString(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27480,9 +24698,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSynchronize)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int (*)(Display *))XSynchronize(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27497,9 +24713,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetAfterFunction)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, int (*)(Display *), es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int (*)(Display *))XSetAfterFunction(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27521,9 +24735,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInternAtom)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XInternAtom(arg1,(char const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27556,9 +24768,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInternAtoms)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XInternAtoms(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -27582,9 +24792,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCopyColormapAndFree)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XCopyColormapAndFree(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27615,9 +24823,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateColormap)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = XCreateColormap(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27666,9 +24872,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreatePixmapCursor)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = XCreatePixmapCursor(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27717,9 +24921,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateGlyphCursor)
   
   SWIG_FIRST_SELF(arg6, XColor *, es->message_arguments[4])
   SWIG_FIRST_SELF(arg7, XColor *, es->message_arguments[5])
-  gdk_threads_enter ();
   result = XCreateGlyphCursor(arg1,arg2,arg3,arg4,arg5,(XColor const *)arg6,(XColor const *)arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27740,9 +24942,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateFontCursor)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XCreateFontCursor(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27763,9 +24963,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLoadFont)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XLoadFont(arg1,(char const *)arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27796,9 +24994,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateGC)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XGCValues *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (GC)XCreateGC(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27811,9 +25007,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGContextFromGC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, GC, es->message_receiver)
-  gdk_threads_enter ();
   result = XGContextFromGC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27827,9 +25021,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFlushGC)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GC, es->message_arguments[0])
-  gdk_threads_enter ();
   XFlushGC(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27874,9 +25066,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreatePixmap)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = XCreatePixmap(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27921,9 +25111,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateBitmapFromData)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = XCreateBitmapFromData(arg1,arg2,(char const *)arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -27992,9 +25180,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreatePixmapFromBitmapData)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   result = XCreatePixmapFromBitmapData(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28071,9 +25257,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateSimpleWindow)
   }	   
   arg9 = SYX_SMALL_INTEGER(es->message_arguments[7]);
   
-  gdk_threads_enter ();
   result = XCreateSimpleWindow(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28094,9 +25278,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetSelectionOwner)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XGetSelectionOwner(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28185,9 +25367,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateWindow)
   arg11 = SYX_SMALL_INTEGER(es->message_arguments[9]);
   
   SWIG_FIRST_SELF(arg12, XSetWindowAttributes *, es->message_arguments[10])
-  gdk_threads_enter ();
   result = XCreateWindow(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28218,9 +25398,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListInstalledColormaps)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (Colormap *)XListInstalledColormaps(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -28262,9 +25440,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListFonts)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char **)XListFonts(arg1,(char const *)arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -28308,9 +25484,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListFontsWithInfo)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char **)XListFontsWithInfo(arg1,(char const *)arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -28336,9 +25510,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetFontPath)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char **)XGetFontPath(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -28364,9 +25536,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListExtensions)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (char **)XListExtensions(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -28400,9 +25570,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListProperties)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (Atom *)XListProperties(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -28430,9 +25598,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListHosts)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (XHostAddress *)XListHosts(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -28464,9 +25630,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeycodeToKeysym)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = XKeycodeToKeysym(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28487,9 +25651,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLookupKeysym)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XLookupKeysym(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28528,9 +25690,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetKeyboardMapping)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (KeySym *)XGetKeyboardMapping(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -28552,9 +25712,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStringToKeysym)
   }	   
   arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XStringToKeysym((char const *)arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28567,9 +25725,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMaxRequestSize)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long)XMaxRequestSize(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28582,9 +25738,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtendedMaxRequestSize)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long)XExtendedMaxRequestSize(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28597,9 +25751,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResourceManagerString)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XResourceManagerString(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28612,9 +25764,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XScreenResourceString)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XScreenResourceString(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28627,9 +25777,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayMotionBufferSize)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long)XDisplayMotionBufferSize(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28642,9 +25790,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVisualIDFromVisual)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Visual *, es->message_receiver)
-  gdk_threads_enter ();
   result = XVisualIDFromVisual(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28655,9 +25801,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInitThreads)
   Status result;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = XInitThreads();
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28669,9 +25813,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLockDisplay)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   XLockDisplay(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28683,9 +25825,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnlockDisplay)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   XUnlockDisplay(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28706,9 +25846,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInitExtension)
   }	   
   arg2 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XExtCodes *)XInitExtension(arg1,(char const *)arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28721,9 +25859,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddExtension)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (XExtCodes *)XAddExtension(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28744,9 +25880,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFindOnExtensionList)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XExtData *)XFindOnExtensionList(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28767,9 +25901,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRootWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XRootWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28782,9 +25914,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultRootWindow)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = XDefaultRootWindow(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28797,9 +25927,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRootWindowOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = XRootWindowOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28820,9 +25948,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultVisual)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (Visual *)XDefaultVisual(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28835,9 +25961,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultVisualOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Visual *)XDefaultVisualOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28858,9 +25982,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultGC)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (GC)XDefaultGC(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28873,9 +25995,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultGCOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (GC)XDefaultGCOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28896,9 +26016,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBlackPixel)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (unsigned long)XBlackPixel(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28919,9 +26037,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWhitePixel)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (unsigned long)XWhitePixel(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28932,9 +26048,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllPlanes)
   unsigned long result;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = (unsigned long)XAllPlanes();
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28947,9 +26061,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBlackPixelOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long)XBlackPixelOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28962,9 +26074,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWhitePixelOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long)XWhitePixelOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28977,9 +26087,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNextRequest)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long)XNextRequest(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -28992,9 +26100,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLastKnownRequestProcessed)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (unsigned long)XLastKnownRequestProcessed(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29007,9 +26113,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XServerVendor)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XServerVendor(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29022,9 +26126,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayString)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XDisplayString(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29045,9 +26147,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultColormap)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XDefaultColormap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29060,9 +26160,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultColormapOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = XDefaultColormapOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29075,9 +26173,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *)XDisplayOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29098,9 +26194,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XScreenOfDisplay)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (Screen *)XScreenOfDisplay(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29113,9 +26207,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultScreenOfDisplay)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (Screen *)XDefaultScreenOfDisplay(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29128,9 +26220,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEventMaskOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (long)XEventMaskOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29143,9 +26233,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XScreenNumberOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XScreenNumberOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29158,9 +26246,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetErrorHandler)
   SyxOop result_oop;
   
   arg1 = (XErrorHandler) es->message_arguments[0];
-  gdk_threads_enter ();
   result = (XErrorHandler)XSetErrorHandler(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29173,9 +26259,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetIOErrorHandler)
   SyxOop result_oop;
   
   arg1 = (XIOErrorHandler) es->message_arguments[0];
-  gdk_threads_enter ();
   result = (XIOErrorHandler)XSetIOErrorHandler(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29198,9 +26282,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListPixmapFormats)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (XPixmapFormatValues *)XListPixmapFormats(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -29234,9 +26316,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XListDepths)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int *)XListDepths(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -29278,9 +26358,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReconfigureWMWindow)
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
   SWIG_FIRST_SELF(arg5, XWindowChanges *, es->message_arguments[3])
-  gdk_threads_enter ();
   result = XReconfigureWMWindow(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29313,9 +26391,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetWMProtocols)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XGetWMProtocols(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -29349,9 +26425,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWMProtocols)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = XSetWMProtocols(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29380,9 +26454,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIconifyWindow)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = XIconifyWindow(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29411,9 +26483,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWithdrawWindow)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = XWithdrawWindow(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29446,9 +26516,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetCommand)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XGetCommand(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -29484,9 +26552,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetWMColormapWindows)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XGetWMColormapWindows(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SYX_PRIM_RETURN (result_oop);
@@ -29520,9 +26586,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWMColormapWindows)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = XSetWMColormapWindows(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29542,9 +26606,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeStringList)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   XFreeStringList(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SWIG_APPEND_VALUE (syx_string_new(*arg1));
   SYX_PRIM_RETURN (result_oop);
@@ -29576,9 +26638,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetTransientForHint)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetTransientForHint(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29591,9 +26651,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XActivateScreenSaver)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XActivateScreenSaver(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29608,9 +26666,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddHost)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XHostAddress *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XAddHost(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29633,9 +26689,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddHosts)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XAddHosts(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29650,9 +26704,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddToExtensionList)
   
   SWIG_FIRST_SELF(arg1, struct _XExtData **, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XExtData *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XAddToExtensionList(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29673,9 +26725,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddToSaveSet)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XAddToSaveSet(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29698,9 +26748,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllocColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XColor *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XAllocColor(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29735,9 +26783,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllocColorCells)
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
   SWIG_FIRST_SELF(arg6, unsigned long *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XAllocColorCells(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29798,9 +26844,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllocColorPlanes)
   
   SWIG_FIRST_SELF(arg9, unsigned long *, es->message_arguments[7])
   SWIG_FIRST_SELF(arg10, unsigned long *, es->message_arguments[8])
-  gdk_threads_enter ();
   result = XAllocColorPlanes(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29833,9 +26877,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllocNamedColor)
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XColor *, es->message_arguments[3])
-  gdk_threads_enter ();
   result = XAllocNamedColor(arg1,arg2,(char const *)arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29864,9 +26906,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAllowEvents)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XAllowEvents(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29879,9 +26919,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAutoRepeatOff)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XAutoRepeatOff(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29894,9 +26932,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAutoRepeatOn)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XAutoRepeatOn(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29917,9 +26953,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBell)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XBell(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29932,9 +26966,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBitmapBitOrder)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XBitmapBitOrder(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29947,9 +26979,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBitmapPad)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XBitmapPad(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29962,9 +26992,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBitmapUnit)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XBitmapUnit(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -29977,9 +27005,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCellsOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XCellsOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30016,9 +27042,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeActivePointerGrab)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XChangeActivePointerGrab(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30043,9 +27067,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeGC)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XGCValues *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XChangeGC(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30068,9 +27090,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeKeyboardControl)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XKeyboardControl *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = (int)XChangeKeyboardControl(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30109,9 +27129,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeKeyboardMapping)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XChangeKeyboardMapping(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30136,9 +27154,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangePointerControl)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XChangePointerControl(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30201,9 +27217,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeProperty)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   result = (int)XChangeProperty(arg1,arg2,arg3,arg4,arg5,arg6,(unsigned char const *)arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30232,9 +27246,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeSaveSet)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XChangeSaveSet(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30265,9 +27277,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XChangeWindowAttributes)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XSetWindowAttributes *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XChangeWindowAttributes(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30286,9 +27296,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCheckIfEvent)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, Bool (*)(Display *,XEvent *,XPointer), es->message_arguments[1])
   arg4 = (XPointer) es->message_arguments[2];
-  gdk_threads_enter ();
   result = XCheckIfEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -30310,9 +27318,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCheckMaskEvent)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XEvent *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XCheckMaskEvent(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -30334,9 +27340,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCheckTypedEvent)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XEvent *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XCheckTypedEvent(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -30366,9 +27370,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCheckTypedWindowEvent)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XEvent *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = XCheckTypedWindowEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -30398,9 +27400,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCheckWindowEvent)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XEvent *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = XCheckWindowEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -30428,9 +27428,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateSubwindows)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XCirculateSubwindows(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30451,9 +27449,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateSubwindowsDown)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XCirculateSubwindowsDown(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30474,9 +27470,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCirculateSubwindowsUp)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XCirculateSubwindowsUp(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30530,9 +27524,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClearArea)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XClearArea(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30553,9 +27545,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XClearWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XClearWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30568,9 +27558,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCloseDisplay)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XCloseDisplay(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30601,9 +27589,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConfigureWindow)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XWindowChanges *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XConfigureWindow(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30616,9 +27602,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConnectionNumber)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XConnectionNumber(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30671,9 +27655,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XConvertSelection)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XConvertSelection(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30752,9 +27734,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCopyArea)
   }	   
   arg10 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   
-  gdk_threads_enter ();
   result = (int)XCopyArea(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30779,9 +27759,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCopyGC)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, GC, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XCopyGC(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30868,9 +27846,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCopyPlane)
   }	   
   arg11 = SYX_SMALL_INTEGER(es->message_arguments[9]);
   
-  gdk_threads_enter ();
   result = (int)XCopyPlane(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30891,9 +27867,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultDepth)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDefaultDepth(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30906,9 +27880,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultDepthOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XDefaultDepthOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30921,9 +27893,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefaultScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XDefaultScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30952,9 +27922,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDefineCursor)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XDefineCursor(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -30983,9 +27951,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDeleteProperty)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XDeleteProperty(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31006,9 +27972,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDestroyWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31029,9 +27993,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroySubwindows)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDestroySubwindows(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31044,9 +28006,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDoesBackingStore)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XDoesBackingStore(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31059,9 +28019,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDoesSaveUnders)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = XDoesSaveUnders(arg1);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -31073,9 +28031,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisableAccessControl)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XDisableAccessControl(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31096,9 +28052,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayCells)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayCells(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31119,9 +28073,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayHeight)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayHeight(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31142,9 +28094,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayHeightMM)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayHeightMM(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31173,9 +28123,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayKeycodes)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = (int)XDisplayKeycodes(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
@@ -31200,9 +28148,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayPlanes)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayPlanes(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31223,9 +28169,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayWidth)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayWidth(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31246,9 +28190,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayWidthMM)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XDisplayWidthMM(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31319,9 +28261,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawArc)
   }	   
   arg9 = SYX_SMALL_INTEGER(es->message_arguments[7]);
   
-  gdk_threads_enter ();
   result = (int)XDrawArc(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31354,9 +28294,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawArcs)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XDrawArcs(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31411,9 +28349,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawImageString)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawImageString(arg1,arg2,arg3,arg4,arg5,(char const *)arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31462,9 +28398,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawImageString16)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawImageString16(arg1,arg2,arg3,arg4,arg5,(XChar2b const *)arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31519,9 +28453,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawLine)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawLine(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31562,9 +28494,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawLines)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XDrawLines(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31603,9 +28533,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawPoint)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XDrawPoint(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31646,9 +28574,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawPoints)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XDrawPoints(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31703,9 +28629,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawRectangle)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawRectangle(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31738,9 +28662,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawRectangles)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XDrawRectangles(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31773,9 +28695,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawSegments)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XDrawSegments(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31830,9 +28750,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawString)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawString(arg1,arg2,arg3,arg4,arg5,(char const *)arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31881,9 +28799,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawString16)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawString16(arg1,arg2,arg3,arg4,arg5,(XChar2b const *)arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31932,9 +28848,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawText)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawText(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31983,9 +28897,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDrawText16)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XDrawText16(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -31998,9 +28910,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEnableAccessControl)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XEnableAccessControl(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32021,9 +28931,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XEventsQueued)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XEventsQueued(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32054,9 +28962,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFetchName)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XFetchName(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -32130,9 +29036,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFillArc)
   }	   
   arg9 = SYX_SMALL_INTEGER(es->message_arguments[7]);
   
-  gdk_threads_enter ();
   result = (int)XFillArc(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32165,9 +29069,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFillArcs)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XFillArcs(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32216,9 +29118,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFillPolygon)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XFillPolygon(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32273,9 +29173,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFillRectangle)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XFillRectangle(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32308,9 +29206,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFillRectangles)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XFillRectangles(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32323,9 +29219,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFlush)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XFlush(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32346,9 +29240,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XForceScreenSaver)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XForceScreenSaver(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32361,9 +29253,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFree)
   SyxOop result_oop;
   
   arg1 = (void *) es->message_arguments[0];
-  gdk_threads_enter ();
   result = (int)XFree(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32384,9 +29274,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeColormap)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XFreeColormap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32425,9 +29313,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeColors)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XFreeColors(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32448,9 +29334,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeCursor)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XFreeCursor(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32471,9 +29355,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeExtensionList)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XFreeExtensionList(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg1));
   SYX_PRIM_RETURN (result_oop);
@@ -32491,9 +29373,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeFont)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontStruct *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XFreeFont(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32524,9 +29404,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeFontInfo)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XFreeFontInfo(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg1));
   SYX_PRIM_RETURN (result_oop);
@@ -32550,9 +29428,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeFontNames)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XFreeFontNames(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg1));
   SYX_PRIM_RETURN (result_oop);
@@ -32576,9 +29452,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeFontPath)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XFreeFontPath(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg1));
   SYX_PRIM_RETURN (result_oop);
@@ -32596,9 +29470,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeGC)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GC, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XFreeGC(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32611,9 +29483,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeModifiermap)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XModifierKeymap *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XFreeModifiermap(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32634,9 +29504,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreePixmap)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XFreePixmap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32741,9 +29609,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGeometry)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (5);
-  gdk_threads_enter ();
   result = (int)XGeometry(arg1,arg2,(char const *)arg3,(char const *)arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg10));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg11));
@@ -32802,9 +29668,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetErrorDatabaseText)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XGetErrorDatabaseText(arg1,(char const *)arg2,(char const *)arg3,(char const *)arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32841,9 +29705,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetErrorText)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XGetErrorText(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32866,9 +29728,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetFontProperty)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, unsigned long *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XGetFontProperty(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -32892,9 +29752,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetGCValues)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XGCValues *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = XGetGCValues(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -32941,9 +29799,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetGeometry)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = XGetGeometry(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
@@ -32978,9 +29834,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetIconName)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XGetIconName(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -33008,9 +29862,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetInputFocus)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XGetInputFocus(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -33028,9 +29880,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetKeyboardControl)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XKeyboardState *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XGetKeyboardControl(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33065,9 +29915,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetPointerControl)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = (int)XGetPointerControl(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
@@ -33095,9 +29943,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetPointerMapping)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XGetPointerMapping(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33138,9 +29984,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetScreenSaver)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (5);
-  gdk_threads_enter ();
   result = (int)XGetScreenSaver(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
@@ -33169,9 +30013,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetTransientForHint)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, Window *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XGetTransientForHint(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33242,9 +30084,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetWindowProperty)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XGetWindowProperty(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg9));
   SYX_PRIM_RETURN (result_oop);
@@ -33270,9 +30110,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetWindowAttributes)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XWindowAttributes *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = XGetWindowAttributes(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33343,9 +30181,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGrabButton)
   }	   
   arg9 = SYX_SMALL_INTEGER(es->message_arguments[7]);
   
-  gdk_threads_enter ();
   result = (int)XGrabButton(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33392,9 +30228,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGrabKey)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XGrabKey(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33433,9 +30267,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGrabKeyboard)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XGrabKeyboard(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33498,9 +30330,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGrabPointer)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   result = (int)XGrabPointer(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33513,9 +30343,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGrabServer)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XGrabServer(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33528,9 +30356,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XHeightMMOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XHeightMMOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33543,9 +30369,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XHeightOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XHeightOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33564,9 +30388,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIfEvent)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, Bool (*)(Display *,XEvent *,XPointer), es->message_arguments[1])
   arg4 = (XPointer) es->message_arguments[2];
-  gdk_threads_enter ();
   result = (int)XIfEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33579,9 +30401,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XImageByteOrder)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XImageByteOrder(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33602,9 +30422,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInstallColormap)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XInstallColormap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33625,9 +30443,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKeysymToKeycode)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XKeysymToKeycode(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33648,9 +30464,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XKillClient)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XKillClient(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33683,9 +30497,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLookupColor)
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XColor *, es->message_arguments[3])
-  gdk_threads_enter ();
   result = XLookupColor(arg1,arg2,(char const *)arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33706,9 +30518,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLowerWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XLowerWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33729,9 +30539,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapRaised)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XMapRaised(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33752,9 +30560,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapSubwindows)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XMapSubwindows(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33775,9 +30581,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMapWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XMapWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33800,9 +30604,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMaskEvent)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XEvent *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = (int)XMaskEvent(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33815,9 +30617,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMaxCmapsOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XMaxCmapsOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33830,9 +30630,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMinCmapsOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XMinCmapsOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33885,9 +30683,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMoveResizeWindow)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XMoveResizeWindow(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33924,9 +30720,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XMoveWindow)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XMoveWindow(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33941,9 +30735,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNextEvent)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XNextEvent(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33956,9 +30748,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XNoOp)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XNoOp(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -33989,9 +30779,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XParseColor)
   arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = XParseColor(arg1,arg2,(char const *)arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34030,9 +30818,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XParseGeometry)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = (int)XParseGeometry((char const *)arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg2));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
@@ -34051,9 +30837,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPeekEvent)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XPeekEvent(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34072,9 +30856,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPeekIfEvent)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, Bool (*)(Display *,XEvent *,XPointer), es->message_arguments[1])
   arg4 = (XPointer) es->message_arguments[2];
-  gdk_threads_enter ();
   result = (int)XPeekIfEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34087,9 +30869,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPending)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XPending(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34102,9 +30882,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPlanesOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XPlanesOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34117,9 +30895,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XProtocolRevision)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XProtocolRevision(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34132,9 +30908,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XProtocolVersion)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XProtocolVersion(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34149,9 +30923,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPutBackEvent)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XEvent *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XPutBackEvent(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34224,9 +30996,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XPutImage)
   }	   
   arg10 = SYX_SMALL_INTEGER(es->message_arguments[8]);
   
-  gdk_threads_enter ();
   result = (int)XPutImage(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34239,9 +31009,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQLength)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XQLength(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34282,9 +31050,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryBestCursor)
   
   SWIG_FIRST_SELF(arg5, unsigned int *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, unsigned int *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XQueryBestCursor(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34333,9 +31099,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryBestSize)
   
   SWIG_FIRST_SELF(arg6, unsigned int *, es->message_arguments[4])
   SWIG_FIRST_SELF(arg7, unsigned int *, es->message_arguments[5])
-  gdk_threads_enter ();
   result = XQueryBestSize(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34376,9 +31140,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryBestStipple)
   
   SWIG_FIRST_SELF(arg5, unsigned int *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, unsigned int *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XQueryBestStipple(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34419,9 +31181,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryBestTile)
   
   SWIG_FIRST_SELF(arg5, unsigned int *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, unsigned int *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XQueryBestTile(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34444,9 +31204,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XColor *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = (int)XQueryColor(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34477,9 +31235,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryColors)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XQueryColors(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34522,9 +31278,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryExtension)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = XQueryExtension(arg1,(char const *)arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
@@ -34543,9 +31297,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryKeymap)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, char *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XQueryKeymap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34600,9 +31352,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryPointer)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (5);
-  gdk_threads_enter ();
   result = XQueryPointer(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
@@ -34668,9 +31418,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryTextExtents)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = (int)XQueryTextExtents(arg1,arg2,(char const *)arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
@@ -34730,9 +31478,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryTextExtents16)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = (int)XQueryTextExtents16(arg1,arg2,(XChar2b const *)arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
@@ -34766,9 +31512,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XQueryTree)
   SWIG_FIRST_SELF(arg4, Window *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, Window **, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, unsigned int *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XQueryTree(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34789,9 +31533,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRaiseWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XRaiseWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34842,9 +31584,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReadBitmapFile)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = (int)XReadBitmapFile(arg1,arg2,(char const *)arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg8));
@@ -34889,9 +31629,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReadBitmapFileData)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = (int)XReadBitmapFileData((char const *)arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
@@ -34936,9 +31674,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRebindKeysym)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XRebindKeysym(arg1,arg2,arg3,arg4,(unsigned char const *)arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34963,9 +31699,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRecolorCursor)
   
   SWIG_FIRST_SELF(arg3, XColor *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XRecolorCursor(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -34978,9 +31712,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRefreshKeyboardMapping)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XMappingEvent *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XRefreshKeyboardMapping(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35001,9 +31733,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRemoveFromSaveSet)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XRemoveFromSaveSet(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35018,9 +31748,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRemoveHost)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XHostAddress *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XRemoveHost(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35043,9 +31771,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRemoveHosts)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XRemoveHosts(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35090,9 +31816,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XReparentWindow)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XReparentWindow(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35105,9 +31829,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResetScreenSaver)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XResetScreenSaver(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35144,9 +31866,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XResizeWindow)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XResizeWindow(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35169,9 +31889,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRestackWindows)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XRestackWindows(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35192,9 +31910,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRotateBuffers)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XRotateBuffers(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35233,9 +31949,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRotateWindowProperties)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XRotateWindowProperties(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35248,9 +31962,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XScreenCount)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XScreenCount(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35279,9 +31991,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSelectInput)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSelectInput(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35312,9 +32022,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSendEvent)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = XSendEvent(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35335,9 +32043,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetAccessControl)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XSetAccessControl(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35360,9 +32066,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetArcMode)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetArcMode(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35385,9 +32089,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetBackground)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetBackground(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35410,9 +32112,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetClipMask)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetClipMask(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35443,9 +32143,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetClipOrigin)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XSetClipOrigin(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35494,9 +32192,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetClipRectangles)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XSetClipRectangles(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35517,9 +32213,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetCloseDownMode)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XSetCloseDownMode(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35558,9 +32252,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetCommand)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XSetCommand(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -35602,9 +32294,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetDashes)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XSetDashes(arg1,arg2,arg3,(char const *)arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35627,9 +32317,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetFillRule)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetFillRule(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35652,9 +32340,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetFillStyle)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetFillStyle(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35677,9 +32363,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetFont)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetFont(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35710,9 +32394,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetFontPath)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = (int)XSetFontPath(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_string_new(*arg2));
   SYX_PRIM_RETURN (result_oop);
@@ -35738,9 +32420,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetForeground)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetForeground(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35763,9 +32443,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetFunction)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetFunction(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35781,9 +32459,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetGraphicsExposures)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, GC, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XSetGraphicsExposures(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35812,9 +32488,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetIconName)
   }	   
   arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetIconName(arg1,arg2,(char const *)arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35851,9 +32525,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetInputFocus)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XSetInputFocus(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35900,9 +32572,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetLineAttributes)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XSetLineAttributes(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35917,9 +32587,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetModifierMapping)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XModifierKeymap *, es->message_arguments[0])
-  gdk_threads_enter ();
   result = (int)XSetModifierMapping(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35942,9 +32610,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetPlaneMask)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetPlaneMask(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -35967,9 +32633,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetPointerMapping)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetPointerMapping(arg1,(unsigned char const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36014,9 +32678,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetScreenSaver)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XSetScreenSaver(arg1,arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36053,9 +32715,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetSelectionOwner)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XSetSelectionOwner(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36102,9 +32762,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetState)
   }	   
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
-  gdk_threads_enter ();
   result = (int)XSetState(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36127,9 +32785,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetStipple)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetStipple(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36152,9 +32808,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetSubwindowMode)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetSubwindowMode(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36185,9 +32839,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetTSOrigin)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XSetTSOrigin(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36210,9 +32862,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetTile)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetTile(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36241,9 +32891,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowBackground)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowBackground(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36272,9 +32920,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowBackgroundPixmap)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowBackgroundPixmap(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36303,9 +32949,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowBorder)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowBorder(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36334,9 +32978,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowBorderPixmap)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowBorderPixmap(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36365,9 +33007,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowBorderWidth)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowBorderWidth(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36396,9 +33036,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetWindowColormap)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XSetWindowColormap(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36435,9 +33073,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreBuffer)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XStoreBuffer(arg1,(char const *)arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36466,9 +33102,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreBytes)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XStoreBytes(arg1,(char const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36491,9 +33125,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, XColor *, es->message_arguments[1])
-  gdk_threads_enter ();
   result = (int)XStoreColor(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36524,9 +33156,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreColors)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XStoreColors(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36555,9 +33185,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreName)
   }	   
   arg3 = SYX_OBJECT_STRING(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XStoreName(arg1,arg2,(char const *)arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36602,9 +33230,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XStoreNamedColor)
   }	   
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
-  gdk_threads_enter ();
   result = (int)XStoreNamedColor(arg1,arg2,(char const *)arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36618,9 +33244,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSync)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XSync(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36673,9 +33297,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextExtents)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = (int)XTextExtents(arg1,(char const *)arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
@@ -36727,9 +33349,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextExtents16)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (4);
-  gdk_threads_enter ();
   result = (int)XTextExtents16(arg1,(XChar2b const *)arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg5));
@@ -36763,9 +33383,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextWidth)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XTextWidth(arg1,(char const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36788,9 +33406,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTextWidth16)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XTextWidth16(arg1,(XChar2b const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36853,9 +33469,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XTranslateCoordinates)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = XTranslateCoordinates(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg6));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
   SYX_PRIM_RETURN (result_oop);
@@ -36879,9 +33493,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUndefineCursor)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUndefineCursor(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36918,9 +33530,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUngrabButton)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XUngrabButton(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36957,9 +33567,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUngrabKey)
   }	   
   arg4 = SYX_SMALL_INTEGER(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (int)XUngrabKey(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -36980,9 +33588,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUngrabKeyboard)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUngrabKeyboard(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37003,9 +33609,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUngrabPointer)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUngrabPointer(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37018,9 +33622,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUngrabServer)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XUngrabServer(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37041,9 +33643,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUninstallColormap)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUninstallColormap(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37064,9 +33664,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnloadFont)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUnloadFont(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37087,9 +33685,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapSubwindows)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUnmapSubwindows(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37110,9 +33706,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnmapWindow)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (int)XUnmapWindow(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37125,9 +33719,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVendorRelease)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XVendorRelease(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37204,9 +33796,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWarpPointer)
   }	   
   arg9 = SYX_SMALL_INTEGER(es->message_arguments[7]);
   
-  gdk_threads_enter ();
   result = (int)XWarpPointer(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37219,9 +33809,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWidthMMOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XWidthMMOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37234,9 +33822,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWidthOfScreen)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, Screen *, es->message_receiver)
-  gdk_threads_enter ();
   result = (int)XWidthOfScreen(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37267,9 +33853,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWindowEvent)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XEvent *, es->message_arguments[2])
-  gdk_threads_enter ();
   result = (int)XWindowEvent(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37330,9 +33914,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XWriteBitmapFile)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   result = (int)XWriteBitmapFile(arg1,(char const *)arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37343,9 +33925,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSupportsLocale)
   Bool result;
   SyxOop result_oop;
   
-  gdk_threads_enter ();
   result = XSupportsLocale();
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -37363,9 +33943,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetLocaleModifiers)
   }	   
   arg1 = SYX_OBJECT_STRING(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (char *)XSetLocaleModifiers((char const *)arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37396,9 +33974,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOpenOM)
   }	   
   arg4 = SYX_OBJECT_STRING(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (XOM)XOpenOM(arg1,arg2,(char const *)arg3,(char const *)arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37411,9 +33987,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCloseOM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = XCloseOM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37427,9 +34001,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetOMValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XSetOMValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37443,9 +34015,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetOMValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XGetOMValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37458,9 +34028,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayOfOM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *)XDisplayOfOM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37473,9 +34041,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLocaleOfOM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XLocaleOfOM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37489,9 +34055,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateOC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOM, es->message_receiver)
-  gdk_threads_enter ();
   result = (XOC)XCreateOC(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37503,9 +34067,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyOC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOC, es->message_receiver)
-  gdk_threads_enter ();
   XDestroyOC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37518,9 +34080,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOMOfOC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOC, es->message_receiver)
-  gdk_threads_enter ();
   result = (XOM)XOMOfOC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37534,9 +34094,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetOCValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOC, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XSetOCValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37550,9 +34108,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetOCValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XOC, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XGetOCValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37591,9 +34147,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateFontSet)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (3);
-  gdk_threads_enter ();
   result = (XFontSet)XCreateFontSet(arg1,(char const *)arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg4));
   SWIG_APPEND_VALUE (syx_string_new(*arg5));
@@ -37611,9 +34165,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFreeFontSet)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontSet, es->message_arguments[0])
-  gdk_threads_enter ();
   XFreeFontSet(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37630,9 +34182,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFontsOfFontSet)
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XFontStruct ***, es->message_arguments[0])
   SWIG_FIRST_SELF(arg3, char ***, es->message_arguments[1])
-  gdk_threads_enter ();
   result = (int)XFontsOfFontSet(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37645,9 +34195,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XBaseFontNameListOfFontSet)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XBaseFontNameListOfFontSet(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37660,9 +34208,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLocaleOfFontSet)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XLocaleOfFontSet(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37675,9 +34221,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XContextDependentDrawing)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = XContextDependentDrawing(arg1);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -37689,9 +34233,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDirectionalDependentDrawing)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = XDirectionalDependentDrawing(arg1);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -37703,9 +34245,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XContextualDrawing)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = XContextualDrawing(arg1);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -37717,9 +34257,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XExtentsOfFontSet)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
-  gdk_threads_enter ();
   result = (XFontSetExtents *)XExtentsOfFontSet(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37748,9 +34286,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextEscapement)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XmbTextEscapement(arg1,(char const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37773,9 +34309,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextEscapement)
   }	   
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
-  gdk_threads_enter ();
   result = (int)XwcTextEscapement(arg1,(wchar_t const *)arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37808,9 +34342,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextExtents)
   
   SWIG_FIRST_SELF(arg4, XRectangle *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XRectangle *, es->message_arguments[3])
-  gdk_threads_enter ();
   result = (int)XmbTextExtents(arg1,(char const *)arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37837,9 +34369,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextExtents)
   
   SWIG_FIRST_SELF(arg4, XRectangle *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XRectangle *, es->message_arguments[3])
-  gdk_threads_enter ();
   result = (int)XwcTextExtents(arg1,(wchar_t const *)arg2,arg3,arg4,arg5);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37894,9 +34424,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbTextPerCharExtents)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XmbTextPerCharExtents(arg1,(char const *)arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
   SYX_PRIM_RETURN (result_oop);
@@ -37948,9 +34476,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcTextPerCharExtents)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XwcTextPerCharExtents(arg1,(wchar_t const *)arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg7));
   SYX_PRIM_RETURN (result_oop);
@@ -38001,9 +34527,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbDrawText)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   XmbDrawText(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38051,9 +34575,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcDrawText)
   }	   
   arg7 = SYX_SMALL_INTEGER(es->message_arguments[5]);
   
-  gdk_threads_enter ();
   XwcDrawText(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38109,9 +34631,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbDrawString)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   XmbDrawString(arg1,arg2,arg3,arg4,arg5,arg6,(char const *)arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38161,9 +34681,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcDrawString)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   XwcDrawString(arg1,arg2,arg3,arg4,arg5,arg6,(wchar_t const *)arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38219,9 +34737,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbDrawImageString)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   XmbDrawImageString(arg1,arg2,arg3,arg4,arg5,arg6,(char const *)arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38271,9 +34787,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcDrawImageString)
   }	   
   arg8 = SYX_SMALL_INTEGER(es->message_arguments[6]);
   
-  gdk_threads_enter ();
   XwcDrawImageString(arg1,arg2,arg3,arg4,arg5,arg6,(wchar_t const *)arg7,arg8);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38304,9 +34818,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XOpenIM)
   }	   
   arg4 = SYX_OBJECT_STRING(es->message_arguments[2]);
   
-  gdk_threads_enter ();
   result = (XIM)XOpenIM(arg1,arg2,arg3,arg4);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38319,9 +34831,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCloseIM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = XCloseIM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38335,9 +34845,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetIMValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XGetIMValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38351,9 +34859,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetIMValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XSetIMValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38366,9 +34872,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDisplayOfIM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = (Display *)XDisplayOfIM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38381,9 +34885,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XLocaleOfIM)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XLocaleOfIM(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38397,9 +34899,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XCreateIC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIM, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIC)XCreateIC(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38411,9 +34911,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XDestroyIC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   XDestroyIC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38425,9 +34923,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetICFocus)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   XSetICFocus(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38439,9 +34935,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnsetICFocus)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   XUnsetICFocus(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38454,9 +34948,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcResetIC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   result = (wchar_t *)XwcResetIC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38469,9 +34961,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbResetIC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XmbResetIC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38485,9 +34975,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XSetICValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XSetICValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38501,9 +34989,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XGetICValues)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   result = (char *)XGetICValues(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_string_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38516,9 +35002,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XIMOfIC)
   SyxOop result_oop;
   
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
-  gdk_threads_enter ();
   result = (XIM)XIMOfIC(arg1);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38539,9 +35023,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XFilterEvent)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = XFilterEvent(arg1,arg2);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -38575,9 +35057,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XmbLookupString)
   
   SWIG_FIRST_SELF(arg5, KeySym *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, Status *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = (int)XmbLookupString(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38606,9 +35086,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XwcLookupString)
   
   SWIG_FIRST_SELF(arg5, KeySym *, es->message_arguments[3])
   SWIG_FIRST_SELF(arg6, Status *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = (int)XwcLookupString(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38628,9 +35106,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XVaCreateNestedList)
   }	   
   arg1 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   result = (XVaNestedList)XVaCreateNestedList(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38665,9 +35141,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRegisterIMInstantiateCallback)
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XRegisterIMInstantiateCallback(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -38701,9 +35175,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XUnregisterIMInstantiateCallback)
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
-  gdk_threads_enter ();
   result = XUnregisterIMInstantiateCallback(arg1,arg2,arg3,arg4,arg5,arg6);
-  gdk_threads_leave ();
   SYX_PRIM_RETURN (result_oop);
 }
 
@@ -38727,9 +35199,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XInternalConnectionNumbers)
 #define SWIG_APPEND_VALUE _SWIG_APPEND_RESULT
   int num_values = 0;
   result_oop = syx_array_new_size (2);
-  gdk_threads_enter ();
   result = XInternalConnectionNumbers(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SWIG_APPEND_VALUE (syx_small_integer_new(*arg3));
   SYX_PRIM_RETURN (result_oop);
@@ -38752,9 +35222,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XProcessInternalConnection)
   }	   
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
-  gdk_threads_enter ();
   XProcessInternalConnection(arg1,arg2);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38771,9 +35239,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XAddConnectionWatch)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   arg2 = (XConnectionWatchProc) es->message_arguments[0];
   arg3 = (XPointer) es->message_arguments[1];
-  gdk_threads_enter ();
   result = XAddConnectionWatch(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -38789,9 +35255,7 @@ SYX_FUNC_PRIMITIVE(Xlib_XRemoveConnectionWatch)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   arg2 = (XConnectionWatchProc) es->message_arguments[0];
   arg3 = (XPointer) es->message_arguments[1];
-  gdk_threads_enter ();
   XRemoveConnectionWatch(arg1,arg2,arg3);
-  gdk_threads_leave ();
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
