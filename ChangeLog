@@ -1,5 +1,15 @@
 2007-12-23  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/x11/st/Wm.st: removed
+
+	* plugins/x11/plugin-init.c: do not include Xlib_wrap.c
+
+	* plugins/x11/Xlib.i:
+
+	* plugins/x11/SConscript: compile Xlib_wrap.c
+
+	* plugins/x11/Makefile.am: compile Xlib_wrap.c
+
 	* configure.ac: enable debug level and fix plugins support
 
 	* tests/stsupport/TestCStruct.st: update according to the latest changes and add tests for unions

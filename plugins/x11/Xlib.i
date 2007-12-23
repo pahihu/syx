@@ -1,9 +1,10 @@
+%{
 #include <X11/Xlib.h>
 #include <X11/X.h>
-#include <X11/Xlcint.h>
 #include <X11/Xproto.h>
 #include <X11/Xprotostr.h>
 #include <X11/Xfuncproto.h>
+%}
 
 %include typemaps.i
 %include cpointer.i
@@ -2464,24 +2465,6 @@ extern XVaNestedList XVaCreateNestedList(
 );
 
 /* internal connections for IMs */
-
-extern Bool XRegisterIMInstantiateCallback(
-    Display*			/* dpy */,
-    struct _XrmHashBucketRec*	/* rdb */,
-    char*			/* res_name */,
-    char*			/* res_class */,
-    XIMProc			/* callback */,
-    XPointer*			/* client_data */
-);
-
-extern Bool XUnregisterIMInstantiateCallback(
-    Display*			/* dpy */,
-    struct _XrmHashBucketRec*	/* rdb */,
-    char*			/* res_name */,
-    char*			/* res_class */,
-    XIMProc			/* callback */,
-    XPointer*			/* client_data */
-);
 
 extern Status XInternalConnectionNumbers(
     Display*			/* dpy */,

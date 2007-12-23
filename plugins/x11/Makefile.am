@@ -8,7 +8,7 @@ pluginx11dir = $(plugindir)/x11
 pluginx11_LTLIBRARIES= libsyx-x11.la
 
 libsyx_x11_la_SOURCES	= 	\
-	plugin-init.c
+	plugin-init.c Xlib_wrap.c
 
 libsyx_x11_la_LIBADD	= $(SYX_DEP_LIBS) $(X11_DEP_LIBS)
 

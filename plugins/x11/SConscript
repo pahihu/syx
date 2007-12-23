@@ -27,7 +27,7 @@ import os
 
 Import ('penv', 'distdir')
 
-lib_sources = Split ("plugin-init.c")
+lib_sources = Split ("plugin-init.c Xlib_wrap.c")
 st_sources = Split("""st/XDisplay.st st/XEvent.st st/XWindow.st""")
 
 if penv['plugins'] and penv['X11']:

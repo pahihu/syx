@@ -27,8 +27,6 @@
 #include <X11/Xlib.h>
 #include <unistd.h>
 
-#include <plugins/x11/Xlib_wrap.c>
-
 syx_bool
 syx_plugin_initialize (void)
 {
@@ -39,7 +37,6 @@ syx_plugin_initialize (void)
       "Xlib.st",
       "Display.st",
       "XEvent.st",
-      "Wm.st",
       NULL
     };
     static syx_symbol x11_initialize_request_classes[] = {
@@ -52,7 +49,6 @@ syx_plugin_initialize (void)
       "XlibXMotionEvent",
       "XlibXEvent",
       "XEvent",
-      "Wm",
       NULL
     };
 
