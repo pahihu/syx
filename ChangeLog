@@ -1,5 +1,7 @@
 2007-12-23  Luca Bruno  <lethalman88@gmail.com>
 
+	* configure.ac: enable debug level and fix plugins support
+
 	* tests/stsupport/TestCStruct.st: update according to the latest changes and add tests for unions
 
 	* tests/testforeignstruct.c (main): test unions

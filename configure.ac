@@ -77,6 +77,15 @@ if test "$native_win32" == yes; then
    AC_CHECK_HEADERS([windows.h])
 fi
 
+
+dnl debug level
+AC_MSG_CHECKING([the build debug level])
+AC_ARG_ENABLE(debug,
+        AC_HELP_STRING([--enable-debug],
+                       [debug level (no, normal, info, full) [default=normal]]),
+                       [],[enable_debug="normal"])
+AC_MSG_RESULT([$enable_debug])
+
 dnl gmp support
 AC_MSG_CHECKING([whether to build with big numbers support])
 AC_ARG_WITH(gmp,
@@ -141,6 +150,22 @@ AC_ARG_ENABLE(wingui,
                        [],[enable_wingui=$native_win32])
 AC_MSG_RESULT([$enable_wingui])
 
+dnl check for debug level
+case "$enable_debug" in
+no)
+   CFLAGS="$CFLAGS -O3"
+   ;;
+normal)
+   CFLAGS="$CFLAGS -g -O2"
+   ;;
+info)
+   CFLAGS="$CFLAGS -g -O -DSYX_DEBUG_INFO"
+   ;;
+full)
+   CFLAGS="$CFLAGS -g -O -DSYX_DEBUG_INFO -DSYX_DEBUG_FULL"
+   ;;
+esac
+
 dnl check for profiling
 if test "$enable_profile" == yes; then
    CFLAGS="$CFLAGS -pg"
@@ -185,6 +210,7 @@ dnl check for plugins
 if test "$with_plugins" != no; then
    AC_CHECK_LIB(dl, dlopen, [
                 AC_DEFINE(HAVE_LIBDL, 1, [Define to 1 if you have the 'ltdl' library (-ldl).])
+                CFLAGS="$CFLAGS -DWITH_PLUGINS"
                 LIBS="$LIBS -ldl"
                 build_plugins="yes"], [build_plugins="no"])
 fi
@@ -272,6 +298,7 @@ AC_OUTPUT
 echo "
 Smalltalk YX was configured with the following options:
 
+ Debug level              : $enable_debug
  Big numbers support      : $build_gmp
  Plugins support          : $build_plugins
 "
