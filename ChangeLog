@@ -1,6 +1,6 @@
 2007-12-24  Luca Bruno  <lethalman88@gmail.com>
 
-	* configure.ac: enable mantainer mode and check for pkg-config
+	* configure.ac: enable mantainer mode, check for pkg-config and add prereq
 
 	* syx/syx-object.c (syx_dictionary_rehash): missing check
 

@@ -8,6 +8,7 @@ m4_define([syx_version], [0.1.5])
 
 dnl init autoconf
 AC_INIT([syx], [syx_version], [lethalman88@gmail.com])
+AC_PREREQ([2.59])
 
 dnl set $target
 AC_CANONICAL_TARGET
