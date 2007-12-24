@@ -1,3 +1,28 @@
+2007-12-24  Rahul <blufox@gmail.com>
+	* plugins/x11/plugin-init.c: updated the module prefix to X11
+
+	* plugins/x11/x11gen.rb: updated module prefix to X11 and to remove
+
+	XlibXlib structure
+
+	* plugins/x11/Xlib.i: update with NeedWidePrototypes to compile in solaris
+
+	* plugins/x11/st/XDisplay.st: added instead of XDisplay
+
+	* plugins/x11/st/Xlib.st: updated with new module prefix X11 instead of
+
+	Xlib and remove XlibXlib
+
+	* plugins/x11/st/Display.st: removed
+
+	* plugins/x11/st/XEvent.st: updated by subclassing X11XEvent
+
+	* plugins/x11/SConscript: updated to install Xlib.st
+
+	* plugins/x11/Xlib_wrap.c: updated with new classnames
+
+	* plugins/x11/swig.rb: updated the module prefix.
+
 2007-12-24  Luca Bruno  <lethalman88@gmail.com>
 
 	* st/kernel/Behavior.st: fixed parsing instance and class variable names

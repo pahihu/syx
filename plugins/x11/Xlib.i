@@ -25,7 +25,7 @@ typedef void * XPointer;
 
 %include Xlib_structs.i
 
-%module Xlib
+%module X11
 %{
 
 extern XFontStruct *XLoadQueryFont(
@@ -49,7 +49,11 @@ extern XTimeCoord *XGetMotionEvents(
 
 extern XModifierKeymap *XDeleteModifiermapEntry(
     XModifierKeymap*	/* modmap */,
+#if NeedWidePrototypes
+    unsigned int	/* keycode_entry */,
+#else
     KeyCode		/* keycode_entry */,
+#endif
     int			/* modifier */
 );
 
@@ -59,7 +63,11 @@ extern XModifierKeymap	*XGetModifierMapping(
 
 extern XModifierKeymap	*XInsertModifiermapEntry(
     XModifierKeymap*	/* modmap */,
+#if NeedWidePrototypes
+    unsigned int	/* keycode_entry */,
+#else
     KeyCode		/* keycode_entry */,
+#endif
     int			/* modifier */    
 );
 
@@ -314,7 +322,11 @@ extern XHostAddress *XListHosts(
 );
 extern KeySym XKeycodeToKeysym(
     Display*		/* display */,
-    KeyCode		/* keycode */,
+#if NeedWidePrototypes
+    unsigned int	/* keycode_entry */,
+#else
+    KeyCode		/* keycode_entry */,
+#endif
     int			/* index */
 );
 extern KeySym XLookupKeysym(
@@ -323,7 +335,11 @@ extern KeySym XLookupKeysym(
 );
 extern KeySym *XGetKeyboardMapping(
     Display*		/* display */,
-    KeyCode		/* first_keycode */,
+#if NeedWidePrototypes
+    unsigned int	/* keycode_entry */,
+#else
+    KeyCode		/* keycode_entry */,
+#endif
     int			/* keycode_count */,
     int*		/* keysyms_per_keycode_return */
 );

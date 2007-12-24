@@ -23,7 +23,8 @@ DEALINGS IN THE SOFTWARE.
 "
 LIC
 
-MODULE = 'Xlib'
+MODULE = 'X11'
+GLOBAL = ''
 
 class SwigExtract
     def SwigExtract.parse(fn)
@@ -33,7 +34,7 @@ class SwigExtract
         lines.each do |line|
             case line
             when /SYX_FUNC_PRIMITIVE\(#{MODULE}_(.*)\)$/
-                func = {:name => $1,  :class => MODULE}
+                func = {:name => $1,  :class => GLOBAL}
                 if func[:name] =~ /new_(.*)$/
                     func[:class] = $1
                 end

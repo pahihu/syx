@@ -35,19 +35,19 @@ syx_plugin_initialize (void)
     syx_string filename;
     static syx_symbol x11_filenames[] = {
       "Xlib.st",
-      "Display.st",
+      "XDisplay.st",
       "XEvent.st",
       NULL
     };
     static syx_symbol x11_initialize_request_classes[] = {
-      "XlibGC",
-      "XlibDisplay",
-      "Display",
-      "XlibXWindowAttributes",
-      "XlibXButtonEvent",
-      "XlibXKeyEvent",
-      "XlibXMotionEvent",
-      "XlibXEvent",
+      "X11GC",
+      "X11Display",
+      "XDisplay",
+      "X11XWindowAttributes",
+      "X11XButtonEvent",
+      "X11XKeyEvent",
+      "X11XMotionEvent",
+      "X11XEvent",
       "XEvent",
       NULL
     };

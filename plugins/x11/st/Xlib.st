@@ -1,161 +1,161 @@
-CStruct subclass: #XlibXlib
+CStruct subclass: #X11
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXlib class methodsFor: 'initialize-release'!
+!X11 class methodsFor: 'initialize-release'!
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXlib class methodsFor: 'Xlib'!
+!X11 class methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XNewModifiermap primitive function"
 primXNewModifiermap: arg1
-    <cCall: 'Xlib_XNewModifiermap' plugin: 'x11'>
+    <cCall: 'X11_XNewModifiermap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XOpenDisplay primitive function"
 primXOpenDisplay: arg1
-    <cCall: 'Xlib_XOpenDisplay' plugin: 'x11'>
+    <cCall: 'X11_XOpenDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XrmInitialize primitive function"
 primXrmInitialize
-    <cCall: 'Xlib_XrmInitialize' plugin: 'x11'>
+    <cCall: 'X11_XrmInitialize' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayName primitive function"
 primXDisplayName: arg1
-    <cCall: 'Xlib_XDisplayName' plugin: 'x11'>
+    <cCall: 'X11_XDisplayName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XKeysymToString primitive function"
 primXKeysymToString: arg1
-    <cCall: 'Xlib_XKeysymToString' plugin: 'x11'>
+    <cCall: 'X11_XKeysymToString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStringToKeysym primitive function"
 primXStringToKeysym: arg1
-    <cCall: 'Xlib_XStringToKeysym' plugin: 'x11'>
+    <cCall: 'X11_XStringToKeysym' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XInitThreads primitive function"
 primXInitThreads
-    <cCall: 'Xlib_XInitThreads' plugin: 'x11'>
+    <cCall: 'X11_XInitThreads' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllPlanes primitive function"
 primXAllPlanes
-    <cCall: 'Xlib_XAllPlanes' plugin: 'x11'>
+    <cCall: 'X11_XAllPlanes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetErrorHandler primitive function"
 primXSetErrorHandler: arg1
-    <cCall: 'Xlib_XSetErrorHandler' plugin: 'x11'>
+    <cCall: 'X11_XSetErrorHandler' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetIOErrorHandler primitive function"
 primXSetIOErrorHandler: arg1
-    <cCall: 'Xlib_XSetIOErrorHandler' plugin: 'x11'>
+    <cCall: 'X11_XSetIOErrorHandler' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeStringList primitive function"
 primXFreeStringList: arg1
-    <cCall: 'Xlib_XFreeStringList' plugin: 'x11'>
+    <cCall: 'X11_XFreeStringList' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFree primitive function"
 primXFree: arg1
-    <cCall: 'Xlib_XFree' plugin: 'x11'>
+    <cCall: 'X11_XFree' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeExtensionList primitive function"
 primXFreeExtensionList: arg1
-    <cCall: 'Xlib_XFreeExtensionList' plugin: 'x11'>
+    <cCall: 'X11_XFreeExtensionList' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeFontInfo primitive function"
 primXFreeFontInfo: arg1 freeInfo: arg2 actualCount: arg3
-    <cCall: 'Xlib_XFreeFontInfo' plugin: 'x11'>
+    <cCall: 'X11_XFreeFontInfo' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeFontNames primitive function"
 primXFreeFontNames: arg1
-    <cCall: 'Xlib_XFreeFontNames' plugin: 'x11'>
+    <cCall: 'X11_XFreeFontNames' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeFontPath primitive function"
 primXFreeFontPath: arg1
-    <cCall: 'Xlib_XFreeFontPath' plugin: 'x11'>
+    <cCall: 'X11_XFreeFontPath' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XParseGeometry primitive function"
 primXParseGeometry: arg1 xReturn: arg2 yReturn: arg3 widthReturn: arg4 heightReturn: arg5
-    <cCall: 'Xlib_XParseGeometry' plugin: 'x11'>
+    <cCall: 'X11_XParseGeometry' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XReadBitmapFileData primitive function"
 primXReadBitmapFileData: arg1 widthReturn: arg2 heightReturn: arg3 dataReturn: arg4 xHotReturn: arg5 yHotReturn: arg6
-    <cCall: 'Xlib_XReadBitmapFileData' plugin: 'x11'>
+    <cCall: 'X11_XReadBitmapFileData' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSupportsLocale primitive function"
 primXSupportsLocale
-    <cCall: 'Xlib_XSupportsLocale' plugin: 'x11'>
+    <cCall: 'X11_XSupportsLocale' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetLocaleModifiers primitive function"
 primXSetLocaleModifiers: arg1
-    <cCall: 'Xlib_XSetLocaleModifiers' plugin: 'x11'>
+    <cCall: 'X11_XSetLocaleModifiers' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XVaCreateNestedList primitive function"
 primXVaCreateNestedList: arg1
-    <cCall: 'Xlib_XVaCreateNestedList' plugin: 'x11'>
+    <cCall: 'X11_XVaCreateNestedList' plugin: 'x11'>
     self primitiveFailed
 !
 
@@ -164,17 +164,17 @@ primXVaCreateNestedList: arg1
 
 
 name
-    ^'XlibXlib'
+    ^'X11'
 
 ! !
 
-!XlibXlib methodsFor: 'pointer'!
+!X11 methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXlib methodsFor: 'finalization'!
+!X11 methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -185,35 +185,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMStatusDrawCallbackStruct
+CStruct subclass: #X11XIMStatusDrawCallbackStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMStatusDrawCallbackStruct class methodsFor: 'initialize-release'!
+!X11XIMStatusDrawCallbackStruct class methodsFor: 'initialize-release'!
 
-primXlibXIMStatusDrawCallbackStructCreate
-    <cCall: 'Xlib_new_XIMStatusDrawCallbackStruct' plugin: 'x11'>
+primX11XIMStatusDrawCallbackStructCreate
+    <cCall: 'X11_new_XIMStatusDrawCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMStatusDrawCallbackStructCreate).
+    ^self handle: (self primX11XIMStatusDrawCallbackStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMStatusDrawCallbackStruct  methodsFor: 'Xlib'!
+!X11XIMStatusDrawCallbackStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXIMStatusDrawCallbackStructType
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_type_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStatusDrawCallbackStructType: val
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_type_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -228,11 +228,11 @@ type: val
 "_________________________________________________________"
 "data primitive accessors"
 primXIMStatusDrawCallbackStructData
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStatusDrawCallbackStructData: val
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -249,28 +249,28 @@ data: val
 
 
 
-primXlibXIMStatusDrawCallbackStructDelete
-    <cCall: 'Xlib_delete_XIMStatusDrawCallbackStruct' plugin: 'x11'>
+primX11XIMStatusDrawCallbackStructDelete
+    <cCall: 'X11_delete_XIMStatusDrawCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMStatusDrawCallbackStructDelete.
+    ^self primX11XIMStatusDrawCallbackStructDelete.
 !
 
 
 name
-    ^'XlibXIMStatusDrawCallbackStruct'
+    ^'X11XIMStatusDrawCallbackStruct'
 
 ! !
 
-!XlibXIMStatusDrawCallbackStruct methodsFor: 'pointer'!
+!X11XIMStatusDrawCallbackStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMStatusDrawCallbackStruct methodsFor: 'finalization'!
+!X11XIMStatusDrawCallbackStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -281,35 +281,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMPreeditDrawCallbackStruct
+CStruct subclass: #X11XIMPreeditDrawCallbackStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMPreeditDrawCallbackStruct class methodsFor: 'initialize-release'!
+!X11XIMPreeditDrawCallbackStruct class methodsFor: 'initialize-release'!
 
-primXlibXIMPreeditDrawCallbackStructCreate
-    <cCall: 'Xlib_new_XIMPreeditDrawCallbackStruct' plugin: 'x11'>
+primX11XIMPreeditDrawCallbackStructCreate
+    <cCall: 'X11_new_XIMPreeditDrawCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMPreeditDrawCallbackStructCreate).
+    ^self handle: (self primX11XIMPreeditDrawCallbackStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMPreeditDrawCallbackStruct  methodsFor: 'Xlib'!
+!X11XIMPreeditDrawCallbackStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "caret primitive accessors"
 primXIMPreeditDrawCallbackStructCaret
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_caret_get' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_caret_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMPreeditDrawCallbackStructCaret: val
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_caret_set' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_caret_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -324,11 +324,11 @@ caret: val
 "_________________________________________________________"
 "chg_first primitive accessors"
 primXIMPreeditDrawCallbackStructChgFirst
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_chg_first_get' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_chg_first_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMPreeditDrawCallbackStructChgFirst: val
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_chg_first_set' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_chg_first_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -343,11 +343,11 @@ chgfirst: val
 "_________________________________________________________"
 "chg_length primitive accessors"
 primXIMPreeditDrawCallbackStructChgLength
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_chg_length_get' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_chg_length_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMPreeditDrawCallbackStructChgLength: val
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_chg_length_set' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_chg_length_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -362,11 +362,11 @@ chglength: val
 "_________________________________________________________"
 "text primitive accessors"
 primXIMPreeditDrawCallbackStructText
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_text_get' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_text_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMPreeditDrawCallbackStructText: val
-    <cCall: 'Xlib_XIMPreeditDrawCallbackStruct_text_set' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditDrawCallbackStruct_text_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -383,28 +383,28 @@ text: val
 
 
 
-primXlibXIMPreeditDrawCallbackStructDelete
-    <cCall: 'Xlib_delete_XIMPreeditDrawCallbackStruct' plugin: 'x11'>
+primX11XIMPreeditDrawCallbackStructDelete
+    <cCall: 'X11_delete_XIMPreeditDrawCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMPreeditDrawCallbackStructDelete.
+    ^self primX11XIMPreeditDrawCallbackStructDelete.
 !
 
 
 name
-    ^'XlibXIMPreeditDrawCallbackStruct'
+    ^'X11XIMPreeditDrawCallbackStruct'
 
 ! !
 
-!XlibXIMPreeditDrawCallbackStruct methodsFor: 'pointer'!
+!X11XIMPreeditDrawCallbackStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMPreeditDrawCallbackStruct methodsFor: 'finalization'!
+!X11XIMPreeditDrawCallbackStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -415,35 +415,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXKeyEvent
+CStruct subclass: #X11XKeyEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXKeyEvent class methodsFor: 'initialize-release'!
+!X11XKeyEvent class methodsFor: 'initialize-release'!
 
-primXlibXKeyEventCreate
-    <cCall: 'Xlib_new_XKeyEvent' plugin: 'x11'>
+primX11XKeyEventCreate
+    <cCall: 'X11_new_XKeyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXKeyEventCreate).
+    ^self handle: (self primX11XKeyEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXKeyEvent  methodsFor: 'Xlib'!
+!X11XKeyEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXKeyEventType
-    <cCall: 'Xlib_XKeyEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventType: val
-    <cCall: 'Xlib_XKeyEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -458,11 +458,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXKeyEventSerial
-    <cCall: 'Xlib_XKeyEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventSerial: val
-    <cCall: 'Xlib_XKeyEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -477,11 +477,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXKeyEventSendEvent
-    <cCall: 'Xlib_XKeyEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventSendEvent: val
-    <cCall: 'Xlib_XKeyEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -496,11 +496,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXKeyEventDisplay
-    <cCall: 'Xlib_XKeyEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventDisplay: val
-    <cCall: 'Xlib_XKeyEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -515,11 +515,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXKeyEventWindow
-    <cCall: 'Xlib_XKeyEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventWindow: val
-    <cCall: 'Xlib_XKeyEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -534,11 +534,11 @@ window: val
 "_________________________________________________________"
 "root primitive accessors"
 primXKeyEventRoot
-    <cCall: 'Xlib_XKeyEvent_root_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventRoot: val
-    <cCall: 'Xlib_XKeyEvent_root_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -553,11 +553,11 @@ root: val
 "_________________________________________________________"
 "subwindow primitive accessors"
 primXKeyEventSubwindow
-    <cCall: 'Xlib_XKeyEvent_subwindow_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_subwindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventSubwindow: val
-    <cCall: 'Xlib_XKeyEvent_subwindow_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_subwindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -572,11 +572,11 @@ subwindow: val
 "_________________________________________________________"
 "time primitive accessors"
 primXKeyEventTime
-    <cCall: 'Xlib_XKeyEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventTime: val
-    <cCall: 'Xlib_XKeyEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -591,11 +591,11 @@ time: val
 "_________________________________________________________"
 "x primitive accessors"
 primXKeyEventX
-    <cCall: 'Xlib_XKeyEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventX: val
-    <cCall: 'Xlib_XKeyEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -610,11 +610,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXKeyEventY
-    <cCall: 'Xlib_XKeyEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventY: val
-    <cCall: 'Xlib_XKeyEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -629,11 +629,11 @@ y: val
 "_________________________________________________________"
 "x_root primitive accessors"
 primXKeyEventXRoot
-    <cCall: 'Xlib_XKeyEvent_x_root_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_x_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventXRoot: val
-    <cCall: 'Xlib_XKeyEvent_x_root_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_x_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -648,11 +648,11 @@ xroot: val
 "_________________________________________________________"
 "y_root primitive accessors"
 primXKeyEventYRoot
-    <cCall: 'Xlib_XKeyEvent_y_root_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_y_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventYRoot: val
-    <cCall: 'Xlib_XKeyEvent_y_root_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_y_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -667,11 +667,11 @@ yroot: val
 "_________________________________________________________"
 "state primitive accessors"
 primXKeyEventState
-    <cCall: 'Xlib_XKeyEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventState: val
-    <cCall: 'Xlib_XKeyEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -686,11 +686,11 @@ state: val
 "_________________________________________________________"
 "keycode primitive accessors"
 primXKeyEventKeycode
-    <cCall: 'Xlib_XKeyEvent_keycode_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_keycode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventKeycode: val
-    <cCall: 'Xlib_XKeyEvent_keycode_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_keycode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -705,11 +705,11 @@ keycode: val
 "_________________________________________________________"
 "same_screen primitive accessors"
 primXKeyEventSameScreen
-    <cCall: 'Xlib_XKeyEvent_same_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_same_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyEventSameScreen: val
-    <cCall: 'Xlib_XKeyEvent_same_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyEvent_same_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -726,35 +726,35 @@ samescreen: val
 "_________________________________________________________"
 "XLookupKeysym primitive function"
 primXLookupKeysym: arg1
-    <cCall: 'Xlib_XLookupKeysym' plugin: 'x11'>
+    <cCall: 'X11_XLookupKeysym' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXKeyEventDelete
-    <cCall: 'Xlib_delete_XKeyEvent' plugin: 'x11'>
+primX11XKeyEventDelete
+    <cCall: 'X11_delete_XKeyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXKeyEventDelete.
+    ^self primX11XKeyEventDelete.
 !
 
 
 name
-    ^'XlibXKeyEvent'
+    ^'X11XKeyEvent'
 
 ! !
 
-!XlibXKeyEvent methodsFor: 'pointer'!
+!X11XKeyEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXKeyEvent methodsFor: 'finalization'!
+!X11XKeyEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -765,35 +765,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXMapRequestEvent
+CStruct subclass: #X11XMapRequestEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXMapRequestEvent class methodsFor: 'initialize-release'!
+!X11XMapRequestEvent class methodsFor: 'initialize-release'!
 
-primXlibXMapRequestEventCreate
-    <cCall: 'Xlib_new_XMapRequestEvent' plugin: 'x11'>
+primX11XMapRequestEventCreate
+    <cCall: 'X11_new_XMapRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXMapRequestEventCreate).
+    ^self handle: (self primX11XMapRequestEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXMapRequestEvent  methodsFor: 'Xlib'!
+!X11XMapRequestEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXMapRequestEventType
-    <cCall: 'Xlib_XMapRequestEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventType: val
-    <cCall: 'Xlib_XMapRequestEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -808,11 +808,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXMapRequestEventSerial
-    <cCall: 'Xlib_XMapRequestEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventSerial: val
-    <cCall: 'Xlib_XMapRequestEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -827,11 +827,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXMapRequestEventSendEvent
-    <cCall: 'Xlib_XMapRequestEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventSendEvent: val
-    <cCall: 'Xlib_XMapRequestEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -846,11 +846,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXMapRequestEventDisplay
-    <cCall: 'Xlib_XMapRequestEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventDisplay: val
-    <cCall: 'Xlib_XMapRequestEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -865,11 +865,11 @@ display: val
 "_________________________________________________________"
 "parent primitive accessors"
 primXMapRequestEventParent
-    <cCall: 'Xlib_XMapRequestEvent_parent_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_parent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventParent: val
-    <cCall: 'Xlib_XMapRequestEvent_parent_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_parent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -884,11 +884,11 @@ parent: val
 "_________________________________________________________"
 "window primitive accessors"
 primXMapRequestEventWindow
-    <cCall: 'Xlib_XMapRequestEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMapRequestEventWindow: val
-    <cCall: 'Xlib_XMapRequestEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XMapRequestEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -905,28 +905,28 @@ window: val
 
 
 
-primXlibXMapRequestEventDelete
-    <cCall: 'Xlib_delete_XMapRequestEvent' plugin: 'x11'>
+primX11XMapRequestEventDelete
+    <cCall: 'X11_delete_XMapRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXMapRequestEventDelete.
+    ^self primX11XMapRequestEventDelete.
 !
 
 
 name
-    ^'XlibXMapRequestEvent'
+    ^'X11XMapRequestEvent'
 
 ! !
 
-!XlibXMapRequestEvent methodsFor: 'pointer'!
+!X11XMapRequestEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXMapRequestEvent methodsFor: 'finalization'!
+!X11XMapRequestEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -937,35 +937,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXTextItem
+CStruct subclass: #X11XTextItem
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXTextItem class methodsFor: 'initialize-release'!
+!X11XTextItem class methodsFor: 'initialize-release'!
 
-primXlibXTextItemCreate
-    <cCall: 'Xlib_new_XTextItem' plugin: 'x11'>
+primX11XTextItemCreate
+    <cCall: 'X11_new_XTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXTextItemCreate).
+    ^self handle: (self primX11XTextItemCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXTextItem  methodsFor: 'Xlib'!
+!X11XTextItem  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "chars primitive accessors"
 primXTextItemChars
-    <cCall: 'Xlib_XTextItem_chars_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_chars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItemChars: val
-    <cCall: 'Xlib_XTextItem_chars_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_chars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -980,11 +980,11 @@ chars: val
 "_________________________________________________________"
 "nchars primitive accessors"
 primXTextItemNchars
-    <cCall: 'Xlib_XTextItem_nchars_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_nchars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItemNchars: val
-    <cCall: 'Xlib_XTextItem_nchars_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_nchars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -999,11 +999,11 @@ nchars: val
 "_________________________________________________________"
 "delta primitive accessors"
 primXTextItemDelta
-    <cCall: 'Xlib_XTextItem_delta_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_delta_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItemDelta: val
-    <cCall: 'Xlib_XTextItem_delta_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_delta_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1018,11 +1018,11 @@ delta: val
 "_________________________________________________________"
 "font primitive accessors"
 primXTextItemFont
-    <cCall: 'Xlib_XTextItem_font_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_font_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItemFont: val
-    <cCall: 'Xlib_XTextItem_font_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem_font_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1039,28 +1039,28 @@ font: val
 
 
 
-primXlibXTextItemDelete
-    <cCall: 'Xlib_delete_XTextItem' plugin: 'x11'>
+primX11XTextItemDelete
+    <cCall: 'X11_delete_XTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXTextItemDelete.
+    ^self primX11XTextItemDelete.
 !
 
 
 name
-    ^'XlibXTextItem'
+    ^'X11XTextItem'
 
 ! !
 
-!XlibXTextItem methodsFor: 'pointer'!
+!X11XTextItem methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXTextItem methodsFor: 'finalization'!
+!X11XTextItem methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1071,35 +1071,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibVisual
+CStruct subclass: #X11Visual
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibVisual class methodsFor: 'initialize-release'!
+!X11Visual class methodsFor: 'initialize-release'!
 
-primXlibVisualCreate
-    <cCall: 'Xlib_new_Visual' plugin: 'x11'>
+primX11VisualCreate
+    <cCall: 'X11_new_Visual' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibVisualCreate).
+    ^self handle: (self primX11VisualCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibVisual  methodsFor: 'Xlib'!
+!X11Visual  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "ext_data primitive accessors"
 primVisualExtData
-    <cCall: 'Xlib_Visual_ext_data_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_ext_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualExtData: val
-    <cCall: 'Xlib_Visual_ext_data_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_ext_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1114,11 +1114,11 @@ extdata: val
 "_________________________________________________________"
 "visualid primitive accessors"
 primVisualVisualid
-    <cCall: 'Xlib_Visual_visualid_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_visualid_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualVisualid: val
-    <cCall: 'Xlib_Visual_visualid_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_visualid_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1133,11 +1133,11 @@ visualid: val
 "_________________________________________________________"
 "class primitive accessors"
 primVisualClass
-    <cCall: 'Xlib_Visual_class_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_class_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualClass: val
-    <cCall: 'Xlib_Visual_class_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_class_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1152,11 +1152,11 @@ class: val
 "_________________________________________________________"
 "red_mask primitive accessors"
 primVisualRedMask
-    <cCall: 'Xlib_Visual_red_mask_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_red_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualRedMask: val
-    <cCall: 'Xlib_Visual_red_mask_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_red_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1171,11 +1171,11 @@ redmask: val
 "_________________________________________________________"
 "green_mask primitive accessors"
 primVisualGreenMask
-    <cCall: 'Xlib_Visual_green_mask_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_green_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualGreenMask: val
-    <cCall: 'Xlib_Visual_green_mask_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_green_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1190,11 +1190,11 @@ greenmask: val
 "_________________________________________________________"
 "blue_mask primitive accessors"
 primVisualBlueMask
-    <cCall: 'Xlib_Visual_blue_mask_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_blue_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualBlueMask: val
-    <cCall: 'Xlib_Visual_blue_mask_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_blue_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1209,11 +1209,11 @@ bluemask: val
 "_________________________________________________________"
 "bits_per_rgb primitive accessors"
 primVisualBitsPerRgb
-    <cCall: 'Xlib_Visual_bits_per_rgb_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_bits_per_rgb_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualBitsPerRgb: val
-    <cCall: 'Xlib_Visual_bits_per_rgb_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_bits_per_rgb_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1228,11 +1228,11 @@ bitsperrgb: val
 "_________________________________________________________"
 "map_entries primitive accessors"
 primVisualMapEntries
-    <cCall: 'Xlib_Visual_map_entries_get' plugin: 'x11'>
+    <cCall: 'X11_Visual_map_entries_get' plugin: 'x11'>
     self primitiveFailed
 !
 primVisualMapEntries: val
-    <cCall: 'Xlib_Visual_map_entries_set' plugin: 'x11'>
+    <cCall: 'X11_Visual_map_entries_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1249,35 +1249,35 @@ mapentries: val
 "_________________________________________________________"
 "XVisualIDFromVisual primitive function"
 primXVisualIDFromVisual
-    <cCall: 'Xlib_XVisualIDFromVisual' plugin: 'x11'>
+    <cCall: 'X11_XVisualIDFromVisual' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibVisualDelete
-    <cCall: 'Xlib_delete_Visual' plugin: 'x11'>
+primX11VisualDelete
+    <cCall: 'X11_delete_Visual' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibVisualDelete.
+    ^self primX11VisualDelete.
 !
 
 
 name
-    ^'XlibVisual'
+    ^'X11Visual'
 
 ! !
 
-!XlibVisual methodsFor: 'pointer'!
+!X11Visual methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibVisual methodsFor: 'finalization'!
+!X11Visual methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1288,35 +1288,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXCrossingEvent
+CStruct subclass: #X11XCrossingEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXCrossingEvent class methodsFor: 'initialize-release'!
+!X11XCrossingEvent class methodsFor: 'initialize-release'!
 
-primXlibXCrossingEventCreate
-    <cCall: 'Xlib_new_XCrossingEvent' plugin: 'x11'>
+primX11XCrossingEventCreate
+    <cCall: 'X11_new_XCrossingEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXCrossingEventCreate).
+    ^self handle: (self primX11XCrossingEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXCrossingEvent  methodsFor: 'Xlib'!
+!X11XCrossingEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXCrossingEventType
-    <cCall: 'Xlib_XCrossingEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventType: val
-    <cCall: 'Xlib_XCrossingEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1331,11 +1331,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXCrossingEventSerial
-    <cCall: 'Xlib_XCrossingEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventSerial: val
-    <cCall: 'Xlib_XCrossingEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1350,11 +1350,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXCrossingEventSendEvent
-    <cCall: 'Xlib_XCrossingEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventSendEvent: val
-    <cCall: 'Xlib_XCrossingEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1369,11 +1369,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXCrossingEventDisplay
-    <cCall: 'Xlib_XCrossingEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventDisplay: val
-    <cCall: 'Xlib_XCrossingEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1388,11 +1388,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXCrossingEventWindow
-    <cCall: 'Xlib_XCrossingEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventWindow: val
-    <cCall: 'Xlib_XCrossingEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1407,11 +1407,11 @@ window: val
 "_________________________________________________________"
 "root primitive accessors"
 primXCrossingEventRoot
-    <cCall: 'Xlib_XCrossingEvent_root_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventRoot: val
-    <cCall: 'Xlib_XCrossingEvent_root_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1426,11 +1426,11 @@ root: val
 "_________________________________________________________"
 "subwindow primitive accessors"
 primXCrossingEventSubwindow
-    <cCall: 'Xlib_XCrossingEvent_subwindow_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_subwindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventSubwindow: val
-    <cCall: 'Xlib_XCrossingEvent_subwindow_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_subwindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1445,11 +1445,11 @@ subwindow: val
 "_________________________________________________________"
 "time primitive accessors"
 primXCrossingEventTime
-    <cCall: 'Xlib_XCrossingEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventTime: val
-    <cCall: 'Xlib_XCrossingEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1464,11 +1464,11 @@ time: val
 "_________________________________________________________"
 "x primitive accessors"
 primXCrossingEventX
-    <cCall: 'Xlib_XCrossingEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventX: val
-    <cCall: 'Xlib_XCrossingEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1483,11 +1483,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXCrossingEventY
-    <cCall: 'Xlib_XCrossingEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventY: val
-    <cCall: 'Xlib_XCrossingEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1502,11 +1502,11 @@ y: val
 "_________________________________________________________"
 "x_root primitive accessors"
 primXCrossingEventXRoot
-    <cCall: 'Xlib_XCrossingEvent_x_root_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_x_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventXRoot: val
-    <cCall: 'Xlib_XCrossingEvent_x_root_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_x_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1521,11 +1521,11 @@ xroot: val
 "_________________________________________________________"
 "y_root primitive accessors"
 primXCrossingEventYRoot
-    <cCall: 'Xlib_XCrossingEvent_y_root_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_y_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventYRoot: val
-    <cCall: 'Xlib_XCrossingEvent_y_root_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_y_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1540,11 +1540,11 @@ yroot: val
 "_________________________________________________________"
 "mode primitive accessors"
 primXCrossingEventMode
-    <cCall: 'Xlib_XCrossingEvent_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventMode: val
-    <cCall: 'Xlib_XCrossingEvent_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1559,11 +1559,11 @@ mode: val
 "_________________________________________________________"
 "detail primitive accessors"
 primXCrossingEventDetail
-    <cCall: 'Xlib_XCrossingEvent_detail_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_detail_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventDetail: val
-    <cCall: 'Xlib_XCrossingEvent_detail_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_detail_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1578,11 +1578,11 @@ detail: val
 "_________________________________________________________"
 "same_screen primitive accessors"
 primXCrossingEventSameScreen
-    <cCall: 'Xlib_XCrossingEvent_same_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_same_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventSameScreen: val
-    <cCall: 'Xlib_XCrossingEvent_same_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_same_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1597,11 +1597,11 @@ samescreen: val
 "_________________________________________________________"
 "focus primitive accessors"
 primXCrossingEventFocus
-    <cCall: 'Xlib_XCrossingEvent_focus_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_focus_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventFocus: val
-    <cCall: 'Xlib_XCrossingEvent_focus_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_focus_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1616,11 +1616,11 @@ focus: val
 "_________________________________________________________"
 "state primitive accessors"
 primXCrossingEventState
-    <cCall: 'Xlib_XCrossingEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCrossingEventState: val
-    <cCall: 'Xlib_XCrossingEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XCrossingEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1637,28 +1637,28 @@ state: val
 
 
 
-primXlibXCrossingEventDelete
-    <cCall: 'Xlib_delete_XCrossingEvent' plugin: 'x11'>
+primX11XCrossingEventDelete
+    <cCall: 'X11_delete_XCrossingEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXCrossingEventDelete.
+    ^self primX11XCrossingEventDelete.
 !
 
 
 name
-    ^'XlibXCrossingEvent'
+    ^'X11XCrossingEvent'
 
 ! !
 
-!XlibXCrossingEvent methodsFor: 'pointer'!
+!X11XCrossingEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXCrossingEvent methodsFor: 'finalization'!
+!X11XCrossingEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1669,35 +1669,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMStatusDrawCallbackStructData
+CStruct subclass: #X11XIMStatusDrawCallbackStructData
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMStatusDrawCallbackStructData class methodsFor: 'initialize-release'!
+!X11XIMStatusDrawCallbackStructData class methodsFor: 'initialize-release'!
 
-primXlibXIMStatusDrawCallbackStructDataCreate
-    <cCall: 'Xlib_new_XIMStatusDrawCallbackStruct_data' plugin: 'x11'>
+primX11XIMStatusDrawCallbackStructDataCreate
+    <cCall: 'X11_new_XIMStatusDrawCallbackStruct_data' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMStatusDrawCallbackStructDataCreate).
+    ^self handle: (self primX11XIMStatusDrawCallbackStructDataCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMStatusDrawCallbackStructData  methodsFor: 'Xlib'!
+!X11XIMStatusDrawCallbackStructData  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "text primitive accessors"
 primXIMStatusDrawCallbackStructDataText
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_text_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_text_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStatusDrawCallbackStructDataText: val
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_text_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_text_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1712,11 +1712,11 @@ text: val
 "_________________________________________________________"
 "bitmap primitive accessors"
 primXIMStatusDrawCallbackStructDataBitmap
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_bitmap_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_bitmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStatusDrawCallbackStructDataBitmap: val
-    <cCall: 'Xlib_XIMStatusDrawCallbackStruct_data_bitmap_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStatusDrawCallbackStruct_data_bitmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1733,28 +1733,28 @@ bitmap: val
 
 
 
-primXlibXIMStatusDrawCallbackStructDataDelete
-    <cCall: 'Xlib_delete_XIMStatusDrawCallbackStruct_data' plugin: 'x11'>
+primX11XIMStatusDrawCallbackStructDataDelete
+    <cCall: 'X11_delete_XIMStatusDrawCallbackStruct_data' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMStatusDrawCallbackStructDataDelete.
+    ^self primX11XIMStatusDrawCallbackStructDataDelete.
 !
 
 
 name
-    ^'XlibXIMStatusDrawCallbackStructData'
+    ^'X11XIMStatusDrawCallbackStructData'
 
 ! !
 
-!XlibXIMStatusDrawCallbackStructData methodsFor: 'pointer'!
+!X11XIMStatusDrawCallbackStructData methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMStatusDrawCallbackStructData methodsFor: 'finalization'!
+!X11XIMStatusDrawCallbackStructData methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1765,35 +1765,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXOMFontInfo
+CStruct subclass: #X11XOMFontInfo
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXOMFontInfo class methodsFor: 'initialize-release'!
+!X11XOMFontInfo class methodsFor: 'initialize-release'!
 
-primXlibXOMFontInfoCreate
-    <cCall: 'Xlib_new_XOMFontInfo' plugin: 'x11'>
+primX11XOMFontInfoCreate
+    <cCall: 'X11_new_XOMFontInfo' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXOMFontInfoCreate).
+    ^self handle: (self primX11XOMFontInfoCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXOMFontInfo  methodsFor: 'Xlib'!
+!X11XOMFontInfo  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "num_font primitive accessors"
 primXOMFontInfoNumFont
-    <cCall: 'Xlib_XOMFontInfo_num_font_get' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_num_font_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMFontInfoNumFont: val
-    <cCall: 'Xlib_XOMFontInfo_num_font_set' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_num_font_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1808,11 +1808,11 @@ numfont: val
 "_________________________________________________________"
 "font_struct_list primitive accessors"
 primXOMFontInfoFontStructList
-    <cCall: 'Xlib_XOMFontInfo_font_struct_list_get' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_font_struct_list_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMFontInfoFontStructList: val
-    <cCall: 'Xlib_XOMFontInfo_font_struct_list_set' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_font_struct_list_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1827,11 +1827,11 @@ fontstructlist: val
 "_________________________________________________________"
 "font_name_list primitive accessors"
 primXOMFontInfoFontNameList
-    <cCall: 'Xlib_XOMFontInfo_font_name_list_get' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_font_name_list_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMFontInfoFontNameList: val
-    <cCall: 'Xlib_XOMFontInfo_font_name_list_set' plugin: 'x11'>
+    <cCall: 'X11_XOMFontInfo_font_name_list_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1848,28 +1848,28 @@ fontnamelist: val
 
 
 
-primXlibXOMFontInfoDelete
-    <cCall: 'Xlib_delete_XOMFontInfo' plugin: 'x11'>
+primX11XOMFontInfoDelete
+    <cCall: 'X11_delete_XOMFontInfo' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXOMFontInfoDelete.
+    ^self primX11XOMFontInfoDelete.
 !
 
 
 name
-    ^'XlibXOMFontInfo'
+    ^'X11XOMFontInfo'
 
 ! !
 
-!XlibXOMFontInfo methodsFor: 'pointer'!
+!X11XOMFontInfo methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXOMFontInfo methodsFor: 'finalization'!
+!X11XOMFontInfo methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1880,35 +1880,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXFontProp
+CStruct subclass: #X11XFontProp
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXFontProp class methodsFor: 'initialize-release'!
+!X11XFontProp class methodsFor: 'initialize-release'!
 
-primXlibXFontPropCreate
-    <cCall: 'Xlib_new_XFontProp' plugin: 'x11'>
+primX11XFontPropCreate
+    <cCall: 'X11_new_XFontProp' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXFontPropCreate).
+    ^self handle: (self primX11XFontPropCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXFontProp  methodsFor: 'Xlib'!
+!X11XFontProp  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "name primitive accessors"
 primXFontPropName
-    <cCall: 'Xlib_XFontProp_name_get' plugin: 'x11'>
+    <cCall: 'X11_XFontProp_name_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontPropName: val
-    <cCall: 'Xlib_XFontProp_name_set' plugin: 'x11'>
+    <cCall: 'X11_XFontProp_name_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1923,11 +1923,11 @@ name: val
 "_________________________________________________________"
 "card32 primitive accessors"
 primXFontPropCard32
-    <cCall: 'Xlib_XFontProp_card32_get' plugin: 'x11'>
+    <cCall: 'X11_XFontProp_card32_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontPropCard32: val
-    <cCall: 'Xlib_XFontProp_card32_set' plugin: 'x11'>
+    <cCall: 'X11_XFontProp_card32_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -1944,28 +1944,28 @@ card32: val
 
 
 
-primXlibXFontPropDelete
-    <cCall: 'Xlib_delete_XFontProp' plugin: 'x11'>
+primX11XFontPropDelete
+    <cCall: 'X11_delete_XFontProp' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXFontPropDelete.
+    ^self primX11XFontPropDelete.
 !
 
 
 name
-    ^'XlibXFontProp'
+    ^'X11XFontProp'
 
 ! !
 
-!XlibXFontProp methodsFor: 'pointer'!
+!X11XFontProp methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXFontProp methodsFor: 'finalization'!
+!X11XFontProp methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -1976,35 +1976,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXSelectionEvent
+CStruct subclass: #X11XSelectionEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXSelectionEvent class methodsFor: 'initialize-release'!
+!X11XSelectionEvent class methodsFor: 'initialize-release'!
 
-primXlibXSelectionEventCreate
-    <cCall: 'Xlib_new_XSelectionEvent' plugin: 'x11'>
+primX11XSelectionEventCreate
+    <cCall: 'X11_new_XSelectionEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXSelectionEventCreate).
+    ^self handle: (self primX11XSelectionEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXSelectionEvent  methodsFor: 'Xlib'!
+!X11XSelectionEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXSelectionEventType
-    <cCall: 'Xlib_XSelectionEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventType: val
-    <cCall: 'Xlib_XSelectionEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2019,11 +2019,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXSelectionEventSerial
-    <cCall: 'Xlib_XSelectionEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventSerial: val
-    <cCall: 'Xlib_XSelectionEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2038,11 +2038,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXSelectionEventSendEvent
-    <cCall: 'Xlib_XSelectionEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventSendEvent: val
-    <cCall: 'Xlib_XSelectionEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2057,11 +2057,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXSelectionEventDisplay
-    <cCall: 'Xlib_XSelectionEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventDisplay: val
-    <cCall: 'Xlib_XSelectionEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2076,11 +2076,11 @@ display: val
 "_________________________________________________________"
 "requestor primitive accessors"
 primXSelectionEventRequestor
-    <cCall: 'Xlib_XSelectionEvent_requestor_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_requestor_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventRequestor: val
-    <cCall: 'Xlib_XSelectionEvent_requestor_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_requestor_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2095,11 +2095,11 @@ requestor: val
 "_________________________________________________________"
 "selection primitive accessors"
 primXSelectionEventSelection
-    <cCall: 'Xlib_XSelectionEvent_selection_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_selection_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventSelection: val
-    <cCall: 'Xlib_XSelectionEvent_selection_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_selection_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2114,11 +2114,11 @@ selection: val
 "_________________________________________________________"
 "target primitive accessors"
 primXSelectionEventTarget
-    <cCall: 'Xlib_XSelectionEvent_target_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_target_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventTarget: val
-    <cCall: 'Xlib_XSelectionEvent_target_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_target_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2133,11 +2133,11 @@ target: val
 "_________________________________________________________"
 "property primitive accessors"
 primXSelectionEventProperty
-    <cCall: 'Xlib_XSelectionEvent_property_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_property_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventProperty: val
-    <cCall: 'Xlib_XSelectionEvent_property_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_property_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2152,11 +2152,11 @@ property: val
 "_________________________________________________________"
 "time primitive accessors"
 primXSelectionEventTime
-    <cCall: 'Xlib_XSelectionEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionEventTime: val
-    <cCall: 'Xlib_XSelectionEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2173,28 +2173,28 @@ time: val
 
 
 
-primXlibXSelectionEventDelete
-    <cCall: 'Xlib_delete_XSelectionEvent' plugin: 'x11'>
+primX11XSelectionEventDelete
+    <cCall: 'X11_delete_XSelectionEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXSelectionEventDelete.
+    ^self primX11XSelectionEventDelete.
 !
 
 
 name
-    ^'XlibXSelectionEvent'
+    ^'X11XSelectionEvent'
 
 ! !
 
-!XlibXSelectionEvent methodsFor: 'pointer'!
+!X11XSelectionEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXSelectionEvent methodsFor: 'finalization'!
+!X11XSelectionEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2205,35 +2205,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXPixmapFormatValues
+CStruct subclass: #X11XPixmapFormatValues
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXPixmapFormatValues class methodsFor: 'initialize-release'!
+!X11XPixmapFormatValues class methodsFor: 'initialize-release'!
 
-primXlibXPixmapFormatValuesCreate
-    <cCall: 'Xlib_new_XPixmapFormatValues' plugin: 'x11'>
+primX11XPixmapFormatValuesCreate
+    <cCall: 'X11_new_XPixmapFormatValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXPixmapFormatValuesCreate).
+    ^self handle: (self primX11XPixmapFormatValuesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXPixmapFormatValues  methodsFor: 'Xlib'!
+!X11XPixmapFormatValues  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "depth primitive accessors"
 primXPixmapFormatValuesDepth
-    <cCall: 'Xlib_XPixmapFormatValues_depth_get' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPixmapFormatValuesDepth: val
-    <cCall: 'Xlib_XPixmapFormatValues_depth_set' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2248,11 +2248,11 @@ depth: val
 "_________________________________________________________"
 "bits_per_pixel primitive accessors"
 primXPixmapFormatValuesBitsPerPixel
-    <cCall: 'Xlib_XPixmapFormatValues_bits_per_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_bits_per_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPixmapFormatValuesBitsPerPixel: val
-    <cCall: 'Xlib_XPixmapFormatValues_bits_per_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_bits_per_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2267,11 +2267,11 @@ bitsperpixel: val
 "_________________________________________________________"
 "scanline_pad primitive accessors"
 primXPixmapFormatValuesScanlinePad
-    <cCall: 'Xlib_XPixmapFormatValues_scanline_pad_get' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_scanline_pad_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPixmapFormatValuesScanlinePad: val
-    <cCall: 'Xlib_XPixmapFormatValues_scanline_pad_set' plugin: 'x11'>
+    <cCall: 'X11_XPixmapFormatValues_scanline_pad_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2288,28 +2288,28 @@ scanlinepad: val
 
 
 
-primXlibXPixmapFormatValuesDelete
-    <cCall: 'Xlib_delete_XPixmapFormatValues' plugin: 'x11'>
+primX11XPixmapFormatValuesDelete
+    <cCall: 'X11_delete_XPixmapFormatValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXPixmapFormatValuesDelete.
+    ^self primX11XPixmapFormatValuesDelete.
 !
 
 
 name
-    ^'XlibXPixmapFormatValues'
+    ^'X11XPixmapFormatValues'
 
 ! !
 
-!XlibXPixmapFormatValues methodsFor: 'pointer'!
+!X11XPixmapFormatValues methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXPixmapFormatValues methodsFor: 'finalization'!
+!X11XPixmapFormatValues methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2320,35 +2320,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXPoint
+CStruct subclass: #X11XPoint
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXPoint class methodsFor: 'initialize-release'!
+!X11XPoint class methodsFor: 'initialize-release'!
 
-primXlibXPointCreate
-    <cCall: 'Xlib_new_XPoint' plugin: 'x11'>
+primX11XPointCreate
+    <cCall: 'X11_new_XPoint' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXPointCreate).
+    ^self handle: (self primX11XPointCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXPoint  methodsFor: 'Xlib'!
+!X11XPoint  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x primitive accessors"
 primXPointX
-    <cCall: 'Xlib_XPoint_x_get' plugin: 'x11'>
+    <cCall: 'X11_XPoint_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPointX: val
-    <cCall: 'Xlib_XPoint_x_set' plugin: 'x11'>
+    <cCall: 'X11_XPoint_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2363,11 +2363,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXPointY
-    <cCall: 'Xlib_XPoint_y_get' plugin: 'x11'>
+    <cCall: 'X11_XPoint_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPointY: val
-    <cCall: 'Xlib_XPoint_y_set' plugin: 'x11'>
+    <cCall: 'X11_XPoint_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2384,28 +2384,28 @@ y: val
 
 
 
-primXlibXPointDelete
-    <cCall: 'Xlib_delete_XPoint' plugin: 'x11'>
+primX11XPointDelete
+    <cCall: 'X11_delete_XPoint' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXPointDelete.
+    ^self primX11XPointDelete.
 !
 
 
 name
-    ^'XlibXPoint'
+    ^'X11XPoint'
 
 ! !
 
-!XlibXPoint methodsFor: 'pointer'!
+!X11XPoint methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXPoint methodsFor: 'finalization'!
+!X11XPoint methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2416,35 +2416,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXCirculateRequestEvent
+CStruct subclass: #X11XCirculateRequestEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXCirculateRequestEvent class methodsFor: 'initialize-release'!
+!X11XCirculateRequestEvent class methodsFor: 'initialize-release'!
 
-primXlibXCirculateRequestEventCreate
-    <cCall: 'Xlib_new_XCirculateRequestEvent' plugin: 'x11'>
+primX11XCirculateRequestEventCreate
+    <cCall: 'X11_new_XCirculateRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXCirculateRequestEventCreate).
+    ^self handle: (self primX11XCirculateRequestEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXCirculateRequestEvent  methodsFor: 'Xlib'!
+!X11XCirculateRequestEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXCirculateRequestEventType
-    <cCall: 'Xlib_XCirculateRequestEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventType: val
-    <cCall: 'Xlib_XCirculateRequestEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2459,11 +2459,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXCirculateRequestEventSerial
-    <cCall: 'Xlib_XCirculateRequestEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventSerial: val
-    <cCall: 'Xlib_XCirculateRequestEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2478,11 +2478,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXCirculateRequestEventSendEvent
-    <cCall: 'Xlib_XCirculateRequestEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventSendEvent: val
-    <cCall: 'Xlib_XCirculateRequestEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2497,11 +2497,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXCirculateRequestEventDisplay
-    <cCall: 'Xlib_XCirculateRequestEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventDisplay: val
-    <cCall: 'Xlib_XCirculateRequestEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2516,11 +2516,11 @@ display: val
 "_________________________________________________________"
 "parent primitive accessors"
 primXCirculateRequestEventParent
-    <cCall: 'Xlib_XCirculateRequestEvent_parent_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_parent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventParent: val
-    <cCall: 'Xlib_XCirculateRequestEvent_parent_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_parent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2535,11 +2535,11 @@ parent: val
 "_________________________________________________________"
 "window primitive accessors"
 primXCirculateRequestEventWindow
-    <cCall: 'Xlib_XCirculateRequestEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventWindow: val
-    <cCall: 'Xlib_XCirculateRequestEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2554,11 +2554,11 @@ window: val
 "_________________________________________________________"
 "place primitive accessors"
 primXCirculateRequestEventPlace
-    <cCall: 'Xlib_XCirculateRequestEvent_place_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_place_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateRequestEventPlace: val
-    <cCall: 'Xlib_XCirculateRequestEvent_place_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateRequestEvent_place_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2575,28 +2575,28 @@ place: val
 
 
 
-primXlibXCirculateRequestEventDelete
-    <cCall: 'Xlib_delete_XCirculateRequestEvent' plugin: 'x11'>
+primX11XCirculateRequestEventDelete
+    <cCall: 'X11_delete_XCirculateRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXCirculateRequestEventDelete.
+    ^self primX11XCirculateRequestEventDelete.
 !
 
 
 name
-    ^'XlibXCirculateRequestEvent'
+    ^'X11XCirculateRequestEvent'
 
 ! !
 
-!XlibXCirculateRequestEvent methodsFor: 'pointer'!
+!X11XCirculateRequestEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXCirculateRequestEvent methodsFor: 'finalization'!
+!X11XCirculateRequestEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2607,61 +2607,61 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibGC
+CStruct subclass: #X11GC
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibGC class methodsFor: 'initialize-release'!
+!X11GC class methodsFor: 'initialize-release'!
 
-primXlibGCCreate
-    <cCall: 'Xlib_new_GC' plugin: 'x11'>
+primX11GCCreate
+    <cCall: 'X11_new_GC' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibGCCreate).
+    ^self handle: (self primX11GCCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibGC  methodsFor: 'Xlib'!
+!X11GC  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XGContextFromGC primitive function"
 primXGContextFromGC
-    <cCall: 'Xlib_XGContextFromGC' plugin: 'x11'>
+    <cCall: 'X11_XGContextFromGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibGCDelete
-    <cCall: 'Xlib_delete_GC' plugin: 'x11'>
+primX11GCDelete
+    <cCall: 'X11_delete_GC' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibGCDelete.
+    ^self primX11GCDelete.
 !
 
 
 name
-    ^'XlibGC'
+    ^'X11GC'
 
 ! !
 
-!XlibGC methodsFor: 'pointer'!
+!X11GC methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibGC methodsFor: 'finalization'!
+!X11GC methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2672,35 +2672,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXAnyEvent
+CStruct subclass: #X11XAnyEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXAnyEvent class methodsFor: 'initialize-release'!
+!X11XAnyEvent class methodsFor: 'initialize-release'!
 
-primXlibXAnyEventCreate
-    <cCall: 'Xlib_new_XAnyEvent' plugin: 'x11'>
+primX11XAnyEventCreate
+    <cCall: 'X11_new_XAnyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXAnyEventCreate).
+    ^self handle: (self primX11XAnyEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXAnyEvent  methodsFor: 'Xlib'!
+!X11XAnyEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXAnyEventType
-    <cCall: 'Xlib_XAnyEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXAnyEventType: val
-    <cCall: 'Xlib_XAnyEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2715,11 +2715,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXAnyEventSerial
-    <cCall: 'Xlib_XAnyEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXAnyEventSerial: val
-    <cCall: 'Xlib_XAnyEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2734,11 +2734,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXAnyEventSendEvent
-    <cCall: 'Xlib_XAnyEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXAnyEventSendEvent: val
-    <cCall: 'Xlib_XAnyEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2753,11 +2753,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXAnyEventDisplay
-    <cCall: 'Xlib_XAnyEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXAnyEventDisplay: val
-    <cCall: 'Xlib_XAnyEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2772,11 +2772,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXAnyEventWindow
-    <cCall: 'Xlib_XAnyEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXAnyEventWindow: val
-    <cCall: 'Xlib_XAnyEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XAnyEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2793,28 +2793,28 @@ window: val
 
 
 
-primXlibXAnyEventDelete
-    <cCall: 'Xlib_delete_XAnyEvent' plugin: 'x11'>
+primX11XAnyEventDelete
+    <cCall: 'X11_delete_XAnyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXAnyEventDelete.
+    ^self primX11XAnyEventDelete.
 !
 
 
 name
-    ^'XlibXAnyEvent'
+    ^'X11XAnyEvent'
 
 ! !
 
-!XlibXAnyEvent methodsFor: 'pointer'!
+!X11XAnyEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXAnyEvent methodsFor: 'finalization'!
+!X11XAnyEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2825,35 +2825,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXArc
+CStruct subclass: #X11XArc
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXArc class methodsFor: 'initialize-release'!
+!X11XArc class methodsFor: 'initialize-release'!
 
-primXlibXArcCreate
-    <cCall: 'Xlib_new_XArc' plugin: 'x11'>
+primX11XArcCreate
+    <cCall: 'X11_new_XArc' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXArcCreate).
+    ^self handle: (self primX11XArcCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXArc  methodsFor: 'Xlib'!
+!X11XArc  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x primitive accessors"
 primXArcX
-    <cCall: 'Xlib_XArc_x_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcX: val
-    <cCall: 'Xlib_XArc_x_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2868,11 +2868,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXArcY
-    <cCall: 'Xlib_XArc_y_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcY: val
-    <cCall: 'Xlib_XArc_y_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2887,11 +2887,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXArcWidth
-    <cCall: 'Xlib_XArc_width_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcWidth: val
-    <cCall: 'Xlib_XArc_width_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2906,11 +2906,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXArcHeight
-    <cCall: 'Xlib_XArc_height_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcHeight: val
-    <cCall: 'Xlib_XArc_height_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2925,11 +2925,11 @@ height: val
 "_________________________________________________________"
 "angle1 primitive accessors"
 primXArcAngle1
-    <cCall: 'Xlib_XArc_angle1_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_angle1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcAngle1: val
-    <cCall: 'Xlib_XArc_angle1_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_angle1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2944,11 +2944,11 @@ angle1: val
 "_________________________________________________________"
 "angle2 primitive accessors"
 primXArcAngle2
-    <cCall: 'Xlib_XArc_angle2_get' plugin: 'x11'>
+    <cCall: 'X11_XArc_angle2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXArcAngle2: val
-    <cCall: 'Xlib_XArc_angle2_set' plugin: 'x11'>
+    <cCall: 'X11_XArc_angle2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -2965,28 +2965,28 @@ angle2: val
 
 
 
-primXlibXArcDelete
-    <cCall: 'Xlib_delete_XArc' plugin: 'x11'>
+primX11XArcDelete
+    <cCall: 'X11_delete_XArc' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXArcDelete.
+    ^self primX11XArcDelete.
 !
 
 
 name
-    ^'XlibXArc'
+    ^'X11XArc'
 
 ! !
 
-!XlibXArc methodsFor: 'pointer'!
+!X11XArc methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXArc methodsFor: 'finalization'!
+!X11XArc methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -2997,35 +2997,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXGravityEvent
+CStruct subclass: #X11XGravityEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXGravityEvent class methodsFor: 'initialize-release'!
+!X11XGravityEvent class methodsFor: 'initialize-release'!
 
-primXlibXGravityEventCreate
-    <cCall: 'Xlib_new_XGravityEvent' plugin: 'x11'>
+primX11XGravityEventCreate
+    <cCall: 'X11_new_XGravityEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXGravityEventCreate).
+    ^self handle: (self primX11XGravityEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXGravityEvent  methodsFor: 'Xlib'!
+!X11XGravityEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXGravityEventType
-    <cCall: 'Xlib_XGravityEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventType: val
-    <cCall: 'Xlib_XGravityEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3040,11 +3040,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXGravityEventSerial
-    <cCall: 'Xlib_XGravityEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventSerial: val
-    <cCall: 'Xlib_XGravityEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3059,11 +3059,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXGravityEventSendEvent
-    <cCall: 'Xlib_XGravityEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventSendEvent: val
-    <cCall: 'Xlib_XGravityEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3078,11 +3078,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXGravityEventDisplay
-    <cCall: 'Xlib_XGravityEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventDisplay: val
-    <cCall: 'Xlib_XGravityEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3097,11 +3097,11 @@ display: val
 "_________________________________________________________"
 "event primitive accessors"
 primXGravityEventEvent
-    <cCall: 'Xlib_XGravityEvent_event_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventEvent: val
-    <cCall: 'Xlib_XGravityEvent_event_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3116,11 +3116,11 @@ event: val
 "_________________________________________________________"
 "window primitive accessors"
 primXGravityEventWindow
-    <cCall: 'Xlib_XGravityEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventWindow: val
-    <cCall: 'Xlib_XGravityEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3135,11 +3135,11 @@ window: val
 "_________________________________________________________"
 "x primitive accessors"
 primXGravityEventX
-    <cCall: 'Xlib_XGravityEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventX: val
-    <cCall: 'Xlib_XGravityEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3154,11 +3154,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXGravityEventY
-    <cCall: 'Xlib_XGravityEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGravityEventY: val
-    <cCall: 'Xlib_XGravityEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XGravityEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3175,28 +3175,28 @@ y: val
 
 
 
-primXlibXGravityEventDelete
-    <cCall: 'Xlib_delete_XGravityEvent' plugin: 'x11'>
+primX11XGravityEventDelete
+    <cCall: 'X11_delete_XGravityEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXGravityEventDelete.
+    ^self primX11XGravityEventDelete.
 !
 
 
 name
-    ^'XlibXGravityEvent'
+    ^'X11XGravityEvent'
 
 ! !
 
-!XlibXGravityEvent methodsFor: 'pointer'!
+!X11XGravityEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXGravityEvent methodsFor: 'finalization'!
+!X11XGravityEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -3207,35 +3207,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXDestroyWindowEvent
+CStruct subclass: #X11XDestroyWindowEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXDestroyWindowEvent class methodsFor: 'initialize-release'!
+!X11XDestroyWindowEvent class methodsFor: 'initialize-release'!
 
-primXlibXDestroyWindowEventCreate
-    <cCall: 'Xlib_new_XDestroyWindowEvent' plugin: 'x11'>
+primX11XDestroyWindowEventCreate
+    <cCall: 'X11_new_XDestroyWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXDestroyWindowEventCreate).
+    ^self handle: (self primX11XDestroyWindowEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXDestroyWindowEvent  methodsFor: 'Xlib'!
+!X11XDestroyWindowEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXDestroyWindowEventType
-    <cCall: 'Xlib_XDestroyWindowEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventType: val
-    <cCall: 'Xlib_XDestroyWindowEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3250,11 +3250,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXDestroyWindowEventSerial
-    <cCall: 'Xlib_XDestroyWindowEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventSerial: val
-    <cCall: 'Xlib_XDestroyWindowEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3269,11 +3269,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXDestroyWindowEventSendEvent
-    <cCall: 'Xlib_XDestroyWindowEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventSendEvent: val
-    <cCall: 'Xlib_XDestroyWindowEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3288,11 +3288,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXDestroyWindowEventDisplay
-    <cCall: 'Xlib_XDestroyWindowEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventDisplay: val
-    <cCall: 'Xlib_XDestroyWindowEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3307,11 +3307,11 @@ display: val
 "_________________________________________________________"
 "event primitive accessors"
 primXDestroyWindowEventEvent
-    <cCall: 'Xlib_XDestroyWindowEvent_event_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventEvent: val
-    <cCall: 'Xlib_XDestroyWindowEvent_event_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3326,11 +3326,11 @@ event: val
 "_________________________________________________________"
 "window primitive accessors"
 primXDestroyWindowEventWindow
-    <cCall: 'Xlib_XDestroyWindowEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXDestroyWindowEventWindow: val
-    <cCall: 'Xlib_XDestroyWindowEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindowEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3347,28 +3347,28 @@ window: val
 
 
 
-primXlibXDestroyWindowEventDelete
-    <cCall: 'Xlib_delete_XDestroyWindowEvent' plugin: 'x11'>
+primX11XDestroyWindowEventDelete
+    <cCall: 'X11_delete_XDestroyWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXDestroyWindowEventDelete.
+    ^self primX11XDestroyWindowEventDelete.
 !
 
 
 name
-    ^'XlibXDestroyWindowEvent'
+    ^'X11XDestroyWindowEvent'
 
 ! !
 
-!XlibXDestroyWindowEvent methodsFor: 'pointer'!
+!X11XDestroyWindowEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXDestroyWindowEvent methodsFor: 'finalization'!
+!X11XDestroyWindowEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -3379,35 +3379,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXExtData
+CStruct subclass: #X11XExtData
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXExtData class methodsFor: 'initialize-release'!
+!X11XExtData class methodsFor: 'initialize-release'!
 
-primXlibXExtDataCreate
-    <cCall: 'Xlib_new_XExtData' plugin: 'x11'>
+primX11XExtDataCreate
+    <cCall: 'X11_new_XExtData' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXExtDataCreate).
+    ^self handle: (self primX11XExtDataCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXExtData  methodsFor: 'Xlib'!
+!X11XExtData  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "number primitive accessors"
 primXExtDataNumber
-    <cCall: 'Xlib_XExtData_number_get' plugin: 'x11'>
+    <cCall: 'X11_XExtData_number_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtDataNumber: val
-    <cCall: 'Xlib_XExtData_number_set' plugin: 'x11'>
+    <cCall: 'X11_XExtData_number_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3422,11 +3422,11 @@ number: val
 "_________________________________________________________"
 "next primitive accessors"
 primXExtDataNext
-    <cCall: 'Xlib_XExtData_next_get' plugin: 'x11'>
+    <cCall: 'X11_XExtData_next_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtDataNext: val
-    <cCall: 'Xlib_XExtData_next_set' plugin: 'x11'>
+    <cCall: 'X11_XExtData_next_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3441,11 +3441,11 @@ next: val
 "_________________________________________________________"
 "free_private primitive accessors"
 primXExtDataFreePrivate
-    <cCall: 'Xlib_XExtData_free_private_get' plugin: 'x11'>
+    <cCall: 'X11_XExtData_free_private_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtDataFreePrivate: val
-    <cCall: 'Xlib_XExtData_free_private_set' plugin: 'x11'>
+    <cCall: 'X11_XExtData_free_private_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3460,11 +3460,11 @@ freeprivate: val
 "_________________________________________________________"
 "private_data primitive accessors"
 primXExtDataPrivateData
-    <cCall: 'Xlib_XExtData_private_data_get' plugin: 'x11'>
+    <cCall: 'X11_XExtData_private_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtDataPrivateData: val
-    <cCall: 'Xlib_XExtData_private_data_set' plugin: 'x11'>
+    <cCall: 'X11_XExtData_private_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3481,35 +3481,35 @@ privatedata: val
 "_________________________________________________________"
 "XFindOnExtensionList primitive function"
 primXFindOnExtensionList: arg1
-    <cCall: 'Xlib_XFindOnExtensionList' plugin: 'x11'>
+    <cCall: 'X11_XFindOnExtensionList' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXExtDataDelete
-    <cCall: 'Xlib_delete_XExtData' plugin: 'x11'>
+primX11XExtDataDelete
+    <cCall: 'X11_delete_XExtData' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXExtDataDelete.
+    ^self primX11XExtDataDelete.
 !
 
 
 name
-    ^'XlibXExtData'
+    ^'X11XExtData'
 
 ! !
 
-!XlibXExtData methodsFor: 'pointer'!
+!X11XExtData methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXExtData methodsFor: 'finalization'!
+!X11XExtData methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -3520,35 +3520,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXPropertyEvent
+CStruct subclass: #X11XPropertyEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXPropertyEvent class methodsFor: 'initialize-release'!
+!X11XPropertyEvent class methodsFor: 'initialize-release'!
 
-primXlibXPropertyEventCreate
-    <cCall: 'Xlib_new_XPropertyEvent' plugin: 'x11'>
+primX11XPropertyEventCreate
+    <cCall: 'X11_new_XPropertyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXPropertyEventCreate).
+    ^self handle: (self primX11XPropertyEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXPropertyEvent  methodsFor: 'Xlib'!
+!X11XPropertyEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXPropertyEventType
-    <cCall: 'Xlib_XPropertyEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventType: val
-    <cCall: 'Xlib_XPropertyEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3563,11 +3563,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXPropertyEventSerial
-    <cCall: 'Xlib_XPropertyEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventSerial: val
-    <cCall: 'Xlib_XPropertyEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3582,11 +3582,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXPropertyEventSendEvent
-    <cCall: 'Xlib_XPropertyEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventSendEvent: val
-    <cCall: 'Xlib_XPropertyEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3601,11 +3601,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXPropertyEventDisplay
-    <cCall: 'Xlib_XPropertyEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventDisplay: val
-    <cCall: 'Xlib_XPropertyEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3620,11 +3620,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXPropertyEventWindow
-    <cCall: 'Xlib_XPropertyEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventWindow: val
-    <cCall: 'Xlib_XPropertyEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3639,11 +3639,11 @@ window: val
 "_________________________________________________________"
 "atom primitive accessors"
 primXPropertyEventAtom
-    <cCall: 'Xlib_XPropertyEvent_atom_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_atom_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventAtom: val
-    <cCall: 'Xlib_XPropertyEvent_atom_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_atom_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3658,11 +3658,11 @@ atom: val
 "_________________________________________________________"
 "time primitive accessors"
 primXPropertyEventTime
-    <cCall: 'Xlib_XPropertyEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventTime: val
-    <cCall: 'Xlib_XPropertyEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3677,11 +3677,11 @@ time: val
 "_________________________________________________________"
 "state primitive accessors"
 primXPropertyEventState
-    <cCall: 'Xlib_XPropertyEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXPropertyEventState: val
-    <cCall: 'Xlib_XPropertyEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XPropertyEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -3698,28 +3698,28 @@ state: val
 
 
 
-primXlibXPropertyEventDelete
-    <cCall: 'Xlib_delete_XPropertyEvent' plugin: 'x11'>
+primX11XPropertyEventDelete
+    <cCall: 'X11_delete_XPropertyEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXPropertyEventDelete.
+    ^self primX11XPropertyEventDelete.
 !
 
 
 name
-    ^'XlibXPropertyEvent'
+    ^'X11XPropertyEvent'
 
 ! !
 
-!XlibXPropertyEvent methodsFor: 'pointer'!
+!X11XPropertyEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXPropertyEvent methodsFor: 'finalization'!
+!X11XPropertyEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -3730,96 +3730,96 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXOM
+CStruct subclass: #X11XOM
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXOM class methodsFor: 'initialize-release'!
+!X11XOM class methodsFor: 'initialize-release'!
 
-primXlibXOMCreate
-    <cCall: 'Xlib_new_XOM' plugin: 'x11'>
+primX11XOMCreate
+    <cCall: 'X11_new_XOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXOMCreate).
+    ^self handle: (self primX11XOMCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXOM  methodsFor: 'Xlib'!
+!X11XOM  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XCloseOM primitive function"
 primXCloseOM
-    <cCall: 'Xlib_XCloseOM' plugin: 'x11'>
+    <cCall: 'X11_XCloseOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetOMValues primitive function"
 primXSetOMValues
-    <cCall: 'Xlib_XSetOMValues' plugin: 'x11'>
+    <cCall: 'X11_XSetOMValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetOMValues primitive function"
 primXGetOMValues
-    <cCall: 'Xlib_XGetOMValues' plugin: 'x11'>
+    <cCall: 'X11_XGetOMValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayOfOM primitive function"
 primXDisplayOfOM
-    <cCall: 'Xlib_XDisplayOfOM' plugin: 'x11'>
+    <cCall: 'X11_XDisplayOfOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLocaleOfOM primitive function"
 primXLocaleOfOM
-    <cCall: 'Xlib_XLocaleOfOM' plugin: 'x11'>
+    <cCall: 'X11_XLocaleOfOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateOC primitive function"
 primXCreateOC
-    <cCall: 'Xlib_XCreateOC' plugin: 'x11'>
+    <cCall: 'X11_XCreateOC' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXOMDelete
-    <cCall: 'Xlib_delete_XOM' plugin: 'x11'>
+primX11XOMDelete
+    <cCall: 'X11_delete_XOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXOMDelete.
+    ^self primX11XOMDelete.
 !
 
 
 name
-    ^'XlibXOM'
+    ^'X11XOM'
 
 ! !
 
-!XlibXOM methodsFor: 'pointer'!
+!X11XOM methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXOM methodsFor: 'finalization'!
+!X11XOM methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -3830,110 +3830,110 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibDisplay
+CStruct subclass: #X11Display
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibDisplay class methodsFor: 'initialize-release'!
+!X11Display class methodsFor: 'initialize-release'!
 
-primXlibDisplayCreate
-    <cCall: 'Xlib_new_Display' plugin: 'x11'>
+primX11DisplayCreate
+    <cCall: 'X11_new_Display' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibDisplayCreate).
+    ^self handle: (self primX11DisplayCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibDisplay  methodsFor: 'Xlib'!
+!X11Display  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XLoadQueryFont primitive function"
 primXLoadQueryFont: arg1
-    <cCall: 'Xlib_XLoadQueryFont' plugin: 'x11'>
+    <cCall: 'X11_XLoadQueryFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryFont primitive function"
 primXQueryFont: arg1
-    <cCall: 'Xlib_XQueryFont' plugin: 'x11'>
+    <cCall: 'X11_XQueryFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetMotionEvents primitive function"
 primXGetMotionEvents: arg1 start: arg4 stop: arg5 neventsReturn: arg6
-    <cCall: 'Xlib_XGetMotionEvents' plugin: 'x11'>
+    <cCall: 'X11_XGetMotionEvents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetModifierMapping primitive function"
 primXGetModifierMapping
-    <cCall: 'Xlib_XGetModifierMapping' plugin: 'x11'>
+    <cCall: 'X11_XGetModifierMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateImage primitive function"
 primXCreateImage: arg1 depth: arg4 format: arg5 offset: arg6 data: arg7 width: arg8 height: arg9 bitmapPad: arg10 bytesPerLine: arg11
-    <cCall: 'Xlib_XCreateImage' plugin: 'x11'>
+    <cCall: 'X11_XCreateImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetImage primitive function"
 primXGetImage: arg1 x: arg4 y: arg5 width: arg6 height: arg7 planeMask: arg8 format: arg9
-    <cCall: 'Xlib_XGetImage' plugin: 'x11'>
+    <cCall: 'X11_XGetImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetSubImage primitive function"
 primXGetSubImage: arg1 x: arg4 y: arg5 width: arg6 height: arg7 planeMask: arg8 format: arg9 destImage: arg10 destX: arg11 destY: arg12
-    <cCall: 'Xlib_XGetSubImage' plugin: 'x11'>
+    <cCall: 'X11_XGetSubImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFetchBytes primitive function"
 primXFetchBytes: arg1
-    <cCall: 'Xlib_XFetchBytes' plugin: 'x11'>
+    <cCall: 'X11_XFetchBytes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFetchBuffer primitive function"
 primXFetchBuffer: arg1 buffer: arg4
-    <cCall: 'Xlib_XFetchBuffer' plugin: 'x11'>
+    <cCall: 'X11_XFetchBuffer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetAtomName primitive function"
 primXGetAtomName: arg1
-    <cCall: 'Xlib_XGetAtomName' plugin: 'x11'>
+    <cCall: 'X11_XGetAtomName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetAtomNames primitive function"
 primXGetAtomNames: arg1 count: arg4 namesReturn: arg5
-    <cCall: 'Xlib_XGetAtomNames' plugin: 'x11'>
+    <cCall: 'X11_XGetAtomNames' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetDefault primitive function"
 primXGetDefault: arg1 option: arg4
-    <cCall: 'Xlib_XGetDefault' plugin: 'x11'>
+    <cCall: 'X11_XGetDefault' plugin: 'x11'>
     self primitiveFailed
 !
 
@@ -3946,1960 +3946,1960 @@ primXGetDefault: arg1 option: arg4
 "_________________________________________________________"
 "XInternAtom primitive function"
 primXInternAtom: arg1 onlyIfExists: arg4
-    <cCall: 'Xlib_XInternAtom' plugin: 'x11'>
+    <cCall: 'X11_XInternAtom' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XInternAtoms primitive function"
 primXInternAtoms: arg1 count: arg4 onlyIfExists: arg5 atomsReturn: arg6
-    <cCall: 'Xlib_XInternAtoms' plugin: 'x11'>
+    <cCall: 'X11_XInternAtoms' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCopyColormapAndFree primitive function"
 primXCopyColormapAndFree: arg1
-    <cCall: 'Xlib_XCopyColormapAndFree' plugin: 'x11'>
+    <cCall: 'X11_XCopyColormapAndFree' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateColormap primitive function"
 primXCreateColormap: arg1 visual: arg4 alloc: arg5
-    <cCall: 'Xlib_XCreateColormap' plugin: 'x11'>
+    <cCall: 'X11_XCreateColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreatePixmapCursor primitive function"
 primXCreatePixmapCursor: arg1 mask: arg4 foregroundColor: arg5 backgroundColor: arg6 x: arg7 y: arg8
-    <cCall: 'Xlib_XCreatePixmapCursor' plugin: 'x11'>
+    <cCall: 'X11_XCreatePixmapCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateGlyphCursor primitive function"
 primXCreateGlyphCursor: arg1 maskFont: arg4 sourceChar: arg5 maskChar: arg6 foregroundColor: arg7 backgroundColor: arg8
-    <cCall: 'Xlib_XCreateGlyphCursor' plugin: 'x11'>
+    <cCall: 'X11_XCreateGlyphCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateFontCursor primitive function"
 primXCreateFontCursor: arg1
-    <cCall: 'Xlib_XCreateFontCursor' plugin: 'x11'>
+    <cCall: 'X11_XCreateFontCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLoadFont primitive function"
 primXLoadFont: arg1
-    <cCall: 'Xlib_XLoadFont' plugin: 'x11'>
+    <cCall: 'X11_XLoadFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateGC primitive function"
 primXCreateGC: arg1 valuemask: arg4 values: arg5
-    <cCall: 'Xlib_XCreateGC' plugin: 'x11'>
+    <cCall: 'X11_XCreateGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFlushGC primitive function"
 primXFlushGC: arg1
-    <cCall: 'Xlib_XFlushGC' plugin: 'x11'>
+    <cCall: 'X11_XFlushGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreatePixmap primitive function"
 primXCreatePixmap: arg1 width: arg4 height: arg5 depth: arg6
-    <cCall: 'Xlib_XCreatePixmap' plugin: 'x11'>
+    <cCall: 'X11_XCreatePixmap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateBitmapFromData primitive function"
 primXCreateBitmapFromData: arg1 data: arg4 width: arg5 height: arg6
-    <cCall: 'Xlib_XCreateBitmapFromData' plugin: 'x11'>
+    <cCall: 'X11_XCreateBitmapFromData' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreatePixmapFromBitmapData primitive function"
 primXCreatePixmapFromBitmapData: arg1 data: arg4 width: arg5 height: arg6 fg: arg7 bg: arg8 depth: arg9
-    <cCall: 'Xlib_XCreatePixmapFromBitmapData' plugin: 'x11'>
+    <cCall: 'X11_XCreatePixmapFromBitmapData' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateSimpleWindow primitive function"
 primXCreateSimpleWindow: arg1 x: arg4 y: arg5 width: arg6 height: arg7 borderWidth: arg8 border: arg9 background: arg10
-    <cCall: 'Xlib_XCreateSimpleWindow' plugin: 'x11'>
+    <cCall: 'X11_XCreateSimpleWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetSelectionOwner primitive function"
 primXGetSelectionOwner: arg1
-    <cCall: 'Xlib_XGetSelectionOwner' plugin: 'x11'>
+    <cCall: 'X11_XGetSelectionOwner' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateWindow primitive function"
 primXCreateWindow: arg1 x: arg4 y: arg5 width: arg6 height: arg7 borderWidth: arg8 depth: arg9 class: arg10 visual: arg11 valuemask: arg12 attributes: arg13
-    <cCall: 'Xlib_XCreateWindow' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListInstalledColormaps primitive function"
 primXListInstalledColormaps: arg1 numReturn: arg4
-    <cCall: 'Xlib_XListInstalledColormaps' plugin: 'x11'>
+    <cCall: 'X11_XListInstalledColormaps' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListFonts primitive function"
 primXListFonts: arg1 maxnames: arg4 actualCountReturn: arg5
-    <cCall: 'Xlib_XListFonts' plugin: 'x11'>
+    <cCall: 'X11_XListFonts' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListFontsWithInfo primitive function"
 primXListFontsWithInfo: arg1 maxnames: arg4 countReturn: arg5 infoReturn: arg6
-    <cCall: 'Xlib_XListFontsWithInfo' plugin: 'x11'>
+    <cCall: 'X11_XListFontsWithInfo' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetFontPath primitive function"
 primXGetFontPath: arg1
-    <cCall: 'Xlib_XGetFontPath' plugin: 'x11'>
+    <cCall: 'X11_XGetFontPath' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListExtensions primitive function"
 primXListExtensions: arg1
-    <cCall: 'Xlib_XListExtensions' plugin: 'x11'>
+    <cCall: 'X11_XListExtensions' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListProperties primitive function"
 primXListProperties: arg1 numPropReturn: arg4
-    <cCall: 'Xlib_XListProperties' plugin: 'x11'>
+    <cCall: 'X11_XListProperties' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListHosts primitive function"
 primXListHosts: arg1 stateReturn: arg4
-    <cCall: 'Xlib_XListHosts' plugin: 'x11'>
+    <cCall: 'X11_XListHosts' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XKeycodeToKeysym primitive function"
-primXKeycodeToKeysym: arg1 index: arg4
-    <cCall: 'Xlib_XKeycodeToKeysym' plugin: 'x11'>
+primXKeycodeToKeysym: arg1 keycodeEntry: arg4 index: arg5
+    <cCall: 'X11_XKeycodeToKeysym' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetKeyboardMapping primitive function"
-primXGetKeyboardMapping: arg1 keycodeCount: arg4 keysymsPerKeycodeReturn: arg5
-    <cCall: 'Xlib_XGetKeyboardMapping' plugin: 'x11'>
+primXGetKeyboardMapping: arg1 keycodeEntry: arg4 keycodeCount: arg5 keysymsPerKeycodeReturn: arg6
+    <cCall: 'X11_XGetKeyboardMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMaxRequestSize primitive function"
 primXMaxRequestSize
-    <cCall: 'Xlib_XMaxRequestSize' plugin: 'x11'>
+    <cCall: 'X11_XMaxRequestSize' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XExtendedMaxRequestSize primitive function"
 primXExtendedMaxRequestSize
-    <cCall: 'Xlib_XExtendedMaxRequestSize' plugin: 'x11'>
+    <cCall: 'X11_XExtendedMaxRequestSize' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XResourceManagerString primitive function"
 primXResourceManagerString
-    <cCall: 'Xlib_XResourceManagerString' plugin: 'x11'>
+    <cCall: 'X11_XResourceManagerString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayMotionBufferSize primitive function"
 primXDisplayMotionBufferSize
-    <cCall: 'Xlib_XDisplayMotionBufferSize' plugin: 'x11'>
+    <cCall: 'X11_XDisplayMotionBufferSize' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLockDisplay primitive function"
 primXLockDisplay
-    <cCall: 'Xlib_XLockDisplay' plugin: 'x11'>
+    <cCall: 'X11_XLockDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUnlockDisplay primitive function"
 primXUnlockDisplay
-    <cCall: 'Xlib_XUnlockDisplay' plugin: 'x11'>
+    <cCall: 'X11_XUnlockDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XInitExtension primitive function"
 primXInitExtension: arg1
-    <cCall: 'Xlib_XInitExtension' plugin: 'x11'>
+    <cCall: 'X11_XInitExtension' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAddExtension primitive function"
 primXAddExtension
-    <cCall: 'Xlib_XAddExtension' plugin: 'x11'>
+    <cCall: 'X11_XAddExtension' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRootWindow primitive function"
 primXRootWindow: arg1
-    <cCall: 'Xlib_XRootWindow' plugin: 'x11'>
+    <cCall: 'X11_XRootWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultRootWindow primitive function"
 primXDefaultRootWindow
-    <cCall: 'Xlib_XDefaultRootWindow' plugin: 'x11'>
+    <cCall: 'X11_XDefaultRootWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultVisual primitive function"
 primXDefaultVisual: arg1
-    <cCall: 'Xlib_XDefaultVisual' plugin: 'x11'>
+    <cCall: 'X11_XDefaultVisual' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultGC primitive function"
 primXDefaultGC: arg1
-    <cCall: 'Xlib_XDefaultGC' plugin: 'x11'>
+    <cCall: 'X11_XDefaultGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBlackPixel primitive function"
 primXBlackPixel: arg1
-    <cCall: 'Xlib_XBlackPixel' plugin: 'x11'>
+    <cCall: 'X11_XBlackPixel' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWhitePixel primitive function"
 primXWhitePixel: arg1
-    <cCall: 'Xlib_XWhitePixel' plugin: 'x11'>
+    <cCall: 'X11_XWhitePixel' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XNextRequest primitive function"
 primXNextRequest
-    <cCall: 'Xlib_XNextRequest' plugin: 'x11'>
+    <cCall: 'X11_XNextRequest' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLastKnownRequestProcessed primitive function"
 primXLastKnownRequestProcessed
-    <cCall: 'Xlib_XLastKnownRequestProcessed' plugin: 'x11'>
+    <cCall: 'X11_XLastKnownRequestProcessed' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XServerVendor primitive function"
 primXServerVendor
-    <cCall: 'Xlib_XServerVendor' plugin: 'x11'>
+    <cCall: 'X11_XServerVendor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayString primitive function"
 primXDisplayString
-    <cCall: 'Xlib_XDisplayString' plugin: 'x11'>
+    <cCall: 'X11_XDisplayString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultColormap primitive function"
 primXDefaultColormap: arg1
-    <cCall: 'Xlib_XDefaultColormap' plugin: 'x11'>
+    <cCall: 'X11_XDefaultColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XScreenOfDisplay primitive function"
 primXScreenOfDisplay: arg1
-    <cCall: 'Xlib_XScreenOfDisplay' plugin: 'x11'>
+    <cCall: 'X11_XScreenOfDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultScreenOfDisplay primitive function"
 primXDefaultScreenOfDisplay
-    <cCall: 'Xlib_XDefaultScreenOfDisplay' plugin: 'x11'>
+    <cCall: 'X11_XDefaultScreenOfDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListPixmapFormats primitive function"
 primXListPixmapFormats: arg1
-    <cCall: 'Xlib_XListPixmapFormats' plugin: 'x11'>
+    <cCall: 'X11_XListPixmapFormats' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XListDepths primitive function"
 primXListDepths: arg1 countReturn: arg4
-    <cCall: 'Xlib_XListDepths' plugin: 'x11'>
+    <cCall: 'X11_XListDepths' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XReconfigureWMWindow primitive function"
 primXReconfigureWMWindow: arg1 screenNumber: arg4 mask: arg5 changes: arg6
-    <cCall: 'Xlib_XReconfigureWMWindow' plugin: 'x11'>
+    <cCall: 'X11_XReconfigureWMWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetWMProtocols primitive function"
 primXGetWMProtocols: arg1 protocolsReturn: arg4 countReturn: arg5
-    <cCall: 'Xlib_XGetWMProtocols' plugin: 'x11'>
+    <cCall: 'X11_XGetWMProtocols' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWMProtocols primitive function"
 primXSetWMProtocols: arg1 protocols: arg4 count: arg5
-    <cCall: 'Xlib_XSetWMProtocols' plugin: 'x11'>
+    <cCall: 'X11_XSetWMProtocols' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XIconifyWindow primitive function"
 primXIconifyWindow: arg1 screenNumber: arg4
-    <cCall: 'Xlib_XIconifyWindow' plugin: 'x11'>
+    <cCall: 'X11_XIconifyWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWithdrawWindow primitive function"
 primXWithdrawWindow: arg1 screenNumber: arg4
-    <cCall: 'Xlib_XWithdrawWindow' plugin: 'x11'>
+    <cCall: 'X11_XWithdrawWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetCommand primitive function"
 primXGetCommand: arg1 argvReturn: arg4 argcReturn: arg5
-    <cCall: 'Xlib_XGetCommand' plugin: 'x11'>
+    <cCall: 'X11_XGetCommand' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetWMColormapWindows primitive function"
 primXGetWMColormapWindows: arg1 windowsReturn: arg4 countReturn: arg5
-    <cCall: 'Xlib_XGetWMColormapWindows' plugin: 'x11'>
+    <cCall: 'X11_XGetWMColormapWindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWMColormapWindows primitive function"
 primXSetWMColormapWindows: arg1 colormapWindows: arg4 count: arg5
-    <cCall: 'Xlib_XSetWMColormapWindows' plugin: 'x11'>
+    <cCall: 'X11_XSetWMColormapWindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetTransientForHint primitive function"
 primXSetTransientForHint: arg1 propWindow: arg4
-    <cCall: 'Xlib_XSetTransientForHint' plugin: 'x11'>
+    <cCall: 'X11_XSetTransientForHint' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XActivateScreenSaver primitive function"
 primXActivateScreenSaver
-    <cCall: 'Xlib_XActivateScreenSaver' plugin: 'x11'>
+    <cCall: 'X11_XActivateScreenSaver' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAddHost primitive function"
 primXAddHost: arg1
-    <cCall: 'Xlib_XAddHost' plugin: 'x11'>
+    <cCall: 'X11_XAddHost' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAddHosts primitive function"
 primXAddHosts: arg1 numHosts: arg4
-    <cCall: 'Xlib_XAddHosts' plugin: 'x11'>
+    <cCall: 'X11_XAddHosts' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAddToSaveSet primitive function"
 primXAddToSaveSet: arg1
-    <cCall: 'Xlib_XAddToSaveSet' plugin: 'x11'>
+    <cCall: 'X11_XAddToSaveSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllocColor primitive function"
 primXAllocColor: arg1 screenInOut: arg4
-    <cCall: 'Xlib_XAllocColor' plugin: 'x11'>
+    <cCall: 'X11_XAllocColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllocColorCells primitive function"
 primXAllocColorCells: arg1 contig: arg4 planeMasksReturn: arg5 nplanes: arg6 pixelsReturn: arg7 npixels: arg8
-    <cCall: 'Xlib_XAllocColorCells' plugin: 'x11'>
+    <cCall: 'X11_XAllocColorCells' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllocColorPlanes primitive function"
 primXAllocColorPlanes: arg1 contig: arg4 pixelsReturn: arg5 ncolors: arg6 nreds: arg7 ngreens: arg8 nblues: arg9 rmaskReturn: arg10 gmaskReturn: arg11 bmaskReturn: arg12
-    <cCall: 'Xlib_XAllocColorPlanes' plugin: 'x11'>
+    <cCall: 'X11_XAllocColorPlanes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllocNamedColor primitive function"
 primXAllocNamedColor: arg1 colorName: arg4 screenDefReturn: arg5 exactDefReturn: arg6
-    <cCall: 'Xlib_XAllocNamedColor' plugin: 'x11'>
+    <cCall: 'X11_XAllocNamedColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAllowEvents primitive function"
 primXAllowEvents: arg1 time: arg4
-    <cCall: 'Xlib_XAllowEvents' plugin: 'x11'>
+    <cCall: 'X11_XAllowEvents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAutoRepeatOff primitive function"
 primXAutoRepeatOff
-    <cCall: 'Xlib_XAutoRepeatOff' plugin: 'x11'>
+    <cCall: 'X11_XAutoRepeatOff' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAutoRepeatOn primitive function"
 primXAutoRepeatOn
-    <cCall: 'Xlib_XAutoRepeatOn' plugin: 'x11'>
+    <cCall: 'X11_XAutoRepeatOn' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBell primitive function"
 primXBell: arg1
-    <cCall: 'Xlib_XBell' plugin: 'x11'>
+    <cCall: 'X11_XBell' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBitmapBitOrder primitive function"
 primXBitmapBitOrder
-    <cCall: 'Xlib_XBitmapBitOrder' plugin: 'x11'>
+    <cCall: 'X11_XBitmapBitOrder' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBitmapPad primitive function"
 primXBitmapPad
-    <cCall: 'Xlib_XBitmapPad' plugin: 'x11'>
+    <cCall: 'X11_XBitmapPad' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBitmapUnit primitive function"
 primXBitmapUnit
-    <cCall: 'Xlib_XBitmapUnit' plugin: 'x11'>
+    <cCall: 'X11_XBitmapUnit' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeActivePointerGrab primitive function"
 primXChangeActivePointerGrab: arg1 cursor: arg4 time: arg5
-    <cCall: 'Xlib_XChangeActivePointerGrab' plugin: 'x11'>
+    <cCall: 'X11_XChangeActivePointerGrab' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeGC primitive function"
 primXChangeGC: arg1 valuemask: arg4 values: arg5
-    <cCall: 'Xlib_XChangeGC' plugin: 'x11'>
+    <cCall: 'X11_XChangeGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeKeyboardControl primitive function"
 primXChangeKeyboardControl: arg1 values: arg4
-    <cCall: 'Xlib_XChangeKeyboardControl' plugin: 'x11'>
+    <cCall: 'X11_XChangeKeyboardControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeKeyboardMapping primitive function"
 primXChangeKeyboardMapping: arg1 keysymsPerKeycode: arg4 keysyms: arg5 numCodes: arg6
-    <cCall: 'Xlib_XChangeKeyboardMapping' plugin: 'x11'>
+    <cCall: 'X11_XChangeKeyboardMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangePointerControl primitive function"
 primXChangePointerControl: arg1 doThreshold: arg4 accelNumerator: arg5 accelDenominator: arg6 threshold: arg7
-    <cCall: 'Xlib_XChangePointerControl' plugin: 'x11'>
+    <cCall: 'X11_XChangePointerControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeProperty primitive function"
 primXChangeProperty: arg1 property: arg4 type: arg5 format: arg6 mode: arg7 data: arg8 nelements: arg9
-    <cCall: 'Xlib_XChangeProperty' plugin: 'x11'>
+    <cCall: 'X11_XChangeProperty' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeSaveSet primitive function"
 primXChangeSaveSet: arg1 changeMode: arg4
-    <cCall: 'Xlib_XChangeSaveSet' plugin: 'x11'>
+    <cCall: 'X11_XChangeSaveSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XChangeWindowAttributes primitive function"
 primXChangeWindowAttributes: arg1 valuemask: arg4 attributes: arg5
-    <cCall: 'Xlib_XChangeWindowAttributes' plugin: 'x11'>
+    <cCall: 'X11_XChangeWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCheckIfEvent primitive function"
 primXCheckIfEvent: arg1 display: arg4 event: arg5 arg: arg6 predicate: arg7 arg: arg8
-    <cCall: 'Xlib_XCheckIfEvent' plugin: 'x11'>
+    <cCall: 'X11_XCheckIfEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCheckMaskEvent primitive function"
 primXCheckMaskEvent: arg1 eventReturn: arg4
-    <cCall: 'Xlib_XCheckMaskEvent' plugin: 'x11'>
+    <cCall: 'X11_XCheckMaskEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCheckTypedEvent primitive function"
 primXCheckTypedEvent: arg1 eventReturn: arg4
-    <cCall: 'Xlib_XCheckTypedEvent' plugin: 'x11'>
+    <cCall: 'X11_XCheckTypedEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCheckTypedWindowEvent primitive function"
 primXCheckTypedWindowEvent: arg1 eventType: arg4 eventReturn: arg5
-    <cCall: 'Xlib_XCheckTypedWindowEvent' plugin: 'x11'>
+    <cCall: 'X11_XCheckTypedWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCheckWindowEvent primitive function"
 primXCheckWindowEvent: arg1 eventMask: arg4 eventReturn: arg5
-    <cCall: 'Xlib_XCheckWindowEvent' plugin: 'x11'>
+    <cCall: 'X11_XCheckWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCirculateSubwindows primitive function"
 primXCirculateSubwindows: arg1 direction: arg4
-    <cCall: 'Xlib_XCirculateSubwindows' plugin: 'x11'>
+    <cCall: 'X11_XCirculateSubwindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCirculateSubwindowsDown primitive function"
 primXCirculateSubwindowsDown: arg1
-    <cCall: 'Xlib_XCirculateSubwindowsDown' plugin: 'x11'>
+    <cCall: 'X11_XCirculateSubwindowsDown' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCirculateSubwindowsUp primitive function"
 primXCirculateSubwindowsUp: arg1
-    <cCall: 'Xlib_XCirculateSubwindowsUp' plugin: 'x11'>
+    <cCall: 'X11_XCirculateSubwindowsUp' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XClearArea primitive function"
 primXClearArea: arg1 x: arg4 y: arg5 width: arg6 height: arg7 exposures: arg8
-    <cCall: 'Xlib_XClearArea' plugin: 'x11'>
+    <cCall: 'X11_XClearArea' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XClearWindow primitive function"
 primXClearWindow: arg1
-    <cCall: 'Xlib_XClearWindow' plugin: 'x11'>
+    <cCall: 'X11_XClearWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCloseDisplay primitive function"
 primXCloseDisplay
-    <cCall: 'Xlib_XCloseDisplay' plugin: 'x11'>
+    <cCall: 'X11_XCloseDisplay' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XConfigureWindow primitive function"
 primXConfigureWindow: arg1 valueMask: arg4 values: arg5
-    <cCall: 'Xlib_XConfigureWindow' plugin: 'x11'>
+    <cCall: 'X11_XConfigureWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XConnectionNumber primitive function"
 primXConnectionNumber
-    <cCall: 'Xlib_XConnectionNumber' plugin: 'x11'>
+    <cCall: 'X11_XConnectionNumber' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XConvertSelection primitive function"
 primXConvertSelection: arg1 target: arg4 property: arg5 requestor: arg6 time: arg7
-    <cCall: 'Xlib_XConvertSelection' plugin: 'x11'>
+    <cCall: 'X11_XConvertSelection' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCopyArea primitive function"
 primXCopyArea: arg1 dest: arg4 gc: arg5 srcX: arg6 srcY: arg7 width: arg8 height: arg9 destX: arg10 destY: arg11
-    <cCall: 'Xlib_XCopyArea' plugin: 'x11'>
+    <cCall: 'X11_XCopyArea' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCopyGC primitive function"
 primXCopyGC: arg1 valuemask: arg4 dest: arg5
-    <cCall: 'Xlib_XCopyGC' plugin: 'x11'>
+    <cCall: 'X11_XCopyGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCopyPlane primitive function"
 primXCopyPlane: arg1 dest: arg4 gc: arg5 srcX: arg6 srcY: arg7 width: arg8 height: arg9 destX: arg10 destY: arg11 plane: arg12
-    <cCall: 'Xlib_XCopyPlane' plugin: 'x11'>
+    <cCall: 'X11_XCopyPlane' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultDepth primitive function"
 primXDefaultDepth: arg1
-    <cCall: 'Xlib_XDefaultDepth' plugin: 'x11'>
+    <cCall: 'X11_XDefaultDepth' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultScreen primitive function"
 primXDefaultScreen
-    <cCall: 'Xlib_XDefaultScreen' plugin: 'x11'>
+    <cCall: 'X11_XDefaultScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefineCursor primitive function"
 primXDefineCursor: arg1 cursor: arg4
-    <cCall: 'Xlib_XDefineCursor' plugin: 'x11'>
+    <cCall: 'X11_XDefineCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDeleteProperty primitive function"
 primXDeleteProperty: arg1 property: arg4
-    <cCall: 'Xlib_XDeleteProperty' plugin: 'x11'>
+    <cCall: 'X11_XDeleteProperty' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDestroyWindow primitive function"
 primXDestroyWindow: arg1
-    <cCall: 'Xlib_XDestroyWindow' plugin: 'x11'>
+    <cCall: 'X11_XDestroyWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDestroySubwindows primitive function"
 primXDestroySubwindows: arg1
-    <cCall: 'Xlib_XDestroySubwindows' plugin: 'x11'>
+    <cCall: 'X11_XDestroySubwindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisableAccessControl primitive function"
 primXDisableAccessControl
-    <cCall: 'Xlib_XDisableAccessControl' plugin: 'x11'>
+    <cCall: 'X11_XDisableAccessControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayCells primitive function"
 primXDisplayCells: arg1
-    <cCall: 'Xlib_XDisplayCells' plugin: 'x11'>
+    <cCall: 'X11_XDisplayCells' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayHeight primitive function"
 primXDisplayHeight: arg1
-    <cCall: 'Xlib_XDisplayHeight' plugin: 'x11'>
+    <cCall: 'X11_XDisplayHeight' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayHeightMM primitive function"
 primXDisplayHeightMM: arg1
-    <cCall: 'Xlib_XDisplayHeightMM' plugin: 'x11'>
+    <cCall: 'X11_XDisplayHeightMM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayKeycodes primitive function"
 primXDisplayKeycodes: arg1 maxKeycodesReturn: arg4
-    <cCall: 'Xlib_XDisplayKeycodes' plugin: 'x11'>
+    <cCall: 'X11_XDisplayKeycodes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayPlanes primitive function"
 primXDisplayPlanes: arg1
-    <cCall: 'Xlib_XDisplayPlanes' plugin: 'x11'>
+    <cCall: 'X11_XDisplayPlanes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayWidth primitive function"
 primXDisplayWidth: arg1
-    <cCall: 'Xlib_XDisplayWidth' plugin: 'x11'>
+    <cCall: 'X11_XDisplayWidth' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayWidthMM primitive function"
 primXDisplayWidthMM: arg1
-    <cCall: 'Xlib_XDisplayWidthMM' plugin: 'x11'>
+    <cCall: 'X11_XDisplayWidthMM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawArc primitive function"
 primXDrawArc: arg1 gc: arg4 x: arg5 y: arg6 width: arg7 height: arg8 angle1: arg9 angle2: arg10
-    <cCall: 'Xlib_XDrawArc' plugin: 'x11'>
+    <cCall: 'X11_XDrawArc' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawArcs primitive function"
 primXDrawArcs: arg1 gc: arg4 arcs: arg5 narcs: arg6
-    <cCall: 'Xlib_XDrawArcs' plugin: 'x11'>
+    <cCall: 'X11_XDrawArcs' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawImageString primitive function"
 primXDrawImageString: arg1 gc: arg4 x: arg5 y: arg6 string: arg7 length: arg8
-    <cCall: 'Xlib_XDrawImageString' plugin: 'x11'>
+    <cCall: 'X11_XDrawImageString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawImageString16 primitive function"
 primXDrawImageString16: arg1 gc: arg4 x: arg5 y: arg6 string: arg7 length: arg8
-    <cCall: 'Xlib_XDrawImageString16' plugin: 'x11'>
+    <cCall: 'X11_XDrawImageString16' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawLine primitive function"
 primXDrawLine: arg1 gc: arg4 x1: arg5 y1: arg6 x2: arg7 y2: arg8
-    <cCall: 'Xlib_XDrawLine' plugin: 'x11'>
+    <cCall: 'X11_XDrawLine' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawLines primitive function"
 primXDrawLines: arg1 gc: arg4 points: arg5 npoints: arg6 mode: arg7
-    <cCall: 'Xlib_XDrawLines' plugin: 'x11'>
+    <cCall: 'X11_XDrawLines' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawPoint primitive function"
 primXDrawPoint: arg1 gc: arg4 x: arg5 y: arg6
-    <cCall: 'Xlib_XDrawPoint' plugin: 'x11'>
+    <cCall: 'X11_XDrawPoint' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawPoints primitive function"
 primXDrawPoints: arg1 gc: arg4 points: arg5 npoints: arg6 mode: arg7
-    <cCall: 'Xlib_XDrawPoints' plugin: 'x11'>
+    <cCall: 'X11_XDrawPoints' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawRectangle primitive function"
 primXDrawRectangle: arg1 gc: arg4 x: arg5 y: arg6 width: arg7 height: arg8
-    <cCall: 'Xlib_XDrawRectangle' plugin: 'x11'>
+    <cCall: 'X11_XDrawRectangle' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawRectangles primitive function"
 primXDrawRectangles: arg1 gc: arg4 rectangles: arg5 nrectangles: arg6
-    <cCall: 'Xlib_XDrawRectangles' plugin: 'x11'>
+    <cCall: 'X11_XDrawRectangles' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawSegments primitive function"
 primXDrawSegments: arg1 gc: arg4 segments: arg5 nsegments: arg6
-    <cCall: 'Xlib_XDrawSegments' plugin: 'x11'>
+    <cCall: 'X11_XDrawSegments' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawString primitive function"
 primXDrawString: arg1 gc: arg4 x: arg5 y: arg6 string: arg7 length: arg8
-    <cCall: 'Xlib_XDrawString' plugin: 'x11'>
+    <cCall: 'X11_XDrawString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawString16 primitive function"
 primXDrawString16: arg1 gc: arg4 x: arg5 y: arg6 string: arg7 length: arg8
-    <cCall: 'Xlib_XDrawString16' plugin: 'x11'>
+    <cCall: 'X11_XDrawString16' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawText primitive function"
 primXDrawText: arg1 gc: arg4 x: arg5 y: arg6 items: arg7 nitems: arg8
-    <cCall: 'Xlib_XDrawText' plugin: 'x11'>
+    <cCall: 'X11_XDrawText' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDrawText16 primitive function"
 primXDrawText16: arg1 gc: arg4 x: arg5 y: arg6 items: arg7 nitems: arg8
-    <cCall: 'Xlib_XDrawText16' plugin: 'x11'>
+    <cCall: 'X11_XDrawText16' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XEnableAccessControl primitive function"
 primXEnableAccessControl
-    <cCall: 'Xlib_XEnableAccessControl' plugin: 'x11'>
+    <cCall: 'X11_XEnableAccessControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XEventsQueued primitive function"
 primXEventsQueued: arg1
-    <cCall: 'Xlib_XEventsQueued' plugin: 'x11'>
+    <cCall: 'X11_XEventsQueued' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFetchName primitive function"
 primXFetchName: arg1 windowNameReturn: arg4
-    <cCall: 'Xlib_XFetchName' plugin: 'x11'>
+    <cCall: 'X11_XFetchName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFillArc primitive function"
 primXFillArc: arg1 gc: arg4 x: arg5 y: arg6 width: arg7 height: arg8 angle1: arg9 angle2: arg10
-    <cCall: 'Xlib_XFillArc' plugin: 'x11'>
+    <cCall: 'X11_XFillArc' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFillArcs primitive function"
 primXFillArcs: arg1 gc: arg4 arcs: arg5 narcs: arg6
-    <cCall: 'Xlib_XFillArcs' plugin: 'x11'>
+    <cCall: 'X11_XFillArcs' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFillPolygon primitive function"
 primXFillPolygon: arg1 gc: arg4 points: arg5 npoints: arg6 shape: arg7 mode: arg8
-    <cCall: 'Xlib_XFillPolygon' plugin: 'x11'>
+    <cCall: 'X11_XFillPolygon' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFillRectangle primitive function"
 primXFillRectangle: arg1 gc: arg4 x: arg5 y: arg6 width: arg7 height: arg8
-    <cCall: 'Xlib_XFillRectangle' plugin: 'x11'>
+    <cCall: 'X11_XFillRectangle' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFillRectangles primitive function"
 primXFillRectangles: arg1 gc: arg4 rectangles: arg5 nrectangles: arg6
-    <cCall: 'Xlib_XFillRectangles' plugin: 'x11'>
+    <cCall: 'X11_XFillRectangles' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFlush primitive function"
 primXFlush
-    <cCall: 'Xlib_XFlush' plugin: 'x11'>
+    <cCall: 'X11_XFlush' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XForceScreenSaver primitive function"
 primXForceScreenSaver: arg1
-    <cCall: 'Xlib_XForceScreenSaver' plugin: 'x11'>
+    <cCall: 'X11_XForceScreenSaver' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeColormap primitive function"
 primXFreeColormap: arg1
-    <cCall: 'Xlib_XFreeColormap' plugin: 'x11'>
+    <cCall: 'X11_XFreeColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeColors primitive function"
 primXFreeColors: arg1 pixels: arg4 npixels: arg5 planes: arg6
-    <cCall: 'Xlib_XFreeColors' plugin: 'x11'>
+    <cCall: 'X11_XFreeColors' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeCursor primitive function"
 primXFreeCursor: arg1
-    <cCall: 'Xlib_XFreeCursor' plugin: 'x11'>
+    <cCall: 'X11_XFreeCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeFont primitive function"
 primXFreeFont: arg1
-    <cCall: 'Xlib_XFreeFont' plugin: 'x11'>
+    <cCall: 'X11_XFreeFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeGC primitive function"
 primXFreeGC: arg1
-    <cCall: 'Xlib_XFreeGC' plugin: 'x11'>
+    <cCall: 'X11_XFreeGC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreePixmap primitive function"
 primXFreePixmap: arg1
-    <cCall: 'Xlib_XFreePixmap' plugin: 'x11'>
+    <cCall: 'X11_XFreePixmap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGeometry primitive function"
 primXGeometry: arg1 position: arg4 defaultPosition: arg5 bwidth: arg6 fwidth: arg7 fheight: arg8 xadder: arg9 yadder: arg10 xReturn: arg11 yReturn: arg12 widthReturn: arg13 heightReturn: arg14
-    <cCall: 'Xlib_XGeometry' plugin: 'x11'>
+    <cCall: 'X11_XGeometry' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetErrorDatabaseText primitive function"
 primXGetErrorDatabaseText: arg1 message: arg4 defaultString: arg5 bufferReturn: arg6 length: arg7
-    <cCall: 'Xlib_XGetErrorDatabaseText' plugin: 'x11'>
+    <cCall: 'X11_XGetErrorDatabaseText' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetErrorText primitive function"
 primXGetErrorText: arg1 bufferReturn: arg4 length: arg5
-    <cCall: 'Xlib_XGetErrorText' plugin: 'x11'>
+    <cCall: 'X11_XGetErrorText' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetGCValues primitive function"
 primXGetGCValues: arg1 valuemask: arg4 valuesReturn: arg5
-    <cCall: 'Xlib_XGetGCValues' plugin: 'x11'>
+    <cCall: 'X11_XGetGCValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetGeometry primitive function"
 primXGetGeometry: arg1 rootReturn: arg4 xReturn: arg5 yReturn: arg6 widthReturn: arg7 heightReturn: arg8 borderWidthReturn: arg9 depthReturn: arg10
-    <cCall: 'Xlib_XGetGeometry' plugin: 'x11'>
+    <cCall: 'X11_XGetGeometry' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetIconName primitive function"
 primXGetIconName: arg1 iconNameReturn: arg4
-    <cCall: 'Xlib_XGetIconName' plugin: 'x11'>
+    <cCall: 'X11_XGetIconName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetInputFocus primitive function"
 primXGetInputFocus: arg1 revertToReturn: arg4
-    <cCall: 'Xlib_XGetInputFocus' plugin: 'x11'>
+    <cCall: 'X11_XGetInputFocus' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetKeyboardControl primitive function"
 primXGetKeyboardControl: arg1
-    <cCall: 'Xlib_XGetKeyboardControl' plugin: 'x11'>
+    <cCall: 'X11_XGetKeyboardControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetPointerControl primitive function"
 primXGetPointerControl: arg1 accelDenominatorReturn: arg4 thresholdReturn: arg5
-    <cCall: 'Xlib_XGetPointerControl' plugin: 'x11'>
+    <cCall: 'X11_XGetPointerControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetPointerMapping primitive function"
 primXGetPointerMapping: arg1 nmap: arg4
-    <cCall: 'Xlib_XGetPointerMapping' plugin: 'x11'>
+    <cCall: 'X11_XGetPointerMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetScreenSaver primitive function"
 primXGetScreenSaver: arg1 intervalReturn: arg4 preferBlankingReturn: arg5 allowExposuresReturn: arg6
-    <cCall: 'Xlib_XGetScreenSaver' plugin: 'x11'>
+    <cCall: 'X11_XGetScreenSaver' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetTransientForHint primitive function"
 primXGetTransientForHint: arg1 propWindowReturn: arg4
-    <cCall: 'Xlib_XGetTransientForHint' plugin: 'x11'>
+    <cCall: 'X11_XGetTransientForHint' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetWindowProperty primitive function"
 primXGetWindowProperty: arg1 property: arg4 longOffset: arg5 longLength: arg6 delete: arg7 reqType: arg8 actualTypeReturn: arg9 actualFormatReturn: arg10 nitemsReturn: arg11 bytesAfterReturn: arg12 propReturn: arg13
-    <cCall: 'Xlib_XGetWindowProperty' plugin: 'x11'>
+    <cCall: 'X11_XGetWindowProperty' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetWindowAttributes primitive function"
 primXGetWindowAttributes: arg1 windowAttributesReturn: arg4
-    <cCall: 'Xlib_XGetWindowAttributes' plugin: 'x11'>
+    <cCall: 'X11_XGetWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGrabButton primitive function"
 primXGrabButton: arg1 modifiers: arg4 grabWindow: arg5 ownerEvents: arg6 eventMask: arg7 pointerMode: arg8 keyboardMode: arg9 confineTo: arg10 cursor: arg11
-    <cCall: 'Xlib_XGrabButton' plugin: 'x11'>
+    <cCall: 'X11_XGrabButton' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGrabKey primitive function"
 primXGrabKey: arg1 modifiers: arg4 grabWindow: arg5 ownerEvents: arg6 pointerMode: arg7 keyboardMode: arg8
-    <cCall: 'Xlib_XGrabKey' plugin: 'x11'>
+    <cCall: 'X11_XGrabKey' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGrabKeyboard primitive function"
 primXGrabKeyboard: arg1 ownerEvents: arg4 pointerMode: arg5 keyboardMode: arg6 time: arg7
-    <cCall: 'Xlib_XGrabKeyboard' plugin: 'x11'>
+    <cCall: 'X11_XGrabKeyboard' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGrabPointer primitive function"
 primXGrabPointer: arg1 ownerEvents: arg4 eventMask: arg5 pointerMode: arg6 keyboardMode: arg7 confineTo: arg8 cursor: arg9 time: arg10
-    <cCall: 'Xlib_XGrabPointer' plugin: 'x11'>
+    <cCall: 'X11_XGrabPointer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGrabServer primitive function"
 primXGrabServer
-    <cCall: 'Xlib_XGrabServer' plugin: 'x11'>
+    <cCall: 'X11_XGrabServer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XIfEvent primitive function"
 primXIfEvent: arg1 display: arg4 event: arg5 arg: arg6 predicate: arg7 arg: arg8
-    <cCall: 'Xlib_XIfEvent' plugin: 'x11'>
+    <cCall: 'X11_XIfEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XImageByteOrder primitive function"
 primXImageByteOrder
-    <cCall: 'Xlib_XImageByteOrder' plugin: 'x11'>
+    <cCall: 'X11_XImageByteOrder' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XInstallColormap primitive function"
 primXInstallColormap: arg1
-    <cCall: 'Xlib_XInstallColormap' plugin: 'x11'>
+    <cCall: 'X11_XInstallColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XKeysymToKeycode primitive function"
 primXKeysymToKeycode: arg1
-    <cCall: 'Xlib_XKeysymToKeycode' plugin: 'x11'>
+    <cCall: 'X11_XKeysymToKeycode' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XKillClient primitive function"
 primXKillClient: arg1
-    <cCall: 'Xlib_XKillClient' plugin: 'x11'>
+    <cCall: 'X11_XKillClient' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLookupColor primitive function"
 primXLookupColor: arg1 colorName: arg4 exactDefReturn: arg5 screenDefReturn: arg6
-    <cCall: 'Xlib_XLookupColor' plugin: 'x11'>
+    <cCall: 'X11_XLookupColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLowerWindow primitive function"
 primXLowerWindow: arg1
-    <cCall: 'Xlib_XLowerWindow' plugin: 'x11'>
+    <cCall: 'X11_XLowerWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMapRaised primitive function"
 primXMapRaised: arg1
-    <cCall: 'Xlib_XMapRaised' plugin: 'x11'>
+    <cCall: 'X11_XMapRaised' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMapSubwindows primitive function"
 primXMapSubwindows: arg1
-    <cCall: 'Xlib_XMapSubwindows' plugin: 'x11'>
+    <cCall: 'X11_XMapSubwindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMapWindow primitive function"
 primXMapWindow: arg1
-    <cCall: 'Xlib_XMapWindow' plugin: 'x11'>
+    <cCall: 'X11_XMapWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMaskEvent primitive function"
 primXMaskEvent: arg1 eventReturn: arg4
-    <cCall: 'Xlib_XMaskEvent' plugin: 'x11'>
+    <cCall: 'X11_XMaskEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMoveResizeWindow primitive function"
 primXMoveResizeWindow: arg1 x: arg4 y: arg5 width: arg6 height: arg7
-    <cCall: 'Xlib_XMoveResizeWindow' plugin: 'x11'>
+    <cCall: 'X11_XMoveResizeWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMoveWindow primitive function"
 primXMoveWindow: arg1 x: arg4 y: arg5
-    <cCall: 'Xlib_XMoveWindow' plugin: 'x11'>
+    <cCall: 'X11_XMoveWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XNextEvent primitive function"
 primXNextEvent: arg1
-    <cCall: 'Xlib_XNextEvent' plugin: 'x11'>
+    <cCall: 'X11_XNextEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XNoOp primitive function"
 primXNoOp
-    <cCall: 'Xlib_XNoOp' plugin: 'x11'>
+    <cCall: 'X11_XNoOp' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XParseColor primitive function"
 primXParseColor: arg1 spec: arg4 exactDefReturn: arg5
-    <cCall: 'Xlib_XParseColor' plugin: 'x11'>
+    <cCall: 'X11_XParseColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPeekEvent primitive function"
 primXPeekEvent: arg1
-    <cCall: 'Xlib_XPeekEvent' plugin: 'x11'>
+    <cCall: 'X11_XPeekEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPeekIfEvent primitive function"
 primXPeekIfEvent: arg1 display: arg4 event: arg5 arg: arg6 predicate: arg7 arg: arg8
-    <cCall: 'Xlib_XPeekIfEvent' plugin: 'x11'>
+    <cCall: 'X11_XPeekIfEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPending primitive function"
 primXPending
-    <cCall: 'Xlib_XPending' plugin: 'x11'>
+    <cCall: 'X11_XPending' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XProtocolRevision primitive function"
 primXProtocolRevision
-    <cCall: 'Xlib_XProtocolRevision' plugin: 'x11'>
+    <cCall: 'X11_XProtocolRevision' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XProtocolVersion primitive function"
 primXProtocolVersion
-    <cCall: 'Xlib_XProtocolVersion' plugin: 'x11'>
+    <cCall: 'X11_XProtocolVersion' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPutBackEvent primitive function"
 primXPutBackEvent: arg1
-    <cCall: 'Xlib_XPutBackEvent' plugin: 'x11'>
+    <cCall: 'X11_XPutBackEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPutImage primitive function"
 primXPutImage: arg1 gc: arg4 image: arg5 srcX: arg6 srcY: arg7 destX: arg8 destY: arg9 width: arg10 height: arg11
-    <cCall: 'Xlib_XPutImage' plugin: 'x11'>
+    <cCall: 'X11_XPutImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQLength primitive function"
 primXQLength
-    <cCall: 'Xlib_XQLength' plugin: 'x11'>
+    <cCall: 'X11_XQLength' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryBestCursor primitive function"
 primXQueryBestCursor: arg1 width: arg4 height: arg5 widthReturn: arg6 heightReturn: arg7
-    <cCall: 'Xlib_XQueryBestCursor' plugin: 'x11'>
+    <cCall: 'X11_XQueryBestCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryBestSize primitive function"
 primXQueryBestSize: arg1 whichScreen: arg4 width: arg5 height: arg6 widthReturn: arg7 heightReturn: arg8
-    <cCall: 'Xlib_XQueryBestSize' plugin: 'x11'>
+    <cCall: 'X11_XQueryBestSize' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryBestStipple primitive function"
 primXQueryBestStipple: arg1 width: arg4 height: arg5 widthReturn: arg6 heightReturn: arg7
-    <cCall: 'Xlib_XQueryBestStipple' plugin: 'x11'>
+    <cCall: 'X11_XQueryBestStipple' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryBestTile primitive function"
 primXQueryBestTile: arg1 width: arg4 height: arg5 widthReturn: arg6 heightReturn: arg7
-    <cCall: 'Xlib_XQueryBestTile' plugin: 'x11'>
+    <cCall: 'X11_XQueryBestTile' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryColor primitive function"
 primXQueryColor: arg1 defInOut: arg4
-    <cCall: 'Xlib_XQueryColor' plugin: 'x11'>
+    <cCall: 'X11_XQueryColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryColors primitive function"
 primXQueryColors: arg1 defsInOut: arg4 ncolors: arg5
-    <cCall: 'Xlib_XQueryColors' plugin: 'x11'>
+    <cCall: 'X11_XQueryColors' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryExtension primitive function"
 primXQueryExtension: arg1 majorOpcodeReturn: arg4 firstEventReturn: arg5 firstErrorReturn: arg6
-    <cCall: 'Xlib_XQueryExtension' plugin: 'x11'>
+    <cCall: 'X11_XQueryExtension' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryKeymap primitive function"
 primXQueryKeymap: arg1
-    <cCall: 'Xlib_XQueryKeymap' plugin: 'x11'>
+    <cCall: 'X11_XQueryKeymap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryPointer primitive function"
 primXQueryPointer: arg1 rootReturn: arg4 childReturn: arg5 rootXReturn: arg6 rootYReturn: arg7 winXReturn: arg8 winYReturn: arg9 maskReturn: arg10
-    <cCall: 'Xlib_XQueryPointer' plugin: 'x11'>
+    <cCall: 'X11_XQueryPointer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryTextExtents primitive function"
 primXQueryTextExtents: arg1 string: arg4 nchars: arg5 directionReturn: arg6 fontAscentReturn: arg7 fontDescentReturn: arg8 overallReturn: arg9
-    <cCall: 'Xlib_XQueryTextExtents' plugin: 'x11'>
+    <cCall: 'X11_XQueryTextExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryTextExtents16 primitive function"
 primXQueryTextExtents16: arg1 string: arg4 nchars: arg5 directionReturn: arg6 fontAscentReturn: arg7 fontDescentReturn: arg8 overallReturn: arg9
-    <cCall: 'Xlib_XQueryTextExtents16' plugin: 'x11'>
+    <cCall: 'X11_XQueryTextExtents16' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XQueryTree primitive function"
 primXQueryTree: arg1 rootReturn: arg4 parentReturn: arg5 childrenReturn: arg6 nchildrenReturn: arg7
-    <cCall: 'Xlib_XQueryTree' plugin: 'x11'>
+    <cCall: 'X11_XQueryTree' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRaiseWindow primitive function"
 primXRaiseWindow: arg1
-    <cCall: 'Xlib_XRaiseWindow' plugin: 'x11'>
+    <cCall: 'X11_XRaiseWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XReadBitmapFile primitive function"
 primXReadBitmapFile: arg1 filename: arg4 widthReturn: arg5 heightReturn: arg6 bitmapReturn: arg7 xHotReturn: arg8 yHotReturn: arg9
-    <cCall: 'Xlib_XReadBitmapFile' plugin: 'x11'>
+    <cCall: 'X11_XReadBitmapFile' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRebindKeysym primitive function"
 primXRebindKeysym: arg1 list: arg4 modCount: arg5 string: arg6 bytesString: arg7
-    <cCall: 'Xlib_XRebindKeysym' plugin: 'x11'>
+    <cCall: 'X11_XRebindKeysym' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRecolorCursor primitive function"
 primXRecolorCursor: arg1 foregroundColor: arg4 backgroundColor: arg5
-    <cCall: 'Xlib_XRecolorCursor' plugin: 'x11'>
+    <cCall: 'X11_XRecolorCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRemoveFromSaveSet primitive function"
 primXRemoveFromSaveSet: arg1
-    <cCall: 'Xlib_XRemoveFromSaveSet' plugin: 'x11'>
+    <cCall: 'X11_XRemoveFromSaveSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRemoveHost primitive function"
 primXRemoveHost: arg1
-    <cCall: 'Xlib_XRemoveHost' plugin: 'x11'>
+    <cCall: 'X11_XRemoveHost' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRemoveHosts primitive function"
 primXRemoveHosts: arg1 numHosts: arg4
-    <cCall: 'Xlib_XRemoveHosts' plugin: 'x11'>
+    <cCall: 'X11_XRemoveHosts' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XReparentWindow primitive function"
 primXReparentWindow: arg1 parent: arg4 x: arg5 y: arg6
-    <cCall: 'Xlib_XReparentWindow' plugin: 'x11'>
+    <cCall: 'X11_XReparentWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XResetScreenSaver primitive function"
 primXResetScreenSaver
-    <cCall: 'Xlib_XResetScreenSaver' plugin: 'x11'>
+    <cCall: 'X11_XResetScreenSaver' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XResizeWindow primitive function"
 primXResizeWindow: arg1 width: arg4 height: arg5
-    <cCall: 'Xlib_XResizeWindow' plugin: 'x11'>
+    <cCall: 'X11_XResizeWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRestackWindows primitive function"
 primXRestackWindows: arg1 nwindows: arg4
-    <cCall: 'Xlib_XRestackWindows' plugin: 'x11'>
+    <cCall: 'X11_XRestackWindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRotateBuffers primitive function"
 primXRotateBuffers: arg1
-    <cCall: 'Xlib_XRotateBuffers' plugin: 'x11'>
+    <cCall: 'X11_XRotateBuffers' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRotateWindowProperties primitive function"
 primXRotateWindowProperties: arg1 properties: arg4 numProp: arg5 npositions: arg6
-    <cCall: 'Xlib_XRotateWindowProperties' plugin: 'x11'>
+    <cCall: 'X11_XRotateWindowProperties' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XScreenCount primitive function"
 primXScreenCount
-    <cCall: 'Xlib_XScreenCount' plugin: 'x11'>
+    <cCall: 'X11_XScreenCount' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSelectInput primitive function"
 primXSelectInput: arg1 eventMask: arg4
-    <cCall: 'Xlib_XSelectInput' plugin: 'x11'>
+    <cCall: 'X11_XSelectInput' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSendEvent primitive function"
 primXSendEvent: arg1 propagate: arg4 eventMask: arg5 eventSend: arg6
-    <cCall: 'Xlib_XSendEvent' plugin: 'x11'>
+    <cCall: 'X11_XSendEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetAccessControl primitive function"
 primXSetAccessControl: arg1
-    <cCall: 'Xlib_XSetAccessControl' plugin: 'x11'>
+    <cCall: 'X11_XSetAccessControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetArcMode primitive function"
 primXSetArcMode: arg1 arcMode: arg4
-    <cCall: 'Xlib_XSetArcMode' plugin: 'x11'>
+    <cCall: 'X11_XSetArcMode' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetBackground primitive function"
 primXSetBackground: arg1 background: arg4
-    <cCall: 'Xlib_XSetBackground' plugin: 'x11'>
+    <cCall: 'X11_XSetBackground' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetClipMask primitive function"
 primXSetClipMask: arg1 pixmap: arg4
-    <cCall: 'Xlib_XSetClipMask' plugin: 'x11'>
+    <cCall: 'X11_XSetClipMask' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetClipOrigin primitive function"
 primXSetClipOrigin: arg1 clipXOrigin: arg4 clipYOrigin: arg5
-    <cCall: 'Xlib_XSetClipOrigin' plugin: 'x11'>
+    <cCall: 'X11_XSetClipOrigin' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetClipRectangles primitive function"
 primXSetClipRectangles: arg1 clipXOrigin: arg4 clipYOrigin: arg5 rectangles: arg6 n: arg7 ordering: arg8
-    <cCall: 'Xlib_XSetClipRectangles' plugin: 'x11'>
+    <cCall: 'X11_XSetClipRectangles' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetCloseDownMode primitive function"
 primXSetCloseDownMode: arg1
-    <cCall: 'Xlib_XSetCloseDownMode' plugin: 'x11'>
+    <cCall: 'X11_XSetCloseDownMode' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetCommand primitive function"
 primXSetCommand: arg1 argv: arg4 argc: arg5
-    <cCall: 'Xlib_XSetCommand' plugin: 'x11'>
+    <cCall: 'X11_XSetCommand' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetDashes primitive function"
 primXSetDashes: arg1 dashOffset: arg4 dashList: arg5 n: arg6
-    <cCall: 'Xlib_XSetDashes' plugin: 'x11'>
+    <cCall: 'X11_XSetDashes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetFillRule primitive function"
 primXSetFillRule: arg1 fillRule: arg4
-    <cCall: 'Xlib_XSetFillRule' plugin: 'x11'>
+    <cCall: 'X11_XSetFillRule' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetFillStyle primitive function"
 primXSetFillStyle: arg1 fillStyle: arg4
-    <cCall: 'Xlib_XSetFillStyle' plugin: 'x11'>
+    <cCall: 'X11_XSetFillStyle' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetFont primitive function"
 primXSetFont: arg1 font: arg4
-    <cCall: 'Xlib_XSetFont' plugin: 'x11'>
+    <cCall: 'X11_XSetFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetFontPath primitive function"
 primXSetFontPath: arg1 ndirs: arg4
-    <cCall: 'Xlib_XSetFontPath' plugin: 'x11'>
+    <cCall: 'X11_XSetFontPath' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetForeground primitive function"
 primXSetForeground: arg1 foreground: arg4
-    <cCall: 'Xlib_XSetForeground' plugin: 'x11'>
+    <cCall: 'X11_XSetForeground' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetFunction primitive function"
 primXSetFunction: arg1 function: arg4
-    <cCall: 'Xlib_XSetFunction' plugin: 'x11'>
+    <cCall: 'X11_XSetFunction' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetGraphicsExposures primitive function"
 primXSetGraphicsExposures: arg1 graphicsExposures: arg4
-    <cCall: 'Xlib_XSetGraphicsExposures' plugin: 'x11'>
+    <cCall: 'X11_XSetGraphicsExposures' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetIconName primitive function"
 primXSetIconName: arg1 iconName: arg4
-    <cCall: 'Xlib_XSetIconName' plugin: 'x11'>
+    <cCall: 'X11_XSetIconName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetInputFocus primitive function"
 primXSetInputFocus: arg1 revertTo: arg4 time: arg5
-    <cCall: 'Xlib_XSetInputFocus' plugin: 'x11'>
+    <cCall: 'X11_XSetInputFocus' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetLineAttributes primitive function"
 primXSetLineAttributes: arg1 lineWidth: arg4 lineStyle: arg5 capStyle: arg6 joinStyle: arg7
-    <cCall: 'Xlib_XSetLineAttributes' plugin: 'x11'>
+    <cCall: 'X11_XSetLineAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetModifierMapping primitive function"
 primXSetModifierMapping: arg1
-    <cCall: 'Xlib_XSetModifierMapping' plugin: 'x11'>
+    <cCall: 'X11_XSetModifierMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetPlaneMask primitive function"
 primXSetPlaneMask: arg1 planeMask: arg4
-    <cCall: 'Xlib_XSetPlaneMask' plugin: 'x11'>
+    <cCall: 'X11_XSetPlaneMask' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetPointerMapping primitive function"
 primXSetPointerMapping: arg1 nmap: arg4
-    <cCall: 'Xlib_XSetPointerMapping' plugin: 'x11'>
+    <cCall: 'X11_XSetPointerMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetScreenSaver primitive function"
 primXSetScreenSaver: arg1 interval: arg4 preferBlanking: arg5 allowExposures: arg6
-    <cCall: 'Xlib_XSetScreenSaver' plugin: 'x11'>
+    <cCall: 'X11_XSetScreenSaver' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetSelectionOwner primitive function"
 primXSetSelectionOwner: arg1 owner: arg4 time: arg5
-    <cCall: 'Xlib_XSetSelectionOwner' plugin: 'x11'>
+    <cCall: 'X11_XSetSelectionOwner' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetState primitive function"
 primXSetState: arg1 foreground: arg4 background: arg5 function: arg6 planeMask: arg7
-    <cCall: 'Xlib_XSetState' plugin: 'x11'>
+    <cCall: 'X11_XSetState' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetStipple primitive function"
 primXSetStipple: arg1 stipple: arg4
-    <cCall: 'Xlib_XSetStipple' plugin: 'x11'>
+    <cCall: 'X11_XSetStipple' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetSubwindowMode primitive function"
 primXSetSubwindowMode: arg1 subwindowMode: arg4
-    <cCall: 'Xlib_XSetSubwindowMode' plugin: 'x11'>
+    <cCall: 'X11_XSetSubwindowMode' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetTSOrigin primitive function"
 primXSetTSOrigin: arg1 tsXOrigin: arg4 tsYOrigin: arg5
-    <cCall: 'Xlib_XSetTSOrigin' plugin: 'x11'>
+    <cCall: 'X11_XSetTSOrigin' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetTile primitive function"
 primXSetTile: arg1 tile: arg4
-    <cCall: 'Xlib_XSetTile' plugin: 'x11'>
+    <cCall: 'X11_XSetTile' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowBackground primitive function"
 primXSetWindowBackground: arg1 backgroundPixel: arg4
-    <cCall: 'Xlib_XSetWindowBackground' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowBackground' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowBackgroundPixmap primitive function"
 primXSetWindowBackgroundPixmap: arg1 backgroundPixmap: arg4
-    <cCall: 'Xlib_XSetWindowBackgroundPixmap' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowBackgroundPixmap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowBorder primitive function"
 primXSetWindowBorder: arg1 borderPixel: arg4
-    <cCall: 'Xlib_XSetWindowBorder' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowBorder' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowBorderPixmap primitive function"
 primXSetWindowBorderPixmap: arg1 borderPixmap: arg4
-    <cCall: 'Xlib_XSetWindowBorderPixmap' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowBorderPixmap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowBorderWidth primitive function"
 primXSetWindowBorderWidth: arg1 width: arg4
-    <cCall: 'Xlib_XSetWindowBorderWidth' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowBorderWidth' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetWindowColormap primitive function"
 primXSetWindowColormap: arg1 colormap: arg4
-    <cCall: 'Xlib_XSetWindowColormap' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreBuffer primitive function"
 primXStoreBuffer: arg1 nbytes: arg4 buffer: arg5
-    <cCall: 'Xlib_XStoreBuffer' plugin: 'x11'>
+    <cCall: 'X11_XStoreBuffer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreBytes primitive function"
 primXStoreBytes: arg1 nbytes: arg4
-    <cCall: 'Xlib_XStoreBytes' plugin: 'x11'>
+    <cCall: 'X11_XStoreBytes' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreColor primitive function"
 primXStoreColor: arg1 color: arg4
-    <cCall: 'Xlib_XStoreColor' plugin: 'x11'>
+    <cCall: 'X11_XStoreColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreColors primitive function"
 primXStoreColors: arg1 color: arg4 ncolors: arg5
-    <cCall: 'Xlib_XStoreColors' plugin: 'x11'>
+    <cCall: 'X11_XStoreColors' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreName primitive function"
 primXStoreName: arg1 windowName: arg4
-    <cCall: 'Xlib_XStoreName' plugin: 'x11'>
+    <cCall: 'X11_XStoreName' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XStoreNamedColor primitive function"
 primXStoreNamedColor: arg1 color: arg4 pixel: arg5 flags: arg6
-    <cCall: 'Xlib_XStoreNamedColor' plugin: 'x11'>
+    <cCall: 'X11_XStoreNamedColor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSync primitive function"
 primXSync: arg1
-    <cCall: 'Xlib_XSync' plugin: 'x11'>
+    <cCall: 'X11_XSync' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XTranslateCoordinates primitive function"
 primXTranslateCoordinates: arg1 destW: arg4 srcX: arg5 srcY: arg6 destXReturn: arg7 destYReturn: arg8 childReturn: arg9
-    <cCall: 'Xlib_XTranslateCoordinates' plugin: 'x11'>
+    <cCall: 'X11_XTranslateCoordinates' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUndefineCursor primitive function"
 primXUndefineCursor: arg1
-    <cCall: 'Xlib_XUndefineCursor' plugin: 'x11'>
+    <cCall: 'X11_XUndefineCursor' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUngrabButton primitive function"
 primXUngrabButton: arg1 modifiers: arg4 grabWindow: arg5
-    <cCall: 'Xlib_XUngrabButton' plugin: 'x11'>
+    <cCall: 'X11_XUngrabButton' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUngrabKey primitive function"
 primXUngrabKey: arg1 modifiers: arg4 grabWindow: arg5
-    <cCall: 'Xlib_XUngrabKey' plugin: 'x11'>
+    <cCall: 'X11_XUngrabKey' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUngrabKeyboard primitive function"
 primXUngrabKeyboard: arg1
-    <cCall: 'Xlib_XUngrabKeyboard' plugin: 'x11'>
+    <cCall: 'X11_XUngrabKeyboard' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUngrabPointer primitive function"
 primXUngrabPointer: arg1
-    <cCall: 'Xlib_XUngrabPointer' plugin: 'x11'>
+    <cCall: 'X11_XUngrabPointer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUngrabServer primitive function"
 primXUngrabServer
-    <cCall: 'Xlib_XUngrabServer' plugin: 'x11'>
+    <cCall: 'X11_XUngrabServer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUninstallColormap primitive function"
 primXUninstallColormap: arg1
-    <cCall: 'Xlib_XUninstallColormap' plugin: 'x11'>
+    <cCall: 'X11_XUninstallColormap' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUnloadFont primitive function"
 primXUnloadFont: arg1
-    <cCall: 'Xlib_XUnloadFont' plugin: 'x11'>
+    <cCall: 'X11_XUnloadFont' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUnmapSubwindows primitive function"
 primXUnmapSubwindows: arg1
-    <cCall: 'Xlib_XUnmapSubwindows' plugin: 'x11'>
+    <cCall: 'X11_XUnmapSubwindows' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUnmapWindow primitive function"
 primXUnmapWindow: arg1
-    <cCall: 'Xlib_XUnmapWindow' plugin: 'x11'>
+    <cCall: 'X11_XUnmapWindow' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XVendorRelease primitive function"
 primXVendorRelease
-    <cCall: 'Xlib_XVendorRelease' plugin: 'x11'>
+    <cCall: 'X11_XVendorRelease' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWarpPointer primitive function"
 primXWarpPointer: arg1 destW: arg4 srcX: arg5 srcY: arg6 srcWidth: arg7 srcHeight: arg8 destX: arg9 destY: arg10
-    <cCall: 'Xlib_XWarpPointer' plugin: 'x11'>
+    <cCall: 'X11_XWarpPointer' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWindowEvent primitive function"
 primXWindowEvent: arg1 eventMask: arg4 eventReturn: arg5
-    <cCall: 'Xlib_XWindowEvent' plugin: 'x11'>
+    <cCall: 'X11_XWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWriteBitmapFile primitive function"
 primXWriteBitmapFile: arg1 bitmap: arg4 width: arg5 height: arg6 xHot: arg7 yHot: arg8
-    <cCall: 'Xlib_XWriteBitmapFile' plugin: 'x11'>
+    <cCall: 'X11_XWriteBitmapFile' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XOpenOM primitive function"
 primXOpenOM: arg1 resName: arg4 resClass: arg5
-    <cCall: 'Xlib_XOpenOM' plugin: 'x11'>
+    <cCall: 'X11_XOpenOM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateFontSet primitive function"
 primXCreateFontSet: arg1 missingCharsetList: arg4 missingCharsetCount: arg5 defString: arg6
-    <cCall: 'Xlib_XCreateFontSet' plugin: 'x11'>
+    <cCall: 'X11_XCreateFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeFontSet primitive function"
 primXFreeFontSet: arg1
-    <cCall: 'Xlib_XFreeFontSet' plugin: 'x11'>
+    <cCall: 'X11_XFreeFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbDrawText primitive function"
 primXmbDrawText: arg1 gc: arg4 x: arg5 y: arg6 textItems: arg7 nitems: arg8
-    <cCall: 'Xlib_XmbDrawText' plugin: 'x11'>
+    <cCall: 'X11_XmbDrawText' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcDrawText primitive function"
 primXwcDrawText: arg1 gc: arg4 x: arg5 y: arg6 textItems: arg7 nitems: arg8
-    <cCall: 'Xlib_XwcDrawText' plugin: 'x11'>
+    <cCall: 'X11_XwcDrawText' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbDrawString primitive function"
 primXmbDrawString: arg1 fontSet: arg4 gc: arg5 x: arg6 y: arg7 text: arg8 bytesText: arg9
-    <cCall: 'Xlib_XmbDrawString' plugin: 'x11'>
+    <cCall: 'X11_XmbDrawString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcDrawString primitive function"
 primXwcDrawString: arg1 fontSet: arg4 gc: arg5 x: arg6 y: arg7 text: arg8 numWchars: arg9
-    <cCall: 'Xlib_XwcDrawString' plugin: 'x11'>
+    <cCall: 'X11_XwcDrawString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbDrawImageString primitive function"
 primXmbDrawImageString: arg1 fontSet: arg4 gc: arg5 x: arg6 y: arg7 text: arg8 bytesText: arg9
-    <cCall: 'Xlib_XmbDrawImageString' plugin: 'x11'>
+    <cCall: 'X11_XmbDrawImageString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcDrawImageString primitive function"
 primXwcDrawImageString: arg1 fontSet: arg4 gc: arg5 x: arg6 y: arg7 text: arg8 numWchars: arg9
-    <cCall: 'Xlib_XwcDrawImageString' plugin: 'x11'>
+    <cCall: 'X11_XwcDrawImageString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XOpenIM primitive function"
 primXOpenIM: arg1 resName: arg4 resClass: arg5
-    <cCall: 'Xlib_XOpenIM' plugin: 'x11'>
+    <cCall: 'X11_XOpenIM' plugin: 'x11'>
     self primitiveFailed
 !
 
@@ -5912,56 +5912,56 @@ primXOpenIM: arg1 resName: arg4 resClass: arg5
 "_________________________________________________________"
 "XInternalConnectionNumbers primitive function"
 primXInternalConnectionNumbers: arg1 countReturn: arg4
-    <cCall: 'Xlib_XInternalConnectionNumbers' plugin: 'x11'>
+    <cCall: 'X11_XInternalConnectionNumbers' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XProcessInternalConnection primitive function"
 primXProcessInternalConnection: arg1
-    <cCall: 'Xlib_XProcessInternalConnection' plugin: 'x11'>
+    <cCall: 'X11_XProcessInternalConnection' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XAddConnectionWatch primitive function"
 primXAddConnectionWatch: arg1 clientData: arg4
-    <cCall: 'Xlib_XAddConnectionWatch' plugin: 'x11'>
+    <cCall: 'X11_XAddConnectionWatch' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRemoveConnectionWatch primitive function"
 primXRemoveConnectionWatch: arg1 clientData: arg4
-    <cCall: 'Xlib_XRemoveConnectionWatch' plugin: 'x11'>
+    <cCall: 'X11_XRemoveConnectionWatch' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibDisplayDelete
-    <cCall: 'Xlib_delete_Display' plugin: 'x11'>
+primX11DisplayDelete
+    <cCall: 'X11_delete_Display' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibDisplayDelete.
+    ^self primX11DisplayDelete.
 !
 
 
 name
-    ^'XlibDisplay'
+    ^'X11Display'
 
 ! !
 
-!XlibDisplay methodsFor: 'pointer'!
+!X11Display methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibDisplay methodsFor: 'finalization'!
+!X11Display methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -5972,35 +5972,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXHostAddress
+CStruct subclass: #X11XHostAddress
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXHostAddress class methodsFor: 'initialize-release'!
+!X11XHostAddress class methodsFor: 'initialize-release'!
 
-primXlibXHostAddressCreate
-    <cCall: 'Xlib_new_XHostAddress' plugin: 'x11'>
+primX11XHostAddressCreate
+    <cCall: 'X11_new_XHostAddress' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXHostAddressCreate).
+    ^self handle: (self primX11XHostAddressCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXHostAddress  methodsFor: 'Xlib'!
+!X11XHostAddress  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "family primitive accessors"
 primXHostAddressFamily
-    <cCall: 'Xlib_XHostAddress_family_get' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_family_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXHostAddressFamily: val
-    <cCall: 'Xlib_XHostAddress_family_set' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_family_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6015,11 +6015,11 @@ family: val
 "_________________________________________________________"
 "length primitive accessors"
 primXHostAddressLength
-    <cCall: 'Xlib_XHostAddress_length_get' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_length_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXHostAddressLength: val
-    <cCall: 'Xlib_XHostAddress_length_set' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_length_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6034,11 +6034,11 @@ length: val
 "_________________________________________________________"
 "address primitive accessors"
 primXHostAddressAddress
-    <cCall: 'Xlib_XHostAddress_address_get' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_address_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXHostAddressAddress: val
-    <cCall: 'Xlib_XHostAddress_address_set' plugin: 'x11'>
+    <cCall: 'X11_XHostAddress_address_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6055,28 +6055,28 @@ address: val
 
 
 
-primXlibXHostAddressDelete
-    <cCall: 'Xlib_delete_XHostAddress' plugin: 'x11'>
+primX11XHostAddressDelete
+    <cCall: 'X11_delete_XHostAddress' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXHostAddressDelete.
+    ^self primX11XHostAddressDelete.
 !
 
 
 name
-    ^'XlibXHostAddress'
+    ^'X11XHostAddress'
 
 ! !
 
-!XlibXHostAddress methodsFor: 'pointer'!
+!X11XHostAddress methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXHostAddress methodsFor: 'finalization'!
+!X11XHostAddress methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -6087,35 +6087,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibDepth
+CStruct subclass: #X11Depth
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibDepth class methodsFor: 'initialize-release'!
+!X11Depth class methodsFor: 'initialize-release'!
 
-primXlibDepthCreate
-    <cCall: 'Xlib_new_Depth' plugin: 'x11'>
+primX11DepthCreate
+    <cCall: 'X11_new_Depth' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibDepthCreate).
+    ^self handle: (self primX11DepthCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibDepth  methodsFor: 'Xlib'!
+!X11Depth  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "depth primitive accessors"
 primDepthDepth
-    <cCall: 'Xlib_Depth_depth_get' plugin: 'x11'>
+    <cCall: 'X11_Depth_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primDepthDepth: val
-    <cCall: 'Xlib_Depth_depth_set' plugin: 'x11'>
+    <cCall: 'X11_Depth_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6130,11 +6130,11 @@ depth: val
 "_________________________________________________________"
 "nvisuals primitive accessors"
 primDepthNvisuals
-    <cCall: 'Xlib_Depth_nvisuals_get' plugin: 'x11'>
+    <cCall: 'X11_Depth_nvisuals_get' plugin: 'x11'>
     self primitiveFailed
 !
 primDepthNvisuals: val
-    <cCall: 'Xlib_Depth_nvisuals_set' plugin: 'x11'>
+    <cCall: 'X11_Depth_nvisuals_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6149,11 +6149,11 @@ nvisuals: val
 "_________________________________________________________"
 "visuals primitive accessors"
 primDepthVisuals
-    <cCall: 'Xlib_Depth_visuals_get' plugin: 'x11'>
+    <cCall: 'X11_Depth_visuals_get' plugin: 'x11'>
     self primitiveFailed
 !
 primDepthVisuals: val
-    <cCall: 'Xlib_Depth_visuals_set' plugin: 'x11'>
+    <cCall: 'X11_Depth_visuals_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6170,28 +6170,28 @@ visuals: val
 
 
 
-primXlibDepthDelete
-    <cCall: 'Xlib_delete_Depth' plugin: 'x11'>
+primX11DepthDelete
+    <cCall: 'X11_delete_Depth' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibDepthDelete.
+    ^self primX11DepthDelete.
 !
 
 
 name
-    ^'XlibDepth'
+    ^'X11Depth'
 
 ! !
 
-!XlibDepth methodsFor: 'pointer'!
+!X11Depth methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibDepth methodsFor: 'finalization'!
+!X11Depth methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -6202,35 +6202,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXEDataObject
+CStruct subclass: #X11XEDataObject
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXEDataObject class methodsFor: 'initialize-release'!
+!X11XEDataObject class methodsFor: 'initialize-release'!
 
-primXlibXEDataObjectCreate
-    <cCall: 'Xlib_new_XEDataObject' plugin: 'x11'>
+primX11XEDataObjectCreate
+    <cCall: 'X11_new_XEDataObject' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXEDataObjectCreate).
+    ^self handle: (self primX11XEDataObjectCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXEDataObject  methodsFor: 'Xlib'!
+!X11XEDataObject  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "display primitive accessors"
 primXEDataObjectDisplay
-    <cCall: 'Xlib_XEDataObject_display_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectDisplay: val
-    <cCall: 'Xlib_XEDataObject_display_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6245,11 +6245,11 @@ display: val
 "_________________________________________________________"
 "gc primitive accessors"
 primXEDataObjectGc
-    <cCall: 'Xlib_XEDataObject_gc_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_gc_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectGc: val
-    <cCall: 'Xlib_XEDataObject_gc_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_gc_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6264,11 +6264,11 @@ gc: val
 "_________________________________________________________"
 "visual primitive accessors"
 primXEDataObjectVisual
-    <cCall: 'Xlib_XEDataObject_visual_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_visual_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectVisual: val
-    <cCall: 'Xlib_XEDataObject_visual_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_visual_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6283,11 +6283,11 @@ visual: val
 "_________________________________________________________"
 "screen primitive accessors"
 primXEDataObjectScreen
-    <cCall: 'Xlib_XEDataObject_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectScreen: val
-    <cCall: 'Xlib_XEDataObject_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6302,11 +6302,11 @@ screen: val
 "_________________________________________________________"
 "pixmap_format primitive accessors"
 primXEDataObjectPixmapFormat
-    <cCall: 'Xlib_XEDataObject_pixmap_format_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_pixmap_format_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectPixmapFormat: val
-    <cCall: 'Xlib_XEDataObject_pixmap_format_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_pixmap_format_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6321,11 +6321,11 @@ pixmapformat: val
 "_________________________________________________________"
 "font primitive accessors"
 primXEDataObjectFont
-    <cCall: 'Xlib_XEDataObject_font_get' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_font_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEDataObjectFont: val
-    <cCall: 'Xlib_XEDataObject_font_set' plugin: 'x11'>
+    <cCall: 'X11_XEDataObject_font_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6342,28 +6342,28 @@ font: val
 
 
 
-primXlibXEDataObjectDelete
-    <cCall: 'Xlib_delete_XEDataObject' plugin: 'x11'>
+primX11XEDataObjectDelete
+    <cCall: 'X11_delete_XEDataObject' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXEDataObjectDelete.
+    ^self primX11XEDataObjectDelete.
 !
 
 
 name
-    ^'XlibXEDataObject'
+    ^'X11XEDataObject'
 
 ! !
 
-!XlibXEDataObject methodsFor: 'pointer'!
+!X11XEDataObject methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXEDataObject methodsFor: 'finalization'!
+!X11XEDataObject methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -6374,35 +6374,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibScreen
+CStruct subclass: #X11Screen
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibScreen class methodsFor: 'initialize-release'!
+!X11Screen class methodsFor: 'initialize-release'!
 
-primXlibScreenCreate
-    <cCall: 'Xlib_new_Screen' plugin: 'x11'>
+primX11ScreenCreate
+    <cCall: 'X11_new_Screen' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibScreenCreate).
+    ^self handle: (self primX11ScreenCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibScreen  methodsFor: 'Xlib'!
+!X11Screen  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "ext_data primitive accessors"
 primScreenExtData
-    <cCall: 'Xlib_Screen_ext_data_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_ext_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenExtData: val
-    <cCall: 'Xlib_Screen_ext_data_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_ext_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6417,11 +6417,11 @@ extdata: val
 "_________________________________________________________"
 "display primitive accessors"
 primScreenDisplay
-    <cCall: 'Xlib_Screen_display_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenDisplay: val
-    <cCall: 'Xlib_Screen_display_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6436,11 +6436,11 @@ display: val
 "_________________________________________________________"
 "root primitive accessors"
 primScreenRoot
-    <cCall: 'Xlib_Screen_root_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenRoot: val
-    <cCall: 'Xlib_Screen_root_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6455,11 +6455,11 @@ root: val
 "_________________________________________________________"
 "width primitive accessors"
 primScreenWidth
-    <cCall: 'Xlib_Screen_width_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenWidth: val
-    <cCall: 'Xlib_Screen_width_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6474,11 +6474,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primScreenHeight
-    <cCall: 'Xlib_Screen_height_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenHeight: val
-    <cCall: 'Xlib_Screen_height_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6493,11 +6493,11 @@ height: val
 "_________________________________________________________"
 "mwidth primitive accessors"
 primScreenMwidth
-    <cCall: 'Xlib_Screen_mwidth_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_mwidth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenMwidth: val
-    <cCall: 'Xlib_Screen_mwidth_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_mwidth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6512,11 +6512,11 @@ mwidth: val
 "_________________________________________________________"
 "mheight primitive accessors"
 primScreenMheight
-    <cCall: 'Xlib_Screen_mheight_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_mheight_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenMheight: val
-    <cCall: 'Xlib_Screen_mheight_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_mheight_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6531,11 +6531,11 @@ mheight: val
 "_________________________________________________________"
 "ndepths primitive accessors"
 primScreenNdepths
-    <cCall: 'Xlib_Screen_ndepths_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_ndepths_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenNdepths: val
-    <cCall: 'Xlib_Screen_ndepths_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_ndepths_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6550,11 +6550,11 @@ ndepths: val
 "_________________________________________________________"
 "depths primitive accessors"
 primScreenDepths
-    <cCall: 'Xlib_Screen_depths_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_depths_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenDepths: val
-    <cCall: 'Xlib_Screen_depths_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_depths_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6569,11 +6569,11 @@ depths: val
 "_________________________________________________________"
 "root_depth primitive accessors"
 primScreenRootDepth
-    <cCall: 'Xlib_Screen_root_depth_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenRootDepth: val
-    <cCall: 'Xlib_Screen_root_depth_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6588,11 +6588,11 @@ rootdepth: val
 "_________________________________________________________"
 "root_visual primitive accessors"
 primScreenRootVisual
-    <cCall: 'Xlib_Screen_root_visual_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_visual_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenRootVisual: val
-    <cCall: 'Xlib_Screen_root_visual_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_visual_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6607,11 +6607,11 @@ rootvisual: val
 "_________________________________________________________"
 "default_gc primitive accessors"
 primScreenDefaultGc
-    <cCall: 'Xlib_Screen_default_gc_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_default_gc_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenDefaultGc: val
-    <cCall: 'Xlib_Screen_default_gc_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_default_gc_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6626,11 +6626,11 @@ defaultgc: val
 "_________________________________________________________"
 "cmap primitive accessors"
 primScreenCmap
-    <cCall: 'Xlib_Screen_cmap_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_cmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenCmap: val
-    <cCall: 'Xlib_Screen_cmap_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_cmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6645,11 +6645,11 @@ cmap: val
 "_________________________________________________________"
 "white_pixel primitive accessors"
 primScreenWhitePixel
-    <cCall: 'Xlib_Screen_white_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_white_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenWhitePixel: val
-    <cCall: 'Xlib_Screen_white_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_white_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6664,11 +6664,11 @@ whitepixel: val
 "_________________________________________________________"
 "black_pixel primitive accessors"
 primScreenBlackPixel
-    <cCall: 'Xlib_Screen_black_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_black_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenBlackPixel: val
-    <cCall: 'Xlib_Screen_black_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_black_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6683,11 +6683,11 @@ blackpixel: val
 "_________________________________________________________"
 "max_maps primitive accessors"
 primScreenMaxMaps
-    <cCall: 'Xlib_Screen_max_maps_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_max_maps_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenMaxMaps: val
-    <cCall: 'Xlib_Screen_max_maps_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_max_maps_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6702,11 +6702,11 @@ maxmaps: val
 "_________________________________________________________"
 "min_maps primitive accessors"
 primScreenMinMaps
-    <cCall: 'Xlib_Screen_min_maps_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_min_maps_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenMinMaps: val
-    <cCall: 'Xlib_Screen_min_maps_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_min_maps_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6721,11 +6721,11 @@ minmaps: val
 "_________________________________________________________"
 "backing_store primitive accessors"
 primScreenBackingStore
-    <cCall: 'Xlib_Screen_backing_store_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_backing_store_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenBackingStore: val
-    <cCall: 'Xlib_Screen_backing_store_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_backing_store_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6740,11 +6740,11 @@ backingstore: val
 "_________________________________________________________"
 "save_unders primitive accessors"
 primScreenSaveUnders
-    <cCall: 'Xlib_Screen_save_unders_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_save_unders_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenSaveUnders: val
-    <cCall: 'Xlib_Screen_save_unders_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_save_unders_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6759,11 +6759,11 @@ saveunders: val
 "_________________________________________________________"
 "root_input_mask primitive accessors"
 primScreenRootInputMask
-    <cCall: 'Xlib_Screen_root_input_mask_get' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_input_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenRootInputMask: val
-    <cCall: 'Xlib_Screen_root_input_mask_set' plugin: 'x11'>
+    <cCall: 'X11_Screen_root_input_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -6780,175 +6780,175 @@ rootinputmask: val
 "_________________________________________________________"
 "XScreenResourceString primitive function"
 primXScreenResourceString
-    <cCall: 'Xlib_XScreenResourceString' plugin: 'x11'>
+    <cCall: 'X11_XScreenResourceString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XRootWindowOfScreen primitive function"
 primXRootWindowOfScreen
-    <cCall: 'Xlib_XRootWindowOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XRootWindowOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultVisualOfScreen primitive function"
 primXDefaultVisualOfScreen
-    <cCall: 'Xlib_XDefaultVisualOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XDefaultVisualOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultGCOfScreen primitive function"
 primXDefaultGCOfScreen
-    <cCall: 'Xlib_XDefaultGCOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XDefaultGCOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBlackPixelOfScreen primitive function"
 primXBlackPixelOfScreen
-    <cCall: 'Xlib_XBlackPixelOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XBlackPixelOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWhitePixelOfScreen primitive function"
 primXWhitePixelOfScreen
-    <cCall: 'Xlib_XWhitePixelOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XWhitePixelOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultColormapOfScreen primitive function"
 primXDefaultColormapOfScreen
-    <cCall: 'Xlib_XDefaultColormapOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XDefaultColormapOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayOfScreen primitive function"
 primXDisplayOfScreen
-    <cCall: 'Xlib_XDisplayOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XDisplayOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XEventMaskOfScreen primitive function"
 primXEventMaskOfScreen
-    <cCall: 'Xlib_XEventMaskOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XEventMaskOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XScreenNumberOfScreen primitive function"
 primXScreenNumberOfScreen
-    <cCall: 'Xlib_XScreenNumberOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XScreenNumberOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCellsOfScreen primitive function"
 primXCellsOfScreen
-    <cCall: 'Xlib_XCellsOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XCellsOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDefaultDepthOfScreen primitive function"
 primXDefaultDepthOfScreen
-    <cCall: 'Xlib_XDefaultDepthOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XDefaultDepthOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDoesBackingStore primitive function"
 primXDoesBackingStore
-    <cCall: 'Xlib_XDoesBackingStore' plugin: 'x11'>
+    <cCall: 'X11_XDoesBackingStore' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDoesSaveUnders primitive function"
 primXDoesSaveUnders
-    <cCall: 'Xlib_XDoesSaveUnders' plugin: 'x11'>
+    <cCall: 'X11_XDoesSaveUnders' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XHeightMMOfScreen primitive function"
 primXHeightMMOfScreen
-    <cCall: 'Xlib_XHeightMMOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XHeightMMOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XHeightOfScreen primitive function"
 primXHeightOfScreen
-    <cCall: 'Xlib_XHeightOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XHeightOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMaxCmapsOfScreen primitive function"
 primXMaxCmapsOfScreen
-    <cCall: 'Xlib_XMaxCmapsOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XMaxCmapsOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XMinCmapsOfScreen primitive function"
 primXMinCmapsOfScreen
-    <cCall: 'Xlib_XMinCmapsOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XMinCmapsOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XPlanesOfScreen primitive function"
 primXPlanesOfScreen
-    <cCall: 'Xlib_XPlanesOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XPlanesOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWidthMMOfScreen primitive function"
 primXWidthMMOfScreen
-    <cCall: 'Xlib_XWidthMMOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XWidthMMOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XWidthOfScreen primitive function"
 primXWidthOfScreen
-    <cCall: 'Xlib_XWidthOfScreen' plugin: 'x11'>
+    <cCall: 'X11_XWidthOfScreen' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibScreenDelete
-    <cCall: 'Xlib_delete_Screen' plugin: 'x11'>
+primX11ScreenDelete
+    <cCall: 'X11_delete_Screen' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibScreenDelete.
+    ^self primX11ScreenDelete.
 !
 
 
 name
-    ^'XlibScreen'
+    ^'X11Screen'
 
 ! !
 
-!XlibScreen methodsFor: 'pointer'!
+!X11Screen methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibScreen methodsFor: 'finalization'!
+!X11Screen methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -6959,35 +6959,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMStringConversionText
+CStruct subclass: #X11XIMStringConversionText
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMStringConversionText class methodsFor: 'initialize-release'!
+!X11XIMStringConversionText class methodsFor: 'initialize-release'!
 
-primXlibXIMStringConversionTextCreate
-    <cCall: 'Xlib_new_XIMStringConversionText' plugin: 'x11'>
+primX11XIMStringConversionTextCreate
+    <cCall: 'X11_new_XIMStringConversionText' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMStringConversionTextCreate).
+    ^self handle: (self primX11XIMStringConversionTextCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMStringConversionText  methodsFor: 'Xlib'!
+!X11XIMStringConversionText  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "length primitive accessors"
 primXIMStringConversionTextLength
-    <cCall: 'Xlib_XIMStringConversionText_length_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_length_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextLength: val
-    <cCall: 'Xlib_XIMStringConversionText_length_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_length_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7002,11 +7002,11 @@ length: val
 "_________________________________________________________"
 "feedback primitive accessors"
 primXIMStringConversionTextFeedback
-    <cCall: 'Xlib_XIMStringConversionText_feedback_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_feedback_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextFeedback: val
-    <cCall: 'Xlib_XIMStringConversionText_feedback_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_feedback_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7021,11 +7021,11 @@ feedback: val
 "_________________________________________________________"
 "encoding_is_wchar primitive accessors"
 primXIMStringConversionTextEncodingIsWchar
-    <cCall: 'Xlib_XIMStringConversionText_encoding_is_wchar_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_encoding_is_wchar_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextEncodingIsWchar: val
-    <cCall: 'Xlib_XIMStringConversionText_encoding_is_wchar_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_encoding_is_wchar_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7040,11 +7040,11 @@ encodingiswchar: val
 "_________________________________________________________"
 "string primitive accessors"
 primXIMStringConversionTextString
-    <cCall: 'Xlib_XIMStringConversionText_string_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextString: val
-    <cCall: 'Xlib_XIMStringConversionText_string_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7061,28 +7061,28 @@ string: val
 
 
 
-primXlibXIMStringConversionTextDelete
-    <cCall: 'Xlib_delete_XIMStringConversionText' plugin: 'x11'>
+primX11XIMStringConversionTextDelete
+    <cCall: 'X11_delete_XIMStringConversionText' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMStringConversionTextDelete.
+    ^self primX11XIMStringConversionTextDelete.
 !
 
 
 name
-    ^'XlibXIMStringConversionText'
+    ^'X11XIMStringConversionText'
 
 ! !
 
-!XlibXIMStringConversionText methodsFor: 'pointer'!
+!X11XIMStringConversionText methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMStringConversionText methodsFor: 'finalization'!
+!X11XIMStringConversionText methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -7093,35 +7093,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXImage
+CStruct subclass: #X11XImage
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXImage class methodsFor: 'initialize-release'!
+!X11XImage class methodsFor: 'initialize-release'!
 
-primXlibXImageCreate
-    <cCall: 'Xlib_new_XImage' plugin: 'x11'>
+primX11XImageCreate
+    <cCall: 'X11_new_XImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXImageCreate).
+    ^self handle: (self primX11XImageCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXImage  methodsFor: 'Xlib'!
+!X11XImage  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "width primitive accessors"
 primXImageWidth
-    <cCall: 'Xlib_XImage_width_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageWidth: val
-    <cCall: 'Xlib_XImage_width_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7136,11 +7136,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXImageHeight
-    <cCall: 'Xlib_XImage_height_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageHeight: val
-    <cCall: 'Xlib_XImage_height_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7155,11 +7155,11 @@ height: val
 "_________________________________________________________"
 "xoffset primitive accessors"
 primXImageXoffset
-    <cCall: 'Xlib_XImage_xoffset_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_xoffset_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageXoffset: val
-    <cCall: 'Xlib_XImage_xoffset_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_xoffset_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7174,11 +7174,11 @@ xoffset: val
 "_________________________________________________________"
 "format primitive accessors"
 primXImageFormat
-    <cCall: 'Xlib_XImage_format_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_format_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFormat: val
-    <cCall: 'Xlib_XImage_format_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_format_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7193,11 +7193,11 @@ format: val
 "_________________________________________________________"
 "data primitive accessors"
 primXImageData
-    <cCall: 'Xlib_XImage_data_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageData: val
-    <cCall: 'Xlib_XImage_data_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7212,11 +7212,11 @@ data: val
 "_________________________________________________________"
 "byte_order primitive accessors"
 primXImageByteOrder
-    <cCall: 'Xlib_XImage_byte_order_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_byte_order_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageByteOrder: val
-    <cCall: 'Xlib_XImage_byte_order_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_byte_order_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7231,11 +7231,11 @@ byteorder: val
 "_________________________________________________________"
 "bitmap_unit primitive accessors"
 primXImageBitmapUnit
-    <cCall: 'Xlib_XImage_bitmap_unit_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_unit_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBitmapUnit: val
-    <cCall: 'Xlib_XImage_bitmap_unit_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_unit_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7250,11 +7250,11 @@ bitmapunit: val
 "_________________________________________________________"
 "bitmap_bit_order primitive accessors"
 primXImageBitmapBitOrder
-    <cCall: 'Xlib_XImage_bitmap_bit_order_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_bit_order_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBitmapBitOrder: val
-    <cCall: 'Xlib_XImage_bitmap_bit_order_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_bit_order_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7269,11 +7269,11 @@ bitmapbitorder: val
 "_________________________________________________________"
 "bitmap_pad primitive accessors"
 primXImageBitmapPad
-    <cCall: 'Xlib_XImage_bitmap_pad_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_pad_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBitmapPad: val
-    <cCall: 'Xlib_XImage_bitmap_pad_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_bitmap_pad_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7288,11 +7288,11 @@ bitmappad: val
 "_________________________________________________________"
 "depth primitive accessors"
 primXImageDepth
-    <cCall: 'Xlib_XImage_depth_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageDepth: val
-    <cCall: 'Xlib_XImage_depth_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7307,11 +7307,11 @@ depth: val
 "_________________________________________________________"
 "bytes_per_line primitive accessors"
 primXImageBytesPerLine
-    <cCall: 'Xlib_XImage_bytes_per_line_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_bytes_per_line_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBytesPerLine: val
-    <cCall: 'Xlib_XImage_bytes_per_line_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_bytes_per_line_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7326,11 +7326,11 @@ bytesperline: val
 "_________________________________________________________"
 "bits_per_pixel primitive accessors"
 primXImageBitsPerPixel
-    <cCall: 'Xlib_XImage_bits_per_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_bits_per_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBitsPerPixel: val
-    <cCall: 'Xlib_XImage_bits_per_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_bits_per_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7345,11 +7345,11 @@ bitsperpixel: val
 "_________________________________________________________"
 "red_mask primitive accessors"
 primXImageRedMask
-    <cCall: 'Xlib_XImage_red_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_red_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageRedMask: val
-    <cCall: 'Xlib_XImage_red_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_red_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7364,11 +7364,11 @@ redmask: val
 "_________________________________________________________"
 "green_mask primitive accessors"
 primXImageGreenMask
-    <cCall: 'Xlib_XImage_green_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_green_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageGreenMask: val
-    <cCall: 'Xlib_XImage_green_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_green_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7383,11 +7383,11 @@ greenmask: val
 "_________________________________________________________"
 "blue_mask primitive accessors"
 primXImageBlueMask
-    <cCall: 'Xlib_XImage_blue_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_blue_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageBlueMask: val
-    <cCall: 'Xlib_XImage_blue_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_blue_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7402,11 +7402,11 @@ bluemask: val
 "_________________________________________________________"
 "obdata primitive accessors"
 primXImageObdata
-    <cCall: 'Xlib_XImage_obdata_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_obdata_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageObdata: val
-    <cCall: 'Xlib_XImage_obdata_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_obdata_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7421,11 +7421,11 @@ obdata: val
 "_________________________________________________________"
 "f primitive accessors"
 primXImageF
-    <cCall: 'Xlib_XImage_f_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageF: val
-    <cCall: 'Xlib_XImage_f_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7442,35 +7442,35 @@ f: val
 "_________________________________________________________"
 "XInitImage primitive function"
 primXInitImage
-    <cCall: 'Xlib_XInitImage' plugin: 'x11'>
+    <cCall: 'X11_XInitImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXImageDelete
-    <cCall: 'Xlib_delete_XImage' plugin: 'x11'>
+primX11XImageDelete
+    <cCall: 'X11_delete_XImage' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXImageDelete.
+    ^self primX11XImageDelete.
 !
 
 
 name
-    ^'XlibXImage'
+    ^'X11XImage'
 
 ! !
 
-!XlibXImage methodsFor: 'pointer'!
+!X11XImage methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXImage methodsFor: 'finalization'!
+!X11XImage methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -7481,35 +7481,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXRectangle
+CStruct subclass: #X11XRectangle
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXRectangle class methodsFor: 'initialize-release'!
+!X11XRectangle class methodsFor: 'initialize-release'!
 
-primXlibXRectangleCreate
-    <cCall: 'Xlib_new_XRectangle' plugin: 'x11'>
+primX11XRectangleCreate
+    <cCall: 'X11_new_XRectangle' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXRectangleCreate).
+    ^self handle: (self primX11XRectangleCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXRectangle  methodsFor: 'Xlib'!
+!X11XRectangle  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x primitive accessors"
 primXRectangleX
-    <cCall: 'Xlib_XRectangle_x_get' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXRectangleX: val
-    <cCall: 'Xlib_XRectangle_x_set' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7524,11 +7524,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXRectangleY
-    <cCall: 'Xlib_XRectangle_y_get' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXRectangleY: val
-    <cCall: 'Xlib_XRectangle_y_set' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7543,11 +7543,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXRectangleWidth
-    <cCall: 'Xlib_XRectangle_width_get' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXRectangleWidth: val
-    <cCall: 'Xlib_XRectangle_width_set' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7562,11 +7562,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXRectangleHeight
-    <cCall: 'Xlib_XRectangle_height_get' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXRectangleHeight: val
-    <cCall: 'Xlib_XRectangle_height_set' plugin: 'x11'>
+    <cCall: 'X11_XRectangle_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7583,28 +7583,28 @@ height: val
 
 
 
-primXlibXRectangleDelete
-    <cCall: 'Xlib_delete_XRectangle' plugin: 'x11'>
+primX11XRectangleDelete
+    <cCall: 'X11_delete_XRectangle' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXRectangleDelete.
+    ^self primX11XRectangleDelete.
 !
 
 
 name
-    ^'XlibXRectangle'
+    ^'X11XRectangle'
 
 ! !
 
-!XlibXRectangle methodsFor: 'pointer'!
+!X11XRectangle methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXRectangle methodsFor: 'finalization'!
+!X11XRectangle methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -7615,35 +7615,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXNoExposeEvent
+CStruct subclass: #X11XNoExposeEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXNoExposeEvent class methodsFor: 'initialize-release'!
+!X11XNoExposeEvent class methodsFor: 'initialize-release'!
 
-primXlibXNoExposeEventCreate
-    <cCall: 'Xlib_new_XNoExposeEvent' plugin: 'x11'>
+primX11XNoExposeEventCreate
+    <cCall: 'X11_new_XNoExposeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXNoExposeEventCreate).
+    ^self handle: (self primX11XNoExposeEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXNoExposeEvent  methodsFor: 'Xlib'!
+!X11XNoExposeEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXNoExposeEventType
-    <cCall: 'Xlib_XNoExposeEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventType: val
-    <cCall: 'Xlib_XNoExposeEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7658,11 +7658,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXNoExposeEventSerial
-    <cCall: 'Xlib_XNoExposeEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventSerial: val
-    <cCall: 'Xlib_XNoExposeEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7677,11 +7677,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXNoExposeEventSendEvent
-    <cCall: 'Xlib_XNoExposeEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventSendEvent: val
-    <cCall: 'Xlib_XNoExposeEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7696,11 +7696,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXNoExposeEventDisplay
-    <cCall: 'Xlib_XNoExposeEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventDisplay: val
-    <cCall: 'Xlib_XNoExposeEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7715,11 +7715,11 @@ display: val
 "_________________________________________________________"
 "drawable primitive accessors"
 primXNoExposeEventDrawable
-    <cCall: 'Xlib_XNoExposeEvent_drawable_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_drawable_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventDrawable: val
-    <cCall: 'Xlib_XNoExposeEvent_drawable_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_drawable_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7734,11 +7734,11 @@ drawable: val
 "_________________________________________________________"
 "major_code primitive accessors"
 primXNoExposeEventMajorCode
-    <cCall: 'Xlib_XNoExposeEvent_major_code_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_major_code_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventMajorCode: val
-    <cCall: 'Xlib_XNoExposeEvent_major_code_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_major_code_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7753,11 +7753,11 @@ majorcode: val
 "_________________________________________________________"
 "minor_code primitive accessors"
 primXNoExposeEventMinorCode
-    <cCall: 'Xlib_XNoExposeEvent_minor_code_get' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_minor_code_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXNoExposeEventMinorCode: val
-    <cCall: 'Xlib_XNoExposeEvent_minor_code_set' plugin: 'x11'>
+    <cCall: 'X11_XNoExposeEvent_minor_code_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7774,28 +7774,28 @@ minorcode: val
 
 
 
-primXlibXNoExposeEventDelete
-    <cCall: 'Xlib_delete_XNoExposeEvent' plugin: 'x11'>
+primX11XNoExposeEventDelete
+    <cCall: 'X11_delete_XNoExposeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXNoExposeEventDelete.
+    ^self primX11XNoExposeEventDelete.
 !
 
 
 name
-    ^'XlibXNoExposeEvent'
+    ^'X11XNoExposeEvent'
 
 ! !
 
-!XlibXNoExposeEvent methodsFor: 'pointer'!
+!X11XNoExposeEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXNoExposeEvent methodsFor: 'finalization'!
+!X11XNoExposeEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -7806,35 +7806,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXEvent
+CStruct subclass: #X11XEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXEvent class methodsFor: 'initialize-release'!
+!X11XEvent class methodsFor: 'initialize-release'!
 
-primXlibXEventCreate
-    <cCall: 'Xlib_new_XEvent' plugin: 'x11'>
+primX11XEventCreate
+    <cCall: 'X11_new_XEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXEventCreate).
+    ^self handle: (self primX11XEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXEvent  methodsFor: 'Xlib'!
+!X11XEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXEventType
-    <cCall: 'Xlib_XEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventType: val
-    <cCall: 'Xlib_XEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7849,11 +7849,11 @@ type: val
 "_________________________________________________________"
 "xany primitive accessors"
 primXEventXany
-    <cCall: 'Xlib_XEvent_xany_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xany_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXany: val
-    <cCall: 'Xlib_XEvent_xany_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xany_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7868,11 +7868,11 @@ xany: val
 "_________________________________________________________"
 "xkey primitive accessors"
 primXEventXkey
-    <cCall: 'Xlib_XEvent_xkey_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xkey_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXkey: val
-    <cCall: 'Xlib_XEvent_xkey_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xkey_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7887,11 +7887,11 @@ xkey: val
 "_________________________________________________________"
 "xbutton primitive accessors"
 primXEventXbutton
-    <cCall: 'Xlib_XEvent_xbutton_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xbutton_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXbutton: val
-    <cCall: 'Xlib_XEvent_xbutton_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xbutton_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7906,11 +7906,11 @@ xbutton: val
 "_________________________________________________________"
 "xmotion primitive accessors"
 primXEventXmotion
-    <cCall: 'Xlib_XEvent_xmotion_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmotion_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXmotion: val
-    <cCall: 'Xlib_XEvent_xmotion_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmotion_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7925,11 +7925,11 @@ xmotion: val
 "_________________________________________________________"
 "xcrossing primitive accessors"
 primXEventXcrossing
-    <cCall: 'Xlib_XEvent_xcrossing_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcrossing_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXcrossing: val
-    <cCall: 'Xlib_XEvent_xcrossing_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcrossing_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7944,11 +7944,11 @@ xcrossing: val
 "_________________________________________________________"
 "xfocus primitive accessors"
 primXEventXfocus
-    <cCall: 'Xlib_XEvent_xfocus_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xfocus_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXfocus: val
-    <cCall: 'Xlib_XEvent_xfocus_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xfocus_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7963,11 +7963,11 @@ xfocus: val
 "_________________________________________________________"
 "xexpose primitive accessors"
 primXEventXexpose
-    <cCall: 'Xlib_XEvent_xexpose_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xexpose_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXexpose: val
-    <cCall: 'Xlib_XEvent_xexpose_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xexpose_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -7982,11 +7982,11 @@ xexpose: val
 "_________________________________________________________"
 "xgraphicsexpose primitive accessors"
 primXEventXgraphicsexpose
-    <cCall: 'Xlib_XEvent_xgraphicsexpose_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xgraphicsexpose_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXgraphicsexpose: val
-    <cCall: 'Xlib_XEvent_xgraphicsexpose_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xgraphicsexpose_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8001,11 +8001,11 @@ xgraphicsexpose: val
 "_________________________________________________________"
 "xnoexpose primitive accessors"
 primXEventXnoexpose
-    <cCall: 'Xlib_XEvent_xnoexpose_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xnoexpose_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXnoexpose: val
-    <cCall: 'Xlib_XEvent_xnoexpose_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xnoexpose_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8020,11 +8020,11 @@ xnoexpose: val
 "_________________________________________________________"
 "xvisibility primitive accessors"
 primXEventXvisibility
-    <cCall: 'Xlib_XEvent_xvisibility_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xvisibility_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXvisibility: val
-    <cCall: 'Xlib_XEvent_xvisibility_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xvisibility_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8039,11 +8039,11 @@ xvisibility: val
 "_________________________________________________________"
 "xcreatewindow primitive accessors"
 primXEventXcreatewindow
-    <cCall: 'Xlib_XEvent_xcreatewindow_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcreatewindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXcreatewindow: val
-    <cCall: 'Xlib_XEvent_xcreatewindow_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcreatewindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8058,11 +8058,11 @@ xcreatewindow: val
 "_________________________________________________________"
 "xdestroywindow primitive accessors"
 primXEventXdestroywindow
-    <cCall: 'Xlib_XEvent_xdestroywindow_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xdestroywindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXdestroywindow: val
-    <cCall: 'Xlib_XEvent_xdestroywindow_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xdestroywindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8077,11 +8077,11 @@ xdestroywindow: val
 "_________________________________________________________"
 "xunmap primitive accessors"
 primXEventXunmap
-    <cCall: 'Xlib_XEvent_xunmap_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xunmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXunmap: val
-    <cCall: 'Xlib_XEvent_xunmap_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xunmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8096,11 +8096,11 @@ xunmap: val
 "_________________________________________________________"
 "xmap primitive accessors"
 primXEventXmap
-    <cCall: 'Xlib_XEvent_xmap_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXmap: val
-    <cCall: 'Xlib_XEvent_xmap_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8115,11 +8115,11 @@ xmap: val
 "_________________________________________________________"
 "xmaprequest primitive accessors"
 primXEventXmaprequest
-    <cCall: 'Xlib_XEvent_xmaprequest_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmaprequest_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXmaprequest: val
-    <cCall: 'Xlib_XEvent_xmaprequest_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmaprequest_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8134,11 +8134,11 @@ xmaprequest: val
 "_________________________________________________________"
 "xreparent primitive accessors"
 primXEventXreparent
-    <cCall: 'Xlib_XEvent_xreparent_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xreparent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXreparent: val
-    <cCall: 'Xlib_XEvent_xreparent_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xreparent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8153,11 +8153,11 @@ xreparent: val
 "_________________________________________________________"
 "xconfigure primitive accessors"
 primXEventXconfigure
-    <cCall: 'Xlib_XEvent_xconfigure_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xconfigure_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXconfigure: val
-    <cCall: 'Xlib_XEvent_xconfigure_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xconfigure_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8172,11 +8172,11 @@ xconfigure: val
 "_________________________________________________________"
 "xgravity primitive accessors"
 primXEventXgravity
-    <cCall: 'Xlib_XEvent_xgravity_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xgravity_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXgravity: val
-    <cCall: 'Xlib_XEvent_xgravity_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xgravity_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8191,11 +8191,11 @@ xgravity: val
 "_________________________________________________________"
 "xresizerequest primitive accessors"
 primXEventXresizerequest
-    <cCall: 'Xlib_XEvent_xresizerequest_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xresizerequest_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXresizerequest: val
-    <cCall: 'Xlib_XEvent_xresizerequest_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xresizerequest_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8210,11 +8210,11 @@ xresizerequest: val
 "_________________________________________________________"
 "xconfigurerequest primitive accessors"
 primXEventXconfigurerequest
-    <cCall: 'Xlib_XEvent_xconfigurerequest_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xconfigurerequest_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXconfigurerequest: val
-    <cCall: 'Xlib_XEvent_xconfigurerequest_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xconfigurerequest_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8229,11 +8229,11 @@ xconfigurerequest: val
 "_________________________________________________________"
 "xcirculate primitive accessors"
 primXEventXcirculate
-    <cCall: 'Xlib_XEvent_xcirculate_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcirculate_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXcirculate: val
-    <cCall: 'Xlib_XEvent_xcirculate_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcirculate_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8248,11 +8248,11 @@ xcirculate: val
 "_________________________________________________________"
 "xcirculaterequest primitive accessors"
 primXEventXcirculaterequest
-    <cCall: 'Xlib_XEvent_xcirculaterequest_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcirculaterequest_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXcirculaterequest: val
-    <cCall: 'Xlib_XEvent_xcirculaterequest_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcirculaterequest_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8267,11 +8267,11 @@ xcirculaterequest: val
 "_________________________________________________________"
 "xproperty primitive accessors"
 primXEventXproperty
-    <cCall: 'Xlib_XEvent_xproperty_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xproperty_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXproperty: val
-    <cCall: 'Xlib_XEvent_xproperty_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xproperty_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8286,11 +8286,11 @@ xproperty: val
 "_________________________________________________________"
 "xselectionclear primitive accessors"
 primXEventXselectionclear
-    <cCall: 'Xlib_XEvent_xselectionclear_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselectionclear_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXselectionclear: val
-    <cCall: 'Xlib_XEvent_xselectionclear_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselectionclear_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8305,11 +8305,11 @@ xselectionclear: val
 "_________________________________________________________"
 "xselectionrequest primitive accessors"
 primXEventXselectionrequest
-    <cCall: 'Xlib_XEvent_xselectionrequest_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselectionrequest_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXselectionrequest: val
-    <cCall: 'Xlib_XEvent_xselectionrequest_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselectionrequest_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8324,11 +8324,11 @@ xselectionrequest: val
 "_________________________________________________________"
 "xselection primitive accessors"
 primXEventXselection
-    <cCall: 'Xlib_XEvent_xselection_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselection_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXselection: val
-    <cCall: 'Xlib_XEvent_xselection_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xselection_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8343,11 +8343,11 @@ xselection: val
 "_________________________________________________________"
 "xcolormap primitive accessors"
 primXEventXcolormap
-    <cCall: 'Xlib_XEvent_xcolormap_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcolormap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXcolormap: val
-    <cCall: 'Xlib_XEvent_xcolormap_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xcolormap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8362,11 +8362,11 @@ xcolormap: val
 "_________________________________________________________"
 "xclient primitive accessors"
 primXEventXclient
-    <cCall: 'Xlib_XEvent_xclient_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xclient_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXclient: val
-    <cCall: 'Xlib_XEvent_xclient_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xclient_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8381,11 +8381,11 @@ xclient: val
 "_________________________________________________________"
 "xmapping primitive accessors"
 primXEventXmapping
-    <cCall: 'Xlib_XEvent_xmapping_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmapping_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXmapping: val
-    <cCall: 'Xlib_XEvent_xmapping_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xmapping_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8400,11 +8400,11 @@ xmapping: val
 "_________________________________________________________"
 "xerror primitive accessors"
 primXEventXerror
-    <cCall: 'Xlib_XEvent_xerror_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xerror_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXerror: val
-    <cCall: 'Xlib_XEvent_xerror_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xerror_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8419,11 +8419,11 @@ xerror: val
 "_________________________________________________________"
 "xkeymap primitive accessors"
 primXEventXkeymap
-    <cCall: 'Xlib_XEvent_xkeymap_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xkeymap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventXkeymap: val
-    <cCall: 'Xlib_XEvent_xkeymap_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_xkeymap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8438,11 +8438,11 @@ xkeymap: val
 "_________________________________________________________"
 "pad primitive accessors"
 primXEventPad
-    <cCall: 'Xlib_XEvent_pad_get' plugin: 'x11'>
+    <cCall: 'X11_XEvent_pad_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXEventPad: val
-    <cCall: 'Xlib_XEvent_pad_set' plugin: 'x11'>
+    <cCall: 'X11_XEvent_pad_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8459,35 +8459,35 @@ pad: val
 "_________________________________________________________"
 "XFilterEvent primitive function"
 primXFilterEvent: arg1
-    <cCall: 'Xlib_XFilterEvent' plugin: 'x11'>
+    <cCall: 'X11_XFilterEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXEventDelete
-    <cCall: 'Xlib_delete_XEvent' plugin: 'x11'>
+primX11XEventDelete
+    <cCall: 'X11_delete_XEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXEventDelete.
+    ^self primX11XEventDelete.
 !
 
 
 name
-    ^'XlibXEvent'
+    ^'X11XEvent'
 
 ! !
 
-!XlibXEvent methodsFor: 'pointer'!
+!X11XEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXEvent methodsFor: 'finalization'!
+!X11XEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -8498,35 +8498,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXFontStruct
+CStruct subclass: #X11XFontStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXFontStruct class methodsFor: 'initialize-release'!
+!X11XFontStruct class methodsFor: 'initialize-release'!
 
-primXlibXFontStructCreate
-    <cCall: 'Xlib_new_XFontStruct' plugin: 'x11'>
+primX11XFontStructCreate
+    <cCall: 'X11_new_XFontStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXFontStructCreate).
+    ^self handle: (self primX11XFontStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXFontStruct  methodsFor: 'Xlib'!
+!X11XFontStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "ext_data primitive accessors"
 primXFontStructExtData
-    <cCall: 'Xlib_XFontStruct_ext_data_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_ext_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructExtData: val
-    <cCall: 'Xlib_XFontStruct_ext_data_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_ext_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8541,11 +8541,11 @@ extdata: val
 "_________________________________________________________"
 "fid primitive accessors"
 primXFontStructFid
-    <cCall: 'Xlib_XFontStruct_fid_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_fid_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructFid: val
-    <cCall: 'Xlib_XFontStruct_fid_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_fid_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8560,11 +8560,11 @@ fid: val
 "_________________________________________________________"
 "direction primitive accessors"
 primXFontStructDirection
-    <cCall: 'Xlib_XFontStruct_direction_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_direction_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructDirection: val
-    <cCall: 'Xlib_XFontStruct_direction_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_direction_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8579,11 +8579,11 @@ direction: val
 "_________________________________________________________"
 "min_char_or_byte2 primitive accessors"
 primXFontStructMinCharOrByte2
-    <cCall: 'Xlib_XFontStruct_min_char_or_byte2_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_char_or_byte2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMinCharOrByte2: val
-    <cCall: 'Xlib_XFontStruct_min_char_or_byte2_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_char_or_byte2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8598,11 +8598,11 @@ mincharorbyte2: val
 "_________________________________________________________"
 "max_char_or_byte2 primitive accessors"
 primXFontStructMaxCharOrByte2
-    <cCall: 'Xlib_XFontStruct_max_char_or_byte2_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_char_or_byte2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMaxCharOrByte2: val
-    <cCall: 'Xlib_XFontStruct_max_char_or_byte2_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_char_or_byte2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8617,11 +8617,11 @@ maxcharorbyte2: val
 "_________________________________________________________"
 "min_byte1 primitive accessors"
 primXFontStructMinByte1
-    <cCall: 'Xlib_XFontStruct_min_byte1_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_byte1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMinByte1: val
-    <cCall: 'Xlib_XFontStruct_min_byte1_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_byte1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8636,11 +8636,11 @@ minbyte1: val
 "_________________________________________________________"
 "max_byte1 primitive accessors"
 primXFontStructMaxByte1
-    <cCall: 'Xlib_XFontStruct_max_byte1_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_byte1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMaxByte1: val
-    <cCall: 'Xlib_XFontStruct_max_byte1_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_byte1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8655,11 +8655,11 @@ maxbyte1: val
 "_________________________________________________________"
 "all_chars_exist primitive accessors"
 primXFontStructAllCharsExist
-    <cCall: 'Xlib_XFontStruct_all_chars_exist_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_all_chars_exist_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructAllCharsExist: val
-    <cCall: 'Xlib_XFontStruct_all_chars_exist_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_all_chars_exist_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8674,11 +8674,11 @@ allcharsexist: val
 "_________________________________________________________"
 "default_char primitive accessors"
 primXFontStructDefaultChar
-    <cCall: 'Xlib_XFontStruct_default_char_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_default_char_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructDefaultChar: val
-    <cCall: 'Xlib_XFontStruct_default_char_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_default_char_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8693,11 +8693,11 @@ defaultchar: val
 "_________________________________________________________"
 "n_properties primitive accessors"
 primXFontStructNProperties
-    <cCall: 'Xlib_XFontStruct_n_properties_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_n_properties_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructNProperties: val
-    <cCall: 'Xlib_XFontStruct_n_properties_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_n_properties_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8712,11 +8712,11 @@ nproperties: val
 "_________________________________________________________"
 "properties primitive accessors"
 primXFontStructProperties
-    <cCall: 'Xlib_XFontStruct_properties_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_properties_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructProperties: val
-    <cCall: 'Xlib_XFontStruct_properties_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_properties_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8731,11 +8731,11 @@ properties: val
 "_________________________________________________________"
 "min_bounds primitive accessors"
 primXFontStructMinBounds
-    <cCall: 'Xlib_XFontStruct_min_bounds_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_bounds_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMinBounds: val
-    <cCall: 'Xlib_XFontStruct_min_bounds_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_min_bounds_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8750,11 +8750,11 @@ minbounds: val
 "_________________________________________________________"
 "max_bounds primitive accessors"
 primXFontStructMaxBounds
-    <cCall: 'Xlib_XFontStruct_max_bounds_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_bounds_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructMaxBounds: val
-    <cCall: 'Xlib_XFontStruct_max_bounds_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_max_bounds_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8769,11 +8769,11 @@ maxbounds: val
 "_________________________________________________________"
 "per_char primitive accessors"
 primXFontStructPerChar
-    <cCall: 'Xlib_XFontStruct_per_char_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_per_char_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructPerChar: val
-    <cCall: 'Xlib_XFontStruct_per_char_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_per_char_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8788,11 +8788,11 @@ perchar: val
 "_________________________________________________________"
 "ascent primitive accessors"
 primXFontStructAscent
-    <cCall: 'Xlib_XFontStruct_ascent_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_ascent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructAscent: val
-    <cCall: 'Xlib_XFontStruct_ascent_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_ascent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8807,11 +8807,11 @@ ascent: val
 "_________________________________________________________"
 "descent primitive accessors"
 primXFontStructDescent
-    <cCall: 'Xlib_XFontStruct_descent_get' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_descent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontStructDescent: val
-    <cCall: 'Xlib_XFontStruct_descent_set' plugin: 'x11'>
+    <cCall: 'X11_XFontStruct_descent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8828,63 +8828,63 @@ descent: val
 "_________________________________________________________"
 "XGetFontProperty primitive function"
 primXGetFontProperty: arg1 valueReturn: arg4
-    <cCall: 'Xlib_XGetFontProperty' plugin: 'x11'>
+    <cCall: 'X11_XGetFontProperty' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XTextExtents primitive function"
 primXTextExtents: arg1 nchars: arg4 directionReturn: arg5 fontAscentReturn: arg6 fontDescentReturn: arg7 overallReturn: arg8
-    <cCall: 'Xlib_XTextExtents' plugin: 'x11'>
+    <cCall: 'X11_XTextExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XTextExtents16 primitive function"
 primXTextExtents16: arg1 nchars: arg4 directionReturn: arg5 fontAscentReturn: arg6 fontDescentReturn: arg7 overallReturn: arg8
-    <cCall: 'Xlib_XTextExtents16' plugin: 'x11'>
+    <cCall: 'X11_XTextExtents16' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XTextWidth primitive function"
 primXTextWidth: arg1 count: arg4
-    <cCall: 'Xlib_XTextWidth' plugin: 'x11'>
+    <cCall: 'X11_XTextWidth' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XTextWidth16 primitive function"
 primXTextWidth16: arg1 count: arg4
-    <cCall: 'Xlib_XTextWidth16' plugin: 'x11'>
+    <cCall: 'X11_XTextWidth16' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXFontStructDelete
-    <cCall: 'Xlib_delete_XFontStruct' plugin: 'x11'>
+primX11XFontStructDelete
+    <cCall: 'X11_delete_XFontStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXFontStructDelete.
+    ^self primX11XFontStructDelete.
 !
 
 
 name
-    ^'XlibXFontStruct'
+    ^'X11XFontStruct'
 
 ! !
 
-!XlibXFontStruct methodsFor: 'pointer'!
+!X11XFontStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXFontStruct methodsFor: 'finalization'!
+!X11XFontStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -8895,35 +8895,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXKeyboardControl
+CStruct subclass: #X11XKeyboardControl
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXKeyboardControl class methodsFor: 'initialize-release'!
+!X11XKeyboardControl class methodsFor: 'initialize-release'!
 
-primXlibXKeyboardControlCreate
-    <cCall: 'Xlib_new_XKeyboardControl' plugin: 'x11'>
+primX11XKeyboardControlCreate
+    <cCall: 'X11_new_XKeyboardControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXKeyboardControlCreate).
+    ^self handle: (self primX11XKeyboardControlCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXKeyboardControl  methodsFor: 'Xlib'!
+!X11XKeyboardControl  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "key_click_percent primitive accessors"
 primXKeyboardControlKeyClickPercent
-    <cCall: 'Xlib_XKeyboardControl_key_click_percent_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_key_click_percent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlKeyClickPercent: val
-    <cCall: 'Xlib_XKeyboardControl_key_click_percent_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_key_click_percent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8938,11 +8938,11 @@ keyclickpercent: val
 "_________________________________________________________"
 "bell_percent primitive accessors"
 primXKeyboardControlBellPercent
-    <cCall: 'Xlib_XKeyboardControl_bell_percent_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_percent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlBellPercent: val
-    <cCall: 'Xlib_XKeyboardControl_bell_percent_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_percent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8957,11 +8957,11 @@ bellpercent: val
 "_________________________________________________________"
 "bell_pitch primitive accessors"
 primXKeyboardControlBellPitch
-    <cCall: 'Xlib_XKeyboardControl_bell_pitch_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_pitch_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlBellPitch: val
-    <cCall: 'Xlib_XKeyboardControl_bell_pitch_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_pitch_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8976,11 +8976,11 @@ bellpitch: val
 "_________________________________________________________"
 "bell_duration primitive accessors"
 primXKeyboardControlBellDuration
-    <cCall: 'Xlib_XKeyboardControl_bell_duration_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_duration_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlBellDuration: val
-    <cCall: 'Xlib_XKeyboardControl_bell_duration_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_bell_duration_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -8995,11 +8995,11 @@ bellduration: val
 "_________________________________________________________"
 "led primitive accessors"
 primXKeyboardControlLed
-    <cCall: 'Xlib_XKeyboardControl_led_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_led_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlLed: val
-    <cCall: 'Xlib_XKeyboardControl_led_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_led_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9014,11 +9014,11 @@ led: val
 "_________________________________________________________"
 "led_mode primitive accessors"
 primXKeyboardControlLedMode
-    <cCall: 'Xlib_XKeyboardControl_led_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_led_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlLedMode: val
-    <cCall: 'Xlib_XKeyboardControl_led_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_led_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9033,11 +9033,11 @@ ledmode: val
 "_________________________________________________________"
 "key primitive accessors"
 primXKeyboardControlKey
-    <cCall: 'Xlib_XKeyboardControl_key_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_key_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlKey: val
-    <cCall: 'Xlib_XKeyboardControl_key_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_key_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9052,11 +9052,11 @@ key: val
 "_________________________________________________________"
 "auto_repeat_mode primitive accessors"
 primXKeyboardControlAutoRepeatMode
-    <cCall: 'Xlib_XKeyboardControl_auto_repeat_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_auto_repeat_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardControlAutoRepeatMode: val
-    <cCall: 'Xlib_XKeyboardControl_auto_repeat_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardControl_auto_repeat_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9073,28 +9073,28 @@ autorepeatmode: val
 
 
 
-primXlibXKeyboardControlDelete
-    <cCall: 'Xlib_delete_XKeyboardControl' plugin: 'x11'>
+primX11XKeyboardControlDelete
+    <cCall: 'X11_delete_XKeyboardControl' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXKeyboardControlDelete.
+    ^self primX11XKeyboardControlDelete.
 !
 
 
 name
-    ^'XlibXKeyboardControl'
+    ^'X11XKeyboardControl'
 
 ! !
 
-!XlibXKeyboardControl methodsFor: 'pointer'!
+!X11XKeyboardControl methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXKeyboardControl methodsFor: 'finalization'!
+!X11XKeyboardControl methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9105,96 +9105,96 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIM
+CStruct subclass: #X11XIM
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIM class methodsFor: 'initialize-release'!
+!X11XIM class methodsFor: 'initialize-release'!
 
-primXlibXIMCreate
-    <cCall: 'Xlib_new_XIM' plugin: 'x11'>
+primX11XIMCreate
+    <cCall: 'X11_new_XIM' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMCreate).
+    ^self handle: (self primX11XIMCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIM  methodsFor: 'Xlib'!
+!X11XIM  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XCloseIM primitive function"
 primXCloseIM
-    <cCall: 'Xlib_XCloseIM' plugin: 'x11'>
+    <cCall: 'X11_XCloseIM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetIMValues primitive function"
 primXGetIMValues
-    <cCall: 'Xlib_XGetIMValues' plugin: 'x11'>
+    <cCall: 'X11_XGetIMValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetIMValues primitive function"
 primXSetIMValues
-    <cCall: 'Xlib_XSetIMValues' plugin: 'x11'>
+    <cCall: 'X11_XSetIMValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDisplayOfIM primitive function"
 primXDisplayOfIM
-    <cCall: 'Xlib_XDisplayOfIM' plugin: 'x11'>
+    <cCall: 'X11_XDisplayOfIM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLocaleOfIM primitive function"
 primXLocaleOfIM
-    <cCall: 'Xlib_XLocaleOfIM' plugin: 'x11'>
+    <cCall: 'X11_XLocaleOfIM' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XCreateIC primitive function"
 primXCreateIC
-    <cCall: 'Xlib_XCreateIC' plugin: 'x11'>
+    <cCall: 'X11_XCreateIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXIMDelete
-    <cCall: 'Xlib_delete_XIM' plugin: 'x11'>
+primX11XIMDelete
+    <cCall: 'X11_delete_XIM' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMDelete.
+    ^self primX11XIMDelete.
 !
 
 
 name
-    ^'XlibXIM'
+    ^'X11XIM'
 
 ! !
 
-!XlibXIM methodsFor: 'pointer'!
+!X11XIM methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIM methodsFor: 'finalization'!
+!X11XIM methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9205,145 +9205,145 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXFontSet
+CStruct subclass: #X11XFontSet
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXFontSet class methodsFor: 'initialize-release'!
+!X11XFontSet class methodsFor: 'initialize-release'!
 
-primXlibXFontSetCreate
-    <cCall: 'Xlib_new_XFontSet' plugin: 'x11'>
+primX11XFontSetCreate
+    <cCall: 'X11_new_XFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXFontSetCreate).
+    ^self handle: (self primX11XFontSetCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXFontSet  methodsFor: 'Xlib'!
+!X11XFontSet  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XFontsOfFontSet primitive function"
 primXFontsOfFontSet: arg1 fontNameList: arg4
-    <cCall: 'Xlib_XFontsOfFontSet' plugin: 'x11'>
+    <cCall: 'X11_XFontsOfFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XBaseFontNameListOfFontSet primitive function"
 primXBaseFontNameListOfFontSet
-    <cCall: 'Xlib_XBaseFontNameListOfFontSet' plugin: 'x11'>
+    <cCall: 'X11_XBaseFontNameListOfFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XLocaleOfFontSet primitive function"
 primXLocaleOfFontSet
-    <cCall: 'Xlib_XLocaleOfFontSet' plugin: 'x11'>
+    <cCall: 'X11_XLocaleOfFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XContextDependentDrawing primitive function"
 primXContextDependentDrawing
-    <cCall: 'Xlib_XContextDependentDrawing' plugin: 'x11'>
+    <cCall: 'X11_XContextDependentDrawing' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XDirectionalDependentDrawing primitive function"
 primXDirectionalDependentDrawing
-    <cCall: 'Xlib_XDirectionalDependentDrawing' plugin: 'x11'>
+    <cCall: 'X11_XDirectionalDependentDrawing' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XContextualDrawing primitive function"
 primXContextualDrawing
-    <cCall: 'Xlib_XContextualDrawing' plugin: 'x11'>
+    <cCall: 'X11_XContextualDrawing' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XExtentsOfFontSet primitive function"
 primXExtentsOfFontSet
-    <cCall: 'Xlib_XExtentsOfFontSet' plugin: 'x11'>
+    <cCall: 'X11_XExtentsOfFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbTextEscapement primitive function"
 primXmbTextEscapement: arg1 bytesText: arg4
-    <cCall: 'Xlib_XmbTextEscapement' plugin: 'x11'>
+    <cCall: 'X11_XmbTextEscapement' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcTextEscapement primitive function"
 primXwcTextEscapement: arg1 numWchars: arg4
-    <cCall: 'Xlib_XwcTextEscapement' plugin: 'x11'>
+    <cCall: 'X11_XwcTextEscapement' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbTextExtents primitive function"
 primXmbTextExtents: arg1 bytesText: arg4 overallInkReturn: arg5 overallLogicalReturn: arg6
-    <cCall: 'Xlib_XmbTextExtents' plugin: 'x11'>
+    <cCall: 'X11_XmbTextExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcTextExtents primitive function"
 primXwcTextExtents: arg1 numWchars: arg4 overallInkReturn: arg5 overallLogicalReturn: arg6
-    <cCall: 'Xlib_XwcTextExtents' plugin: 'x11'>
+    <cCall: 'X11_XwcTextExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbTextPerCharExtents primitive function"
 primXmbTextPerCharExtents: arg1 bytesText: arg4 inkExtentsBuffer: arg5 logicalExtentsBuffer: arg6 bufferSize: arg7 numChars: arg8 overallInkReturn: arg9 overallLogicalReturn: arg10
-    <cCall: 'Xlib_XmbTextPerCharExtents' plugin: 'x11'>
+    <cCall: 'X11_XmbTextPerCharExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcTextPerCharExtents primitive function"
 primXwcTextPerCharExtents: arg1 numWchars: arg4 inkExtentsBuffer: arg5 logicalExtentsBuffer: arg6 bufferSize: arg7 numChars: arg8 overallInkReturn: arg9 overallLogicalReturn: arg10
-    <cCall: 'Xlib_XwcTextPerCharExtents' plugin: 'x11'>
+    <cCall: 'X11_XwcTextPerCharExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXFontSetDelete
-    <cCall: 'Xlib_delete_XFontSet' plugin: 'x11'>
+primX11XFontSetDelete
+    <cCall: 'X11_delete_XFontSet' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXFontSetDelete.
+    ^self primX11XFontSetDelete.
 !
 
 
 name
-    ^'XlibXFontSet'
+    ^'X11XFontSet'
 
 ! !
 
-!XlibXFontSet methodsFor: 'pointer'!
+!X11XFontSet methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXFontSet methodsFor: 'finalization'!
+!X11XFontSet methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9354,35 +9354,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMTextString
+CStruct subclass: #X11XIMTextString
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMTextString class methodsFor: 'initialize-release'!
+!X11XIMTextString class methodsFor: 'initialize-release'!
 
-primXlibXIMTextStringCreate
-    <cCall: 'Xlib_new_XIMText_string' plugin: 'x11'>
+primX11XIMTextStringCreate
+    <cCall: 'X11_new_XIMText_string' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMTextStringCreate).
+    ^self handle: (self primX11XIMTextStringCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMTextString  methodsFor: 'Xlib'!
+!X11XIMTextString  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "multi_byte primitive accessors"
 primXIMTextStringMultiByte
-    <cCall: 'Xlib_XIMText_string_multi_byte_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_multi_byte_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextStringMultiByte: val
-    <cCall: 'Xlib_XIMText_string_multi_byte_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_multi_byte_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9397,11 +9397,11 @@ multibyte: val
 "_________________________________________________________"
 "wide_char primitive accessors"
 primXIMTextStringWideChar
-    <cCall: 'Xlib_XIMText_string_wide_char_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_wide_char_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextStringWideChar: val
-    <cCall: 'Xlib_XIMText_string_wide_char_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_wide_char_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9418,28 +9418,28 @@ widechar: val
 
 
 
-primXlibXIMTextStringDelete
-    <cCall: 'Xlib_delete_XIMText_string' plugin: 'x11'>
+primX11XIMTextStringDelete
+    <cCall: 'X11_delete_XIMText_string' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMTextStringDelete.
+    ^self primX11XIMTextStringDelete.
 !
 
 
 name
-    ^'XlibXIMTextString'
+    ^'X11XIMTextString'
 
 ! !
 
-!XlibXIMTextString methodsFor: 'pointer'!
+!X11XIMTextString methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMTextString methodsFor: 'finalization'!
+!X11XIMTextString methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9450,35 +9450,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXImageF
+CStruct subclass: #X11XImageF
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXImageF class methodsFor: 'initialize-release'!
+!X11XImageF class methodsFor: 'initialize-release'!
 
-primXlibXImageFCreate
-    <cCall: 'Xlib_new_XImage_f' plugin: 'x11'>
+primX11XImageFCreate
+    <cCall: 'X11_new_XImage_f' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXImageFCreate).
+    ^self handle: (self primX11XImageFCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXImageF  methodsFor: 'Xlib'!
+!X11XImageF  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "create_image primitive accessors"
 primXImageFCreateImage
-    <cCall: 'Xlib_XImage_f_create_image_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_create_image_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFCreateImage: val
-    <cCall: 'Xlib_XImage_f_create_image_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_create_image_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9493,11 +9493,11 @@ createimage: val
 "_________________________________________________________"
 "destroy_image primitive accessors"
 primXImageFDestroyImage
-    <cCall: 'Xlib_XImage_f_destroy_image_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_destroy_image_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFDestroyImage: val
-    <cCall: 'Xlib_XImage_f_destroy_image_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_destroy_image_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9512,11 +9512,11 @@ destroyimage: val
 "_________________________________________________________"
 "get_pixel primitive accessors"
 primXImageFGetPixel
-    <cCall: 'Xlib_XImage_f_get_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_get_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFGetPixel: val
-    <cCall: 'Xlib_XImage_f_get_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_get_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9531,11 +9531,11 @@ getpixel: val
 "_________________________________________________________"
 "put_pixel primitive accessors"
 primXImageFPutPixel
-    <cCall: 'Xlib_XImage_f_put_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_put_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFPutPixel: val
-    <cCall: 'Xlib_XImage_f_put_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_put_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9550,11 +9550,11 @@ putpixel: val
 "_________________________________________________________"
 "sub_image primitive accessors"
 primXImageFSubImage
-    <cCall: 'Xlib_XImage_f_sub_image_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_sub_image_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFSubImage: val
-    <cCall: 'Xlib_XImage_f_sub_image_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_sub_image_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9569,11 +9569,11 @@ subimage: val
 "_________________________________________________________"
 "add_pixel primitive accessors"
 primXImageFAddPixel
-    <cCall: 'Xlib_XImage_f_add_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_add_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXImageFAddPixel: val
-    <cCall: 'Xlib_XImage_f_add_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XImage_f_add_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9590,28 +9590,28 @@ addpixel: val
 
 
 
-primXlibXImageFDelete
-    <cCall: 'Xlib_delete_XImage_f' plugin: 'x11'>
+primX11XImageFDelete
+    <cCall: 'X11_delete_XImage_f' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXImageFDelete.
+    ^self primX11XImageFDelete.
 !
 
 
 name
-    ^'XlibXImageF'
+    ^'X11XImageF'
 
 ! !
 
-!XlibXImageF methodsFor: 'pointer'!
+!X11XImageF methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXImageF methodsFor: 'finalization'!
+!X11XImageF methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9622,35 +9622,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXVisibilityEvent
+CStruct subclass: #X11XVisibilityEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXVisibilityEvent class methodsFor: 'initialize-release'!
+!X11XVisibilityEvent class methodsFor: 'initialize-release'!
 
-primXlibXVisibilityEventCreate
-    <cCall: 'Xlib_new_XVisibilityEvent' plugin: 'x11'>
+primX11XVisibilityEventCreate
+    <cCall: 'X11_new_XVisibilityEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXVisibilityEventCreate).
+    ^self handle: (self primX11XVisibilityEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXVisibilityEvent  methodsFor: 'Xlib'!
+!X11XVisibilityEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXVisibilityEventType
-    <cCall: 'Xlib_XVisibilityEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventType: val
-    <cCall: 'Xlib_XVisibilityEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9665,11 +9665,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXVisibilityEventSerial
-    <cCall: 'Xlib_XVisibilityEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventSerial: val
-    <cCall: 'Xlib_XVisibilityEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9684,11 +9684,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXVisibilityEventSendEvent
-    <cCall: 'Xlib_XVisibilityEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventSendEvent: val
-    <cCall: 'Xlib_XVisibilityEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9703,11 +9703,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXVisibilityEventDisplay
-    <cCall: 'Xlib_XVisibilityEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventDisplay: val
-    <cCall: 'Xlib_XVisibilityEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9722,11 +9722,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXVisibilityEventWindow
-    <cCall: 'Xlib_XVisibilityEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventWindow: val
-    <cCall: 'Xlib_XVisibilityEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9741,11 +9741,11 @@ window: val
 "_________________________________________________________"
 "state primitive accessors"
 primXVisibilityEventState
-    <cCall: 'Xlib_XVisibilityEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXVisibilityEventState: val
-    <cCall: 'Xlib_XVisibilityEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XVisibilityEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9762,28 +9762,28 @@ state: val
 
 
 
-primXlibXVisibilityEventDelete
-    <cCall: 'Xlib_delete_XVisibilityEvent' plugin: 'x11'>
+primX11XVisibilityEventDelete
+    <cCall: 'X11_delete_XVisibilityEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXVisibilityEventDelete.
+    ^self primX11XVisibilityEventDelete.
 !
 
 
 name
-    ^'XlibXVisibilityEvent'
+    ^'X11XVisibilityEvent'
 
 ! !
 
-!XlibXVisibilityEvent methodsFor: 'pointer'!
+!X11XVisibilityEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXVisibilityEvent methodsFor: 'finalization'!
+!X11XVisibilityEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -9794,35 +9794,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXSelectionRequestEvent
+CStruct subclass: #X11XSelectionRequestEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXSelectionRequestEvent class methodsFor: 'initialize-release'!
+!X11XSelectionRequestEvent class methodsFor: 'initialize-release'!
 
-primXlibXSelectionRequestEventCreate
-    <cCall: 'Xlib_new_XSelectionRequestEvent' plugin: 'x11'>
+primX11XSelectionRequestEventCreate
+    <cCall: 'X11_new_XSelectionRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXSelectionRequestEventCreate).
+    ^self handle: (self primX11XSelectionRequestEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXSelectionRequestEvent  methodsFor: 'Xlib'!
+!X11XSelectionRequestEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXSelectionRequestEventType
-    <cCall: 'Xlib_XSelectionRequestEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventType: val
-    <cCall: 'Xlib_XSelectionRequestEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9837,11 +9837,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXSelectionRequestEventSerial
-    <cCall: 'Xlib_XSelectionRequestEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventSerial: val
-    <cCall: 'Xlib_XSelectionRequestEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9856,11 +9856,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXSelectionRequestEventSendEvent
-    <cCall: 'Xlib_XSelectionRequestEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventSendEvent: val
-    <cCall: 'Xlib_XSelectionRequestEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9875,11 +9875,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXSelectionRequestEventDisplay
-    <cCall: 'Xlib_XSelectionRequestEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventDisplay: val
-    <cCall: 'Xlib_XSelectionRequestEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9894,11 +9894,11 @@ display: val
 "_________________________________________________________"
 "owner primitive accessors"
 primXSelectionRequestEventOwner
-    <cCall: 'Xlib_XSelectionRequestEvent_owner_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_owner_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventOwner: val
-    <cCall: 'Xlib_XSelectionRequestEvent_owner_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_owner_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9913,11 +9913,11 @@ owner: val
 "_________________________________________________________"
 "requestor primitive accessors"
 primXSelectionRequestEventRequestor
-    <cCall: 'Xlib_XSelectionRequestEvent_requestor_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_requestor_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventRequestor: val
-    <cCall: 'Xlib_XSelectionRequestEvent_requestor_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_requestor_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9932,11 +9932,11 @@ requestor: val
 "_________________________________________________________"
 "selection primitive accessors"
 primXSelectionRequestEventSelection
-    <cCall: 'Xlib_XSelectionRequestEvent_selection_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_selection_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventSelection: val
-    <cCall: 'Xlib_XSelectionRequestEvent_selection_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_selection_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9951,11 +9951,11 @@ selection: val
 "_________________________________________________________"
 "target primitive accessors"
 primXSelectionRequestEventTarget
-    <cCall: 'Xlib_XSelectionRequestEvent_target_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_target_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventTarget: val
-    <cCall: 'Xlib_XSelectionRequestEvent_target_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_target_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9970,11 +9970,11 @@ target: val
 "_________________________________________________________"
 "property primitive accessors"
 primXSelectionRequestEventProperty
-    <cCall: 'Xlib_XSelectionRequestEvent_property_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_property_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventProperty: val
-    <cCall: 'Xlib_XSelectionRequestEvent_property_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_property_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -9989,11 +9989,11 @@ property: val
 "_________________________________________________________"
 "time primitive accessors"
 primXSelectionRequestEventTime
-    <cCall: 'Xlib_XSelectionRequestEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionRequestEventTime: val
-    <cCall: 'Xlib_XSelectionRequestEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionRequestEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10010,28 +10010,28 @@ time: val
 
 
 
-primXlibXSelectionRequestEventDelete
-    <cCall: 'Xlib_delete_XSelectionRequestEvent' plugin: 'x11'>
+primX11XSelectionRequestEventDelete
+    <cCall: 'X11_delete_XSelectionRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXSelectionRequestEventDelete.
+    ^self primX11XSelectionRequestEventDelete.
 !
 
 
 name
-    ^'XlibXSelectionRequestEvent'
+    ^'X11XSelectionRequestEvent'
 
 ! !
 
-!XlibXSelectionRequestEvent methodsFor: 'pointer'!
+!X11XSelectionRequestEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXSelectionRequestEvent methodsFor: 'finalization'!
+!X11XSelectionRequestEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10042,35 +10042,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXSelectionClearEvent
+CStruct subclass: #X11XSelectionClearEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXSelectionClearEvent class methodsFor: 'initialize-release'!
+!X11XSelectionClearEvent class methodsFor: 'initialize-release'!
 
-primXlibXSelectionClearEventCreate
-    <cCall: 'Xlib_new_XSelectionClearEvent' plugin: 'x11'>
+primX11XSelectionClearEventCreate
+    <cCall: 'X11_new_XSelectionClearEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXSelectionClearEventCreate).
+    ^self handle: (self primX11XSelectionClearEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXSelectionClearEvent  methodsFor: 'Xlib'!
+!X11XSelectionClearEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXSelectionClearEventType
-    <cCall: 'Xlib_XSelectionClearEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventType: val
-    <cCall: 'Xlib_XSelectionClearEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10085,11 +10085,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXSelectionClearEventSerial
-    <cCall: 'Xlib_XSelectionClearEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventSerial: val
-    <cCall: 'Xlib_XSelectionClearEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10104,11 +10104,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXSelectionClearEventSendEvent
-    <cCall: 'Xlib_XSelectionClearEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventSendEvent: val
-    <cCall: 'Xlib_XSelectionClearEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10123,11 +10123,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXSelectionClearEventDisplay
-    <cCall: 'Xlib_XSelectionClearEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventDisplay: val
-    <cCall: 'Xlib_XSelectionClearEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10142,11 +10142,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXSelectionClearEventWindow
-    <cCall: 'Xlib_XSelectionClearEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventWindow: val
-    <cCall: 'Xlib_XSelectionClearEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10161,11 +10161,11 @@ window: val
 "_________________________________________________________"
 "selection primitive accessors"
 primXSelectionClearEventSelection
-    <cCall: 'Xlib_XSelectionClearEvent_selection_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_selection_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventSelection: val
-    <cCall: 'Xlib_XSelectionClearEvent_selection_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_selection_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10180,11 +10180,11 @@ selection: val
 "_________________________________________________________"
 "time primitive accessors"
 primXSelectionClearEventTime
-    <cCall: 'Xlib_XSelectionClearEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSelectionClearEventTime: val
-    <cCall: 'Xlib_XSelectionClearEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XSelectionClearEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10201,28 +10201,28 @@ time: val
 
 
 
-primXlibXSelectionClearEventDelete
-    <cCall: 'Xlib_delete_XSelectionClearEvent' plugin: 'x11'>
+primX11XSelectionClearEventDelete
+    <cCall: 'X11_delete_XSelectionClearEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXSelectionClearEventDelete.
+    ^self primX11XSelectionClearEventDelete.
 !
 
 
 name
-    ^'XlibXSelectionClearEvent'
+    ^'X11XSelectionClearEvent'
 
 ! !
 
-!XlibXSelectionClearEvent methodsFor: 'pointer'!
+!X11XSelectionClearEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXSelectionClearEvent methodsFor: 'finalization'!
+!X11XSelectionClearEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10233,35 +10233,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMValuesList
+CStruct subclass: #X11XIMValuesList
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMValuesList class methodsFor: 'initialize-release'!
+!X11XIMValuesList class methodsFor: 'initialize-release'!
 
-primXlibXIMValuesListCreate
-    <cCall: 'Xlib_new_XIMValuesList' plugin: 'x11'>
+primX11XIMValuesListCreate
+    <cCall: 'X11_new_XIMValuesList' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMValuesListCreate).
+    ^self handle: (self primX11XIMValuesListCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMValuesList  methodsFor: 'Xlib'!
+!X11XIMValuesList  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "count_values primitive accessors"
 primXIMValuesListCountValues
-    <cCall: 'Xlib_XIMValuesList_count_values_get' plugin: 'x11'>
+    <cCall: 'X11_XIMValuesList_count_values_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMValuesListCountValues: val
-    <cCall: 'Xlib_XIMValuesList_count_values_set' plugin: 'x11'>
+    <cCall: 'X11_XIMValuesList_count_values_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10276,11 +10276,11 @@ countvalues: val
 "_________________________________________________________"
 "supported_values primitive accessors"
 primXIMValuesListSupportedValues
-    <cCall: 'Xlib_XIMValuesList_supported_values_get' plugin: 'x11'>
+    <cCall: 'X11_XIMValuesList_supported_values_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMValuesListSupportedValues: val
-    <cCall: 'Xlib_XIMValuesList_supported_values_set' plugin: 'x11'>
+    <cCall: 'X11_XIMValuesList_supported_values_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10297,28 +10297,28 @@ supportedvalues: val
 
 
 
-primXlibXIMValuesListDelete
-    <cCall: 'Xlib_delete_XIMValuesList' plugin: 'x11'>
+primX11XIMValuesListDelete
+    <cCall: 'X11_delete_XIMValuesList' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMValuesListDelete.
+    ^self primX11XIMValuesListDelete.
 !
 
 
 name
-    ^'XlibXIMValuesList'
+    ^'X11XIMValuesList'
 
 ! !
 
-!XlibXIMValuesList methodsFor: 'pointer'!
+!X11XIMValuesList methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMValuesList methodsFor: 'finalization'!
+!X11XIMValuesList methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10329,35 +10329,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMText
+CStruct subclass: #X11XIMText
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMText class methodsFor: 'initialize-release'!
+!X11XIMText class methodsFor: 'initialize-release'!
 
-primXlibXIMTextCreate
-    <cCall: 'Xlib_new_XIMText' plugin: 'x11'>
+primX11XIMTextCreate
+    <cCall: 'X11_new_XIMText' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMTextCreate).
+    ^self handle: (self primX11XIMTextCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMText  methodsFor: 'Xlib'!
+!X11XIMText  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "length primitive accessors"
 primXIMTextLength
-    <cCall: 'Xlib_XIMText_length_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_length_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextLength: val
-    <cCall: 'Xlib_XIMText_length_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_length_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10372,11 +10372,11 @@ length: val
 "_________________________________________________________"
 "feedback primitive accessors"
 primXIMTextFeedback
-    <cCall: 'Xlib_XIMText_feedback_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_feedback_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextFeedback: val
-    <cCall: 'Xlib_XIMText_feedback_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_feedback_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10391,11 +10391,11 @@ feedback: val
 "_________________________________________________________"
 "encoding_is_wchar primitive accessors"
 primXIMTextEncodingIsWchar
-    <cCall: 'Xlib_XIMText_encoding_is_wchar_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_encoding_is_wchar_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextEncodingIsWchar: val
-    <cCall: 'Xlib_XIMText_encoding_is_wchar_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_encoding_is_wchar_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10410,11 +10410,11 @@ encodingiswchar: val
 "_________________________________________________________"
 "string primitive accessors"
 primXIMTextString
-    <cCall: 'Xlib_XIMText_string_get' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMTextString: val
-    <cCall: 'Xlib_XIMText_string_set' plugin: 'x11'>
+    <cCall: 'X11_XIMText_string_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10431,28 +10431,28 @@ string: val
 
 
 
-primXlibXIMTextDelete
-    <cCall: 'Xlib_delete_XIMText' plugin: 'x11'>
+primX11XIMTextDelete
+    <cCall: 'X11_delete_XIMText' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMTextDelete.
+    ^self primX11XIMTextDelete.
 !
 
 
 name
-    ^'XlibXIMText'
+    ^'X11XIMText'
 
 ! !
 
-!XlibXIMText methodsFor: 'pointer'!
+!X11XIMText methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMText methodsFor: 'finalization'!
+!X11XIMText methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10463,35 +10463,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXSetWindowAttributes
+CStruct subclass: #X11XSetWindowAttributes
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXSetWindowAttributes class methodsFor: 'initialize-release'!
+!X11XSetWindowAttributes class methodsFor: 'initialize-release'!
 
-primXlibXSetWindowAttributesCreate
-    <cCall: 'Xlib_new_XSetWindowAttributes' plugin: 'x11'>
+primX11XSetWindowAttributesCreate
+    <cCall: 'X11_new_XSetWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXSetWindowAttributesCreate).
+    ^self handle: (self primX11XSetWindowAttributesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXSetWindowAttributes  methodsFor: 'Xlib'!
+!X11XSetWindowAttributes  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "background_pixmap primitive accessors"
 primXSetWindowAttributesBackgroundPixmap
-    <cCall: 'Xlib_XSetWindowAttributes_background_pixmap_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_background_pixmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBackgroundPixmap: val
-    <cCall: 'Xlib_XSetWindowAttributes_background_pixmap_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_background_pixmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10506,11 +10506,11 @@ backgroundpixmap: val
 "_________________________________________________________"
 "background_pixel primitive accessors"
 primXSetWindowAttributesBackgroundPixel
-    <cCall: 'Xlib_XSetWindowAttributes_background_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_background_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBackgroundPixel: val
-    <cCall: 'Xlib_XSetWindowAttributes_background_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_background_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10525,11 +10525,11 @@ backgroundpixel: val
 "_________________________________________________________"
 "border_pixmap primitive accessors"
 primXSetWindowAttributesBorderPixmap
-    <cCall: 'Xlib_XSetWindowAttributes_border_pixmap_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_border_pixmap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBorderPixmap: val
-    <cCall: 'Xlib_XSetWindowAttributes_border_pixmap_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_border_pixmap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10544,11 +10544,11 @@ borderpixmap: val
 "_________________________________________________________"
 "border_pixel primitive accessors"
 primXSetWindowAttributesBorderPixel
-    <cCall: 'Xlib_XSetWindowAttributes_border_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_border_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBorderPixel: val
-    <cCall: 'Xlib_XSetWindowAttributes_border_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_border_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10563,11 +10563,11 @@ borderpixel: val
 "_________________________________________________________"
 "bit_gravity primitive accessors"
 primXSetWindowAttributesBitGravity
-    <cCall: 'Xlib_XSetWindowAttributes_bit_gravity_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_bit_gravity_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBitGravity: val
-    <cCall: 'Xlib_XSetWindowAttributes_bit_gravity_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_bit_gravity_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10582,11 +10582,11 @@ bitgravity: val
 "_________________________________________________________"
 "win_gravity primitive accessors"
 primXSetWindowAttributesWinGravity
-    <cCall: 'Xlib_XSetWindowAttributes_win_gravity_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_win_gravity_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesWinGravity: val
-    <cCall: 'Xlib_XSetWindowAttributes_win_gravity_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_win_gravity_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10601,11 +10601,11 @@ wingravity: val
 "_________________________________________________________"
 "backing_store primitive accessors"
 primXSetWindowAttributesBackingStore
-    <cCall: 'Xlib_XSetWindowAttributes_backing_store_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_store_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBackingStore: val
-    <cCall: 'Xlib_XSetWindowAttributes_backing_store_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_store_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10620,11 +10620,11 @@ backingstore: val
 "_________________________________________________________"
 "backing_planes primitive accessors"
 primXSetWindowAttributesBackingPlanes
-    <cCall: 'Xlib_XSetWindowAttributes_backing_planes_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_planes_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBackingPlanes: val
-    <cCall: 'Xlib_XSetWindowAttributes_backing_planes_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_planes_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10639,11 +10639,11 @@ backingplanes: val
 "_________________________________________________________"
 "backing_pixel primitive accessors"
 primXSetWindowAttributesBackingPixel
-    <cCall: 'Xlib_XSetWindowAttributes_backing_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesBackingPixel: val
-    <cCall: 'Xlib_XSetWindowAttributes_backing_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_backing_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10658,11 +10658,11 @@ backingpixel: val
 "_________________________________________________________"
 "save_under primitive accessors"
 primXSetWindowAttributesSaveUnder
-    <cCall: 'Xlib_XSetWindowAttributes_save_under_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_save_under_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesSaveUnder: val
-    <cCall: 'Xlib_XSetWindowAttributes_save_under_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_save_under_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10677,11 +10677,11 @@ saveunder: val
 "_________________________________________________________"
 "event_mask primitive accessors"
 primXSetWindowAttributesEventMask
-    <cCall: 'Xlib_XSetWindowAttributes_event_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_event_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesEventMask: val
-    <cCall: 'Xlib_XSetWindowAttributes_event_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_event_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10696,11 +10696,11 @@ eventmask: val
 "_________________________________________________________"
 "do_not_propagate_mask primitive accessors"
 primXSetWindowAttributesDoNotPropagateMask
-    <cCall: 'Xlib_XSetWindowAttributes_do_not_propagate_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_do_not_propagate_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesDoNotPropagateMask: val
-    <cCall: 'Xlib_XSetWindowAttributes_do_not_propagate_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_do_not_propagate_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10715,11 +10715,11 @@ donotpropagatemask: val
 "_________________________________________________________"
 "override_redirect primitive accessors"
 primXSetWindowAttributesOverrideRedirect
-    <cCall: 'Xlib_XSetWindowAttributes_override_redirect_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_override_redirect_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesOverrideRedirect: val
-    <cCall: 'Xlib_XSetWindowAttributes_override_redirect_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_override_redirect_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10734,11 +10734,11 @@ overrideredirect: val
 "_________________________________________________________"
 "colormap primitive accessors"
 primXSetWindowAttributesColormap
-    <cCall: 'Xlib_XSetWindowAttributes_colormap_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_colormap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesColormap: val
-    <cCall: 'Xlib_XSetWindowAttributes_colormap_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_colormap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10753,11 +10753,11 @@ colormap: val
 "_________________________________________________________"
 "cursor primitive accessors"
 primXSetWindowAttributesCursor
-    <cCall: 'Xlib_XSetWindowAttributes_cursor_get' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_cursor_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSetWindowAttributesCursor: val
-    <cCall: 'Xlib_XSetWindowAttributes_cursor_set' plugin: 'x11'>
+    <cCall: 'X11_XSetWindowAttributes_cursor_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10774,28 +10774,28 @@ cursor: val
 
 
 
-primXlibXSetWindowAttributesDelete
-    <cCall: 'Xlib_delete_XSetWindowAttributes' plugin: 'x11'>
+primX11XSetWindowAttributesDelete
+    <cCall: 'X11_delete_XSetWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXSetWindowAttributesDelete.
+    ^self primX11XSetWindowAttributesDelete.
 !
 
 
 name
-    ^'XlibXSetWindowAttributes'
+    ^'X11XSetWindowAttributes'
 
 ! !
 
-!XlibXSetWindowAttributes methodsFor: 'pointer'!
+!X11XSetWindowAttributes methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXSetWindowAttributes methodsFor: 'finalization'!
+!X11XSetWindowAttributes methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10806,35 +10806,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXKeyboardState
+CStruct subclass: #X11XKeyboardState
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXKeyboardState class methodsFor: 'initialize-release'!
+!X11XKeyboardState class methodsFor: 'initialize-release'!
 
-primXlibXKeyboardStateCreate
-    <cCall: 'Xlib_new_XKeyboardState' plugin: 'x11'>
+primX11XKeyboardStateCreate
+    <cCall: 'X11_new_XKeyboardState' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXKeyboardStateCreate).
+    ^self handle: (self primX11XKeyboardStateCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXKeyboardState  methodsFor: 'Xlib'!
+!X11XKeyboardState  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "key_click_percent primitive accessors"
 primXKeyboardStateKeyClickPercent
-    <cCall: 'Xlib_XKeyboardState_key_click_percent_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_key_click_percent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateKeyClickPercent: val
-    <cCall: 'Xlib_XKeyboardState_key_click_percent_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_key_click_percent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10849,11 +10849,11 @@ keyclickpercent: val
 "_________________________________________________________"
 "bell_percent primitive accessors"
 primXKeyboardStateBellPercent
-    <cCall: 'Xlib_XKeyboardState_bell_percent_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_percent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateBellPercent: val
-    <cCall: 'Xlib_XKeyboardState_bell_percent_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_percent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10868,11 +10868,11 @@ bellpercent: val
 "_________________________________________________________"
 "bell_pitch primitive accessors"
 primXKeyboardStateBellPitch
-    <cCall: 'Xlib_XKeyboardState_bell_pitch_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_pitch_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateBellPitch: val
-    <cCall: 'Xlib_XKeyboardState_bell_pitch_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_pitch_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10887,11 +10887,11 @@ bellpitch: val
 "_________________________________________________________"
 "bell_duration primitive accessors"
 primXKeyboardStateBellDuration
-    <cCall: 'Xlib_XKeyboardState_bell_duration_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_duration_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateBellDuration: val
-    <cCall: 'Xlib_XKeyboardState_bell_duration_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_bell_duration_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10906,11 +10906,11 @@ bellduration: val
 "_________________________________________________________"
 "led_mask primitive accessors"
 primXKeyboardStateLedMask
-    <cCall: 'Xlib_XKeyboardState_led_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_led_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateLedMask: val
-    <cCall: 'Xlib_XKeyboardState_led_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_led_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10925,11 +10925,11 @@ ledmask: val
 "_________________________________________________________"
 "global_auto_repeat primitive accessors"
 primXKeyboardStateGlobalAutoRepeat
-    <cCall: 'Xlib_XKeyboardState_global_auto_repeat_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_global_auto_repeat_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateGlobalAutoRepeat: val
-    <cCall: 'Xlib_XKeyboardState_global_auto_repeat_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_global_auto_repeat_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10944,11 +10944,11 @@ globalautorepeat: val
 "_________________________________________________________"
 "auto_repeats primitive accessors"
 primXKeyboardStateAutoRepeats
-    <cCall: 'Xlib_XKeyboardState_auto_repeats_get' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_auto_repeats_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeyboardStateAutoRepeats: val
-    <cCall: 'Xlib_XKeyboardState_auto_repeats_set' plugin: 'x11'>
+    <cCall: 'X11_XKeyboardState_auto_repeats_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -10965,28 +10965,28 @@ autorepeats: val
 
 
 
-primXlibXKeyboardStateDelete
-    <cCall: 'Xlib_delete_XKeyboardState' plugin: 'x11'>
+primX11XKeyboardStateDelete
+    <cCall: 'X11_delete_XKeyboardState' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXKeyboardStateDelete.
+    ^self primX11XKeyboardStateDelete.
 !
 
 
 name
-    ^'XlibXKeyboardState'
+    ^'X11XKeyboardState'
 
 ! !
 
-!XlibXKeyboardState methodsFor: 'pointer'!
+!X11XKeyboardState methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXKeyboardState methodsFor: 'finalization'!
+!X11XKeyboardState methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -10997,35 +10997,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXCirculateEvent
+CStruct subclass: #X11XCirculateEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXCirculateEvent class methodsFor: 'initialize-release'!
+!X11XCirculateEvent class methodsFor: 'initialize-release'!
 
-primXlibXCirculateEventCreate
-    <cCall: 'Xlib_new_XCirculateEvent' plugin: 'x11'>
+primX11XCirculateEventCreate
+    <cCall: 'X11_new_XCirculateEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXCirculateEventCreate).
+    ^self handle: (self primX11XCirculateEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXCirculateEvent  methodsFor: 'Xlib'!
+!X11XCirculateEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXCirculateEventType
-    <cCall: 'Xlib_XCirculateEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventType: val
-    <cCall: 'Xlib_XCirculateEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11040,11 +11040,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXCirculateEventSerial
-    <cCall: 'Xlib_XCirculateEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventSerial: val
-    <cCall: 'Xlib_XCirculateEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11059,11 +11059,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXCirculateEventSendEvent
-    <cCall: 'Xlib_XCirculateEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventSendEvent: val
-    <cCall: 'Xlib_XCirculateEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11078,11 +11078,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXCirculateEventDisplay
-    <cCall: 'Xlib_XCirculateEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventDisplay: val
-    <cCall: 'Xlib_XCirculateEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11097,11 +11097,11 @@ display: val
 "_________________________________________________________"
 "event primitive accessors"
 primXCirculateEventEvent
-    <cCall: 'Xlib_XCirculateEvent_event_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventEvent: val
-    <cCall: 'Xlib_XCirculateEvent_event_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11116,11 +11116,11 @@ event: val
 "_________________________________________________________"
 "window primitive accessors"
 primXCirculateEventWindow
-    <cCall: 'Xlib_XCirculateEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventWindow: val
-    <cCall: 'Xlib_XCirculateEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11135,11 +11135,11 @@ window: val
 "_________________________________________________________"
 "place primitive accessors"
 primXCirculateEventPlace
-    <cCall: 'Xlib_XCirculateEvent_place_get' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_place_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCirculateEventPlace: val
-    <cCall: 'Xlib_XCirculateEvent_place_set' plugin: 'x11'>
+    <cCall: 'X11_XCirculateEvent_place_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11156,28 +11156,28 @@ place: val
 
 
 
-primXlibXCirculateEventDelete
-    <cCall: 'Xlib_delete_XCirculateEvent' plugin: 'x11'>
+primX11XCirculateEventDelete
+    <cCall: 'X11_delete_XCirculateEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXCirculateEventDelete.
+    ^self primX11XCirculateEventDelete.
 !
 
 
 name
-    ^'XlibXCirculateEvent'
+    ^'X11XCirculateEvent'
 
 ! !
 
-!XlibXCirculateEvent methodsFor: 'pointer'!
+!X11XCirculateEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXCirculateEvent methodsFor: 'finalization'!
+!X11XCirculateEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11188,35 +11188,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXTimeCoord
+CStruct subclass: #X11XTimeCoord
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXTimeCoord class methodsFor: 'initialize-release'!
+!X11XTimeCoord class methodsFor: 'initialize-release'!
 
-primXlibXTimeCoordCreate
-    <cCall: 'Xlib_new_XTimeCoord' plugin: 'x11'>
+primX11XTimeCoordCreate
+    <cCall: 'X11_new_XTimeCoord' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXTimeCoordCreate).
+    ^self handle: (self primX11XTimeCoordCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXTimeCoord  methodsFor: 'Xlib'!
+!X11XTimeCoord  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "time primitive accessors"
 primXTimeCoordTime
-    <cCall: 'Xlib_XTimeCoord_time_get' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTimeCoordTime: val
-    <cCall: 'Xlib_XTimeCoord_time_set' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11231,11 +11231,11 @@ time: val
 "_________________________________________________________"
 "x primitive accessors"
 primXTimeCoordX
-    <cCall: 'Xlib_XTimeCoord_x_get' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTimeCoordX: val
-    <cCall: 'Xlib_XTimeCoord_x_set' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11250,11 +11250,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXTimeCoordY
-    <cCall: 'Xlib_XTimeCoord_y_get' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTimeCoordY: val
-    <cCall: 'Xlib_XTimeCoord_y_set' plugin: 'x11'>
+    <cCall: 'X11_XTimeCoord_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11271,28 +11271,28 @@ y: val
 
 
 
-primXlibXTimeCoordDelete
-    <cCall: 'Xlib_delete_XTimeCoord' plugin: 'x11'>
+primX11XTimeCoordDelete
+    <cCall: 'X11_delete_XTimeCoord' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXTimeCoordDelete.
+    ^self primX11XTimeCoordDelete.
 !
 
 
 name
-    ^'XlibXTimeCoord'
+    ^'X11XTimeCoord'
 
 ! !
 
-!XlibXTimeCoord methodsFor: 'pointer'!
+!X11XTimeCoord methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXTimeCoord methodsFor: 'finalization'!
+!X11XTimeCoord methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11303,35 +11303,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXCreateWindowEvent
+CStruct subclass: #X11XCreateWindowEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXCreateWindowEvent class methodsFor: 'initialize-release'!
+!X11XCreateWindowEvent class methodsFor: 'initialize-release'!
 
-primXlibXCreateWindowEventCreate
-    <cCall: 'Xlib_new_XCreateWindowEvent' plugin: 'x11'>
+primX11XCreateWindowEventCreate
+    <cCall: 'X11_new_XCreateWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXCreateWindowEventCreate).
+    ^self handle: (self primX11XCreateWindowEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXCreateWindowEvent  methodsFor: 'Xlib'!
+!X11XCreateWindowEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXCreateWindowEventType
-    <cCall: 'Xlib_XCreateWindowEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventType: val
-    <cCall: 'Xlib_XCreateWindowEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11346,11 +11346,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXCreateWindowEventSerial
-    <cCall: 'Xlib_XCreateWindowEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventSerial: val
-    <cCall: 'Xlib_XCreateWindowEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11365,11 +11365,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXCreateWindowEventSendEvent
-    <cCall: 'Xlib_XCreateWindowEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventSendEvent: val
-    <cCall: 'Xlib_XCreateWindowEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11384,11 +11384,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXCreateWindowEventDisplay
-    <cCall: 'Xlib_XCreateWindowEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventDisplay: val
-    <cCall: 'Xlib_XCreateWindowEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11403,11 +11403,11 @@ display: val
 "_________________________________________________________"
 "parent primitive accessors"
 primXCreateWindowEventParent
-    <cCall: 'Xlib_XCreateWindowEvent_parent_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_parent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventParent: val
-    <cCall: 'Xlib_XCreateWindowEvent_parent_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_parent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11422,11 +11422,11 @@ parent: val
 "_________________________________________________________"
 "window primitive accessors"
 primXCreateWindowEventWindow
-    <cCall: 'Xlib_XCreateWindowEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventWindow: val
-    <cCall: 'Xlib_XCreateWindowEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11441,11 +11441,11 @@ window: val
 "_________________________________________________________"
 "x primitive accessors"
 primXCreateWindowEventX
-    <cCall: 'Xlib_XCreateWindowEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventX: val
-    <cCall: 'Xlib_XCreateWindowEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11460,11 +11460,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXCreateWindowEventY
-    <cCall: 'Xlib_XCreateWindowEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventY: val
-    <cCall: 'Xlib_XCreateWindowEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11479,11 +11479,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXCreateWindowEventWidth
-    <cCall: 'Xlib_XCreateWindowEvent_width_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventWidth: val
-    <cCall: 'Xlib_XCreateWindowEvent_width_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11498,11 +11498,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXCreateWindowEventHeight
-    <cCall: 'Xlib_XCreateWindowEvent_height_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventHeight: val
-    <cCall: 'Xlib_XCreateWindowEvent_height_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11517,11 +11517,11 @@ height: val
 "_________________________________________________________"
 "border_width primitive accessors"
 primXCreateWindowEventBorderWidth
-    <cCall: 'Xlib_XCreateWindowEvent_border_width_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_border_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventBorderWidth: val
-    <cCall: 'Xlib_XCreateWindowEvent_border_width_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_border_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11536,11 +11536,11 @@ borderwidth: val
 "_________________________________________________________"
 "override_redirect primitive accessors"
 primXCreateWindowEventOverrideRedirect
-    <cCall: 'Xlib_XCreateWindowEvent_override_redirect_get' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_override_redirect_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCreateWindowEventOverrideRedirect: val
-    <cCall: 'Xlib_XCreateWindowEvent_override_redirect_set' plugin: 'x11'>
+    <cCall: 'X11_XCreateWindowEvent_override_redirect_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11557,28 +11557,28 @@ overrideredirect: val
 
 
 
-primXlibXCreateWindowEventDelete
-    <cCall: 'Xlib_delete_XCreateWindowEvent' plugin: 'x11'>
+primX11XCreateWindowEventDelete
+    <cCall: 'X11_delete_XCreateWindowEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXCreateWindowEventDelete.
+    ^self primX11XCreateWindowEventDelete.
 !
 
 
 name
-    ^'XlibXCreateWindowEvent'
+    ^'X11XCreateWindowEvent'
 
 ! !
 
-!XlibXCreateWindowEvent methodsFor: 'pointer'!
+!X11XCreateWindowEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXCreateWindowEvent methodsFor: 'finalization'!
+!X11XCreateWindowEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11589,35 +11589,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXSegment
+CStruct subclass: #X11XSegment
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXSegment class methodsFor: 'initialize-release'!
+!X11XSegment class methodsFor: 'initialize-release'!
 
-primXlibXSegmentCreate
-    <cCall: 'Xlib_new_XSegment' plugin: 'x11'>
+primX11XSegmentCreate
+    <cCall: 'X11_new_XSegment' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXSegmentCreate).
+    ^self handle: (self primX11XSegmentCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXSegment  methodsFor: 'Xlib'!
+!X11XSegment  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x1 primitive accessors"
 primXSegmentX1
-    <cCall: 'Xlib_XSegment_x1_get' plugin: 'x11'>
+    <cCall: 'X11_XSegment_x1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSegmentX1: val
-    <cCall: 'Xlib_XSegment_x1_set' plugin: 'x11'>
+    <cCall: 'X11_XSegment_x1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11632,11 +11632,11 @@ x1: val
 "_________________________________________________________"
 "y1 primitive accessors"
 primXSegmentY1
-    <cCall: 'Xlib_XSegment_y1_get' plugin: 'x11'>
+    <cCall: 'X11_XSegment_y1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSegmentY1: val
-    <cCall: 'Xlib_XSegment_y1_set' plugin: 'x11'>
+    <cCall: 'X11_XSegment_y1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11651,11 +11651,11 @@ y1: val
 "_________________________________________________________"
 "x2 primitive accessors"
 primXSegmentX2
-    <cCall: 'Xlib_XSegment_x2_get' plugin: 'x11'>
+    <cCall: 'X11_XSegment_x2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSegmentX2: val
-    <cCall: 'Xlib_XSegment_x2_set' plugin: 'x11'>
+    <cCall: 'X11_XSegment_x2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11670,11 +11670,11 @@ x2: val
 "_________________________________________________________"
 "y2 primitive accessors"
 primXSegmentY2
-    <cCall: 'Xlib_XSegment_y2_get' plugin: 'x11'>
+    <cCall: 'X11_XSegment_y2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXSegmentY2: val
-    <cCall: 'Xlib_XSegment_y2_set' plugin: 'x11'>
+    <cCall: 'X11_XSegment_y2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11691,28 +11691,28 @@ y2: val
 
 
 
-primXlibXSegmentDelete
-    <cCall: 'Xlib_delete_XSegment' plugin: 'x11'>
+primX11XSegmentDelete
+    <cCall: 'X11_delete_XSegment' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXSegmentDelete.
+    ^self primX11XSegmentDelete.
 !
 
 
 name
-    ^'XlibXSegment'
+    ^'X11XSegment'
 
 ! !
 
-!XlibXSegment methodsFor: 'pointer'!
+!X11XSegment methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXSegment methodsFor: 'finalization'!
+!X11XSegment methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11723,35 +11723,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibScreenFormat
+CStruct subclass: #X11ScreenFormat
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibScreenFormat class methodsFor: 'initialize-release'!
+!X11ScreenFormat class methodsFor: 'initialize-release'!
 
-primXlibScreenFormatCreate
-    <cCall: 'Xlib_new_ScreenFormat' plugin: 'x11'>
+primX11ScreenFormatCreate
+    <cCall: 'X11_new_ScreenFormat' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibScreenFormatCreate).
+    ^self handle: (self primX11ScreenFormatCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibScreenFormat  methodsFor: 'Xlib'!
+!X11ScreenFormat  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "ext_data primitive accessors"
 primScreenFormatExtData
-    <cCall: 'Xlib_ScreenFormat_ext_data_get' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_ext_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenFormatExtData: val
-    <cCall: 'Xlib_ScreenFormat_ext_data_set' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_ext_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11766,11 +11766,11 @@ extdata: val
 "_________________________________________________________"
 "depth primitive accessors"
 primScreenFormatDepth
-    <cCall: 'Xlib_ScreenFormat_depth_get' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenFormatDepth: val
-    <cCall: 'Xlib_ScreenFormat_depth_set' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11785,11 +11785,11 @@ depth: val
 "_________________________________________________________"
 "bits_per_pixel primitive accessors"
 primScreenFormatBitsPerPixel
-    <cCall: 'Xlib_ScreenFormat_bits_per_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_bits_per_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenFormatBitsPerPixel: val
-    <cCall: 'Xlib_ScreenFormat_bits_per_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_bits_per_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11804,11 +11804,11 @@ bitsperpixel: val
 "_________________________________________________________"
 "scanline_pad primitive accessors"
 primScreenFormatScanlinePad
-    <cCall: 'Xlib_ScreenFormat_scanline_pad_get' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_scanline_pad_get' plugin: 'x11'>
     self primitiveFailed
 !
 primScreenFormatScanlinePad: val
-    <cCall: 'Xlib_ScreenFormat_scanline_pad_set' plugin: 'x11'>
+    <cCall: 'X11_ScreenFormat_scanline_pad_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11825,28 +11825,28 @@ scanlinepad: val
 
 
 
-primXlibScreenFormatDelete
-    <cCall: 'Xlib_delete_ScreenFormat' plugin: 'x11'>
+primX11ScreenFormatDelete
+    <cCall: 'X11_delete_ScreenFormat' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibScreenFormatDelete.
+    ^self primX11ScreenFormatDelete.
 !
 
 
 name
-    ^'XlibScreenFormat'
+    ^'X11ScreenFormat'
 
 ! !
 
-!XlibScreenFormat methodsFor: 'pointer'!
+!X11ScreenFormat methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibScreenFormat methodsFor: 'finalization'!
+!X11ScreenFormat methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11857,35 +11857,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXServerInterpretedAddress
+CStruct subclass: #X11XServerInterpretedAddress
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXServerInterpretedAddress class methodsFor: 'initialize-release'!
+!X11XServerInterpretedAddress class methodsFor: 'initialize-release'!
 
-primXlibXServerInterpretedAddressCreate
-    <cCall: 'Xlib_new_XServerInterpretedAddress' plugin: 'x11'>
+primX11XServerInterpretedAddressCreate
+    <cCall: 'X11_new_XServerInterpretedAddress' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXServerInterpretedAddressCreate).
+    ^self handle: (self primX11XServerInterpretedAddressCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXServerInterpretedAddress  methodsFor: 'Xlib'!
+!X11XServerInterpretedAddress  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "typelength primitive accessors"
 primXServerInterpretedAddressTypelength
-    <cCall: 'Xlib_XServerInterpretedAddress_typelength_get' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_typelength_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXServerInterpretedAddressTypelength: val
-    <cCall: 'Xlib_XServerInterpretedAddress_typelength_set' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_typelength_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11900,11 +11900,11 @@ typelength: val
 "_________________________________________________________"
 "valuelength primitive accessors"
 primXServerInterpretedAddressValuelength
-    <cCall: 'Xlib_XServerInterpretedAddress_valuelength_get' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_valuelength_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXServerInterpretedAddressValuelength: val
-    <cCall: 'Xlib_XServerInterpretedAddress_valuelength_set' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_valuelength_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11919,11 +11919,11 @@ valuelength: val
 "_________________________________________________________"
 "type primitive accessors"
 primXServerInterpretedAddressType
-    <cCall: 'Xlib_XServerInterpretedAddress_type_get' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXServerInterpretedAddressType: val
-    <cCall: 'Xlib_XServerInterpretedAddress_type_set' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11938,11 +11938,11 @@ type: val
 "_________________________________________________________"
 "value primitive accessors"
 primXServerInterpretedAddressValue
-    <cCall: 'Xlib_XServerInterpretedAddress_value_get' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_value_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXServerInterpretedAddressValue: val
-    <cCall: 'Xlib_XServerInterpretedAddress_value_set' plugin: 'x11'>
+    <cCall: 'X11_XServerInterpretedAddress_value_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -11959,28 +11959,28 @@ value: val
 
 
 
-primXlibXServerInterpretedAddressDelete
-    <cCall: 'Xlib_delete_XServerInterpretedAddress' plugin: 'x11'>
+primX11XServerInterpretedAddressDelete
+    <cCall: 'X11_delete_XServerInterpretedAddress' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXServerInterpretedAddressDelete.
+    ^self primX11XServerInterpretedAddressDelete.
 !
 
 
 name
-    ^'XlibXServerInterpretedAddress'
+    ^'X11XServerInterpretedAddress'
 
 ! !
 
-!XlibXServerInterpretedAddress methodsFor: 'pointer'!
+!X11XServerInterpretedAddress methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXServerInterpretedAddress methodsFor: 'finalization'!
+!X11XServerInterpretedAddress methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -11991,35 +11991,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXConfigureEvent
+CStruct subclass: #X11XConfigureEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXConfigureEvent class methodsFor: 'initialize-release'!
+!X11XConfigureEvent class methodsFor: 'initialize-release'!
 
-primXlibXConfigureEventCreate
-    <cCall: 'Xlib_new_XConfigureEvent' plugin: 'x11'>
+primX11XConfigureEventCreate
+    <cCall: 'X11_new_XConfigureEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXConfigureEventCreate).
+    ^self handle: (self primX11XConfigureEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXConfigureEvent  methodsFor: 'Xlib'!
+!X11XConfigureEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXConfigureEventType
-    <cCall: 'Xlib_XConfigureEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventType: val
-    <cCall: 'Xlib_XConfigureEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12034,11 +12034,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXConfigureEventSerial
-    <cCall: 'Xlib_XConfigureEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventSerial: val
-    <cCall: 'Xlib_XConfigureEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12053,11 +12053,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXConfigureEventSendEvent
-    <cCall: 'Xlib_XConfigureEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventSendEvent: val
-    <cCall: 'Xlib_XConfigureEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12072,11 +12072,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXConfigureEventDisplay
-    <cCall: 'Xlib_XConfigureEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventDisplay: val
-    <cCall: 'Xlib_XConfigureEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12091,11 +12091,11 @@ display: val
 "_________________________________________________________"
 "event primitive accessors"
 primXConfigureEventEvent
-    <cCall: 'Xlib_XConfigureEvent_event_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventEvent: val
-    <cCall: 'Xlib_XConfigureEvent_event_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12110,11 +12110,11 @@ event: val
 "_________________________________________________________"
 "window primitive accessors"
 primXConfigureEventWindow
-    <cCall: 'Xlib_XConfigureEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventWindow: val
-    <cCall: 'Xlib_XConfigureEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12129,11 +12129,11 @@ window: val
 "_________________________________________________________"
 "x primitive accessors"
 primXConfigureEventX
-    <cCall: 'Xlib_XConfigureEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventX: val
-    <cCall: 'Xlib_XConfigureEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12148,11 +12148,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXConfigureEventY
-    <cCall: 'Xlib_XConfigureEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventY: val
-    <cCall: 'Xlib_XConfigureEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12167,11 +12167,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXConfigureEventWidth
-    <cCall: 'Xlib_XConfigureEvent_width_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventWidth: val
-    <cCall: 'Xlib_XConfigureEvent_width_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12186,11 +12186,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXConfigureEventHeight
-    <cCall: 'Xlib_XConfigureEvent_height_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventHeight: val
-    <cCall: 'Xlib_XConfigureEvent_height_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12205,11 +12205,11 @@ height: val
 "_________________________________________________________"
 "border_width primitive accessors"
 primXConfigureEventBorderWidth
-    <cCall: 'Xlib_XConfigureEvent_border_width_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_border_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventBorderWidth: val
-    <cCall: 'Xlib_XConfigureEvent_border_width_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_border_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12224,11 +12224,11 @@ borderwidth: val
 "_________________________________________________________"
 "above primitive accessors"
 primXConfigureEventAbove
-    <cCall: 'Xlib_XConfigureEvent_above_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_above_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventAbove: val
-    <cCall: 'Xlib_XConfigureEvent_above_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_above_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12243,11 +12243,11 @@ above: val
 "_________________________________________________________"
 "override_redirect primitive accessors"
 primXConfigureEventOverrideRedirect
-    <cCall: 'Xlib_XConfigureEvent_override_redirect_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_override_redirect_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureEventOverrideRedirect: val
-    <cCall: 'Xlib_XConfigureEvent_override_redirect_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureEvent_override_redirect_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12264,28 +12264,28 @@ overrideredirect: val
 
 
 
-primXlibXConfigureEventDelete
-    <cCall: 'Xlib_delete_XConfigureEvent' plugin: 'x11'>
+primX11XConfigureEventDelete
+    <cCall: 'X11_delete_XConfigureEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXConfigureEventDelete.
+    ^self primX11XConfigureEventDelete.
 !
 
 
 name
-    ^'XlibXConfigureEvent'
+    ^'X11XConfigureEvent'
 
 ! !
 
-!XlibXConfigureEvent methodsFor: 'pointer'!
+!X11XConfigureEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXConfigureEvent methodsFor: 'finalization'!
+!X11XConfigureEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -12296,35 +12296,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXOMCharSetList
+CStruct subclass: #X11XOMCharSetList
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXOMCharSetList class methodsFor: 'initialize-release'!
+!X11XOMCharSetList class methodsFor: 'initialize-release'!
 
-primXlibXOMCharSetListCreate
-    <cCall: 'Xlib_new_XOMCharSetList' plugin: 'x11'>
+primX11XOMCharSetListCreate
+    <cCall: 'X11_new_XOMCharSetList' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXOMCharSetListCreate).
+    ^self handle: (self primX11XOMCharSetListCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXOMCharSetList  methodsFor: 'Xlib'!
+!X11XOMCharSetList  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "charset_count primitive accessors"
 primXOMCharSetListCharsetCount
-    <cCall: 'Xlib_XOMCharSetList_charset_count_get' plugin: 'x11'>
+    <cCall: 'X11_XOMCharSetList_charset_count_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMCharSetListCharsetCount: val
-    <cCall: 'Xlib_XOMCharSetList_charset_count_set' plugin: 'x11'>
+    <cCall: 'X11_XOMCharSetList_charset_count_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12339,11 +12339,11 @@ charsetcount: val
 "_________________________________________________________"
 "charset_list primitive accessors"
 primXOMCharSetListCharsetList
-    <cCall: 'Xlib_XOMCharSetList_charset_list_get' plugin: 'x11'>
+    <cCall: 'X11_XOMCharSetList_charset_list_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMCharSetListCharsetList: val
-    <cCall: 'Xlib_XOMCharSetList_charset_list_set' plugin: 'x11'>
+    <cCall: 'X11_XOMCharSetList_charset_list_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12360,28 +12360,28 @@ charsetlist: val
 
 
 
-primXlibXOMCharSetListDelete
-    <cCall: 'Xlib_delete_XOMCharSetList' plugin: 'x11'>
+primX11XOMCharSetListDelete
+    <cCall: 'X11_delete_XOMCharSetList' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXOMCharSetListDelete.
+    ^self primX11XOMCharSetListDelete.
 !
 
 
 name
-    ^'XlibXOMCharSetList'
+    ^'X11XOMCharSetList'
 
 ! !
 
-!XlibXOMCharSetList methodsFor: 'pointer'!
+!X11XOMCharSetList methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXOMCharSetList methodsFor: 'finalization'!
+!X11XOMCharSetList methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -12392,35 +12392,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXButtonEvent
+CStruct subclass: #X11XButtonEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXButtonEvent class methodsFor: 'initialize-release'!
+!X11XButtonEvent class methodsFor: 'initialize-release'!
 
-primXlibXButtonEventCreate
-    <cCall: 'Xlib_new_XButtonEvent' plugin: 'x11'>
+primX11XButtonEventCreate
+    <cCall: 'X11_new_XButtonEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXButtonEventCreate).
+    ^self handle: (self primX11XButtonEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXButtonEvent  methodsFor: 'Xlib'!
+!X11XButtonEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXButtonEventType
-    <cCall: 'Xlib_XButtonEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventType: val
-    <cCall: 'Xlib_XButtonEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12435,11 +12435,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXButtonEventSerial
-    <cCall: 'Xlib_XButtonEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventSerial: val
-    <cCall: 'Xlib_XButtonEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12454,11 +12454,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXButtonEventSendEvent
-    <cCall: 'Xlib_XButtonEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventSendEvent: val
-    <cCall: 'Xlib_XButtonEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12473,11 +12473,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXButtonEventDisplay
-    <cCall: 'Xlib_XButtonEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventDisplay: val
-    <cCall: 'Xlib_XButtonEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12492,11 +12492,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXButtonEventWindow
-    <cCall: 'Xlib_XButtonEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventWindow: val
-    <cCall: 'Xlib_XButtonEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12511,11 +12511,11 @@ window: val
 "_________________________________________________________"
 "root primitive accessors"
 primXButtonEventRoot
-    <cCall: 'Xlib_XButtonEvent_root_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventRoot: val
-    <cCall: 'Xlib_XButtonEvent_root_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12530,11 +12530,11 @@ root: val
 "_________________________________________________________"
 "subwindow primitive accessors"
 primXButtonEventSubwindow
-    <cCall: 'Xlib_XButtonEvent_subwindow_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_subwindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventSubwindow: val
-    <cCall: 'Xlib_XButtonEvent_subwindow_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_subwindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12549,11 +12549,11 @@ subwindow: val
 "_________________________________________________________"
 "time primitive accessors"
 primXButtonEventTime
-    <cCall: 'Xlib_XButtonEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventTime: val
-    <cCall: 'Xlib_XButtonEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12568,11 +12568,11 @@ time: val
 "_________________________________________________________"
 "x primitive accessors"
 primXButtonEventX
-    <cCall: 'Xlib_XButtonEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventX: val
-    <cCall: 'Xlib_XButtonEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12587,11 +12587,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXButtonEventY
-    <cCall: 'Xlib_XButtonEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventY: val
-    <cCall: 'Xlib_XButtonEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12606,11 +12606,11 @@ y: val
 "_________________________________________________________"
 "x_root primitive accessors"
 primXButtonEventXRoot
-    <cCall: 'Xlib_XButtonEvent_x_root_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_x_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventXRoot: val
-    <cCall: 'Xlib_XButtonEvent_x_root_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_x_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12625,11 +12625,11 @@ xroot: val
 "_________________________________________________________"
 "y_root primitive accessors"
 primXButtonEventYRoot
-    <cCall: 'Xlib_XButtonEvent_y_root_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_y_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventYRoot: val
-    <cCall: 'Xlib_XButtonEvent_y_root_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_y_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12644,11 +12644,11 @@ yroot: val
 "_________________________________________________________"
 "state primitive accessors"
 primXButtonEventState
-    <cCall: 'Xlib_XButtonEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventState: val
-    <cCall: 'Xlib_XButtonEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12663,11 +12663,11 @@ state: val
 "_________________________________________________________"
 "button primitive accessors"
 primXButtonEventButton
-    <cCall: 'Xlib_XButtonEvent_button_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_button_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventButton: val
-    <cCall: 'Xlib_XButtonEvent_button_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_button_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12682,11 +12682,11 @@ button: val
 "_________________________________________________________"
 "same_screen primitive accessors"
 primXButtonEventSameScreen
-    <cCall: 'Xlib_XButtonEvent_same_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_same_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXButtonEventSameScreen: val
-    <cCall: 'Xlib_XButtonEvent_same_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XButtonEvent_same_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12703,28 +12703,28 @@ samescreen: val
 
 
 
-primXlibXButtonEventDelete
-    <cCall: 'Xlib_delete_XButtonEvent' plugin: 'x11'>
+primX11XButtonEventDelete
+    <cCall: 'X11_delete_XButtonEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXButtonEventDelete.
+    ^self primX11XButtonEventDelete.
 !
 
 
 name
-    ^'XlibXButtonEvent'
+    ^'X11XButtonEvent'
 
 ! !
 
-!XlibXButtonEvent methodsFor: 'pointer'!
+!X11XButtonEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXButtonEvent methodsFor: 'finalization'!
+!X11XButtonEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -12735,35 +12735,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXKeymapEvent
+CStruct subclass: #X11XKeymapEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXKeymapEvent class methodsFor: 'initialize-release'!
+!X11XKeymapEvent class methodsFor: 'initialize-release'!
 
-primXlibXKeymapEventCreate
-    <cCall: 'Xlib_new_XKeymapEvent' plugin: 'x11'>
+primX11XKeymapEventCreate
+    <cCall: 'X11_new_XKeymapEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXKeymapEventCreate).
+    ^self handle: (self primX11XKeymapEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXKeymapEvent  methodsFor: 'Xlib'!
+!X11XKeymapEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXKeymapEventType
-    <cCall: 'Xlib_XKeymapEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventType: val
-    <cCall: 'Xlib_XKeymapEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12778,11 +12778,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXKeymapEventSerial
-    <cCall: 'Xlib_XKeymapEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventSerial: val
-    <cCall: 'Xlib_XKeymapEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12797,11 +12797,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXKeymapEventSendEvent
-    <cCall: 'Xlib_XKeymapEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventSendEvent: val
-    <cCall: 'Xlib_XKeymapEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12816,11 +12816,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXKeymapEventDisplay
-    <cCall: 'Xlib_XKeymapEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventDisplay: val
-    <cCall: 'Xlib_XKeymapEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12835,11 +12835,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXKeymapEventWindow
-    <cCall: 'Xlib_XKeymapEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventWindow: val
-    <cCall: 'Xlib_XKeymapEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12854,11 +12854,11 @@ window: val
 "_________________________________________________________"
 "key_vector primitive accessors"
 primXKeymapEventKeyVector
-    <cCall: 'Xlib_XKeymapEvent_key_vector_get' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_key_vector_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXKeymapEventKeyVector: val
-    <cCall: 'Xlib_XKeymapEvent_key_vector_set' plugin: 'x11'>
+    <cCall: 'X11_XKeymapEvent_key_vector_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12875,28 +12875,28 @@ keyvector: val
 
 
 
-primXlibXKeymapEventDelete
-    <cCall: 'Xlib_delete_XKeymapEvent' plugin: 'x11'>
+primX11XKeymapEventDelete
+    <cCall: 'X11_delete_XKeymapEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXKeymapEventDelete.
+    ^self primX11XKeymapEventDelete.
 !
 
 
 name
-    ^'XlibXKeymapEvent'
+    ^'X11XKeymapEvent'
 
 ! !
 
-!XlibXKeymapEvent methodsFor: 'pointer'!
+!X11XKeymapEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXKeymapEvent methodsFor: 'finalization'!
+!X11XKeymapEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -12907,35 +12907,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXGraphicsExposeEvent
+CStruct subclass: #X11XGraphicsExposeEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXGraphicsExposeEvent class methodsFor: 'initialize-release'!
+!X11XGraphicsExposeEvent class methodsFor: 'initialize-release'!
 
-primXlibXGraphicsExposeEventCreate
-    <cCall: 'Xlib_new_XGraphicsExposeEvent' plugin: 'x11'>
+primX11XGraphicsExposeEventCreate
+    <cCall: 'X11_new_XGraphicsExposeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXGraphicsExposeEventCreate).
+    ^self handle: (self primX11XGraphicsExposeEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXGraphicsExposeEvent  methodsFor: 'Xlib'!
+!X11XGraphicsExposeEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXGraphicsExposeEventType
-    <cCall: 'Xlib_XGraphicsExposeEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventType: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12950,11 +12950,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXGraphicsExposeEventSerial
-    <cCall: 'Xlib_XGraphicsExposeEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventSerial: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12969,11 +12969,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXGraphicsExposeEventSendEvent
-    <cCall: 'Xlib_XGraphicsExposeEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventSendEvent: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -12988,11 +12988,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXGraphicsExposeEventDisplay
-    <cCall: 'Xlib_XGraphicsExposeEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventDisplay: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13007,11 +13007,11 @@ display: val
 "_________________________________________________________"
 "drawable primitive accessors"
 primXGraphicsExposeEventDrawable
-    <cCall: 'Xlib_XGraphicsExposeEvent_drawable_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_drawable_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventDrawable: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_drawable_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_drawable_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13026,11 +13026,11 @@ drawable: val
 "_________________________________________________________"
 "x primitive accessors"
 primXGraphicsExposeEventX
-    <cCall: 'Xlib_XGraphicsExposeEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventX: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13045,11 +13045,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXGraphicsExposeEventY
-    <cCall: 'Xlib_XGraphicsExposeEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventY: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13064,11 +13064,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXGraphicsExposeEventWidth
-    <cCall: 'Xlib_XGraphicsExposeEvent_width_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventWidth: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_width_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13083,11 +13083,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXGraphicsExposeEventHeight
-    <cCall: 'Xlib_XGraphicsExposeEvent_height_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventHeight: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_height_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13102,11 +13102,11 @@ height: val
 "_________________________________________________________"
 "count primitive accessors"
 primXGraphicsExposeEventCount
-    <cCall: 'Xlib_XGraphicsExposeEvent_count_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_count_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventCount: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_count_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_count_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13121,11 +13121,11 @@ count: val
 "_________________________________________________________"
 "major_code primitive accessors"
 primXGraphicsExposeEventMajorCode
-    <cCall: 'Xlib_XGraphicsExposeEvent_major_code_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_major_code_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventMajorCode: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_major_code_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_major_code_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13140,11 +13140,11 @@ majorcode: val
 "_________________________________________________________"
 "minor_code primitive accessors"
 primXGraphicsExposeEventMinorCode
-    <cCall: 'Xlib_XGraphicsExposeEvent_minor_code_get' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_minor_code_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGraphicsExposeEventMinorCode: val
-    <cCall: 'Xlib_XGraphicsExposeEvent_minor_code_set' plugin: 'x11'>
+    <cCall: 'X11_XGraphicsExposeEvent_minor_code_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13161,28 +13161,28 @@ minorcode: val
 
 
 
-primXlibXGraphicsExposeEventDelete
-    <cCall: 'Xlib_delete_XGraphicsExposeEvent' plugin: 'x11'>
+primX11XGraphicsExposeEventDelete
+    <cCall: 'X11_delete_XGraphicsExposeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXGraphicsExposeEventDelete.
+    ^self primX11XGraphicsExposeEventDelete.
 !
 
 
 name
-    ^'XlibXGraphicsExposeEvent'
+    ^'X11XGraphicsExposeEvent'
 
 ! !
 
-!XlibXGraphicsExposeEvent methodsFor: 'pointer'!
+!X11XGraphicsExposeEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXGraphicsExposeEvent methodsFor: 'finalization'!
+!X11XGraphicsExposeEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -13193,35 +13193,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXFontSetExtents
+CStruct subclass: #X11XFontSetExtents
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXFontSetExtents class methodsFor: 'initialize-release'!
+!X11XFontSetExtents class methodsFor: 'initialize-release'!
 
-primXlibXFontSetExtentsCreate
-    <cCall: 'Xlib_new_XFontSetExtents' plugin: 'x11'>
+primX11XFontSetExtentsCreate
+    <cCall: 'X11_new_XFontSetExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXFontSetExtentsCreate).
+    ^self handle: (self primX11XFontSetExtentsCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXFontSetExtents  methodsFor: 'Xlib'!
+!X11XFontSetExtents  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "max_ink_extent primitive accessors"
 primXFontSetExtentsMaxInkExtent
-    <cCall: 'Xlib_XFontSetExtents_max_ink_extent_get' plugin: 'x11'>
+    <cCall: 'X11_XFontSetExtents_max_ink_extent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontSetExtentsMaxInkExtent: val
-    <cCall: 'Xlib_XFontSetExtents_max_ink_extent_set' plugin: 'x11'>
+    <cCall: 'X11_XFontSetExtents_max_ink_extent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13236,11 +13236,11 @@ maxinkextent: val
 "_________________________________________________________"
 "max_logical_extent primitive accessors"
 primXFontSetExtentsMaxLogicalExtent
-    <cCall: 'Xlib_XFontSetExtents_max_logical_extent_get' plugin: 'x11'>
+    <cCall: 'X11_XFontSetExtents_max_logical_extent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFontSetExtentsMaxLogicalExtent: val
-    <cCall: 'Xlib_XFontSetExtents_max_logical_extent_set' plugin: 'x11'>
+    <cCall: 'X11_XFontSetExtents_max_logical_extent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13257,28 +13257,28 @@ maxlogicalextent: val
 
 
 
-primXlibXFontSetExtentsDelete
-    <cCall: 'Xlib_delete_XFontSetExtents' plugin: 'x11'>
+primX11XFontSetExtentsDelete
+    <cCall: 'X11_delete_XFontSetExtents' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXFontSetExtentsDelete.
+    ^self primX11XFontSetExtentsDelete.
 !
 
 
 name
-    ^'XlibXFontSetExtents'
+    ^'X11XFontSetExtents'
 
 ! !
 
-!XlibXFontSetExtents methodsFor: 'pointer'!
+!X11XFontSetExtents methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXFontSetExtents methodsFor: 'finalization'!
+!X11XFontSetExtents methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -13289,35 +13289,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXResizeRequestEvent
+CStruct subclass: #X11XResizeRequestEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXResizeRequestEvent class methodsFor: 'initialize-release'!
+!X11XResizeRequestEvent class methodsFor: 'initialize-release'!
 
-primXlibXResizeRequestEventCreate
-    <cCall: 'Xlib_new_XResizeRequestEvent' plugin: 'x11'>
+primX11XResizeRequestEventCreate
+    <cCall: 'X11_new_XResizeRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXResizeRequestEventCreate).
+    ^self handle: (self primX11XResizeRequestEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXResizeRequestEvent  methodsFor: 'Xlib'!
+!X11XResizeRequestEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXResizeRequestEventType
-    <cCall: 'Xlib_XResizeRequestEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventType: val
-    <cCall: 'Xlib_XResizeRequestEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13332,11 +13332,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXResizeRequestEventSerial
-    <cCall: 'Xlib_XResizeRequestEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventSerial: val
-    <cCall: 'Xlib_XResizeRequestEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13351,11 +13351,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXResizeRequestEventSendEvent
-    <cCall: 'Xlib_XResizeRequestEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventSendEvent: val
-    <cCall: 'Xlib_XResizeRequestEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13370,11 +13370,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXResizeRequestEventDisplay
-    <cCall: 'Xlib_XResizeRequestEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventDisplay: val
-    <cCall: 'Xlib_XResizeRequestEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13389,11 +13389,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXResizeRequestEventWindow
-    <cCall: 'Xlib_XResizeRequestEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventWindow: val
-    <cCall: 'Xlib_XResizeRequestEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13408,11 +13408,11 @@ window: val
 "_________________________________________________________"
 "width primitive accessors"
 primXResizeRequestEventWidth
-    <cCall: 'Xlib_XResizeRequestEvent_width_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventWidth: val
-    <cCall: 'Xlib_XResizeRequestEvent_width_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13427,11 +13427,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXResizeRequestEventHeight
-    <cCall: 'Xlib_XResizeRequestEvent_height_get' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXResizeRequestEventHeight: val
-    <cCall: 'Xlib_XResizeRequestEvent_height_set' plugin: 'x11'>
+    <cCall: 'X11_XResizeRequestEvent_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13448,28 +13448,28 @@ height: val
 
 
 
-primXlibXResizeRequestEventDelete
-    <cCall: 'Xlib_delete_XResizeRequestEvent' plugin: 'x11'>
+primX11XResizeRequestEventDelete
+    <cCall: 'X11_delete_XResizeRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXResizeRequestEventDelete.
+    ^self primX11XResizeRequestEventDelete.
 !
 
 
 name
-    ^'XlibXResizeRequestEvent'
+    ^'X11XResizeRequestEvent'
 
 ! !
 
-!XlibXResizeRequestEvent methodsFor: 'pointer'!
+!X11XResizeRequestEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXResizeRequestEvent methodsFor: 'finalization'!
+!X11XResizeRequestEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -13480,35 +13480,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMStringConversionTextString
+CStruct subclass: #X11XIMStringConversionTextString
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMStringConversionTextString class methodsFor: 'initialize-release'!
+!X11XIMStringConversionTextString class methodsFor: 'initialize-release'!
 
-primXlibXIMStringConversionTextStringCreate
-    <cCall: 'Xlib_new_XIMStringConversionText_string' plugin: 'x11'>
+primX11XIMStringConversionTextStringCreate
+    <cCall: 'X11_new_XIMStringConversionText_string' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMStringConversionTextStringCreate).
+    ^self handle: (self primX11XIMStringConversionTextStringCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMStringConversionTextString  methodsFor: 'Xlib'!
+!X11XIMStringConversionTextString  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "mbs primitive accessors"
 primXIMStringConversionTextStringMbs
-    <cCall: 'Xlib_XIMStringConversionText_string_mbs_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_mbs_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextStringMbs: val
-    <cCall: 'Xlib_XIMStringConversionText_string_mbs_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_mbs_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13523,11 +13523,11 @@ mbs: val
 "_________________________________________________________"
 "wcs primitive accessors"
 primXIMStringConversionTextStringWcs
-    <cCall: 'Xlib_XIMStringConversionText_string_wcs_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_wcs_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionTextStringWcs: val
-    <cCall: 'Xlib_XIMStringConversionText_string_wcs_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionText_string_wcs_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13544,28 +13544,28 @@ wcs: val
 
 
 
-primXlibXIMStringConversionTextStringDelete
-    <cCall: 'Xlib_delete_XIMStringConversionText_string' plugin: 'x11'>
+primX11XIMStringConversionTextStringDelete
+    <cCall: 'X11_delete_XIMStringConversionText_string' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMStringConversionTextStringDelete.
+    ^self primX11XIMStringConversionTextStringDelete.
 !
 
 
 name
-    ^'XlibXIMStringConversionTextString'
+    ^'X11XIMStringConversionTextString'
 
 ! !
 
-!XlibXIMStringConversionTextString methodsFor: 'pointer'!
+!X11XIMStringConversionTextString methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMStringConversionTextString methodsFor: 'finalization'!
+!X11XIMStringConversionTextString methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -13576,35 +13576,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXWindowAttributes
+CStruct subclass: #X11XWindowAttributes
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXWindowAttributes class methodsFor: 'initialize-release'!
+!X11XWindowAttributes class methodsFor: 'initialize-release'!
 
-primXlibXWindowAttributesCreate
-    <cCall: 'Xlib_new_XWindowAttributes' plugin: 'x11'>
+primX11XWindowAttributesCreate
+    <cCall: 'X11_new_XWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXWindowAttributesCreate).
+    ^self handle: (self primX11XWindowAttributesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXWindowAttributes  methodsFor: 'Xlib'!
+!X11XWindowAttributes  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x primitive accessors"
 primXWindowAttributesX
-    <cCall: 'Xlib_XWindowAttributes_x_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesX: val
-    <cCall: 'Xlib_XWindowAttributes_x_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13619,11 +13619,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXWindowAttributesY
-    <cCall: 'Xlib_XWindowAttributes_y_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesY: val
-    <cCall: 'Xlib_XWindowAttributes_y_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13638,11 +13638,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXWindowAttributesWidth
-    <cCall: 'Xlib_XWindowAttributes_width_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesWidth: val
-    <cCall: 'Xlib_XWindowAttributes_width_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13657,11 +13657,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXWindowAttributesHeight
-    <cCall: 'Xlib_XWindowAttributes_height_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesHeight: val
-    <cCall: 'Xlib_XWindowAttributes_height_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13676,11 +13676,11 @@ height: val
 "_________________________________________________________"
 "border_width primitive accessors"
 primXWindowAttributesBorderWidth
-    <cCall: 'Xlib_XWindowAttributes_border_width_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_border_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesBorderWidth: val
-    <cCall: 'Xlib_XWindowAttributes_border_width_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_border_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13695,11 +13695,11 @@ borderwidth: val
 "_________________________________________________________"
 "depth primitive accessors"
 primXWindowAttributesDepth
-    <cCall: 'Xlib_XWindowAttributes_depth_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_depth_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesDepth: val
-    <cCall: 'Xlib_XWindowAttributes_depth_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_depth_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13714,11 +13714,11 @@ depth: val
 "_________________________________________________________"
 "visual primitive accessors"
 primXWindowAttributesVisual
-    <cCall: 'Xlib_XWindowAttributes_visual_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_visual_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesVisual: val
-    <cCall: 'Xlib_XWindowAttributes_visual_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_visual_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13733,11 +13733,11 @@ visual: val
 "_________________________________________________________"
 "root primitive accessors"
 primXWindowAttributesRoot
-    <cCall: 'Xlib_XWindowAttributes_root_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesRoot: val
-    <cCall: 'Xlib_XWindowAttributes_root_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13752,11 +13752,11 @@ root: val
 "_________________________________________________________"
 "class primitive accessors"
 primXWindowAttributesClass
-    <cCall: 'Xlib_XWindowAttributes_class_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_class_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesClass: val
-    <cCall: 'Xlib_XWindowAttributes_class_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_class_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13771,11 +13771,11 @@ class: val
 "_________________________________________________________"
 "bit_gravity primitive accessors"
 primXWindowAttributesBitGravity
-    <cCall: 'Xlib_XWindowAttributes_bit_gravity_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_bit_gravity_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesBitGravity: val
-    <cCall: 'Xlib_XWindowAttributes_bit_gravity_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_bit_gravity_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13790,11 +13790,11 @@ bitgravity: val
 "_________________________________________________________"
 "win_gravity primitive accessors"
 primXWindowAttributesWinGravity
-    <cCall: 'Xlib_XWindowAttributes_win_gravity_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_win_gravity_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesWinGravity: val
-    <cCall: 'Xlib_XWindowAttributes_win_gravity_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_win_gravity_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13809,11 +13809,11 @@ wingravity: val
 "_________________________________________________________"
 "backing_store primitive accessors"
 primXWindowAttributesBackingStore
-    <cCall: 'Xlib_XWindowAttributes_backing_store_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_store_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesBackingStore: val
-    <cCall: 'Xlib_XWindowAttributes_backing_store_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_store_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13828,11 +13828,11 @@ backingstore: val
 "_________________________________________________________"
 "backing_planes primitive accessors"
 primXWindowAttributesBackingPlanes
-    <cCall: 'Xlib_XWindowAttributes_backing_planes_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_planes_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesBackingPlanes: val
-    <cCall: 'Xlib_XWindowAttributes_backing_planes_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_planes_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13847,11 +13847,11 @@ backingplanes: val
 "_________________________________________________________"
 "backing_pixel primitive accessors"
 primXWindowAttributesBackingPixel
-    <cCall: 'Xlib_XWindowAttributes_backing_pixel_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_pixel_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesBackingPixel: val
-    <cCall: 'Xlib_XWindowAttributes_backing_pixel_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_backing_pixel_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13866,11 +13866,11 @@ backingpixel: val
 "_________________________________________________________"
 "save_under primitive accessors"
 primXWindowAttributesSaveUnder
-    <cCall: 'Xlib_XWindowAttributes_save_under_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_save_under_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesSaveUnder: val
-    <cCall: 'Xlib_XWindowAttributes_save_under_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_save_under_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13885,11 +13885,11 @@ saveunder: val
 "_________________________________________________________"
 "colormap primitive accessors"
 primXWindowAttributesColormap
-    <cCall: 'Xlib_XWindowAttributes_colormap_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_colormap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesColormap: val
-    <cCall: 'Xlib_XWindowAttributes_colormap_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_colormap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13904,11 +13904,11 @@ colormap: val
 "_________________________________________________________"
 "map_installed primitive accessors"
 primXWindowAttributesMapInstalled
-    <cCall: 'Xlib_XWindowAttributes_map_installed_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_map_installed_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesMapInstalled: val
-    <cCall: 'Xlib_XWindowAttributes_map_installed_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_map_installed_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13923,11 +13923,11 @@ mapinstalled: val
 "_________________________________________________________"
 "map_state primitive accessors"
 primXWindowAttributesMapState
-    <cCall: 'Xlib_XWindowAttributes_map_state_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_map_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesMapState: val
-    <cCall: 'Xlib_XWindowAttributes_map_state_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_map_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13942,11 +13942,11 @@ mapstate: val
 "_________________________________________________________"
 "all_event_masks primitive accessors"
 primXWindowAttributesAllEventMasks
-    <cCall: 'Xlib_XWindowAttributes_all_event_masks_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_all_event_masks_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesAllEventMasks: val
-    <cCall: 'Xlib_XWindowAttributes_all_event_masks_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_all_event_masks_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13961,11 +13961,11 @@ alleventmasks: val
 "_________________________________________________________"
 "your_event_mask primitive accessors"
 primXWindowAttributesYourEventMask
-    <cCall: 'Xlib_XWindowAttributes_your_event_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_your_event_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesYourEventMask: val
-    <cCall: 'Xlib_XWindowAttributes_your_event_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_your_event_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13980,11 +13980,11 @@ youreventmask: val
 "_________________________________________________________"
 "do_not_propagate_mask primitive accessors"
 primXWindowAttributesDoNotPropagateMask
-    <cCall: 'Xlib_XWindowAttributes_do_not_propagate_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_do_not_propagate_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesDoNotPropagateMask: val
-    <cCall: 'Xlib_XWindowAttributes_do_not_propagate_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_do_not_propagate_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -13999,11 +13999,11 @@ donotpropagatemask: val
 "_________________________________________________________"
 "override_redirect primitive accessors"
 primXWindowAttributesOverrideRedirect
-    <cCall: 'Xlib_XWindowAttributes_override_redirect_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_override_redirect_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesOverrideRedirect: val
-    <cCall: 'Xlib_XWindowAttributes_override_redirect_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_override_redirect_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14018,11 +14018,11 @@ overrideredirect: val
 "_________________________________________________________"
 "screen primitive accessors"
 primXWindowAttributesScreen
-    <cCall: 'Xlib_XWindowAttributes_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowAttributesScreen: val
-    <cCall: 'Xlib_XWindowAttributes_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowAttributes_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14039,28 +14039,28 @@ screen: val
 
 
 
-primXlibXWindowAttributesDelete
-    <cCall: 'Xlib_delete_XWindowAttributes' plugin: 'x11'>
+primX11XWindowAttributesDelete
+    <cCall: 'X11_delete_XWindowAttributes' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXWindowAttributesDelete.
+    ^self primX11XWindowAttributesDelete.
 !
 
 
 name
-    ^'XlibXWindowAttributes'
+    ^'X11XWindowAttributes'
 
 ! !
 
-!XlibXWindowAttributes methodsFor: 'pointer'!
+!X11XWindowAttributes methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXWindowAttributes methodsFor: 'finalization'!
+!X11XWindowAttributes methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14071,35 +14071,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXMappingEvent
+CStruct subclass: #X11XMappingEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXMappingEvent class methodsFor: 'initialize-release'!
+!X11XMappingEvent class methodsFor: 'initialize-release'!
 
-primXlibXMappingEventCreate
-    <cCall: 'Xlib_new_XMappingEvent' plugin: 'x11'>
+primX11XMappingEventCreate
+    <cCall: 'X11_new_XMappingEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXMappingEventCreate).
+    ^self handle: (self primX11XMappingEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXMappingEvent  methodsFor: 'Xlib'!
+!X11XMappingEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXMappingEventType
-    <cCall: 'Xlib_XMappingEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventType: val
-    <cCall: 'Xlib_XMappingEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14114,11 +14114,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXMappingEventSerial
-    <cCall: 'Xlib_XMappingEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventSerial: val
-    <cCall: 'Xlib_XMappingEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14133,11 +14133,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXMappingEventSendEvent
-    <cCall: 'Xlib_XMappingEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventSendEvent: val
-    <cCall: 'Xlib_XMappingEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14152,11 +14152,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXMappingEventDisplay
-    <cCall: 'Xlib_XMappingEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventDisplay: val
-    <cCall: 'Xlib_XMappingEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14171,11 +14171,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXMappingEventWindow
-    <cCall: 'Xlib_XMappingEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventWindow: val
-    <cCall: 'Xlib_XMappingEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14190,11 +14190,11 @@ window: val
 "_________________________________________________________"
 "request primitive accessors"
 primXMappingEventRequest
-    <cCall: 'Xlib_XMappingEvent_request_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_request_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventRequest: val
-    <cCall: 'Xlib_XMappingEvent_request_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_request_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14209,11 +14209,11 @@ request: val
 "_________________________________________________________"
 "first_keycode primitive accessors"
 primXMappingEventFirstKeycode
-    <cCall: 'Xlib_XMappingEvent_first_keycode_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_first_keycode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventFirstKeycode: val
-    <cCall: 'Xlib_XMappingEvent_first_keycode_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_first_keycode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14228,11 +14228,11 @@ firstkeycode: val
 "_________________________________________________________"
 "count primitive accessors"
 primXMappingEventCount
-    <cCall: 'Xlib_XMappingEvent_count_get' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_count_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMappingEventCount: val
-    <cCall: 'Xlib_XMappingEvent_count_set' plugin: 'x11'>
+    <cCall: 'X11_XMappingEvent_count_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14249,35 +14249,35 @@ count: val
 "_________________________________________________________"
 "XRefreshKeyboardMapping primitive function"
 primXRefreshKeyboardMapping
-    <cCall: 'Xlib_XRefreshKeyboardMapping' plugin: 'x11'>
+    <cCall: 'X11_XRefreshKeyboardMapping' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXMappingEventDelete
-    <cCall: 'Xlib_delete_XMappingEvent' plugin: 'x11'>
+primX11XMappingEventDelete
+    <cCall: 'X11_delete_XMappingEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXMappingEventDelete.
+    ^self primX11XMappingEventDelete.
 !
 
 
 name
-    ^'XlibXMappingEvent'
+    ^'X11XMappingEvent'
 
 ! !
 
-!XlibXMappingEvent methodsFor: 'pointer'!
+!X11XMappingEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXMappingEvent methodsFor: 'finalization'!
+!X11XMappingEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14288,35 +14288,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMStringConversionCallbackStruct
+CStruct subclass: #X11XIMStringConversionCallbackStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMStringConversionCallbackStruct class methodsFor: 'initialize-release'!
+!X11XIMStringConversionCallbackStruct class methodsFor: 'initialize-release'!
 
-primXlibXIMStringConversionCallbackStructCreate
-    <cCall: 'Xlib_new_XIMStringConversionCallbackStruct' plugin: 'x11'>
+primX11XIMStringConversionCallbackStructCreate
+    <cCall: 'X11_new_XIMStringConversionCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMStringConversionCallbackStructCreate).
+    ^self handle: (self primX11XIMStringConversionCallbackStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMStringConversionCallbackStruct  methodsFor: 'Xlib'!
+!X11XIMStringConversionCallbackStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "position primitive accessors"
 primXIMStringConversionCallbackStructPosition
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_position_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_position_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionCallbackStructPosition: val
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_position_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_position_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14331,11 +14331,11 @@ position: val
 "_________________________________________________________"
 "direction primitive accessors"
 primXIMStringConversionCallbackStructDirection
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_direction_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_direction_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionCallbackStructDirection: val
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_direction_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_direction_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14350,11 +14350,11 @@ direction: val
 "_________________________________________________________"
 "operation primitive accessors"
 primXIMStringConversionCallbackStructOperation
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_operation_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_operation_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionCallbackStructOperation: val
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_operation_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_operation_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14369,11 +14369,11 @@ operation: val
 "_________________________________________________________"
 "factor primitive accessors"
 primXIMStringConversionCallbackStructFactor
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_factor_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_factor_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionCallbackStructFactor: val
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_factor_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_factor_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14388,11 +14388,11 @@ factor: val
 "_________________________________________________________"
 "text primitive accessors"
 primXIMStringConversionCallbackStructText
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_text_get' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_text_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMStringConversionCallbackStructText: val
-    <cCall: 'Xlib_XIMStringConversionCallbackStruct_text_set' plugin: 'x11'>
+    <cCall: 'X11_XIMStringConversionCallbackStruct_text_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14409,28 +14409,28 @@ text: val
 
 
 
-primXlibXIMStringConversionCallbackStructDelete
-    <cCall: 'Xlib_delete_XIMStringConversionCallbackStruct' plugin: 'x11'>
+primX11XIMStringConversionCallbackStructDelete
+    <cCall: 'X11_delete_XIMStringConversionCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMStringConversionCallbackStructDelete.
+    ^self primX11XIMStringConversionCallbackStructDelete.
 !
 
 
 name
-    ^'XlibXIMStringConversionCallbackStruct'
+    ^'X11XIMStringConversionCallbackStruct'
 
 ! !
 
-!XlibXIMStringConversionCallbackStruct methodsFor: 'pointer'!
+!X11XIMStringConversionCallbackStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMStringConversionCallbackStruct methodsFor: 'finalization'!
+!X11XIMStringConversionCallbackStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14441,35 +14441,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXOMOrientation
+CStruct subclass: #X11XOMOrientation
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXOMOrientation class methodsFor: 'initialize-release'!
+!X11XOMOrientation class methodsFor: 'initialize-release'!
 
-primXlibXOMOrientationCreate
-    <cCall: 'Xlib_new_XOMOrientation' plugin: 'x11'>
+primX11XOMOrientationCreate
+    <cCall: 'X11_new_XOMOrientation' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXOMOrientationCreate).
+    ^self handle: (self primX11XOMOrientationCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXOMOrientation  methodsFor: 'Xlib'!
+!X11XOMOrientation  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "num_orientation primitive accessors"
 primXOMOrientationNumOrientation
-    <cCall: 'Xlib_XOMOrientation_num_orientation_get' plugin: 'x11'>
+    <cCall: 'X11_XOMOrientation_num_orientation_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMOrientationNumOrientation: val
-    <cCall: 'Xlib_XOMOrientation_num_orientation_set' plugin: 'x11'>
+    <cCall: 'X11_XOMOrientation_num_orientation_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14484,11 +14484,11 @@ numorientation: val
 "_________________________________________________________"
 "orientation primitive accessors"
 primXOMOrientationOrientation
-    <cCall: 'Xlib_XOMOrientation_orientation_get' plugin: 'x11'>
+    <cCall: 'X11_XOMOrientation_orientation_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXOMOrientationOrientation: val
-    <cCall: 'Xlib_XOMOrientation_orientation_set' plugin: 'x11'>
+    <cCall: 'X11_XOMOrientation_orientation_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14505,28 +14505,28 @@ orientation: val
 
 
 
-primXlibXOMOrientationDelete
-    <cCall: 'Xlib_delete_XOMOrientation' plugin: 'x11'>
+primX11XOMOrientationDelete
+    <cCall: 'X11_delete_XOMOrientation' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXOMOrientationDelete.
+    ^self primX11XOMOrientationDelete.
 !
 
 
 name
-    ^'XlibXOMOrientation'
+    ^'X11XOMOrientation'
 
 ! !
 
-!XlibXOMOrientation methodsFor: 'pointer'!
+!X11XOMOrientation methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXOMOrientation methodsFor: 'finalization'!
+!X11XOMOrientation methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14537,35 +14537,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXWindowChanges
+CStruct subclass: #X11XWindowChanges
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXWindowChanges class methodsFor: 'initialize-release'!
+!X11XWindowChanges class methodsFor: 'initialize-release'!
 
-primXlibXWindowChangesCreate
-    <cCall: 'Xlib_new_XWindowChanges' plugin: 'x11'>
+primX11XWindowChangesCreate
+    <cCall: 'X11_new_XWindowChanges' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXWindowChangesCreate).
+    ^self handle: (self primX11XWindowChangesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXWindowChanges  methodsFor: 'Xlib'!
+!X11XWindowChanges  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "x primitive accessors"
 primXWindowChangesX
-    <cCall: 'Xlib_XWindowChanges_x_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesX: val
-    <cCall: 'Xlib_XWindowChanges_x_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14580,11 +14580,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXWindowChangesY
-    <cCall: 'Xlib_XWindowChanges_y_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesY: val
-    <cCall: 'Xlib_XWindowChanges_y_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14599,11 +14599,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXWindowChangesWidth
-    <cCall: 'Xlib_XWindowChanges_width_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesWidth: val
-    <cCall: 'Xlib_XWindowChanges_width_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14618,11 +14618,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXWindowChangesHeight
-    <cCall: 'Xlib_XWindowChanges_height_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesHeight: val
-    <cCall: 'Xlib_XWindowChanges_height_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14637,11 +14637,11 @@ height: val
 "_________________________________________________________"
 "border_width primitive accessors"
 primXWindowChangesBorderWidth
-    <cCall: 'Xlib_XWindowChanges_border_width_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_border_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesBorderWidth: val
-    <cCall: 'Xlib_XWindowChanges_border_width_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_border_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14656,11 +14656,11 @@ borderwidth: val
 "_________________________________________________________"
 "sibling primitive accessors"
 primXWindowChangesSibling
-    <cCall: 'Xlib_XWindowChanges_sibling_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_sibling_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesSibling: val
-    <cCall: 'Xlib_XWindowChanges_sibling_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_sibling_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14675,11 +14675,11 @@ sibling: val
 "_________________________________________________________"
 "stack_mode primitive accessors"
 primXWindowChangesStackMode
-    <cCall: 'Xlib_XWindowChanges_stack_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_stack_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXWindowChangesStackMode: val
-    <cCall: 'Xlib_XWindowChanges_stack_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XWindowChanges_stack_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14696,28 +14696,28 @@ stackmode: val
 
 
 
-primXlibXWindowChangesDelete
-    <cCall: 'Xlib_delete_XWindowChanges' plugin: 'x11'>
+primX11XWindowChangesDelete
+    <cCall: 'X11_delete_XWindowChanges' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXWindowChangesDelete.
+    ^self primX11XWindowChangesDelete.
 !
 
 
 name
-    ^'XlibXWindowChanges'
+    ^'X11XWindowChanges'
 
 ! !
 
-!XlibXWindowChanges methodsFor: 'pointer'!
+!X11XWindowChanges methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXWindowChanges methodsFor: 'finalization'!
+!X11XWindowChanges methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14728,35 +14728,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXClientMessageEventData
+CStruct subclass: #X11XClientMessageEventData
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXClientMessageEventData class methodsFor: 'initialize-release'!
+!X11XClientMessageEventData class methodsFor: 'initialize-release'!
 
-primXlibXClientMessageEventDataCreate
-    <cCall: 'Xlib_new_XClientMessageEvent_data' plugin: 'x11'>
+primX11XClientMessageEventDataCreate
+    <cCall: 'X11_new_XClientMessageEvent_data' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXClientMessageEventDataCreate).
+    ^self handle: (self primX11XClientMessageEventDataCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXClientMessageEventData  methodsFor: 'Xlib'!
+!X11XClientMessageEventData  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "b primitive accessors"
 primXClientMessageEventDataB
-    <cCall: 'Xlib_XClientMessageEvent_data_b_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_b_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventDataB: val
-    <cCall: 'Xlib_XClientMessageEvent_data_b_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_b_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14771,11 +14771,11 @@ b: val
 "_________________________________________________________"
 "s primitive accessors"
 primXClientMessageEventDataS
-    <cCall: 'Xlib_XClientMessageEvent_data_s_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_s_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventDataS: val
-    <cCall: 'Xlib_XClientMessageEvent_data_s_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_s_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14790,11 +14790,11 @@ s: val
 "_________________________________________________________"
 "l primitive accessors"
 primXClientMessageEventDataL
-    <cCall: 'Xlib_XClientMessageEvent_data_l_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_l_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventDataL: val
-    <cCall: 'Xlib_XClientMessageEvent_data_l_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_l_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14811,28 +14811,28 @@ l: val
 
 
 
-primXlibXClientMessageEventDataDelete
-    <cCall: 'Xlib_delete_XClientMessageEvent_data' plugin: 'x11'>
+primX11XClientMessageEventDataDelete
+    <cCall: 'X11_delete_XClientMessageEvent_data' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXClientMessageEventDataDelete.
+    ^self primX11XClientMessageEventDataDelete.
 !
 
 
 name
-    ^'XlibXClientMessageEventData'
+    ^'X11XClientMessageEventData'
 
 ! !
 
-!XlibXClientMessageEventData methodsFor: 'pointer'!
+!X11XClientMessageEventData methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXClientMessageEventData methodsFor: 'finalization'!
+!X11XClientMessageEventData methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14843,35 +14843,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXExtCodes
+CStruct subclass: #X11XExtCodes
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXExtCodes class methodsFor: 'initialize-release'!
+!X11XExtCodes class methodsFor: 'initialize-release'!
 
-primXlibXExtCodesCreate
-    <cCall: 'Xlib_new_XExtCodes' plugin: 'x11'>
+primX11XExtCodesCreate
+    <cCall: 'X11_new_XExtCodes' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXExtCodesCreate).
+    ^self handle: (self primX11XExtCodesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXExtCodes  methodsFor: 'Xlib'!
+!X11XExtCodes  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "extension primitive accessors"
 primXExtCodesExtension
-    <cCall: 'Xlib_XExtCodes_extension_get' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_extension_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtCodesExtension: val
-    <cCall: 'Xlib_XExtCodes_extension_set' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_extension_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14886,11 +14886,11 @@ extension: val
 "_________________________________________________________"
 "major_opcode primitive accessors"
 primXExtCodesMajorOpcode
-    <cCall: 'Xlib_XExtCodes_major_opcode_get' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_major_opcode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtCodesMajorOpcode: val
-    <cCall: 'Xlib_XExtCodes_major_opcode_set' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_major_opcode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14905,11 +14905,11 @@ majoropcode: val
 "_________________________________________________________"
 "first_event primitive accessors"
 primXExtCodesFirstEvent
-    <cCall: 'Xlib_XExtCodes_first_event_get' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_first_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtCodesFirstEvent: val
-    <cCall: 'Xlib_XExtCodes_first_event_set' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_first_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14924,11 +14924,11 @@ firstevent: val
 "_________________________________________________________"
 "first_error primitive accessors"
 primXExtCodesFirstError
-    <cCall: 'Xlib_XExtCodes_first_error_get' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_first_error_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXExtCodesFirstError: val
-    <cCall: 'Xlib_XExtCodes_first_error_set' plugin: 'x11'>
+    <cCall: 'X11_XExtCodes_first_error_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -14945,28 +14945,28 @@ firsterror: val
 
 
 
-primXlibXExtCodesDelete
-    <cCall: 'Xlib_delete_XExtCodes' plugin: 'x11'>
+primX11XExtCodesDelete
+    <cCall: 'X11_delete_XExtCodes' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXExtCodesDelete.
+    ^self primX11XExtCodesDelete.
 !
 
 
 name
-    ^'XlibXExtCodes'
+    ^'X11XExtCodes'
 
 ! !
 
-!XlibXExtCodes methodsFor: 'pointer'!
+!X11XExtCodes methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXExtCodes methodsFor: 'finalization'!
+!X11XExtCodes methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -14977,35 +14977,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXGCValues
+CStruct subclass: #X11XGCValues
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXGCValues class methodsFor: 'initialize-release'!
+!X11XGCValues class methodsFor: 'initialize-release'!
 
-primXlibXGCValuesCreate
-    <cCall: 'Xlib_new_XGCValues' plugin: 'x11'>
+primX11XGCValuesCreate
+    <cCall: 'X11_new_XGCValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXGCValuesCreate).
+    ^self handle: (self primX11XGCValuesCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXGCValues  methodsFor: 'Xlib'!
+!X11XGCValues  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "function primitive accessors"
 primXGCValuesFunction
-    <cCall: 'Xlib_XGCValues_function_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_function_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesFunction: val
-    <cCall: 'Xlib_XGCValues_function_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_function_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15020,11 +15020,11 @@ function: val
 "_________________________________________________________"
 "plane_mask primitive accessors"
 primXGCValuesPlaneMask
-    <cCall: 'Xlib_XGCValues_plane_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_plane_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesPlaneMask: val
-    <cCall: 'Xlib_XGCValues_plane_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_plane_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15039,11 +15039,11 @@ planemask: val
 "_________________________________________________________"
 "foreground primitive accessors"
 primXGCValuesForeground
-    <cCall: 'Xlib_XGCValues_foreground_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_foreground_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesForeground: val
-    <cCall: 'Xlib_XGCValues_foreground_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_foreground_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15058,11 +15058,11 @@ foreground: val
 "_________________________________________________________"
 "background primitive accessors"
 primXGCValuesBackground
-    <cCall: 'Xlib_XGCValues_background_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_background_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesBackground: val
-    <cCall: 'Xlib_XGCValues_background_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_background_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15077,11 +15077,11 @@ background: val
 "_________________________________________________________"
 "line_width primitive accessors"
 primXGCValuesLineWidth
-    <cCall: 'Xlib_XGCValues_line_width_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_line_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesLineWidth: val
-    <cCall: 'Xlib_XGCValues_line_width_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_line_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15096,11 +15096,11 @@ linewidth: val
 "_________________________________________________________"
 "line_style primitive accessors"
 primXGCValuesLineStyle
-    <cCall: 'Xlib_XGCValues_line_style_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_line_style_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesLineStyle: val
-    <cCall: 'Xlib_XGCValues_line_style_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_line_style_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15115,11 +15115,11 @@ linestyle: val
 "_________________________________________________________"
 "cap_style primitive accessors"
 primXGCValuesCapStyle
-    <cCall: 'Xlib_XGCValues_cap_style_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_cap_style_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesCapStyle: val
-    <cCall: 'Xlib_XGCValues_cap_style_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_cap_style_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15134,11 +15134,11 @@ capstyle: val
 "_________________________________________________________"
 "join_style primitive accessors"
 primXGCValuesJoinStyle
-    <cCall: 'Xlib_XGCValues_join_style_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_join_style_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesJoinStyle: val
-    <cCall: 'Xlib_XGCValues_join_style_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_join_style_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15153,11 +15153,11 @@ joinstyle: val
 "_________________________________________________________"
 "fill_style primitive accessors"
 primXGCValuesFillStyle
-    <cCall: 'Xlib_XGCValues_fill_style_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_fill_style_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesFillStyle: val
-    <cCall: 'Xlib_XGCValues_fill_style_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_fill_style_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15172,11 +15172,11 @@ fillstyle: val
 "_________________________________________________________"
 "fill_rule primitive accessors"
 primXGCValuesFillRule
-    <cCall: 'Xlib_XGCValues_fill_rule_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_fill_rule_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesFillRule: val
-    <cCall: 'Xlib_XGCValues_fill_rule_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_fill_rule_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15191,11 +15191,11 @@ fillrule: val
 "_________________________________________________________"
 "arc_mode primitive accessors"
 primXGCValuesArcMode
-    <cCall: 'Xlib_XGCValues_arc_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_arc_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesArcMode: val
-    <cCall: 'Xlib_XGCValues_arc_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_arc_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15210,11 +15210,11 @@ arcmode: val
 "_________________________________________________________"
 "tile primitive accessors"
 primXGCValuesTile
-    <cCall: 'Xlib_XGCValues_tile_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_tile_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesTile: val
-    <cCall: 'Xlib_XGCValues_tile_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_tile_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15229,11 +15229,11 @@ tile: val
 "_________________________________________________________"
 "stipple primitive accessors"
 primXGCValuesStipple
-    <cCall: 'Xlib_XGCValues_stipple_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_stipple_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesStipple: val
-    <cCall: 'Xlib_XGCValues_stipple_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_stipple_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15248,11 +15248,11 @@ stipple: val
 "_________________________________________________________"
 "ts_x_origin primitive accessors"
 primXGCValuesTsXOrigin
-    <cCall: 'Xlib_XGCValues_ts_x_origin_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_ts_x_origin_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesTsXOrigin: val
-    <cCall: 'Xlib_XGCValues_ts_x_origin_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_ts_x_origin_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15267,11 +15267,11 @@ tsxorigin: val
 "_________________________________________________________"
 "ts_y_origin primitive accessors"
 primXGCValuesTsYOrigin
-    <cCall: 'Xlib_XGCValues_ts_y_origin_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_ts_y_origin_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesTsYOrigin: val
-    <cCall: 'Xlib_XGCValues_ts_y_origin_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_ts_y_origin_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15286,11 +15286,11 @@ tsyorigin: val
 "_________________________________________________________"
 "font primitive accessors"
 primXGCValuesFont
-    <cCall: 'Xlib_XGCValues_font_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_font_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesFont: val
-    <cCall: 'Xlib_XGCValues_font_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_font_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15305,11 +15305,11 @@ font: val
 "_________________________________________________________"
 "subwindow_mode primitive accessors"
 primXGCValuesSubwindowMode
-    <cCall: 'Xlib_XGCValues_subwindow_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_subwindow_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesSubwindowMode: val
-    <cCall: 'Xlib_XGCValues_subwindow_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_subwindow_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15324,11 +15324,11 @@ subwindowmode: val
 "_________________________________________________________"
 "graphics_exposures primitive accessors"
 primXGCValuesGraphicsExposures
-    <cCall: 'Xlib_XGCValues_graphics_exposures_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_graphics_exposures_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesGraphicsExposures: val
-    <cCall: 'Xlib_XGCValues_graphics_exposures_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_graphics_exposures_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15343,11 +15343,11 @@ graphicsexposures: val
 "_________________________________________________________"
 "clip_x_origin primitive accessors"
 primXGCValuesClipXOrigin
-    <cCall: 'Xlib_XGCValues_clip_x_origin_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_x_origin_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesClipXOrigin: val
-    <cCall: 'Xlib_XGCValues_clip_x_origin_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_x_origin_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15362,11 +15362,11 @@ clipxorigin: val
 "_________________________________________________________"
 "clip_y_origin primitive accessors"
 primXGCValuesClipYOrigin
-    <cCall: 'Xlib_XGCValues_clip_y_origin_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_y_origin_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesClipYOrigin: val
-    <cCall: 'Xlib_XGCValues_clip_y_origin_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_y_origin_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15381,11 +15381,11 @@ clipyorigin: val
 "_________________________________________________________"
 "clip_mask primitive accessors"
 primXGCValuesClipMask
-    <cCall: 'Xlib_XGCValues_clip_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesClipMask: val
-    <cCall: 'Xlib_XGCValues_clip_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_clip_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15400,11 +15400,11 @@ clipmask: val
 "_________________________________________________________"
 "dash_offset primitive accessors"
 primXGCValuesDashOffset
-    <cCall: 'Xlib_XGCValues_dash_offset_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_dash_offset_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesDashOffset: val
-    <cCall: 'Xlib_XGCValues_dash_offset_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_dash_offset_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15419,11 +15419,11 @@ dashoffset: val
 "_________________________________________________________"
 "dashes primitive accessors"
 primXGCValuesDashes
-    <cCall: 'Xlib_XGCValues_dashes_get' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_dashes_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXGCValuesDashes: val
-    <cCall: 'Xlib_XGCValues_dashes_set' plugin: 'x11'>
+    <cCall: 'X11_XGCValues_dashes_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15440,28 +15440,28 @@ dashes: val
 
 
 
-primXlibXGCValuesDelete
-    <cCall: 'Xlib_delete_XGCValues' plugin: 'x11'>
+primX11XGCValuesDelete
+    <cCall: 'X11_delete_XGCValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXGCValuesDelete.
+    ^self primX11XGCValuesDelete.
 !
 
 
 name
-    ^'XlibXGCValues'
+    ^'X11XGCValues'
 
 ! !
 
-!XlibXGCValues methodsFor: 'pointer'!
+!X11XGCValues methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXGCValues methodsFor: 'finalization'!
+!X11XGCValues methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -15472,82 +15472,82 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXOC
+CStruct subclass: #X11XOC
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXOC class methodsFor: 'initialize-release'!
+!X11XOC class methodsFor: 'initialize-release'!
 
-primXlibXOCCreate
-    <cCall: 'Xlib_new_XOC' plugin: 'x11'>
+primX11XOCCreate
+    <cCall: 'X11_new_XOC' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXOCCreate).
+    ^self handle: (self primX11XOCCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXOC  methodsFor: 'Xlib'!
+!X11XOC  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XDestroyOC primitive function"
 primXDestroyOC
-    <cCall: 'Xlib_XDestroyOC' plugin: 'x11'>
+    <cCall: 'X11_XDestroyOC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XOMOfOC primitive function"
 primXOMOfOC
-    <cCall: 'Xlib_XOMOfOC' plugin: 'x11'>
+    <cCall: 'X11_XOMOfOC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetOCValues primitive function"
 primXSetOCValues
-    <cCall: 'Xlib_XSetOCValues' plugin: 'x11'>
+    <cCall: 'X11_XSetOCValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetOCValues primitive function"
 primXGetOCValues
-    <cCall: 'Xlib_XGetOCValues' plugin: 'x11'>
+    <cCall: 'X11_XGetOCValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXOCDelete
-    <cCall: 'Xlib_delete_XOC' plugin: 'x11'>
+primX11XOCDelete
+    <cCall: 'X11_delete_XOC' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXOCDelete.
+    ^self primX11XOCDelete.
 !
 
 
 name
-    ^'XlibXOC'
+    ^'X11XOC'
 
 ! !
 
-!XlibXOC methodsFor: 'pointer'!
+!X11XOC methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXOC methodsFor: 'finalization'!
+!X11XOC methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -15558,35 +15558,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXFocusChangeEvent
+CStruct subclass: #X11XFocusChangeEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXFocusChangeEvent class methodsFor: 'initialize-release'!
+!X11XFocusChangeEvent class methodsFor: 'initialize-release'!
 
-primXlibXFocusChangeEventCreate
-    <cCall: 'Xlib_new_XFocusChangeEvent' plugin: 'x11'>
+primX11XFocusChangeEventCreate
+    <cCall: 'X11_new_XFocusChangeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXFocusChangeEventCreate).
+    ^self handle: (self primX11XFocusChangeEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXFocusChangeEvent  methodsFor: 'Xlib'!
+!X11XFocusChangeEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXFocusChangeEventType
-    <cCall: 'Xlib_XFocusChangeEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventType: val
-    <cCall: 'Xlib_XFocusChangeEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15601,11 +15601,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXFocusChangeEventSerial
-    <cCall: 'Xlib_XFocusChangeEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventSerial: val
-    <cCall: 'Xlib_XFocusChangeEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15620,11 +15620,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXFocusChangeEventSendEvent
-    <cCall: 'Xlib_XFocusChangeEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventSendEvent: val
-    <cCall: 'Xlib_XFocusChangeEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15639,11 +15639,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXFocusChangeEventDisplay
-    <cCall: 'Xlib_XFocusChangeEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventDisplay: val
-    <cCall: 'Xlib_XFocusChangeEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15658,11 +15658,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXFocusChangeEventWindow
-    <cCall: 'Xlib_XFocusChangeEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventWindow: val
-    <cCall: 'Xlib_XFocusChangeEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15677,11 +15677,11 @@ window: val
 "_________________________________________________________"
 "mode primitive accessors"
 primXFocusChangeEventMode
-    <cCall: 'Xlib_XFocusChangeEvent_mode_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_mode_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventMode: val
-    <cCall: 'Xlib_XFocusChangeEvent_mode_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_mode_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15696,11 +15696,11 @@ mode: val
 "_________________________________________________________"
 "detail primitive accessors"
 primXFocusChangeEventDetail
-    <cCall: 'Xlib_XFocusChangeEvent_detail_get' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_detail_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXFocusChangeEventDetail: val
-    <cCall: 'Xlib_XFocusChangeEvent_detail_set' plugin: 'x11'>
+    <cCall: 'X11_XFocusChangeEvent_detail_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15717,28 +15717,28 @@ detail: val
 
 
 
-primXlibXFocusChangeEventDelete
-    <cCall: 'Xlib_delete_XFocusChangeEvent' plugin: 'x11'>
+primX11XFocusChangeEventDelete
+    <cCall: 'X11_delete_XFocusChangeEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXFocusChangeEventDelete.
+    ^self primX11XFocusChangeEventDelete.
 !
 
 
 name
-    ^'XlibXFocusChangeEvent'
+    ^'X11XFocusChangeEvent'
 
 ! !
 
-!XlibXFocusChangeEvent methodsFor: 'pointer'!
+!X11XFocusChangeEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXFocusChangeEvent methodsFor: 'finalization'!
+!X11XFocusChangeEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -15749,35 +15749,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXConfigureRequestEvent
+CStruct subclass: #X11XConfigureRequestEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXConfigureRequestEvent class methodsFor: 'initialize-release'!
+!X11XConfigureRequestEvent class methodsFor: 'initialize-release'!
 
-primXlibXConfigureRequestEventCreate
-    <cCall: 'Xlib_new_XConfigureRequestEvent' plugin: 'x11'>
+primX11XConfigureRequestEventCreate
+    <cCall: 'X11_new_XConfigureRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXConfigureRequestEventCreate).
+    ^self handle: (self primX11XConfigureRequestEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXConfigureRequestEvent  methodsFor: 'Xlib'!
+!X11XConfigureRequestEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXConfigureRequestEventType
-    <cCall: 'Xlib_XConfigureRequestEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventType: val
-    <cCall: 'Xlib_XConfigureRequestEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15792,11 +15792,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXConfigureRequestEventSerial
-    <cCall: 'Xlib_XConfigureRequestEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventSerial: val
-    <cCall: 'Xlib_XConfigureRequestEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15811,11 +15811,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXConfigureRequestEventSendEvent
-    <cCall: 'Xlib_XConfigureRequestEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventSendEvent: val
-    <cCall: 'Xlib_XConfigureRequestEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15830,11 +15830,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXConfigureRequestEventDisplay
-    <cCall: 'Xlib_XConfigureRequestEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventDisplay: val
-    <cCall: 'Xlib_XConfigureRequestEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15849,11 +15849,11 @@ display: val
 "_________________________________________________________"
 "parent primitive accessors"
 primXConfigureRequestEventParent
-    <cCall: 'Xlib_XConfigureRequestEvent_parent_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_parent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventParent: val
-    <cCall: 'Xlib_XConfigureRequestEvent_parent_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_parent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15868,11 +15868,11 @@ parent: val
 "_________________________________________________________"
 "window primitive accessors"
 primXConfigureRequestEventWindow
-    <cCall: 'Xlib_XConfigureRequestEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventWindow: val
-    <cCall: 'Xlib_XConfigureRequestEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15887,11 +15887,11 @@ window: val
 "_________________________________________________________"
 "x primitive accessors"
 primXConfigureRequestEventX
-    <cCall: 'Xlib_XConfigureRequestEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventX: val
-    <cCall: 'Xlib_XConfigureRequestEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15906,11 +15906,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXConfigureRequestEventY
-    <cCall: 'Xlib_XConfigureRequestEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventY: val
-    <cCall: 'Xlib_XConfigureRequestEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15925,11 +15925,11 @@ y: val
 "_________________________________________________________"
 "width primitive accessors"
 primXConfigureRequestEventWidth
-    <cCall: 'Xlib_XConfigureRequestEvent_width_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventWidth: val
-    <cCall: 'Xlib_XConfigureRequestEvent_width_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15944,11 +15944,11 @@ width: val
 "_________________________________________________________"
 "height primitive accessors"
 primXConfigureRequestEventHeight
-    <cCall: 'Xlib_XConfigureRequestEvent_height_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_height_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventHeight: val
-    <cCall: 'Xlib_XConfigureRequestEvent_height_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_height_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15963,11 +15963,11 @@ height: val
 "_________________________________________________________"
 "border_width primitive accessors"
 primXConfigureRequestEventBorderWidth
-    <cCall: 'Xlib_XConfigureRequestEvent_border_width_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_border_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventBorderWidth: val
-    <cCall: 'Xlib_XConfigureRequestEvent_border_width_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_border_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -15982,11 +15982,11 @@ borderwidth: val
 "_________________________________________________________"
 "above primitive accessors"
 primXConfigureRequestEventAbove
-    <cCall: 'Xlib_XConfigureRequestEvent_above_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_above_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventAbove: val
-    <cCall: 'Xlib_XConfigureRequestEvent_above_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_above_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16001,11 +16001,11 @@ above: val
 "_________________________________________________________"
 "detail primitive accessors"
 primXConfigureRequestEventDetail
-    <cCall: 'Xlib_XConfigureRequestEvent_detail_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_detail_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventDetail: val
-    <cCall: 'Xlib_XConfigureRequestEvent_detail_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_detail_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16020,11 +16020,11 @@ detail: val
 "_________________________________________________________"
 "value_mask primitive accessors"
 primXConfigureRequestEventValueMask
-    <cCall: 'Xlib_XConfigureRequestEvent_value_mask_get' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_value_mask_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXConfigureRequestEventValueMask: val
-    <cCall: 'Xlib_XConfigureRequestEvent_value_mask_set' plugin: 'x11'>
+    <cCall: 'X11_XConfigureRequestEvent_value_mask_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16041,28 +16041,28 @@ valuemask: val
 
 
 
-primXlibXConfigureRequestEventDelete
-    <cCall: 'Xlib_delete_XConfigureRequestEvent' plugin: 'x11'>
+primX11XConfigureRequestEventDelete
+    <cCall: 'X11_delete_XConfigureRequestEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXConfigureRequestEventDelete.
+    ^self primX11XConfigureRequestEventDelete.
 !
 
 
 name
-    ^'XlibXConfigureRequestEvent'
+    ^'X11XConfigureRequestEvent'
 
 ! !
 
-!XlibXConfigureRequestEvent methodsFor: 'pointer'!
+!X11XConfigureRequestEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXConfigureRequestEvent methodsFor: 'finalization'!
+!X11XConfigureRequestEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -16073,35 +16073,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXClientMessageEvent
+CStruct subclass: #X11XClientMessageEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXClientMessageEvent class methodsFor: 'initialize-release'!
+!X11XClientMessageEvent class methodsFor: 'initialize-release'!
 
-primXlibXClientMessageEventCreate
-    <cCall: 'Xlib_new_XClientMessageEvent' plugin: 'x11'>
+primX11XClientMessageEventCreate
+    <cCall: 'X11_new_XClientMessageEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXClientMessageEventCreate).
+    ^self handle: (self primX11XClientMessageEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXClientMessageEvent  methodsFor: 'Xlib'!
+!X11XClientMessageEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXClientMessageEventType
-    <cCall: 'Xlib_XClientMessageEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventType: val
-    <cCall: 'Xlib_XClientMessageEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16116,11 +16116,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXClientMessageEventSerial
-    <cCall: 'Xlib_XClientMessageEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventSerial: val
-    <cCall: 'Xlib_XClientMessageEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16135,11 +16135,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXClientMessageEventSendEvent
-    <cCall: 'Xlib_XClientMessageEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventSendEvent: val
-    <cCall: 'Xlib_XClientMessageEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16154,11 +16154,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXClientMessageEventDisplay
-    <cCall: 'Xlib_XClientMessageEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventDisplay: val
-    <cCall: 'Xlib_XClientMessageEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16173,11 +16173,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXClientMessageEventWindow
-    <cCall: 'Xlib_XClientMessageEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventWindow: val
-    <cCall: 'Xlib_XClientMessageEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16192,11 +16192,11 @@ window: val
 "_________________________________________________________"
 "message_type primitive accessors"
 primXClientMessageEventMessageType
-    <cCall: 'Xlib_XClientMessageEvent_message_type_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_message_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventMessageType: val
-    <cCall: 'Xlib_XClientMessageEvent_message_type_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_message_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16211,11 +16211,11 @@ messagetype: val
 "_________________________________________________________"
 "format primitive accessors"
 primXClientMessageEventFormat
-    <cCall: 'Xlib_XClientMessageEvent_format_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_format_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventFormat: val
-    <cCall: 'Xlib_XClientMessageEvent_format_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_format_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16230,11 +16230,11 @@ format: val
 "_________________________________________________________"
 "data primitive accessors"
 primXClientMessageEventData
-    <cCall: 'Xlib_XClientMessageEvent_data_get' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXClientMessageEventData: val
-    <cCall: 'Xlib_XClientMessageEvent_data_set' plugin: 'x11'>
+    <cCall: 'X11_XClientMessageEvent_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16251,28 +16251,28 @@ data: val
 
 
 
-primXlibXClientMessageEventDelete
-    <cCall: 'Xlib_delete_XClientMessageEvent' plugin: 'x11'>
+primX11XClientMessageEventDelete
+    <cCall: 'X11_delete_XClientMessageEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXClientMessageEventDelete.
+    ^self primX11XClientMessageEventDelete.
 !
 
 
 name
-    ^'XlibXClientMessageEvent'
+    ^'X11XClientMessageEvent'
 
 ! !
 
-!XlibXClientMessageEvent methodsFor: 'pointer'!
+!X11XClientMessageEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXClientMessageEvent methodsFor: 'finalization'!
+!X11XClientMessageEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -16283,35 +16283,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXwcTextItem
+CStruct subclass: #X11XwcTextItem
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXwcTextItem class methodsFor: 'initialize-release'!
+!X11XwcTextItem class methodsFor: 'initialize-release'!
 
-primXlibXwcTextItemCreate
-    <cCall: 'Xlib_new_XwcTextItem' plugin: 'x11'>
+primX11XwcTextItemCreate
+    <cCall: 'X11_new_XwcTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXwcTextItemCreate).
+    ^self handle: (self primX11XwcTextItemCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXwcTextItem  methodsFor: 'Xlib'!
+!X11XwcTextItem  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "chars primitive accessors"
 primXwcTextItemChars
-    <cCall: 'Xlib_XwcTextItem_chars_get' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_chars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXwcTextItemChars: val
-    <cCall: 'Xlib_XwcTextItem_chars_set' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_chars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16326,11 +16326,11 @@ chars: val
 "_________________________________________________________"
 "nchars primitive accessors"
 primXwcTextItemNchars
-    <cCall: 'Xlib_XwcTextItem_nchars_get' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_nchars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXwcTextItemNchars: val
-    <cCall: 'Xlib_XwcTextItem_nchars_set' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_nchars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16345,11 +16345,11 @@ nchars: val
 "_________________________________________________________"
 "delta primitive accessors"
 primXwcTextItemDelta
-    <cCall: 'Xlib_XwcTextItem_delta_get' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_delta_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXwcTextItemDelta: val
-    <cCall: 'Xlib_XwcTextItem_delta_set' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_delta_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16364,11 +16364,11 @@ delta: val
 "_________________________________________________________"
 "font_set primitive accessors"
 primXwcTextItemFontSet
-    <cCall: 'Xlib_XwcTextItem_font_set_get' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_font_set_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXwcTextItemFontSet: val
-    <cCall: 'Xlib_XwcTextItem_font_set_set' plugin: 'x11'>
+    <cCall: 'X11_XwcTextItem_font_set_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16385,28 +16385,28 @@ fontset: val
 
 
 
-primXlibXwcTextItemDelete
-    <cCall: 'Xlib_delete_XwcTextItem' plugin: 'x11'>
+primX11XwcTextItemDelete
+    <cCall: 'X11_delete_XwcTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXwcTextItemDelete.
+    ^self primX11XwcTextItemDelete.
 !
 
 
 name
-    ^'XlibXwcTextItem'
+    ^'X11XwcTextItem'
 
 ! !
 
-!XlibXwcTextItem methodsFor: 'pointer'!
+!X11XwcTextItem methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXwcTextItem methodsFor: 'finalization'!
+!X11XwcTextItem methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -16417,35 +16417,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXModifierKeymap
+CStruct subclass: #X11XModifierKeymap
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXModifierKeymap class methodsFor: 'initialize-release'!
+!X11XModifierKeymap class methodsFor: 'initialize-release'!
 
-primXlibXModifierKeymapCreate
-    <cCall: 'Xlib_new_XModifierKeymap' plugin: 'x11'>
+primX11XModifierKeymapCreate
+    <cCall: 'X11_new_XModifierKeymap' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXModifierKeymapCreate).
+    ^self handle: (self primX11XModifierKeymapCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXModifierKeymap  methodsFor: 'Xlib'!
+!X11XModifierKeymap  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "max_keypermod primitive accessors"
 primXModifierKeymapMaxKeypermod
-    <cCall: 'Xlib_XModifierKeymap_max_keypermod_get' plugin: 'x11'>
+    <cCall: 'X11_XModifierKeymap_max_keypermod_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXModifierKeymapMaxKeypermod: val
-    <cCall: 'Xlib_XModifierKeymap_max_keypermod_set' plugin: 'x11'>
+    <cCall: 'X11_XModifierKeymap_max_keypermod_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16460,11 +16460,11 @@ maxkeypermod: val
 "_________________________________________________________"
 "modifiermap primitive accessors"
 primXModifierKeymapModifiermap
-    <cCall: 'Xlib_XModifierKeymap_modifiermap_get' plugin: 'x11'>
+    <cCall: 'X11_XModifierKeymap_modifiermap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXModifierKeymapModifiermap: val
-    <cCall: 'Xlib_XModifierKeymap_modifiermap_set' plugin: 'x11'>
+    <cCall: 'X11_XModifierKeymap_modifiermap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16480,50 +16480,50 @@ modifiermap: val
 
 "_________________________________________________________"
 "XDeleteModifiermapEntry primitive function"
-primXDeleteModifiermapEntry: arg1 modifier: arg4
-    <cCall: 'Xlib_XDeleteModifiermapEntry' plugin: 'x11'>
+primXDeleteModifiermapEntry: arg1 keycodeEntry: arg4 modifier: arg5
+    <cCall: 'X11_XDeleteModifiermapEntry' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XInsertModifiermapEntry primitive function"
-primXInsertModifiermapEntry: arg1 modifier: arg4
-    <cCall: 'Xlib_XInsertModifiermapEntry' plugin: 'x11'>
+primXInsertModifiermapEntry: arg1 keycodeEntry: arg4 modifier: arg5
+    <cCall: 'X11_XInsertModifiermapEntry' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XFreeModifiermap primitive function"
 primXFreeModifiermap
-    <cCall: 'Xlib_XFreeModifiermap' plugin: 'x11'>
+    <cCall: 'X11_XFreeModifiermap' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXModifierKeymapDelete
-    <cCall: 'Xlib_delete_XModifierKeymap' plugin: 'x11'>
+primX11XModifierKeymapDelete
+    <cCall: 'X11_delete_XModifierKeymap' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXModifierKeymapDelete.
+    ^self primX11XModifierKeymapDelete.
 !
 
 
 name
-    ^'XlibXModifierKeymap'
+    ^'X11XModifierKeymap'
 
 ! !
 
-!XlibXModifierKeymap methodsFor: 'pointer'!
+!X11XModifierKeymap methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXModifierKeymap methodsFor: 'finalization'!
+!X11XModifierKeymap methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -16534,35 +16534,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXColormapEvent
+CStruct subclass: #X11XColormapEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXColormapEvent class methodsFor: 'initialize-release'!
+!X11XColormapEvent class methodsFor: 'initialize-release'!
 
-primXlibXColormapEventCreate
-    <cCall: 'Xlib_new_XColormapEvent' plugin: 'x11'>
+primX11XColormapEventCreate
+    <cCall: 'X11_new_XColormapEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXColormapEventCreate).
+    ^self handle: (self primX11XColormapEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXColormapEvent  methodsFor: 'Xlib'!
+!X11XColormapEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXColormapEventType
-    <cCall: 'Xlib_XColormapEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventType: val
-    <cCall: 'Xlib_XColormapEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16577,11 +16577,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXColormapEventSerial
-    <cCall: 'Xlib_XColormapEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventSerial: val
-    <cCall: 'Xlib_XColormapEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16596,11 +16596,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXColormapEventSendEvent
-    <cCall: 'Xlib_XColormapEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventSendEvent: val
-    <cCall: 'Xlib_XColormapEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16615,11 +16615,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXColormapEventDisplay
-    <cCall: 'Xlib_XColormapEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventDisplay: val
-    <cCall: 'Xlib_XColormapEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16634,11 +16634,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXColormapEventWindow
-    <cCall: 'Xlib_XColormapEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventWindow: val
-    <cCall: 'Xlib_XColormapEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16653,11 +16653,11 @@ window: val
 "_________________________________________________________"
 "colormap primitive accessors"
 primXColormapEventColormap
-    <cCall: 'Xlib_XColormapEvent_colormap_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_colormap_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventColormap: val
-    <cCall: 'Xlib_XColormapEvent_colormap_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_colormap_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16672,11 +16672,11 @@ colormap: val
 "_________________________________________________________"
 "new primitive accessors"
 primXColormapEventNew
-    <cCall: 'Xlib_XColormapEvent_new_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_new_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventNew: val
-    <cCall: 'Xlib_XColormapEvent_new_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_new_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16691,11 +16691,11 @@ new: val
 "_________________________________________________________"
 "state primitive accessors"
 primXColormapEventState
-    <cCall: 'Xlib_XColormapEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXColormapEventState: val
-    <cCall: 'Xlib_XColormapEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XColormapEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16712,28 +16712,28 @@ state: val
 
 
 
-primXlibXColormapEventDelete
-    <cCall: 'Xlib_delete_XColormapEvent' plugin: 'x11'>
+primX11XColormapEventDelete
+    <cCall: 'X11_delete_XColormapEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXColormapEventDelete.
+    ^self primX11XColormapEventDelete.
 !
 
 
 name
-    ^'XlibXColormapEvent'
+    ^'X11XColormapEvent'
 
 ! !
 
-!XlibXColormapEvent methodsFor: 'pointer'!
+!X11XColormapEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXColormapEvent methodsFor: 'finalization'!
+!X11XColormapEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -16744,35 +16744,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXMotionEvent
+CStruct subclass: #X11XMotionEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXMotionEvent class methodsFor: 'initialize-release'!
+!X11XMotionEvent class methodsFor: 'initialize-release'!
 
-primXlibXMotionEventCreate
-    <cCall: 'Xlib_new_XMotionEvent' plugin: 'x11'>
+primX11XMotionEventCreate
+    <cCall: 'X11_new_XMotionEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXMotionEventCreate).
+    ^self handle: (self primX11XMotionEventCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXMotionEvent  methodsFor: 'Xlib'!
+!X11XMotionEvent  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "type primitive accessors"
 primXMotionEventType
-    <cCall: 'Xlib_XMotionEvent_type_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_type_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventType: val
-    <cCall: 'Xlib_XMotionEvent_type_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_type_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16787,11 +16787,11 @@ type: val
 "_________________________________________________________"
 "serial primitive accessors"
 primXMotionEventSerial
-    <cCall: 'Xlib_XMotionEvent_serial_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_serial_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventSerial: val
-    <cCall: 'Xlib_XMotionEvent_serial_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_serial_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16806,11 +16806,11 @@ serial: val
 "_________________________________________________________"
 "send_event primitive accessors"
 primXMotionEventSendEvent
-    <cCall: 'Xlib_XMotionEvent_send_event_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_send_event_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventSendEvent: val
-    <cCall: 'Xlib_XMotionEvent_send_event_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_send_event_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16825,11 +16825,11 @@ sendevent: val
 "_________________________________________________________"
 "display primitive accessors"
 primXMotionEventDisplay
-    <cCall: 'Xlib_XMotionEvent_display_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_display_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventDisplay: val
-    <cCall: 'Xlib_XMotionEvent_display_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_display_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16844,11 +16844,11 @@ display: val
 "_________________________________________________________"
 "window primitive accessors"
 primXMotionEventWindow
-    <cCall: 'Xlib_XMotionEvent_window_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_window_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventWindow: val
-    <cCall: 'Xlib_XMotionEvent_window_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_window_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16863,11 +16863,11 @@ window: val
 "_________________________________________________________"
 "root primitive accessors"
 primXMotionEventRoot
-    <cCall: 'Xlib_XMotionEvent_root_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventRoot: val
-    <cCall: 'Xlib_XMotionEvent_root_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16882,11 +16882,11 @@ root: val
 "_________________________________________________________"
 "subwindow primitive accessors"
 primXMotionEventSubwindow
-    <cCall: 'Xlib_XMotionEvent_subwindow_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_subwindow_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventSubwindow: val
-    <cCall: 'Xlib_XMotionEvent_subwindow_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_subwindow_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16901,11 +16901,11 @@ subwindow: val
 "_________________________________________________________"
 "time primitive accessors"
 primXMotionEventTime
-    <cCall: 'Xlib_XMotionEvent_time_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_time_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventTime: val
-    <cCall: 'Xlib_XMotionEvent_time_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_time_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16920,11 +16920,11 @@ time: val
 "_________________________________________________________"
 "x primitive accessors"
 primXMotionEventX
-    <cCall: 'Xlib_XMotionEvent_x_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_x_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventX: val
-    <cCall: 'Xlib_XMotionEvent_x_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_x_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16939,11 +16939,11 @@ x: val
 "_________________________________________________________"
 "y primitive accessors"
 primXMotionEventY
-    <cCall: 'Xlib_XMotionEvent_y_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_y_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventY: val
-    <cCall: 'Xlib_XMotionEvent_y_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_y_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16958,11 +16958,11 @@ y: val
 "_________________________________________________________"
 "x_root primitive accessors"
 primXMotionEventXRoot
-    <cCall: 'Xlib_XMotionEvent_x_root_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_x_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventXRoot: val
-    <cCall: 'Xlib_XMotionEvent_x_root_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_x_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16977,11 +16977,11 @@ xroot: val
 "_________________________________________________________"
 "y_root primitive accessors"
 primXMotionEventYRoot
-    <cCall: 'Xlib_XMotionEvent_y_root_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_y_root_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventYRoot: val
-    <cCall: 'Xlib_XMotionEvent_y_root_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_y_root_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -16996,11 +16996,11 @@ yroot: val
 "_________________________________________________________"
 "state primitive accessors"
 primXMotionEventState
-    <cCall: 'Xlib_XMotionEvent_state_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventState: val
-    <cCall: 'Xlib_XMotionEvent_state_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17015,11 +17015,11 @@ state: val
 "_________________________________________________________"
 "is_hint primitive accessors"
 primXMotionEventIsHint
-    <cCall: 'Xlib_XMotionEvent_is_hint_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_is_hint_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventIsHint: val
-    <cCall: 'Xlib_XMotionEvent_is_hint_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_is_hint_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17034,11 +17034,11 @@ ishint: val
 "_________________________________________________________"
 "same_screen primitive accessors"
 primXMotionEventSameScreen
-    <cCall: 'Xlib_XMotionEvent_same_screen_get' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_same_screen_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXMotionEventSameScreen: val
-    <cCall: 'Xlib_XMotionEvent_same_screen_set' plugin: 'x11'>
+    <cCall: 'X11_XMotionEvent_same_screen_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17055,28 +17055,28 @@ samescreen: val
 
 
 
-primXlibXMotionEventDelete
-    <cCall: 'Xlib_delete_XMotionEvent' plugin: 'x11'>
+primX11XMotionEventDelete
+    <cCall: 'X11_delete_XMotionEvent' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXMotionEventDelete.
+    ^self primX11XMotionEventDelete.
 !
 
 
 name
-    ^'XlibXMotionEvent'
+    ^'X11XMotionEvent'
 
 ! !
 
-!XlibXMotionEvent methodsFor: 'pointer'!
+!X11XMotionEvent methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXMotionEvent methodsFor: 'finalization'!
+!X11XMotionEvent methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17087,35 +17087,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXTextItem16
+CStruct subclass: #X11XTextItem16
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXTextItem16 class methodsFor: 'initialize-release'!
+!X11XTextItem16 class methodsFor: 'initialize-release'!
 
-primXlibXTextItem16Create
-    <cCall: 'Xlib_new_XTextItem16' plugin: 'x11'>
+primX11XTextItem16Create
+    <cCall: 'X11_new_XTextItem16' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXTextItem16Create).
+    ^self handle: (self primX11XTextItem16Create).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXTextItem16  methodsFor: 'Xlib'!
+!X11XTextItem16  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "chars primitive accessors"
 primXTextItem16Chars
-    <cCall: 'Xlib_XTextItem16_chars_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_chars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItem16Chars: val
-    <cCall: 'Xlib_XTextItem16_chars_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_chars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17130,11 +17130,11 @@ chars: val
 "_________________________________________________________"
 "nchars primitive accessors"
 primXTextItem16Nchars
-    <cCall: 'Xlib_XTextItem16_nchars_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_nchars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItem16Nchars: val
-    <cCall: 'Xlib_XTextItem16_nchars_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_nchars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17149,11 +17149,11 @@ nchars: val
 "_________________________________________________________"
 "delta primitive accessors"
 primXTextItem16Delta
-    <cCall: 'Xlib_XTextItem16_delta_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_delta_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItem16Delta: val
-    <cCall: 'Xlib_XTextItem16_delta_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_delta_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17168,11 +17168,11 @@ delta: val
 "_________________________________________________________"
 "font primitive accessors"
 primXTextItem16Font
-    <cCall: 'Xlib_XTextItem16_font_get' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_font_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXTextItem16Font: val
-    <cCall: 'Xlib_XTextItem16_font_set' plugin: 'x11'>
+    <cCall: 'X11_XTextItem16_font_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17189,28 +17189,28 @@ font: val
 
 
 
-primXlibXTextItem16Delete
-    <cCall: 'Xlib_delete_XTextItem16' plugin: 'x11'>
+primX11XTextItem16Delete
+    <cCall: 'X11_delete_XTextItem16' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXTextItem16Delete.
+    ^self primX11XTextItem16Delete.
 !
 
 
 name
-    ^'XlibXTextItem16'
+    ^'X11XTextItem16'
 
 ! !
 
-!XlibXTextItem16 methodsFor: 'pointer'!
+!X11XTextItem16 methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXTextItem16 methodsFor: 'finalization'!
+!X11XTextItem16 methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17221,35 +17221,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMPreeditStateNotifyCallbackStruct
+CStruct subclass: #X11XIMPreeditStateNotifyCallbackStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMPreeditStateNotifyCallbackStruct class methodsFor: 'initialize-release'!
+!X11XIMPreeditStateNotifyCallbackStruct class methodsFor: 'initialize-release'!
 
-primXlibXIMPreeditStateNotifyCallbackStructCreate
-    <cCall: 'Xlib_new_XIMPreeditStateNotifyCallbackStruct' plugin: 'x11'>
+primX11XIMPreeditStateNotifyCallbackStructCreate
+    <cCall: 'X11_new_XIMPreeditStateNotifyCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMPreeditStateNotifyCallbackStructCreate).
+    ^self handle: (self primX11XIMPreeditStateNotifyCallbackStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMPreeditStateNotifyCallbackStruct  methodsFor: 'Xlib'!
+!X11XIMPreeditStateNotifyCallbackStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "state primitive accessors"
 primXIMPreeditStateNotifyCallbackStructState
-    <cCall: 'Xlib_XIMPreeditStateNotifyCallbackStruct_state_get' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditStateNotifyCallbackStruct_state_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMPreeditStateNotifyCallbackStructState: val
-    <cCall: 'Xlib_XIMPreeditStateNotifyCallbackStruct_state_set' plugin: 'x11'>
+    <cCall: 'X11_XIMPreeditStateNotifyCallbackStruct_state_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17266,28 +17266,28 @@ state: val
 
 
 
-primXlibXIMPreeditStateNotifyCallbackStructDelete
-    <cCall: 'Xlib_delete_XIMPreeditStateNotifyCallbackStruct' plugin: 'x11'>
+primX11XIMPreeditStateNotifyCallbackStructDelete
+    <cCall: 'X11_delete_XIMPreeditStateNotifyCallbackStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMPreeditStateNotifyCallbackStructDelete.
+    ^self primX11XIMPreeditStateNotifyCallbackStructDelete.
 !
 
 
 name
-    ^'XlibXIMPreeditStateNotifyCallbackStruct'
+    ^'X11XIMPreeditStateNotifyCallbackStruct'
 
 ! !
 
-!XlibXIMPreeditStateNotifyCallbackStruct methodsFor: 'pointer'!
+!X11XIMPreeditStateNotifyCallbackStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMPreeditStateNotifyCallbackStruct methodsFor: 'finalization'!
+!X11XIMPreeditStateNotifyCallbackStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17298,35 +17298,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIMCallback
+CStruct subclass: #X11XIMCallback
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIMCallback class methodsFor: 'initialize-release'!
+!X11XIMCallback class methodsFor: 'initialize-release'!
 
-primXlibXIMCallbackCreate
-    <cCall: 'Xlib_new_XIMCallback' plugin: 'x11'>
+primX11XIMCallbackCreate
+    <cCall: 'X11_new_XIMCallback' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXIMCallbackCreate).
+    ^self handle: (self primX11XIMCallbackCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIMCallback  methodsFor: 'Xlib'!
+!X11XIMCallback  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "client_data primitive accessors"
 primXIMCallbackClientData
-    <cCall: 'Xlib_XIMCallback_client_data_get' plugin: 'x11'>
+    <cCall: 'X11_XIMCallback_client_data_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMCallbackClientData: val
-    <cCall: 'Xlib_XIMCallback_client_data_set' plugin: 'x11'>
+    <cCall: 'X11_XIMCallback_client_data_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17341,11 +17341,11 @@ clientdata: val
 "_________________________________________________________"
 "callback primitive accessors"
 primXIMCallbackCallback
-    <cCall: 'Xlib_XIMCallback_callback_get' plugin: 'x11'>
+    <cCall: 'X11_XIMCallback_callback_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXIMCallbackCallback: val
-    <cCall: 'Xlib_XIMCallback_callback_set' plugin: 'x11'>
+    <cCall: 'X11_XIMCallback_callback_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17362,28 +17362,28 @@ callback: val
 
 
 
-primXlibXIMCallbackDelete
-    <cCall: 'Xlib_delete_XIMCallback' plugin: 'x11'>
+primX11XIMCallbackDelete
+    <cCall: 'X11_delete_XIMCallback' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXIMCallbackDelete.
+    ^self primX11XIMCallbackDelete.
 !
 
 
 name
-    ^'XlibXIMCallback'
+    ^'X11XIMCallback'
 
 ! !
 
-!XlibXIMCallback methodsFor: 'pointer'!
+!X11XIMCallback methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIMCallback methodsFor: 'finalization'!
+!X11XIMCallback methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17394,124 +17394,124 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXIC
+CStruct subclass: #X11XIC
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXIC class methodsFor: 'initialize-release'!
+!X11XIC class methodsFor: 'initialize-release'!
 
-primXlibXICCreate
-    <cCall: 'Xlib_new_XIC' plugin: 'x11'>
+primX11XICCreate
+    <cCall: 'X11_new_XIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXICCreate).
+    ^self handle: (self primX11XICCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXIC  methodsFor: 'Xlib'!
+!X11XIC  methodsFor: 'X11'!
 
 
 
 "_________________________________________________________"
 "XDestroyIC primitive function"
 primXDestroyIC
-    <cCall: 'Xlib_XDestroyIC' plugin: 'x11'>
+    <cCall: 'X11_XDestroyIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetICFocus primitive function"
 primXSetICFocus
-    <cCall: 'Xlib_XSetICFocus' plugin: 'x11'>
+    <cCall: 'X11_XSetICFocus' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XUnsetICFocus primitive function"
 primXUnsetICFocus
-    <cCall: 'Xlib_XUnsetICFocus' plugin: 'x11'>
+    <cCall: 'X11_XUnsetICFocus' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcResetIC primitive function"
 primXwcResetIC
-    <cCall: 'Xlib_XwcResetIC' plugin: 'x11'>
+    <cCall: 'X11_XwcResetIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbResetIC primitive function"
 primXmbResetIC
-    <cCall: 'Xlib_XmbResetIC' plugin: 'x11'>
+    <cCall: 'X11_XmbResetIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XSetICValues primitive function"
 primXSetICValues
-    <cCall: 'Xlib_XSetICValues' plugin: 'x11'>
+    <cCall: 'X11_XSetICValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XGetICValues primitive function"
 primXGetICValues
-    <cCall: 'Xlib_XGetICValues' plugin: 'x11'>
+    <cCall: 'X11_XGetICValues' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XIMOfIC primitive function"
 primXIMOfIC
-    <cCall: 'Xlib_XIMOfIC' plugin: 'x11'>
+    <cCall: 'X11_XIMOfIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XmbLookupString primitive function"
 primXmbLookupString: arg1 bufferReturn: arg4 bytesBuffer: arg5 keysymReturn: arg6 statusReturn: arg7
-    <cCall: 'Xlib_XmbLookupString' plugin: 'x11'>
+    <cCall: 'X11_XmbLookupString' plugin: 'x11'>
     self primitiveFailed
 !
 
 "_________________________________________________________"
 "XwcLookupString primitive function"
 primXwcLookupString: arg1 bufferReturn: arg4 wcharsBuffer: arg5 keysymReturn: arg6 statusReturn: arg7
-    <cCall: 'Xlib_XwcLookupString' plugin: 'x11'>
+    <cCall: 'X11_XwcLookupString' plugin: 'x11'>
     self primitiveFailed
 !
 
 
 
 
-primXlibXICDelete
-    <cCall: 'Xlib_delete_XIC' plugin: 'x11'>
+primX11XICDelete
+    <cCall: 'X11_delete_XIC' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXICDelete.
+    ^self primX11XICDelete.
 !
 
 
 name
-    ^'XlibXIC'
+    ^'X11XIC'
 
 ! !
 
-!XlibXIC methodsFor: 'pointer'!
+!X11XIC methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXIC methodsFor: 'finalization'!
+!X11XIC methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17522,35 +17522,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXCharStruct
+CStruct subclass: #X11XCharStruct
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXCharStruct class methodsFor: 'initialize-release'!
+!X11XCharStruct class methodsFor: 'initialize-release'!
 
-primXlibXCharStructCreate
-    <cCall: 'Xlib_new_XCharStruct' plugin: 'x11'>
+primX11XCharStructCreate
+    <cCall: 'X11_new_XCharStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXCharStructCreate).
+    ^self handle: (self primX11XCharStructCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXCharStruct  methodsFor: 'Xlib'!
+!X11XCharStruct  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "lbearing primitive accessors"
 primXCharStructLbearing
-    <cCall: 'Xlib_XCharStruct_lbearing_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_lbearing_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructLbearing: val
-    <cCall: 'Xlib_XCharStruct_lbearing_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_lbearing_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17565,11 +17565,11 @@ lbearing: val
 "_________________________________________________________"
 "rbearing primitive accessors"
 primXCharStructRbearing
-    <cCall: 'Xlib_XCharStruct_rbearing_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_rbearing_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructRbearing: val
-    <cCall: 'Xlib_XCharStruct_rbearing_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_rbearing_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17584,11 +17584,11 @@ rbearing: val
 "_________________________________________________________"
 "width primitive accessors"
 primXCharStructWidth
-    <cCall: 'Xlib_XCharStruct_width_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_width_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructWidth: val
-    <cCall: 'Xlib_XCharStruct_width_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_width_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17603,11 +17603,11 @@ width: val
 "_________________________________________________________"
 "ascent primitive accessors"
 primXCharStructAscent
-    <cCall: 'Xlib_XCharStruct_ascent_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_ascent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructAscent: val
-    <cCall: 'Xlib_XCharStruct_ascent_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_ascent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17622,11 +17622,11 @@ ascent: val
 "_________________________________________________________"
 "descent primitive accessors"
 primXCharStructDescent
-    <cCall: 'Xlib_XCharStruct_descent_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_descent_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructDescent: val
-    <cCall: 'Xlib_XCharStruct_descent_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_descent_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17641,11 +17641,11 @@ descent: val
 "_________________________________________________________"
 "attributes primitive accessors"
 primXCharStructAttributes
-    <cCall: 'Xlib_XCharStruct_attributes_get' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_attributes_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXCharStructAttributes: val
-    <cCall: 'Xlib_XCharStruct_attributes_set' plugin: 'x11'>
+    <cCall: 'X11_XCharStruct_attributes_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17662,28 +17662,28 @@ attributes: val
 
 
 
-primXlibXCharStructDelete
-    <cCall: 'Xlib_delete_XCharStruct' plugin: 'x11'>
+primX11XCharStructDelete
+    <cCall: 'X11_delete_XCharStruct' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXCharStructDelete.
+    ^self primX11XCharStructDelete.
 !
 
 
 name
-    ^'XlibXCharStruct'
+    ^'X11XCharStruct'
 
 ! !
 
-!XlibXCharStruct methodsFor: 'pointer'!
+!X11XCharStruct methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXCharStruct methodsFor: 'finalization'!
+!X11XCharStruct methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17694,35 +17694,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXmbTextItem
+CStruct subclass: #X11XmbTextItem
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXmbTextItem class methodsFor: 'initialize-release'!
+!X11XmbTextItem class methodsFor: 'initialize-release'!
 
-primXlibXmbTextItemCreate
-    <cCall: 'Xlib_new_XmbTextItem' plugin: 'x11'>
+primX11XmbTextItemCreate
+    <cCall: 'X11_new_XmbTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXmbTextItemCreate).
+    ^self handle: (self primX11XmbTextItemCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXmbTextItem  methodsFor: 'Xlib'!
+!X11XmbTextItem  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "chars primitive accessors"
 primXmbTextItemChars
-    <cCall: 'Xlib_XmbTextItem_chars_get' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_chars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXmbTextItemChars: val
-    <cCall: 'Xlib_XmbTextItem_chars_set' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_chars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17737,11 +17737,11 @@ chars: val
 "_________________________________________________________"
 "nchars primitive accessors"
 primXmbTextItemNchars
-    <cCall: 'Xlib_XmbTextItem_nchars_get' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_nchars_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXmbTextItemNchars: val
-    <cCall: 'Xlib_XmbTextItem_nchars_set' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_nchars_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17756,11 +17756,11 @@ nchars: val
 "_________________________________________________________"
 "delta primitive accessors"
 primXmbTextItemDelta
-    <cCall: 'Xlib_XmbTextItem_delta_get' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_delta_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXmbTextItemDelta: val
-    <cCall: 'Xlib_XmbTextItem_delta_set' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_delta_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17775,11 +17775,11 @@ delta: val
 "_________________________________________________________"
 "font_set primitive accessors"
 primXmbTextItemFontSet
-    <cCall: 'Xlib_XmbTextItem_font_set_get' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_font_set_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXmbTextItemFontSet: val
-    <cCall: 'Xlib_XmbTextItem_font_set_set' plugin: 'x11'>
+    <cCall: 'X11_XmbTextItem_font_set_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17796,28 +17796,28 @@ fontset: val
 
 
 
-primXlibXmbTextItemDelete
-    <cCall: 'Xlib_delete_XmbTextItem' plugin: 'x11'>
+primX11XmbTextItemDelete
+    <cCall: 'X11_delete_XmbTextItem' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXmbTextItemDelete.
+    ^self primX11XmbTextItemDelete.
 !
 
 
 name
-    ^'XlibXmbTextItem'
+    ^'X11XmbTextItem'
 
 ! !
 
-!XlibXmbTextItem methodsFor: 'pointer'!
+!X11XmbTextItem methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXmbTextItem methodsFor: 'finalization'!
+!X11XmbTextItem methodsFor: 'finalization'!
 
 close
     handle := nil.
@@ -17828,35 +17828,35 @@ finalize
 ! !
 
 "#####################################################################"
-CStruct subclass: #XlibXChar2b
+CStruct subclass: #X11XChar2b
         instanceVariableNames: ''
         classVariableNames: ''!
 
-!XlibXChar2b class methodsFor: 'initialize-release'!
+!X11XChar2b class methodsFor: 'initialize-release'!
 
-primXlibXChar2bCreate
-    <cCall: 'Xlib_new_XChar2b' plugin: 'x11'>
+primX11XChar2bCreate
+    <cCall: 'X11_new_XChar2b' plugin: 'x11'>
     self primitiveFailed
 !
 
 create
-    ^self handle: (self primXlibXChar2bCreate).
+    ^self handle: (self primX11XChar2bCreate).
 !
 
 initialize
     finalizationRequest := true.
 ! !
 
-!XlibXChar2b  methodsFor: 'Xlib'!
+!X11XChar2b  methodsFor: 'X11'!
 
 "_________________________________________________________"
 "byte1 primitive accessors"
 primXChar2bByte1
-    <cCall: 'Xlib_XChar2b_byte1_get' plugin: 'x11'>
+    <cCall: 'X11_XChar2b_byte1_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXChar2bByte1: val
-    <cCall: 'Xlib_XChar2b_byte1_set' plugin: 'x11'>
+    <cCall: 'X11_XChar2b_byte1_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17871,11 +17871,11 @@ byte1: val
 "_________________________________________________________"
 "byte2 primitive accessors"
 primXChar2bByte2
-    <cCall: 'Xlib_XChar2b_byte2_get' plugin: 'x11'>
+    <cCall: 'X11_XChar2b_byte2_get' plugin: 'x11'>
     self primitiveFailed
 !
 primXChar2bByte2: val
-    <cCall: 'Xlib_XChar2b_byte2_set' plugin: 'x11'>
+    <cCall: 'X11_XChar2b_byte2_set' plugin: 'x11'>
     self primitiveFailed
 !
 "........................................................"
@@ -17892,28 +17892,1691 @@ byte2: val
 
 
 
-primXlibXChar2bDelete
-    <cCall: 'Xlib_delete_XChar2b' plugin: 'x11'>
+primX11XChar2bDelete
+    <cCall: 'X11_delete_XChar2b' plugin: 'x11'>
     self primitiveFailed
 !
 
 delete
-    ^self primXlibXChar2bDelete.
+    ^self primX11XChar2bDelete.
 !
 
 
 name
-    ^'XlibXChar2b'
+    ^'X11XChar2b'
 
 ! !
 
-!XlibXChar2b methodsFor: 'pointer'!
+!X11XChar2b methodsFor: 'pointer'!
 
 isHandleNil
     ^handle isNil
 ! !
 
-!XlibXChar2b methodsFor: 'finalization'!
+!X11XChar2b methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XMapEvent
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XMapEvent class methodsFor: 'initialize-release'!
+
+primX11XMapEventCreate
+    <cCall: 'X11_new_XMapEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XMapEventCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XMapEvent  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"type primitive accessors"
+primXMapEventType
+    <cCall: 'X11_XMapEvent_type_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventType: val
+    <cCall: 'X11_XMapEvent_type_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"type accessors"
+type
+    ^self primXMapEventType
+!
+type: val
+    ^self primXMapEventType: val
+!
+
+"_________________________________________________________"
+"serial primitive accessors"
+primXMapEventSerial
+    <cCall: 'X11_XMapEvent_serial_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventSerial: val
+    <cCall: 'X11_XMapEvent_serial_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"serial accessors"
+serial
+    ^self primXMapEventSerial
+!
+serial: val
+    ^self primXMapEventSerial: val
+!
+
+"_________________________________________________________"
+"send_event primitive accessors"
+primXMapEventSendEvent
+    <cCall: 'X11_XMapEvent_send_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventSendEvent: val
+    <cCall: 'X11_XMapEvent_send_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"send_event accessors"
+sendevent
+    ^self primXMapEventSendEvent
+!
+sendevent: val
+    ^self primXMapEventSendEvent: val
+!
+
+"_________________________________________________________"
+"display primitive accessors"
+primXMapEventDisplay
+    <cCall: 'X11_XMapEvent_display_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventDisplay: val
+    <cCall: 'X11_XMapEvent_display_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"display accessors"
+display
+    ^self primXMapEventDisplay
+!
+display: val
+    ^self primXMapEventDisplay: val
+!
+
+"_________________________________________________________"
+"event primitive accessors"
+primXMapEventEvent
+    <cCall: 'X11_XMapEvent_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventEvent: val
+    <cCall: 'X11_XMapEvent_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"event accessors"
+event
+    ^self primXMapEventEvent
+!
+event: val
+    ^self primXMapEventEvent: val
+!
+
+"_________________________________________________________"
+"window primitive accessors"
+primXMapEventWindow
+    <cCall: 'X11_XMapEvent_window_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventWindow: val
+    <cCall: 'X11_XMapEvent_window_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"window accessors"
+window
+    ^self primXMapEventWindow
+!
+window: val
+    ^self primXMapEventWindow: val
+!
+
+"_________________________________________________________"
+"override_redirect primitive accessors"
+primXMapEventOverrideRedirect
+    <cCall: 'X11_XMapEvent_override_redirect_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXMapEventOverrideRedirect: val
+    <cCall: 'X11_XMapEvent_override_redirect_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"override_redirect accessors"
+overrideredirect
+    ^self primXMapEventOverrideRedirect
+!
+overrideredirect: val
+    ^self primXMapEventOverrideRedirect: val
+!
+
+
+
+
+
+
+primX11XMapEventDelete
+    <cCall: 'X11_delete_XMapEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XMapEventDelete.
+!
+
+
+name
+    ^'X11XMapEvent'
+
+! !
+
+!X11XMapEvent methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XMapEvent methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XIMHotKeyTrigger
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XIMHotKeyTrigger class methodsFor: 'initialize-release'!
+
+primX11XIMHotKeyTriggerCreate
+    <cCall: 'X11_new_XIMHotKeyTrigger' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XIMHotKeyTriggerCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XIMHotKeyTrigger  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"keysym primitive accessors"
+primXIMHotKeyTriggerKeysym
+    <cCall: 'X11_XIMHotKeyTrigger_keysym_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMHotKeyTriggerKeysym: val
+    <cCall: 'X11_XIMHotKeyTrigger_keysym_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"keysym accessors"
+keysym
+    ^self primXIMHotKeyTriggerKeysym
+!
+keysym: val
+    ^self primXIMHotKeyTriggerKeysym: val
+!
+
+"_________________________________________________________"
+"modifier primitive accessors"
+primXIMHotKeyTriggerModifier
+    <cCall: 'X11_XIMHotKeyTrigger_modifier_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMHotKeyTriggerModifier: val
+    <cCall: 'X11_XIMHotKeyTrigger_modifier_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"modifier accessors"
+modifier
+    ^self primXIMHotKeyTriggerModifier
+!
+modifier: val
+    ^self primXIMHotKeyTriggerModifier: val
+!
+
+"_________________________________________________________"
+"modifier_mask primitive accessors"
+primXIMHotKeyTriggerModifierMask
+    <cCall: 'X11_XIMHotKeyTrigger_modifier_mask_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMHotKeyTriggerModifierMask: val
+    <cCall: 'X11_XIMHotKeyTrigger_modifier_mask_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"modifier_mask accessors"
+modifiermask
+    ^self primXIMHotKeyTriggerModifierMask
+!
+modifiermask: val
+    ^self primXIMHotKeyTriggerModifierMask: val
+!
+
+
+
+
+
+
+primX11XIMHotKeyTriggerDelete
+    <cCall: 'X11_delete_XIMHotKeyTrigger' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XIMHotKeyTriggerDelete.
+!
+
+
+name
+    ^'X11XIMHotKeyTrigger'
+
+! !
+
+!X11XIMHotKeyTrigger methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XIMHotKeyTrigger methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XIMStyles
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XIMStyles class methodsFor: 'initialize-release'!
+
+primX11XIMStylesCreate
+    <cCall: 'X11_new_XIMStyles' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XIMStylesCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XIMStyles  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"count_styles primitive accessors"
+primXIMStylesCountStyles
+    <cCall: 'X11_XIMStyles_count_styles_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMStylesCountStyles: val
+    <cCall: 'X11_XIMStyles_count_styles_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"count_styles accessors"
+countstyles
+    ^self primXIMStylesCountStyles
+!
+countstyles: val
+    ^self primXIMStylesCountStyles: val
+!
+
+"_________________________________________________________"
+"supported_styles primitive accessors"
+primXIMStylesSupportedStyles
+    <cCall: 'X11_XIMStyles_supported_styles_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMStylesSupportedStyles: val
+    <cCall: 'X11_XIMStyles_supported_styles_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"supported_styles accessors"
+supportedstyles
+    ^self primXIMStylesSupportedStyles
+!
+supportedstyles: val
+    ^self primXIMStylesSupportedStyles: val
+!
+
+
+
+
+
+
+primX11XIMStylesDelete
+    <cCall: 'X11_delete_XIMStyles' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XIMStylesDelete.
+!
+
+
+name
+    ^'X11XIMStyles'
+
+! !
+
+!X11XIMStyles methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XIMStyles methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XExposeEvent
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XExposeEvent class methodsFor: 'initialize-release'!
+
+primX11XExposeEventCreate
+    <cCall: 'X11_new_XExposeEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XExposeEventCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XExposeEvent  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"type primitive accessors"
+primXExposeEventType
+    <cCall: 'X11_XExposeEvent_type_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventType: val
+    <cCall: 'X11_XExposeEvent_type_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"type accessors"
+type
+    ^self primXExposeEventType
+!
+type: val
+    ^self primXExposeEventType: val
+!
+
+"_________________________________________________________"
+"serial primitive accessors"
+primXExposeEventSerial
+    <cCall: 'X11_XExposeEvent_serial_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventSerial: val
+    <cCall: 'X11_XExposeEvent_serial_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"serial accessors"
+serial
+    ^self primXExposeEventSerial
+!
+serial: val
+    ^self primXExposeEventSerial: val
+!
+
+"_________________________________________________________"
+"send_event primitive accessors"
+primXExposeEventSendEvent
+    <cCall: 'X11_XExposeEvent_send_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventSendEvent: val
+    <cCall: 'X11_XExposeEvent_send_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"send_event accessors"
+sendevent
+    ^self primXExposeEventSendEvent
+!
+sendevent: val
+    ^self primXExposeEventSendEvent: val
+!
+
+"_________________________________________________________"
+"display primitive accessors"
+primXExposeEventDisplay
+    <cCall: 'X11_XExposeEvent_display_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventDisplay: val
+    <cCall: 'X11_XExposeEvent_display_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"display accessors"
+display
+    ^self primXExposeEventDisplay
+!
+display: val
+    ^self primXExposeEventDisplay: val
+!
+
+"_________________________________________________________"
+"window primitive accessors"
+primXExposeEventWindow
+    <cCall: 'X11_XExposeEvent_window_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventWindow: val
+    <cCall: 'X11_XExposeEvent_window_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"window accessors"
+window
+    ^self primXExposeEventWindow
+!
+window: val
+    ^self primXExposeEventWindow: val
+!
+
+"_________________________________________________________"
+"x primitive accessors"
+primXExposeEventX
+    <cCall: 'X11_XExposeEvent_x_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventX: val
+    <cCall: 'X11_XExposeEvent_x_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"x accessors"
+x
+    ^self primXExposeEventX
+!
+x: val
+    ^self primXExposeEventX: val
+!
+
+"_________________________________________________________"
+"y primitive accessors"
+primXExposeEventY
+    <cCall: 'X11_XExposeEvent_y_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventY: val
+    <cCall: 'X11_XExposeEvent_y_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"y accessors"
+y
+    ^self primXExposeEventY
+!
+y: val
+    ^self primXExposeEventY: val
+!
+
+"_________________________________________________________"
+"width primitive accessors"
+primXExposeEventWidth
+    <cCall: 'X11_XExposeEvent_width_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventWidth: val
+    <cCall: 'X11_XExposeEvent_width_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"width accessors"
+width
+    ^self primXExposeEventWidth
+!
+width: val
+    ^self primXExposeEventWidth: val
+!
+
+"_________________________________________________________"
+"height primitive accessors"
+primXExposeEventHeight
+    <cCall: 'X11_XExposeEvent_height_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventHeight: val
+    <cCall: 'X11_XExposeEvent_height_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"height accessors"
+height
+    ^self primXExposeEventHeight
+!
+height: val
+    ^self primXExposeEventHeight: val
+!
+
+"_________________________________________________________"
+"count primitive accessors"
+primXExposeEventCount
+    <cCall: 'X11_XExposeEvent_count_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXExposeEventCount: val
+    <cCall: 'X11_XExposeEvent_count_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"count accessors"
+count
+    ^self primXExposeEventCount
+!
+count: val
+    ^self primXExposeEventCount: val
+!
+
+
+
+
+
+
+primX11XExposeEventDelete
+    <cCall: 'X11_delete_XExposeEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XExposeEventDelete.
+!
+
+
+name
+    ^'X11XExposeEvent'
+
+! !
+
+!X11XExposeEvent methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XExposeEvent methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XReparentEvent
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XReparentEvent class methodsFor: 'initialize-release'!
+
+primX11XReparentEventCreate
+    <cCall: 'X11_new_XReparentEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XReparentEventCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XReparentEvent  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"type primitive accessors"
+primXReparentEventType
+    <cCall: 'X11_XReparentEvent_type_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventType: val
+    <cCall: 'X11_XReparentEvent_type_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"type accessors"
+type
+    ^self primXReparentEventType
+!
+type: val
+    ^self primXReparentEventType: val
+!
+
+"_________________________________________________________"
+"serial primitive accessors"
+primXReparentEventSerial
+    <cCall: 'X11_XReparentEvent_serial_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventSerial: val
+    <cCall: 'X11_XReparentEvent_serial_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"serial accessors"
+serial
+    ^self primXReparentEventSerial
+!
+serial: val
+    ^self primXReparentEventSerial: val
+!
+
+"_________________________________________________________"
+"send_event primitive accessors"
+primXReparentEventSendEvent
+    <cCall: 'X11_XReparentEvent_send_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventSendEvent: val
+    <cCall: 'X11_XReparentEvent_send_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"send_event accessors"
+sendevent
+    ^self primXReparentEventSendEvent
+!
+sendevent: val
+    ^self primXReparentEventSendEvent: val
+!
+
+"_________________________________________________________"
+"display primitive accessors"
+primXReparentEventDisplay
+    <cCall: 'X11_XReparentEvent_display_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventDisplay: val
+    <cCall: 'X11_XReparentEvent_display_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"display accessors"
+display
+    ^self primXReparentEventDisplay
+!
+display: val
+    ^self primXReparentEventDisplay: val
+!
+
+"_________________________________________________________"
+"event primitive accessors"
+primXReparentEventEvent
+    <cCall: 'X11_XReparentEvent_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventEvent: val
+    <cCall: 'X11_XReparentEvent_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"event accessors"
+event
+    ^self primXReparentEventEvent
+!
+event: val
+    ^self primXReparentEventEvent: val
+!
+
+"_________________________________________________________"
+"window primitive accessors"
+primXReparentEventWindow
+    <cCall: 'X11_XReparentEvent_window_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventWindow: val
+    <cCall: 'X11_XReparentEvent_window_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"window accessors"
+window
+    ^self primXReparentEventWindow
+!
+window: val
+    ^self primXReparentEventWindow: val
+!
+
+"_________________________________________________________"
+"parent primitive accessors"
+primXReparentEventParent
+    <cCall: 'X11_XReparentEvent_parent_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventParent: val
+    <cCall: 'X11_XReparentEvent_parent_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"parent accessors"
+parent
+    ^self primXReparentEventParent
+!
+parent: val
+    ^self primXReparentEventParent: val
+!
+
+"_________________________________________________________"
+"x primitive accessors"
+primXReparentEventX
+    <cCall: 'X11_XReparentEvent_x_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventX: val
+    <cCall: 'X11_XReparentEvent_x_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"x accessors"
+x
+    ^self primXReparentEventX
+!
+x: val
+    ^self primXReparentEventX: val
+!
+
+"_________________________________________________________"
+"y primitive accessors"
+primXReparentEventY
+    <cCall: 'X11_XReparentEvent_y_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventY: val
+    <cCall: 'X11_XReparentEvent_y_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"y accessors"
+y
+    ^self primXReparentEventY
+!
+y: val
+    ^self primXReparentEventY: val
+!
+
+"_________________________________________________________"
+"override_redirect primitive accessors"
+primXReparentEventOverrideRedirect
+    <cCall: 'X11_XReparentEvent_override_redirect_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXReparentEventOverrideRedirect: val
+    <cCall: 'X11_XReparentEvent_override_redirect_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"override_redirect accessors"
+overrideredirect
+    ^self primXReparentEventOverrideRedirect
+!
+overrideredirect: val
+    ^self primXReparentEventOverrideRedirect: val
+!
+
+
+
+
+
+
+primX11XReparentEventDelete
+    <cCall: 'X11_delete_XReparentEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XReparentEventDelete.
+!
+
+
+name
+    ^'X11XReparentEvent'
+
+! !
+
+!X11XReparentEvent methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XReparentEvent methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XUnmapEvent
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XUnmapEvent class methodsFor: 'initialize-release'!
+
+primX11XUnmapEventCreate
+    <cCall: 'X11_new_XUnmapEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XUnmapEventCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XUnmapEvent  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"type primitive accessors"
+primXUnmapEventType
+    <cCall: 'X11_XUnmapEvent_type_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventType: val
+    <cCall: 'X11_XUnmapEvent_type_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"type accessors"
+type
+    ^self primXUnmapEventType
+!
+type: val
+    ^self primXUnmapEventType: val
+!
+
+"_________________________________________________________"
+"serial primitive accessors"
+primXUnmapEventSerial
+    <cCall: 'X11_XUnmapEvent_serial_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventSerial: val
+    <cCall: 'X11_XUnmapEvent_serial_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"serial accessors"
+serial
+    ^self primXUnmapEventSerial
+!
+serial: val
+    ^self primXUnmapEventSerial: val
+!
+
+"_________________________________________________________"
+"send_event primitive accessors"
+primXUnmapEventSendEvent
+    <cCall: 'X11_XUnmapEvent_send_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventSendEvent: val
+    <cCall: 'X11_XUnmapEvent_send_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"send_event accessors"
+sendevent
+    ^self primXUnmapEventSendEvent
+!
+sendevent: val
+    ^self primXUnmapEventSendEvent: val
+!
+
+"_________________________________________________________"
+"display primitive accessors"
+primXUnmapEventDisplay
+    <cCall: 'X11_XUnmapEvent_display_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventDisplay: val
+    <cCall: 'X11_XUnmapEvent_display_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"display accessors"
+display
+    ^self primXUnmapEventDisplay
+!
+display: val
+    ^self primXUnmapEventDisplay: val
+!
+
+"_________________________________________________________"
+"event primitive accessors"
+primXUnmapEventEvent
+    <cCall: 'X11_XUnmapEvent_event_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventEvent: val
+    <cCall: 'X11_XUnmapEvent_event_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"event accessors"
+event
+    ^self primXUnmapEventEvent
+!
+event: val
+    ^self primXUnmapEventEvent: val
+!
+
+"_________________________________________________________"
+"window primitive accessors"
+primXUnmapEventWindow
+    <cCall: 'X11_XUnmapEvent_window_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventWindow: val
+    <cCall: 'X11_XUnmapEvent_window_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"window accessors"
+window
+    ^self primXUnmapEventWindow
+!
+window: val
+    ^self primXUnmapEventWindow: val
+!
+
+"_________________________________________________________"
+"from_configure primitive accessors"
+primXUnmapEventFromConfigure
+    <cCall: 'X11_XUnmapEvent_from_configure_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXUnmapEventFromConfigure: val
+    <cCall: 'X11_XUnmapEvent_from_configure_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"from_configure accessors"
+fromconfigure
+    ^self primXUnmapEventFromConfigure
+!
+fromconfigure: val
+    ^self primXUnmapEventFromConfigure: val
+!
+
+
+
+
+
+
+primX11XUnmapEventDelete
+    <cCall: 'X11_delete_XUnmapEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XUnmapEventDelete.
+!
+
+
+name
+    ^'X11XUnmapEvent'
+
+! !
+
+!X11XUnmapEvent methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XUnmapEvent methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XIMHotKeyTriggers
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XIMHotKeyTriggers class methodsFor: 'initialize-release'!
+
+primX11XIMHotKeyTriggersCreate
+    <cCall: 'X11_new_XIMHotKeyTriggers' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XIMHotKeyTriggersCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XIMHotKeyTriggers  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"num_hot_key primitive accessors"
+primXIMHotKeyTriggersNumHotKey
+    <cCall: 'X11_XIMHotKeyTriggers_num_hot_key_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMHotKeyTriggersNumHotKey: val
+    <cCall: 'X11_XIMHotKeyTriggers_num_hot_key_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"num_hot_key accessors"
+numhotkey
+    ^self primXIMHotKeyTriggersNumHotKey
+!
+numhotkey: val
+    ^self primXIMHotKeyTriggersNumHotKey: val
+!
+
+"_________________________________________________________"
+"key primitive accessors"
+primXIMHotKeyTriggersKey
+    <cCall: 'X11_XIMHotKeyTriggers_key_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMHotKeyTriggersKey: val
+    <cCall: 'X11_XIMHotKeyTriggers_key_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"key accessors"
+key
+    ^self primXIMHotKeyTriggersKey
+!
+key: val
+    ^self primXIMHotKeyTriggersKey: val
+!
+
+
+
+
+
+
+primX11XIMHotKeyTriggersDelete
+    <cCall: 'X11_delete_XIMHotKeyTriggers' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XIMHotKeyTriggersDelete.
+!
+
+
+name
+    ^'X11XIMHotKeyTriggers'
+
+! !
+
+!X11XIMHotKeyTriggers methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XIMHotKeyTriggers methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XIMPreeditCaretCallbackStruct
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XIMPreeditCaretCallbackStruct class methodsFor: 'initialize-release'!
+
+primX11XIMPreeditCaretCallbackStructCreate
+    <cCall: 'X11_new_XIMPreeditCaretCallbackStruct' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XIMPreeditCaretCallbackStructCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XIMPreeditCaretCallbackStruct  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"position primitive accessors"
+primXIMPreeditCaretCallbackStructPosition
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_position_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMPreeditCaretCallbackStructPosition: val
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_position_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"position accessors"
+position
+    ^self primXIMPreeditCaretCallbackStructPosition
+!
+position: val
+    ^self primXIMPreeditCaretCallbackStructPosition: val
+!
+
+"_________________________________________________________"
+"direction primitive accessors"
+primXIMPreeditCaretCallbackStructDirection
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_direction_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMPreeditCaretCallbackStructDirection: val
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_direction_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"direction accessors"
+direction
+    ^self primXIMPreeditCaretCallbackStructDirection
+!
+direction: val
+    ^self primXIMPreeditCaretCallbackStructDirection: val
+!
+
+"_________________________________________________________"
+"style primitive accessors"
+primXIMPreeditCaretCallbackStructStyle
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_style_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXIMPreeditCaretCallbackStructStyle: val
+    <cCall: 'X11_XIMPreeditCaretCallbackStruct_style_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"style accessors"
+style
+    ^self primXIMPreeditCaretCallbackStructStyle
+!
+style: val
+    ^self primXIMPreeditCaretCallbackStructStyle: val
+!
+
+
+
+
+
+
+primX11XIMPreeditCaretCallbackStructDelete
+    <cCall: 'X11_delete_XIMPreeditCaretCallbackStruct' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XIMPreeditCaretCallbackStructDelete.
+!
+
+
+name
+    ^'X11XIMPreeditCaretCallbackStruct'
+
+! !
+
+!X11XIMPreeditCaretCallbackStruct methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XIMPreeditCaretCallbackStruct methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XErrorEvent
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XErrorEvent class methodsFor: 'initialize-release'!
+
+primX11XErrorEventCreate
+    <cCall: 'X11_new_XErrorEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XErrorEventCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XErrorEvent  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"type primitive accessors"
+primXErrorEventType
+    <cCall: 'X11_XErrorEvent_type_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventType: val
+    <cCall: 'X11_XErrorEvent_type_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"type accessors"
+type
+    ^self primXErrorEventType
+!
+type: val
+    ^self primXErrorEventType: val
+!
+
+"_________________________________________________________"
+"display primitive accessors"
+primXErrorEventDisplay
+    <cCall: 'X11_XErrorEvent_display_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventDisplay: val
+    <cCall: 'X11_XErrorEvent_display_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"display accessors"
+display
+    ^self primXErrorEventDisplay
+!
+display: val
+    ^self primXErrorEventDisplay: val
+!
+
+"_________________________________________________________"
+"resourceid primitive accessors"
+primXErrorEventResourceid
+    <cCall: 'X11_XErrorEvent_resourceid_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventResourceid: val
+    <cCall: 'X11_XErrorEvent_resourceid_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"resourceid accessors"
+resourceid
+    ^self primXErrorEventResourceid
+!
+resourceid: val
+    ^self primXErrorEventResourceid: val
+!
+
+"_________________________________________________________"
+"serial primitive accessors"
+primXErrorEventSerial
+    <cCall: 'X11_XErrorEvent_serial_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventSerial: val
+    <cCall: 'X11_XErrorEvent_serial_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"serial accessors"
+serial
+    ^self primXErrorEventSerial
+!
+serial: val
+    ^self primXErrorEventSerial: val
+!
+
+"_________________________________________________________"
+"error_code primitive accessors"
+primXErrorEventErrorCode
+    <cCall: 'X11_XErrorEvent_error_code_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventErrorCode: val
+    <cCall: 'X11_XErrorEvent_error_code_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"error_code accessors"
+errorcode
+    ^self primXErrorEventErrorCode
+!
+errorcode: val
+    ^self primXErrorEventErrorCode: val
+!
+
+"_________________________________________________________"
+"request_code primitive accessors"
+primXErrorEventRequestCode
+    <cCall: 'X11_XErrorEvent_request_code_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventRequestCode: val
+    <cCall: 'X11_XErrorEvent_request_code_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"request_code accessors"
+requestcode
+    ^self primXErrorEventRequestCode
+!
+requestcode: val
+    ^self primXErrorEventRequestCode: val
+!
+
+"_________________________________________________________"
+"minor_code primitive accessors"
+primXErrorEventMinorCode
+    <cCall: 'X11_XErrorEvent_minor_code_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXErrorEventMinorCode: val
+    <cCall: 'X11_XErrorEvent_minor_code_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"minor_code accessors"
+minorcode
+    ^self primXErrorEventMinorCode
+!
+minorcode: val
+    ^self primXErrorEventMinorCode: val
+!
+
+
+
+
+
+
+primX11XErrorEventDelete
+    <cCall: 'X11_delete_XErrorEvent' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XErrorEventDelete.
+!
+
+
+name
+    ^'X11XErrorEvent'
+
+! !
+
+!X11XErrorEvent methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XErrorEvent methodsFor: 'finalization'!
+
+close
+    handle := nil.
+!
+
+finalize
+    self close
+! !
+
+"#####################################################################"
+CStruct subclass: #X11XColor
+        instanceVariableNames: ''
+        classVariableNames: ''!
+
+!X11XColor class methodsFor: 'initialize-release'!
+
+primX11XColorCreate
+    <cCall: 'X11_new_XColor' plugin: 'x11'>
+    self primitiveFailed
+!
+
+create
+    ^self handle: (self primX11XColorCreate).
+!
+
+initialize
+    finalizationRequest := true.
+! !
+
+!X11XColor  methodsFor: 'X11'!
+
+"_________________________________________________________"
+"pixel primitive accessors"
+primXColorPixel
+    <cCall: 'X11_XColor_pixel_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorPixel: val
+    <cCall: 'X11_XColor_pixel_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"pixel accessors"
+pixel
+    ^self primXColorPixel
+!
+pixel: val
+    ^self primXColorPixel: val
+!
+
+"_________________________________________________________"
+"red primitive accessors"
+primXColorRed
+    <cCall: 'X11_XColor_red_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorRed: val
+    <cCall: 'X11_XColor_red_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"red accessors"
+red
+    ^self primXColorRed
+!
+red: val
+    ^self primXColorRed: val
+!
+
+"_________________________________________________________"
+"green primitive accessors"
+primXColorGreen
+    <cCall: 'X11_XColor_green_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorGreen: val
+    <cCall: 'X11_XColor_green_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"green accessors"
+green
+    ^self primXColorGreen
+!
+green: val
+    ^self primXColorGreen: val
+!
+
+"_________________________________________________________"
+"blue primitive accessors"
+primXColorBlue
+    <cCall: 'X11_XColor_blue_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorBlue: val
+    <cCall: 'X11_XColor_blue_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"blue accessors"
+blue
+    ^self primXColorBlue
+!
+blue: val
+    ^self primXColorBlue: val
+!
+
+"_________________________________________________________"
+"flags primitive accessors"
+primXColorFlags
+    <cCall: 'X11_XColor_flags_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorFlags: val
+    <cCall: 'X11_XColor_flags_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"flags accessors"
+flags
+    ^self primXColorFlags
+!
+flags: val
+    ^self primXColorFlags: val
+!
+
+"_________________________________________________________"
+"pad primitive accessors"
+primXColorPad
+    <cCall: 'X11_XColor_pad_get' plugin: 'x11'>
+    self primitiveFailed
+!
+primXColorPad: val
+    <cCall: 'X11_XColor_pad_set' plugin: 'x11'>
+    self primitiveFailed
+!
+"........................................................"
+"pad accessors"
+pad
+    ^self primXColorPad
+!
+pad: val
+    ^self primXColorPad: val
+!
+
+
+
+
+
+
+primX11XColorDelete
+    <cCall: 'X11_delete_XColor' plugin: 'x11'>
+    self primitiveFailed
+!
+
+delete
+    ^self primX11XColorDelete.
+!
+
+
+name
+    ^'X11XColor'
+
+! !
+
+!X11XColor methodsFor: 'pointer'!
+
+isHandleNil
+    ^handle isNil
+! !
+
+!X11XColor methodsFor: 'finalization'!
 
 close
     handle := nil.

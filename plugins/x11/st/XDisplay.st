@@ -21,11 +21,11 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-XlibDisplay subclass: #Display
+X11Display subclass: #XDisplay
         instanceVariableNames: ''
         classVariableNames: 'Mod1Mask GrabModeAsync ButtonPressMask None CurrentTime'!
 
-!Display class methodsFor: 'initialize-release'!
+!XDisplay class methodsFor: 'initialize-release'!
 
 initialize
     finalizationRequest := true.
@@ -36,18 +36,18 @@ initialize
     None := 0
 ! !
 
-!Display class methodsFor: 'instance creation'!
+!XDisplay class methodsFor: 'instance creation'!
 
 open
     ^self open: nil
 !
 
 open: aStringOrNil
-    ^self handle: (XlibXlib primXOpenDisplay: aStringOrNil)
+    ^self handle: (X11 primXOpenDisplay: aStringOrNil)
 ! !
 
 
-!Display methodsFor: 'xlib'!
+!XDisplay methodsFor: 'xlib'!
 
 defaultRootWindow
     ^self primXDefaultRootWindow
@@ -70,7 +70,7 @@ whitePixel: screen
 !
 
 defaultGC: screen
-    ^XlibGC handle: (self primXDefaultGC: screen)
+    ^X11GC handle: (self primXDefaultGC: screen)
 !
 
 fillRectangle: window gc: gc x: x y: y width: w height: h
@@ -88,7 +88,7 @@ xKeysymToKeycode: keySym
 !
 
 xStringToKeysym: str
-    ^XlibXlib primXStringToKeysym: str
+    ^X11 primXStringToKeysym: str
 !
 
 grabKey: aString window: w
@@ -160,7 +160,7 @@ nextEvent: evt
     ^self primXNextEvent: evt
 ! !
 
-!Display methodsFor: 'finalization'!
+!XDisplay methodsFor: 'finalization'!
 
 close
     | ret |

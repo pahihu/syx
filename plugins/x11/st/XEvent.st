@@ -21,27 +21,27 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-XlibXEvent subclass: #XEvent
+X11XEvent subclass: #XEvent
         instanceVariableNames: ''
         classVariableNames: ''!
 
 !XEvent class methodsFor: 'instance creation'!
 
 create
-    ^self handle: (self primXlibXEventCreate).
+    ^self handle: (self primX11XEventCreate).
 ! !
 
 !XEvent methodsFor: 'access'!
 xkey
-    ^XlibXKeyEvent handle: (self primXEventXkey).
+    ^X11XKeyEvent handle: (self primXEventXkey).
 !
 
 xmotion
-    ^XlibXMotionEvent handle: (self primXEventXmotion).
+    ^X11XMotionEvent handle: (self primXEventXmotion).
 !
 
 xbutton
-    ^XlibXButtonEvent handle: (self primXEventXbutton).
+    ^X11XButtonEvent handle: (self primXEventXbutton).
 ! !
 
 !XEvent methodsFor: 'finalization'!
@@ -49,3 +49,4 @@ xbutton
 finalize
     self delete.
 ! !
+
