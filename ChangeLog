@@ -1,95 +1,103 @@
+2007-12-24  Luca Bruno  <lethalman88@gmail.com>
+
+        Changed FileStream behavior to handle FILE* instead of file descriptors
+
+        * syx/syx-primitives.c (FileStream_fileOp):
+
+        * st/kernel/FileStream.st:
+
 2007-12-24  Rahul <blufox@gmail.com>
-	* plugins/x11/plugin-init.c: updated the module prefix to X11
+        * plugins/x11/plugin-init.c: updated the module prefix to X11
 
-	* plugins/x11/x11gen.rb: updated module prefix to X11 and to remove
+        * plugins/x11/x11gen.rb: updated module prefix to X11 and to remove
 
-	XlibXlib structure
+        XlibXlib structure
 
-	* plugins/x11/Xlib.i: update with NeedWidePrototypes to compile in solaris
+        * plugins/x11/Xlib.i: update with NeedWidePrototypes to compile in solaris
 
-	* plugins/x11/st/XDisplay.st: added instead of XDisplay
+        * plugins/x11/st/XDisplay.st: added instead of XDisplay
 
-	* plugins/x11/st/Xlib.st: updated with new module prefix X11 instead of
+        * plugins/x11/st/Xlib.st: updated with new module prefix X11 instead of
 
-	Xlib and remove XlibXlib
+        Xlib and remove XlibXlib
 
-	* plugins/x11/st/Display.st: removed
+        * plugins/x11/st/Display.st: removed
 
-	* plugins/x11/st/XEvent.st: updated by subclassing X11XEvent
+        * plugins/x11/st/XEvent.st: updated by subclassing X11XEvent
 
-	* plugins/x11/SConscript: updated to install Xlib.st
+        * plugins/x11/SConscript: updated to install Xlib.st
 
-	* plugins/x11/Xlib_wrap.c: updated with new classnames
+        * plugins/x11/Xlib_wrap.c: updated with new classnames
 
-	* plugins/x11/swig.rb: updated the module prefix.
+        * plugins/x11/swig.rb: updated the module prefix.
 
 2007-12-24  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/kernel/Behavior.st: fixed parsing instance and class variable names
+        * st/kernel/Behavior.st: fixed parsing instance and class variable names
 
-	* configure.ac: enable mantainer mode, check for pkg-config and add prereq
+        * configure.ac: enable mantainer mode, check for pkg-config and add prereq
 
-	* syx/syx-object.c (syx_dictionary_rehash): missing check
+        * syx/syx-object.c (syx_dictionary_rehash): missing check
 
 2007-12-23  Luca Bruno  <lethalman88@gmail.com>
 
-	* plugins/x11/st/Wm.st: removed
+        * plugins/x11/st/Wm.st: removed
 
-	* plugins/x11/plugin-init.c: do not include Xlib_wrap.c
+        * plugins/x11/plugin-init.c: do not include Xlib_wrap.c
 
-	* plugins/x11/Xlib.i:
+        * plugins/x11/Xlib.i:
 
-	* plugins/x11/SConscript: compile Xlib_wrap.c
+        * plugins/x11/SConscript: compile Xlib_wrap.c
 
-	* plugins/x11/Makefile.am: compile Xlib_wrap.c
+        * plugins/x11/Makefile.am: compile Xlib_wrap.c
 
-	* configure.ac: enable debug level and fix plugins support
+        * configure.ac: enable debug level and fix plugins support
 
-	* tests/stsupport/TestCStruct.st: update according to the latest changes and add tests for unions
+        * tests/stsupport/TestCStruct.st: update according to the latest changes and add tests for unions
 
-	* tests/testforeignstruct.c (main): test unions
+        * tests/testforeignstruct.c (main): test unions
 
-	Specify CStruct/CUnion fields with the same order as real C structs/unions
-	for instance #(char f1) instead of the old #(f1 char).
-	
-	* st/foreign/CPointer.st (asByteArray): added
-	(asString): added
+        Specify CStruct/CUnion fields with the same order as real C structs/unions
+        for instance #(char f1) instead of the old #(f1 char).
+        
+        * st/foreign/CPointer.st (asByteArray): added
+        (asString): added
 
-	* st/foreign/CStructFieldTypePointer.st: added
+        * st/foreign/CStructFieldTypePointer.st: added
 
-	* st/foreign/CStructFieldType.st: handle pointers with a different class
+        * st/foreign/CStructFieldType.st: handle pointers with a different class
 
-	* st/foreign/CUnion.st: added
+        * st/foreign/CUnion.st: added
 
-	* st/foreign/CUnionGenerator.st: added
+        * st/foreign/CUnionGenerator.st: added
 
-	* syx/syx-init.c (_syx_file_in_basic): file in CUnion.st and CUnionGenerator.st
+        * syx/syx-init.c (_syx_file_in_basic): file in CUnion.st and CUnionGenerator.st
 
-	* syx/syx-primitives.c (CPointer_asString): added
-	(CPointer_asByteArray): added
+        * syx/syx-primitives.c (CPointer_asString): added
+        (CPointer_asByteArray): added
 
-	* plugins/wingui/Makefile.am: fix install dir
+        * plugins/wingui/Makefile.am: fix install dir
 
-	* plugins/readline/Makefile.am: fix install dir
-	
-	* plugins/gtk/Makefile.am: fix install dir
+        * plugins/readline/Makefile.am: fix install dir
+        
+        * plugins/gtk/Makefile.am: fix install dir
 
-	* plugins/x11/Makefile.am: fix install dir
+        * plugins/x11/Makefile.am: fix install dir
 
 2007-12-21  Luca Bruno  <lethalman88@gmail.com>
 
-	Build plugins and install desktop files using the GNU build system.
-	
-	* plugins/wingui/Makefile.am: added
+        Build plugins and install desktop files using the GNU build system.
+        
+        * plugins/wingui/Makefile.am: added
 
-	* plugins/gtk/Makefile.am: added
+        * plugins/gtk/Makefile.am: added
 
-	* plugins/readline/Makefile.am: added
+        * plugins/readline/Makefile.am: added
 
-	* plugins/x11/Makefile.am: added
+        * plugins/x11/Makefile.am: added
 
-	* share/Makefile.am: added
-	
+        * share/Makefile.am: added
+        
         Run tests into the tests directory.
         
         * tests/SConscript (builder_test): use abspath and build into the tests directory

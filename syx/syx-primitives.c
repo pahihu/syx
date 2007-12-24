@@ -22,6 +22,8 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#define _POSIX_C_SOURCE 1
+
 #include "syx-memory.h"
 #include "syx-error.h"
 #include "syx-types.h"
@@ -620,24 +622,27 @@ SYX_FUNC_PRIMITIVE (StdIOStream_nextPutAll)
 SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 {
   syx_int32 op;
-  syx_int32 fd;
+  FILE *file;
   syx_int32 ret;
   syx_symbol mode;
-  syx_int32 flags;
   syx_char c;
   syx_int32 count;
   syx_string s;
   SyxOop string;
+#ifdef HAVE_FSTAT
+  struct stat statbuf;
+#endif
 
   SYX_START_PROFILE;
 
   SYX_PRIM_ARGS(2);
 
   op = SYX_SMALL_INTEGER (es->message_arguments[0]);
-  fd = SYX_SMALL_INTEGER (es->message_arguments[1]);
+  file = SYX_OOP_CAST_POINTER (es->message_arguments[1]);
   ret = 0;
 
-  if (op != 0 && fd < 0)
+  /* except fopen and fdopen ops */
+  if (op != 0 && op != 8 && !file) 
     {
       SYX_PRIM_FAIL;
     }
@@ -645,38 +650,22 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
   switch (op)
     {
     case 0: /* open */
-      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
-      flags = 0;
-      
-      if (*mode == 'r')
-        {
-          if (mode[1] == '+')
-            flags |= O_RDWR;
-          else
-            flags |= O_RDONLY;
-        }
-      else if (*mode == 'w')
-        {
-          flags |= O_CREAT | O_TRUNC;
-          if (mode[1] == '+')
-            flags |= O_RDWR;
-          else
-            flags |= O_WRONLY;
-        }
-      else if (*mode == 'a')
-        {
-          flags |= O_APPEND | O_WRONLY | O_CREAT;
-        }
-      else
+      if (!SYX_OBJECT_IS_STRING (es->message_arguments[1]) || !SYX_OBJECT_IS_STRING (es->message_arguments[2]))
         {
           SYX_PRIM_FAIL;
         }
-        
-      ret = open (SYX_OBJECT_STRING (es->message_arguments[1]), flags);
+
+      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
+      if (!(file = fopen (SYX_OBJECT_SYMBOL(es->message_arguments[1]), mode)))
+        {
+          SYX_PRIM_FAIL;
+        }
+
+      SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
       break;
 
     case 1: /* close */
-      ret = close (fd);
+      ret = fclose (file);
       break;
       
     case 2: /* nextPut: */
@@ -686,33 +675,33 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
           SYX_PRIM_FAIL;
         }
 
-      c = SYX_CHARACTER (es->message_arguments[2]);
-      ret = write (fd, &c, 1);
+      ret = fputc (SYX_CHARACTER (es->message_arguments[2]), file);
       break;
 
     case 3: /* nextPutAll: */
       SYX_PRIM_ARGS(3);
+
+      if (SYX_IS_NIL (es->message_arguments[2]))
+        {
+          ret = 0;
+          break;
+        }
 
       if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
         {
           SYX_PRIM_FAIL;
         }
 
-      if (!SYX_IS_NIL (es->message_arguments[2]))
-        {
-          ret = write (fd, SYX_OBJECT_BYTE_ARRAY (es->message_arguments[2]),
-                       SYX_OBJECT_DATA_SIZE (es->message_arguments[2]) - 1);
-        }
-      else
-        ret = 0;
+      ret = fputs (SYX_OBJECT_SYMBOL (es->message_arguments[2]), file);
       break;
 
     case 4: /* flush */
-/*      ret = fsync (fd); */
+      ret = fflush (file);
       break;
 
     case 5: /* next */
-      if (!read (fd, &c, 1))
+      c = fgetc (file);
+      if (!c)
         {
           /* EOF */
           SYX_PRIM_RETURN (syx_nil);
@@ -724,38 +713,44 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
     case 6: /* next: */
       SYX_PRIM_ARGS(3);
       count = SYX_SMALL_INTEGER (es->message_arguments[2]);
-      s = (syx_string) syx_malloc (count+1);
+      s = (syx_string) syx_calloc (count+1, sizeof (syx_char));
 
-      count = read (fd, s, count);
-      
-      if (!count)
+      if (!fgets (s, count, file))
         {
-          /* maybe EOF */
+          /* FIXME: check for errors */
           SYX_PRIM_RETURN (syx_nil);
         }
       
-      s[count] = '\0';
-      
-      string = syx_string_new (s);
-      syx_free (s);
-      
+      string = syx_string_new_unref (s);
       SYX_PRIM_RETURN (string);
       break;
 
     case 7: /* size */
-      {
-        #ifdef HAVE_FSTAT
-        struct stat statbuf;
-        if ((fstat (fd, &statbuf)) < 0)
-          {
-            SYX_PRIM_FAIL;
-          }
+#ifdef HAVE_FSTAT
+      if ((fstat (fileno(file), &statbuf)) < 0)
+        {
+          SYX_PRIM_FAIL;
+        }
+      
+      SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
+#else
+      SYX_PRIM_RETURN (syx_small_integer_new (0));
+#endif
+      break;
 
-        SYX_PRIM_RETURN (syx_small_integer_new (statbuf.st_size));
-        #else
-        SYX_PRIM_RETURN (syx_small_integer_new (0));
-        #endif
-      }
+    case 8: /* fdopen */
+      if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+        {
+          SYX_PRIM_FAIL;
+        }
+
+      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
+      if (!(file = fdopen (SYX_SMALL_INTEGER(es->message_arguments[1]), mode)))
+        {
+          SYX_PRIM_FAIL;
+        }
+
+      SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
       break;
 
     default: /* unknown */

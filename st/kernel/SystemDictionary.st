@@ -49,12 +49,6 @@ initializeFirstSystem
     "This method is called on image creation"
     systemInitializationRequests := Set new.
 
-    self
-	at: #stdin put: (StdIOStream on: 0) allowReadOnly;
-	at: #stdout put: (StdIOStream on: 1) allowWriteOnly;
-	at: #stderr put: (StdIOStream on: 2) allowWriteOnly;
-	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
-
     Object allSubclassesDo: [ :ea |
 	ea initialize ].
 !
@@ -65,6 +59,12 @@ startupObject: anObject
 
 startupSystem: commandLineArguments
     commandLineArguments := commandLineArguments.
+
+    self
+	at: #stdin put: (StdIOStream on: 0 for: FileStream read);
+	at: #stdout put: (StdIOStream on: 1 for: FileStream write);
+	at: #stderr put: (StdIOStream on: 2 for: FileStream write);
+	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     systemInitializationRequests do: [ :ea |
 	ea initializeSystem ].

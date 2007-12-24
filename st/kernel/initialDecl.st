@@ -162,7 +162,7 @@ ReadWriteStream subclass: #ByteStream
                 classVariableNames: ''!
 
 ByteStream subclass: #FileStream
-	   instanceVariableNames: 'fd name filePtr peek'
+	   instanceVariableNames: 'handle name filePtr peek'
            classVariableNames: ''!
 
 FileStream subclass: #StdIOStream

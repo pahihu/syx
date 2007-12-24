@@ -28,8 +28,8 @@ new
     self shouldNotImplement
 !
     
-on: aFD
-    ^self basicNew fd: aFD
+on: aFD for: aMode
+    ^self basicNew initializeHandle: (self fileOp: 8 with: aFD with: aMode) for: aMode
 !
 
 open: aFilename
@@ -37,20 +37,11 @@ open: aFilename
 !
 
 open: aFilename for: aMode
-    | inst |
-    inst := self basicNew fd: (self fileOp: 0 with: aFilename with: aMode).
-    aMode
-	caseOf: {
-	    [ self append ] -> [ inst allowWriteOnly ].
-	    [ self read ] -> [ inst allowReadOnly ].
-	    [ self write ] -> [ inst allowWriteOnly ].
-	    [ self readWrite ] -> [ inst allowReadAndWrite ].
-	    [ self readWriteCreate ] -> [ inst allowReadAndWrite ] }.
-    ^inst
+    ^self basicNew initializeHandle: (self fileOp: 0 with: aFilename with: aMode) for: aMode
 !
 
 fileOp: anInteger with: anArgument with: anotherArgument
-    "Returns a file descriptor"
+    "Returns a FILE* handle"
     <primitive: 'FileStream_fileOp'>
 	self primitiveFailed
 !
@@ -79,6 +70,27 @@ readWriteCreate
     ^'w+'
 ! !
 
+
+!FileStream methodsFor: 'initialize-release'!
+
+initialize
+    super initialize.
+    collection := String new: 10.
+    curPos := endPos := 0
+!
+
+initializeHandle: aFilePointer for: aMode
+    self initialize.
+    handle := aFilePointer.
+    aMode
+	caseOf: {
+	    [ self class append ] -> [ self allowWriteOnly ].
+	    [ self class read ] -> [ self allowReadOnly ].
+	    [ self class write ] -> [ self allowWriteOnly ].
+	    [ self class readWrite ] -> [ self allowReadAndWrite ].
+	    [ self class readWriteCreate ] -> [ self allowReadAndWrite ] }
+! !
+
 !FileStream methodsFor: 'accessing'!
 
 contents
@@ -96,7 +108,7 @@ upToEnd
 
 size
     | primSize |
-    primSize := self fileOp: 7 on: fd.
+    primSize := self fileOp: 7 on: handle.
     ^primSize max: endPos
 !    
 
@@ -117,26 +129,16 @@ fileIn
     lexer := CompilerLexer readFrom: stream.
     parser := CompilerParser on: lexer for: nil class.
     parser runMultipleAndDeclarations
-!
-
-fd: aFD
-    fd := aFD.
-    collection := String new: 10.
-    curPos := endPos := 0
-!
-
-fd
-    ^fd
 ! !
 
 !FileStream methodsFor: 'primitives'!
 
-fileOp: anInteger on: aFD
+fileOp: anInteger on: fileHandle
     <primitive: 'FileStream_fileOp'>
 	self primitiveFailed
 !
 
-fileOp: anInteger on: aFD with: anArgument
+fileOp: anInteger on: fileHandle with: anArgument
     <primitive: 'FileStream_fileOp'>
 	self primitiveFailed
 ! !
@@ -156,30 +158,30 @@ nextPutBuffer: aByteArray
 !FileStream methodsFor: 'basic'!
 
 close
-    self fileOp: 1 on: fd.
-    fd := -1.
+    self fileOp: 1 on: handle.
+    handle := nil
 !
 
 nextPut: aCharacter
     self ensureWriteable.
-    self fileOp: 2 on: fd with: aCharacter.
+    self fileOp: 2 on: handle with: aCharacter.
     self nextPutBuffer: aCharacter asString
 !
 
 nextPutAll: aByteArray
     self ensureWriteable.
-    self fileOp: 3 on: fd with: aByteArray.
+    self fileOp: 3 on: handle with: aByteArray.
     self nextPutBuffer: aByteArray
 !
 
 flush
-    self fileOp: 4 on: fd
+    self fileOp: 4 on: handle
 !
 
 next
     | c |
     self ensureReadable.
-    c := self fileOp: 5 on: fd.
+    c := self fileOp: 5 on: handle.
     self nextPutBuffer: c asString.
     ^c
 !
@@ -187,7 +189,7 @@ next
 next: numBytes
     | s |
     self ensureReadable.
-    s := self fileOp: 6 on: fd with: numBytes.
+    s := self fileOp: 6 on: handle with: numBytes.
     self nextPutBuffer: s.
     ^s
 ! !
