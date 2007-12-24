@@ -90,11 +90,11 @@ class SwigGenerate
 "#{mem} primitive accessors"
 prim#{mname}#{mmname}
     <cCall: '#{MODULE}_#{name}_#{mem}_get' plugin: 'x11'>
-	self primitiveFailed
+    self primitiveFailed
 !
 prim#{mname}#{mmname}: val
     <cCall: '#{MODULE}_#{name}_#{mem}_set' plugin: 'x11'>
-	self primitiveFailed
+    self primitiveFailed
 !
 "........................................................"
 "#{mem} accessors"
@@ -110,8 +110,8 @@ PRIM
         end
         
         functions = ""
-        struct[:functions].each do |f|
-            mname = mangle(f)
+        struct[:functions].each do |fname|
+            mname = mangle(fname)
             pname = "prim#{mname}"
             farr = funcs[pname]
             fdef = nil
@@ -146,16 +146,16 @@ PRIM
             if farr.nil?
                 prim =<<PRIM
 "_________________________________________________________"
-"#{f} primitive function commented out."
+"#{fname} primitive function commented out."
 "#{fdef}"
 PRIM
             else
                 prim =<<PRIM
 "_________________________________________________________"
-"#{f} primitive function"
+"#{fname} primitive function"
 #{fdef}
     <cCall: '#{MODULE}_#{mname}' plugin: 'x11'>
-	self primitiveFailed
+    self primitiveFailed
 !
 
 PRIM
@@ -170,7 +170,7 @@ PRIM
 
 prim#{structname}Create
     <cCall: '#{MODULE}_new_#{name}' plugin: 'x11'>
-	self primitiveFailed
+    self primitiveFailed
 !
 
 create
@@ -182,7 +182,7 @@ C
 
 prim#{structname}Delete
     <cCall: '#{MODULE}_delete_#{name}' plugin: 'x11'>
-	self primitiveFailed
+    self primitiveFailed
 !
 
 delete
