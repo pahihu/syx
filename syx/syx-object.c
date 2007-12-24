@@ -569,13 +569,13 @@ syx_dictionary_rehash (SyxOop dict)
 {
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   syx_int32 tally = SYX_SMALL_INTEGER (SYX_DICTIONARY_TALLY (dict));
-  syx_varsize newsize = size + tally;
+  syx_varsize newsize = size * 2;
   SyxOop *table = SYX_OBJECT_DATA (dict);
   SyxOop newdict = syx_dictionary_new (newsize);
   SyxOop entry;
   syx_int32 i;
 
-  for (i=0; tally; i+=2)
+  for (i=0; tally && i < size; i+=2)
     {
       entry = table[i];
       if (!SYX_IS_NIL (entry))

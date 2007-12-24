@@ -238,7 +238,7 @@ if test "$build_plugins" == yes; then
 
    dnl enable gtk
    if test "$enable_gtk" != no; then
-      PKG_CHECK_MODULES(GTK_DEP,
+      PKG_CHECK_MODULES([GTK_DEP],
                      [gthread-2.0 >= 2.14.0
                       gtk+-2.0 >= 2.14.0],
                      [build_gtk="yes"
@@ -262,7 +262,7 @@ if test "$build_plugins" == yes; then
 
    dnl enable x11
    if test "$enable_x11" != no; then
-      PKG_CHECK_MODULES(X11_DEP,
+      PKG_CHECK_MODULES([X11_DEP],
                      [x11 >= 1.1.2],
                      [build_x11="yes"
                       plugin_subdirs="$plugin_subdirs plugins/x11"
