@@ -125,7 +125,7 @@ updateInstanceSize
     self allSubclassesDo: [ :ea | ea updateInstanceSize ]
 !
 
-parseVariableNames: aString
+parseInstanceVariableNames: aString
     | lexer token coll |
     aString isString
 	ifFalse: [ self error: 'Expected a string containing variable names' ].
@@ -135,14 +135,30 @@ parseVariableNames: aString
 	whileTrue: [
 	    token class = CompilerIdentifierToken
 		ifFalse: [ self error: 'Instance variables must be valid identifiers' ].
-	    token first isLowercase
+            token first isLowercase
 		ifFalse: [ self error: 'Instance variables must not be capitalized' ].
 	    coll add: token asSymbol ].
     ^coll asArray
 !
 
+parseClassVariableNames: aString
+    | lexer token coll |
+    aString isString
+	ifFalse: [ self error: 'Expected a string containing variable names' ].
+    lexer := CompilerLexer text: aString.
+    coll := OrderedCollection new.
+    [ (token := lexer nextToken) notNil ]
+	whileTrue: [
+	    token class = CompilerIdentifierToken
+		ifFalse: [ self error: 'Class variables must be valid identifiers' ].
+            token first isUppercase
+		ifFalse: [ self error: 'Class variables must not be capitalized' ].
+	    coll add: token asSymbol ].
+    ^coll asArray
+!
+
 setInstanceVariableNames: aString
-    instanceVariableNames := self parseVariableNames: aString.
+    instanceVariableNames := self parseInstanceVariableNames: aString.
     self updateInstanceSize
 !
 
@@ -213,7 +229,7 @@ classVariables
 
 setClassVariableNames: aString
     | array |
-    array := self parseVariableNames: aString.
+    array := self parseClassVariableNames: aString.
     classVariables := IdentityDictionary new: array size.
     array do: [ :ea |
 	classVariables at: ea put: nil ]
