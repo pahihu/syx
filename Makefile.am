@@ -7,7 +7,7 @@ EXTRA_DIST =						\
 	autogen.sh Doxyfile README-BINARIES SConstruct	\
 	syx.sln syx.vcproj makefile.vc
 
-install-data-hook:
+installcheck-local:
 	$(DESTDIR)$(bindir)/syx -r $(DESTDIR)$(pkgdatadir) -S
 	@echo ============================================
 	@echo Smalltalk YX has been installed successfully
