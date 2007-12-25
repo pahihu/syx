@@ -1,3 +1,11 @@
+2007-12-25  Luca Bruno  <lethalman88@gmail.com>
+
+        Fix issue #25.
+        
+        * st/kernel/Compiler.st (runMultipleAndDeclarations): copy literal array because the primitive will modify it even it's constant
+
+        * syx/syx-primitives.c (FileStream_fileOp): use fread instead of fgets
+
 2007-12-24  Luca Bruno  <lethalman88@gmail.com>
 
         Changed FileStream behavior to handle FILE* instead of file descriptors

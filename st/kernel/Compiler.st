@@ -615,7 +615,7 @@ runMultipleAndDeclarations
     | pos text size |
     text := lexer stream contents.
     size := text size.
-    pos := #(0).
+    pos := #(0) copy.
     [ pos first < size ]
       whileTrue:
 	[ self primParseChunk: text startingAt: pos ]

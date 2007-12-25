@@ -712,15 +712,30 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
     case 6: /* next: */
       SYX_PRIM_ARGS(3);
-      count = SYX_SMALL_INTEGER (es->message_arguments[2]);
-      s = (syx_string) syx_calloc (count+1, sizeof (syx_char));
-
-      if (!fgets (s, count, file))
+      if (feof (file))
         {
-          /* FIXME: check for errors */
           SYX_PRIM_RETURN (syx_nil);
         }
-      
+
+      count = SYX_SMALL_INTEGER (es->message_arguments[2]);
+      s = (syx_string) syx_malloc (count+1);
+      count = fread (s, sizeof (syx_char), count, file);
+
+      if (!count)
+        {
+          syx_free (s);
+          if (feof (file))
+            {
+              SYX_PRIM_RETURN (syx_nil);
+            }
+          
+          if (ferror (file))
+            {
+              SYX_PRIM_FAIL;
+            }
+        }
+
+      s[count] = '\0';
       string = syx_string_new_unref (s);
       SYX_PRIM_RETURN (string);
       break;
