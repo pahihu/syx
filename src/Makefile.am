@@ -1,3 +1,5 @@
+AM_CFLAGS = -ansi -pedantic
+
 INCLUDES		=	\
 	-I$(top_srcdir) 	\
 	$(SYX_DEP_CFLAGS)

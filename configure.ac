@@ -17,8 +17,6 @@ dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
 AM_CONFIG_HEADER(syx/syx-config.h)
 
-AM_MANTAINER_MODE
-
 dnl check for basic programs
 AC_PROG_CC
 AC_PROG_CC_STDC
@@ -26,7 +24,7 @@ AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
-CFLAGS="$CFLAGS -ansi -pedantic -Wall -Wno-strict-aliasing -DROOT_PATH=\"$datadir/syx\" -DIMAGE_PATH=\"$datadir/syx/default.sim\" -DPLUGIN_PATH=\"$libdir/syx\""
+CFLAGS="$CFLAGS -Wall -Wno-strict-aliasing -DROOT_PATH=\"$datadir/syx\" -DIMAGE_PATH=\"$datadir/syx/default.sim\" -DPLUGIN_PATH=\"$libdir/syx\""
 
 dnl check for standard header files
 AC_HEADER_STDC

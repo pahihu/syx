@@ -3,8 +3,6 @@ INCLUDES		=	\
 	$(SYX_DEP_CFLAGS)       \
 	$(GTK_DEP_CFLAGS)
 
-CFLAGS+="-std=c99"
-
 plugingtkdir = $(plugindir)/gtk
 
 plugingtk_LTLIBRARIES= libsyx-gtk.la
