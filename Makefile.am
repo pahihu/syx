@@ -7,7 +7,8 @@ EXTRA_DIST =						\
 	autogen.sh Doxyfile README-BINARIES SConstruct	\
 	syx.sln syx.vcproj makefile.vc
 
-installcheck-local:
+install: install-recursive
+	@echo Generating default image at $(DESTDIR)$(datadir)/default.sim
 	$(DESTDIR)$(bindir)/syx -r $(DESTDIR)$(pkgdatadir) -S
 	@echo ============================================
 	@echo Smalltalk YX has been installed successfully
