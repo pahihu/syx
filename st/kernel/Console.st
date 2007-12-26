@@ -69,7 +69,29 @@ nextChunk
     ] repeat
 !
 
+helpString
+    ^'===========
+To quit Smalltalk YX type "Smalltalk quit!" or press ^D (ctrl+D).
+To say Hello World type:
+ ''Hello world''!
+
+For more documentation and examples please visit the homepage or contact us.
+
+Homepage: http://syx.googlecode.com
+Mailing list: http://groups.google.com/group/syx-discuss
+IRC channel: #syx on irc.freenode.net
+E-mail: lethalman88 at gmail.com
+==========='
+!
+
+setupHelp
+    Smalltalk at: #help put: self helpString.
+    (Smalltalk version, ' is ready.') printNl.
+    'Type "help!" to get help.' printNl
+!
+
 run
+    self setupHelp.
     haveReadline := Smalltalk loadPlugin: 'readline'.
     [
 	[

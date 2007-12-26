@@ -61,21 +61,21 @@ startupSystem: commandLineArguments
     commandLineArguments := commandLineArguments.
 
     self
-	at: #stdin put: (StdIOStream on: 0 for: nil);
-	at: #stdout put: (StdIOStream on: 1 for: nil);
-	at: #stderr put: (StdIOStream on: 2 for: nil);
+	at: #stdin put: (StdIOStream on: 0 for: FileStream read);
+	at: #stdout put: (StdIOStream on: 1 for: FileStream write);
+	at: #stderr put: (StdIOStream on: 2 for: FileStream write);
 	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     systemInitializationRequests do: [ :ea |
 	ea initializeSystem ].
 
+    startupProcess := Processor activeProcess.
     commandLineArguments notEmpty
 	ifTrue: [
 	    FileStream fileIn: commandLineArguments first.
 	    continueStartup
 		ifFalse: [ ^self ] ].
 
-    startupProcess := Processor activeProcess.
     startupObject isNil
         ifTrue: [
 	     Console startup ]

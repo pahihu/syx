@@ -107,17 +107,23 @@ syx_token_free (SyxToken token)
 static void
 _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_char sstr[256] = {0};
-  syx_string str = sstr;
+  syx_uint32 length = 200;
+  syx_string str = syx_malloc(length+2);
+  syx_uint32 i = 1;
 
-  *str++ = lastChar;
+  *str = lastChar;
 
   while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))
-    *str++ = lastChar;
+    {
+      *(str+i) = lastChar;
+      i++;
+    }
 
   if (lastChar == ':')
     {
-      *str++ = ':';
+      *(str+i) = ':';
+      i++;
+
       token->type = SYX_TOKEN_NAME_COLON;
     }
   else
@@ -126,7 +132,9 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
       token->type = SYX_TOKEN_NAME_CONST;
     }
 
-  token->value.string = syx_strdup (sstr);
+  str[i] = '\0';
+  token->value.string = syx_strdup (str);
+  syx_free (str);
 }
 
 static void
@@ -267,8 +275,9 @@ _syx_lexer_token_character (SyxLexer *self, SyxToken *token, syx_char lastChar)
 static void
 _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_char sstr[256] = {0};
-  syx_string str = sstr;
+  syx_uint32 length = 200;
+  syx_string str = syx_malloc(length+2);
+  syx_uint32 i = 0;
 
   /* if it's not an alpha numeric symbol,
      be sure to return a symbol of length 2 as the ANSI defines */
@@ -282,10 +291,15 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
     {
-      *str++ = lastChar;
+      *(str+i) = lastChar;
+      i++;
+
       lastChar = syx_lexer_forward (self);
       if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
-        *str++ = lastChar;
+        {
+          *(str+i) = lastChar;
+          i++;
+        }
       else
         syx_lexer_push_back (self);
     }
@@ -293,30 +307,46 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
     {
       while (lastChar && (isalnum (lastChar) || lastChar == ':'))
         {
-          *str++ = lastChar;
+          *(str+i) = lastChar;
+          i++;
+
           lastChar = syx_lexer_forward (self);
         }
       syx_lexer_push_back (self);
     }
   
+  str[i] = '\0';
   token->type = SYX_TOKEN_SYM_CONST;
-  token->value.string = syx_strdup (sstr);
+  token->value.string = syx_strdup (str);
+  syx_free(str);
 }
 
 static void
 _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
 {
-  syx_char sstr[256] = {0};
-  syx_string str = sstr;
+  syx_uint32 length = 200;
+  syx_string str = syx_malloc(length+2);
+  syx_uint32 i = 0;
 
   while (TRUE)
     {
       while ((lastChar = syx_lexer_forward (self)) && lastChar != '\'')
-        *str++ = lastChar;
+        {
+          if (i == length)
+            {
+              length += 200;
+              str = syx_realloc (str, length+2);
+            }
+          *(str+i) = lastChar;
+          i++;
+        }
       
       lastChar = syx_lexer_forward (self);
       if (lastChar == '\'')
-        *str++ = '\'';
+        {
+          *(str+i) = '\'';
+          i++;
+        }
       else
         {
           syx_lexer_push_back (self);
@@ -324,8 +354,10 @@ _syx_lexer_token_string (SyxLexer *self, SyxToken *token, syx_char lastChar)
         }
     }
 
+  str[i] = '\0';
   token->type = SYX_TOKEN_STR_CONST;
-  token->value.string = syx_strdup (sstr);
+  token->value.string = syx_strdup (str);
+  syx_free (str);
 }
 
 static syx_bool
