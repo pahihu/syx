@@ -203,25 +203,5 @@ upToEnd
     ^w contents
 !
 
-primNextPut: aCharacter
-    <primitive: 'StdIOStream_nextPut'>
-	self primitiveFailed
-!
-
-nextPut: aCharacter
-    self ensureWriteable.
-    self primNextPut: aCharacter
-!
-
-primNextPutAll: aByteArray
-    <primitive: 'StdIOStream_nextPutAll'>
-	self primitiveFailed
-!
-
-nextPutAll: aByteArray
-    self ensureWriteable.
-    self primNextPutAll: aByteArray
-!
-
 nextPutBuffer: aString
 ! !

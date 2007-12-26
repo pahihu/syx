@@ -11,6 +11,7 @@ with: aCollection
 !PositionableStream methodsFor: 'initialize-release'!
 
 initializeOn: aCollection
+    self initialize.
     collection := aCollection.
     curPos := 0.
     endPos := collection size    

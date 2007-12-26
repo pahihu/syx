@@ -687,12 +687,10 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
           break;
         }
 
-      if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
-        {
-          SYX_PRIM_FAIL;
-        }
-
-      ret = fputs (SYX_OBJECT_SYMBOL (es->message_arguments[2]), file);
+      ret = fwrite (SYX_OBJECT_DATA (es->message_arguments[2]),
+                    sizeof (syx_int8),
+                    SYX_OBJECT_DATA_SIZE (es->message_arguments[2]),
+                    file);
       break;
 
     case 4: /* flush */
@@ -700,18 +698,25 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 5: /* next */
-      c = fgetc (file);
-      if (!c)
+      count = read (fileno (file), &c, 1);
+
+      if (!count)
         {
           /* EOF */
           SYX_PRIM_RETURN (syx_nil);
         }
       
+      if (count < 0)
+        {
+          SYX_PRIM_FAIL;
+        }
+
       SYX_PRIM_RETURN (syx_character_new (c));
       break;
 
     case 6: /* next: */
       SYX_PRIM_ARGS(3);
+
       if (feof (file))
         {
           SYX_PRIM_RETURN (syx_nil);
@@ -719,20 +724,17 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
       count = SYX_SMALL_INTEGER (es->message_arguments[2]);
       s = (syx_string) syx_malloc (count+1);
-      count = fread (s, sizeof (syx_char), count, file);
+      count = read (fileno (file), s, count);
 
       if (!count)
         {
           syx_free (s);
-          if (feof (file))
-            {
-              SYX_PRIM_RETURN (syx_nil);
-            }
-          
-          if (ferror (file))
-            {
-              SYX_PRIM_FAIL;
-            }
+          SYX_PRIM_RETURN (syx_nil);
+        }
+
+      if (count < 0)
+        {
+          SYX_PRIM_FAIL;
         }
 
       s[count] = '\0';
@@ -754,18 +756,30 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 8: /* fdopen */
-      if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+      switch (SYX_SMALL_INTEGER(es->message_arguments[1]))
         {
-          SYX_PRIM_FAIL;
+        case 0:
+          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdin));
+          break;
+        case 1:
+          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdout));
+          break;
+        case 2:
+          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stderr));
+          break;
+        default:
+          if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+            {
+              SYX_PRIM_FAIL;
+            }
+          mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
+          if (!(file = fdopen (SYX_SMALL_INTEGER(es->message_arguments[1]), mode)))
+            {
+              SYX_PRIM_FAIL;
+            }
+          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
+          break;
         }
-
-      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
-      if (!(file = fdopen (SYX_SMALL_INTEGER(es->message_arguments[1]), mode)))
-        {
-          SYX_PRIM_FAIL;
-        }
-
-      SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
       break;
 
     default: /* unknown */

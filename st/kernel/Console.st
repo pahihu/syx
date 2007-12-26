@@ -47,7 +47,7 @@ nextLine
 		  line isNil
 		      ifTrue: [ 'EOF' printNl. Smalltalk quit ].
 		  self primAddHistory: line ]
-	ifFalse: [ '> ' print.
+	ifFalse: [ '> ' print. stdout flush.
 	           line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ 'EOF' printNl. Smalltalk quit].
