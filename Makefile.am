@@ -9,7 +9,7 @@ EXTRA_DIST =						\
 
 install: install-recursive
 	@echo Generating default image at $(DESTDIR)$(datadir)/default.sim
-	$(DESTDIR)$(bindir)/syx -r $(DESTDIR)$(pkgdatadir) -S
+	LD_PRELOAD="$(DESTDIR)$(libdir)/libsyx.so" $(DESTDIR)$(bindir)/syx -r $(DESTDIR)$(pkgdatadir) -S
 	@echo ============================================
 	@echo Smalltalk YX has been installed successfully
 	@echo ============================================
