@@ -1,12 +1,16 @@
-AM_CFLAGS = -ansi -pedantic
+SYX_OTHER_CFLAGS += -ansi -pedantic -DROOT_PATH=$(datadir)/syx \
+	-DIMAGE_PATH=$(datadir)/syx/default.sim \
+	-DPLUGIN_PATH=$(libdir)/syx
+
+EXTRA_DIST = SConscript
 
 INCLUDES		=	\
 	-I$(top_srcdir) 	\
 	$(SYX_DEP_CFLAGS)
 
-EXTRA_DIST = SConscript
 
-lib_LTLIBRARIES= libsyx.la
+lib_LTLIBRARIES		= libsyx.la
+
 
 libsyx_la_SOURCES	= 	\
 	syx-bytecode.c syx-init.c syx-interp.c \
@@ -14,7 +18,8 @@ libsyx_la_SOURCES	= 	\
 	syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c \
         syx-plugins.c syx-signal.c syx-profile.c
 
-libsyx_la_LIBADD	= $(SYX_DEP_LIBS)
+libsyx_la_CFLAGS	= $(SYX_DEP_CFLAGS) $(SYX_OTHER_CFLAGS)
+libsyx_la_LIBADD	= $(SYX_DEP_LIBS) $(SYX_OTHER_LIBS)
 
 syxincludedir	= $(includedir)/syx
 syxinclude_HEADERS	= 	\

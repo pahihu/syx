@@ -1,4 +1,4 @@
-SUBDIRS = syx src $(plugin_subdirs) share tests
+SUBDIRS = syx src $(plugin_subdirs) share examples tests
 
 dist_stkerneldata_DATA = st/kernel/*.st
 dist_stforeigndata_DATA = st/foreign/*.st

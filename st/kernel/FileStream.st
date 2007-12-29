@@ -203,5 +203,15 @@ upToEnd
     ^w contents
 !
 
+nextPut: aCharacter
+    <primitive: 'StdIOStream_nextPut'>
+        self primitiveFailed
+!
+
+nextPutAll: aString
+    <primitive: 'StdIOStream_nextPutAll'>
+        self primitiveFailed
+!
+
 nextPutBuffer: aString
 ! !

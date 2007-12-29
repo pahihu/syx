@@ -57,7 +57,7 @@ startupObject: anObject
     startupObject := anObject
 !
 
-startupSystem: commandLineArguments
+initializeSystem: commandLineArguments
     commandLineArguments := commandLineArguments.
 
     self
@@ -68,7 +68,9 @@ startupSystem: commandLineArguments
 
     systemInitializationRequests do: [ :ea |
 	ea initializeSystem ].
+!
 
+startupSystem
     startupProcess := Processor activeProcess.
     commandLineArguments notEmpty
 	ifTrue: [

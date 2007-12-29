@@ -29,5 +29,5 @@ import os
 Import ('env', 'distdir')
 
 path = os.path.join (distdir, 'examples', 'x11')
-target = env.Install (path, ['SConscript', 'Wm.st'])
+target = env.Install (path, ['Makefile.am', 'SConscript', 'Wm.st'])
 env.Alias ('sdist', target)

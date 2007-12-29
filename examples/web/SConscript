@@ -35,5 +35,5 @@ if not 'wince' in env['host']:
     Default (xenv.Program (sources))
 
 path = os.path.join (distdir, 'examples', 'web')
-target = env.Install (path, sources + ['SConscript', 'browser.st'])
+target = env.Install (path, sources + ['Makefile.am', 'SConscript', 'browser.st', 'coldbrowser.st'])
 env.Alias ('sdist', target)

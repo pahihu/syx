@@ -29,7 +29,7 @@ import os
 Import ('env', 'distdir')
 
 path = os.path.join (distdir, 'examples')
-target = env.Install (path, ['SConscript'])
+target = env.Install (path, ['Makefile.am', 'SConscript'])
 env.Alias ('sdist', target)
 
-env.SConscript (dirs=['console', 'embedding', 'web'], exports=['env', 'distdir'])
+env.SConscript (dirs=['basic', 'console', 'embedding', 'web', 'gtk', 'x11'], exports=['env', 'distdir'])

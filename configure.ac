@@ -17,14 +17,14 @@ dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
 AM_CONFIG_HEADER(syx/syx-config.h)
 
+CFLAGS="$(CFLAGS) -Wall -Wno-strict-aliasing"
+
 dnl check for basic programs
 AC_PROG_CC
 AC_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
-
-CFLAGS="$CFLAGS -Wall -Wno-strict-aliasing -DROOT_PATH=\"$datadir/syx\" -DIMAGE_PATH=\"$datadir/syx/default.sim\" -DPLUGIN_PATH=\"$libdir/syx\""
 
 dnl check for standard header files
 AC_HEADER_STDC
@@ -71,14 +71,6 @@ build_gtk="no"
 build_x11="no"
 build_readline="no"
 build_wingui="no"
-
-dnl windows specific
-if test "$native_win32" == yes; then
-   CFLAGS="$CFLAGS -DWINDOWS -D_DLL"
-   LIBS="$LIBS -lwsock32"
-   AC_CHECK_HEADERS([windows.h])
-fi
-
 
 dnl debug level
 AC_MSG_CHECKING([the build debug level])
@@ -168,10 +160,16 @@ full)
    ;;
 esac
 
-dnl check for profiling
+dnl win32 specific
+if test "$native_win32" == yes; then
+   SYX_OTHER_CFLAGS="$SYX_OTHER_CFLAGS -DWINDOWS -D_DLL"
+   SYX_OTHER_LIBS="$SYX_OTHER_LIBS -lwsock32"
+fi
+
+dnl check for profile
 if test "$enable_profile" == yes; then
-   CFLAGS="$CFLAGS -pg"
-   LIBS="$LIBS -pg"
+   SYX_OTHER_CFLAGS="$SYX_OTHER_CFLAGS -pg"
+   SYX_OTHER_LIBS="$SYX_OTHER_LIBS -pg"
 fi
 
 dnl check for internal profiling
@@ -180,14 +178,14 @@ if test "$enable_iprofile" == yes; then
 fi
 
 dnl check for math library
-AC_CHECK_LIB(m, floor, [LIBS="$LIBS -lm"])
+AC_CHECK_LIB(m, floor, [SYX_OTHER_LIBS="$SYX_OTHER_LIBS -lm"])
 
 dnl check for gmp library
 if test "$with_gmp" != no; then
    AC_CACHE_CHECK(for mpz_init in -lgmp, syx_cv_gmp_libs, [
      syx_cv_gmp_libs="-lgmp"
-     ac_save_LIBS="$LIBS"
-     LIBS="$LIBS $syx_cv_gmp_libs"
+     ac_save_SYX_OTHER_LIBS="$SYX_OTHER_LIBS"
+     SYX_OTHER_LIBS="$SYX_OTHER_LIBS $syx_cv_gmp_libs"
 
      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
             #include <stdio.h>
@@ -196,11 +194,11 @@ if test "$with_gmp" != no; then
             mpz_t z;
             mpz_init (z);
         ]])],, [syx_cv_gmp_libs="not found"])
-     LIBS="$ac_save_LIBS"
+     SYX_OTHER_LIBS="$ac_save_SYX_OTHER_LIBS"
    ])
 
    if test "$syx_cv_gmp_libs" != "not found"; then
-      LIBS="$LIBS $syx_cv_gmp_libs"
+      SYX_OTHER_LIBS="$SYX_OTHER_LIBS $syx_cv_gmp_libs"
       AC_DEFINE(HAVE_LIBGMP, 1, [Define to 1 if you have the 'gmp' library (-lgmp).])
       build_gmp="yes"
    else
@@ -212,10 +210,12 @@ dnl check for plugins
 if test "$with_plugins" != no; then
    AC_CHECK_LIB(dl, dlopen, [
                 AC_DEFINE(HAVE_LIBDL, 1, [Define to 1 if you have the 'ltdl' library (-ldl).])
-                CFLAGS="$CFLAGS -DWITH_PLUGINS"
-                LIBS="$LIBS -ldl"
+                SYX_OTHER_LIBS="$SYX_OTHER_LIBS -ldl"
                 build_plugins="yes"], [build_plugins="no"])
 fi
+
+AC_SUBST(SYX_OTHER_CFLAGS)
+AC_SUBST(SYX_OTHER_LIBS)
 
 dnl set syx/st/kernel dir
 stkerneldatadir="$datadir/syx/st/kernel"
@@ -232,7 +232,20 @@ AH_TOP(
 AH_BOTTOM(
 [#endif /* SYX_CONFIG_H */])
 
-AC_CONFIG_FILES([Makefile syx/Makefile src/Makefile share/Makefile tests/Makefile])
+AC_CONFIG_FILES([
+Makefile
+syx/Makefile
+src/Makefile
+share/Makefile
+examples/Makefile
+examples/basic/Makefile
+examples/console/Makefile
+examples/embedding/Makefile
+examples/web/Makefile
+examples/gtk/Makefile
+examples/x11/Makefile
+tests/Makefile
+])
 
 plugin_subdirs=
 

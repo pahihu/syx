@@ -29,5 +29,5 @@ import os
 Import ('env', 'distdir')
 
 path = os.path.join (distdir, 'examples', 'gtk')
-target = env.Install (path, ['SConscript', 'helloworld.st'])
+target = env.Install (path, ['Makefile.am', 'SConscript', 'helloworld.st'])
 env.Alias ('sdist', target)
