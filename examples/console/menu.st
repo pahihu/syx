@@ -1,3 +1,4 @@
+#!/usr/bin/env syx
 | choice menu |
 
 'Smalltalk YX simple example menu:' printNl.

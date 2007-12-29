@@ -1,0 +1,8 @@
+The window manager in Wm.st has been written by Rahul aka blufox,
+inspired by tinywm.
+
+To drag a window, press ALT and the sx mouse button, then move.
+
+To resize a window, press ALT and the dx mouse button, then move.
+
+To raise a window, press F1 on the window.
