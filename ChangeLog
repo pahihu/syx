@@ -1,31 +1,41 @@
 2007-12-29  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-init.c (syx_initialize_system): first send #initializeSystem: blocking then #startupSystem to ensure all things are initialized if the scheduler is not initialized in some embedded applications.
+	* st/kernel/initialDecl.st: store commandLine object instead of commandLineArguments
 
-	* st/kernel/SystemDictionary.st (initializeSystem:): added
+        Added makefiles for examples.
+        
+        * syx/Makefile.am: remove macros from here
 
-	Added makefiles for examples.
-	
-	* configure.ac: use SYX_OTHER_LIBS and SYX_OTHER_CFLAGS for libsyx
+        * st/kernel/CommandLine.st: added
+
+        * src/main.c (_parse_args): do not handle -c
+
+        * syx/syx-init.c (syx_initialize_system): first send #initializeSystem: blocking then #startupSystem to ensure all things are initialized if the scheduler is not initialized in some embedded applications.
+        (_syx_file_in_basic): added CommandLine.st
+
+        * st/kernel/SystemDictionary.st (initializeSystem:): added
+        (startupSystem): handle -c and -e options
+
+        * configure.ac: use SYX_OTHER_LIBS and SYX_OTHER_CFLAGS for libsyx and readd path macros
 
 2007-12-26  Luca Bruno  <lethalman88@gmail.com>
 
-	Working on issue #22.
-	
-	* st/kernel/Console.st (setupHelp): added
-	(helpString): added
-	(run):
+        Working on issue #22.
+        
+        * st/kernel/Console.st (setupHelp): added
+        (helpString): added
+        (run):
 
-	* syx/syx-lexer.c (_syx_lexer_token_string): unlimited strings
-	(_syx_lexer_token_symbol): unlimited symbols
-	(_syx_lexer_token_identifier): unlimited identifiers
+        * syx/syx-lexer.c (_syx_lexer_token_string): unlimited strings
+        (_syx_lexer_token_symbol): unlimited symbols
+        (_syx_lexer_token_identifier): unlimited identifiers
 
-	Fix image snapshot inside scripts.
+        Fix image snapshot inside scripts.
 
-	* st/kernel/FileStream.st (nextPut): removed
-	(nextPutAll): removed
+        * st/kernel/FileStream.st (nextPut): removed
+        (nextPutAll): removed
 
-	* st/kernel/SystemDictionary.st (startupSystem): save the startupProcess before fileing files
+        * st/kernel/SystemDictionary.st (startupSystem): save the startupProcess before fileing files
 
         * st/kernel/Console.st (nextLine): flush stdout
 

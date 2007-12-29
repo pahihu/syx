@@ -40,12 +40,13 @@ _help (void)
 	  "  -i --image=IMAGEFILE\tLoad the image IMAGEFILE, also SYX_IMAGE_PATH=x\n"
 	  "\t\t\t(default: %s)\n\n"
 	  "  -s --scratch\t\tBuild the environment from scratch and save the image.\n"
-	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n"
-	  "  -c\t\t\tContinue startup process after loading files\n"
-	  "\t\t\tfrom the command line.\n\n",
+	  "  -S\t\t\tLike --scratch. Exits once the environment is built.\n",
 	  SYX_ROOT_PATH, SYX_IMAGE_PATH);
 
-  printf ("  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
+  printf ("  -c\t\t\tContinue startup process after loading files\n"
+          "\t\t\tor evaluating code.\n\n"
+          "  -e [code]\t\tEvaluate one line of code.\n"
+          "  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
 	  "\t\t\tof it to IMAGEFILE.\n\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"
 	  "  -h --help\t\tPrint this message.\n\n"
@@ -85,7 +86,7 @@ _do_recovery (const char *rim_path)
 
 /* Thanks to Krzysztof Kowalczyk for this getopt */
 
-enum {
+enum OptArgument{
   ARG_UNKNOWN,
   ARG_ERROR,
   ARG_ROOT,
@@ -100,29 +101,27 @@ enum {
 
 struct {
   const char* arg_name;
-  int         arg_enum;
-  int         need_param;
+  enum OptArgument arg_enum;
+  int need_param;
 } arg_defs[] = {
-  {"--root", ARG_ROOT, 1},
-  {"--image", ARG_IMAGE, 1},
+  {"--root", ARG_ROOT, TRUE},
+  {"--image", ARG_IMAGE, TRUE},
   {"--scratch", ARG_SCRATCH, 0},
   {"--version", ARG_VERSION, 0},
-  {"--recovery", ARG_RECOVERY, 1},
+  {"--recovery", ARG_RECOVERY, TRUE},
   {"--help", ARG_HELP, 0},
-  {"-r", ARG_ROOT, 1},
-  {"-i", ARG_IMAGE, 1},
+  {"-r", ARG_ROOT, TRUE},
+  {"-i", ARG_IMAGE, TRUE},
   {"-s", ARG_SCRATCH, 0},
   {"-S", ARG_SCRATCH_AND_QUIT, 0},
   {"-v", ARG_VERSION, 0},
   {"-h", ARG_HELP, 0},
-  {"-c", ARG_CONTINUE_STARTUP, 0},
   {NULL, 0}
 };
 
 static int curr_arg=1;
 
-
-static int
+static enum OptArgument
 arg_enum_from_name (int argc, const char** argv, const char** arg_val)
 {
   const char *arg;
@@ -132,7 +131,11 @@ arg_enum_from_name (int argc, const char** argv, const char** arg_val)
     return ARG_UNKNOWN;
 
   arg = argv[curr_arg];
-  i = 0;
+  if (!arg)
+    return ARG_UNKNOWN;
+
+  if (*arg != '-')
+    return ARG_UNKNOWN;
 
   *arg_val = NULL;
   for (i=0; arg_defs[i].arg_name; i++)
@@ -170,18 +173,14 @@ _parse_args (int argc, char **argv)
   syx_symbol recovery = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
-  syx_bool continuestartup = FALSE;
   syx_bool init;
 
   while (curr_arg < argc)
     {
       const char* arg_val;
-      int arg_enum = arg_enum_from_name(argc, (const char **)argv, &arg_val);
+      enum OptArgument arg_enum = arg_enum_from_name(argc, (const char **)argv, &arg_val);
       switch (arg_enum)
         {
-	case ARG_UNKNOWN:
-	  /* exit loop */
-	  goto end_of_arg;
 	case ARG_ROOT:
 	  root_path = syx_strdup (arg_val);
 	  break;
@@ -204,9 +203,12 @@ _parse_args (int argc, char **argv)
 	case ARG_HELP:
 	  _help ();
 	  exit (EXIT_FAILURE);
-	case ARG_CONTINUE_STARTUP:
-	  continuestartup = TRUE;
 	  break;
+	case ARG_UNKNOWN:
+        default:
+	  /* Exit loop.
+             Unknown arguments will be handled by Smalltalk */
+	  goto end_of_arg;
         }
     }
 
@@ -247,8 +249,6 @@ _parse_args (int argc, char **argv)
 
       if (recovery)
         _do_recovery (recovery);
-
-      SYX_OBJECT_VARS(syx_globals)[5] = syx_boolean_new (continuestartup);
 
       /* Force WinWorkspace startup on WinCE */
 #ifdef WINCE

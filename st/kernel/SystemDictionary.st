@@ -58,7 +58,7 @@ startupObject: anObject
 !
 
 initializeSystem: commandLineArguments
-    commandLineArguments := commandLineArguments.
+    commandLine := CommandLine new: commandLineArguments.
 
     self
 	at: #stdin put: (StdIOStream on: 0 for: FileStream read);
@@ -71,12 +71,20 @@ initializeSystem: commandLineArguments
 !
 
 startupSystem
+    | continueStartup evalString |
     startupProcess := Processor activeProcess.
-    commandLineArguments notEmpty
-	ifTrue: [
-	    FileStream fileIn: commandLineArguments first.
-	    continueStartup
-		ifFalse: [ ^self ] ].
+
+    commandLine parse: #(c e:).
+    continueStartup := commandLine options at: #c ifAbsent: [ false ].
+    evalString := commandLine options at: #e: ifAbsent: [ nil ].
+    evalString
+        ifNotNil: [ evalString doIt ].
+
+    commandLine arguments do: [ :fileName |
+        FileStream fileIn: fileName ].
+
+    commandLine commandLineArguments isEmpty | continueStartup
+        ifFalse: [ ^self ].
 
     startupObject isNil
         ifTrue: [
@@ -93,8 +101,8 @@ rehashClass
 
 !SystemDictionary methodsFor: 'accessing'!
 
-commandLineArguments
-    ^commandLineArguments
+commandLine
+    ^commandLine
 ! !
 
 !SystemDictionary methodsFor: 'plugins'!

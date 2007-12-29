@@ -17,7 +17,7 @@ dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
 AM_CONFIG_HEADER(syx/syx-config.h)
 
-CFLAGS="$(CFLAGS) -Wall -Wno-strict-aliasing"
+CFLAGS="$(CFLAGS) -Wall -Wno-strict-aliasing -DROOT_PATH=$datadir/syx -DIMAGE_PATH=$datadir/syx/default.sim -DPLUGIN_PATH=$libdir/syx"
 
 dnl check for basic programs
 AC_PROG_CC
@@ -184,8 +184,8 @@ dnl check for gmp library
 if test "$with_gmp" != no; then
    AC_CACHE_CHECK(for mpz_init in -lgmp, syx_cv_gmp_libs, [
      syx_cv_gmp_libs="-lgmp"
-     ac_save_SYX_OTHER_LIBS="$SYX_OTHER_LIBS"
-     SYX_OTHER_LIBS="$SYX_OTHER_LIBS $syx_cv_gmp_libs"
+     ac_save_LIBS="$LIBS"
+     LIBS="$LIBS $syx_cv_gmp_libs"
 
      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
             #include <stdio.h>
@@ -194,7 +194,7 @@ if test "$with_gmp" != no; then
             mpz_t z;
             mpz_init (z);
         ]])],, [syx_cv_gmp_libs="not found"])
-     SYX_OTHER_LIBS="$ac_save_SYX_OTHER_LIBS"
+     LIBS="$ac_save_LIBS"
    ])
 
    if test "$syx_cv_gmp_libs" != "not found"; then

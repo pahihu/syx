@@ -132,7 +132,7 @@ _syx_file_in_basic (void)
     "DateTime.st",
     "Compiler.st",
     "MVC.st",
-    "Console.st",
+    "CommandLine.st", "Console.st",
     "WinWorkspace.st",
     NULL
   };
@@ -212,7 +212,7 @@ syx_build_basic (void)
   syx_globals = syx_dictionary_new (200);
   /* hold SystemDictionary instance variables */
   syx_free (SYX_OBJECT_VARS(syx_globals));
-  SYX_OBJECT_VARS(syx_globals) = (SyxOop *) syx_calloc (SYX_VARS_DICTIONARY_ALL + 5, sizeof (SyxOop));
+  SYX_OBJECT_VARS(syx_globals) = (SyxOop *) syx_calloc (SYX_VARS_DICTIONARY_ALL + 4, sizeof (SyxOop));
 
   syx_symbols = syx_dictionary_new (1000);
   syx_globals_at_put (syx_symbol_new ("Smalltalk"), syx_globals);

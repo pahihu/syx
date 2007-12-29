@@ -258,7 +258,7 @@ Dictionary subclass: #IdentityDictionary
 	   classVariableNames: ''!
 
 IdentityDictionary subclass: #SystemDictionary
-		   instanceVariableNames: 'systemInitializationRequests commandLineArguments startupProcess startupObject continueStartup'
+		   instanceVariableNames: 'systemInitializationRequests commandLine startupProcess startupObject'
 		   classVariableNames: ''!
 
 
@@ -296,6 +296,10 @@ String subclass: #CompilerBinaryToken
        classVariableNames: ''!
 
 "Console"
+
+Object subclass: #CommandLine
+       instanceVariableNames: 'commandLineArguments arguments options'
+       classVariableNames: ''!
 
 Object subclass: #Console
        instanceVariableNames: 'haveReadline'

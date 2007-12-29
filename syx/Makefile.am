@@ -1,6 +1,4 @@
-SYX_OTHER_CFLAGS += -ansi -pedantic -DROOT_PATH=$(datadir)/syx \
-	-DIMAGE_PATH=$(datadir)/syx/default.sim \
-	-DPLUGIN_PATH=$(libdir)/syx
+SYX_OTHER_CFLAGS += -ansi -pedantic
 
 EXTRA_DIST = SConscript
 
