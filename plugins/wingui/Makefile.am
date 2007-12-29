@@ -11,3 +11,5 @@ libsyx_wingui_la_SOURCES	= 	\
 	plugin-init.c
 
 libsyx_wingui_la_LIBADD	= $(SYX_DEP_LIBS) $(WINGUI_DEP_LIBS)
+
+EXTRA_DIST = SConscript

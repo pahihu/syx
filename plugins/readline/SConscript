@@ -46,5 +46,6 @@ if penv['plugins'] and penv['READLINE']:
          conf.Finish ()
          print 'WARNING: building without readline plugin'
 
-target = penv.Install (os.path.join (distdir, 'plugins', 'readline'), lib_sources + ['SConscript'])
+target = penv.Install (os.path.join (distdir, 'plugins', 'readline'),
+                       lib_sources + ['Makefile.am', 'SConscript'])
 penv.Alias ('sdist', target)

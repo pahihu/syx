@@ -1,0 +1,63 @@
+Installation Instructions
+*************************
+
+Basic Installation
+==================
+
+These are generic installation instructions.
+
+   First you need the Scons building system. You can obtain it at
+   http://www.scons.org.
+   
+The simplest way to compile this package is:
+
+  1. `cd' to the directory containing the package's source code and type
+     `scons'
+
+  2. Optionally, type `scons test' to run any self-tests that come with
+     the package.
+
+  4. Type `scons install' to install the programs and any data files and
+     documentation.
+
+  5. You can remove the program binaries and object files from the
+     source code directory by typing `scons -c clean'.  To also remove the
+     files that `scons test' created, type `scons test -c'.
+
+Compilers and Options
+=====================
+
+Some systems require unusual options for compilation or linking that the
+`scons' script does not know about.  Run `scons -h' for
+details on some of the pertinent environment variables, and
+`scons -H' for options related to the builder.
+
+Installation Names
+==================
+
+By default, `scons install' installs the package's commands under
+`/usr/local/bin', include files under `/usr/local/include', etc.  You
+can specify an installation prefix other than `/usr/local' by giving
+`scons' the option `prefix=PREFIX'.
+
+   You can specify separate installation prefixes for
+architecture-specific files and architecture-independent files.  If you
+pass the option `exec_prefix=PREFIX' to `scons', the package uses
+PREFIX as the prefix for installing programs and libraries.
+Documentation and other data files still use the regular prefix.
+
+   In addition, if you use an unusual directory layout you can give
+options like `bindir=DIR' to specify different values for particular
+kinds of files.  Run `scons -h' for a list of the directories
+you can set and what kinds of files go in them.
+
+Optional Features
+=================
+
+Some packages pay attention to `FEATURE=value' options to
+`scons', where FEATURE indicates an optional part of the package.
+Type `scons -h' for a more a list of possible features to enable/disable.
+
+`scons' also accepts some other, not widely useful, options.  Run
+`scons -H' for more details.
+

@@ -45,7 +45,7 @@ _help (void)
 
   printf ("  -c\t\t\tContinue startup process after loading files\n"
           "\t\t\tor evaluating code.\n\n"
-          "  -e [code]\t\tEvaluate one line of code.\n"
+          "  -e CODE\t\tEvaluate one line of code.\n"
           "  --recovery=IMAGEFILE\tLoad the default image and save the recovered copy\n"
 	  "\t\t\tof it to IMAGEFILE.\n\n"
 	  "  -v --version\t\tPrint version information and then exit.\n"

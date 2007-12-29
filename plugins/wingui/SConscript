@@ -50,5 +50,6 @@ if penv['plugins'] and penv['WINGUI']:
          instdir = os.path.join (env['plugindir'], 'wingui')
          env.SyxInstall (instdir, lib_shared)
 
-target = penv.Install (os.path.join (distdir, 'plugins', 'wingui'), lib_sources + ['SConscript'])
+target = penv.Install (os.path.join (distdir, 'plugins', 'wingui'),
+                       lib_sources + ['Makefile.am', 'SConscript'])
 penv.Alias ('sdist', target)

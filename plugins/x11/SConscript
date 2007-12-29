@@ -29,6 +29,7 @@ Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c Xlib_wrap.c")
 st_sources = Split("""st/XDisplay.st st/XEvent.st st/Xlib.st""")
+extras = Split("""SConscript Makefile.am Xlib.i Xlib_structs.i x11.rb x11gen.rb swig.rb""")
 
 if penv['plugins'] and penv['X11']:
    env = penv.Clone ()
@@ -47,7 +48,7 @@ if penv['plugins'] and penv['X11']:
       except:
          print "WARNING: building without X11 plugin support"
 
-target = penv.Install (os.path.join (distdir, 'plugins', 'x11'), lib_sources + ['SConscript'])
+target = penv.Install (os.path.join (distdir, 'plugins', 'x11'), lib_sources + extras)
 penv.Alias ('sdist', target)
 
 path = os.path.join (distdir, 'plugins', 'x11', 'st')
