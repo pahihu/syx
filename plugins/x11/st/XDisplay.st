@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Rahul, Luca Bruno
+Copyright (c) 2007 Rahul
 This file is part of Smalltalk YX.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

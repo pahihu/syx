@@ -4,7 +4,7 @@ dnl syx - Smalltalk YX programming language
 dnl
 
 dnl version info
-m4_define([syx_version], [0.1.5])
+m4_define([syx_version], [0.1.6])
 
 dnl init autoconf
 AC_INIT([syx], [syx_version], [lethalman88@gmail.com])
