@@ -29,7 +29,7 @@ Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c Xlib_wrap.c")
 st_sources = Split("""st/XDisplay.st st/XEvent.st st/Xlib.st""")
-extras = Split("""SConscript Makefile.am Xlib.i Xlib_structs.i x11.rb x11gen.rb swig.rb""")
+extras = Split("""SConscript Makefile.am""")
 
 if penv['plugins'] and penv['X11']:
    env = penv.Clone ()

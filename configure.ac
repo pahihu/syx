@@ -211,6 +211,7 @@ if test "$with_plugins" != no; then
    AC_CHECK_LIB(dl, dlopen, [
                 AC_DEFINE(HAVE_LIBDL, 1, [Define to 1 if you have the 'ltdl' library (-ldl).])
                 SYX_OTHER_LIBS="$SYX_OTHER_LIBS -ldl"
+                SYX_OTHER_CFLAGS="$SYX_OTHER_CFLAGS -DWITH_PLUGINS"
                 build_plugins="yes"], [build_plugins="no"])
 fi
 
@@ -257,7 +258,7 @@ if test "$build_plugins" == yes; then
                      [gthread-2.0 >= 2.14.0
                       gtk+-2.0 >= 2.14.0],
                      [build_gtk="yes"
-                      plugin_subdirs="$plugin_subdirs plugins/gtk"
+                      plugin_subdirs="$plugin_subdirs gtk"
                       AC_CONFIG_FILES([plugins/gtk/Makefile])
                       stgtkdatadir="$datadir/syx/st/gtk"
                       AC_SUBST(stgtkdatadir)])
@@ -269,7 +270,7 @@ if test "$build_plugins" == yes; then
                 [build_readline="yes"
                  READLINE_DEP_LIBS="-lreadline"
                  AC_SUBST([READLINE_DEP_LIBS])
-                 plugin_subdirs="$plugin_subdirs plugins/readline"
+                 plugin_subdirs="$plugin_subdirs readline"
                  AC_CONFIG_FILES([plugins/readline/Makefile])
                  streadlinedatadir="$datadir/syx/st/readline"
                  AC_SUBST(streadlinedatadir)])
@@ -280,7 +281,7 @@ if test "$build_plugins" == yes; then
       PKG_CHECK_MODULES([X11_DEP],
                      [x11 >= 1.1.2],
                      [build_x11="yes"
-                      plugin_subdirs="$plugin_subdirs plugins/x11"
+                      plugin_subdirs="$plugin_subdirs x11"
                       AC_CONFIG_FILES([plugins/x11/Makefile])
                       stx11datadir="$datadir/syx/st/x11"
                       AC_SUBST(stx11datadir)])
@@ -290,18 +291,23 @@ if test "$build_plugins" == yes; then
    if test "$enable_wingui" != no; then
       if test "$target_wince" == yes; then
             AC_CHECK_LIB([commctrl], [MessageBox],
-                [build_wingui="yes"
-                 WINGUI_DEP_LIBS="-lcommctrl"
-                 AC_SUBST([WINGUI_DEP_LIBS])
-                 plugin_subdirs="$plugin_subdirs plugins/wingui"
-                 AC_CONFIG_FILES([plugins/wingui/Makefile])
-                 stwinguidatadir="$datadir/syx/st/wingui"
-                 AC_SUBST(stwinguidatadir)])
+                [build_wingui="yes"])
       else
          build_wingui="yes"
       fi
+
+      if test "$build_wingui" == yes; then
+            WINGUI_DEP_LIBS="-lcommctrl"
+            AC_SUBST([WINGUI_DEP_LIBS])
+            plugin_subdirs="$plugin_subdirs wingui"
+            AC_CONFIG_FILES([plugins/wingui/Makefile])
+            stwinguidatadir="$datadir/syx/st/wingui"
+            AC_SUBST(stwinguidatadir)
+      fi
    fi
 fi
+
+AC_CONFIG_FILES([plugins/Makefile])
 
 AC_SUBST(plugin_subdirs)
 

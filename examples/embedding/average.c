@@ -1,4 +1,4 @@
-#include <syx/syx.h>
+#include "../../syx/syx.h"
 
 SYX_FUNC_PRIMITIVE(average)
 {

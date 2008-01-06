@@ -418,13 +418,13 @@ if env['doc'] and env['doxygen']:
 
 # Install data
 
-sources = glob.glob ('st/kernel/*.st')
+kernel_sources = glob.glob ('st/kernel/*.st')
 path = os.path.join (env['rootdir'], 'st', 'kernel')
-env.SyxInstall (path, sources)
+env.SyxInstall (path, kernel_sources)
 
-sources = glob.glob ('st/foreign/*.st')
+foreign_sources = glob.glob ('st/foreign/*.st')
 path = os.path.join (env['rootdir'], 'st', 'foreign')
-env.SyxInstall (path, sources)
+env.SyxInstall (path, foreign_sources)
 
 if env['PLATFORM'] == 'posix':
    desktoppath = os.path.join (env['datadir'], 'applications')
@@ -457,16 +457,16 @@ if env['PLATFORM'] == 'posix':
 # Source distribution
 
 path = os.path.join (distdir, 'st', 'kernel')
-target = env.Install (path, sources)
+target = env.Install (path, kernel_sources)
 env.Alias ('sdist', target)
 
 path = os.path.join (distdir, 'st', 'foreign')
-target = env.Install (path, sources)
+target = env.Install (path, foreign_sources)
 env.Alias ('sdist', target)
 
 sources = ['INSTALL', 'README', 'AUTHORS', 'ChangeLog', 'COPYING', 'SConstruct', 'TODO', 'NEWS', 'Doxyfile',
            'README-BINARIES', 'syx.sln', 'syx.vcproj', 'makefile.vc',
-           'autogen.sh', 'libtool', 'missing', 'mkinstalldirs', 'ltmain.sh', 'install-sh',
+           'autogen.sh', 'compile', 'missing', 'mkinstalldirs', 'ltmain.sh', 'install-sh',
            'configure', 'configure.ac', 'aclocal.m4', 'config.guess', 'config.sub', 'depcomp',
            'Makefile.in', 'Makefile.am']
 target = env.Install (distdir, sources)

@@ -35,5 +35,5 @@ if penv[ 'PLATFORM'] == 'win32':
    
 SConscript (dirs=['gtk', 'readline', 'wingui', 'x11'], exports=['penv', 'distdir'])
 
-target = env.Install (os.path.join (distdir, 'plugins'), 'SConscript')
+target = env.Install (os.path.join (distdir, 'plugins'), ['Makefile.am', 'SConscript'])
 env.Alias ('sdist', target)

@@ -1,4 +1,4 @@
-#include <syx/syx.h>
+#include "../../syx/syx.h"
 
 int main (int argc, char *argv[])
 {

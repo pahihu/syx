@@ -1,7 +1,7 @@
 /* Thanks to Dominic Letz for this example */
 
 #include <stdlib.h>
-#include <syx/syx.h>
+#include "../../syx/syx.h"
 
 int main (int argc, char *argv[])
 {
