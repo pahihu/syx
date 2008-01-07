@@ -208,7 +208,7 @@ syx_plugin_initialize (void)
     }
   
   // CreateWindowA doesn't work with ANSI window name?
-  hWnd = CreateWindow(ClsName, L"Smalltalk YX 0.1.4", WS_OVERLAPPEDWINDOW,
+  hWnd = CreateWindow(ClsName, L"Smalltalk YX 0.1.6", WS_OVERLAPPEDWINDOW,
 		      0, 0,
 		      CW_USEDEFAULT, CW_USEDEFAULT,
 		      NULL, NULL,
