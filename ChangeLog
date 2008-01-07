@@ -1,18 +1,22 @@
+2008-01-07  Luca Bruno  <lethalman88@gmail.com>
+
+        == Released 0.1.6 version == 
+
 2008-01-06  Luca Bruno  <lethalman88@gmail.com>
 
-	Fixed examples build and various dist issues
-	
-	* configure.ac: missing -DWITH_PLUGINS
+        Fixed examples build and various dist issues
+        
+        * configure.ac: missing -DWITH_PLUGINS
 
-	* plugins/Makefile.am: added
+        * plugins/Makefile.am: added
 
 2008-01-05  Luca Bruno  <lethalman88@gmail.com>
 
-	Preparing for 0.1.6 release.
+        Preparing for 0.1.6 release.
 
 2007-12-29  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/kernel/initialDecl.st: store commandLine object instead of commandLineArguments
+        * st/kernel/initialDecl.st: store commandLine object instead of commandLineArguments
 
         Added makefiles for examples.
         

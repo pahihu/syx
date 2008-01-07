@@ -17,7 +17,7 @@ dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
 AM_CONFIG_HEADER(syx/syx-config.h)
 
-CFLAGS="$(CFLAGS) -Wall -Wno-strict-aliasing -DROOT_PATH=$datadir/syx -DIMAGE_PATH=$datadir/syx/default.sim -DPLUGIN_PATH=$libdir/syx"
+CFLAGS="$CFLAGS -Wall -Wno-strict-aliasing -DROOT_PATH=$datadir/syx -DIMAGE_PATH=$datadir/syx/default.sim -DPLUGIN_PATH=$libdir/syx"
 
 dnl check for basic programs
 AC_PROG_CC
@@ -255,8 +255,8 @@ if test "$build_plugins" == yes; then
    dnl enable gtk
    if test "$enable_gtk" != no; then
       PKG_CHECK_MODULES([GTK_DEP],
-                     [gthread-2.0 >= 2.14.0
-                      gtk+-2.0 >= 2.14.0],
+                     [gthread-2.0 >= 2.12.0
+                      gtk+-2.0 >= 2.12.0],
                      [build_gtk="yes"
                       plugin_subdirs="$plugin_subdirs gtk"
                       AC_CONFIG_FILES([plugins/gtk/Makefile])
@@ -279,7 +279,7 @@ if test "$build_plugins" == yes; then
    dnl enable x11
    if test "$enable_x11" != no; then
       PKG_CHECK_MODULES([X11_DEP],
-                     [x11 >= 1.1.2],
+                     [x11],
                      [build_x11="yes"
                       plugin_subdirs="$plugin_subdirs x11"
                       AC_CONFIG_FILES([plugins/x11/Makefile])
