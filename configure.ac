@@ -101,7 +101,7 @@ AC_MSG_CHECKING([whether to compile and link with -pg])
 AC_ARG_ENABLE(profile,
         AC_HELP_STRING([--enable-profile],
                        [compile and link with -pg [default=no]]),
-                       [enable_profile="yes"],[enable_profile="no"])
+                       [],[enable_profile="no"])
 AC_MSG_RESULT([$enable_profile])
 
 dnl internal profiling
@@ -109,7 +109,7 @@ AC_MSG_CHECKING([whether to enable internal profiling])
 AC_ARG_ENABLE(iprofile,
         AC_HELP_STRING([--enable-iprofile],
                        [enable internal profiling [default=no]]),
-                       [enable_iprofile="yes"],[enable_iprofile="no"])
+                       [],[enable_iprofile="no"])
 AC_MSG_RESULT([$enable_iprofile])
 
 dnl gtk
@@ -278,9 +278,10 @@ if test "$build_plugins" == yes; then
 
    dnl enable x11
    if test "$enable_x11" != no; then
-      PKG_CHECK_MODULES([X11_DEP],
-                     [x11],
+      AC_CHECK_LIB([X11], [XOpenDisplay],
                      [build_x11="yes"
+                      X11_DEP_LIBS="-lX11"
+                      AC_SUBST([X11_DEP_LIBS])
                       plugin_subdirs="$plugin_subdirs x11"
                       AC_CONFIG_FILES([plugins/x11/Makefile])
                       stx11datadir="$datadir/syx/st/x11"

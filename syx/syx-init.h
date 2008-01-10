@@ -32,7 +32,7 @@
 SYX_BEGIN_DECLS
 
 /*! Default initial memory size */
-#define SYX_INIT_MEMORY_SIZE 100000
+#define SYX_INIT_MEMORY_SIZE 500000
 
 EXPORT extern syx_bool syx_system_initialized;
 
