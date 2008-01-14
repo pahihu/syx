@@ -136,10 +136,14 @@ asUppercase
 asLowercase
     self isUppercase
         ifTrue: [ ^Character codePoint: self codePoint + 32 ]
-!
+! !
 
-printString
-    ^self asString
+!Character methodsFor: 'printing'!
+
+printOn: aStream
+    aStream
+        nextPut: $$;
+        nextPut: self
 ! !
 
 !Character methodsFor: 'testing'!

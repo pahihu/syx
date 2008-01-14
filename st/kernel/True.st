@@ -60,8 +60,10 @@ or: aBlock
 
 not
     ^false
-!
+! !
 
-printString
-    ^'true'
+!True methodsFor: 'printing'!
+
+printOn: aStream
+    aStream nextPutAll: 'true'
 ! !

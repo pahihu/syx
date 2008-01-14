@@ -53,10 +53,13 @@ basicAt: anIndex put: aCharacter
     ^aCharacter
 ! !
 
-!String methodsFor: 'primitives'!
+!String methodsFor: 'printing'!
 
-printString
-    ^self
+printOn: aStream
+    aStream
+        nextPut: $';
+        nextPutAll: self;
+        nextPut: $'
 ! !
 
 !String methodsFor: 'basic'!

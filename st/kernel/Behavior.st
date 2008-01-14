@@ -53,11 +53,6 @@ methodDictionary
 instanceVariableNames
     "Answer a copy of the names of the instance variables"
     ^instanceVariableNames copy
-!
-
-printString
-    "My string representation is my name itself"
-    ^self name asString
 ! !
 
 !Behavior methodsFor: 'instance creation'!
@@ -221,6 +216,13 @@ allSuperclassesDo: aBlock
 	whileTrue: [ aBlock value: class ]
 ! !
 
+!Behavior methodsFor: 'printing'!
+
+printOn: aStream
+    "My string representation is my name itself"
+    aStream nextPutAll: self name
+! !
+
 !Class methodsFor: 'accessing'!
 
 classVariables
@@ -234,4 +236,5 @@ setClassVariableNames: aString
     array do: [ :ea |
 	classVariables at: ea put: nil ]
 ! !
+
 

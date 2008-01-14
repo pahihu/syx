@@ -54,8 +54,10 @@ or: aBlock
 
 not
     ^true
-!
+! !
 
-printString
-    ^'false'
+!False methodsFor: 'printing'!
+
+printOn: aStream
+    aStream nextPutAll: 'false'
 ! !

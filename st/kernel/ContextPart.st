@@ -65,7 +65,7 @@ traceback
     context := self.
     [ context notNil ]
 	whileTrue: [
-	    context tracebackString printNl.
+            Transcript showCr: context tracebackString.
 	    context := context parent ]
 ! !
 

@@ -519,12 +519,6 @@ SYX_FUNC_PRIMITIVE (String_asSymbol)
 }
 
 /* These printing function are used ONLY for tests */
-SYX_FUNC_PRIMITIVE (SmallInteger_print)
-{
-  printf ("%d\n", SYX_SMALL_INTEGER(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
-}
-
 SYX_FUNC_PRIMITIVE (Float_print)
 {
   printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));

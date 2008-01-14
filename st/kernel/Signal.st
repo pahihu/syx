@@ -71,7 +71,7 @@ signal
     signalerContext := thisContext.
     [
 	self handlerContext isNil
-	    ifTrue: [ 'Unhandled exception... process is going to be terminated' printNl.
+            ifTrue: [ Transcript showCr: 'Unhandled exception... process is going to be terminated'.
 		      self debug.
 		      Processor activeProcess terminate]
 	    ifFalse: [ self return: (handlerContext handlerBlock value: self) ]
@@ -84,13 +84,15 @@ signal: aMessageText
 !
 
 debug
-    ('= ', self description printString) printNl.
+    Transcript showCr: '= ', self description.
     self messageText
-	ifNotNil: [ ('== ', self messageText printString) printNl ].
-    Transcript cr.
-    'Traceback:' printNl.
+	ifNotNil: [ Transcript showCr: '== ', self messageText ].
+    Transcript
+        cr;
+        showCr: 'Traceback:'.
     [ signalerContext traceback ]
-	on: Signal do: [ :ex | 'Unable to debug' printNl ]
+	on: Signal
+        do: [ :ex | Transcript showCr: 'Unable to debug' ]
 !
 
 pass

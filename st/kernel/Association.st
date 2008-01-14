@@ -54,8 +54,11 @@ value
 
 !Association methodsFor: 'printing'!
 
-printString
-    ^self key printString, '->', self value printString
+printOn: aStream
+    aStream
+        nextPutAll: self key printString;
+        nextPutAll: '->';
+        nextPutAll: self value printString
 ! !
 
 !VariableBinding class methodsFor: 'instance creation'!

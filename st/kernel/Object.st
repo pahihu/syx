@@ -37,6 +37,10 @@ finalize
 !Object methodsFor: 'copying'!
 
 copy
+    ^self shallowCopy
+!
+
+shallowCopy
     <primitive: 'Object_copy'>
 	^self
 ! !
@@ -111,9 +115,9 @@ isKindOf: aClass
     ^false
 !
 
-isMemberOf: candidateClass
+isMemberOf: aClass
     "Answer true whenever the receiver is an instance of the given class"
-    ^self class = candidateClass
+    ^self class = aClass
 !
 
 isClass
@@ -159,14 +163,6 @@ class
 	self primitiveFailed
 !
 
-print
-    Transcript show: self printString
-!
-
-printNl
-    Transcript showCr: self printString
-!
-
 = anObject
     <primitive: 'Object_equal'>
 	self primitiveFailed
@@ -183,10 +179,6 @@ printNl
 
 ~~ anObject
     ^(self == anObject) not
-!
-
-printString
-    ^'a ', self class name asString
 ! !
 
 !Object methodsFor: 'signaling'!
@@ -294,4 +286,29 @@ yourself
 
 briefInspect
     ^self
+! !
+
+!Object methodsFor: 'printing'!
+
+print
+    Transcript show: self printString
+!
+
+printNl
+    Transcript showCr: self printString
+!
+
+printOn: aStream
+    "Append to aStream a String representation of the receiver"
+    aStream
+        nextPutAll: 'a ';
+        nextPutAll: self class name
+!
+
+printString
+    "Answer a String representation of the receiver"
+    | stream |
+    stream := WriteStream on: String new.
+    self printOn: stream.
+    ^stream contents
 ! !

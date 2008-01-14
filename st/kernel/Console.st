@@ -45,12 +45,12 @@ nextLine
     haveReadline
 	ifTrue: [ line := self primReadline: '> '.
 		  line isNil
-		      ifTrue: [ 'EOF' printNl. Smalltalk quit ].
+		      ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit ].
 		  self primAddHistory: line ]
 	ifFalse: [ '> ' print. stdout flush.
 	           line := stdin next: 1024.
 		   line isNil
-		       ifTrue: [ 'EOF' printNl. Smalltalk quit].
+		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].
 		   line := line copyFrom: 1 to: line size - 1 ].
     ^line
 !
@@ -85,13 +85,19 @@ E-mail: lethalman88 at gmail.com
 !
 
 setupHelp
-    Smalltalk at: #help put: self helpString.
-    (Smalltalk version, ' is ready.') printNl.
-    'Type "help!" to get help.' printNl
+    Smalltalk at: #help put: self helpString
+!
+
+showHelp
+    Transcript
+        showCr: Smalltalk version, ' is ready.';
+        showCr: 'Type "help!" to get help.'
 !
 
 run
-    self setupHelp.
+    self
+        setupHelp;
+        showHelp.
     haveReadline := Smalltalk loadPlugin: 'readline'.
     [
 	[

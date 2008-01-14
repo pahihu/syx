@@ -31,6 +31,8 @@ initializeSubclassOf: aClass named: classSymbol
 
 !Metaclass methodsFor: 'printing'!
 
-printString
-    ^instanceClass name asString, ' class'
+printOn: aStream
+    aStream
+        nextPutAll: instanceClass name asString;
+        nextPutAll: ' class'
 ! !

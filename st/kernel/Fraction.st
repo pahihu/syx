@@ -172,16 +172,13 @@ asFloat
 
 !Fraction methodsFor: 'printing'!
 
-printString
-    | stream |
-    stream := WriteStream on: String new.
-    stream
+printOn: aStream
+    aStream
 	nextPut: $(;
 	nextPutAll: numerator printString;
 	nextPut: $/;
 	nextPutAll: denominator printString;
-	nextPut: $).
-    ^stream contents
+	nextPut: $)
 ! !
 
 !Fraction methodsFor: 'testing'!

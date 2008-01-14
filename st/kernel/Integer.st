@@ -80,10 +80,12 @@ radix: base
     self negative
 	ifTrue: [ stream nextPut: $- ].
     ^stream contents reverse
-!
+! !
 
-printString
-    ^self radix: 10
+!Integer methodsFor: 'printing'!
+
+printOn: aStream
+    aStream nextPutAll: (self radix: 10)
 ! !
 
 !Integer methodsFor: 'converting'!

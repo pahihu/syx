@@ -67,8 +67,10 @@ asSymbol
 
 !Symbol methodsFor: 'printing'!
 
-printString
-    ^'#', self asString
+printOn: aStream
+    aStream
+        nextPut: $#;
+        nextPutAll: self
 ! !
 
 !Symbol methodsFor: 'testing'!

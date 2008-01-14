@@ -24,12 +24,8 @@ DEALINGS IN THE SOFTWARE.
 
 !UndefinedObject methodsFor: 'printing'!
 
-print
-    ^'nil' print
-!
-
-printString
-    ^'nil'
+printOn: aStream
+    aStream nextPutAll: 'nil'
 ! !
 
 !UndefinedObject methodsFor: 'testing'!
