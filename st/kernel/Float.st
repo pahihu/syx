@@ -65,17 +65,7 @@ isFloat
     ^true
 ! !
 
-!Float methodsFor: 'arithmetic'!
-
-+ aNumber
-     <primitive: 'Float_plus'>
-	 ^super + aNumber
-!
-
-- aNumber
-     <primitive: 'Float_minus'>
-	 ^super - aNumber
-!
+!Float methodsFor: 'comparing'!
 
 < aNumber
      <primitive: 'Float_lt'>
@@ -115,6 +105,18 @@ isFloat
 ~~ aNumber
      <primitive: 'Float_ne'>
 	 ^super ~~ aNumber
+! !
+
+!Float methodsFor: 'arithmetic'!
+
++ aNumber
+     <primitive: 'Float_plus'>
+	 ^super + aNumber
+!
+
+- aNumber
+     <primitive: 'Float_minus'>
+	 ^super - aNumber
 !
 
 * aNumber
@@ -129,7 +131,9 @@ isFloat
 
 \\ aNumber
      self notYetImplemented
-!
+! !
+
+!Float methodsFor: 'truncation and round off'!
 
 ceiling
     <primitive: 'Float_ceil'>

@@ -1,4 +1,28 @@
-!Integer methodsFor: 'arithmetic'!
+"
+Copyright (c) 2007 Luca Bruno
+
+This file is part of Smalltalk YX.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the 'Software'), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+"
+
+!Integer methodsFor: 'factorization and divisibility'!
 
 gcd: aNumber
     "Answer the greatest common divisor"
@@ -13,7 +37,22 @@ gcd: aNumber
     ^num abs
 ! !
 
-!Integer methodsFor: 'bit-wise operations'!
+!Integer methodsFor: 'bit manipulation'!
+
+allMask: anInteger
+    "Answer true if all 1 bits of the receiver are 1 also in the argument"
+    ^(self bitAnd: anInteger) == anInteger
+!
+
+anyMask: anInteger
+    "Answer true if any of the bits that are 1 in the argument are 1 in the receiver"
+    ^(self bitAnd: anInteger) ~~ anInteger
+!
+
+noMask: anInteger
+    "Answer true if none of the bits that are 1 in the argument are 1 in the receiver"
+    ^(self bitAnd: anInteger) == 0
+!
 
 bitAnd: aNumber
     aNumber isInteger
@@ -49,6 +88,16 @@ bitShift: aNumber
     ^self asLargeInteger bitShift: aNumber
 !
 
+bitAt: index
+    "Answer the bit 0 or 1 at the given index"
+    ^(self bitShift: (index - 1) negated) bitAnd: 1
+!
+
+bitInvert
+    "Answer an Integer whose bits are inverted"
+    ^self bitXor: -1
+!
+
 << aNumber
     ^self bitShift: aNumber
 !
@@ -80,19 +129,32 @@ radix: base
     self negative
 	ifTrue: [ stream nextPut: $- ].
     ^stream contents reverse
-! !
+!
 
-!Integer methodsFor: 'printing'!
+printStringRadix: base
+    | stream |
+    stream := WriteStream on: String new.
+    self printOn: stream base: base.
+    ^stream contents
+!
 
 printOn: aStream
-    aStream nextPutAll: (self radix: 10)
+    self storeOn: aStream base: 10
 !
 
 storeOn: aStream
-    aStream nextPutAll: (self radix: 10)
+    self storeOn: aStream base: 10
+!
+
+printOn: aStream base: base
+    aStream nextPutAll: (self radix: base)
+!
+
+storeOn: aStream base: base
+    aStream nextPutAll: (self radix: base)
 ! !
 
-!Integer methodsFor: 'converting'!
+!Integer methodsFor: 'truncation and round off'!
 
 ceiling
     ^self
@@ -110,4 +172,11 @@ truncated
 
 isInteger
     ^true
+! !
+
+!Integer methodsFor: 'enumerating'!
+
+timesRepeat: aBlock
+    1 to: self to: [ :ea |
+        aBlock value ]
 ! !

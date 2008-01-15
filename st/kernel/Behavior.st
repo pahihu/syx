@@ -220,7 +220,7 @@ allSuperclassesDo: aBlock
 
 article
     "Answer the article to put before my name"
-    (#($a $e $i $o $u) includes: self name first asLowercase)
+    self name first isVowel
         ifTrue: [ ^'an' ]
         ifFalse: [ ^'a' ]
 !

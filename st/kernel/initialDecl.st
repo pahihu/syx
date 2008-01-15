@@ -145,6 +145,10 @@ Stream subclass: #PositionableStream
        instanceVariableNames: 'collection curPos endPos'
        classVariableNames: ''!
 
+Stream subclass: #Random
+       instanceVariableNames: 'seed'
+       classVariableNames: ''!
+
 PositionableStream subclass: #ReadStream
 		   instanceVariableNames: ''
 		   classVariableNames: ''!

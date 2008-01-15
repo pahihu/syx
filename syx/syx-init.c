@@ -124,7 +124,7 @@ _syx_file_in_basic (void)
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
     "Association.st",
-    "Stream.st", "PositionableStream.st", "WriteStream.st", "FileStream.st",
+    "Stream.st", "Random.st", "PositionableStream.st", "WriteStream.st", "FileStream.st",
     "TextCollector.st",
     "Interval.st",
     "Set.st", "Bag.st",

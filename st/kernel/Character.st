@@ -38,6 +38,20 @@ whiteSpaces
     ^WhiteSpaceTable
 !
 
+separators
+    ^WhiteSpaceTable
+!
+
+backspace
+    "Answer a backspace character"
+    ^self value: 8
+!
+
+esc
+    "Answer an esc character"
+    ^self value: 27
+!
+
 cr
     "Answer a carriage return character"
     ^self value: 13
@@ -69,6 +83,11 @@ verticalTab
 !
 
 ff
+    "Answer a form-feed character"
+    ^self value: 12
+!
+
+newPage
     "Answer a form-feed character"
     ^self value: 12
 !
@@ -180,6 +199,10 @@ isWhiteSpace
     ^WhiteSpaceTable includes: self
 !
 
+isSeparator
+    ^self isWhiteSpace
+!
+
 isLetter
     ^self isLowercase | self isUppercase
 !
@@ -202,4 +225,8 @@ isLowercase
 
 isUppercase
     ^self between: $A and: $Z
+!
+
+isVowel
+    ^#($a $e $i $o $u) includes: self asLowercase
 ! !

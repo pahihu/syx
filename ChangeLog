@@ -1,5 +1,30 @@
 2008-01-15  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-init.c (_syx_file_in_basic): file in Random.st
+
+	* st/kernel/Random.st: added
+
+	* st/kernel/Integer.st (bitInvert): added
+	(bitAt): added
+	(printOn:base): added
+	(storeOn:base): added	
+	(printStringRadix): added
+	Added missing license header
+
+	* st/kernel/Float.st: change converting to truncation and round off
+	
+	* st/kernel/Integer.st: change converting to truncation and round off
+	(timesRepeat): added
+
+	* st/kernel/Number.st (rem): added
+	(strictlyPositive): added
+	(squared): added
+
+	* st/kernel/Character.st (newPage): added
+	(esc): added
+	(backspace): added
+	(isVowel): added
+
 	Rename #codePoint: occurrences to #value:. Keep #codePoint: anyway.
 	
 	* st/kernel/Integer.st (radix):

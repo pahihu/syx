@@ -76,17 +76,7 @@ isLargeInteger
     ^true
 ! !
 
-!LargeInteger methodsFor: 'arithmetic'!
-
-+ aNumber
-     <primitive: 'LargeInteger_plus'>
-	 ^super + aNumber
-!
-
-- aNumber
-     <primitive: 'LargeInteger_minus'>
-	 ^super - aNumber
-!
+!LargeInteger methodsFor: 'truncation and round off'!
 
 < aNumber
      <primitive: 'LargeInteger_lt'>
@@ -126,6 +116,18 @@ isLargeInteger
 ~~ aNumber
      <primitive: 'LargeInteger_ne'>
 	 ^super ~~ aNumber
+! !
+
+!LargeInteger methodsFor: 'arithmetic'!
+
++ aNumber
+     <primitive: 'LargeInteger_plus'>
+	 ^super + aNumber
+!
+
+- aNumber
+     <primitive: 'LargeInteger_minus'>
+	 ^super - aNumber
 !
 
 / aNumber

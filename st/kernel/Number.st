@@ -120,6 +120,10 @@ positive
     ^self >= self zero
 !
 
+strictlyPositive
+    ^self > self zero
+!
+
 sign
     self < self zero
 	ifTrue: [ ^-1 ].
@@ -128,7 +132,7 @@ sign
     ^0
 ! !
 
-!Number methodsFor: 'iterators'!
+!Number methodsFor: 'intervals'!
 
 to: stop
     "Create an Interval between the receiver and stop"
@@ -296,8 +300,13 @@ abs
 !
 
 quo: aNumber
-    "Do division then answer the truncated quotient"
+    "Do division then answer the truncated quotient towards zero"
     ^(self / aNumber) truncated
+!
+
+rem: aNumber
+    "Do division then answer the truncated remainder towards zero"
+    self notYetImplemented
 !
 
 compare: aNumber
@@ -307,7 +316,7 @@ compare: aNumber
     self = aNumber
 	ifTrue: [ ^0 ].
     self < aNumber
-	ifTrue: [ ^-1 ]
+        ifTrue: [ ^-1 ]
 !
 
 reciprocal
@@ -328,3 +337,39 @@ unity
 zeroDivide
     ZeroDivide signal
 ! !
+
+!Number methodsFor: 'mathematical functions'!
+
+exp
+    self notYetImplemented
+!
+
+ln
+    self notYetImplemented
+!
+
+log: aNumber
+    self notYetImplemented
+!
+
+floorLog: radix
+    self notYetImplemented
+!
+
+raisedTo: aNumber
+    self notYetImplemented
+!
+
+raisedToInteger: anInteger
+    self notYetImplemented
+!
+
+sqrt
+    self notYetImplemented
+!
+
+squared
+    "Answer the square of the receiver"
+    ^self * self
+! !
+
