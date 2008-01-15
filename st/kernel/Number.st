@@ -36,13 +36,14 @@ readFrom: readStream
 	ifFalse: [ ^0 ].
 
     "Integer part first"
-    num := c codePoint - $0 codePoint.
+    num := c digitValue.
     [ c := readStream next. c notNil and: [ c isDigit ] ]
 	whileTrue: [
-	    n := c codePoint - $0 codePoint.
+	    n := c digitValue.
 	    num := num * 10 + n ].
 
     "Check for radix"
+    c ifNil: [ ^num ].
     c asLowercase = $r
 	ifTrue: [
 	    | radix table |
@@ -72,7 +73,7 @@ readFrom: readStream
 
     [ c notNil and: [ c isDigit ] ]
 	whileTrue: [
-	    n := c codePoint - $0 codePoint.
+	    n := c digitValue.
 	    num := num + (n * scale).
 	    scale := scale * 0.1.
 	    c := readStream next ].

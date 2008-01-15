@@ -32,24 +32,24 @@ new: anIndex
 !String methodsFor: 'basic'!
 
 at: anIndex
-    ^Character codePoint: (self byteAt: anIndex)
+    ^Character value: (self byteAt: anIndex)
 !
 
 at: anIndex put: aCharacter
     aCharacter isCharacter
 	ifFalse: [ self error: 'A character is required got ', aCharacter printString ].
-    self byteAt: anIndex put: aCharacter codePoint.
+    self byteAt: anIndex put: aCharacter asciiValue.
     ^aCharacter
 !
 
 basicAt: anIndex
-    ^Character codePoint: (self byteAt: anIndex)
+    ^Character value: (self byteAt: anIndex)
 !
 
 basicAt: anIndex put: aCharacter
     aCharacter isCharacter
 	ifFalse: [ self error: 'A character is required' ].
-    self byteAt: anIndex put: aCharacter codePoint.
+    self byteAt: anIndex put: aCharacter asciiValue.
     ^aCharacter
 ! !
 
@@ -193,8 +193,8 @@ sameAs: aCollection
 compare: aString
     1 to: (self size min: aString size) do: [ :i |
 	| n1 n2 |
-	n1 := (self at: i) codePoint.
-	n2 := (aString at: i) codePoint.
+	n1 := (self at: i) asciiValue.
+	n2 := (aString at: i) asciiValue.
 	n1 = n2 ifFalse: [ ^n1 - n2 ] ].
 
     ^self size - aString size

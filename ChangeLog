@@ -1,5 +1,16 @@
 2008-01-15  Luca Bruno  <lethalman88@gmail.com>
 
+	Rename #codePoint: occurrences to #value:. Keep #codePoint: anyway.
+	
+	* st/kernel/Integer.st (radix):
+
+	* st/kernel/String.st:
+
+	* st/kernel/Number.st (readFrom): 
+
+	* st/kernel/Character.st (asciiValue): added
+	(digitValue): added
+
 	* syx/syx-init.c (_syx_file_in_basic): file in Date.st
 
 	* st/kernel/Date.st: added

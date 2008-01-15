@@ -72,10 +72,10 @@ radix: base
     [ num ~= 0 ]
 	whileTrue: [
 	    | cp |
-	    cp := $0 codePoint + (num \\ base).
-	    cp > $9 codePoint
-		ifTrue: [ cp := cp + $A codePoint - $9 codePoint - 1 ].
-	    stream nextPut: (Character codePoint: cp).
+	    cp := $0 asciiValue + (num \\ base).
+	    cp > $9 asciiValue
+		ifTrue: [ cp := cp + $A asciiValue - $9 asciiValue - 1 ].
+	    stream nextPut: (Character value: cp).
 	    num := num // base ].
     self negative
 	ifTrue: [ stream nextPut: $- ].

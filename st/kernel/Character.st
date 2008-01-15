@@ -40,51 +40,69 @@ whiteSpaces
 
 cr
     "Answer a carriage return character"
-    ^self codePoint: 13
+    ^self value: 13
 !
 
 nl
     "Answer a new line character"
-    ^self codePoint: 10
+    ^self value: 10
 !
 
 lf
     "Answer a line feed character"
-    ^self codePoint: 10
+    ^self value: 10
 !
 
 space
     "Answer a space character"
-    ^self codePoint: 32
+    ^self value: 32
 !
 
 tab
     "Answer a tab character"
-    ^self codePoint: 9
+    ^self value: 9
 !
 
 verticalTab
     "Answer a vertical tab character"
-    ^self codePoint: 11
+    ^self value: 11
 !
 
 ff
     "Answer a form-feed character"
-    ^self codePoint: 12
+    ^self value: 12
 !
 
 codePoint: anInteger
-    "Create a character from its integer representation"
+    ^self value: anInteger
+!
+
+value: anInteger
+    "Create a Character from the given integer representation"
     <primitive: 'Character_new'>
 	self primitiveFailed
+!
+
+digitValue: anInteger
+    "Create a Character whose digit value is anInteger"
+    ^self value: anInteger + $0 asciiValue
 ! !
 
 !Character methodsFor: 'accessing'!
 
 codePoint
+    ^self asciiValue
+!
+
+asciiValue
     "Answer the integer rapresentation of myself"
     <primitive: 'Character_value'>
 	self primitiveFailed
+!
+
+digitValue
+    "Answer the number corresponding to the digit value of the receiver"
+    ^self asciiValue - $0 asciiValue
 ! !
 
 !Character methodsFor: 'comparing'!
@@ -130,12 +148,12 @@ asString
 
 asUppercase
     self isLowercase
-        ifTrue: [ ^Character codePoint: self codePoint - 32 ]
+        ifTrue: [ ^Character value: self codePoint - 32 ]
 !
 
 asLowercase
     self isUppercase
-        ifTrue: [ ^Character codePoint: self codePoint + 32 ]
+        ifTrue: [ ^Character value: self codePoint + 32 ]
 ! !
 
 !Character methodsFor: 'printing'!
