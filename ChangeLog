@@ -1,5 +1,11 @@
 2008-01-15  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-init.c (_syx_file_in_basic): file in Date.st
+
+	* st/kernel/Date.st: added
+
+	* st/kernel/initialDecl.st: add Date class
+
         * st/kernel/Magnitude.st (between): moved to comparing category
         (=): added
 

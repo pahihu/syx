@@ -88,3 +88,5 @@ isString
 isSymbol
     ^true
 ! !
+
+
