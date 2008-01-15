@@ -218,7 +218,19 @@ allSuperclassesDo: aBlock
 
 !Behavior methodsFor: 'printing'!
 
+article
+    "Answer the article to put before my name"
+    (#($a $e $i $o $u) includes: self name first asLowercase)
+        ifTrue: [ ^'an' ]
+        ifFalse: [ ^'a' ]
+!
+
 printOn: aStream
+    "My string representation is my name itself"
+    aStream nextPutAll: self name
+!
+
+storeOn: aStream
     "My string representation is my name itself"
     aStream nextPutAll: self name
 ! !
@@ -236,5 +248,3 @@ setClassVariableNames: aString
     array do: [ :ea |
 	classVariables at: ea put: nil ]
 ! !
-
-

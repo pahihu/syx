@@ -86,6 +86,10 @@ radix: base
 
 printOn: aStream
     aStream nextPutAll: (self radix: 10)
+!
+
+storeOn: aStream
+    aStream nextPutAll: (self radix: 10)
 ! !
 
 !Integer methodsFor: 'converting'!

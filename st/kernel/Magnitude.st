@@ -22,13 +22,11 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!Magnitude methodsFor: 'shortcuts'!
-
-between: firstNumber and: secondNumber
-    ^(self >= firstNumber) & (self <= secondNumber)
-! !
-
 !Magnitude methodsFor: 'comparing'!
+
+= aMagnitude
+    self subclassResponsibility
+!
 
 < aMagnitude
     self subclassResponsibility 
@@ -58,4 +56,10 @@ min: aMagnitude
     ^self < aMagnitude
 	ifTrue: [ self ]
 	ifFalse: [ aMagnitude ]
+!
+
+between: firstNumber and: secondNumber
+    "Answer whether the receiver is both greater than or equal to the first number
+     and less than or equal to the second number"
+    ^(self >= firstNumber) & (self <= secondNumber)
 ! !

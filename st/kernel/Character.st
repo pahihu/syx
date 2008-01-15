@@ -144,6 +144,12 @@ printOn: aStream
     aStream
         nextPut: $$;
         nextPut: self
+!
+
+storeOn: aStream
+    aStream
+        nextPut: $$;
+        nextPut: self
 ! !
 
 !Character methodsFor: 'testing'!

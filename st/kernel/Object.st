@@ -181,7 +181,7 @@ class
     ^(self == anObject) not
 ! !
 
-!Object methodsFor: 'signaling'!
+!Object methodsFor: 'error handling'!
 
 error: messageText
     Error signal: messageText
@@ -301,7 +301,8 @@ printNl
 printOn: aStream
     "Append to aStream a String representation of the receiver"
     aStream
-        nextPutAll: 'a ';
+        nextPutAll: self class article;
+        space;
         nextPutAll: self class name
 !
 
@@ -310,5 +311,21 @@ printString
     | stream |
     stream := WriteStream on: String new.
     self printOn: stream.
+    ^stream contents
+!
+
+storeOn: aStream
+    "Append to aStream a String representation from which the receiver can be reconstructed"
+    aStream
+        nextPut: $(;
+        store: self class;
+        nextPutAll: ' basicNew)'
+!
+
+storeString
+    "Answer a String representation from which the receiver can be reconstructed"
+    | stream |
+    stream := WriteStream on: String new.
+    self storeOn: stream.
     ^stream contents
 ! !

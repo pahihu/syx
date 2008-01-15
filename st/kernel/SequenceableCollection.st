@@ -340,3 +340,26 @@ indexOf: anElement startingAt: anIndex ifAbsent: exceptionBlock
 	    ifFalse: [ ^false ] ].
     ^true
 ! !
+
+!SequenceableCollection methodsFor: 'printing'!
+
+storeOn: aStream
+    | size |
+    size := self size.
+    aStream
+        nextPutAll: '((';
+        store: self class;
+        nextPutAll: ' basicNew: ';
+        store: size;
+        nextPut: $).
+
+    1 to: size do: [ :idx |
+        aStream
+            nextPutAll: ' at: ';
+            store: idx;
+            nextPutAll: ' put: ';
+            store: (self at: idx);
+            nextPut: $; ].
+
+    aStream nextPutAll: ' yourself)'
+! !

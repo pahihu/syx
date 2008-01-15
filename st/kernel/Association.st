@@ -59,6 +59,16 @@ printOn: aStream
         nextPutAll: self key printString;
         nextPutAll: '->';
         nextPutAll: self value printString
+!
+
+storeOn: aStream
+    aStream
+        nextPut: $(;
+        store: self class;
+        nextPutAll: ' key: ';
+        store: self key;
+        nextPutAll: ' value: ';
+        store: self value
 ! !
 
 !VariableBinding class methodsFor: 'instance creation'!

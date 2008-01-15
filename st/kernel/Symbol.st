@@ -71,6 +71,12 @@ printOn: aStream
     aStream
         nextPut: $#;
         nextPutAll: self
+!
+
+storeOn: aStream
+    aStream
+        nextPut: $#;
+        nextPutAll: self
 ! !
 
 !Symbol methodsFor: 'testing'!

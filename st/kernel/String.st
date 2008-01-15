@@ -60,6 +60,16 @@ printOn: aStream
         nextPut: $';
         nextPutAll: self;
         nextPut: $'
+!
+
+storeOn: aStream
+    aStream nextPut: $'.
+    self do: [ :ea |
+        ea = $'
+            ifTrue: [ aStream nextPut: $' ].
+        aStream
+            nextPut: ea ].
+    aStream nextPut: $'
 ! !
 
 !String methodsFor: 'basic'!

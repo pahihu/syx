@@ -158,4 +158,21 @@ tab
 cr 
     "Write a carriage return"
     self nextPut: Character cr
+!
+
+space
+    "Write a space character"
+    self nextPut: Character space
+! !
+
+!Stream methodsFor: 'shortcuts'!
+
+store: anObject
+    "Store a String representation from which anObject can be reconstructed"
+    anObject storeOn: self
+!
+
+print: anObject
+    "Print a String representation of anObject"
+    anObject printOn: self
 ! !

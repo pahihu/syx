@@ -260,3 +260,30 @@ notEmpty
     ^self isEmpty not
 ! !
 
+!Collection methodsFor: 'printing'!
+
+printOn: aStream
+    aStream
+        print: self class;
+        nextPutAll: ' ('.
+    self do: [ :ea |
+        aStream
+            print: ea;
+            space ].
+    aStream nextPut: $)
+!
+
+storeOn: aStream
+    aStream
+        nextPut: $(;
+        store: self class;
+        nextPutAll: ' new'.
+
+    self do: [ :ea |
+        aStream
+            nextPutAll: ' add: ';
+            store: ea;
+            nextPut: $; ].
+
+    aStream nextPutAll: ' yourself)'
+! !

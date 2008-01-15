@@ -60,4 +60,8 @@ not
 
 printOn: aStream
     aStream nextPutAll: 'false'
+!
+
+storeOn: aStream
+    aStream nextPutAll: 'false'
 ! !

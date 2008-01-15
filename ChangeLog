@@ -1,3 +1,33 @@
+2008-01-15  Luca Bruno  <lethalman88@gmail.com>
+
+        * st/kernel/Magnitude.st (between): moved to comparing category
+        (=): added
+
+        Implement storeOn, storeString and printOn for collections.
+
+        * st/kernel/SequenceableCollection.st (storeOn): added
+
+        * st/kernel/Collection.st (printOn): added
+        (storeOn): added
+
+        * st/kernel/Behavior.st (storeOn): added
+
+        * st/kernel/Integer.st (storeOn): added
+
+        * st/kernel/Character.st (storeOn): added
+
+        * st/kernel/String.st (storeOn): added
+
+        * st/kernel/Object.st (storeOn): added
+        (storeString): added
+        (printOn): use the right class article        
+
+        * st/kernel/Behavior.st (storeOn): added
+
+        * st/kernel/Association.st (storeOn): added
+
+        * st/kernel/Stream.st (space): added
+        
 2008-01-14  Luca Bruno  <lethalman88@gmail.com>
 
         * syx/syx-primitives.c (SmallInteger_print): removed since unused
