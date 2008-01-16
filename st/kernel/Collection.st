@@ -55,7 +55,9 @@ growTo: anInteger
 
 growBy: anInteger
     self growTo: self basicSize + anInteger
-!
+! !
+
+!Collection methodsFor: 'adding'!
 
 add: anObject
     self subclassResponsibility
@@ -64,7 +66,9 @@ add: anObject
 addAll: aCollection
     aCollection do: [ :ea |
 	self add: ea ]
-!
+! !
+
+!Collection methodsFor: 'removing'!
 
 remove: anObject ifAbsent: exceptionHandler
     "Remove anObject from the collection. Evaluate exceptionHandler if anObject is not found"
@@ -126,24 +130,6 @@ collect: transformerBlock
     ^coll
 !
 
-includes: anObject
-    "Return true if the receiver contains anObject, otherwise false"
-    self do: [ :ea |
-	ea = anObject
-	    ifTrue: [ ^true ] ].
-    ^false
-!
-
-occurrencesOf: anObject
-    "Answer how many times anObject occurred in the collection"
-    | occurs |
-    occurs := 0.
-    self do: [ :ea |
-	ea = anObject
-	    ifTrue: [ occurs := occurs + 1 ] ].
-    ^occurs
-!
-
 reject: discriminatorBlock
     "Return a collection of which elements are the ones that cause discriminatorBlock to return false"
     | coll |
@@ -181,6 +167,17 @@ detect: discriminatorBlock ifNone: exceptionHandler
      Evaluate exceptionHandler if any error occurs"
     [ self detect: discriminatorBlock ]
 	on: Error do: exceptionHandler
+!
+
+inject: thisValue into: binaryBlock
+    "Evaluate the block for each element of the receiver,
+     with the previous returned value of the block as first argument
+     and the current element as second argument"
+    | ret |
+    ret := thisValue.
+    self do: [ :ea |
+        binaryBlock value: ret value: ea ].
+    ^ret
 ! !
    
 !Collection methodsFor: 'basic'!
@@ -258,6 +255,24 @@ isEmpty
 
 notEmpty
     ^self isEmpty not
+!
+
+includes: anObject
+    "Return true if the receiver contains anObject, otherwise false"
+    self do: [ :ea |
+	ea = anObject
+	    ifTrue: [ ^true ] ].
+    ^false
+!
+
+occurrencesOf: anObject
+    "Answer how many times anObject occurred in the collection"
+    | occurs |
+    occurs := 0.
+    self do: [ :ea |
+	ea = anObject
+	    ifTrue: [ occurs := occurs + 1 ] ].
+    ^occurs
 ! !
 
 !Collection methodsFor: 'printing'!
@@ -267,9 +282,10 @@ printOn: aStream
         print: self class;
         nextPutAll: ' ('.
     self do: [ :ea |
-        aStream
-            print: ea;
-            space ].
+        ea == self
+            ifTrue: [ '...' printOn: aStream ]
+            ifFalse: [ ea printOn: aStream ].
+        aStream space ].
     aStream nextPut: $)
 !
 
@@ -280,10 +296,11 @@ storeOn: aStream
         nextPutAll: ' new'.
 
     self do: [ :ea |
-        aStream
-            nextPutAll: ' add: ';
-            store: ea;
-            nextPut: $; ].
+        aStream nextPutAll: ' add: ';
+        ea == self
+            ifTrue: [ nil printOn: aStream ] "FIXME: we should not store nil"
+            ifFalse: [ ea storeOn: aStream ].
+        aStream nextPut: $; ].
 
     aStream nextPutAll: ' yourself)'
 ! !

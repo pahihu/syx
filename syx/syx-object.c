@@ -480,10 +480,12 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
   table = SYX_OBJECT_DATA (dict);
   key = SYX_ASSOCIATION_KEY (binding);
   index = SYX_SMALL_INTEGER (SYX_ASSOCIATION_VALUE (binding));
-  entry = table[index];
-
-  if (SYX_OOP_EQ (entry, key))
-    return table[index+1];
+  if (index < SYX_OBJECT_DATA_SIZE(dict))
+    {
+      entry = table[index];
+      if (SYX_OOP_EQ (entry, key))
+        return table[index+1];
+    }
 
   index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
   if (index < 0)
@@ -588,6 +590,7 @@ syx_dictionary_rehash (SyxOop dict)
   syx_free (SYX_OBJECT_DATA (dict));
   SYX_OBJECT_DATA (dict) = SYX_OBJECT_DATA (newdict);
   SYX_OBJECT_DATA_SIZE (dict) = SYX_OBJECT_DATA_SIZE (newdict);
+  syx_free (SYX_OBJECT_VARS (newdict));
   syx_memory_free (newdict);
 }
 

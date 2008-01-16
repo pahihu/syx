@@ -40,6 +40,12 @@ initialize
 
 rehashClass
     ^self class
+!
+
+incrementTally
+    tally := tally + 1.
+    tally >= (self basicSize // 2)
+	ifTrue: [ self rehashToSize: self basicSize + tally ].
 ! !
 
 !Dictionary methodsFor: 'accessing'!
@@ -60,34 +66,6 @@ rehashToSize: anInteger
     ObjectMemory atData: self put: d
 !
 
-incrementTally
-    tally := tally + 1.
-    tally >= (self basicSize // 2)
-	ifTrue: [ self rehashToSize: self basicSize + tally ].
-!
-
-removeKey: aKey ifAbsent: exceptionHandler
-    | index |
-    index := self indexOf: aKey.
-    (self basicAt: index) isNil
-	ifTrue: [ ^exceptionHandler value ].
-    self basicAt: index put: nil.
-    tally := tally - 1.
-    ^aKey
-!
-
-removeKey: aKey
-    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
-!
-
-remove: anAssociation ifAbsent: exceptionHandler
-    ^self removeKey: anAssociation key ifAbsent: exceptionHandler
-!
-
-remove: anAssociation
-    ^self removeKey: anAssociation key
-!
-
 indexOf: aKey
     | i n size |
     size := self basicSize.
@@ -105,10 +83,16 @@ indexOf: aKey
 !
 
 associationAt: aKey
+    "Answer the association at the given key, throw an exception otherwise"
+    ^self associationAt: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+!
+
+associationAt: aKey ifAbsent: exceptionBlock
+    "Answer the association at the given key, evaluate the exceptionBlock if not found"
     | index key |
     index := self indexOf: aKey.
     (key := self basicAt: index) isNil
-	ifTrue: [ NotFound signal: 'Key not found: ', aKey ].
+	ifTrue: [ ^exceptionBlock value ].
     ^(key -> (self basicAt: index + 1))
 !
 
@@ -132,9 +116,38 @@ at: aKey put: aValue
 	basicAt: index + 1 put: aValue.
     self incrementTally.
     ^aValue
+!
+
+keyAtValue: value
+    "Answer the first key encountered where the given value is stored or nil"
+    ^self keyAtValue: value ifAsbent: [ nil ]
+!
+
+keyAtValue: value ifAbsent: exceptionBlock
+    "Answer the first key encountered where the given value is stored or evaluate the exceptionBlock"
+    self keysAndValuesDo: [ :k :v |
+        v = value
+            ifTrue: [ ^k ] ].
+    ^exceptionBlock value
+!
+
+keys
+    | ret |
+    ret := Set new.
+    self keysDo: [ :ea |
+        ret add: ea ].
+    ^ret
+!
+
+values
+    | ret |
+    ret := Bag new.
+    self do: [ :ea |
+        ret add: ea ].
+    ^ret
 ! !
 
-!Dictionary methodsFor: 'enumerating'!
+!Dictionary methodsFor: 'dictionary enumerating'!
 
 keysAndValuesDo: aBlock
     1 to: self basicSize by: 2 do: [ :i |
@@ -153,19 +166,14 @@ keysDo: aBlock
 	| key |
 	(key := self basicAt: i)
 	    ifNotNil: [ aBlock value: key ] ]
-!
+! !
+
+!Dictionary methodsFor: 'enumerating'!
 
 do: aBlock
     1 to: self basicSize by: 2 do: [ :i |
 	(self basicAt: i)
 	    ifNotNil: [ aBlock value: (self basicAt: i + 1) ] ]
-!
-
-includesKey: anObject
-    "Answer true if the given key is present in the dictionary, otherwise false"
-    | index |
-    index := self indexOf: anObject.
-    ^(self basicAt: index) notNil
 !
 
 collect: transformerBlock
@@ -196,4 +204,88 @@ select: discriminatorBlock
 	(discriminatorBlock value: value)
 	    ifTrue: [ coll at: key put: value ] ].
     ^coll
+! !
+
+!Dictionary methodsFor: 'printing'!
+
+printOn: aStream
+    aStream
+        print: self class;
+        nextPutAll: ' ('.
+
+    self associationsDo: [ :ea |
+        aStream nl; tab.
+        ea value == self
+            ifTrue: [ 
+                aStream
+                    print: ea key;
+                    nextPutAll: '->';
+                    print: '...' ]
+            ifFalse: [ ea printOn: aStream ] ].
+    
+    aStream nl; nextPut: $)
+!
+
+storeOn: aStream
+    aStream
+        nextPutAll: '((';
+        store: self class;
+        nextPutAll: ' new)'.
+    
+    self keysAndValuesDo: [ :key :value |
+        aStream
+            nextPutAll: ' at: ';
+            store: key;
+            nextPutAll: ' put: '.
+        value == self
+            ifTrue: [ nil storeOn: aStream ] "FIXME: we should not store nil"
+            ifFalse: [ value storeOn: aStream ].
+
+        aStream nextPut: $; ].
+
+    aStream nextPutAll: ' yourself)'
+! !
+
+!Dictionary methodsFor: 'testing'!
+
+includesKey: anObject
+    "Answer true if the given key is present in the dictionary, otherwise false"
+    | index |
+    index := self indexOf: anObject.
+    ^(self basicAt: index) notNil
+!
+
+includesAssociation: anAssociation
+    "Answer true if the given association is present in the receiver, otherwise false"
+    | assoc |
+    assoc := self associationAt: anAssociation key ifAbsent: [ ^false ].
+    ^assoc = anAssociation
+! !
+
+!Dictionary methodsFor: 'removing'!
+
+removeKey: aKey ifAbsent: exceptionHandler
+    | index |
+    index := self indexOf: aKey.
+    (self basicAt: index) isNil
+	ifTrue: [ ^exceptionHandler value ].
+    self basicAt: index put: nil.
+    tally := tally - 1.
+    ^aKey
+!
+
+removeKey: aKey
+    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+!
+
+remove: anAssociation ifAbsent: exceptionHandler
+    ^self removeKey: anAssociation key ifAbsent: exceptionHandler
+!
+
+remove: anAssociation
+    ^self removeKey: anAssociation key
+!
+
+removeAssociation: anAssociation
+    ^self remove: anAssociation
 ! !

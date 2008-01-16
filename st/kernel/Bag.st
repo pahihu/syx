@@ -36,3 +36,11 @@ isSet
 isBag
     ^true
 ! !
+
+!Bag methodsFor: 'adding'!
+
+add: newObject withOccurrences: anInteger
+    "Add newObject to the receiver anInteger times"
+    anInteger timesRepeat: [ self add: newObject ].
+    ^newObject
+! !

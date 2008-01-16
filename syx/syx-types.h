@@ -161,6 +161,9 @@ syx_malloc (syx_int32 size)
 {
   syx_pointer ptr;
 
+  if (!size)
+    return NULL;
+
   ptr = malloc (size);
   if (!ptr)
     {
@@ -175,6 +178,9 @@ INLINE syx_pointer
 syx_malloc0 (syx_int32 size)
 {
   syx_pointer ptr;
+
+  if (!size)
+    return NULL;
 
   ptr = malloc (size);
   if (!ptr)
@@ -191,6 +197,9 @@ INLINE syx_pointer
 syx_calloc (syx_int32 elements, syx_int32 element_size)
 {
   syx_pointer ptr;
+
+  if (!elements || !element_size)
+    return NULL;
 
   ptr = calloc (elements, element_size);
   if (!ptr)

@@ -354,12 +354,17 @@ storeOn: aStream
         nextPut: $).
 
     1 to: size do: [ :idx |
+        | element |
         aStream
             nextPutAll: ' at: ';
             store: idx;
-            nextPutAll: ' put: ';
-            store: (self at: idx);
-            nextPut: $; ].
+            nextPutAll: ' put: '.
+        
+        (element := self at: idx) == self
+            ifTrue: [ nil storeOn: aStream ] "FIXME: we should not store nil"
+            ifFalse: [ element storeOn: aStream ].
+
+        aStream nextPut: $; ].
 
     aStream nextPutAll: ' yourself)'
 ! !

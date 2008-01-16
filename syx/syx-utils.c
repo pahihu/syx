@@ -387,7 +387,7 @@ syx_cold_file_in (syx_symbol filename)
 #ifdef HAVE_FSTAT
   struct stat statbuf;
 #endif
-  
+
   if ((fd = open (filename, O_RDONLY)) < 0)
      {
         syx_error ("can't open %s\n", filename);

@@ -12,7 +12,7 @@ initialize
 
 !Set methodsFor: 'private'!
 
-incrementNumElements
+incrementTally
     tally >= (self basicSize // 2)
 	ifTrue: [ self rehashToSize: self basicSize + tally ].
     tally := tally + 1.
@@ -54,14 +54,18 @@ indexOf: anObject
 	    key = anObject | key isNil
 		ifTrue: [ ^i + 1 ].
 	    i := i + 1 ]
-!
+! !
+
+!Set methodsFor: 'enumerating'!
 
 do: aBlock
     1 to: self basicSize do: [ :i |
          | el |
          el := self basicAt: i.
 	 el ifNotNil: [ aBlock value: el ] ]
-!
+! !
+
+!Set methodsFor: 'adding'!
 
 add: anObject
     | index |
@@ -72,9 +76,11 @@ add: anObject
     (self basicAt: index) isNil
 	ifTrue: [
 	    self basicAt: index put: anObject.
-	    self incrementNumElements ].
+	    self incrementTally ].
     ^anObject
-!
+! !
+
+!Set methodsFor: 'removing'!
 
 remove: anObject ifAbsent: exceptionHandler
     | index |
@@ -95,15 +101,13 @@ asSet
     ^self
 ! !
 
-!Set methodsFor: 'enumerating'!
+!Set methodsFor: 'testing'!
 
 includes: anObject
     | index |
     index := self indexOf: anObject.
     ^(self basicAt: index) notNil
-! !
-
-!Set methodsFor: 'testing'!
+!
 
 isSet
     ^true

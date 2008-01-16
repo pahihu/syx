@@ -1,46 +1,72 @@
+2008-01-16  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-object.c (syx_dictionary_bind_if_absent): fixed read error
+
+        * syx/syx-types.h (syx_malloc0): do not alloc 0 size
+        (syx_calloc): do not alloc 0 size
+        (syx_malloc): do not alloc 0 size
+
+        * syx/syx-object.c (syx_dictionary_rehash): fix memory leak
+
+        * st/kernel/Dictionary.st (keyAtValue): added
+        (keyAtValue:ifAbsent): added
+        (keys): added
+        (values): added
+        (printOn): added
+        (storeOn): added
+        (associationAt:ifAbsent): added
+        (includesAssociation): added
+        (removeAssociation): added
+
+        * st/kernel/Bag.st (add:withOccurrences): added
+
+        * st/kernel/Set.st: adjusted categories
+
+        * st/kernel/Collection.st (inject:into): added
+
 2008-01-15  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-init.c (_syx_file_in_basic): file in Random.st
+        * syx/syx-init.c (_syx_file_in_basic): file in Random.st
 
-	* st/kernel/Random.st: added
+        * st/kernel/Random.st: added
 
-	* st/kernel/Integer.st (bitInvert): added
-	(bitAt): added
-	(printOn:base): added
-	(storeOn:base): added	
-	(printStringRadix): added
-	Added missing license header
+        * st/kernel/Integer.st (bitInvert): added
+        (bitAt): added
+        (printOn:base): added
+        (storeOn:base): added        
+        (printStringRadix): added
+        Added missing license header
 
-	* st/kernel/Float.st: change converting to truncation and round off
-	
-	* st/kernel/Integer.st: change converting to truncation and round off
-	(timesRepeat): added
+        * st/kernel/Float.st: change converting to truncation and round off
+        
+        * st/kernel/Integer.st: change converting to truncation and round off
+        (timesRepeat): added
 
-	* st/kernel/Number.st (rem): added
-	(strictlyPositive): added
-	(squared): added
+        * st/kernel/Number.st (rem): added
+        (strictlyPositive): added
+        (squared): added
 
-	* st/kernel/Character.st (newPage): added
-	(esc): added
-	(backspace): added
-	(isVowel): added
+        * st/kernel/Character.st (newPage): added
+        (esc): added
+        (backspace): added
+        (isVowel): added
 
-	Rename #codePoint: occurrences to #value:. Keep #codePoint: anyway.
-	
-	* st/kernel/Integer.st (radix):
+        Rename #codePoint: occurrences to #value:. Keep #codePoint: anyway.
+        
+        * st/kernel/Integer.st (radix):
 
-	* st/kernel/String.st:
+        * st/kernel/String.st:
 
-	* st/kernel/Number.st (readFrom): 
+        * st/kernel/Number.st (readFrom): 
 
-	* st/kernel/Character.st (asciiValue): added
-	(digitValue): added
+        * st/kernel/Character.st (asciiValue): added
+        (digitValue): added
 
-	* syx/syx-init.c (_syx_file_in_basic): file in Date.st
+        * syx/syx-init.c (_syx_file_in_basic): file in Date.st
 
-	* st/kernel/Date.st: added
+        * st/kernel/Date.st: added
 
-	* st/kernel/initialDecl.st: add Date class
+        * st/kernel/initialDecl.st: add Date class
 
         * st/kernel/Magnitude.st (between): moved to comparing category
         (=): added
