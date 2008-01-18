@@ -1,3 +1,10 @@
+2008-01-18  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/String.st (basicAt): check for bounds
+	(basicAt:put): check for bounds
+
+	* st/kernel/SequenceableCollection.st (copyReplaceAll:with): fixed bug with String usage
+
 2008-01-16  Luca Bruno  <lethalman88@gmail.com>
 
         * syx/syx-object.c (syx_dictionary_bind_if_absent): fixed read error

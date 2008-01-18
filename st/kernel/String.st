@@ -32,23 +32,24 @@ new: anIndex
 !String methodsFor: 'basic'!
 
 at: anIndex
-    ^Character value: (self byteAt: anIndex)
+    ^self basicAt: anIndex
 !
 
 at: anIndex put: aCharacter
-    aCharacter isCharacter
-	ifFalse: [ self error: 'A character is required got ', aCharacter printString ].
-    self byteAt: anIndex put: aCharacter asciiValue.
-    ^aCharacter
+    ^self basicAt: anIndex put: aCharacter
 !
 
 basicAt: anIndex
+    anIndex >= self basicSize
+        ifTrue: [ self error: 'Index out of bounds' ].
     ^Character value: (self byteAt: anIndex)
 !
 
 basicAt: anIndex put: aCharacter
+    anIndex >= self basicSize
+        ifTrue: [ self error: 'Index out of bounds' ].
     aCharacter isCharacter
-	ifFalse: [ self error: 'A character is required' ].
+	ifFalse: [ self error: 'A character is required got ', aCharacter printString ].
     self byteAt: anIndex put: aCharacter asciiValue.
     ^aCharacter
 ! !

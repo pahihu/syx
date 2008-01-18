@@ -82,19 +82,19 @@ matchSubCollection: aCollection startingAt: anIndex
 !
 
 copyReplaceAll: targetElements with: replacementElements
-    "Answer a collection which elements are the same of the receiver, expect those that match
-     the given target elements"
+    "Answer a collection which elements are the same of the receiver, except those that match
+     the given target elements and are replaced"
     | stream targetSize i |
     targetSize := targetElements size.
-    stream := WriteStream on: self copyEmpty.
+    stream := WriteStream on: (self copyEmpty: 0).
     i := 0.
-    [ i <= self size ]
+    [ i < self size ]
 	whileTrue: [
 	    (self matchSubCollection: targetElements startingAt: (i := i + 1))
 		ifTrue: [ 
 		    stream nextPutAll: replacementElements.
-		    i := i + targetSize ].
-	    stream nextPut: (self at: i) ].
+		    i := i + targetSize - 1 ]
+                ifFalse: [ stream nextPut: (self at: i) ] ] .
     ^stream contents
 !
 
