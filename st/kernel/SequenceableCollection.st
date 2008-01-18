@@ -252,7 +252,7 @@ after: anObject
 
 before: anObject
     "Answer the object that's before anObject in the collection"
-    self from 1 to: self size keysAndValuesDo: [ :i :ea |
+    self from: 1 to: self size keysAndValuesDo: [ :i :ea |
 	ea = anObject
 	    ifTrue: [ ^self at: i - 1 ] ]
     NotFound signal

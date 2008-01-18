@@ -1,5 +1,20 @@
 2008-01-18  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Number.st (to:by:reverseDo): added
+
+	* st/kernel/OrderedCollection.st (addAll): remove since implemented in Collection
+	(add:after): added
+	(add:before): added
+	(incrementLastIndex:): added
+	(shiftFrom:by): added
+	(addAllLast): added
+	(addAllFirst): added
+	(addLast): added
+	(addFirst): added
+	(removeLast): added
+	(removeFirst): added
+	(removeAtIndex): fixed
+
 	* st/kernel/String.st (basicAt): check for bounds
 	(basicAt:put): check for bounds
 
