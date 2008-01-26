@@ -39,6 +39,9 @@ static SyxErrorType _syx_error_entries_top = 0;
 int errno=0;
 #endif
 
+#define REGISTER_SIGNAL(class, desc, value) \
+  (assert (syx_error_register (desc, syx_globals_at (class)) == value))
+
 /*!
   Initialize the error reporting system.
 
@@ -49,10 +52,9 @@ void
 syx_error_init (void)
 {
   _syx_error_entries_top = 0;
-  assert (syx_error_register ("Interpreter internal fail", syx_globals_at ("VMError")) == SYX_ERROR_INTERP);
-  assert (syx_error_register ("Not found", syx_globals_at ("NotFound")) == SYX_ERROR_NOT_FOUND);
-  assert (syx_error_register ("Wrong number of arguments",
-                              syx_globals_at ("WrongArgumentCount")) == SYX_ERROR_WRONG_ARGUMENT_COUNT);
+  REGISTER_SIGNAL("VMError", "Interpreter internal fail", SYX_ERROR_INTERP);
+  REGISTER_SIGNAL("NotFound", "Not found", SYX_ERROR_NOT_FOUND);
+  REGISTER_SIGNAL("WrongArgumentCount", "Wrong number of arguments", SYX_ERROR_WRONG_ARGUMENT_COUNT);
 }
 
 /*!
@@ -127,10 +129,10 @@ syx_signal (SyxErrorType type, SyxOop message)
   if (!entry)
     return FALSE;
 
-  if (!syx_system_initialized)
+  if (!syx_interp_is_initialized())
     {
       if (SYX_OBJECT_IS_STRING (message) || SYX_OBJECT_IS_SYMBOL (message))
-        syx_error ("%s %s\n", entry->name, SYX_OBJECT_SYMBOL (message));
+        syx_error ("%s: %s\n", entry->name, SYX_OBJECT_SYMBOL (message));
       else
         syx_error (entry->name);
     }
@@ -189,7 +191,7 @@ syx_error (syx_symbol fmt, ...)
   fprintf (stderr, "\n");
   exit (EXIT_FAILURE);
 }
-#else /* WINCE */
+#else /* !WINCE */
 void
 syx_error (syx_symbol fmt, ...)
 {

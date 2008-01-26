@@ -72,17 +72,13 @@ step
     ^step
 ! !
 
-!Interval methodsFor: 'copying'!
+!Interval methodsFor: 'private'!
 
-copyClass
+species
     ^Array
 ! !
 
 !Interval methodsFor: 'enumerating'!
-
-collectClass
-    ^Array
-!
 
 reverse
     "Answer a reversed Interval of the receiver"

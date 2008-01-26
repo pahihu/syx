@@ -305,12 +305,19 @@ _syx_parser_parse_term (SyxParser *self)
           _syx_parser_parse_expression (self);
           token = syx_lexer_get_last_token (self->lexer);
           if (! (token.type == SYX_TOKEN_CLOSING && token.value.character == ')'))
-            syx_error ("Expected ) after sub expression\n");
+            syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected ) after sub expression"));
+          break;
         }
       else if (!strcmp (token.value.string, "["))
-        _syx_parser_parse_block (self);
+        {
+          _syx_parser_parse_block (self);
+          break;
+        }
       else if (!strcmp (token.value.string, "{"))
-        _syx_parser_parse_array (self);
+        {
+          _syx_parser_parse_array (self);
+          break;
+        }
       else if (!strcmp (token.value.string, "-"))
         {
           syx_token_free (token);
@@ -330,19 +337,23 @@ _syx_parser_parse_term (SyxParser *self)
           else if (token.type == SYX_TOKEN_FLOAT_CONST)
             syx_bytecode_push_literal (self->bytecode, syx_float_new (-token.value.floating));
           else
-            syx_error ("Negation not followed by number\n");
+            syx_signal(SYX_ERROR_INTERP, syx_string_new ("Negation not followed by number"));
 
           syx_token_free (token);
+          break;
         }
-      break;
+      /* We continue here because of weird binary token used as expression start */
 
     default:
       if (token.type == SYX_TOKEN_END)
-        syx_error ("End of input unexpected\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("End of input unexpected"));
       else if (token.type > SYX_TOKEN_STRING_ENTRY)
-        syx_error ("Invalid expression start %s\n", token.value.string);
+        {
+          syx_signal (SYX_ERROR_INTERP, syx_string_new ("Invalid expression start: %s", token.value.string));
+          syx_token_free (token);
+        }
       else
-        syx_error ("Excepted expression\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected expression"));
     }
 
   syx_lexer_next_token (self->lexer);
@@ -429,7 +440,7 @@ _syx_parser_parse_primitive (SyxParser *self)
 
   token = syx_lexer_next_token (self->lexer);
   if (token.type != SYX_TOKEN_NAME_COLON)
-    syx_error ("expected name colon\n");
+    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected name colon"));
 
   if (!strcmp (token.value.string, "primitive:"))
     {
@@ -437,16 +448,16 @@ _syx_parser_parse_primitive (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (token.type != SYX_TOKEN_STR_CONST)
-        syx_error ("expected a string containing the primitive to be called\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected a string containing the primitive to be called"));
       
       prim_index = syx_primitive_get_index (token.value.string);
       if (prim_index < 0)
-        syx_error ("unknown primitive named %s\n", token.value.string);
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown primitive named", token.value.string));
       syx_token_free (token);
       
       token = syx_lexer_next_token (self->lexer);
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-        syx_error ("expected >\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected >"));
       syx_token_free (token);
       
       SYX_METHOD_PRIMITIVE (self->method) = syx_small_integer_new (prim_index);
@@ -460,7 +471,7 @@ _syx_parser_parse_primitive (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
 
       if (token.type != SYX_TOKEN_STR_CONST)
-        syx_error ("expected a string containing the primitive to be called\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected a string containing the primitive to be called"));
       syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
       syx_token_free (token);
 
@@ -475,18 +486,18 @@ _syx_parser_parse_primitive (SyxParser *self)
         }
 
       if (! (token.type == SYX_TOKEN_NAME_COLON && !strcmp (token.value.string, "plugin:")))
-        syx_error ("expected plugin:\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected plugin:"));
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
       if (token.type != SYX_TOKEN_STR_CONST)
-        syx_error ("expected a string containing the plugin name\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected a string containing the plugin name"));
       syx_bytecode_gen_literal (self->bytecode, syx_symbol_new (token.value.string));
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ">")))
-        syx_error ("expected >\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected >"));
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
@@ -494,7 +505,7 @@ _syx_parser_parse_primitive (SyxParser *self)
       SYX_METHOD_PRIMITIVE(self->method) = syx_small_integer_new (-2);
     }
   else
-    syx_error ("expected primitive or cCall\n");
+    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected primitive or cCall"));
 
   return;
 }
@@ -518,7 +529,7 @@ _syx_parser_parse_temporaries (SyxParser *self)
           token = syx_lexer_next_token (self->lexer);
         }
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-        syx_error ("Temporary list not terminated by bar\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Temporary list not terminated by bar"));
       syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
@@ -556,7 +567,7 @@ _syx_parser_parse_body (SyxParser *self)
     }
 
   if (self->_in_block && !closed_brace)
-    syx_error ("Expected ] after block body\n");
+    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected ] after block body"));
 }
 
 static void
@@ -638,7 +649,7 @@ _syx_parser_parse_assignment (SyxParser *self, syx_symbol assign_name)
       return;
     }
   
-  syx_error ("unassignable variable named: %s\n", assign_name);
+  syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unassignable variable named: %s\n", assign_name));
 }
 
 static void

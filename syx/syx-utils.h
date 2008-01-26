@@ -59,6 +59,8 @@ extern EXPORT void syx_show_traceback (void);
 extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
 extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
 extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+extern EXPORT syx_string syx_vsprintf(syx_symbol *fmt, ...);
+extern EXPORT syx_string syx_sprintf(syx_symbol fmt, ...);
 
 
 #ifdef UNICODE

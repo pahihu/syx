@@ -84,7 +84,7 @@ indexOf: aKey
 
 associationAt: aKey
     "Answer the association at the given key, throw an exception otherwise"
-    ^self associationAt: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+    ^self associationAt: aKey ifAbsent: [ self errorNotFound: 'Key not found: ', aKey ]
 !
 
 associationAt: aKey ifAbsent: exceptionBlock
@@ -97,7 +97,7 @@ associationAt: aKey ifAbsent: exceptionBlock
 !
 
 at: aKey
-    ^self at: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+    ^self at: aKey ifAbsent: [ self errorNotFound: 'Key not found: ', aKey ]
 !
 
 at: aKey ifAbsent: exceptionBlock
@@ -180,7 +180,7 @@ collect: transformerBlock
     "Evaluate the block for each element of the receiver.
      The results of these evaluations are collected into a new collection"
     | coll |
-    coll := self copyEmpty.
+    coll := self copyEmptyForCollect.
     self keysAndValuesDo: [ :key :value |
 	coll at: key put: (transformerBlock value: value) ].
     ^coll
@@ -209,12 +209,18 @@ select: discriminatorBlock
 !Dictionary methodsFor: 'printing'!
 
 printOn: aStream
+    | tooMany |
+    tooMany := aStream position + self maxPrint.
     aStream
         print: self class;
         nextPutAll: ' ('.
 
     self associationsDo: [ :ea |
         aStream nl; tab.
+        aStream position > tooMany
+            ifTrue: [
+                aStream nextPutAll: '...etc...)'.
+                ^self ].
         ea value == self
             ifTrue: [ 
                 aStream
@@ -275,7 +281,7 @@ removeKey: aKey ifAbsent: exceptionHandler
 !
 
 removeKey: aKey
-    ^self removeKey: aKey ifAbsent: [ NotFound signal: 'Key not found: ', aKey ]
+    ^self removeKey: aKey ifAbsent: [ self errorNotFound: 'Key not found: ', aKey ]
 !
 
 remove: anAssociation ifAbsent: exceptionHandler

@@ -51,6 +51,25 @@ with: firstObject with: secondObject
         yourself
 !
 
+with: firstObject with: secondObject with: thirdObject
+    "Create a collection with the three given elements"
+    ^(self new: 4)
+        at: 1 put: firstObject;
+        at: 2 put: secondObject;
+        at: 3 put: thirdObject;
+        yourself
+!
+
+with: firstObject with: secondObject with: thirdObject with: fourthObject
+    "Create a collection with the four given elements"
+    ^(self new: 4)
+        at: 1 put: firstObject;
+        at: 2 put: secondObject;
+        at: 3 put: thirdObject;
+        at: 4 put: fourthObject;
+        yourself
+!
+
 new: aSize withAll: aCollection
     "Answer an arrayed collection of the given size with the elements of aCollection"
     ^(self new: aSize)

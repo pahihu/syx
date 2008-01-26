@@ -206,6 +206,14 @@ notYetImplemented
 
 primitiveFailed
     PrimitiveFailed signal
+!
+
+errorNotFound
+    NotFound signal
+!
+
+errorNotFound: aMessage
+    NotFound signal: aMessage
 ! !
 
 !Object methodsFor: 'syntax shortcuts'!
@@ -257,7 +265,7 @@ perform: selector withArguments: arguments
 !
 
 caseOf: anArrayOfAssociations
-    ^self caseOf: anArrayOfAssociations otherwise: [ NotFound signal ]
+    ^self caseOf: anArrayOfAssociations otherwise: [ self errorNotFound ]
 !
 
 caseOf: anArrayOfAssociations otherwise: aBlock
@@ -328,4 +336,12 @@ storeString
     stream := WriteStream on: String new.
     self storeOn: stream.
     ^stream contents
+! !
+
+!Object methodsFor: 'private'!
+
+species
+    "Answer the same class as that of the receiver.
+     Some Collection classes may override it"
+    ^self class
 ! !

@@ -170,3 +170,8 @@ signal
 signal
     ^self signal: 'Wrong number of arguments.'
 ! !
+
+!NotFound class methodsFor: 'instance creation'!
+
+what: anObject
+    ^self signal: 'Object not found

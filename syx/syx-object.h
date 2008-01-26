@@ -396,14 +396,18 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 }
 
 
-/*! Returns a new String instance. Duplicates the string in input. */
+/*! Returns a new String instance. Duplicates the string in input.
+  
+  Use of variadic arguments is allowed to create a new string like using sprintf.
+ */
 INLINE SyxOop 
-syx_string_new (syx_symbol string)
+syx_string_new (syx_symbol string, ...)
 {
-  if (!string)
+  syx_string new_string = syx_vsprintf(&string);
+  if (!new_string)
     return syx_nil;
 
-  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)syx_strdup (string));
+  return syx_object_new_data (syx_string_class, FALSE, strlen (string) + 1, (SyxOop *)new_string);
 }
 
 /*! Returns a new String instance. */

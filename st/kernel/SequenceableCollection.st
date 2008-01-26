@@ -247,15 +247,15 @@ after: anObject
     self from: 1 to: self size keysAndValuesDo: [ :i :ea |
 	ea = anObject
 	    ifTrue: [ ^self at: i + 1 ] ].
-    NotFound signal
+    self errorNotFound
 !
 
 before: anObject
     "Answer the object that's before anObject in the collection"
     self from: 1 to: self size keysAndValuesDo: [ :i :ea |
 	ea = anObject
-	    ifTrue: [ ^self at: i - 1 ] ]
-    NotFound signal
+	    ifTrue: [ ^self at: i - 1 ] ].
+    self errorNotFound
 !
 
 from: startIndex to: stopIndex by: step keysAndValuesDo: aBlock

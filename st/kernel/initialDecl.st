@@ -383,6 +383,10 @@ InvalidArgument subclass: #NotFound
 		instanceVariableNames: ''
                 classVariableNames: ''!
 
+InvalidArgument subclass: #NotKeyed
+                instanceVariableNames: ''
+                classVariableNames: ''!
+
 SystemSignal subclass: #UserInterrupt
 	     instanceVariableNames: ''
 	     classVariableNames: ''!

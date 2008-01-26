@@ -39,7 +39,28 @@ with: anObject
  
 with: firstObject with: secondObject
     "Answer a collection with the two given objects"
-    ^self new add: firstObject; add: secondObject; yourself
+    ^self new
+        add: firstObject;
+        add: secondObject; yourself
+!
+
+with: firstObject with: secondObject with: thirdObject
+    "Answer a collection with the three given objects"
+    ^self new
+        add: firstObject;
+        add: secondObject;
+        add: thirdObject;
+        yourself
+!
+
+with: firstObject with: secondObject with: thirdObject with: fourthObject
+    "Answer a collection with the four given objects"
+    ^self new
+        add: firstObject;
+        add: secondObject;
+        add: thirdObject;
+        add: fourthObject;
+        yourself
 !
 
 withAll: aCollection
@@ -77,7 +98,14 @@ remove: anObject ifAbsent: exceptionHandler
 
 remove: anObject
     "Remove anObject and fail if it's absent"
-    ^self remove: anObject ifAbsent: [ NotFound signal ]
+    ^self remove: anObject ifAbsent: [ self errorNotFound ]
+!
+
+removeAll: aCollection
+    "Remove each element of aColection"
+    aCollection do: [ :ea |
+        self remove: ea ].
+    ^aCollection
 ! !
 
 !Collection methodsFor: 'copying'!
@@ -86,23 +114,19 @@ copyEmpty
     ^self copyEmpty: self size
 !
 
-copyClass
-    ^self class
-!
-
 copyEmpty: newSize
     "Create the empty collection of the given size"
-    ^self copyClass new: newSize
+    ^self species new: newSize
 !
 
 copyWithout: oldElement
     "Answer a collection with the same receiver's elements omitting those equivalent to oldElement"
-    ^(self copyClass withAll: self) remove: oldElement; yourself
+    ^(self species withAll: self) remove: oldElement; yourself
 !
 
 copyWith: newElement
     "Answer a collection which is a copy of the receiver, and adds a newElement"
-    ^(self copyClass withAll: self) add: newElement; yourself
+    ^(self species withAll: self) add: newElement; yourself
 ! !
 
 !Collection methodsFor: 'enumerating'!
@@ -112,12 +136,8 @@ do: aBlock
     self subclassResponsibility
 !
 
-collectClass
-    ^self class
-!
-
 copyEmptyForCollect
-    ^self collectClass new: self size
+    ^self species new: self size
 !
 
 collect: transformerBlock
@@ -158,7 +178,7 @@ detect: discriminatorBlock
 	| res |
 	res := discriminatorBlock value: ea.
 	res ifTrue: [ ^ea ] ].
-    NotFound signal
+    self errorNotFound
 !
 
 detect: discriminatorBlock ifNone: exceptionHandler
@@ -278,10 +298,17 @@ occurrencesOf: anObject
 !Collection methodsFor: 'printing'!
 
 printOn: aStream
+    | tooMany |
+    tooMany := aStream position + self maxPrint.
     aStream
         print: self class;
         nextPutAll: ' ('.
+
     self do: [ :ea |
+        aStream position > tooMany
+            ifTrue: [
+                aStream nextPutAll: '...etc...)'.
+                ^self ].
         ea == self
             ifTrue: [ '...' printOn: aStream ]
             ifFalse: [ ea printOn: aStream ].
@@ -303,4 +330,16 @@ storeOn: aStream
         aStream nextPut: $; ].
 
     aStream nextPutAll: ' yourself)'
+! !
+
+!Collection methodsFor: 'private'!
+
+maxPrint
+    ^5000
+! !
+
+!Collection methodsFor: 'error handling'!
+
+errorNotKeyed
+    NotKeyed signal
 ! !

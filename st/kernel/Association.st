@@ -85,7 +85,7 @@ update
     | index |
     value := dictionary indexOf: key.
     (dictionary basicAt: value) ifNil:
-	[ NotFound signal: 'Key not found: ', key ]
+	[ self errorNotFound: 'Key not found: ', key ]
 !
 
 dictionary: aDictionary

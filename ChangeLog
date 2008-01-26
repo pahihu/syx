@@ -1,24 +1,65 @@
+2008-01-25  Luca Bruno  <lethalman88@gmail.com>
+
+        Replaced all occurrences of NotFound signal with #errorNotFound.
+
+        * st/kernel/initialDecl.st: (NotKeyed): added class
+
+        * st/kernel/Dictionary.st (printOn): stop after maxPrint
+
+        * st/kernel/ArrayedCollection.st (with:with:with): added
+        (with:with:with:with): added
+
+        * st/kernel/Interval.st (species): added
+        (copyClass): removed
+        (collectClass): removed
+
+        * st/kernel/Collection.st (copyEmptyForCollect):
+        (copyClass): removed
+        (collectClass): removed
+        (with:with:with): added
+        (with:with:with:with): added
+        (removeAll): added
+        (maxPrint): added
+        (printOn): stop after maxPrint
+        (notKeyed): added
+
+        * st/kernel/Object.st (species): added
+        (errorNotFound): added
+
+2008-01-23  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-parser.c (_syx_parser_parse_term): fixed bug which allowed things such as [ * ]!
+
+        * syx/syx-object.h (syx_string_new): allow variadic arguments
+
+        * syx/syx-error.c (syx_signal): ensure the interpreter is running
+
+        * syx/syx-parser.c: use syx_signal instead of syx_error
+
+        * syx/syx-utils.c (syx_sprintf): added
+        (syx_vsprintf): added
+
 2008-01-18  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/kernel/Number.st (to:by:reverseDo): added
+        * st/kernel/Number.st (to:by:reverseDo): added
 
-	* st/kernel/OrderedCollection.st (addAll): remove since implemented in Collection
-	(add:after): added
-	(add:before): added
-	(incrementLastIndex:): added
-	(shiftFrom:by): added
-	(addAllLast): added
-	(addAllFirst): added
-	(addLast): added
-	(addFirst): added
-	(removeLast): added
-	(removeFirst): added
-	(removeAtIndex): fixed
+        * st/kernel/OrderedCollection.st (addAll): remove since implemented in Collection
+        (add:after): added
+        (add:before): added
+        (incrementLastIndex:): added
+        (shiftFrom:by): added
+        (addAllLast): added
+        (addAllFirst): added
+        (addLast): added
+        (addFirst): added
+        (removeLast): added
+        (removeFirst): added
+        (removeAtIndex): fixed
 
-	* st/kernel/String.st (basicAt): check for bounds
-	(basicAt:put): check for bounds
+        * st/kernel/String.st (basicAt): check for bounds
+        (basicAt:put): check for bounds
 
-	* st/kernel/SequenceableCollection.st (copyReplaceAll:with): fixed bug with String usage
+        * st/kernel/SequenceableCollection.st (copyReplaceAll:with): fixed bug with String usage
 
 2008-01-16  Luca Bruno  <lethalman88@gmail.com>
 
