@@ -96,7 +96,7 @@ syx_object_initialize (SyxOop oop)
   SyxOop context;
 
   /* initialize only if the interpreter is running */
-  if (syx_interp_is_initialized ())
+  if (syx_system_initialized)
     {
       process = syx_process_new ();
       context = syx_send_unary_message (process, syx_nil, oop, "initialize");

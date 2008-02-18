@@ -1,3 +1,13 @@
+2008-02-18  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-lexer.c (_syx_lexer_token_identifier): fix var:=val assignment
+	(_syx_lexer_token_number): fix D.! syntax, where D is a digit (issue #28)
+
+	* syx/syx-interp.h (syx_interp_is_initialized): removed, use syx_system_initialized instead
+	All calls have been updated.
+
+	* syx/syx-parser.c (_syx_parser_parse_term): raise a new error for bad expression starts
+
 2008-01-25  Luca Bruno  <lethalman88@gmail.com>
 
         Replaced all occurrences of NotFound signal with #errorNotFound.

@@ -163,17 +163,6 @@ syx_interp_init (void)
 }
 
 /*!
-  Check whether the interpreter is running.
-
-  \return TRUE if the interpreter has been initialized
-*/
-INLINE syx_bool
-syx_interp_is_initialized (void)
-{
-  return _syx_exec_state != NULL;
-}
-
-/*!
   Finalize the execution of processes and free all the memory used by the interpreter.
 
   This function is called internally by Syx e should not be called from user applications

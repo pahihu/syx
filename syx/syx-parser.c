@@ -345,15 +345,22 @@ _syx_parser_parse_term (SyxParser *self)
       /* We continue here because of weird binary token used as expression start */
 
     default:
-      if (token.type == SYX_TOKEN_END)
-        syx_signal (SYX_ERROR_INTERP, syx_string_new ("End of input unexpected"));
-      else if (token.type > SYX_TOKEN_STRING_ENTRY)
+      switch (token.type)
         {
+        case SYX_TOKEN_END:
+          syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unexpected end of input"));
+          break;
+        case SYX_TOKEN_STRING_ENTRY:
           syx_signal (SYX_ERROR_INTERP, syx_string_new ("Invalid expression start: %s", token.value.string));
           syx_token_free (token);
+          break;
+        case SYX_TOKEN_CLOSING:
+          syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unexpected closing: %c", token.value.character));
+          break;
+        default:
+          syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected expression"));
+          break;
         }
-      else
-        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected expression"));
     }
 
   syx_lexer_next_token (self->lexer);
@@ -542,31 +549,33 @@ static void
 _syx_parser_parse_body (SyxParser *self)
 {
   SyxToken token = syx_lexer_get_last_token (self->lexer);
-  syx_bool closed_brace = FALSE;
 
-  while (token.type != SYX_TOKEN_END)
+  while (TRUE)
     {
-      if (self->_in_block && token.type == SYX_TOKEN_CLOSING && token.value.character == ']')
+      while (token.type == SYX_TOKEN_CLOSING)
         {
-          closed_brace = TRUE;
-          syx_token_free (token);
-          break;
+          if (self->_in_block && token.value.character == ']')
+            return;
+          
+          if (token.value.character == '.')
+            {
+              token = syx_lexer_next_token (self->lexer);
+              /* Do not pop from the stack multiple times */
+              if (token.type != SYX_TOKEN_CLOSING && token.type != SYX_TOKEN_END)
+                syx_bytecode_pop_top (self->bytecode);
+            }
+          else
+            token = syx_lexer_next_token (self->lexer);
         }
-      
-      _syx_parser_parse_statement (self);
 
+      if (token.type == SYX_TOKEN_END)
+        break;
+
+      _syx_parser_parse_statement (self);
       token = syx_lexer_get_last_token (self->lexer);
-      if (token.type == SYX_TOKEN_CLOSING && token.value.character == '.')
-        {
-          syx_token_free (token);
-          token = syx_lexer_next_token (self->lexer);
-          if (token.type == SYX_TOKEN_CLOSING || token.type == SYX_TOKEN_END)
-            continue;
-          syx_bytecode_pop_top (self->bytecode);
-        }
     }
 
-  if (self->_in_block && !closed_brace)
+  if (self->_in_block)
     syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected ] after block body"));
 }
 
@@ -615,7 +624,6 @@ _syx_parser_parse_expression (SyxParser *self)
 
   /* After we got the initial object, we can do message continuation on it
      specifying if 'super' has been requested instead of self */
-
   _syx_parser_do_continuation (self, super_term);
 }
 
