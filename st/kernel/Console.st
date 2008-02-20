@@ -22,6 +22,44 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+Object subclass: #ConsoleChunkReader
+       instanceVariableNames: 'previousChunk inString inComment'
+       classVariableNames: ''!
+
+!ConsoleChunkReader class methodsFor: 'instance creation'!
+
+new
+    ^self basicNew initialize
+! !
+
+!ConsoleChunkReader methodsFor: 'initialize-release'!
+
+initialize
+    previousChunk := ''.
+    inString := false.
+    inComment := false
+!
+
+splitChunk: chunk into: chunks
+    chunk from: 1 to: chunk size keysAndValuesDo: [ :i :ea |
+        ea = $'
+            ifTrue: [ inString := inString not ].
+        ea = $" & inString not
+            ifTrue: [ inComment := inComment not ].
+        ea = $! & inString not & inComment not
+            ifTrue: [
+                chunks add: (chunk copyFrom: 1 to: i-1).
+                ^self splitChunk: (chunk copyFrom: i+1 to: chunk size) into: chunks ] ].
+    previousChunk := chunk
+!
+
+nextChunks: newLine
+    | chunks |
+    chunks := OrderedCollection new.
+    self splitChunk: previousChunk, newLine into: chunks.
+    ^chunks
+! !
+
 !Console class methodsFor: 'instance creation'!
 
 startup
@@ -55,20 +93,6 @@ nextLine
     ^line
 !
 
-nextChunk
-    | chunk |
-    chunk := String new.
-    [
-	| next |
-	next := self nextLine.
-	chunk := chunk, next.
-	chunk size > 1
-	    ifTrue: [
-		(chunk at: chunk size) = $!
-                     ifTrue: [^chunk copyFrom: 1 to: chunk size - 1] ]
-    ] repeat
-!
-
 helpString
     ^'===========
 To quit Smalltalk YX type "Smalltalk quit!" or press ^D (ctrl+D).
@@ -95,15 +119,18 @@ showHelp
 !
 
 run
+    | chunkReader |
     self
         setupHelp;
         showHelp.
     haveReadline := Smalltalk loadPlugin: 'readline'.
+    chunkReader := ConsoleChunkReader new.
     [
 	[
-	    | chunk method context |
-	    chunk := self nextChunk.
-	    ('^[', chunk, '] value') doIt printNl.
+            | lastObject |
+            (chunkReader nextChunks: self nextLine) do: [ :chunk |
+                lastObject := ('^[', chunk, '] value') doIt ].
+            lastObject printNl
 	] on: Signal do: [ :ex | ex debug ]
     ] repeat
 ! !

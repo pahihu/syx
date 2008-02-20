@@ -25,13 +25,17 @@
 #ifndef SYX_UTILS_H
 #define SYX_UTILS_H
 
-#include "syx-platform.h"
-#include "syx-types.h"
-#include "syx-lexer.h"
+#define _ISOC99_SOURCE 1
+
 
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
+
+
+#include "syx-platform.h"
+#include "syx-types.h"
+#include "syx-lexer.h"
 
 SYX_BEGIN_DECLS
 
@@ -59,8 +63,6 @@ extern EXPORT void syx_show_traceback (void);
 extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
 extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
 extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
-extern EXPORT syx_string syx_vsprintf(syx_symbol *fmt, ...);
-extern EXPORT syx_string syx_sprintf(syx_symbol fmt, ...);
 
 
 #ifdef UNICODE
@@ -82,6 +84,35 @@ extern EXPORT syx_string syx_sprintf(syx_symbol fmt, ...);
 #define SYX_IFDEF_CHAR_T syx_char
 
 #endif /* UNICODE */
+
+#define SYX_VSPRINTF(fmt,var)                   \
+  {                                             \
+    syx_int32 n;                                \
+    va_list ap;                                 \
+    syx_int32 size;                             \
+    syx_string s;                               \
+                                                \
+    var = NULL;                                 \
+    if (fmt)                                    \
+      {                                         \
+        size = 100;                             \
+        s = NULL;                               \
+        while (TRUE)                            \
+          {                                     \
+            s = syx_realloc(s, size);           \
+            va_start(ap, fmt);                  \
+            n = vsnprintf (s, size, fmt, ap);   \
+            va_end(ap);                         \
+            if (n > -1 && n < size)             \
+              {                                 \
+                var = s;                        \
+                break;                          \
+              }                                 \
+                                                \
+            size *= 2;                          \
+          }                                     \
+      }                                         \
+  }                                             \
 
 SYX_END_DECLS
 

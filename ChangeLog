@@ -1,3 +1,21 @@
+2008-02-20  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-object.h (syx_string_new_ref): renamed from syx_string_new_unref
+	All calls have been updated
+
+	* plugins/readline/plugin-init.c (ReadLine_readline): reference the returned string instead of creatinga new one
+
+	* syx/syx-primitives.c (FileStream_fileOp): fixed possible memory leak
+
+	* st/kernel/Console.st: added ConsoleChunkReader to fix multiple statements handling
+
+	* syx/syx-object.h (syx_string_new): use SYX_VSPRINTF
+
+	* syx/syx-utils.h (SYX_VSPRINTF): added
+
+	* syx/syx-utils.c (syx_vsprintf): removed
+	(syx_sprintf): removed
+
 2008-02-18  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-lexer.c (_syx_lexer_token_identifier): fix var:=val assignment

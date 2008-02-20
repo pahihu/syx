@@ -25,15 +25,18 @@
 #ifndef SYX_OBJECT_H
 #define SYX_OBJECT_H
 
+#include "syx-utils.h"
 #include "syx-platform.h"
 #include "syx-enums.h"
 #include "syx-error.h"
 
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
 #endif
+
 
 SYX_BEGIN_DECLS
 
@@ -403,7 +406,8 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 INLINE SyxOop 
 syx_string_new (syx_symbol string, ...)
 {
-  syx_string new_string = syx_vsprintf(&string);
+  syx_string new_string;
+  SYX_VSPRINTF (string, new_string);
   if (!new_string)
     return syx_nil;
 
@@ -412,7 +416,7 @@ syx_string_new (syx_symbol string, ...)
 
 /*! Returns a new String instance. */
 INLINE SyxOop
-syx_string_new_unref (syx_string string)
+syx_string_new_ref (syx_string string)
 {
   if (!string)
     return syx_nil;

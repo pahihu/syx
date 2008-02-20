@@ -728,11 +728,12 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 
       if (count < 0)
         {
+          syx_free (s);
           SYX_PRIM_FAIL;
         }
 
       s[count] = '\0';
-      string = syx_string_new_unref (s);
+      string = syx_string_new_ref (s);
       SYX_PRIM_RETURN (string);
       break;
 
