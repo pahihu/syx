@@ -1,4 +1,5 @@
 Major:
+- Refactor the interpreter (newinterp branch)
 - C layer for number operations
 - Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
