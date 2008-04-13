@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,9 +22,10 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "../syx/syx.h"
+
 #include <assert.h>
 #include <stdio.h>
-#include "../syx/syx.h"
 
 struct _test1
 {
@@ -98,10 +99,10 @@ main (int argc, char *argv[])
   SYX_OBJECT_DATA(arguments)[4] = syx_small_integer_new ((syx_nint)&test1.f5 - (syx_nint)&test1);
   SYX_OBJECT_DATA(arguments)[5] = syx_small_integer_new ((syx_nint)&test1.f6 - (syx_nint)&test1);
   process = syx_process_new ();
-  context = syx_send_message (process, syx_nil,
-                              structTest,
+  context = syx_send_message (structTest,
                               "testOffsets:from:",
                               2, arguments, syx_symbol_new ("Test1Struct"));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 
   puts ("- Test fields alignment 2");
@@ -121,10 +122,10 @@ main (int argc, char *argv[])
   SYX_OBJECT_DATA(arguments)[12] = syx_small_integer_new ((syx_nint)&test2.f13 - (syx_nint)&test2);
   SYX_OBJECT_DATA(arguments)[13] = syx_small_integer_new ((syx_nint)&test2.f14 - (syx_nint)&test2);
   process = syx_process_new ();
-  context = syx_send_message (process, syx_nil,
-                              structTest,
+  context = syx_send_message (structTest,
                               "testOffsets:from:",
                               2, arguments, syx_symbol_new ("Test2Struct"));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 
   puts ("- Test fields alignment 3");
@@ -136,10 +137,10 @@ main (int argc, char *argv[])
   SYX_OBJECT_DATA(arguments)[4] = syx_small_integer_new ((syx_nint)&test3.f5 - (syx_nint)&test3);
   SYX_OBJECT_DATA(arguments)[5] = syx_small_integer_new ((syx_nint)&test3.f6 - (syx_nint)&test3);
   process = syx_process_new ();
-  context = syx_send_message (process, syx_nil,
-                              structTest,
+  context = syx_send_message (structTest,
                               "testOffsets:from:",
                               2, arguments, syx_symbol_new ("Test3Struct"));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 
   puts ("- Test reading");
@@ -149,18 +150,18 @@ main (int argc, char *argv[])
   test3.f4 = 199.11822;
   test3.f5 = 23.5; /* won't read yet */
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil,
-                                     structTest,
+  context = syx_send_binary_message (structTest,
                                      "testRead:",
                                      SYX_POINTER_CAST_OOP (&test3));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 
   puts ("- Test writing");
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil,
-                                     structTest,
+  context = syx_send_binary_message (structTest,
                                      "testWrite:",
                                      SYX_POINTER_CAST_OOP (&test3));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   assert(test3.f1 == 320);
   assert(test3.f2 == 10293);
@@ -174,10 +175,10 @@ main (int argc, char *argv[])
   puts ("- Test unions");
   test4.f1 = 'S';
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil,
-                                     structTest,
+  context = syx_send_binary_message (structTest,
                                      "testUnion:",
                                      SYX_POINTER_CAST_OOP (&test4));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   assert(test4.f1 == 'T');
 

@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -108,10 +108,11 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
     }
 
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, callback, "invoke");
+  context = syx_send_unary_message (callback, "invoke");
+  syx_interp_enter_context (process, context);
   SYX_PROCESS_SUSPENDED (process) = syx_false;
   gdk_threads_leave ();
-  do { g_thread_yield (); } while (!SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)));
+  do { g_thread_yield (); } while (SYX_IS_TRUE (SYX_PROCESS_SCHEDULED (process)));
 
   return;
 }
@@ -166,7 +167,8 @@ syx_plugin_initialize (void)
   _syx_gtk_initialized = TRUE;
   
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_globals_at ("Gtk"), "initialize");
+  context = syx_send_unary_message (syx_globals_at ("Gtk"), "initialize");
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   
   g_thread_init (NULL);

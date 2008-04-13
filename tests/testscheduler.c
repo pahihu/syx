@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,12 +22,13 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "../syx/syx.h"
+
 #include <assert.h>
 #include <stdio.h>
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-#include "../syx/syx.h"
 
 int SYX_CDECL
 main (int argc, char *argv[])
@@ -51,7 +52,8 @@ main (int argc, char *argv[])
   syx_lexer_free (lexer, FALSE);					\
   syx_parser_free (parser, FALSE);					\
   process = syx_process_new ();						\
-  context = syx_method_context_new (process, syx_nil, method, syx_nil, syx_nil); \
+  context = syx_method_context_new (method, syx_nil, syx_nil);          \
+  syx_interp_enter_context (process, context);
 
   syx_processor_first_process = syx_nil;
 
