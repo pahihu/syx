@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -260,7 +260,8 @@ syx_build_basic (void)
   _syx_file_in_basic ();
 
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_globals, "initializeFirstSystem");
+  context = syx_send_unary_message (syx_globals, "initializeFirstSystem");
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 }
 
@@ -329,12 +330,14 @@ syx_initialize_system (void)
 
   /* initialize the system */
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil, syx_globals, "initializeSystem:", arguments);
+  context = syx_send_binary_message (syx_globals, "initializeSystem:", arguments);
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 
   /* now schedule to startup */
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_globals, "startupSystem");
+  context = syx_send_unary_message (syx_globals, "startupSystem");
+  syx_interp_enter_context (process, context);
   SYX_PROCESS_SUSPENDED (process) = syx_false;
   
   syx_system_initialized = TRUE;

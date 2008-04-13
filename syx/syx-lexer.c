@@ -121,10 +121,20 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   if (lastChar == ':')
     {
-      *(str+i) = ':';
-      i++;
-
-      token->type = SYX_TOKEN_NAME_COLON;
+      lastChar = syx_lexer_forward (self);
+      if (lastChar == '=')
+        {
+          self->_pushed_back = 0;
+          self->_current_text -= 2;
+          token->type = SYX_TOKEN_NAME_CONST;
+        }
+      else
+        {
+          syx_lexer_push_back (self);
+          *(str+i) = ':';
+          i++;
+          token->type = SYX_TOKEN_NAME_COLON;
+        }
     }
   else
     {
@@ -144,6 +154,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_int32 stop = 0;
   syx_nint radix = 10;
   syx_bool sign = FALSE;
+  syx_bool no_float = FALSE;
   syx_nint tol;
 
   do
@@ -228,6 +239,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
         {
           self->_pushed_back = 0;
           self->_current_text -= 2;
+          no_float = TRUE;
         }
     }
 
@@ -260,7 +272,7 @@ _syx_lexer_token_number (SyxLexer *self, SyxToken *token, syx_char lastChar)
           self->_current_text--;
         }
     }
-  else
+  else if (!no_float)
     syx_lexer_push_back (self);
 }
 

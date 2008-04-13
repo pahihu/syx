@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -495,7 +495,7 @@ syx_semaphore_wait (SyxOop semaphore)
 
 /*! Create a MethodContext for a unary message ready to enter a Process */
 SyxOop
-syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector)
+syx_send_unary_message (SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
   SyxOop klass;
@@ -506,13 +506,13 @@ syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, 
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
-  context = syx_method_context_new (process, parent_context, method, receiver, syx_nil);
+  context = syx_method_context_new (method, receiver, syx_nil);
   return context;
 }
 
 /*! Create a MethodContext for a binary message ready to enter a Process */
 SyxOop
-syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
+syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;
   SyxOop klass;
@@ -524,11 +524,9 @@ syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver,
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
-  syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = argument;
-  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
-  syx_memory_gc_end ();
+  context = syx_method_context_new (method, receiver, arguments);
 
   return context;
 }
@@ -539,13 +537,13 @@ syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver,
   \param num_args number of variadic SyxOop arguments
 */
 SyxOop
-syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
+syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
   SyxOop context;
   va_list ap;
 
   va_start (ap, num_args);
-  context = syx_vsend_message (process, parent_context, receiver, selector, num_args, ap);
+  context = syx_vsend_message (receiver, selector, num_args, ap);
   va_end (ap);
 
   return context;
@@ -555,10 +553,11 @@ syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_sy
 /*!
   Create a MethodContext for an arbitrary message ready to enter a Process.
 
-  \param arguments an Array of arguments
+  \param num_args the number of arguments
+  \param ap a va_list containing all SyxOops
 */
 SyxOop
-syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
+syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
 {
   syx_varsize i;
   SyxOop context;
@@ -574,15 +573,11 @@ syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_s
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
 
-  syx_memory_gc_begin ();
-
   arguments = syx_array_new_size (num_args);
   for (i=0; i < num_args; i++)
     SYX_OBJECT_DATA(arguments)[i] = va_arg (ap, SyxOop);
 
-  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
-
-  syx_memory_gc_end ();
+  context = syx_method_context_new (method, receiver, arguments);
 
   return context;
 }
@@ -757,45 +752,3 @@ syx_show_traceback (void)
     }
 }
 
-/*! Like ANSI vsprintf but instead return a newly allocated string.
-
-  Notice that the variadic arguments are only used to avoid compiling errors,
-  but they're not used */
-syx_string
-syx_vsprintf (syx_symbol *fmt, ...)
-{
-  syx_int32 n;
-  va_list ap;
-  syx_int32 size = 100;
-  syx_string s = NULL;
-
-  if (!fmt || !*fmt)
-    return NULL;
-
-  size = 100;
-  s = NULL;
-
-  while (TRUE)
-    {
-      s = syx_realloc(s, size);
-      va_start(ap, *fmt);
-      n = vsnprintf (s, size, *fmt, ap);
-      va_end(ap);
-      if (n > -1 && n < size)
-        return s;
-
-      size *= 2;
-    }
-
-  return NULL;
-}
-
-/* Like ANSI sprintf but instead return a newly allocated string. */
-syx_string
-syx_sprintf (syx_symbol fmt, ...)
-{
-  if (!fmt)
-    return NULL;
-
-  return syx_vsprintf(&fmt);
-}

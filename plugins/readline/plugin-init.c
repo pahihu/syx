@@ -31,8 +31,7 @@ SYX_FUNC_PRIMITIVE(Readline_readline)
   SyxOop string;
   SYX_PRIM_ARGS(1);
   char *s = readline (SYX_OBJECT_STRING(es->message_arguments[0]));
-  string = syx_string_new (s);
-  syx_free (s);
+  string = syx_string_new_ref (s);
   SYX_PRIM_RETURN(string);
 }
 

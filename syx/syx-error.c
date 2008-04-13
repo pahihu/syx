@@ -129,7 +129,7 @@ syx_signal (SyxErrorType type, SyxOop message)
   if (!entry)
     return FALSE;
 
-  if (!syx_interp_is_initialized())
+  if (!syx_system_initialized)
     {
       if (SYX_OBJECT_IS_STRING (message) || SYX_OBJECT_IS_SYMBOL (message))
         syx_error ("%s: %s\n", entry->name, SYX_OBJECT_SYMBOL (message));

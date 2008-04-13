@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -25,13 +25,17 @@
 #ifndef SYX_UTILS_H
 #define SYX_UTILS_H
 
-#include "syx-platform.h"
-#include "syx-types.h"
-#include "syx-lexer.h"
+#define _ISOC99_SOURCE 1
+
 
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
+
+
+#include "syx-platform.h"
+#include "syx-types.h"
+#include "syx-lexer.h"
 
 SYX_BEGIN_DECLS
 
@@ -44,10 +48,10 @@ extern EXPORT void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-extern EXPORT SyxOop syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector);
-extern EXPORT SyxOop syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
-extern EXPORT SyxOop syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-extern EXPORT SyxOop syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
+extern EXPORT SyxOop syx_send_unary_message (SyxOop receiver, syx_symbol selector);
+extern EXPORT SyxOop syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument);
+extern EXPORT SyxOop syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+extern EXPORT SyxOop syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
 
 extern EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
 extern EXPORT SyxOop syx_do_it_blocking (syx_symbol code);
@@ -59,8 +63,6 @@ extern EXPORT void syx_show_traceback (void);
 extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
 extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
 extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
-extern EXPORT syx_string syx_vsprintf(syx_symbol *fmt, ...);
-extern EXPORT syx_string syx_sprintf(syx_symbol fmt, ...);
 
 
 #ifdef UNICODE
@@ -82,6 +84,35 @@ extern EXPORT syx_string syx_sprintf(syx_symbol fmt, ...);
 #define SYX_IFDEF_CHAR_T syx_char
 
 #endif /* UNICODE */
+
+#define SYX_VSPRINTF(fmt,var)                   \
+  {                                             \
+    syx_int32 n;                                \
+    va_list ap;                                 \
+    syx_int32 size;                             \
+    syx_string s;                               \
+                                                \
+    var = NULL;                                 \
+    if (fmt)                                    \
+      {                                         \
+        size = 100;                             \
+        s = NULL;                               \
+        while (TRUE)                            \
+          {                                     \
+            s = syx_realloc(s, size);           \
+            va_start(ap, fmt);                  \
+            n = vsnprintf (s, size, fmt, ap);   \
+            va_end(ap);                         \
+            if (n > -1 && n < size)             \
+              {                                 \
+                var = s;                        \
+                break;                          \
+              }                                 \
+                                                \
+            size *= 2;                          \
+          }                                     \
+      }                                         \
+  }                                             \
 
 SYX_END_DECLS
 

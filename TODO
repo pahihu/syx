@@ -8,7 +8,6 @@ Major:
 - Cover most of the standard
 
 Minor:
-- Use radix for floats in the lexer
 - Object inspecting
 
 Later:

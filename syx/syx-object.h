@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -25,15 +25,18 @@
 #ifndef SYX_OBJECT_H
 #define SYX_OBJECT_H
 
+#include "syx-utils.h"
 #include "syx-platform.h"
 #include "syx-enums.h"
 #include "syx-error.h"
 
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_LIBGMP
 #include <gmp.h>
 #endif
+
 
 SYX_BEGIN_DECLS
 
@@ -237,8 +240,8 @@ EXPORT SyxOop syx_large_integer_new (syx_symbol string, syx_int32 base);
 EXPORT SyxOop syx_large_integer_new_integer (syx_int32 integer);
 EXPORT SyxOop syx_large_integer_new_mpz (syx_pointer mpz);
 EXPORT SyxOop syx_symbol_new (syx_symbol symbol);
-EXPORT SyxOop syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments);
-EXPORT SyxOop syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context);
+EXPORT SyxOop syx_method_context_new (SyxOop method, SyxOop receiver, SyxOop arguments);
+EXPORT SyxOop syx_block_context_new (SyxOop block, SyxOop arguments);
 EXPORT SyxOop syx_process_new (void);
 
 EXPORT syx_bool syx_array_remove (SyxOop array, SyxOop element);
@@ -266,7 +269,8 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 #define SYX_VARIABLE_BINDING_DICTIONARY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_VARIABLE_BINDING_DICTIONARY])
 
 #define SYX_CODE_BYTECODES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_BYTECODES])
-#define SYX_CODE_ARGUMENT_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_ARGUMENT_COUNT])
+#define SYX_CODE_ARGUMENTS_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_ARGUMENTS_COUNT])
+#define SYX_CODE_TEMPORARIES_COUNT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_TEMPORARIES_COUNT])
 #define SYX_CODE_LITERALS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_LITERALS])
 #define SYX_CODE_STACK_SIZE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_STACK_SIZE])
 #define SYX_CODE_PRIMITIVE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CODE_PRIMITIVE])
@@ -278,27 +282,21 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 #define SYX_METHOD_SELECTOR(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_SELECTOR])
 #define SYX_METHOD_PRIMITIVE(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_PRIMITIVE])
 
-#define SYX_BLOCK_ARGUMENT_STACK_TOP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_ARGUMENT_STACK_TOP])
-
 #define SYX_BLOCK_CLOSURE_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CLOSURE_BLOCK])
-#define SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CLOSURE_DEFINED_CONTEXT])
+#define SYX_BLOCK_CLOSURE_OUTER_FRAME(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CLOSURE_OUTER_FRAME])
 
 #define SYX_METHOD_CONTEXT_PARENT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_PARENT])
 #define SYX_METHOD_CONTEXT_METHOD(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_METHOD])
-#define SYX_METHOD_CONTEXT_AP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_AP])
-#define SYX_METHOD_CONTEXT_SP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_SP])
-#define SYX_METHOD_CONTEXT_TP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_TP])
-#define SYX_METHOD_CONTEXT_IP(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_IP])
+#define SYX_METHOD_CONTEXT_ARGUMENTS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_ARGUMENTS])
 #define SYX_METHOD_CONTEXT_RECEIVER(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_RECEIVER])
-#define SYX_METHOD_CONTEXT_RETURN_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METHOD_CONTEXT_RETURN_CONTEXT])
 
 #define SYX_BLOCK_CONTEXT_OUTER_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_OUTER_CONTEXT])
 #define SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_HANDLED_EXCEPTION])
 #define SYX_BLOCK_CONTEXT_HANDLER_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_HANDLER_BLOCK])
 #define SYX_BLOCK_CONTEXT_ENSURE_BLOCK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_BLOCK_CONTEXT_ENSURE_BLOCK])
 
-#define SYX_PROCESS_CONTEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_CONTEXT])
 #define SYX_PROCESS_STACK(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_STACK])
+#define SYX_PROCESS_FRAME_POINTER(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_FRAME_POINTER])
 #define SYX_PROCESS_SUSPENDED(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_SUSPENDED])
 #define SYX_PROCESS_RETURNED_OBJECT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_RETURNED_OBJECT])
 #define SYX_PROCESS_NEXT(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_PROCESS_NEXT])
@@ -403,7 +401,8 @@ syx_array_new_ref (syx_varsize size, SyxOop *data)
 INLINE SyxOop 
 syx_string_new (syx_symbol string, ...)
 {
-  syx_string new_string = syx_vsprintf(&string);
+  syx_string new_string;
+  SYX_VSPRINTF (string, new_string);
   if (!new_string)
     return syx_nil;
 
@@ -412,7 +411,7 @@ syx_string_new (syx_symbol string, ...)
 
 /*! Returns a new String instance. */
 INLINE SyxOop
-syx_string_new_unref (syx_string string)
+syx_string_new_ref (syx_string string)
 {
   if (!string)
     return syx_nil;

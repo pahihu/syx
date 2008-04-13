@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -131,8 +131,8 @@ syx_memory_clear (void)
       if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (object->klass)))
         {
           process = syx_process_new ();
-          context = syx_send_unary_message (process, syx_nil,
-                                            SYX_POINTER_CAST_OOP (object), "finalize");
+          context = syx_send_unary_message (SYX_POINTER_CAST_OOP (object), "finalize");
+          syx_interp_enter_context (process, context);
           syx_process_execute_blocking (process);
         }
     }

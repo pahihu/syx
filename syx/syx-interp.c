@@ -1,6 +1,5 @@
-
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -23,6 +22,26 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+/*! \page syx_interpreter Syx Interpreter
+
+  Frame representation:
+  this context - * may be nil, it's set when a the context is demanded from the Smalltalk-side
+  parent frame - points to the frame which created the current one, used for "self return"
+  outer frame - points to the most outer frame, usually the frame which created the block closure. It's NULL for method contexts.
+  return frame - points the frame used for stack return
+  compiled code - a CompiledMethod or a CompiledBlock
+  instruction pointer - pointer to the next method bytecode to be executed
+  arguments pointer
+  temporaries pointer
+  stack pointer
+  ... stack ... - contains in order: receiver, arguments, temporaries and others
+  
+  * When a context is needed from the Smalltalk-side (e.g. thisContext, Processor activeProcess context,
+  context parent), a MethodContext or BlockContext is created on the fly.
+  Working on the context instance will have effects on the Process stack, and, when possible,
+  return the existing one (this context).
+*/
+
 #include "syx-interp.h"
 #include "syx-object.h"
 #include "syx-utils.h"
@@ -43,143 +62,281 @@
 
 #endif /* SYX_DEBUG_FULL */
 
-SyxExecState *_syx_exec_state = NULL;
+#define _SYX_INTERP_IN_BLOCK (_syx_interp_state.frame->outer_frame != NULL)
+
+SyxInterpState _syx_interp_state;
 
 static syx_uint16 _syx_interp_get_next_byte (void);
 static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
-/*! Create a new execution state to link the interpreter and the active process */
-SyxExecState *
-syx_exec_state_new (void)
+/*! Saves the current execution state into the active Process */
+static void
+_syx_interp_save_process_state (void)
 {
-  SyxExecState *ret = (SyxExecState *) syx_malloc (sizeof (SyxExecState));
-  ret->message_arguments = NULL;
-  return ret;
+  SYX_PROCESS_FRAME_POINTER(syx_processor_active_process) = syx_small_integer_new (SYX_POINTERS_OFFSET (_syx_interp_state.frame, _syx_interp_state.process_frame));
 }
 
-/*! Fetch the execution state of a Process */
-void
-syx_exec_state_fetch (void)
+/* Fetches and updates the execution state of the interpreter to be ready for next instructions */
+static void
+_syx_interp_state_update (void)
 {
   SyxOop method;
-  SyxOop ctx;
-  
-  SYX_START_PROFILE;
+  SyxOop bytecodes;
 
-  _syx_exec_state->context = ctx = SYX_PROCESS_CONTEXT (_syx_exec_state->process);
-  if (SYX_IS_NIL (ctx))
-    {
-      _syx_exec_state->ip = 0;
-      _syx_exec_state->bytecodes_count = 0;
-      return;
-    }
+  method = _syx_interp_state.frame->method;
+  if (SYX_IS_NIL (method))
+    return;
 
-  method = SYX_METHOD_CONTEXT_METHOD (ctx);
-  
-  _syx_exec_state->receiver = SYX_METHOD_CONTEXT_RECEIVER (ctx);
-  _syx_exec_state->arguments = _syx_exec_state->stack + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_AP (ctx));
-  _syx_exec_state->temporaries = _syx_exec_state->stack + SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_TP (ctx));
-  _syx_exec_state->literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
-  _syx_exec_state->bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (SYX_CODE_BYTECODES (method));
-  _syx_exec_state->bytecodes_count = SYX_OBJECT_DATA_SIZE (SYX_CODE_BYTECODES (method)) / 2;
-  _syx_exec_state->ip = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_IP (_syx_exec_state->context));
-  _syx_exec_state->sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_SP (_syx_exec_state->context));
-
-  SYX_END_PROFILE(exec_state_fetch);
+  bytecodes = SYX_CODE_BYTECODES (method);
+  _syx_interp_state.arguments = &_syx_interp_state.frame->local;
+  _syx_interp_state.temporaries = _syx_interp_state.arguments + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (method));
+  _syx_interp_state.method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
+  _syx_interp_state.method_bytecodes = SYX_OBJECT_DATA (bytecodes);
+  _syx_interp_state.method_bytecodes_count = SYX_OBJECT_DATA_SIZE (bytecodes);
 }
 
-/*! Frees the SyxExecState */
-void
-syx_exec_state_free (void)
+/*! "Maybe" switch process and return TRUE if it's valid, FALSE otherwise */
+static syx_bool
+_syx_interp_switch_process (SyxOop process)
 {
-  if (_syx_exec_state)
-    {
-      if (_syx_exec_state->message_arguments)
-        syx_free (_syx_exec_state->message_arguments);
+  SyxInterpFrame *frame;
 
-      syx_free (_syx_exec_state);
-      _syx_exec_state = NULL;
-    }
+  frame = (SyxInterpFrame *)SYX_PROCESS_STACK (process);
+  if (!frame)
+    return FALSE;
+
+  _syx_interp_save_process_state ();
+  _syx_interp_state.process_frame = frame;
+  frame += SYX_SMALL_INTEGER (SYX_PROCESS_FRAME_POINTER (process));
+  _syx_interp_state.frame = frame;
+  _syx_interp_state_update ();
+
+  if (SYX_IS_NIL (_syx_interp_state.frame->method))
+    return FALSE;
+
+  _syx_interp_state.byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
+  return TRUE;
+}
+
+/*! Sending the message means changing the frame and gaining all necessary informations to run
+  the given method. */
+static void
+_syx_interp_frame_prepare_new (SyxOop method)
+{
+  SyxInterpFrame *frame;
+  SyxInterpFrame *parent_frame;
+  syx_int32 temporaries_count;
+
+  parent_frame = _syx_interp_state.frame;
+  /* We create the new frame just after the current one. The top of the stack is a good point then. */
+  frame = _syx_interp_state.frame = (SyxInterpFrame *)_syx_interp_state.frame->stack;
+  frame->parent_frame = parent_frame;
+  frame->outer_frame = NULL;
+  frame->stack_return_frame = parent_frame;
+  frame->method = method;
+  frame->next_instruction = 0;
+
+  _syx_interp_state_update ();
+
+  temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
+  frame->stack = _syx_interp_state.temporaries + temporaries_count;
+  memcpy (_syx_interp_state.arguments, _syx_interp_state.message_arguments,
+          _syx_interp_state.message_arguments_count * sizeof (SyxOop));
+  memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
+}
+
+/*! Prepare for calling a block closure */
+static void
+_syx_interp_frame_prepare_new_closure (SyxOop closure)
+{
+  _syx_interp_frame_prepare_new (SYX_BLOCK_CLOSURE_BLOCK (closure));
+
+  _syx_interp_state.frame->ensure_block = syx_nil;
+  _syx_interp_state.frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));  
+  _syx_interp_state.frame->stack_return_frame = _syx_interp_state.frame->outer_frame->stack_return_frame;
+  _syx_interp_state.frame->receiver = _syx_interp_state.frame->outer_frame->receiver;
+}
+
+/*! Creates a MethodContext or BlockContext from a frame */
+static SyxOop
+_syx_interp_frame_to_context (SyxInterpFrame *frame)
+{
+  SyxOop context;
+  SyxOop arguments;
+
+  if (frame->this_context)
+    return frame->this_context;
+  
+  syx_memory_gc_begin ();
+  arguments = syx_array_new (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
+  if (_SYX_INTERP_IN_BLOCK)
+    context = syx_block_context_new (frame->method, arguments);
+  else
+    context = syx_method_context_new (frame->method, frame->receiver, arguments);
+  frame->this_context = context;
+  syx_memory_gc_end ();
+
+  return context;
 }
 
 /*!
-  Executes the given process and returnes once the byteslice is reached.
+  Initialize the interpreter to be ready to execute processes.
 
-  This function automatically fetch the state of the Process, saves and frees it once it terminated its running time
+  This function is called internally by Syx and should not be called from user applications.
+*/
+void
+syx_interp_init (void)
+{
+  memset (&_syx_interp_state, '\0', sizeof (SyxInterpState));
+}
+
+/*!
+  Finalize the execution of processes and free all the memory used by the interpreter.
+
+  This function is called internally by Syx e should not be called from user applications
+*/
+void
+syx_interp_quit (void)
+{
+}
+
+/*!
+  Enters a new context.
+
+  \return FALSE if the context was syx_nil
+*/
+syx_bool
+syx_interp_enter_context (SyxOop process, SyxOop context)
+{
+  SyxInterpState orig_state;
+  SyxOop arguments;
+
+  if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
+    return FALSE;
+
+  if (SYX_OOP_NE (process, syx_processor_active_process))
+    {
+      orig_state = _syx_interp_state;
+      _syx_interp_switch_process (process);
+    }
+
+  arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
+  _syx_interp_state.message_arguments_count = SYX_OBJECT_DATA_SIZE (arguments);
+  memcpy (_syx_interp_state.message_arguments, SYX_OBJECT_DATA (arguments), _syx_interp_state.message_arguments_count * sizeof (SyxOop));
+  _syx_interp_state.message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
+  _syx_interp_frame_prepare_new (SYX_METHOD_CONTEXT_METHOD (context));
+  _syx_interp_state.frame->this_context = context;
+
+  if (SYX_OOP_NE (process, syx_processor_active_process))
+    {
+      _syx_interp_state = orig_state;
+      _syx_interp_switch_process (syx_processor_active_process);
+    }
+
+  return TRUE;
+}
+
+/*!
+  Leaves the current frame and push an object into the returning context.
+
+  Use the stack return frame use_stack_return is specified, otherwise use the parent frame.
+  Then sets the returned object variable of the process to the specified object.
+  Finally swap the context with the new one. Terminate the process if no valid return frame is found.
+
+  \param return_object the object to be pushed into the returning context
+  \param use_stack_return TRUE to use the stack return frame, FALSE to use the parent frame
+  \return FALSE if no valid return frame is found
+*/
+syx_bool
+syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
+{
+  SyxInterpFrame *return_frame = (use_stack_return
+                                  ? _syx_interp_state.frame->stack_return_frame
+                                  : _syx_interp_state.frame->parent_frame);
+
+  SYX_PROCESS_RETURNED_OBJECT(syx_processor_active_process) = return_object;
+
+  if (!return_frame)
+    {
+      syx_scheduler_remove_process (syx_processor_active_process);
+      return FALSE;
+    }
+
+  _syx_interp_state.frame = return_frame;
+  _syx_interp_state_update ();
+  syx_interp_stack_push (return_object);
+  return TRUE;
+}
+
+/*!
+  Executes the given process and returns once the byteslice is reached, no more instructions left or
+  yield has been requested.
 */
 void
 syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint16 byte;
 
-  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
+  if (!_syx_interp_switch_process (process))
     {
       syx_scheduler_remove_process (process);
       return;
     }
 
-  _syx_exec_state->process = process;
-  _syx_exec_state->stack = SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
-  syx_exec_state_fetch ();
-  _syx_exec_state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
-
-  while (_syx_exec_state->ip < _syx_exec_state->bytecodes_count && _syx_exec_state->byteslice >= 0)
+  while (_syx_interp_state.frame->next_instruction < _syx_interp_state.method_bytecodes_count && _syx_interp_state.byteslice >= 0)
     {
       byte = _syx_interp_get_next_byte ();
+      /* No more instructions or somebody wants to yield control to other processes */
       if (!_syx_interp_execute_byte (byte))
         break;
-      _syx_exec_state->byteslice--;
+      _syx_interp_state.byteslice--;
     }
 
-  syx_exec_state_save ();
+  _syx_interp_save_process_state ();
 }
 
-/*! Same as syx_process_execute_scheduled but does not take care about the byteslice counter */
+/*! Same as syx_process_execute_scheduled but does not take care about the byteslice counter,
+  and control is not yield until the process is terminated.
+*/
 void
 syx_process_execute_blocking (SyxOop process)
 {
-  SyxExecState *orig_es;
-  syx_uint16 byte;
+  SyxInterpState orig_state;
   SyxOop orig_process;
+  syx_uint16 byte;
 
   SYX_START_PROFILE;
 
-  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
+  orig_process = syx_processor_active_process;
+  orig_state = _syx_interp_state;
+
+  if (!_syx_interp_switch_process (process))
     {
+      syx_processor_active_process = orig_process;
+      _syx_interp_state = orig_state;
       syx_scheduler_remove_process (process);
       return;
     }
 
-  orig_process = syx_processor_active_process;
-  orig_es = _syx_exec_state;
-  _syx_exec_state = syx_exec_state_new ();
-  _syx_exec_state->process = process;
-  _syx_exec_state->stack = SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
-  syx_exec_state_fetch ();
-  syx_processor_active_process = process;
-
-  while (_syx_exec_state->ip < _syx_exec_state->bytecodes_count)
+  while (_syx_interp_state.frame->next_instruction < _syx_interp_state.method_bytecodes_count)
     {
       byte = _syx_interp_get_next_byte ();
       _syx_interp_execute_byte (byte);
     }
+  _syx_interp_save_process_state ();
 
-  syx_exec_state_save ();
-  syx_exec_state_free ();
-
-  _syx_exec_state = orig_es;
+  _syx_interp_state = orig_state;
   syx_processor_active_process = orig_process;
 
   SYX_END_PROFILE(blocking);
 }
-
 
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push instance at %d\n", argument);
 #endif
-  syx_interp_stack_push (SYX_OBJECT_VARS(_syx_exec_state->receiver)[argument]);
+  syx_interp_stack_push (SYX_OBJECT_VARS(_syx_interp_state.frame->receiver)[argument]);
   return TRUE;
 }
 
@@ -190,9 +347,9 @@ SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 #endif
 
   if (argument == 0)
-    syx_interp_stack_push (_syx_exec_state->receiver);
+    syx_interp_stack_push (_syx_interp_state.frame->receiver);
   else
-    syx_interp_stack_push (_syx_exec_state->arguments[argument - 1]);
+    syx_interp_stack_push (_syx_interp_state.arguments[argument - 1]);
   return TRUE;
 }
 
@@ -201,7 +358,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_temporary)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push temporary at %d\n", argument);
 #endif
-  syx_interp_stack_push (_syx_exec_state->temporaries[argument]);
+  syx_interp_stack_push (_syx_interp_state.temporaries[argument]);
   return TRUE;
 }
 
@@ -210,12 +367,13 @@ SYX_FUNC_INTERPRETER (syx_interp_push_literal)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push literal at %d\n", argument);
 #endif
-  syx_interp_stack_push (_syx_exec_state->literals[argument]);
+  syx_interp_stack_push (_syx_interp_state.method_literals[argument]);
   return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_push_constant)
 {
+  SyxOop context;
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push constant %d\n", argument);
 #endif
@@ -231,7 +389,8 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
       syx_interp_stack_push (syx_false);
       break;
     case SYX_BYTECODE_CONST_CONTEXT:
-      syx_interp_stack_push (_syx_exec_state->context);
+      context = syx_interp_frame_to_context (_syx_interp_state.frame);
+      syx_interp_stack_push (context);
       break;
     default:
       syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown constant"));
@@ -246,7 +405,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_binding_variable)
   SyxOop binding;
   SyxOop object;
 
-  binding = _syx_exec_state->literals[argument];
+  binding = _syx_interp_state.method_literals[argument];
   object = syx_dictionary_bind (binding);
 
 #ifdef SYX_DEBUG_BYTECODE
@@ -282,7 +441,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_instance)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign instance at %d\n", argument);
 #endif
-  SYX_OBJECT_VARS(_syx_exec_state->receiver)[argument] = syx_interp_stack_peek ();
+  SYX_OBJECT_VARS(_syx_interp_state.frame->receiver)[argument] = syx_interp_stack_peek ();
   return TRUE;
 }
 
@@ -291,7 +450,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign temporary at %d\n", argument);
 #endif
-  _syx_exec_state->temporaries[argument] = syx_interp_stack_peek ();
+  _syx_interp_state.temporaries[argument] = syx_interp_stack_peek ();
   return TRUE;
 }
 
@@ -300,7 +459,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable)
   SyxOop binding;
   SyxOop value;
 
-  binding = _syx_exec_state->literals[argument];
+  binding = _syx_interp_state.method_literals[argument];
   value = syx_interp_stack_peek ();
 
 #ifdef SYX_DEBUG_BYTECODE
@@ -321,22 +480,15 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   syx_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
-  _syx_exec_state->message_arguments_count = argument;
+  if (argument > 0xFF)
+    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Max number of arguments exceeded: %d\n", argument));
 
-  if (_syx_exec_state->message_arguments)
-    syx_free (_syx_exec_state->message_arguments);
+  _syx_interp_state.message_arguments_count = argument;
+  for (i=argument - 1; i >= 0; i--)
+    _syx_interp_state.message_arguments[i] = syx_interp_stack_pop ();
 
-  if (argument > 0)
-    {
-      _syx_exec_state->message_arguments = (SyxOop *) syx_calloc (argument, sizeof (SyxOop));
-      for (i=argument - 1; i >= 0; i--)
-        _syx_exec_state->message_arguments[i] = syx_interp_stack_pop ();
-    }
-  else
-    _syx_exec_state->message_arguments = NULL;
-
-  _syx_exec_state->message_receiver = syx_interp_stack_pop ();
-  _syx_exec_state->byteslice++; /* be sure we send the message */
+  _syx_interp_state.message_receiver = syx_interp_stack_pop ();
+  _syx_interp_state.byteslice++; /* be sure we send the message */
 
   return TRUE;
 }
@@ -344,13 +496,13 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 SYX_FUNC_INTERPRETER (syx_interp_send_message)
 {
   SyxOop binding;
-  SyxOop klass, method, context;
+  SyxOop klass, method;
   syx_int32 primitive;
 
   SYX_START_PROFILE;
 
-  binding = _syx_exec_state->literals[argument];
-  klass = syx_object_get_class (_syx_exec_state->message_receiver); 
+  binding = _syx_interp_state.method_literals[argument];
+  klass = syx_object_get_class (_syx_interp_state.message_receiver); 
   method = syx_class_lookup_method_binding (klass, binding);
   SYX_END_PROFILE(send_message);
 #ifdef SYX_DEBUG_BYTECODE
@@ -362,41 +514,27 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
-      return syx_signal_does_not_understand (_syx_exec_state->message_receiver, SYX_ASSOCIATION_KEY (binding));
+      return syx_signal_does_not_understand (_syx_interp_state.message_receiver, SYX_ASSOCIATION_KEY (binding));
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call_interp (_syx_exec_state, method);
-
-  if (_syx_exec_state->message_arguments_count > 0)
-    {
-      syx_memory_gc_begin ();
-      context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                        method, _syx_exec_state->message_receiver,
-                                        syx_array_new (_syx_exec_state->message_arguments_count, _syx_exec_state->message_arguments));
-      syx_memory_gc_end ();
-      _syx_exec_state->message_arguments = NULL;
-    }
-  else
-    context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                      method, _syx_exec_state->message_receiver, syx_nil);
-
-
-
-  return syx_interp_enter_context (context);
+    return syx_plugin_call_interp (&_syx_interp_state, method);
+  
+  _syx_interp_frame_prepare_new (method);
+  return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_super)
 {
   SyxOop binding;
-  SyxOop klass, method, context;
+  SyxOop klass, method;
   syx_int32 primitive;
 
-  binding = _syx_exec_state->literals[argument];
-  klass = SYX_CLASS_SUPERCLASS (SYX_CODE_CLASS (SYX_METHOD_CONTEXT_METHOD (_syx_exec_state->context)));
+  binding = _syx_interp_state.method_literals[argument];
+  klass = SYX_CLASS_SUPERCLASS (SYX_CODE_CLASS (_syx_interp_state.frame->method));
   method = syx_class_lookup_method_binding (klass, binding);
 
 #ifdef SYX_DEBUG_BYTECODE
@@ -408,29 +546,17 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - NOT UNDERSTOOD super #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
-      return syx_signal_does_not_understand (_syx_exec_state->message_receiver, SYX_ASSOCIATION_KEY (binding));
+      return syx_signal_does_not_understand (_syx_interp_state.message_receiver, SYX_ASSOCIATION_KEY (binding));
     }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
-    return syx_plugin_call_interp (_syx_exec_state, method);
+    return syx_plugin_call_interp (&_syx_interp_state, method);
 
-  if (_syx_exec_state->message_arguments_count > 0)
-    {
-      syx_memory_gc_begin ();
-      context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                        method, _syx_exec_state->message_receiver,
-                                        syx_array_new (_syx_exec_state->message_arguments_count, _syx_exec_state->message_arguments));
-      syx_memory_gc_end ();
-      _syx_exec_state->message_arguments = NULL;
-    }
-  else
-    context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                      method, _syx_exec_state->message_receiver, syx_nil);
-
-  return syx_interp_enter_context (context);
+  _syx_interp_frame_prepare_new (method);
+  return TRUE;
 }
 
 SYX_FUNC_INTERPRETER (syx_interp_send_unary)
@@ -492,9 +618,14 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 {
-  SyxOop closure = syx_object_copy (_syx_exec_state->literals[argument]);
+  SyxOop frame;
+  SyxOop closure = syx_object_copy (_syx_interp_state.method_literals[argument]);
   syx_interp_stack_push (closure);
-  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(closure) = _syx_exec_state->context;
+  
+  /* Copy a piece of the process stack: the current frame without the "local" structure member
+     which is unuseful. */
+  frame = syx_array_new (sizeof (SyxInterpFrame) / 4 - 1, (SyxOop *)_syx_interp_state.frame);
+  SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame;
   return TRUE;
 }
 
@@ -587,7 +718,6 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
   SyxOop condition;
   syx_uint16 jump;
   SyxOop ensure_block;
-  SyxOop ensure_block_context;
 
   switch (argument)
     {
@@ -595,80 +725,77 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Pop top\n");
 #endif
-      _syx_exec_state->sp--;
+      _syx_interp_state.frame->stack--;
       return TRUE;
     case SYX_BYTECODE_SELF_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Self return\n");
 #endif
-      if (SYX_OOP_EQ (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
+      if (_SYX_INTERP_IN_BLOCK)
         {
           /* check for ensured blocks */
-          ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_exec_state->context);
+          ensure_block = _syx_interp_state.frame->ensure_block;
           if (SYX_IS_TRUE (ensure_block))
             {
               /* ensured block has been called,
                  so pop its returned object */
-              _syx_exec_state->sp--;
-              SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_nil;
+              _syx_interp_state.frame->stack--;
+              _syx_interp_state.frame->ensure_block = syx_nil;
               returned_object = syx_interp_stack_pop ();
             }
           else if (!SYX_IS_NIL (ensure_block))
             {
-              /* create the context and enter it */
-              ensure_block_context = syx_block_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                                            SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
-                                                            syx_nil,
-                                                            SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));
-              /* decrease instruction pointer for future execution of self-return */
-              _syx_exec_state->ip--;
+              /* no arguments passed to the ensure block */
+              _syx_interp_state.message_arguments_count = 0;
+              /* decrease instruction pointer re-execute self-return */
+              _syx_interp_state.frame->next_instruction--;
+
               /* set the ensure block to true, so that next time self-return bytecode is executed */
-              SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_true;
-              return syx_interp_enter_context (ensure_block_context);
+              _syx_interp_state.frame->ensure_block = syx_true;
+              _syx_interp_frame_prepare_new_closure (ensure_block);
+              return TRUE;
             }
           else
             returned_object = syx_interp_stack_pop ();
         }
       else
-        returned_object = _syx_exec_state->receiver;
+        returned_object = _syx_interp_state.frame->receiver;
       
-      return syx_interp_leave_context_and_answer (returned_object, FALSE);
+      return syx_interp_leave_and_answer (returned_object, FALSE);
 
     case SYX_BYTECODE_STACK_RETURN:
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Stack return\n");
 #endif
 
-      if (SYX_OOP_EQ (syx_object_get_class (_syx_exec_state->context), syx_block_context_class))
+      if (_SYX_INTERP_IN_BLOCK)
         {
           /* check for ensure blocks */
-          ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_exec_state->context);
+          ensure_block = _syx_interp_state.frame->ensure_block;
           if (SYX_IS_TRUE (ensure_block))
             {
               /* ensured block has been called,
                  so pop its returned object */
-              _syx_exec_state->sp--;
-              SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_nil;
+              _syx_interp_state.frame->stack--;
+              _syx_interp_state.frame->ensure_block = syx_nil;
             }
           else if (!SYX_IS_NIL (ensure_block))
             {
-              /* create the context and enter it */
-              ensure_block_context = syx_block_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                                            SYX_BLOCK_CLOSURE_BLOCK (ensure_block),
-                                                            syx_nil,
-                                                            SYX_BLOCK_CLOSURE_DEFINED_CONTEXT (ensure_block));
-              /* decrease instruction pointer for future execution of self-return */
-              _syx_exec_state->ip--;
-              /* set the ensure block to true, so that next time self-return bytecode is executed */
-              SYX_BLOCK_CONTEXT_ENSURE_BLOCK(_syx_exec_state->context) = syx_true;
+              /* no arguments passed to the ensure block */
+              _syx_interp_state.message_arguments_count = 0;
+              /* decrease instruction pointer re-execute self-return */
+              _syx_interp_state.frame->next_instruction--;
 
-              return syx_interp_enter_context (ensure_block_context);
+              /* set the ensure block to true, so that next time self-return bytecode is executed */
+              _syx_interp_state.frame->ensure_block = syx_true;
+              _syx_interp_frame_prepare_new_closure (ensure_block);
+              return TRUE;
             }
         }
 
       returned_object = syx_interp_stack_pop ();
 
-      return syx_interp_leave_context_and_answer (returned_object, TRUE);
+      return syx_interp_leave_and_answer (returned_object, TRUE);
     case SYX_BYTECODE_BRANCH_IF_TRUE:
     case SYX_BYTECODE_BRANCH_IF_FALSE:
 #ifdef SYX_DEBUG_BYTECODE
@@ -683,7 +810,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
       if ((argument == SYX_BYTECODE_BRANCH_IF_TRUE ? SYX_IS_FALSE (condition) : SYX_IS_TRUE (condition)))
         {
           syx_interp_stack_push (syx_nil);
-          _syx_exec_state->ip = jump;
+          _syx_interp_state.frame->next_instruction = jump;
         }
 
       return TRUE;
@@ -693,7 +820,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       jump = _syx_interp_get_next_byte ();
       if (jump)
-        _syx_exec_state->ip = jump;
+        _syx_interp_state.frame->next_instruction = jump;
 
       return TRUE;
     case SYX_BYTECODE_DUPLICATE:
@@ -717,10 +844,10 @@ static syx_uint16
 _syx_interp_get_next_byte (void)
 {
 #ifdef SYX_DEBUG_TRACE_IP
-  syx_debug ("TRACE IP - Context %p fetch at ip %d bytecode: %p\n", _syx_exec_state->context, _syx_exec_state->ip, _syx_exec_state->bytecodes[_syx_exec_state->ip]);
+  syx_debug ("TRACE IP - Fetch at ip %d bytecode: %p\n", _syx_interp_state.frame->next_instruction, _syx_interp_state.method_bytecodes[_syx_interp_state.frame->next_instruction]);
 #endif
 
-  return SYX_COMPAT_SWAP_16 (_syx_exec_state->bytecodes[_syx_exec_state->ip++]);
+  return SYX_COMPAT_SWAP_16 (_syx_interp_state.method_bytecodes[_syx_interp_state.frame->next_instruction++]);
 }
 
 static syx_bool
