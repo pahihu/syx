@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -67,7 +67,7 @@ static void
 _do_recovery (const char *rim_path)
 {
   SyxOop process = syx_processor_active_process;
-  SYX_PROCESS_CONTEXT(process) = syx_nil;
+  SYX_PROCESS_STACK(process) = syx_nil;
   SYX_PROCESS_SUSPENDED(process) = syx_true;
   SYX_PROCESS_SCHEDULED(process) = syx_false;
   syx_scheduler_remove_process (process);
