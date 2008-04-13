@@ -27,13 +27,12 @@
 
 #define _ISOC99_SOURCE 1
 
+#include "syx-platform.h"
 
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #endif
 
-
-#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-lexer.h"
 

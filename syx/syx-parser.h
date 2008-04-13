@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -32,17 +32,14 @@
 
 SYX_BEGIN_DECLS
 
+#define SYX_PARSER_MAX_NAMES 0xFF
+#define SYX_PARSER_MAX_SCOPES 0xFF
+#define SYX_PARSER_MAX_CASCADES 0xFF
+
 typedef struct SyxParserScope SyxParserScope;
 struct SyxParserScope
 {
-  syx_int8 start;
-  syx_int8 end;
-};
-
-typedef struct SyxParserScopeStack SyxParserScopeStack;
-struct SyxParserScopeStack
-{
-  SyxParserScope stack[256];
+  syx_string stack[SYX_PARSER_MAX_NAMES];
   syx_int8 top;
 };
 
@@ -61,16 +58,14 @@ struct SyxParser
 
   syx_bool _in_block;
 
-  syx_int16 _duplicate_indexes[256];
-  syx_int32 _duplicate_indexes_top;
+  syx_int16 _duplicate_indexes[SYX_PARSER_MAX_CASCADES];
+  syx_int8 _duplicate_indexes_top;
 
-  syx_string _temporary_names[256];
-  syx_int32 _temporary_names_top;
-  SyxParserScopeStack _temporary_scopes;
+  SyxParserScope _temporary_scopes[SYX_PARSER_MAX_SCOPES];
+  syx_int8 _temporary_scopes_top;
 
-  syx_string _argument_names[256];
-  SyxParserScopeStack _argument_scopes;
-  syx_int32 _argument_names_top;
+  SyxParserScope _argument_scopes[SYX_PARSER_MAX_SCOPES];
+  syx_int8 _argument_scopes_top;
 };
 
 EXPORT extern SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass);

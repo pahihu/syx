@@ -25,8 +25,8 @@
 #ifndef SYX_INTERP_H
 #define SYX_INTERP_H
 
-#include "syx-types.h"
 #include "syx-object.h"
+#include "syx-types.h"
 #include "syx-scheduler.h"
 #include "syx-init.h"
 
@@ -37,8 +37,8 @@ SYX_BEGIN_DECLS
   All the pointers and native ints, in the image will be transformed to an index, to be cross-platform compatible.
   When reading the image, the indexes will be transformed back into pointers.
 */
-typedef struct _SyxInterpFrame SyxInterpFrame;
-struct _SyxInterpFrame
+typedef struct SyxInterpFrame SyxInterpFrame;
+struct SyxInterpFrame
 {
   SyxOop this_context;
   SyxInterpFrame *parent_frame;
@@ -52,7 +52,8 @@ struct _SyxInterpFrame
   SyxOop local; /* used to point to arguments */
 };
 
-typedef struct _SyxInterpState
+typedef struct SyxInterpState SyxInterpState;
+struct SyxInterpState
 {
   SyxInterpFrame *frame;
   SyxInterpFrame *process_frame;
@@ -65,7 +66,7 @@ typedef struct _SyxInterpState
   syx_int32 message_arguments_count;
   SyxOop message_arguments[0xFF];
   SyxOop message_receiver;
-} SyxInterpState;
+};
 
 /* Primitives */
 
@@ -82,7 +83,7 @@ typedef struct _SyxInterpState
 /*! Enter the method which contains the primitive call */
 #define SYX_PRIM_FAIL                                                   \
   syx_interp_enter_context (syx_processor_active_process,               \
-                            syx_method_context_new (es->process, es->context, method, \
+                            syx_method_context_new (method,             \
                                                     es->message_receiver, \
                                                     syx_array_new_ref (es->message_arguments_count, \
                                                                        es->message_arguments))); \
@@ -90,7 +91,7 @@ typedef struct _SyxInterpState
 
 /*! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails */
 #define SYX_PRIM_ARGS(count)                                   \
-  if (count > _syx_exec_state->message_arguments_count)        \
+  if (count > _syx_interp_state.message_arguments_count)       \
     {                                                          \
       SYX_PRIM_FAIL;                                           \
     }

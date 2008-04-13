@@ -1,3 +1,13 @@
+2008-04-13  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-primitives.c: incredibly cleaned up block messages
+
+        Lots of changes to the interpreter and the parser.
+        Arguments and temporaries of blocks won't be put into the same stack of the home method.
+        Changed the way of dealing with contexts and processes.
+        The interpreter won't create any context except the ones demanded outside of it.
+        All contexts informations are now kept inside the process stack.
+
 2008-02-20  Luca Bruno  <lethalman88@gmail.com>
 
         * syx/syx-object.h (syx_string_new_ref): renamed from syx_string_new_unref

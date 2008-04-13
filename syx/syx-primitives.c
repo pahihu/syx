@@ -53,6 +53,9 @@
 #include <gmp.h>
 #endif
 
+/* Prototype of the interpreter function for creating block frames */
+void _syx_interp_frame_prepare_new_closure (SyxOop closure);
+
 INLINE SyxOop 
 _syx_block_context_new_from_closure (SyxExecState *es, SyxOop process, SyxOop context, SyxOop arguments)
 {
@@ -435,47 +438,29 @@ SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
-  SyxOop ctx = _syx_block_context_new_from_closure (es, es->process, es->context, syx_nil);
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  
-  return syx_interp_enter_context (ctx);
+  /* Unset arguments for the execution of the block */
+  es->message_arguments_count = 0;
+  _syx_interp_frame_prepare_new_closure (es->frame->receiver);
+  return TRUE;
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
 {
-  SyxOop args;
-  SyxOop ctx;
   SYX_PRIM_ARGS(1);
 
-  syx_memory_gc_begin ();
-  args = syx_array_new_size (1);
-  SYX_OBJECT_DATA(args)[0] = es->message_arguments[0];
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, args);
-  syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  return syx_interp_enter_context (ctx);
+  /* The only argument for this primitive is right the same argument for the block */
+  _syx_interp_frame_prepare_new_closure (es->frame->receiver);
+  return TRUE;
 }
   
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 {
-  SyxOop args, ctx;
+  SyxOop *args;
   SYX_PRIM_ARGS(1);
 
-  syx_memory_gc_begin ();
-  args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, args);
-  syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  return syx_interp_enter_context (ctx);
+  
+  _syx_interp_frame_prepare_new_closure (es->frame->receiver);
+  return TRUE;
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_on_do)

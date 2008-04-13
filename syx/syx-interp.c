@@ -42,8 +42,8 @@
   return the existing one (this context).
 */
 
-#include "syx-interp.h"
 #include "syx-object.h"
+#include "syx-interp.h"
 #include "syx-utils.h"
 #include "syx-scheduler.h"
 #include "syx-init.h"
@@ -145,8 +145,9 @@ _syx_interp_frame_prepare_new (SyxOop method)
   memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
 }
 
-/*! Prepare for calling a block closure */
-static void
+/*! Prepare for calling a block closure. This function shouldn't be called by any applications.
+ It's not static for being be called form within syx primitives. */
+void
 _syx_interp_frame_prepare_new_closure (SyxOop closure)
 {
   _syx_interp_frame_prepare_new (SYX_BLOCK_CLOSURE_BLOCK (closure));
@@ -389,7 +390,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
       syx_interp_stack_push (syx_false);
       break;
     case SYX_BYTECODE_CONST_CONTEXT:
-      context = syx_interp_frame_to_context (_syx_interp_state.frame);
+      context = _syx_interp_frame_to_context (_syx_interp_state.frame);
       syx_interp_stack_push (context);
       break;
     default:
