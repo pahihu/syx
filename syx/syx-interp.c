@@ -70,7 +70,7 @@ static syx_uint16 _syx_interp_get_next_byte (void);
 static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
 /*! Saves the current execution state into the active Process */
-static void
+void
 _syx_interp_save_process_state (void)
 {
   SYX_PROCESS_FRAME_POINTER(syx_processor_active_process) = syx_small_integer_new (SYX_POINTERS_OFFSET (_syx_interp_state.frame, _syx_interp_state.process_frame));
@@ -119,8 +119,9 @@ _syx_interp_switch_process (SyxOop process)
 }
 
 /*! Sending the message means changing the frame and gaining all necessary informations to run
-  the given method. */
-static void
+  the given method.
+  It's not static because it's called form within syx primitives. */
+void
 _syx_interp_frame_prepare_new (SyxOop method)
 {
   SyxInterpFrame *frame;
@@ -145,17 +146,21 @@ _syx_interp_frame_prepare_new (SyxOop method)
   memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
 }
 
-/*! Prepare for calling a block closure. This function shouldn't be called by any applications.
- It's not static for being be called form within syx primitives. */
+/*! Both create a new frame and prepare for calling a block closure.
+  This function shouldn't be called by any applications.
+  It's not static because it's called form within syx primitives. */
 void
 _syx_interp_frame_prepare_new_closure (SyxOop closure)
 {
   _syx_interp_frame_prepare_new (SYX_BLOCK_CLOSURE_BLOCK (closure));
 
   _syx_interp_state.frame->ensure_block = syx_nil;
-  _syx_interp_state.frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));  
-  _syx_interp_state.frame->stack_return_frame = _syx_interp_state.frame->outer_frame->stack_return_frame;
+  _syx_interp_state.frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));
   _syx_interp_state.frame->receiver = _syx_interp_state.frame->outer_frame->receiver;
+
+  /* We can't return more if there's no parent frame. See BlockClosure_newProcess primitive for instance. */
+  if (_syx_interp_state.frame->parent_frame)
+    _syx_interp_state.frame->stack_return_frame = _syx_interp_state.frame->outer_frame->stack_return_frame;
 }
 
 /*! Creates a MethodContext or BlockContext from a frame */
@@ -202,7 +207,19 @@ syx_interp_quit (void)
 }
 
 /*!
-  Enters a new context.
+  Swap the current context with the given one.
+  
+  \return FALSE if the context was syx_nil
+*/
+syx_bool
+syx_interp_swap_context (SyxOop process, SyxOop context)
+{
+  /* TODO: implement */
+  return TRUE;
+}
+
+/*!
+  Enters a new MethodContext or BlockContext.
 
   \return FALSE if the context was syx_nil
 */
@@ -222,10 +239,21 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
     }
 
   arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
-  _syx_interp_state.message_arguments_count = SYX_OBJECT_DATA_SIZE (arguments);
-  memcpy (_syx_interp_state.message_arguments, SYX_OBJECT_DATA (arguments), _syx_interp_state.message_arguments_count * sizeof (SyxOop));
-  _syx_interp_state.message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
-  _syx_interp_frame_prepare_new (SYX_METHOD_CONTEXT_METHOD (context));
+  if (SYX_IS_NIL (arguments))
+    _syx_interp_state.message_arguments_count = 0;
+  else
+    {
+      _syx_interp_state.message_arguments_count = SYX_OBJECT_DATA_SIZE (arguments);
+      memcpy (_syx_interp_state.message_arguments, SYX_OBJECT_DATA (arguments), _syx_interp_state.message_arguments_count * sizeof (SyxOop));
+    }
+
+  if (SYX_OOP_EQ (syx_object_get_class (context), syx_block_context_class))
+    _syx_interp_frame_prepare_new_closure (SYX_BLOCK_CONTEXT_CLOSURE (context));
+  else
+    {
+      _syx_interp_state.message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
+      _syx_interp_frame_prepare_new (SYX_METHOD_CONTEXT_METHOD (context));
+    }
   _syx_interp_state.frame->this_context = context;
 
   if (SYX_OOP_NE (process, syx_processor_active_process))

@@ -150,6 +150,7 @@ EXPORT void syx_interp_quit (void);
 /*! Peek the last object pushed into the stack */
 #define syx_interp_stack_peek() (*_syx_interp_state.frame->stack)
 
+EXPORT syx_bool syx_interp_swap_context (SyxOop process, SyxOop context);
 EXPORT syx_bool syx_interp_enter_context (SyxOop process, SyxOop context);
 EXPORT syx_bool syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return);
 

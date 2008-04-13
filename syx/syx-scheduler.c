@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,6 +22,8 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "syx-object.h"
+
 #ifdef WINDOWS
   #ifndef WIN32_LEAN_AND_MEAN
   #define WIN32_LEAN_AND_MEAN
@@ -31,7 +33,6 @@
 #endif
 
 #include "syx-types.h"
-#include "syx-object.h"
 #include "syx-enums.h"
 #include "syx-scheduler.h"
 #include "syx-utils.h"

@@ -651,9 +651,11 @@ syx_method_context_new (SyxOop method, SyxOop receiver, SyxOop arguments)
 /*!
   Same as syx_method_context_new but for BlockContexts.
   The receiver is guessed by looking at the outer context.
+
+  \param closure a BlockClosure
 */
 SyxOop 
-syx_block_context_new (SyxOop block, SyxOop arguments)
+syx_block_context_new (SyxOop closure, SyxOop arguments)
 {
   SyxOop object;
 
@@ -661,8 +663,9 @@ syx_block_context_new (SyxOop block, SyxOop arguments)
 
   object = syx_object_new (syx_block_context_class);
 
-  SYX_METHOD_CONTEXT_METHOD(object) = block;
+  SYX_METHOD_CONTEXT_METHOD(object) = SYX_BLOCK_CLOSURE_BLOCK (closure);
   SYX_METHOD_CONTEXT_ARGUMENTS(object) = arguments;
+  SYX_BLOCK_CONTEXT_CLOSURE(object) = closure;
 
   SYX_END_PROFILE(block_context);
 
