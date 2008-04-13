@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -138,13 +138,11 @@ syx_signal (SyxErrorType type, SyxOop message)
     }
 
   if (SYX_IS_NIL (message))
-    context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
-                                      entry->klass, "signal");
+    context = syx_send_unary_message (entry->klass, "signal");
   else
-    context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
-                                       entry->klass, "signal:", message);
+    context = syx_send_binary_message (entry->klass, "signal:", message);
 
-  syx_interp_enter_context (context);
+  syx_interp_enter_context (syx_processor_active_process, context);
 
   return TRUE;
 }
@@ -165,11 +163,9 @@ syx_signal_create_context (SyxErrorType type, SyxOop message)
     return syx_nil;
 
   if (SYX_IS_NIL (message))
-    context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (),       
-                                      entry->klass, "signal");
+    context = syx_send_unary_message (entry->klass, "signal");
   else
-    context = syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (),
-                                       entry->klass, "signal:", message);
+    context = syx_send_binary_message (entry->klass, "signal:", message);
 
   return context;
 }
