@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -380,7 +380,7 @@ syx_plugin_symbol (syx_symbol plugin_name, syx_symbol symbol_name)
   \return FALSE to yield the process
 */
 syx_bool
-syx_plugin_call_interp (SyxExecState *es, SyxOop method)
+syx_plugin_call_interp (SyxInterpState *es, SyxOop method)
 {
 #ifdef WITH_PLUGINS
   SyxOop *literals;
@@ -414,7 +414,7 @@ syx_plugin_call_interp (SyxExecState *es, SyxOop method)
   \return FALSE to yield the process
 */
 syx_bool
-syx_plugin_call (SyxExecState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method)
+syx_plugin_call (SyxInterpState *es, syx_symbol plugin_name, syx_symbol func_name, SyxOop method)
 {
 #ifdef WITH_PLUGINS
   SyxPrimitiveFunc fp;
