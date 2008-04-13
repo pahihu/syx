@@ -566,7 +566,7 @@ syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_
   SyxOop arguments;
 
   if (num_args == 0)
-    return syx_send_unary_message (process, parent_context, receiver, selector);
+    return syx_send_unary_message (receiver, selector);
 
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
@@ -596,10 +596,10 @@ syx_file_in_blocking (syx_symbol file)
   SyxOop process;
 
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil,
-                                     syx_globals_at ("FileStream"),
+  context = syx_send_binary_message (syx_globals_at ("FileStream"),
                                      "fileIn:",
                                      syx_string_new (file));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -617,8 +617,8 @@ syx_do_it_blocking (syx_symbol code)
   SyxOop process;
 
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_string_new (code), "doIt");
-  
+  context = syx_send_unary_message (syx_string_new (code), "doIt");
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -662,8 +662,8 @@ syx_find_first_non_whitespace (syx_symbol string)
 void
 syx_show_traceback (void)
 {
-  SyxExecState *es;
-  SyxOop context, homecontext;
+  SyxInterpState *es;
+  SyxInterpFrame *frame, *homeframe;
   syx_symbol traceformat;
   SyxOop classname;
   syx_symbol extraclass;
@@ -675,7 +675,8 @@ syx_show_traceback (void)
       return;
     }
 
-  es = _syx_exec_state;
+  es = &_syx_interp_state;
+  frame = es->frame;
 
   puts ("Memory state:");
   printf("Memory size: %d\n", _syx_memory_size);
@@ -693,22 +694,20 @@ syx_show_traceback (void)
 
   puts ("\nExecution state:");
   printf("Process: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->process),
-         SYX_MEMORY_INDEX_OF (es->process));
-  printf("Context: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->context),
-         SYX_MEMORY_INDEX_OF (es->context));
+         SYX_OOP_CAST_POINTER (syx_processor_active_process),
+         SYX_MEMORY_INDEX_OF (syx_processor_active_process));
+  printf("Frame: %p\n", (syx_pointer) frame);
   printf("Receiver: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->receiver),
-         SYX_MEMORY_INDEX_OF (es->receiver));
+         SYX_OOP_CAST_POINTER (frame->receiver),
+         SYX_MEMORY_INDEX_OF (frame->receiver));
   printf("Arguments: %p\n", (syx_pointer) es->arguments);
   printf("Temporaries: %p\n", (syx_pointer) es->temporaries);
-  printf("Stack: %p\n", (syx_pointer) es->stack);
-  printf("Literals: %p\n", (syx_pointer) es->literals);
-  printf("Bytecodes: %p (size: %d)\n", (syx_pointer) es->bytecodes, es->bytecodes_count);
+  printf("Stack: %p\n", (syx_pointer) frame->stack);
+  printf("Literals: %p\n", (syx_pointer) es->method_literals);
+  printf("Bytecodes: %p (size: %d)\n", (syx_pointer) es->method_bytecodes, es->method_bytecodes_count);
   printf("Byteslice: %d\n", es->byteslice);
-  printf("Instruction pointer: %d\n", es->ip);
-  printf("Stack pointer: %d\n", es->sp);
+  printf("Instruction pointer: %p\n", (syx_pointer) frame->next_instruction);
+  printf("Stack pointer: %p\n", (syx_pointer) frame->stack);
   printf("Message receiver: %p (memory index: %ld)\n",
          SYX_OOP_CAST_POINTER (es->message_receiver),
          SYX_MEMORY_INDEX_OF (es->message_receiver));
@@ -717,23 +716,22 @@ syx_show_traceback (void)
          es->message_arguments_count);
 
   puts ("\nTraceback:");
-  context = syx_interp_get_current_context ();
-  while (!SYX_IS_NIL (context))
+  while (frame)
     {
-      if (syx_object_get_class (context) == syx_block_context_class)
+      if (frame->outer_frame)
         {
-          homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(context);
-          while (syx_object_get_class (homecontext) != syx_method_context_class)
-            homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(homecontext);
+          homeframe = frame->outer_frame;
+          while (homeframe->outer_frame)
+            homeframe = homeframe->outer_frame;
           traceformat = "%s%s>>%s[]\n";
         }
       else
         {
-          homecontext = context;
+          homeframe = frame;
           traceformat = "%s%s>>%s\n";
         }
 
-      receiver = SYX_METHOD_CONTEXT_RECEIVER(context);
+      receiver = frame->receiver;
       classname = SYX_CLASS_NAME(syx_object_get_class(receiver));
       if (SYX_IS_NIL (classname))
         {
@@ -746,9 +744,9 @@ syx_show_traceback (void)
       printf (traceformat,
               SYX_OBJECT_SYMBOL(classname),
               extraclass,
-              SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(SYX_METHOD_CONTEXT_METHOD(homecontext))));
+              SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(homeframe->method)));
 
-      context = SYX_METHOD_CONTEXT_PARENT (context);
+      frame = frame->parent_frame;
     }
 }
 
