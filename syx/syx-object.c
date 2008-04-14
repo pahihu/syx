@@ -860,7 +860,7 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
 }
 
 /*!
-  Returns a method in a class having a given selector.
+  Returns a method in a class having the given selector.
 
   \return syx_nil if no method has been found
 */

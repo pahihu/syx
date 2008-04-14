@@ -1,4 +1,22 @@
+2008-04-14  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-parser.c (_syx_scope_free): added
+	(syx_parser_free): fix leak
+	Clear scope tops.
+
+	* syx/syx-interp.h (struct SyxInterpFrame): removed ensure_block
+
+	* st/kernel/Set.st: forgot header
+
+	* syx/syx-interp.c (_syx_interp_find_temporary): added
+	(_syx_interp_find_argument): added
+	(_syx_interp_state_update): obtain syx_uint16 bytecodes
+	(_syx_interp_frame_prepare_new): frame receiver not filled in
+	(syx_interp_do_special): get ensure block from the context, if available
+
 2008-04-13  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-error.c (syx_signal_does_not_understand): stop being a macro
 
 	* tests/testparser.c (main): updated
 

@@ -59,12 +59,8 @@ EXPORT extern void syx_warning (syx_symbol fmt, ...);
 EXPORT extern void syx_error (syx_symbol fmt, ...);
 EXPORT extern void syx_perror (syx_symbol message);
 
-/*! Send receiver>>#doesNotUnderstand: with selector */
-#define syx_signal_does_not_understand(receiver, selector)              \
-  (syx_interp_enter_context (syx_processor_active_process,              \
-                             syx_send_binary_message (receiver,         \
-                                                      "doesNotUnderstand:", \
-                                                      selector)))
+/*! Useful stuff */
+EXPORT extern syx_bool syx_signal_does_not_understand(SyxOop receiver, SyxOop selector);
 
 /*! Display debugging messages */
 #define syx_debug printf

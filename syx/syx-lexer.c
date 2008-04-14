@@ -115,7 +115,7 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))
     {
-      *(str+i) = lastChar;
+      str[i] = lastChar;
       i++;
     }
 
@@ -131,7 +131,7 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
       else
         {
           syx_lexer_push_back (self);
-          *(str+i) = ':';
+          str[i] = ':';
           i++;
           token->type = SYX_TOKEN_NAME_COLON;
         }

@@ -58,7 +58,7 @@
 #define SYX_DEBUG_CONTEXT
 /* #define SYX_DEBUG_CONTEXT_STACK */
 #define SYX_DEBUG_BYTECODE
-/* #define SYX_DEBUG_TRACE_IP */
+#define SYX_DEBUG_TRACE_IP
 
 #endif /* SYX_DEBUG_FULL */
 
@@ -91,7 +91,7 @@ _syx_interp_state_update (void)
   _syx_interp_state.arguments = &_syx_interp_state.frame->local;
   _syx_interp_state.temporaries = _syx_interp_state.arguments + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (method));
   _syx_interp_state.method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
-  _syx_interp_state.method_bytecodes = SYX_OBJECT_DATA (bytecodes);
+  _syx_interp_state.method_bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (bytecodes);
   _syx_interp_state.method_bytecodes_count = SYX_OBJECT_DATA_SIZE (bytecodes);
 }
 
@@ -131,12 +131,18 @@ _syx_interp_frame_prepare_new (SyxOop method)
   parent_frame = _syx_interp_state.frame;
   /* We create the new frame just after the current one. The top of the stack is a good point then.
    If the stack pointer isn't available (e.g. for first process run) just use the process stack bottom. */
-  if (!parent_frame || !parent_frame->stack)
-    frame = _syx_interp_state.frame = _syx_interp_state.process_frame;
+  if (!parent_frame->stack)
+    {
+      parent_frame = NULL;
+      frame = _syx_interp_state.frame = _syx_interp_state.process_frame;
+    }
   else
     frame = _syx_interp_state.frame = (SyxInterpFrame *)parent_frame->stack;
+
+  frame->this_context = syx_nil;
   frame->parent_frame = parent_frame;
   frame->stack_return_frame = parent_frame;
+  frame->outer_frame = NULL;
   frame->method = method;
   frame->next_instruction = 0;
 
@@ -144,6 +150,8 @@ _syx_interp_frame_prepare_new (SyxOop method)
 
   temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
   frame->stack = _syx_interp_state.temporaries + temporaries_count;
+
+  frame->receiver = _syx_interp_state.frame->receiver = _syx_interp_state.message_receiver;
   memcpy (_syx_interp_state.arguments, _syx_interp_state.message_arguments,
           _syx_interp_state.message_arguments_count * sizeof (SyxOop));
   memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
@@ -157,7 +165,6 @@ _syx_interp_frame_prepare_new_closure (SyxOop closure)
 {
   _syx_interp_frame_prepare_new (SYX_BLOCK_CLOSURE_BLOCK (closure));
 
-  _syx_interp_state.frame->ensure_block = syx_nil;
   _syx_interp_state.frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));
   _syx_interp_state.frame->receiver = _syx_interp_state.frame->outer_frame->receiver;
 
@@ -363,6 +370,47 @@ syx_process_execute_blocking (SyxOop process)
   SYX_END_PROFILE(blocking);
 }
 
+
+/* Bytecode intepreter */
+
+static SyxOop *
+_syx_interp_find_argument (syx_uint16 argument)
+{
+  SyxInterpFrame *frame = _syx_interp_state.frame;
+  /* The argument index created by the parser is the totally index of all outer arguments.
+     So we need to find the right scope by looping trough outer frames and their arguments. */
+  while (frame)
+    {
+      syx_int32 count = SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (frame->method));
+      if (count > argument)
+        return ((SyxOop *)&_syx_interp_state.frame->local) + argument;
+      argument -= count;
+      frame = frame->outer_frame;
+    }
+
+  /* this will let bytecode functions crash, it's like an assertion */
+  return NULL;
+}
+
+static SyxOop *
+_syx_interp_find_temporary (syx_uint16 temporary)
+{
+  SyxInterpFrame *frame = _syx_interp_state.frame;
+  /* The temporary index created by the parser is the totally index of all outer temporaries.
+     So we need to find the right scope by looping trough outer frames and their arguments. */
+  while (frame)
+    {
+      syx_int32 count = SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (frame->method));
+      if (count > temporary)
+        return ((SyxOop *)&_syx_interp_state.frame->local) + temporary;
+      temporary -= count;
+      frame = frame->outer_frame;
+    }
+
+  /* this will let bytecode functions crash, it's like an assertion */
+  return NULL;
+}
+
 SYX_FUNC_INTERPRETER (syx_interp_push_instance)
 {
 #ifdef SYX_DEBUG_BYTECODE
@@ -377,11 +425,11 @@ SYX_FUNC_INTERPRETER (syx_interp_push_argument)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push argument at %d\n", argument);
 #endif
-
+  
   if (argument == 0)
     syx_interp_stack_push (_syx_interp_state.frame->receiver);
   else
-    syx_interp_stack_push (_syx_interp_state.arguments[argument - 1]);
+    syx_interp_stack_push (*_syx_interp_find_argument (argument - 1));
   return TRUE;
 }
 
@@ -390,7 +438,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_temporary)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push temporary at %d\n", argument);
 #endif
-  syx_interp_stack_push (_syx_interp_state.temporaries[argument]);
+  syx_interp_stack_push (*_syx_interp_find_temporary (argument));
   return TRUE;
 }
 
@@ -482,7 +530,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_temporary)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign temporary at %d\n", argument);
 #endif
-  _syx_interp_state.temporaries[argument] = syx_interp_stack_peek ();
+  *(_syx_interp_find_temporary (argument)) = syx_interp_stack_peek ();
   return TRUE;
 }
 
@@ -497,7 +545,7 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable)
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Assign binding variable '%s' -> %p\n",
              SYX_OBJECT_SYMBOL(SYX_ASSOCIATION_KEY(binding)),
-             SYX_OBJECT (value));
+             SYX_OOP_CAST_POINTER (value));
 #endif
 
   syx_dictionary_bind_set_value (binding, value);
@@ -554,7 +602,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
     return syx_interp_call_primitive (primitive, method);
   else if (primitive == -2)
     return syx_plugin_call_interp (&_syx_interp_state, method);
-  
+
   _syx_interp_frame_prepare_new (method);
   return TRUE;
 }
@@ -765,27 +813,30 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #endif
       if (_SYX_INTERP_IN_BLOCK)
         {
-          /* check for ensured blocks */
-          ensure_block = _syx_interp_state.frame->ensure_block;
-          if (SYX_IS_TRUE (ensure_block))
+          if (!SYX_IS_NIL (_syx_interp_state.frame->this_context))
             {
-              /* ensured block has been called,
-                 so pop its returned object */
-              _syx_interp_state.frame->stack--;
-              _syx_interp_state.frame->ensure_block = syx_nil;
-              returned_object = syx_interp_stack_pop ();
-            }
-          else if (!SYX_IS_NIL (ensure_block))
-            {
-              /* no arguments passed to the ensure block */
-              _syx_interp_state.message_arguments_count = 0;
-              /* decrease instruction pointer re-execute self-return */
-              _syx_interp_state.frame->next_instruction--;
-
-              /* set the ensure block to true, so that next time self-return bytecode is executed */
-              _syx_interp_state.frame->ensure_block = syx_true;
-              _syx_interp_frame_prepare_new_closure (ensure_block);
-              return TRUE;
+              /* check for ensured blocks */
+              ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context);
+              if (SYX_IS_TRUE (ensure_block))
+                {
+                  /* ensured block has been called,
+                     so pop its returned object */
+                  _syx_interp_state.frame->stack--;
+                  SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_nil;
+                  returned_object = syx_interp_stack_pop ();
+                }
+              else if (!SYX_IS_NIL (ensure_block))
+                {
+                  /* no arguments passed to the ensure block */
+                  _syx_interp_state.message_arguments_count = 0;
+                  /* decrease instruction pointer re-execute self-return */
+                  _syx_interp_state.frame->next_instruction--;
+                  
+                  /* set the ensure block to true, so that next time self-return bytecode is executed */
+                  SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_true;
+                  _syx_interp_frame_prepare_new_closure (ensure_block);
+                  return TRUE;
+                }
             }
           else
             returned_object = syx_interp_stack_pop ();
@@ -802,26 +853,29 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 
       if (_SYX_INTERP_IN_BLOCK)
         {
-          /* check for ensure blocks */
-          ensure_block = _syx_interp_state.frame->ensure_block;
-          if (SYX_IS_TRUE (ensure_block))
+          if (!SYX_IS_NIL (_syx_interp_state.frame->this_context))
             {
-              /* ensured block has been called,
-                 so pop its returned object */
-              _syx_interp_state.frame->stack--;
-              _syx_interp_state.frame->ensure_block = syx_nil;
-            }
-          else if (!SYX_IS_NIL (ensure_block))
-            {
-              /* no arguments passed to the ensure block */
-              _syx_interp_state.message_arguments_count = 0;
-              /* decrease instruction pointer re-execute self-return */
-              _syx_interp_state.frame->next_instruction--;
-
-              /* set the ensure block to true, so that next time self-return bytecode is executed */
-              _syx_interp_state.frame->ensure_block = syx_true;
-              _syx_interp_frame_prepare_new_closure (ensure_block);
-              return TRUE;
+              /* check for ensure blocks */
+              ensure_block = SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context);
+              if (SYX_IS_TRUE (ensure_block))
+                {
+                  /* ensured block has been called,
+                     so pop its returned object */
+                  _syx_interp_state.frame->stack--;
+                  SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_nil;
+                }
+              else if (!SYX_IS_NIL (ensure_block))
+                {
+                  /* no arguments passed to the ensure block */
+                  _syx_interp_state.message_arguments_count = 0;
+                  /* decrease instruction pointer re-execute self-return */
+                  _syx_interp_state.frame->next_instruction--;
+                  
+                  /* set the ensure block to true, so that next time self-return bytecode is executed */
+                  SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_true;
+                  _syx_interp_frame_prepare_new_closure (ensure_block);
+                  return TRUE;
+                }
             }
         }
 
@@ -876,7 +930,7 @@ static syx_uint16
 _syx_interp_get_next_byte (void)
 {
 #ifdef SYX_DEBUG_TRACE_IP
-  syx_debug ("TRACE IP - Fetch at ip %d bytecode: %p\n", _syx_interp_state.frame->next_instruction, _syx_interp_state.method_bytecodes[_syx_interp_state.frame->next_instruction]);
+  syx_debug ("TRACE IP - Fetch at ip %d bytecode: %u - %p\n", _syx_interp_state.frame->next_instruction, _syx_interp_state.method_bytecodes[_syx_interp_state.frame->next_instruction], _syx_interp_state.frame);
 #endif
 
   return SYX_COMPAT_SWAP_16 (_syx_interp_state.method_bytecodes[_syx_interp_state.frame->next_instruction++]);

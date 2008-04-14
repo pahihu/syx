@@ -506,7 +506,9 @@ syx_send_unary_message (SyxOop receiver, syx_symbol selector)
   if (SYX_IS_NIL (method))
     syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
                SYX_OOP_CAST_POINTER (klass),
-               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
+               SYX_IS_NIL (SYX_CLASS_NAME(klass))
+               ? NULL
+               : SYX_OBJECT_STRING (SYX_CLASS_NAME(klass)));
 
   context = syx_method_context_new (method, receiver, syx_nil);
   return context;

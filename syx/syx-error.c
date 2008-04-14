@@ -171,6 +171,21 @@ syx_signal_create_context (SyxErrorType type, SyxOop message)
 }
 
 /*!
+  Send receiver>>#doesNotUnderstand: with selector.
+
+  \param receiver
+  \param selector
+*/
+syx_bool
+syx_signal_does_not_understand(SyxOop receiver, SyxOop selector)
+{
+  return syx_interp_enter_context (syx_processor_active_process,
+                                   syx_send_binary_message (receiver,
+                                                            "doesNotUnderstand:",
+                                                            selector));
+}
+
+/*!
   Display an error then exits.
 
   This function will show an error MessageBox on Windows CE

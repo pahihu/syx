@@ -93,6 +93,27 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
   return self;
 }
 
+void
+_syx_scope_free (SyxParserScope *scope)
+{
+  int i;
+  for (i=0; i < scope->top; i++)
+    syx_free (scope->stack[i]);
+}
+
+/* Free current temporary scopes and arguments */
+void
+_syx_parser_free_temporaries (SyxParser *self)
+{
+  _syx_scope_free (self->_temporary_scopes + self->_temporary_scopes_top);
+}
+
+void
+_syx_parser_free_arguments (SyxParser *self)
+{
+  _syx_scope_free (self->_argument_scopes + self->_argument_scopes_top);
+}
+
 /*!
   Free all memory used by the parser.
 
@@ -101,24 +122,7 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
 void
 syx_parser_free (SyxParser *self, syx_bool free_segment)
 {
-  SyxParserScope *scope;
-  syx_size i;
-  syx_size j;
   syx_bytecode_free (self->bytecode);
-  
-  for (i=0; i < self->_temporary_scopes_top; i++)
-    {
-      scope = self->_temporary_scopes + i;
-      for (j=0; j < scope->top; j++)
-        syx_free (scope->stack[j]);
-    }
-
-  for (i=0; i < self->_argument_scopes_top; i++)
-    {
-      scope = self->_argument_scopes + i;
-      for (j=0; j < scope->top; j++)
-        syx_free (scope->stack[j]);
-    }
 
   if (free_segment)
     {
@@ -144,6 +148,9 @@ syx_parser_parse (SyxParser *self, syx_bool skip_message_pattern)
   if (token.type == SYX_TOKEN_END)
     return TRUE;
 
+  self->_temporary_scopes[self->_temporary_scopes_top].top = 0;
+  self->_argument_scopes[self->_argument_scopes_top].top = 0;
+
   if (!skip_message_pattern)
     _syx_parser_parse_message_pattern (self);
 
@@ -167,6 +174,10 @@ syx_parser_parse (SyxParser *self, syx_bool skip_message_pattern)
   SYX_CODE_TEXT(self->method) = syx_string_new (self->lexer->text +
                                                 syx_find_first_non_whitespace (self->lexer->text));
   SYX_CODE_CLASS(self->method) = self->klass;
+
+  /* Free arguments and temporaries of this scope */
+  _syx_parser_free_arguments (self);
+  _syx_parser_free_temporaries (self);
 
   return TRUE;
 }
@@ -528,7 +539,8 @@ _syx_parser_parse_temporaries (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
       while (token.type == SYX_TOKEN_NAME_CONST)
         {
-          scope->stack[scope->top++] = token.value.string;
+          scope->stack[scope->top++] = syx_strdup (token.value.string);
+          syx_token_free (token);
           token = syx_lexer_next_token (self->lexer);
         }
       if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
@@ -701,13 +713,16 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
       syx_token_free (token);
       syx_lexer_next_token (self->lexer);
       self->_temporary_scopes_top++;
+      self->_temporary_scopes[self->_temporary_scopes_top].top = 0;
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
+      _syx_parser_free_temporaries (self);
       self->_temporary_scopes_top--;
       token = syx_lexer_next_token (self->lexer);
     }
   else
     {
+      /* a variable or such has been used, like ifTrue: trueBlock */
       _syx_parser_do_binary_continuation (self, _syx_parser_parse_term (self), FALSE);
       syx_bytecode_gen_message (self->bytecode, FALSE, 0, "value");
     }
@@ -1010,7 +1025,8 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       token = syx_lexer_next_token (self->lexer);
       if (token.type != SYX_TOKEN_NAME_CONST)
         syx_error ("Expected name constant for argument name\n");
-      scope->stack[scope->top++] = token.value.string;
+      scope->stack[scope->top++] = syx_strdup (token.value.string);
+      syx_token_free (token);
 
       syx_lexer_next_token (self->lexer);
       break;
@@ -1024,11 +1040,12 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
           token = syx_lexer_next_token (self->lexer);
           if (token.type != SYX_TOKEN_NAME_CONST)
             syx_error ("Expected name constant for argument name\n");
-          scope->stack[scope->top++] = token.value.string;
+          scope->stack[scope->top++] = syx_strdup (token.value.string);
+          syx_token_free (token);
 
           token = syx_lexer_next_token (self->lexer);
         }
-
+      
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector);
       break;
     default:
@@ -1055,7 +1072,8 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
       syx_token_free (token);
       token = syx_lexer_next_token (self->lexer);
       assert (token.type == SYX_TOKEN_NAME_CONST);
-      scope->stack[scope->top++] = token.value.string;
+      scope->stack[scope->top++] = syx_strdup (token.value.string);
+      syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
     }

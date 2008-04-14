@@ -44,7 +44,6 @@ struct SyxInterpFrame
   SyxInterpFrame *parent_frame;
   SyxInterpFrame *outer_frame;
   SyxInterpFrame *stack_return_frame;
-  SyxOop ensure_block;
   SyxOop method;
   syx_nint next_instruction;
   SyxOop *stack;
@@ -60,7 +59,7 @@ struct SyxInterpState
   SyxOop *arguments;
   SyxOop *temporaries;
   SyxOop *method_literals;
-  SyxOop *method_bytecodes;
+  syx_uint16 *method_bytecodes;
   syx_int32 method_bytecodes_count;
   syx_int32 byteslice;
   syx_int32 message_arguments_count;
