@@ -504,7 +504,9 @@ syx_send_unary_message (SyxOop receiver, syx_symbol selector)
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
 
   context = syx_method_context_new (method, receiver, syx_nil);
   return context;
@@ -522,7 +524,9 @@ syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument)
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
 
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = argument;
@@ -571,7 +575,9 @@ syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
 
   arguments = syx_array_new_size (num_args);
   for (i=0; i < num_args; i++)

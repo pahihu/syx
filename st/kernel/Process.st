@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -35,11 +35,11 @@ initialize
 !
 
 context
-    ^context
+"    ^context"
 !
 
 context: aContext
-    context := aContext
+"    context := aContext"
 !
 
 suspend
@@ -55,7 +55,7 @@ resume
 terminate
     self isActive
 	ifTrue: [ Processor leaveTo: nil andAnswer: nil]
-	ifFalse: [ suspended := false. context := nil ]
+	ifFalse: [ suspended := false. "context := nil" ]
 ! !
 
 !Process methodsFor: 'testing'!

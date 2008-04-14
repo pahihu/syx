@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -89,7 +89,7 @@ Set subclass: #Bag
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method ap tp sp ip receiver returnContext'
+       instanceVariableNames: 'parent method arguments receiver'
        classVariableNames: ''!
 
 ContextPart subclass: #MethodContext
@@ -97,11 +97,11 @@ ContextPart subclass: #MethodContext
             classVariableNames: ''!
 
 MethodContext subclass: #BlockContext
-	    instanceVariableNames: 'outerContext handledException handlerBlock ensureBlock'
+	    instanceVariableNames: 'closure handledException handlerBlock ensureBlock'
             classVariableNames: ''!
 
 Object subclass: #Process
-       instanceVariableNames: 'context stack suspended returnedObject next scheduled'
+       instanceVariableNames: 'stack framePointer suspended returnedObject next scheduled'
        classVariableNames: ''!
 
 Object subclass: #Semaphore
@@ -109,19 +109,19 @@ Object subclass: #Semaphore
        classVariableNames: ''!
 
 Object subclass: #CompiledCode
-       instanceVariableNames: 'bytecodes argumentCount literals stackSize text class'
+       instanceVariableNames: 'bytecodes argumentCount temporaryCount literals stackSize text class'
        classVariableNames: ''!
 
 CompiledCode subclass: #CompiledMethod
-	     instanceVariableNames: 'argumentStackSize temporaryStackSize selector primitive'
+	     instanceVariableNames: 'selector primitive'
              classVariableNames: ''!
 
 CompiledCode subclass: #CompiledBlock
-	     instanceVariableNames: 'argumentStackTop'
+	     instanceVariableNames: ''
 	     classVariableNames: ''!
 
 Object subclass: #BlockClosure
-       instanceVariableNames: 'block definedContext'
+       instanceVariableNames: 'block outerFrame'
        classVariableNames: ''!
 
 

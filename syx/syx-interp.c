@@ -101,7 +101,7 @@ _syx_interp_switch_process (SyxOop process)
 {
   SyxInterpFrame *frame;
 
-  frame = (SyxInterpFrame *)SYX_PROCESS_STACK (process);
+  frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
   if (!frame)
     return FALSE;
 
@@ -129,10 +129,13 @@ _syx_interp_frame_prepare_new (SyxOop method)
   syx_int32 temporaries_count;
 
   parent_frame = _syx_interp_state.frame;
-  /* We create the new frame just after the current one. The top of the stack is a good point then. */
-  frame = _syx_interp_state.frame = (SyxInterpFrame *)_syx_interp_state.frame->stack;
+  /* We create the new frame just after the current one. The top of the stack is a good point then.
+   If the stack pointer isn't available (e.g. for first process run) just use the process stack bottom. */
+  if (!parent_frame || !parent_frame->stack)
+    frame = _syx_interp_state.frame = _syx_interp_state.process_frame;
+  else
+    frame = _syx_interp_state.frame = (SyxInterpFrame *)parent_frame->stack;
   frame->parent_frame = parent_frame;
-  frame->outer_frame = NULL;
   frame->stack_return_frame = parent_frame;
   frame->method = method;
   frame->next_instruction = 0;
@@ -232,7 +235,7 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
     return FALSE;
 
-  if (SYX_OOP_NE (process, syx_processor_active_process))
+  if (SYX_OOP_NE (process, syx_processor_active_process) || !_syx_interp_state.frame)
     {
       orig_state = _syx_interp_state;
       _syx_interp_switch_process (process);

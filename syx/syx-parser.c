@@ -84,6 +84,8 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
   self->bytecode = syx_bytecode_new ();
   self->_temporary_scopes_top = 0;
   self->_argument_scopes_top = 0;
+  memset (self->_temporary_scopes, '\0', sizeof (self->_temporary_scopes));
+  memset (self->_argument_scopes, '\0', sizeof (self->_argument_scopes));
   self->instance_names = syx_class_get_all_instance_variable_names (klass);
 
   self->_duplicate_indexes_top = 0;
@@ -178,7 +180,7 @@ _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
     return -1;
 
   index = 0;
-  for (scope_index=self->_temporary_scopes_top - 1; scope_index >= 0; scope_index--)
+  for (scope_index=self->_temporary_scopes_top; scope_index >= 0; scope_index--)
     {
       scope = self->_temporary_scopes + scope_index;
       for (i=0; i < scope->top; i++, index++)
@@ -200,7 +202,7 @@ _syx_parser_find_argument_name (SyxParser *self, syx_symbol name)
     return -1;
 
   index = 0;
-  for (scope_index=self->_argument_scopes_top - 1; scope_index >= 0; scope_index--)
+  for (scope_index=self->_argument_scopes_top; scope_index >= 0; scope_index--)
     {
       scope = self->_argument_scopes + scope_index;
       for (i=0; i < scope->top; i++, index++)

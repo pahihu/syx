@@ -1,5 +1,19 @@
 2008-04-13  Luca Bruno  <lethalman88@gmail.com>
 
+	* tests/testparser.c (main): updated
+
+	* syx/syx-parser.c: fix argument and temporary search
+
+	* syx/syx-utils.c: more info on method lookup failure
+
+	* syx/syx-interp.c (_syx_interp_switch_process): wrong way to get the process frame bottom
+	(syx_interp_enter_context): be sure we have a frame
+	(_syx_interp_frame_prepare_new): be aware of null frames and null stack pointers
+
+	* syx/syx-enums.h: update VM-used variable names
+
+	* st/kernel/initialDecl.st: variables have been updated to match interpreter implementation
+
 	* syx/syx-primitives.c: incredibly cleaned up block messages
 
         Lots of changes to the interpreter and the parser.

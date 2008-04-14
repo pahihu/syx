@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -73,8 +73,6 @@ fromParser: aCompilerParser
 
 initializeParser: aCompilerParser
     super initializeParser: aCompilerParser.
-    argumentStackSize := aCompilerParser argumentNames size.
-    temporaryStackSize := aCompilerParser temporaryNames size.
     selector := aCompilerParser methodMessage.
     primitive := aCompilerParser methodPrimitive
 ! !
@@ -87,11 +85,11 @@ runOn: aReceiver withArguments: anArray
 !
 
 argumentStackSize
-    ^argumentStackSize
+"    ^argumentStackSize"
 !
 
 temporaryStackSize
-    ^temporaryStackSize
+"    ^temporaryStackSize"
 !
 
 selector
@@ -102,5 +100,5 @@ selector
 
 initializeParser: aCompilerParser
     super initializeParser: aCompilerParser.
-    argumentStackTop := aCompilerParser argumentScopes peek key - 1
+"    argumentStackTop := aCompilerParser argumentScopes peek key - 1"
 ! !
