@@ -67,6 +67,10 @@
 
 SyxInterpState _syx_interp_state;
 
+#ifdef SYX_DEBUG_CONTEXT
+syx_int32 _frame_depth;
+#endif
+
 static syx_uint16 _syx_interp_get_next_byte (void);
 static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
@@ -140,6 +144,10 @@ _syx_interp_frame_prepare_new (SyxOop method)
   else
     frame = _syx_interp_state.frame = (SyxInterpFrame *)parent_frame->stack;
 
+#ifdef SYX_DEBUG_CONTEXT
+  printf("CONTEXT - New frame %p - Depth: %d\n", _syx_interp_state.frame, ++_frame_depth);
+#endif
+
   frame->this_context = syx_nil;
   frame->parent_frame = parent_frame;
   frame->stack_return_frame = parent_frame;
@@ -152,7 +160,7 @@ _syx_interp_frame_prepare_new (SyxOop method)
   temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
   frame->stack = _syx_interp_state.temporaries + temporaries_count;
 
-  frame->receiver = _syx_interp_state.frame->receiver = _syx_interp_state.message_receiver;
+  frame->receiver = _syx_interp_state.message_receiver;
   memcpy (_syx_interp_state.arguments, _syx_interp_state.message_arguments,
           _syx_interp_state.message_arguments_count * sizeof (SyxOop));
   memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
@@ -293,6 +301,10 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
   SyxInterpFrame *return_frame = (use_stack_return
                                   ? _syx_interp_state.frame->stack_return_frame
                                   : _syx_interp_state.frame->parent_frame);
+
+#ifdef SYX_DEBUG_CONTEXT
+  printf("CONTEXT - Leave frame %p for %p - Depth: %d\n", _syx_interp_state.frame, return_frame, --_frame_depth);
+#endif
 
   SYX_PROCESS_RETURNED_OBJECT(syx_processor_active_process) = return_object;
 
@@ -581,6 +593,9 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   SyxOop binding;
   SyxOop klass, method;
   syx_int32 primitive;
+#ifdef SYX_DEBUG_CONTEXT
+  syx_int32 depth;
+#endif
 
   SYX_START_PROFILE;
 
@@ -589,7 +604,19 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   method = syx_class_lookup_method_binding (klass, binding);
   SYX_END_PROFILE(send_message);
 #ifdef SYX_DEBUG_BYTECODE
-  syx_debug ("BYTECODE - Send message #%s\n", SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
+#ifdef SYX_DEBUG_CONTEXT
+  putchar('`');
+  for (depth=0; depth < _frame_depth; depth++)
+    putchar('-');
+#endif
+  syx_debug ("BYTECODE - Send message %s%s#%s\n",
+             SYX_IS_NIL (SYX_CLASS_NAME (syx_object_get_class (_syx_interp_state.message_receiver)))
+             ? SYX_OBJECT_STRING (SYX_CLASS_NAME (_syx_interp_state.message_receiver))
+             : SYX_OBJECT_STRING (SYX_CLASS_NAME (syx_object_get_class (_syx_interp_state.message_receiver))),
+             SYX_IS_NIL (SYX_CLASS_NAME (syx_object_get_class (_syx_interp_state.message_receiver)))
+             ? " class"
+             : "",
+             SYX_OBJECT_SYMBOL (SYX_ASSOCIATION_KEY (binding)));
 #endif
 
   if (SYX_IS_NIL (method))
