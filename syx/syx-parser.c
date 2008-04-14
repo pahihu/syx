@@ -161,6 +161,7 @@ syx_parser_parse (SyxParser *self, syx_bool skip_message_pattern)
 
   if (self->_in_block)
     syx_bytecode_push_constant (self->bytecode, SYX_BYTECODE_CONST_NIL);
+
   _syx_parser_parse_body (self);
 
   syx_bytecode_do_special (self->bytecode, SYX_BYTECODE_SELF_RETURN);
@@ -693,6 +694,8 @@ _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
 static syx_varsize
 _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool do_pop)
 {
+  syx_int32 method_temporary_count;
+  syx_int32 block_temporary_count;
   syx_uint16 jump;
   syx_bool block_state;
   SyxToken token;
@@ -714,8 +717,14 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
       syx_lexer_next_token (self->lexer);
       self->_temporary_scopes_top++;
       self->_temporary_scopes[self->_temporary_scopes_top].top = 0;
+
+      method_temporary_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (self->method));
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
+      block_temporary_count = self->_temporary_scopes[self->_temporary_scopes_top].top;
+      /* increase the size of the temporary stack to hold optimized block temporaries in the method */
+      SYX_CODE_TEMPORARIES_COUNT (self->method) = syx_small_integer_new (method_temporary_count
+                                                                         + block_temporary_count);
       _syx_parser_free_temporaries (self);
       self->_temporary_scopes_top--;
       token = syx_lexer_next_token (self->lexer);
@@ -991,7 +1000,7 @@ _syx_parser_parse_literal_array (SyxParser *self)
           elements[top++] = syx_character_new (token.value.character);
           break;
         default:
-          syx_error ("illegal text in literal array\n");
+          syx_signal (SYX_ERROR_INTERP, syx_string_new ("Illegal text in literal array\n"));
           break;
         }
 
@@ -1024,7 +1033,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
 
       token = syx_lexer_next_token (self->lexer);
       if (token.type != SYX_TOKEN_NAME_CONST)
-        syx_error ("Expected name constant for argument name\n");
+        syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected name constant for argument name\n"));
       scope->stack[scope->top++] = syx_strdup (token.value.string);
       syx_token_free (token);
 
@@ -1039,7 +1048,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
 
           token = syx_lexer_next_token (self->lexer);
           if (token.type != SYX_TOKEN_NAME_CONST)
-            syx_error ("Expected name constant for argument name\n");
+            syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected name constant for argument name\n"));
           scope->stack[scope->top++] = syx_strdup (token.value.string);
           syx_token_free (token);
 
@@ -1049,7 +1058,7 @@ _syx_parser_parse_method_message_pattern (SyxParser *self)
       SYX_METHOD_SELECTOR(self->method) = syx_symbol_new (selector);
       break;
     default:
-      syx_error ("Invalid message pattern\n");
+      syx_signal (SYX_ERROR_INTERP, syx_string_new ("Invalid message pattern\n"));
     }
 
   SYX_CODE_ARGUMENTS_COUNT(self->method) = syx_small_integer_new (scope->top);
@@ -1079,7 +1088,7 @@ _syx_parser_parse_block_message_pattern (SyxParser *self)
     }
 
   if (! (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "|")))
-    syx_error ("Expected | after block message pattern\n");
+    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Expected | after block message pattern\n"));
 
   syx_token_free (token);
   syx_lexer_next_token (self->lexer);

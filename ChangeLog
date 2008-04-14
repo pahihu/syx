@@ -1,5 +1,12 @@
 2008-04-14  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-parser.c (_syx_parser_parse_optimized_block): increase method temporary stack to hold optimized block temporaries
+
+	* syx/syx-interp.c (_syx_interp_find_temporary): forgot to change the code when copied find_argument
+	(_syx_interp_find_argument): fixed
+
+	* syx/syx-interp.h (syx_interp_stack_peek): fix
+
 	* syx/syx-parser.c (_syx_scope_free): added
 	(syx_parser_free): fix leak
 	Clear scope tops.

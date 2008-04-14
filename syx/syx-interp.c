@@ -53,12 +53,13 @@
 #include "syx-error.h"
 #include "syx-profile.h"
 
+#include <assert.h>
+
 #ifdef SYX_DEBUG_FULL
 
 #define SYX_DEBUG_CONTEXT
-/* #define SYX_DEBUG_CONTEXT_STACK */
 #define SYX_DEBUG_BYTECODE
-#define SYX_DEBUG_TRACE_IP
+/*#define SYX_DEBUG_TRACE_IP*/
 
 #endif /* SYX_DEBUG_FULL */
 
@@ -383,12 +384,13 @@ _syx_interp_find_argument (syx_uint16 argument)
     {
       syx_int32 count = SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (frame->method));
       if (count > argument)
-        return ((SyxOop *)&_syx_interp_state.frame->local) + argument;
+        return ((SyxOop *)&frame->local) + argument;
       argument -= count;
       frame = frame->outer_frame;
     }
-
-  /* this will let bytecode functions crash, it's like an assertion */
+  
+  /* this shouldn't be reached, maybe a parser fault? */
+  assert (FALSE);
   return NULL;
 }
 
@@ -400,14 +402,15 @@ _syx_interp_find_temporary (syx_uint16 temporary)
      So we need to find the right scope by looping trough outer frames and their arguments. */
   while (frame)
     {
-      syx_int32 count = SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (frame->method));
+      syx_int32 count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (frame->method));
       if (count > temporary)
-        return ((SyxOop *)&_syx_interp_state.frame->local) + temporary;
+        return ((SyxOop *)&frame->local + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (frame->method))) + temporary;
       temporary -= count;
       frame = frame->outer_frame;
     }
 
-  /* this will let bytecode functions crash, it's like an assertion */
+  /* this shouldn't be reached, maybe a parser fault? */
+  assert (FALSE);
   return NULL;
 }
 
@@ -700,6 +703,11 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 {
   SyxOop frame;
   SyxOop closure = syx_object_copy (_syx_interp_state.method_literals[argument]);
+
+#ifdef SYX_DEBUG_BYTECODE
+  syx_debug ("BYTECODE - Push block closure %d -> %p\n", argument, SYX_OOP_CAST_POINTER (closure));
+#endif
+
   syx_interp_stack_push (closure);
   
   /* Copy a piece of the process stack: the current frame without the "local" structure member
@@ -913,13 +921,14 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE - Duplicate\n");
 #endif
+
       syx_interp_stack_push (syx_interp_stack_peek ());
       return TRUE;
     default:
 #ifdef SYX_DEBUG_BYTECODE
       syx_debug ("BYTECODE ------- UNKNOWN --------\n");
 #endif
-      syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown bytecode"));
+      syx_signal (SYX_ERROR_INTERP, syx_string_new ("Unknown bytecode: %p", argument));
       return FALSE;
     }
 
