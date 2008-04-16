@@ -412,7 +412,7 @@ syx_string_new (syx_symbol string, ...)
 
 /*! Returns a new String instance. */
 INLINE SyxOop
-syx_string_new_ref (syx_string string)
+syx_string_new_unref (syx_string string)
 {
   if (!string)
     return syx_nil;

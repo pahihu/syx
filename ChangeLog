@@ -1,5 +1,16 @@
 2008-04-15  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-interp.h (struct SyxInterpFrame): add detached_frame
+
+	* syx/syx-interp.c (_syx_interp_frame_to_context): copy the arguments
+	(syx_interp_push_block_closure): detach the current frame
+
+	* syx/syx-object.h (syx_string_new_unref): renamed from syx_string_new_ref
+
+	* configure.ac: use -g3 for info and full debug modes
+
+	* syx/syx-interp.h (SYX_PRIM_FAIL): a lot semplified
+
 	* syx/syx-parser.c (_syx_parser_find_temporary_name): fix variable name resolution for optimized blocks
 
 	* syx/syx-interp.c (syx_process_execute_scheduled): usually next instruction is not bigger than the bytecodes count until the end of the process

@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -31,7 +31,7 @@ SYX_FUNC_PRIMITIVE(Readline_readline)
   SyxOop string;
   SYX_PRIM_ARGS(1);
   char *s = readline (SYX_OBJECT_STRING(es->message_arguments[0]));
-  string = syx_string_new_ref (s);
+  string = syx_string_new_unref (s);
   SYX_PRIM_RETURN(string);
 }
 

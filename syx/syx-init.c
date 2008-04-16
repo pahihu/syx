@@ -271,7 +271,7 @@ syx_build_basic (void)
   Sets up syx_nil, syx_true and syx_false constants.
   Lookup all classes from the Smalltalk dictionary and insert them into the VM.
   Then initialize the interpreter, the errors system and the scheduler.
-  Finally send SystemDictionary>>#initializeSystem to initialize everything else from within Smalltalk
+  Finally send SystemDictionary>>#initializeSystem: to initialize everything else from within Smalltalk
 */
 void
 syx_fetch_basic (void)

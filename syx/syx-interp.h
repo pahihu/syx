@@ -41,6 +41,7 @@ typedef struct SyxInterpFrame SyxInterpFrame;
 struct SyxInterpFrame
 {
   SyxOop this_context;
+  SyxOop detached_frame;
   SyxInterpFrame *parent_frame;
   SyxInterpFrame *outer_frame;
   SyxInterpFrame *stack_return_frame;
@@ -81,11 +82,7 @@ struct SyxInterpState
 
 /*! Enter the method which contains the primitive call */
 #define SYX_PRIM_FAIL                                                   \
-  syx_interp_enter_context (syx_processor_active_process,               \
-                            syx_method_context_new (method,             \
-                                                    es->message_receiver, \
-                                                    syx_array_new_ref (es->message_arguments_count, \
-                                                                       es->message_arguments))); \
+  _syx_interp_frame_prepare_new (method);                               \
   return FALSE
 
 /*! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails */

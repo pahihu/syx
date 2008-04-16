@@ -664,7 +664,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
         }
 
       s[count] = '\0';
-      string = syx_string_new_ref (s);
+      string = syx_string_new_unref (s);
       SYX_PRIM_RETURN (string);
       break;
 

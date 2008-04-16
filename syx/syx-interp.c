@@ -83,10 +83,12 @@ _syx_interp_save_process_state (void)
 
 /* Fetches and updates the execution state of the interpreter to be ready for next instructions */
 static void
-_syx_interp_state_update (void)
+_syx_interp_state_update (SyxInterpFrame *frame)
 {
   SyxOop method;
   SyxOop bytecodes;
+
+  _syx_interp_state.frame = frame;
 
   method = _syx_interp_state.frame->method;
   if (SYX_IS_NIL (method))
@@ -113,8 +115,7 @@ _syx_interp_switch_process (SyxOop process)
   _syx_interp_save_process_state ();
   _syx_interp_state.process_frame = frame;
   frame += SYX_SMALL_INTEGER (SYX_PROCESS_FRAME_POINTER (process));
-  _syx_interp_state.frame = frame;
-  _syx_interp_state_update ();
+  _syx_interp_state_update (frame);
 
   if (SYX_IS_NIL (_syx_interp_state.frame->method))
     return FALSE;
@@ -132,34 +133,33 @@ _syx_interp_frame_prepare_new (SyxOop method)
   SyxInterpFrame *frame;
   SyxInterpFrame *parent_frame;
   syx_int32 temporaries_count;
-
+  
   parent_frame = _syx_interp_state.frame;
-  /* We create the new frame just after the current one. The top of the stack is a good point then.
-   If the stack pointer isn't available (e.g. for first process run) just use the process stack bottom. */
-  if (!parent_frame->stack)
+  /* if NULL, this frame should be the first one to be executed of the process */
+  if (SYX_IS_NIL (parent_frame->method))
     {
       parent_frame = NULL;
-      frame = _syx_interp_state.frame = _syx_interp_state.process_frame;
+      frame = _syx_interp_state.process_frame;
     }
   else
-    frame = _syx_interp_state.frame = (SyxInterpFrame *)parent_frame->stack;
+    frame = (SyxInterpFrame *)parent_frame->stack;
 
 #ifdef SYX_DEBUG_CONTEXT
-  printf("CONTEXT - New frame %p - Depth: %d\n", _syx_interp_state.frame, ++_frame_depth);
+  syx_debug ("CONTEXT - New frame %p - Depth: %d\n", _syx_interp_state.frame, ++_frame_depth);
 #endif
 
   frame->this_context = syx_nil;
+  frame->detached_frame = syx_nil;
   frame->parent_frame = parent_frame;
   frame->stack_return_frame = parent_frame;
   frame->outer_frame = NULL;
   frame->method = method;
   frame->next_instruction = 0;
 
-  _syx_interp_state_update ();
+  _syx_interp_state_update (frame);
 
   temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
   frame->stack = _syx_interp_state.temporaries + temporaries_count;
-
   frame->receiver = _syx_interp_state.message_receiver;
   memcpy (_syx_interp_state.arguments, _syx_interp_state.message_arguments,
           _syx_interp_state.message_arguments_count * sizeof (SyxOop));
@@ -193,7 +193,7 @@ _syx_interp_frame_to_context (SyxInterpFrame *frame)
     return frame->this_context;
   
   syx_memory_gc_begin ();
-  arguments = syx_array_new (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
+  arguments = syx_array_new_ref (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
   if (_SYX_INTERP_IN_BLOCK)
     context = syx_block_context_new (frame->method, arguments);
   else
@@ -303,7 +303,10 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
                                   : _syx_interp_state.frame->parent_frame);
 
 #ifdef SYX_DEBUG_CONTEXT
-  printf("CONTEXT - Leave frame %p for %p - Depth: %d\n", _syx_interp_state.frame, return_frame, --_frame_depth);
+  syx_debug ("CONTEXT - Leave frame %p for %p - Depth: %d - %s\n", _syx_interp_state.frame, return_frame, --_frame_depth,
+             (_SYX_INTERP_IN_BLOCK
+              ? NULL
+              : SYX_OBJECT_STRING (SYX_METHOD_SELECTOR (_syx_interp_state.frame->method))));
 #endif
 
   SYX_PROCESS_RETURNED_OBJECT(syx_processor_active_process) = return_object;
@@ -315,7 +318,7 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
       return FALSE;
     }
 
-  _syx_interp_state_update ();
+  _syx_interp_state_update (return_frame);
   syx_interp_stack_push (return_object);
   return TRUE;
 }
@@ -728,7 +731,9 @@ SYX_FUNC_INTERPRETER (syx_interp_send_unary)
 
 SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 {
-  SyxOop frame;
+  SyxInterpFrame *frame;
+  syx_int32 frame_size;
+  SyxOop frame_oop;
   SyxOop closure = syx_object_copy (_syx_interp_state.method_literals[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
@@ -736,11 +741,22 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
 #endif
 
   syx_interp_stack_push (closure);
+
+  if (!SYX_IS_NIL (_syx_interp_state.frame->detached_frame))
+    SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = _syx_interp_state.frame->detached_frame;
+  else
+    {
+      /* Copy a piece of the process stack */
+      frame_size = SYX_POINTERS_OFFSET (_syx_interp_state.frame->stack, _syx_interp_state.frame);
+      frame_oop = syx_array_new_ref (frame_size, (SyxOop *)_syx_interp_state.frame);
+      frame = (SyxInterpFrame *)SYX_OBJECT_DATA (frame_oop);
+      frame->detached_frame = frame_oop;
+      /* Detach this frame from the process stack.
+         The stack pointer will still refer to the process stack */
+      _syx_interp_state_update (frame);
+      SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame_oop;
+    }
   
-  /* Copy a piece of the process stack: the current frame without the "local" structure member
-     which is unuseful. */
-  frame = syx_array_new (sizeof (SyxInterpFrame) / 4 - 1, (SyxOop *)_syx_interp_state.frame);
-  SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame;
   return TRUE;
 }
 
