@@ -308,13 +308,13 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
 
   SYX_PROCESS_RETURNED_OBJECT(syx_processor_active_process) = return_object;
 
+  _syx_interp_state.frame = return_frame;
   if (!return_frame)
     {
       syx_scheduler_remove_process (syx_processor_active_process);
       return FALSE;
     }
 
-  _syx_interp_state.frame = return_frame;
   _syx_interp_state_update ();
   syx_interp_stack_push (return_object);
   return TRUE;
@@ -335,7 +335,7 @@ syx_process_execute_scheduled (SyxOop process)
       return;
     }
 
-  while (_syx_interp_state.frame->next_instruction < _syx_interp_state.method_bytecodes_count && _syx_interp_state.byteslice >= 0)
+  while (_syx_interp_state.frame)
     {
       byte = _syx_interp_get_next_byte ();
       /* No more instructions or somebody wants to yield control to other processes */
@@ -370,7 +370,7 @@ syx_process_execute_blocking (SyxOop process)
       return;
     }
 
-  while (_syx_interp_state.frame->next_instruction < _syx_interp_state.method_bytecodes_count)
+  while (_syx_interp_state.frame)
     {
       byte = _syx_interp_get_next_byte ();
       _syx_interp_execute_byte (byte);

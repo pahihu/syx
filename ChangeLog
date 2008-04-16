@@ -1,3 +1,13 @@
+2008-04-15  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-parser.c (_syx_parser_find_temporary_name): fix variable name resolution for optimized blocks
+
+	* syx/syx-interp.c (syx_process_execute_scheduled): usually next instruction is not bigger than the bytecodes count until the end of the process
+	(syx_process_execute_blocked): same here
+	(syx_interp_leave_and_answer): clear the frame
+
+	* syx/syx-parser.c (_syx_parser_parse_optimized_block): do not create a new scope but share variables with the outer context
+
 2008-04-14  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-parser.c (_syx_parser_parse_optimized_block): increase method temporary stack to hold optimized block temporaries

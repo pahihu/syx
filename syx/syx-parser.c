@@ -195,11 +195,13 @@ _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
   for (scope_index=self->_temporary_scopes_top; scope_index >= 0; scope_index--)
     {
       scope = self->_temporary_scopes + scope_index;
-      for (i=0; i < scope->top; i++, index++)
+      index += scope->top - 1;
+      for (i=scope->top-1; i >= 0; i--, index--)
         {
           if (!strcmp (scope->stack[i], name))
             return index;
         }
+      index++;
     }
 
   return -1;
@@ -550,7 +552,7 @@ _syx_parser_parse_temporaries (SyxParser *self)
 
       syx_lexer_next_token (self->lexer);
     }
-
+    
   SYX_CODE_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (scope->top);
 }
 
@@ -694,8 +696,6 @@ _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
 static syx_varsize
 _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool do_pop)
 {
-  syx_int32 method_temporary_count;
-  syx_int32 block_temporary_count;
   syx_uint16 jump;
   syx_bool block_state;
   SyxToken token;
@@ -715,18 +715,8 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
     {
       syx_token_free (token);
       syx_lexer_next_token (self->lexer);
-      self->_temporary_scopes_top++;
-      self->_temporary_scopes[self->_temporary_scopes_top].top = 0;
-
-      method_temporary_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (self->method));
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
-      block_temporary_count = self->_temporary_scopes[self->_temporary_scopes_top].top;
-      /* increase the size of the temporary stack to hold optimized block temporaries in the method */
-      SYX_CODE_TEMPORARIES_COUNT (self->method) = syx_small_integer_new (method_temporary_count
-                                                                         + block_temporary_count);
-      _syx_parser_free_temporaries (self);
-      self->_temporary_scopes_top--;
       token = syx_lexer_next_token (self->lexer);
     }
   else

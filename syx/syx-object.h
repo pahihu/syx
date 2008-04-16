@@ -63,7 +63,7 @@ SYX_BEGIN_DECLS
 #define SYX_IS_BOOLEAN(oop) (SYX_IS_TRUE(oop) || SYX_IS_FALSE(oop))
 #define SYX_IS_OBJECT(oop) (SYX_IS_POINTER(oop) &&                      \
                             (oop) >= (SyxOop)syx_memory &&              \
-                            (oop) <= (SyxOop)(syx_memory + _syx_memory_size - 1))
+                            (oop) < (SyxOop)(syx_memory + _syx_memory_size))
 #define SYX_IS_CPOINTER(oop) (SYX_IS_POINTER(oop) &&                    \
                               ((oop) < (SyxOop)syx_memory ||            \
                                (oop) >= (SyxOop)(syx_memory + _syx_memory_size)))
