@@ -235,6 +235,7 @@ syx_process_new (void)
   SYX_PROCESS_STACK(object) = syx_array_new_size (5000);
   SYX_PROCESS_SUSPENDED(object) = syx_true;
   SYX_PROCESS_SCHEDULED(object) = syx_false;
+  SYX_PROCESS_FRAME_POINTER(object) = syx_small_integer_new (0);
   syx_scheduler_add_process (object);
   return object;
 }

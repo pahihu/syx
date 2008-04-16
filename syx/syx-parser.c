@@ -694,6 +694,7 @@ _syx_parser_do_continuation (SyxParser *self, syx_bool super_receiver)
 static syx_varsize
 _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_type, syx_bool do_pop)
 {
+  syx_int8 scope_top;
   syx_uint16 jump;
   syx_bool block_state;
   SyxToken token;
@@ -713,8 +714,11 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
     {
       syx_token_free (token);
       syx_lexer_next_token (self->lexer);
+      /* we need to restore the current scope after the optimized block has been parsed */
+      scope_top = self->_temporary_scopes[self->_temporary_scopes_top].top;
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
+      self->_temporary_scopes[self->_temporary_scopes_top].top = scope_top;
       token = syx_lexer_next_token (self->lexer);
     }
   else

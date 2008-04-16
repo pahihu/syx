@@ -156,7 +156,7 @@ main (int argc, char *argv[])
   puts ("- Test temporaries in optimized blocks");
   ret_obj = _interpret ("method | tmp | tmp := 123. true ifTrue: [ | tmp | tmp := 321 ]. ^tmp");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
-
+  /*
   puts ("- Test exception handling");
   ret_obj = _interpret ("method ^[Signal signal] on: Signal do: [:ex | true]");
   assert (SYX_IS_TRUE (ret_obj));
@@ -172,7 +172,7 @@ main (int argc, char *argv[])
   puts ("- Test ensuring");
   ret_obj = _interpret ("method [Signal signal. 123] ensure: [^321]. 213");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
-
+  */
   puts ("- Test loops");
   ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");
   assert (SYX_SMALL_INTEGER(ret_obj) == 1000);

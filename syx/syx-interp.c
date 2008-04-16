@@ -90,12 +90,12 @@ _syx_interp_state_update (SyxInterpFrame *frame)
 
   _syx_interp_state.frame = frame;
 
-  method = _syx_interp_state.frame->method;
+  method = frame->method;
   if (SYX_IS_NIL (method))
     return;
 
   bytecodes = SYX_CODE_BYTECODES (method);
-  _syx_interp_state.arguments = &_syx_interp_state.frame->local;
+  _syx_interp_state.arguments = &frame->local;
   _syx_interp_state.temporaries = _syx_interp_state.arguments + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (method));
   _syx_interp_state.method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
   _syx_interp_state.method_bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (bytecodes);
@@ -120,6 +120,7 @@ _syx_interp_switch_process (SyxOop process)
   if (SYX_IS_NIL (_syx_interp_state.frame->method))
     return FALSE;
 
+  syx_processor_active_process = process;
   _syx_interp_state.byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
   return TRUE;
 }
@@ -193,7 +194,7 @@ _syx_interp_frame_to_context (SyxInterpFrame *frame)
     return frame->this_context;
   
   syx_memory_gc_begin ();
-  arguments = syx_array_new_ref (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
+  arguments = syx_array_new (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
   if (_SYX_INTERP_IN_BLOCK)
     context = syx_block_context_new (frame->method, arguments);
   else
@@ -246,12 +247,14 @@ syx_bool
 syx_interp_enter_context (SyxOop process, SyxOop context)
 {
   SyxInterpState orig_state;
+  SyxOop orig_process;
   SyxOop arguments;
 
   if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
     return FALSE;
 
-  if (SYX_OOP_NE (process, syx_processor_active_process) || !_syx_interp_state.frame)
+  orig_process = syx_processor_active_process;
+  if (SYX_OOP_NE (process, orig_process) || !_syx_interp_state.frame)
     {
       orig_state = _syx_interp_state;
       _syx_interp_switch_process (process);
@@ -275,10 +278,10 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
     }
   _syx_interp_state.frame->this_context = context;
 
-  if (SYX_OOP_NE (process, syx_processor_active_process))
+  if (SYX_OOP_NE (process, orig_process))
     {
       _syx_interp_state = orig_state;
-      _syx_interp_switch_process (syx_processor_active_process);
+      syx_processor_active_process = orig_process;
     }
 
   return TRUE;

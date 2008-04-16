@@ -1,5 +1,11 @@
 2008-04-16  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-interp.c (_syx_interp_frame_to_context): again do not copy because we have to reference the frame, not important if the context will die for now
+
+	* syx/syx-object.c (syx_process_new): reset frame pointer
+
+	* syx/syx-interp.c (_syx_interp_switch_process): really switch process
+
 	* syx/syx-parser.c (syx_parser_new): do not erase scopes
 
 2008-04-15  Luca Bruno  <lethalman88@gmail.com>
