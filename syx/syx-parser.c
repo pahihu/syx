@@ -84,8 +84,6 @@ syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass)
   self->bytecode = syx_bytecode_new ();
   self->_temporary_scopes_top = 0;
   self->_argument_scopes_top = 0;
-  memset (self->_temporary_scopes, '\0', sizeof (self->_temporary_scopes));
-  memset (self->_argument_scopes, '\0', sizeof (self->_argument_scopes));
   self->instance_names = syx_class_get_all_instance_variable_names (klass);
 
   self->_duplicate_indexes_top = 0;
