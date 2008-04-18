@@ -303,17 +303,36 @@ SyxOop
 syx_symbol_new (syx_symbol symbol)
 {
   SyxOop obj;
+  syx_int32 index;
+  SyxOop *table;
+  syx_int32 tally;
+  syx_varsize size;
 
   if (!symbol)
     return syx_nil;
 
-  obj = syx_dictionary_at_symbol_if_absent (syx_symbols, symbol, syx_nil);
+  /* We don't use common dictionary functions to avoid searching the index twice.
+     See issue #21 */
 
-  if (SYX_IS_NIL (obj))
-    {
-      obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)syx_strdup (symbol));
-      syx_dictionary_at_symbol_put (syx_symbols, obj, obj);
-    }
+  tally = SYX_SMALL_INTEGER (SYX_DICTIONARY_TALLY (syx_symbols));
+  size = SYX_OBJECT_DATA_SIZE (syx_symbols);
+
+  if (tally >= size / 2)
+    syx_dictionary_rehash (syx_symbols);
+
+  index = syx_dictionary_index_of (syx_symbols, symbol, TRUE);
+
+  if (index < 0)
+    syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (syx_symbols));
+
+  table = SYX_OBJECT_DATA (syx_symbols);
+  if (!SYX_IS_NIL (table[index]))
+    return table[index+1];
+
+  obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)syx_strdup (symbol));
+  table[index] = obj;
+  table[index+1] = obj;
+  SYX_DICTIONARY_TALLY (syx_symbols) = syx_small_integer_new (tally + 1);
 
   return obj;
 }
@@ -607,16 +626,17 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   if (tally >= size / 2)
     syx_dictionary_rehash (dict);
 
-  table = SYX_OBJECT_DATA (dict);
   index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), TRUE);
 
   if (index < 0)
     syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (dict));
 
+  table = SYX_OBJECT_DATA (dict);
   table[index] = key;
   table[index+1] = value;
   SYX_DICTIONARY_TALLY (dict) = syx_small_integer_new (tally + 1);
 }
+
 
 /*!
   Create a new MethodContext and setup the frame in the Process stack:
