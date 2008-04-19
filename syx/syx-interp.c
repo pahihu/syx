@@ -24,22 +24,11 @@
 
 /*! \page syx_interpreter Syx Interpreter
 
-  Frame representation:
-  this context - * may be nil, it's set when a the context is demanded from the Smalltalk-side
-  parent frame - points to the frame which created the current one, used for "self return"
-  outer frame - points to the most outer frame, usually the frame which created the block closure. It's NULL for method contexts.
-  return frame - points the frame used for stack return
-  compiled code - a CompiledMethod or a CompiledBlock
-  instruction pointer - pointer to the next method bytecode to be executed
-  arguments pointer
-  temporaries pointer
-  stack pointer
-  ... stack ... - contains in order: receiver, arguments, temporaries and others
+  The stack pointer points to arguments, temporaries and the method local stack.
   
   * When a context is needed from the Smalltalk-side (e.g. thisContext, Processor activeProcess context,
-  context parent), a MethodContext or BlockContext is created on the fly.
-  Working on the context instance will have effects on the Process stack, and, when possible,
-  return the existing one (this context).
+  context parent), a MethodContext or BlockContext is created on the fly, or returned the existing one.
+  Working on the context instance will affect Process stack.
 */
 
 #include "syx-object.h"
@@ -112,7 +101,6 @@ _syx_interp_switch_process (SyxOop process)
   if (!frame)
     return FALSE;
 
-  _syx_interp_save_process_state ();
   _syx_interp_state.process_frame = frame;
   frame += SYX_SMALL_INTEGER (SYX_PROCESS_FRAME_POINTER (process));
   _syx_interp_state_update (frame);
@@ -254,11 +242,8 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
     return FALSE;
 
   orig_process = syx_processor_active_process;
-  if (SYX_OOP_NE (process, orig_process) || !_syx_interp_state.frame)
-    {
-      orig_state = _syx_interp_state;
-      _syx_interp_switch_process (process);
-    }
+  orig_state = _syx_interp_state;
+  (void) _syx_interp_switch_process (process);
 
   arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
   if (SYX_IS_NIL (arguments))
@@ -276,13 +261,12 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
       _syx_interp_state.message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
       _syx_interp_frame_prepare_new (SYX_METHOD_CONTEXT_METHOD (context));
     }
-  _syx_interp_state.frame->this_context = context;
 
-  if (SYX_OOP_NE (process, orig_process))
-    {
-      _syx_interp_state = orig_state;
-      syx_processor_active_process = orig_process;
-    }
+  _syx_interp_state.frame->this_context = context;
+  SYX_PROCESS_FRAME_POINTER(process) = syx_small_integer_new (SYX_POINTERS_OFFSET (_syx_interp_state.frame, _syx_interp_state.process_frame));
+
+  _syx_interp_state = orig_state;
+  syx_processor_active_process = orig_process;
 
   return TRUE;
 }
@@ -341,10 +325,10 @@ syx_process_execute_scheduled (SyxOop process)
       return;
     }
 
-  while (_syx_interp_state.frame)
+  while (_syx_interp_state.frame && _syx_interp_state.byteslice >= 0)
     {
       byte = _syx_interp_get_next_byte ();
-      /* No more instructions or somebody wants to yield control to other processes */
+      /* No more frames or somebody wants to yield control to other processes */
       if (!_syx_interp_execute_byte (byte))
         break;
       _syx_interp_state.byteslice--;

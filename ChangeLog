@@ -1,79 +1,92 @@
+2008-04-18  Luca Bruno  <lethalman88@gmail.com>
+
+        * tests/testinterp.c (main): test block recursion (see issue #29)
+
+        * syx/syx-interp.c (_syx_interp_switch_process): do not save the process state
+
+        * syx/syx-parser.c (_syx_parser_parse_optimized_block): fix memory leak
+
+        * syx/syx-interp.c (syx_interp_enter_context): save process state
+        (_syx_interp_switch_process): always switch process
+
+        * syx/syx-init.c (syx_initialize_system): 
+
 2008-04-16  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-primitives.c (BlockClosure_valueWithArguments): forgot part of the implementation
-	(Compiler_parse): fix memory leak
+        * syx/syx-primitives.c (BlockClosure_valueWithArguments): forgot part of the implementation
+        (Compiler_parse): fix memory leak
 
-	* syx/syx-interp.c (_syx_interp_frame_to_context): again do not copy because we have to reference the frame, not important if the context will die for now
+        * syx/syx-interp.c (_syx_interp_frame_to_context): again do not copy because we have to reference the frame, not important if the context will die for now
 
-	* syx/syx-object.c (syx_process_new): reset frame pointer
+        * syx/syx-object.c (syx_process_new): reset frame pointer
 
-	* syx/syx-interp.c (_syx_interp_switch_process): really switch process
+        * syx/syx-interp.c (_syx_interp_switch_process): really switch process
 
-	* syx/syx-parser.c (syx_parser_new): do not erase scopes
+        * syx/syx-parser.c (syx_parser_new): do not erase scopes
 
 2008-04-15  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-interp.h (struct SyxInterpFrame): add detached_frame
+        * syx/syx-interp.h (struct SyxInterpFrame): add detached_frame
 
-	* syx/syx-interp.c (_syx_interp_frame_to_context): copy the arguments
-	(syx_interp_push_block_closure): detach the current frame
+        * syx/syx-interp.c (_syx_interp_frame_to_context): copy the arguments
+        (syx_interp_push_block_closure): detach the current frame
 
-	* syx/syx-object.h (syx_string_new_unref): renamed from syx_string_new_ref
+        * syx/syx-object.h (syx_string_new_unref): renamed from syx_string_new_ref
 
-	* configure.ac: use -g3 for info and full debug modes
+        * configure.ac: use -g3 for info and full debug modes
 
-	* syx/syx-interp.h (SYX_PRIM_FAIL): a lot semplified
+        * syx/syx-interp.h (SYX_PRIM_FAIL): a lot semplified
 
-	* syx/syx-parser.c (_syx_parser_find_temporary_name): fix variable name resolution for optimized blocks
+        * syx/syx-parser.c (_syx_parser_find_temporary_name): fix variable name resolution for optimized blocks
 
-	* syx/syx-interp.c (syx_process_execute_scheduled): usually next instruction is not bigger than the bytecodes count until the end of the process
-	(syx_process_execute_blocked): same here
-	(syx_interp_leave_and_answer): clear the frame
+        * syx/syx-interp.c (syx_process_execute_scheduled): usually next instruction is not bigger than the bytecodes count until the end of the process
+        (syx_process_execute_blocked): same here
+        (syx_interp_leave_and_answer): clear the frame
 
-	* syx/syx-parser.c (_syx_parser_parse_optimized_block): do not create a new scope but share variables with the outer context
+        * syx/syx-parser.c (_syx_parser_parse_optimized_block): do not create a new scope but share variables with the outer context
 
 2008-04-14  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-parser.c (_syx_parser_parse_optimized_block): increase method temporary stack to hold optimized block temporaries
+        * syx/syx-parser.c (_syx_parser_parse_optimized_block): increase method temporary stack to hold optimized block temporaries
 
-	* syx/syx-interp.c (_syx_interp_find_temporary): forgot to change the code when copied find_argument
-	(_syx_interp_find_argument): fixed
+        * syx/syx-interp.c (_syx_interp_find_temporary): forgot to change the code when copied find_argument
+        (_syx_interp_find_argument): fixed
 
-	* syx/syx-interp.h (syx_interp_stack_peek): fix
+        * syx/syx-interp.h (syx_interp_stack_peek): fix
 
-	* syx/syx-parser.c (_syx_scope_free): added
-	(syx_parser_free): fix leak
-	Clear scope tops.
+        * syx/syx-parser.c (_syx_scope_free): added
+        (syx_parser_free): fix leak
+        Clear scope tops.
 
-	* syx/syx-interp.h (struct SyxInterpFrame): removed ensure_block
+        * syx/syx-interp.h (struct SyxInterpFrame): removed ensure_block
 
-	* st/kernel/Set.st: forgot header
+        * st/kernel/Set.st: forgot header
 
-	* syx/syx-interp.c (_syx_interp_find_temporary): added
-	(_syx_interp_find_argument): added
-	(_syx_interp_state_update): obtain syx_uint16 bytecodes
-	(_syx_interp_frame_prepare_new): frame receiver not filled in
-	(syx_interp_do_special): get ensure block from the context, if available
+        * syx/syx-interp.c (_syx_interp_find_temporary): added
+        (_syx_interp_find_argument): added
+        (_syx_interp_state_update): obtain syx_uint16 bytecodes
+        (_syx_interp_frame_prepare_new): frame receiver not filled in
+        (syx_interp_do_special): get ensure block from the context, if available
 
 2008-04-13  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-error.c (syx_signal_does_not_understand): stop being a macro
+        * syx/syx-error.c (syx_signal_does_not_understand): stop being a macro
 
-	* tests/testparser.c (main): updated
+        * tests/testparser.c (main): updated
 
-	* syx/syx-parser.c: fix argument and temporary search
+        * syx/syx-parser.c: fix argument and temporary search
 
-	* syx/syx-utils.c: more info on method lookup failure
+        * syx/syx-utils.c: more info on method lookup failure
 
-	* syx/syx-interp.c (_syx_interp_switch_process): wrong way to get the process frame bottom
-	(syx_interp_enter_context): be sure we have a frame
-	(_syx_interp_frame_prepare_new): be aware of null frames and null stack pointers
+        * syx/syx-interp.c (_syx_interp_switch_process): wrong way to get the process frame bottom
+        (syx_interp_enter_context): be sure we have a frame
+        (_syx_interp_frame_prepare_new): be aware of null frames and null stack pointers
 
-	* syx/syx-enums.h: update VM-used variable names
+        * syx/syx-enums.h: update VM-used variable names
 
-	* st/kernel/initialDecl.st: variables have been updated to match interpreter implementation
+        * st/kernel/initialDecl.st: variables have been updated to match interpreter implementation
 
-	* syx/syx-primitives.c: incredibly cleaned up block messages
+        * syx/syx-primitives.c: incredibly cleaned up block messages
 
         Lots of changes to the interpreter and the parser.
         Arguments and temporaries of blocks won't be put into the same stack of the home method.

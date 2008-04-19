@@ -702,6 +702,7 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
   syx_uint16 jump;
   syx_bool block_state;
   SyxToken token;
+  syx_int32 i;
 
   syx_bytecode_do_special (self->bytecode, branch_type);
   syx_bytecode_gen_code (self->bytecode, 0);
@@ -722,6 +723,8 @@ _syx_parser_parse_optimized_block (SyxParser *self, SyxBytecodeSpecial branch_ty
       scope_top = self->_temporary_scopes[self->_temporary_scopes_top].top;
       _syx_parser_parse_temporaries (self);
       _syx_parser_parse_body (self);
+      for (i=scope_top; i < self->_temporary_scopes[self->_temporary_scopes_top].top; i++)
+        syx_free (self->_temporary_scopes[self->_temporary_scopes_top].stack[i]);
       self->_temporary_scopes[self->_temporary_scopes_top].top = scope_top;
       token = syx_lexer_next_token (self->lexer);
     }

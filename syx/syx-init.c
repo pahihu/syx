@@ -53,6 +53,7 @@
 #include <unistd.h>
 #endif
 
+#include <assert.h>
 #include <stdio.h>
 
 syx_bool syx_system_initialized = FALSE;
@@ -331,13 +332,13 @@ syx_initialize_system (void)
   /* initialize the system */
   process = syx_process_new ();
   context = syx_send_binary_message (syx_globals, "initializeSystem:", arguments);
-  syx_interp_enter_context (process, context);
+  assert (syx_interp_enter_context (process, context));
   syx_process_execute_blocking (process);
 
   /* now schedule to startup */
   process = syx_process_new ();
   context = syx_send_unary_message (syx_globals, "startupSystem");
-  syx_interp_enter_context (process, context);
+  assert (syx_interp_enter_context (process, context));
   SYX_PROCESS_SUSPENDED (process) = syx_false;
   
   syx_system_initialized = TRUE;

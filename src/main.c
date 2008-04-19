@@ -59,7 +59,7 @@ static void
 _version (void)
 {
   printf ("Syx %s\nVisit the homepage: http://code.google.com/p/syx\n"
-	  "Copyright (c) 2007 Luca Bruno\n",
+	  "Copyright (c) 2007-2008 Luca Bruno\n",
 	  SYX_VERSION);
 }
 

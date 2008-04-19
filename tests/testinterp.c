@@ -173,6 +173,14 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method [Signal signal. 123] ensure: [^321]. 213");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
   */
+
+  puts ("- Test block recursion");
+  _interpret ("method | b | b := [ :i | | d | Transcript nextPutAll: 'before ', i printString; cr."
+              "d := i - 1."
+              "(i > 0 ) ifTrue: [ b value: d]."
+              "Transcript nextPutAll: 'after ', i printString; cr. ]."
+              "b value: 5");
+
   puts ("- Test loops");
   ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");
   assert (SYX_SMALL_INTEGER(ret_obj) == 1000);

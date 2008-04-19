@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -72,6 +72,7 @@ initializeSystem: commandLineArguments
 
 startupSystem
     | continueStartup evalString |
+    'asd' printNl.
     startupProcess := Processor activeProcess.
 
     commandLine parse: #(c e:).
