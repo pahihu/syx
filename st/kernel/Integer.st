@@ -139,7 +139,7 @@ printStringRadix: base
 !
 
 printOn: aStream
-    self storeOn: aStream base: 10
+    self printOn: aStream base: 10
 !
 
 storeOn: aStream

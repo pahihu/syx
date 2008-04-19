@@ -411,7 +411,9 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 {
   SYX_PRIM_ARGS(1);
- 
+
+  es->message_arguments_count = SYX_OBJECT_DATA_SIZE (es->message_arguments[0]);
+  memcpy (es->message_arguments, SYX_OBJECT_DATA (es->message_arguments[0]), es->message_arguments_count * sizeof (SyxOop));
   _syx_interp_frame_prepare_new_closure (es->message_receiver);
   return TRUE;
 }
@@ -1673,6 +1675,7 @@ SYX_FUNC_PRIMITIVE (Compiler_parse)
     }
 
   syx_lexer_free (lexer, FALSE);
+  syx_free (parser->instance_names);
   syx_parser_free (parser, FALSE);
 
   SYX_PRIM_RETURN (meth);

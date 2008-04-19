@@ -551,7 +551,11 @@ _syx_parser_parse_temporaries (SyxParser *self)
       syx_lexer_next_token (self->lexer);
     }
     
-  SYX_CODE_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (scope->top);
+  /* we choose the maximum number so we can hold all the temporaries without forgetting
+     previous parsed optimized blocks. */
+  if (SYX_IS_NIL (SYX_CODE_TEMPORARIES_COUNT (self->method))
+      || scope->top > SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (self->method)))
+    SYX_CODE_TEMPORARIES_COUNT(self->method) = syx_small_integer_new (scope->top);
 }
 
 static void

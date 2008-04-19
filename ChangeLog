@@ -1,5 +1,8 @@
 2008-04-16  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-primitives.c (BlockClosure_valueWithArguments): forgot part of the implementation
+	(Compiler_parse): fix memory leak
+
 	* syx/syx-interp.c (_syx_interp_frame_to_context): again do not copy because we have to reference the frame, not important if the context will die for now
 
 	* syx/syx-object.c (syx_process_new): reset frame pointer

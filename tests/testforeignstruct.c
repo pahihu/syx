@@ -85,6 +85,7 @@ main (int argc, char *argv[])
   syx_memory_load_image ("test.sim");
   syx_scheduler_init ();
 
+  puts ("- Initializing test classes");
   syx_cold_file_in ("stsupport/TestCStruct.st");
   structTestClass = syx_globals_at ("TestCStruct");
   syx_object_initialize (structTestClass);
