@@ -174,6 +174,7 @@ main (int argc, char *argv[])
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
   */
 
+  /* From issue #29 */
   puts ("- Test block recursion");
   _interpret ("method | b | b := [ :i | | d | Transcript nextPutAll: 'before ', i printString; cr."
               "d := i - 1."

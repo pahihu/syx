@@ -1,5 +1,7 @@
 2008-04-18  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-parser.c (_syx_parser_find_temporary_name): fixes issue #29
+
         * tests/testinterp.c (main): test block recursion (see issue #29)
 
         * syx/syx-interp.c (_syx_interp_switch_process): do not save the process state

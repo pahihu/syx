@@ -199,7 +199,7 @@ _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
           if (!strcmp (scope->stack[i], name))
             return index;
         }
-      index++;
+      index = scope->top;
     }
 
   return -1;
