@@ -158,7 +158,7 @@ to: stop by: step do: aBlock
     "Do aBlock increasing self to stop stepping by step. Pass the counter to aBlock"
     | i |
     i := self.
-    step positive
+    step >= 0
 	ifTrue: [
 	    [ i <= stop ]
 		whileTrue: [ aBlock value: i.
@@ -173,7 +173,7 @@ to: stop by: step reverseDo: aBlock
     "Do aBlock decreasing self to stop stepping by step. Pass the counter to aBlock"
     | i |
     i := self.
-    step positive
+    step >= 0
 	ifTrue: [
 	    [ i >= stop ]
 		whileTrue: [ aBlock value: i.

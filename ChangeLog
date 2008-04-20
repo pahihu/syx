@@ -1,14 +1,19 @@
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-interp.c (syx_interp_enter_context): missed saving this_context
-	(syx_interp_context_to_frame): added
+        * st/kernel/Number.st (to:by:do, to:by:reverseDo): slightly optimized
 
-	* syx/syx-primitives.c (ContextPart_receiver): added
-	(BlockContext_outerContext): added
+        * syx/syx-primitives.c (Processor_enter): wrong argument
+        (Processor_swapWith): wrong argument
 
-	* st/kernel/BlockContext.st (outerContext, homeContext): 
+        * syx/syx-interp.c (syx_interp_enter_context): missed saving this_context
+        (syx_interp_context_to_frame): added
 
-	* st/kernel/ContextPart.st (tracebackString):
+        * syx/syx-primitives.c (ContextPart_receiver): added
+        (BlockContext_outerContext): added
+
+        * st/kernel/BlockContext.st (outerContext, homeContext): 
+
+        * st/kernel/ContextPart.st (tracebackString):
 
         * syx/syx-interp.h (struct SyxInterpFrame): add closure
 

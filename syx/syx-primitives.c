@@ -473,13 +473,13 @@ SYX_FUNC_PRIMITIVE (BlockContext_outerContext)
 SYX_FUNC_PRIMITIVE (Processor_enter)
 {
   SYX_PRIM_ARGS(1);
-  return syx_interp_enter_context (es->message_receiver, es->message_arguments[0]);
+  return syx_interp_enter_context (syx_processor_active_process, es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_swapWith)
 {
   SYX_PRIM_ARGS(1);
-  return syx_interp_swap_context (es->message_receiver, es->message_arguments[0]);
+  return syx_interp_swap_context (syx_processor_active_process, es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
