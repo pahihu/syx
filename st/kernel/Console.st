@@ -85,7 +85,7 @@ nextLine
 		  line isNil
 		      ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit ].
 		  self primAddHistory: line ]
-	ifFalse: [ '> ' print. stdout flush.
+	ifFalse: [ stdout nextPutAll: '> '; flush.
 	           line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].

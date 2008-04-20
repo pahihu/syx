@@ -184,22 +184,21 @@ syx_parser_parse (SyxParser *self, syx_bool skip_message_pattern)
 static syx_varsize
 _syx_parser_find_temporary_name (SyxParser *self, syx_symbol name)
 {
-  syx_varsize i, index, scope_index;
+  syx_varsize i, top, scope_index;
   SyxParserScope *scope;
   if (!name)
     return -1;
 
-  index = 0;
+  top = 0;
   for (scope_index=self->_temporary_scopes_top; scope_index >= 0; scope_index--)
     {
       scope = self->_temporary_scopes + scope_index;
-      index += scope->top - 1;
-      for (i=scope->top-1; i >= 0; i--, index--)
+      for (i=scope->top-1; i >= 0; i--)
         {
           if (!strcmp (scope->stack[i], name))
-            return index;
+            return i + top;
         }
-      index = scope->top;
+      top += scope->top;
     }
 
   return -1;

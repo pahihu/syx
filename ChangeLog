@@ -1,5 +1,9 @@
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-parser.c (_syx_parser_find_temporary_name): cleaned up, fixes the command line interactive interpreter
+
+	* st/kernel/Console.st (nextLine):
+
 	* syx/syx-interp.c (_syx_interp_switch_process): only switch if it's a different process
 
 	* syx/syx-interp.h (struct SyxInterpState): added process

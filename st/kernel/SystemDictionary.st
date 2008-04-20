@@ -72,7 +72,6 @@ initializeSystem: commandLineArguments
 
 startupSystem
     | continueStartup evalString |
-    'asd' printNl.
     startupProcess := Processor activeProcess.
 
     commandLine parse: #(c e:).
