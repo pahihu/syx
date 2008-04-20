@@ -55,8 +55,8 @@
 
 /* Prototype of the interpreter function for creating frames without using contexts */
 void _syx_interp_save_process_state (void);
-void _syx_interp_frame_prepare_new (SyxOop method);
-void _syx_interp_frame_prepare_new_closure (SyxOop closure);
+void _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method);
+void _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure);
 
 /* This method is inlined in syx_interp_call_primitive */
 SYX_FUNC_PRIMITIVE (Processor_yield)
@@ -218,7 +218,7 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   else if (primitive == -2)
     ret = syx_plugin_call_interp (es, message_method);
   else
-    _syx_interp_frame_prepare_new (message_method);
+    _syx_interp_frame_prepare_new (es, message_method);
 
   /* restore the state */
   memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));
@@ -277,7 +277,7 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   else if (primitive == -2)
     ret = syx_plugin_call_interp (es, message_method);
   else
-    _syx_interp_frame_prepare_new (message_method);
+    _syx_interp_frame_prepare_new (es, message_method);
 
   /* restore the state */
   memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));
@@ -395,7 +395,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
   /* Unset arguments for the execution of the block */
   es->message_arguments_count = 0;
-  _syx_interp_frame_prepare_new_closure (es->message_receiver);
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
   return TRUE;
 }
 
@@ -404,7 +404,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
   SYX_PRIM_ARGS(1);
 
   /* The only argument for this primitive is right the same argument for the block */
-  _syx_interp_frame_prepare_new_closure (es->message_receiver);
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
   return TRUE;
 }
   
@@ -414,7 +414,7 @@ SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 
   es->message_arguments_count = SYX_OBJECT_DATA_SIZE (es->message_arguments[0]);
   memcpy (es->message_arguments, SYX_OBJECT_DATA (es->message_arguments[0]), es->message_arguments_count * sizeof (SyxOop));
-  _syx_interp_frame_prepare_new_closure (es->message_receiver);
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
   return TRUE;
 }
 
@@ -1734,7 +1734,7 @@ SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
   SYX_METHOD_SELECTOR(meth) = syx_symbol_new ("goDoIt");
 
   /* finally execute */
-  _syx_interp_frame_prepare_new (meth);
+  _syx_interp_frame_prepare_new (es, meth);
 
   SYX_PRIM_RETURN (es->message_receiver);
 }

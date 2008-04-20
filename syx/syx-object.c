@@ -231,11 +231,19 @@ syx_large_integer_new_integer (syx_int32 i)
 SyxOop 
 syx_process_new (void)
 {
+  SyxInterpFrame *frame;
   SyxOop object = syx_object_new (syx_process_class);
   SYX_PROCESS_STACK(object) = syx_array_new_size (5000);
   SYX_PROCESS_SUSPENDED(object) = syx_true;
   SYX_PROCESS_SCHEDULED(object) = syx_false;
-  SYX_PROCESS_FRAME_POINTER(object) = syx_small_integer_new (0);
+
+  /* initialize the first frame to avoid null checks in the interpreter */
+  frame = SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (SYX_PROCESS_STACK (object)));
+  /* the stack pointer is used to get the next available frame, which in our case is the bottom
+     of the process stack */
+  frame->stack = frame;
+  SYX_PROCESS_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (frame);
+
   syx_scheduler_add_process (object);
   return object;
 }

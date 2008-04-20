@@ -1,12 +1,11 @@
 Major:
 - Refactor the interpreter (newinterp branch)
+- Cover most of the standard
 - C layer for number operations
-- Change the execution state of the interpreter to be less expensive
 - Create examples and yet more documentation
 - Fix exception handling sequence
 - Fix and improve file/IO streams
 - Create extra GC roots
-- Cover most of the standard
 
 Minor:
 - Object inspecting
@@ -19,7 +18,8 @@ Later:
 Finally:
 - Method inlining
 - JIT
-- OS-threads scheduler
+- Optional OS-threads scheduler, compatible with the current scheduler
 - Implement another kind of hash probing
+- Maybe add namespaces
 
 - Other optimizations

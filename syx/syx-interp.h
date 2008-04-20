@@ -32,6 +32,8 @@
 
 SYX_BEGIN_DECLS
 
+#define SYX_INTERP_STATE_NEW {0, 0, 0, 0, 0, 0, 0, 0, 0, {0}, 0}
+
 /*
   Remember SyxOop has the same size of a pointer.
   All the pointers and native ints, in the image will be transformed to an index, to be cross-platform compatible.
@@ -56,7 +58,6 @@ typedef struct SyxInterpState SyxInterpState;
 struct SyxInterpState
 {
   SyxInterpFrame *frame;
-  SyxInterpFrame *process_frame;
   SyxOop *arguments;
   SyxOop *temporaries;
   SyxOop *method_literals;
@@ -82,7 +83,7 @@ struct SyxInterpState
 
 /*! Enter the method which contains the primitive call */
 #define SYX_PRIM_FAIL                                                   \
-  _syx_interp_frame_prepare_new (method);                               \
+  _syx_interp_frame_prepare_new (&_syx_interp_state, method);           \
   return FALSE
 
 /*! Assert the number of minimum number of arguments given. Call SYX_PRIM_FAIL if assert fails */

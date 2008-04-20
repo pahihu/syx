@@ -54,7 +54,7 @@
 
 #define _SYX_INTERP_IN_BLOCK (_syx_interp_state.frame->outer_frame != NULL)
 
-SyxInterpState _syx_interp_state;
+SyxInterpState _syx_interp_state = SYX_INTERP_STATE_NEW;
 
 #ifdef SYX_DEBUG_CONTEXT
 syx_int32 _frame_depth;
@@ -65,51 +65,57 @@ static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
 /*! Saves the current execution state into the active Process */
 void
-_syx_interp_save_process_state (void)
+_syx_interp_save_process_state (SyxInterpState *state, SyxOop process)
 {
-  SYX_PROCESS_FRAME_POINTER(syx_processor_active_process) = syx_small_integer_new (SYX_POINTERS_OFFSET (_syx_interp_state.frame, _syx_interp_state.process_frame));
+  SYX_PROCESS_FRAME_POINTER(process) = SYX_POINTER_CAST_OOP (state->frame);
 }
 
 /* Fetches and updates the execution state of the interpreter to be ready for next instructions */
-static void
-_syx_interp_state_update (SyxInterpFrame *frame)
+static syx_bool
+_syx_interp_state_update (SyxInterpState *state, SyxInterpFrame *frame)
 {
   SyxOop method;
   SyxOop bytecodes;
 
-  _syx_interp_state.frame = frame;
+  if (!frame)
+    {
+      state->frame = NULL;
+      return FALSE;
+    }
 
   method = frame->method;
   if (SYX_IS_NIL (method))
-    return;
+    {
+      state->frame = NULL;
+      return FALSE;
+    }
+
+  state->frame = frame;
 
   bytecodes = SYX_CODE_BYTECODES (method);
-  _syx_interp_state.arguments = &frame->local;
-  _syx_interp_state.temporaries = _syx_interp_state.arguments + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (method));
-  _syx_interp_state.method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
-  _syx_interp_state.method_bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (bytecodes);
-  _syx_interp_state.method_bytecodes_count = SYX_OBJECT_DATA_SIZE (bytecodes);
+  state->arguments = &frame->local;
+  state->temporaries = state->arguments + SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (method));
+  state->method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
+  state->method_bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (bytecodes);
+  state->method_bytecodes_count = SYX_OBJECT_DATA_SIZE (bytecodes);
+
+  return TRUE;
 }
 
 /*! "Maybe" switch process and return TRUE if it's valid, FALSE otherwise */
 static syx_bool
-_syx_interp_switch_process (SyxOop process)
+_syx_interp_switch_process (SyxInterpState *state, SyxOop process)
 {
   SyxInterpFrame *frame;
 
-  frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_PROCESS_STACK (process));
-  if (!frame)
+  if (SYX_IS_NIL (process))
     return FALSE;
 
-  _syx_interp_state.process_frame = frame;
-  frame += SYX_SMALL_INTEGER (SYX_PROCESS_FRAME_POINTER (process));
-  _syx_interp_state_update (frame);
-
-  if (SYX_IS_NIL (_syx_interp_state.frame->method))
+  frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+  if (!_syx_interp_state_update (state, frame))
     return FALSE;
 
-  syx_processor_active_process = process;
-  _syx_interp_state.byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
+  state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
   return TRUE;
 }
 
@@ -117,24 +123,18 @@ _syx_interp_switch_process (SyxOop process)
   the given method.
   It's not static because it's called form within syx primitives. */
 void
-_syx_interp_frame_prepare_new (SyxOop method)
+_syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method)
 {
   SyxInterpFrame *frame;
   SyxInterpFrame *parent_frame;
   syx_int32 temporaries_count;
   
-  parent_frame = _syx_interp_state.frame;
-  /* if NULL, this frame should be the first one to be executed of the process */
-  if (SYX_IS_NIL (parent_frame->method))
-    {
-      parent_frame = NULL;
-      frame = _syx_interp_state.process_frame;
-    }
-  else
-    frame = (SyxInterpFrame *)parent_frame->stack;
+  parent_frame = state->frame;
+  /* we need the next position of our frame, the stack pointer is a good point in the process stack */
+  frame = (SyxInterpFrame *)parent_frame->stack;
 
 #ifdef SYX_DEBUG_CONTEXT
-  syx_debug ("CONTEXT - New frame %p - Depth: %d\n", _syx_interp_state.frame, ++_frame_depth);
+  syx_debug ("CONTEXT - New frame %p - Depth: %d\n", frame, ++_frame_depth);
 #endif
 
   frame->this_context = syx_nil;
@@ -145,30 +145,32 @@ _syx_interp_frame_prepare_new (SyxOop method)
   frame->method = method;
   frame->next_instruction = 0;
 
-  _syx_interp_state_update (frame);
+  assert (_syx_interp_state_update (state, frame));
 
   temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
-  frame->stack = _syx_interp_state.temporaries + temporaries_count;
-  frame->receiver = _syx_interp_state.message_receiver;
-  memcpy (_syx_interp_state.arguments, _syx_interp_state.message_arguments,
-          _syx_interp_state.message_arguments_count * sizeof (SyxOop));
-  memset (_syx_interp_state.temporaries, '\0', temporaries_count * sizeof (SyxOop));
+  frame->stack = state->temporaries + temporaries_count;
+  frame->receiver = state->message_receiver;
+  memcpy (state->arguments, state->message_arguments,
+          state->message_arguments_count * sizeof (SyxOop));
+  memset (state->temporaries, '\0', temporaries_count * sizeof (SyxOop));
 }
 
 /*! Both create a new frame and prepare for calling a block closure.
   This function shouldn't be called by any applications.
   It's not static because it's called form within syx primitives. */
 void
-_syx_interp_frame_prepare_new_closure (SyxOop closure)
+_syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
 {
-  _syx_interp_frame_prepare_new (SYX_BLOCK_CLOSURE_BLOCK (closure));
+  SyxInterpFrame *frame;
+  _syx_interp_frame_prepare_new (state, SYX_BLOCK_CLOSURE_BLOCK (closure));
+  frame = state->frame;
 
-  _syx_interp_state.frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));
-  _syx_interp_state.frame->receiver = _syx_interp_state.frame->outer_frame->receiver;
+  frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));
+  frame->receiver = frame->outer_frame->receiver;
 
   /* We can't return more if there's no parent frame. See BlockClosure_newProcess primitive for instance. */
-  if (_syx_interp_state.frame->parent_frame)
-    _syx_interp_state.frame->stack_return_frame = _syx_interp_state.frame->outer_frame->stack_return_frame;
+  if (frame->parent_frame)
+    frame->stack_return_frame = frame->outer_frame->stack_return_frame;
 }
 
 /*! Creates a MethodContext or BlockContext from a frame */
@@ -201,7 +203,6 @@ _syx_interp_frame_to_context (SyxInterpFrame *frame)
 void
 syx_interp_init (void)
 {
-  memset (&_syx_interp_state, '\0', sizeof (SyxInterpState));
 }
 
 /*!
@@ -234,39 +235,47 @@ syx_interp_swap_context (SyxOop process, SyxOop context)
 syx_bool
 syx_interp_enter_context (SyxOop process, SyxOop context)
 {
-  SyxInterpState orig_state;
-  SyxOop orig_process;
   SyxOop arguments;
+  syx_bool reset_parent_frame = FALSE;
+  SyxInterpState _state = SYX_INTERP_STATE_NEW;
+  SyxInterpState *state = &_state;
 
   if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
     return FALSE;
 
-  orig_process = syx_processor_active_process;
-  orig_state = _syx_interp_state;
-  (void) _syx_interp_switch_process (process);
+  if (SYX_OOP_EQ (process, syx_processor_active_process))
+    state = &_syx_interp_state;
+
+  if (!_syx_interp_switch_process (state, process))
+    {
+      /* The frame is not valid, maybe a new process.
+         The new frame will have the bottom frame as parent, then we have to reset it
+         to avoid infinite loops / invalid memory accesses */
+      reset_parent_frame = TRUE;
+      state->frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+    }
 
   arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
   if (SYX_IS_NIL (arguments))
-    _syx_interp_state.message_arguments_count = 0;
+    state->message_arguments_count = 0;
   else
     {
-      _syx_interp_state.message_arguments_count = SYX_OBJECT_DATA_SIZE (arguments);
-      memcpy (_syx_interp_state.message_arguments, SYX_OBJECT_DATA (arguments), _syx_interp_state.message_arguments_count * sizeof (SyxOop));
+      state->message_arguments_count = SYX_OBJECT_DATA_SIZE (arguments);
+      memcpy (state->message_arguments, SYX_OBJECT_DATA (arguments), state->message_arguments_count * sizeof (SyxOop));
     }
 
   if (SYX_OOP_EQ (syx_object_get_class (context), syx_block_context_class))
-    _syx_interp_frame_prepare_new_closure (SYX_BLOCK_CONTEXT_CLOSURE (context));
+    _syx_interp_frame_prepare_new_closure (state, SYX_BLOCK_CONTEXT_CLOSURE (context));
   else
     {
-      _syx_interp_state.message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
-      _syx_interp_frame_prepare_new (SYX_METHOD_CONTEXT_METHOD (context));
+      state->message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
+      _syx_interp_frame_prepare_new (state, SYX_METHOD_CONTEXT_METHOD (context));
     }
 
-  _syx_interp_state.frame->this_context = context;
-  SYX_PROCESS_FRAME_POINTER(process) = syx_small_integer_new (SYX_POINTERS_OFFSET (_syx_interp_state.frame, _syx_interp_state.process_frame));
+  if (reset_parent_frame)
+    state->frame->stack_return_frame = state->frame->parent_frame = NULL;
 
-  _syx_interp_state = orig_state;
-  syx_processor_active_process = orig_process;
+  _syx_interp_save_process_state (state, process);
 
   return TRUE;
 }
@@ -305,7 +314,7 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
       return FALSE;
     }
 
-  _syx_interp_state_update (return_frame);
+  _syx_interp_state_update (&_syx_interp_state, return_frame);
   syx_interp_stack_push (return_object);
   return TRUE;
 }
@@ -319,7 +328,7 @@ syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint16 byte;
 
-  if (!_syx_interp_switch_process (process))
+  if (!_syx_interp_switch_process (&_syx_interp_state, process))
     {
       syx_scheduler_remove_process (process);
       return;
@@ -334,7 +343,7 @@ syx_process_execute_scheduled (SyxOop process)
       _syx_interp_state.byteslice--;
     }
 
-  _syx_interp_save_process_state ();
+  _syx_interp_save_process_state (&_syx_interp_state, process);
 }
 
 /*! Same as syx_process_execute_scheduled but does not take care about the byteslice counter,
@@ -352,23 +361,25 @@ syx_process_execute_blocking (SyxOop process)
   orig_process = syx_processor_active_process;
   orig_state = _syx_interp_state;
 
-  if (!_syx_interp_switch_process (process))
+  _syx_interp_save_process_state (&_syx_interp_state, orig_process);
+  if (!_syx_interp_switch_process (&_syx_interp_state, process))
     {
-      syx_processor_active_process = orig_process;
       _syx_interp_state = orig_state;
       syx_scheduler_remove_process (process);
       return;
     }
+
+  syx_processor_active_process = process;
 
   while (_syx_interp_state.frame)
     {
       byte = _syx_interp_get_next_byte ();
       _syx_interp_execute_byte (byte);
     }
-  _syx_interp_save_process_state ();
+  _syx_interp_save_process_state (&_syx_interp_state, process);
 
-  _syx_interp_state = orig_state;
   syx_processor_active_process = orig_process;
+  _syx_interp_switch_process (&_syx_interp_state, orig_process);
 
   SYX_END_PROFILE(blocking);
 }
@@ -623,7 +634,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_message)
   else if (primitive == -2)
     return syx_plugin_call_interp (&_syx_interp_state, method);
 
-  _syx_interp_frame_prepare_new (method);
+  _syx_interp_frame_prepare_new (&_syx_interp_state, method);
   return TRUE;
 }
 
@@ -655,7 +666,7 @@ SYX_FUNC_INTERPRETER (syx_interp_send_super)
   else if (primitive == -2)
     return syx_plugin_call_interp (&_syx_interp_state, method);
 
-  _syx_interp_frame_prepare_new (method);
+  _syx_interp_frame_prepare_new (&_syx_interp_state, method);
   return TRUE;
 }
 
@@ -721,7 +732,11 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
   SyxInterpFrame *frame;
   syx_int32 frame_size;
   SyxOop frame_oop;
-  SyxOop closure = syx_object_copy (_syx_interp_state.method_literals[argument]);
+  SyxOop closure;
+
+  syx_memory_gc_begin ();
+
+  closure = syx_object_copy (_syx_interp_state.method_literals[argument]);
 
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Push block closure %d -> %p\n", argument, SYX_OOP_CAST_POINTER (closure));
@@ -740,9 +755,11 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
       frame->detached_frame = frame_oop;
       /* Detach this frame from the process stack.
          The stack pointer will still refer to the process stack */
-      _syx_interp_state_update (frame);
+      assert (_syx_interp_state_update (&_syx_interp_state, frame));
       SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame_oop;
     }
+
+  syx_memory_gc_end ();
   
   return TRUE;
 }
@@ -872,7 +889,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
                   
                   /* set the ensure block to true, so that next time self-return bytecode is executed */
                   SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_true;
-                  _syx_interp_frame_prepare_new_closure (ensure_block);
+                  _syx_interp_frame_prepare_new_closure (&_syx_interp_state, ensure_block);
                   return TRUE;
                 }
             }
@@ -911,7 +928,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
                   
                   /* set the ensure block to true, so that next time self-return bytecode is executed */
                   SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_true;
-                  _syx_interp_frame_prepare_new_closure (ensure_block);
+                  _syx_interp_frame_prepare_new_closure (&_syx_interp_state, ensure_block);
                   return TRUE;
                 }
             }

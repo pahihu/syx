@@ -1,6 +1,22 @@
+2008-04-20  Luca Bruno  <lethalman88@gmail.com>
+
+        All tests now works just like the trunk. Have to do more work on the scheduler, though.
+        
+        * syx/syx-interp.h (struct SyxInterpState): removed process_frame
+
+        * syx/syx-object.c (syx_process_new): initialize bottome frame
+
+        * syx/syx-primitives.c: updated to match new interpreter internal API
+        
+        * syx/syx-interp.c (_syx_interp_switch_process): fix fetching the frame
+        Refactor most of the functions to request state/process arguments to work concurrency
+        on different processes and execution states.
+        Claned up everything, yet another slightly speedup.
+        All calls have been updated.
+
 2008-04-18  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-parser.c (_syx_parser_find_temporary_name): fixes issue #29
+        * syx/syx-parser.c (_syx_parser_find_temporary_name): fixes issue #29
 
         * tests/testinterp.c (main): test block recursion (see issue #29)
 
