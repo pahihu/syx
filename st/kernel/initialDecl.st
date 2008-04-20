@@ -89,14 +89,14 @@ Set subclass: #Bag
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'parent method arguments receiver'
+       instanceVariableNames: 'framePointer parent method arguments'
        classVariableNames: ''!
 
 ContextPart subclass: #MethodContext
-	    instanceVariableNames: ''
+	    instanceVariableNames: 'receiver'
             classVariableNames: ''!
 
-MethodContext subclass: #BlockContext
+ContextPart subclass: #BlockContext
 	    instanceVariableNames: 'closure handledException handlerBlock ensureBlock'
             classVariableNames: ''!
 

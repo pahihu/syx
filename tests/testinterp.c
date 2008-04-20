@@ -156,11 +156,20 @@ main (int argc, char *argv[])
   puts ("- Test temporaries in optimized blocks");
   ret_obj = _interpret ("method | tmp | tmp := 123. true ifTrue: [ | tmp | tmp := 321 ]. ^tmp");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
-  /*
+
+  /* From issue #29 */
+  puts ("- Test block recursion");
+  _interpret ("method | b | b := [ :i | | d | Transcript nextPutAll: 'before ', i printString; cr."
+              "d := i - 1."
+              "(i > 0 ) ifTrue: [ b value: d]."
+              "Transcript nextPutAll: 'after ', i printString; cr. ]."
+              "b value: 5");
+
   puts ("- Test exception handling");
   ret_obj = _interpret ("method ^[Signal signal] on: Signal do: [:ex | true]");
   assert (SYX_IS_TRUE (ret_obj));
 
+  /*
   puts ("- Test resuming");
   ret_obj = _interpret ("method ^[Signal signal. 123] on: Signal do: [ :ex | ex resume. 321]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
@@ -173,14 +182,6 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method [Signal signal. 123] ensure: [^321]. 213");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
   */
-
-  /* From issue #29 */
-  puts ("- Test block recursion");
-  _interpret ("method | b | b := [ :i | | d | Transcript nextPutAll: 'before ', i printString; cr."
-              "d := i - 1."
-              "(i > 0 ) ifTrue: [ b value: d]."
-              "Transcript nextPutAll: 'after ', i printString; cr. ]."
-              "b value: 5");
 
   puts ("- Test loops");
   ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");

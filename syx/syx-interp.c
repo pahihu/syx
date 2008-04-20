@@ -149,6 +149,7 @@ _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method)
   frame->stack_return_frame = parent_frame;
   frame->outer_frame = NULL;
   frame->method = method;
+  frame->closure = syx_nil;
   frame->next_instruction = 0;
 
   assert (_syx_interp_state_update (state, frame));
@@ -173,6 +174,7 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
 
   frame->outer_frame = (SyxInterpFrame *)SYX_OBJECT_DATA (SYX_BLOCK_CLOSURE_OUTER_FRAME (closure));
   frame->receiver = frame->outer_frame->receiver;
+  frame->closure = closure;
 
   /* We can't return more if there's no parent frame. See BlockClosure_newProcess primitive for instance. */
   if (frame->parent_frame)
@@ -180,21 +182,25 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
 }
 
 /*! Creates a MethodContext or BlockContext from a frame */
-static SyxOop
-_syx_interp_frame_to_context (SyxInterpFrame *frame)
+SyxOop
+syx_interp_frame_to_context (SyxInterpFrame *frame)
 {
   SyxOop context;
   SyxOop arguments;
 
-  if (frame->this_context)
-    return frame->this_context;
+  if (!frame)
+    return syx_nil;
+
+  if (!SYX_IS_NIL (frame->this_context))
+    return frame->this_context; 
   
   syx_memory_gc_begin ();
   arguments = syx_array_new (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
-  if (_SYX_INTERP_IN_BLOCK)
-    context = syx_block_context_new (frame->method, arguments);
+  if (frame->outer_frame)
+    context = syx_block_context_new (frame->closure, arguments);
   else
     context = syx_method_context_new (frame->method, frame->receiver, arguments);
+  SYX_CONTEXT_PART_FRAME_POINTER (context) = SYX_POINTER_CAST_OOP (frame);
   frame->this_context = context;
   syx_memory_gc_end ();
 
@@ -261,7 +267,7 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
       state->process = process;
     }
 
-  arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
+  arguments = SYX_CONTEXT_PART_ARGUMENTS (context);
   if (SYX_IS_NIL (arguments))
     state->message_arguments_count = 0;
   else
@@ -275,7 +281,7 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   else
     {
       state->message_receiver = SYX_METHOD_CONTEXT_RECEIVER (context);
-      _syx_interp_frame_prepare_new (state, SYX_METHOD_CONTEXT_METHOD (context));
+      _syx_interp_frame_prepare_new (state, SYX_CONTEXT_PART_METHOD (context));
     }
 
   if (reset_parent_frame)
@@ -491,7 +497,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
       syx_interp_stack_push (syx_false);
       break;
     case SYX_BYTECODE_CONST_CONTEXT:
-      context = _syx_interp_frame_to_context (_syx_interp_state.frame);
+      context = syx_interp_frame_to_context (_syx_interp_state.frame);
       syx_interp_stack_push (context);
       break;
     default:

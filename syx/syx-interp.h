@@ -48,6 +48,7 @@ struct SyxInterpFrame
   SyxInterpFrame *outer_frame;
   SyxInterpFrame *stack_return_frame;
   SyxOop method;
+  SyxOop closure;
   syx_nint next_instruction;
   SyxOop *stack;
   SyxOop receiver;
@@ -69,6 +70,10 @@ struct SyxInterpState
   SyxOop message_arguments[0xFF];
   SyxOop message_receiver;
 };
+
+
+EXPORT SyxOop syx_interp_frame_to_context (SyxInterpFrame *frame);
+
 
 /* Primitives */
 
@@ -95,7 +100,7 @@ struct SyxInterpState
     }
 
 /*! The number of primitives */
-#define SYX_PRIMITIVES_MAX 110
+#define SYX_PRIMITIVES_MAX 111
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxInterpState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)                          \
@@ -134,7 +139,6 @@ typedef syx_bool (* SyxInterpreterFunc) (syx_uint16 argument);
 #define SYX_FUNC_INTERPRETER(name)        \
   syx_bool                                \
   name (syx_uint16 argument)
-
 
 EXPORT void syx_interp_init (void);
 EXPORT void syx_interp_quit (void);

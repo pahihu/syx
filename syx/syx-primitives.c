@@ -445,18 +445,15 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
   SYX_PRIM_RETURN (proc);
 }
 
-SYX_FUNC_PRIMITIVE (String_asSymbol)
-{
-  SYX_PRIM_RETURN (syx_symbol_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
-}
 
-/* These printing function are used ONLY for tests */
-SYX_FUNC_PRIMITIVE (Float_print)
-{
-  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
-}
 
+/* Contexts */
+
+SYX_FUNC_PRIMITIVE (ContextPart_parent)
+{
+  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->parent_frame));
+}
 
 
 /* Processor */
@@ -722,6 +719,11 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 SYX_FUNC_PRIMITIVE (String_hash)
 {
   SYX_PRIM_RETURN (syx_small_integer_new (syx_string_hash (SYX_OBJECT_SYMBOL (es->message_receiver))));
+}
+
+SYX_FUNC_PRIMITIVE (String_asSymbol)
+{
+  SYX_PRIM_RETURN (syx_symbol_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
 }
 
 /* Small integers */
@@ -1230,6 +1232,13 @@ SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 
 
 /* Floats */
+
+/* This printing function is used ONLY for tests */
+SYX_FUNC_PRIMITIVE (Float_print)
+{
+  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
+  SYX_PRIM_RETURN (es->message_receiver);
+}
 
 SYX_FUNC_PRIMITIVE (Float_plus)
 {
@@ -1946,8 +1955,8 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "BlockClosure_on_do", BlockClosure_on_do },
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
-  { "String_asSymbol", String_asSymbol },
-  { "Float_print", Float_print },
+  /* Contexts */
+  { "ContextPart_parent", ContextPart_parent },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },
@@ -1962,6 +1971,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
 
   /* Strings */
   { "String_hash", String_hash },
+  { "String_asSymbol", String_asSymbol },
 
   /* File streams */
   { "StdIOStream_nextPut", StdIOStream_nextPut },
@@ -2022,6 +2032,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Float_ceil", Float_ceil },
   { "Float_floor", Float_floor },
   { "Float_trunc", Float_trunc },
+  { "Float_print", Float_print },
 
   /* Date and time */
   { "DateTime_gmTime", DateTime_gmTime },

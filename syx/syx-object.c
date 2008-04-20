@@ -238,10 +238,10 @@ syx_process_new (void)
   SYX_PROCESS_SCHEDULED(object) = syx_false;
 
   /* initialize the first frame to avoid null checks in the interpreter */
-  frame = SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (SYX_PROCESS_STACK (object)));
+  frame = (SyxInterpFrame *) SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (SYX_PROCESS_STACK (object)));
   /* the stack pointer is used to get the next available frame, which in our case is the bottom
      of the process stack */
-  frame->stack = frame;
+  frame->stack = (SyxOop *) frame;
   SYX_PROCESS_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (frame);
 
   syx_scheduler_add_process (object);
@@ -646,9 +646,10 @@ syx_method_context_new (SyxOop method, SyxOop receiver, SyxOop arguments)
 
   object = syx_object_new (syx_method_context_class);
 
-  SYX_METHOD_CONTEXT_METHOD(object) = method;
+  SYX_CONTEXT_PART_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (NULL);
+  SYX_CONTEXT_PART_METHOD(object) = method;
+  SYX_CONTEXT_PART_ARGUMENTS(object) = arguments;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
-  SYX_METHOD_CONTEXT_ARGUMENTS(object) = arguments;
 
   syx_memory_gc_end ();
 
@@ -672,8 +673,9 @@ syx_block_context_new (SyxOop closure, SyxOop arguments)
 
   object = syx_object_new (syx_block_context_class);
 
-  SYX_METHOD_CONTEXT_METHOD(object) = SYX_BLOCK_CLOSURE_BLOCK (closure);
-  SYX_METHOD_CONTEXT_ARGUMENTS(object) = arguments;
+  SYX_CONTEXT_PART_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (NULL);
+  SYX_CONTEXT_PART_METHOD(object) = SYX_BLOCK_CLOSURE_BLOCK (closure);
+  SYX_CONTEXT_PART_ARGUMENTS(object) = arguments;
   SYX_BLOCK_CONTEXT_CLOSURE(object) = closure;
 
   SYX_END_PROFILE(block_context);

@@ -91,5 +91,6 @@ parent: aContext
 !
 
 parent
+    <primitive: 'ContextPart_parent'>
 "    ^parent"
 ! !
