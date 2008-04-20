@@ -1,5 +1,7 @@
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-interp.c (_syx_interp_switch_process): only switch if it's a different process
+
 	* syx/syx-interp.h (struct SyxInterpState): added process
         All calls have been updated to use this new member.
 

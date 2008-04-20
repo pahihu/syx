@@ -109,15 +109,19 @@ _syx_interp_switch_process (SyxInterpState *state, SyxOop process)
 {
   SyxInterpFrame *frame;
 
-  if (SYX_IS_NIL (process))
-    return FALSE;
+  if (SYX_OOP_NE (process, state->process))
+    {
+      if (SYX_IS_NIL (process))
+        return FALSE;
 
-  frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
-  if (!_syx_interp_state_update (state, frame))
-    return FALSE;
+      frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+      if (!_syx_interp_state_update (state, frame))
+        return FALSE;
+
+      state->process = process;
+    }
 
   state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
-  state->process = process;
   return TRUE;
 }
 
