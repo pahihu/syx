@@ -705,6 +705,10 @@ syx_show_traceback (void)
          SYX_OOP_CAST_POINTER (syx_processor_active_process),
          SYX_MEMORY_INDEX_OF (syx_processor_active_process));
   printf("Frame: %p\n", (syx_pointer) frame);
+
+  if (!frame)
+    return;
+
   printf("Receiver: %p (memory index: %ld)\n",
          SYX_OOP_CAST_POINTER (frame->receiver),
          SYX_MEMORY_INDEX_OF (frame->receiver));

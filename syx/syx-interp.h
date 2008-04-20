@@ -32,7 +32,7 @@
 
 SYX_BEGIN_DECLS
 
-#define SYX_INTERP_STATE_NEW {0, 0, 0, 0, 0, 0, 0, 0, 0, {0}, 0}
+#define SYX_INTERP_STATE_NEW {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0}, 0}
 
 /*
   Remember SyxOop has the same size of a pointer.
@@ -57,6 +57,7 @@ struct SyxInterpFrame
 typedef struct SyxInterpState SyxInterpState;
 struct SyxInterpState
 {
+  SyxOop process;
   SyxInterpFrame *frame;
   SyxOop *arguments;
   SyxOop *temporaries;

@@ -65,9 +65,10 @@ static syx_bool _syx_interp_execute_byte (syx_uint16 byte);
 
 /*! Saves the current execution state into the active Process */
 void
-_syx_interp_save_process_state (SyxInterpState *state, SyxOop process)
+_syx_interp_save_process_state (SyxInterpState *state)
 {
-  SYX_PROCESS_FRAME_POINTER(process) = SYX_POINTER_CAST_OOP (state->frame);
+  if (state->frame)
+    SYX_PROCESS_FRAME_POINTER(state->process) = SYX_POINTER_CAST_OOP (state->frame);
 }
 
 /* Fetches and updates the execution state of the interpreter to be ready for next instructions */
@@ -116,6 +117,7 @@ _syx_interp_switch_process (SyxInterpState *state, SyxOop process)
     return FALSE;
 
   state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
+  state->process = process;
   return TRUE;
 }
 
@@ -243,16 +245,16 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
     return FALSE;
 
-  if (SYX_OOP_EQ (process, syx_processor_active_process))
+  if (SYX_OOP_EQ (process, _syx_interp_state.process))
     state = &_syx_interp_state;
-
-  if (!_syx_interp_switch_process (state, process))
+  else if (!_syx_interp_switch_process (state, process))
     {
-      /* The frame is not valid, maybe a new process.
+      /* The frame is not valid, maybe it's a new process.
          The new frame will have the bottom frame as parent, then we have to reset it
          to avoid infinite loops / invalid memory accesses */
       reset_parent_frame = TRUE;
       state->frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+      state->process = process;
     }
 
   arguments = SYX_METHOD_CONTEXT_ARGUMENTS (context);
@@ -275,7 +277,7 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   if (reset_parent_frame)
     state->frame->stack_return_frame = state->frame->parent_frame = NULL;
 
-  _syx_interp_save_process_state (state, process);
+  _syx_interp_save_process_state (state);
 
   return TRUE;
 }
@@ -343,7 +345,7 @@ syx_process_execute_scheduled (SyxOop process)
       _syx_interp_state.byteslice--;
     }
 
-  _syx_interp_save_process_state (&_syx_interp_state, process);
+  _syx_interp_save_process_state (&_syx_interp_state);
 }
 
 /*! Same as syx_process_execute_scheduled but does not take care about the byteslice counter,
@@ -361,10 +363,10 @@ syx_process_execute_blocking (SyxOop process)
   orig_process = syx_processor_active_process;
   orig_state = _syx_interp_state;
 
-  _syx_interp_save_process_state (&_syx_interp_state, orig_process);
+  _syx_interp_save_process_state (&_syx_interp_state);
   if (!_syx_interp_switch_process (&_syx_interp_state, process))
     {
-      _syx_interp_state = orig_state;
+      _syx_interp_switch_process (&_syx_interp_state, orig_process);
       syx_scheduler_remove_process (process);
       return;
     }
@@ -376,7 +378,7 @@ syx_process_execute_blocking (SyxOop process)
       byte = _syx_interp_get_next_byte ();
       _syx_interp_execute_byte (byte);
     }
-  _syx_interp_save_process_state (&_syx_interp_state, process);
+  _syx_interp_save_process_state (&_syx_interp_state);
 
   syx_processor_active_process = orig_process;
   _syx_interp_switch_process (&_syx_interp_state, orig_process);

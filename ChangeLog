@@ -1,5 +1,8 @@
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-interp.h (struct SyxInterpState): added process
+        All calls have been updated to use this new member.
+
         All tests now works just like the trunk. Have to do more work on the scheduler, though.
         
         * syx/syx-interp.h (struct SyxInterpState): removed process_frame
