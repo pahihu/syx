@@ -287,6 +287,8 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   if (reset_parent_frame)
     state->frame->stack_return_frame = state->frame->parent_frame = NULL;
 
+  state->frame->this_context = context;
+  SYX_CONTEXT_PART_FRAME_POINTER (context) = SYX_POINTER_CAST_OOP (state->frame);
   _syx_interp_save_process_state (state);
 
   return TRUE;

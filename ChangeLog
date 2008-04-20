@@ -1,31 +1,36 @@
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-interp.c (syx_interp_frame_to_context): use closure
+	* syx/syx-interp.c (syx_interp_enter_context): missed saving this_context
 
-	* syx/syx-interp.h (struct SyxInterpFrame): add closure
+	* syx/syx-primitives.c (ContextPart_receiver): added
+	(BlockContext_outerContext): added
 
-	* syx/syx-object.h: updated accessors
-	All calls have been updated.
+	* st/kernel/BlockContext.st (outerContext, homeContext): 
 
-	* syx/syx-enums.h (enum): add ContextPart enums
+	* st/kernel/ContextPart.st (tracebackString):
 
-	* st/kernel/initialDecl.st: move receiver to MethodContext and add framePointer to ContextPart
+        * syx/syx-interp.h (struct SyxInterpFrame): add closure
 
-	* syx/syx-interp.c (syx_interp_frame_to_context): 
+        * syx/syx-object.h: updated accessors
+        All calls have been updated.
 
-	* syx/syx-primitives.c (ContextPart_parent): added
+        * syx/syx-enums.h (enum): add ContextPart enums
 
-	* syx/syx-interp.c (syx_interp_frame_to_context): made public
+        * st/kernel/initialDecl.st: move receiver to MethodContext and add framePointer to ContextPart
 
-	* syx/syx-primitives.c (_syx_primitive_entries):
+        * syx/syx-interp.c (syx_interp_frame_to_context): made public
+        (syx_interp_frame_to_context): use closure
 
-	* syx/syx-parser.c (_syx_parser_find_temporary_name): cleaned up, fixes the command line interactive interpreter
+        * syx/syx-primitives.c (_syx_primitive_entries):
+        (ContextPart_parent): added
 
-	* st/kernel/Console.st (nextLine):
+        * syx/syx-parser.c (_syx_parser_find_temporary_name): cleaned up, fixes the command line interactive interpreter
 
-	* syx/syx-interp.c (_syx_interp_switch_process): only switch if it's a different process
+        * st/kernel/Console.st (nextLine):
 
-	* syx/syx-interp.h (struct SyxInterpState): added process
+        * syx/syx-interp.c (_syx_interp_switch_process): only switch if it's a different process
+
+        * syx/syx-interp.h (struct SyxInterpState): added process
         All calls have been updated to use this new member.
 
         All tests now works just like the trunk. Have to do more work on the scheduler, though.

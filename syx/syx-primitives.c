@@ -455,6 +455,18 @@ SYX_FUNC_PRIMITIVE (ContextPart_parent)
   SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->parent_frame));
 }
 
+SYX_FUNC_PRIMITIVE (ContextPart_receiver)
+{
+  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SYX_PRIM_RETURN (frame->receiver);
+}
+
+SYX_FUNC_PRIMITIVE (BlockContext_outerContext)
+{
+  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->outer_frame));
+}
+
 
 /* Processor */
 
@@ -1957,6 +1969,8 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
 
   /* Contexts */
   { "ContextPart_parent", ContextPart_parent },
+  { "ContextPart_receiver", ContextPart_receiver },
+  { "BlockContext_outerContext", BlockContext_outerContext },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },

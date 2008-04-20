@@ -100,7 +100,7 @@ EXPORT SyxOop syx_interp_frame_to_context (SyxInterpFrame *frame);
     }
 
 /*! The number of primitives */
-#define SYX_PRIMITIVES_MAX 111
+#define SYX_PRIMITIVES_MAX 112
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxInterpState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)                          \

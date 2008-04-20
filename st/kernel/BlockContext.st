@@ -65,11 +65,12 @@ tracebackString
 !
 
 homeContext
-    "^outerContext homeContext"
+    ^self outerContext homeContext
 !
 
 outerContext
-    "^outerContext"
+    <primitive: 'BlockContext_outerContext'>
+    self primitiveFailed
 ! !
 
 !BlockContext methodsFor: 'testing'!
