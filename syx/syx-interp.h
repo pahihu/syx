@@ -72,6 +72,7 @@ struct SyxInterpState
 };
 
 
+EXPORT SyxInterpFrame *syx_interp_context_to_frame (SyxOop context);
 EXPORT SyxOop syx_interp_frame_to_context (SyxInterpFrame *frame);
 
 

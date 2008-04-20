@@ -181,6 +181,13 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
     frame->stack_return_frame = frame->outer_frame->stack_return_frame;
 }
 
+/*! Returns the frame associated to the given context */
+SyxInterpFrame *
+syx_interp_context_to_frame (SyxOop context)
+{
+  return (SyxInterpFrame *) SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (context));
+}
+
 /*! Creates a MethodContext or BlockContext from a frame */
 SyxOop
 syx_interp_frame_to_context (SyxInterpFrame *frame)

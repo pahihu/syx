@@ -451,19 +451,19 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 
 SYX_FUNC_PRIMITIVE (ContextPart_parent)
 {
-  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
   SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->parent_frame));
 }
 
 SYX_FUNC_PRIMITIVE (ContextPart_receiver)
 {
-  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
   SYX_PRIM_RETURN (frame->receiver);
 }
 
 SYX_FUNC_PRIMITIVE (BlockContext_outerContext)
 {
-  SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (es->message_receiver));
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
   SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->outer_frame));
 }
 
@@ -484,9 +484,10 @@ SYX_FUNC_PRIMITIVE (Processor_swapWith)
 
 SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
 {
+  SyxInterpFrame *frame;
   SYX_PRIM_ARGS(2);
-  /* TODO: implement
-     SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) = es->message_arguments[0]; */
+  frame = syx_interp_context_to_frame (es->message_arguments[0]);
+  es->frame->stack_return_frame = frame;
   return syx_interp_leave_and_answer (es->message_arguments[1], TRUE);
 }
 
