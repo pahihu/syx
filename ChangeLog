@@ -1,3 +1,10 @@
+2008-04-21  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-interp.c (_syx_interp_context_update): added
+        (syx_interp_push_block_closure): update this_context to point to the new detached frame
+        (syx_interp_frame_to_context): set arguments not accessible for now, not good for Smalltalk-side future debugging
+        This fixes basic of the exception handling.
+
 2008-04-20  Luca Bruno  <lethalman88@gmail.com>
 
         * st/kernel/Number.st (to:by:do, to:by:reverseDo): slightly optimized

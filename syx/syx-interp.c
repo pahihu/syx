@@ -48,7 +48,7 @@
 
 #define SYX_DEBUG_CONTEXT
 #define SYX_DEBUG_BYTECODE
-/*#define SYX_DEBUG_TRACE_IP*/
+#define SYX_DEBUG_TRACE_IP
 
 #endif /* SYX_DEBUG_FULL */
 
@@ -181,6 +181,19 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
     frame->stack_return_frame = frame->outer_frame->stack_return_frame;
 }
 
+/*! Update the current context to point to the given frame.
+  This will also update the this_context field of the frame and the address of the
+  context arguments. */
+static void
+_syx_interp_context_update (SyxOop context, SyxInterpFrame *frame)
+{
+  if (SYX_IS_NIL (context) || !frame)
+    return;
+
+  SYX_CONTEXT_PART_FRAME_POINTER (context) = SYX_POINTER_CAST_OOP (frame);
+  frame->this_context = context;
+}
+
 /*! Returns the frame associated to the given context */
 SyxInterpFrame *
 syx_interp_context_to_frame (SyxOop context)
@@ -202,7 +215,10 @@ syx_interp_frame_to_context (SyxInterpFrame *frame)
     return frame->this_context; 
   
   syx_memory_gc_begin ();
-  arguments = syx_array_new (SYX_CODE_ARGUMENTS_COUNT (frame->method), &frame->local);
+  /* FIXME: they're not accessible for GC troubles.
+     Do we need to access them with primitives or do we need to detach the frame when
+     created using enter_context? */
+  arguments = syx_nil;
   if (frame->outer_frame)
     context = syx_block_context_new (frame->closure, arguments);
   else
@@ -777,6 +793,8 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
       /* Detach this frame from the process stack.
          The stack pointer will still refer to the process stack */
       assert (_syx_interp_state_update (&_syx_interp_state, frame));
+      /* Update this_context if available */
+      _syx_interp_context_update (frame->this_context, frame);
       SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame_oop;
     }
 
