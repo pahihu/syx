@@ -89,7 +89,7 @@ Set subclass: #Bag
 "Execution"
 
 Object subclass: #ContextPart
-       instanceVariableNames: 'framePointer parent method arguments'
+       instanceVariableNames: 'framePointer stack parent method arguments'
        classVariableNames: ''!
 
 ContextPart subclass: #MethodContext

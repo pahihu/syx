@@ -1,19 +1,38 @@
 2008-04-23  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-signal.c (_syx_save_recovered_image): 
+        * syx/syx-memory.c (enum SyxMemoryType): added
+        (_syx_memory_write_vars_with_fp): added
+        (_syx_memory_read): added incomplete handler for frame pointers
+        (syx_memory_load_image):
 
-	* src/main.c (_do_recovery): 
+        * syx/syx-interp.h:
+
+        * syx/syx-interp.c (_syx_interp_context_update): removed
+        (syx_interp_frame_to_context): use frame pointer as an index
+        (_syx_interp_switch_process):
+        (syx_interp_frame_to_context): need the stack
+
+        * syx/syx-primitives.c (ContextPart_parent):
+        (ContextPart_parent):
+
+        * st/kernel/initialDecl.st (ContextPart): add process variable
+
+        * syx/syx-enums.h:
+
+        * syx/syx-signal.c (_syx_save_recovered_image): 
+
+        * src/main.c (_do_recovery): 
 
 2008-04-22  Luca Bruno  <lethalman88@gmail.com>
 
-	* tests/testinterp.c (main): added another ensure test
+        * tests/testinterp.c (main): added another ensure test
 
-	* st/kernel/Signal.st (handlerContextStartingFrom): added
-	(signal): use a more sane approach
-	(handlerContext):
+        * st/kernel/Signal.st (handlerContextStartingFrom): added
+        (signal): use a more sane approach
+        (handlerContext):
 
-	* syx/syx-interp.c (syx_interp_do_special): fix block self return
-	(syx_interp_swap_context): implemented
+        * syx/syx-interp.c (syx_interp_do_special): fix block self return
+        (syx_interp_swap_context): implemented
 
 2008-04-21  Luca Bruno  <lethalman88@gmail.com>
 

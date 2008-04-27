@@ -55,6 +55,16 @@ static syx_bool _syx_memory_initialized = FALSE;
 
 #define SYX_MEMORY_TOP (&syx_memory[_syx_memory_size - 1])
 
+typedef enum
+{
+  SYX_MEMORY_TYPE_RAW,
+  SYX_MEMORY_TYPE_OBJECT,
+  SYX_MEMORY_TYPE_FP,
+
+  SYX_MEMORY_TYPE_NORMAL,
+  SYX_MEMORY_TYPE_LARGE_INTEGER
+} SyxMemoryType;
+
 /* Holds temporary objects that must not be freed during a transaction */
 SyxOop _syx_memory_gc_trans[0x100];
 syx_int32 _syx_memory_gc_trans_top = 0;
@@ -249,24 +259,43 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
       oop = oops[i];
       if (SYX_IS_OBJECT (oop))
         {
-          idx = SYX_MEMORY_INDEX_OF(oop);
-
           if (mark_type)
-            fputc (1, image);
+            fputc (SYX_MEMORY_TYPE_OBJECT, image);
 
+          idx = SYX_MEMORY_INDEX_OF (oop);
           idx = SYX_COMPAT_SWAP_32 (idx);
           fwrite (&idx, sizeof (syx_int32), 1, image);
         }
       else
         {
           if (mark_type)
-            fputc (0, image);
+            fputc (SYX_MEMORY_TYPE_RAW, image);
 
           idx = (syx_int32)oop;
           idx = SYX_COMPAT_SWAP_32 (idx);
           fwrite (&idx, sizeof (syx_int32), 1, image);
         }
     }
+}
+
+
+/* Write the variables of a Process or of a Context, fixing the frame pointer to match a valid index
+   in the stack */
+static void
+_syx_memory_write_vars_with_fp (SyxObject *object, SyxVariables stack_var, SyxVariables fp_var, FILE *image)
+{
+  syx_int32 stack_idx = SYX_COMPAT_SWAP_32 (SYX_MEMORY_INDEX_OF (object->vars[stack_var]));
+  syx_int32 offset = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (object->vars[fp_var], object->vars[stack_var]));
+  /* Write all variables before FRAME_POINTER */
+  _syx_memory_write (object->vars, TRUE, fp_var, image);
+  /* Now specify our own type for frame pointers */
+  fputc (SYX_MEMORY_TYPE_FP, image);
+  /* We have to store the stack OOP in order to point to the right stack when loading back the image */
+  fwrite (&stack_idx, sizeof (syx_int32), 1, image);
+  fwrite (&offset, sizeof (syx_int32), 1, image);
+  /* Let's store the remaining variables */
+  _syx_memory_write (object->vars + fp_var + 1, TRUE,
+                     syx_object_vars_size ((SyxOop)object) - fp_var - 1, image);
 }
 
 
@@ -316,11 +345,17 @@ syx_memory_save_image (syx_symbol path)
       fputc (object->has_refs, image);
       fputc (object->is_constant, image);
 
-      /* store instance variables */
       data = syx_object_vars_size ((SyxOop)object);
       data = SYX_COMPAT_SWAP_32(data);
       fwrite (&data, sizeof (syx_varsize), 1, image);
-      _syx_memory_write (object->vars, TRUE, SYX_COMPAT_SWAP_32(data), image);
+      /* store instance variables */
+      if (SYX_OOP_EQ (object->klass, syx_block_context_class) ||
+          SYX_OOP_EQ (object->klass, syx_method_context_class))
+        _syx_memory_write_vars_with_fp (object, SYX_VARS_CONTEXT_PART_STACK, SYX_VARS_CONTEXT_PART_FRAME_POINTER, image);
+      else if (SYX_OOP_EQ (object->klass, syx_process_class))
+        _syx_memory_write_vars_with_fp (object, SYX_VARS_PROCESS_STACK, SYX_VARS_PROCESS_FRAME_POINTER, image);
+      else
+        _syx_memory_write (object->vars, TRUE, SYX_COMPAT_SWAP_32(data), image);
 
       /* store data */
       data = SYX_COMPAT_SWAP_32 (object->data_size);
@@ -341,7 +376,7 @@ syx_memory_save_image (syx_symbol path)
                   syx_int32 offset = 0;
                   syx_nint start, end;
                   /* specify that's a large integer */
-                  fputc (1, image);
+                  fputc (SYX_MEMORY_TYPE_LARGE_INTEGER, image);
                   /* make space to hold the offset */
                   fwrite (&offset, sizeof (syx_int32), 1, image);
                   start = ftell (image);
@@ -350,6 +385,7 @@ syx_memory_save_image (syx_symbol path)
                   offset = end - start;
                   /* go back to the offset */
                   fseek (image, - offset - sizeof (syx_int32), SEEK_CUR);
+                  /* now write the length of the data written by mpz_out_raw () */
                   data = SYX_COMPAT_SWAP_32 (offset);
                   fwrite (&data, sizeof (syx_int32), 1, image);
                   /* return again to continue normal writing */
@@ -359,7 +395,7 @@ syx_memory_save_image (syx_symbol path)
 #endif /* HAVE_LIBGMP */
                 {
                   /* it's not a large integer */
-                  fputc (0, image);
+                  fputc (SYX_MEMORY_TYPE_NORMAL, image);
                   fwrite (object->data, sizeof (syx_int8), object->data_size, image);
                 }
             }
@@ -378,29 +414,37 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 {
   syx_int32 i, idx;
   SyxOop oop;
-  syx_bool is_pointer = TRUE;
+  SyxMemoryType type = 1;
 
   for (i=0; i < n; i++)
     {
       oop = 0;
       
       if (mark_type)
-        is_pointer = fgetc (image);
+        type = fgetc (image);
       
-      if (is_pointer)
+      switch (type)
         {
+        case SYX_MEMORY_TYPE_OBJECT:
           if (!fread (&idx, sizeof (syx_int32), 1, image))
             return FALSE;
 
           idx = SYX_COMPAT_SWAP_32 (idx);
           oop = (SyxOop)(syx_memory + idx);
-        }
-      else
-        {
+          break;
+        case SYX_MEMORY_TYPE_RAW:
           if (!fread (&idx, sizeof (syx_int32), 1, image))
             return FALSE;
 
           oop = SYX_COMPAT_SWAP_32 (idx);
+          break;
+        case SYX_MEMORY_TYPE_FP:
+          /* TODO: implement */
+          fread(&idx, sizeof (syx_int32), 1, image);
+          fread(&idx, sizeof (syx_int32), 1, image);
+          break;
+        default:
+          return FALSE;
         }
 
       oops[i] = oop;
@@ -475,7 +519,7 @@ syx_memory_load_image (syx_symbol path)
       object->data_size = SYX_COMPAT_SWAP_32 (data);
       if (object->data_size > 0)
         {
-          if (object->data)
+          if (object->data && object->data_size > 0)
             syx_free (object->data);
           
           if (object->has_refs)
@@ -486,7 +530,7 @@ syx_memory_load_image (syx_symbol path)
           else
             {
               object->data = (SyxOop *) syx_calloc (object->data_size, sizeof (syx_int8));
-              if (fgetc (image))
+              if (fgetc (image) == SYX_MEMORY_TYPE_LARGE_INTEGER)
                 {
                   fread (&data, sizeof (syx_int32), 1, image);
                   data = SYX_COMPAT_SWAP_32 (data);

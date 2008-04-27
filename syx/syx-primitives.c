@@ -452,7 +452,8 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 SYX_FUNC_PRIMITIVE (ContextPart_parent)
 {
   SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
-  SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->parent_frame));
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (SYX_CONTEXT_PART_STACK (es->message_receiver),
+                                                frame->parent_frame));
 }
 
 SYX_FUNC_PRIMITIVE (ContextPart_receiver)
@@ -464,7 +465,8 @@ SYX_FUNC_PRIMITIVE (ContextPart_receiver)
 SYX_FUNC_PRIMITIVE (BlockContext_outerContext)
 {
   SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
-  SYX_PRIM_RETURN (syx_interp_frame_to_context (frame->outer_frame));
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (SYX_CONTEXT_PART_STACK (es->message_receiver),
+                                                frame->outer_frame));
 }
 
 

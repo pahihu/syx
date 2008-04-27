@@ -181,19 +181,6 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
     frame->stack_return_frame = frame->outer_frame->stack_return_frame;
 }
 
-/*! Update the current context to point to the given frame.
-  This will also update the this_context field of the frame and the address of the
-  context arguments. */
-static void
-_syx_interp_context_update (SyxOop context, SyxInterpFrame *frame)
-{
-  if (SYX_IS_NIL (context) || !frame)
-    return;
-
-  SYX_CONTEXT_PART_FRAME_POINTER (context) = SYX_POINTER_CAST_OOP (frame);
-  frame->this_context = context;
-}
-
 /*! Returns the frame associated to the given context */
 SyxInterpFrame *
 syx_interp_context_to_frame (SyxOop context)
@@ -201,9 +188,13 @@ syx_interp_context_to_frame (SyxOop context)
   return (SyxInterpFrame *) SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (context));
 }
 
-/*! Creates a MethodContext or BlockContext from a frame */
+/*! Creates a MethodContext or BlockContext from a frame
+
+  \param stack the OOP of the whole stack, e.g. SYX_PROCESS_STACK (aProcess). This will not be used
+  if the frame has been detached.
+  \return a new context */
 SyxOop
-syx_interp_frame_to_context (SyxInterpFrame *frame)
+syx_interp_frame_to_context (SyxOop stack, SyxInterpFrame *frame)
 {
   SyxOop context;
   SyxOop arguments;
@@ -219,10 +210,17 @@ syx_interp_frame_to_context (SyxInterpFrame *frame)
      Do we need to access them with primitives or do we need to detach the frame when
      created using enter_context? */
   arguments = syx_nil;
-  if (frame->outer_frame)
-    context = syx_block_context_new (frame->closure, arguments);
+
+  if (!SYX_IS_NIL (frame->closure))
+    {
+      context = syx_block_context_new (frame->closure, arguments);
+      SYX_CONTEXT_PART_STACK (context) = frame->detached_frame;
+    }
   else
-    context = syx_method_context_new (frame->method, frame->receiver, arguments);
+    {
+      context = syx_method_context_new (frame->method, frame->receiver, arguments);
+      SYX_CONTEXT_PART_STACK (context) = stack;
+    }
   SYX_CONTEXT_PART_FRAME_POINTER (context) = SYX_POINTER_CAST_OOP (frame);
   frame->this_context = context;
   syx_memory_gc_end ();
@@ -539,7 +537,8 @@ SYX_FUNC_INTERPRETER (syx_interp_push_constant)
       syx_interp_stack_push (syx_false);
       break;
     case SYX_BYTECODE_CONST_CONTEXT:
-      context = syx_interp_frame_to_context (_syx_interp_state.frame);
+      context = syx_interp_frame_to_context (SYX_PROCESS_STACK (_syx_interp_state.process),
+                                             _syx_interp_state.frame);
       syx_interp_stack_push (context);
       break;
     default:
@@ -811,7 +810,11 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
          The stack pointer will still refer to the process stack */
       assert (_syx_interp_state_update (&_syx_interp_state, frame));
       /* Update this_context if available */
-      _syx_interp_context_update (frame->this_context, frame);
+      if (!SYX_IS_NIL (frame->this_context))
+        {
+          SYX_CONTEXT_PART_STACK (frame->this_context) = frame_oop;
+          SYX_CONTEXT_PART_FRAME_POINTER (frame->this_context) = SYX_POINTER_CAST_OOP (frame);
+        }
       SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = frame_oop;
     }
 
