@@ -65,6 +65,18 @@ typedef enum
   SYX_MEMORY_TYPE_LARGE_INTEGER
 } SyxMemoryType;
 
+typedef struct SyxMemoryLazyPointer SyxMemoryLazyPointer;
+struct SyxMemoryLazyPointer
+{
+  SyxOop stack;
+  syx_int32 offset;
+  SyxOop *entry;
+};
+
+/* Lazy pointers to be fixed once the image is loaded */
+static SyxMemoryLazyPointer *_syx_memory_lazy_pointers = NULL;
+static syx_int32 _syx_memory_lazy_pointers_top = 0;
+
 /* Holds temporary objects that must not be freed during a transaction */
 SyxOop _syx_memory_gc_trans[0x100];
 syx_int32 _syx_memory_gc_trans_top = 0;
@@ -412,6 +424,7 @@ syx_memory_save_image (syx_symbol path)
 static syx_bool
 _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
 {
+  SyxMemoryLazyPointer *lazy;
   syx_int32 i, idx;
   SyxOop oop;
   SyxMemoryType type = 1;
@@ -439,9 +452,22 @@ _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
           oop = SYX_COMPAT_SWAP_32 (idx);
           break;
         case SYX_MEMORY_TYPE_FP:
-          /* TODO: implement */
+          _syx_memory_lazy_pointers = syx_realloc (_syx_memory_lazy_pointers,
+                                                   ++_syx_memory_lazy_pointers_top * sizeof (SyxMemoryLazyPointer));
+          lazy = &_syx_memory_lazy_pointers[_syx_memory_lazy_pointers_top - 1];
+
+          /* Store the stack oop */
           fread(&idx, sizeof (syx_int32), 1, image);
+          idx = SYX_COMPAT_SWAP_32 (idx);
+          lazy->stack = (SyxOop)(syx_memory + idx);
+
+          /* Store the offset */
           fread(&idx, sizeof (syx_int32), 1, image);
+          idx = SYX_COMPAT_SWAP_32 (idx);
+          lazy->offset = idx;
+
+          /* Save the address of the framePointer variable */
+          lazy->entry = &oops[i];
           break;
         default:
           return FALSE;
@@ -466,6 +492,8 @@ syx_memory_load_image (syx_symbol path)
   SyxObject *object;
   FILE *image;
   syx_int32 data;
+  syx_int32 i;
+  SyxMemoryLazyPointer *lazy;
   
   SYX_START_PROFILE;
 
@@ -552,6 +580,14 @@ syx_memory_load_image (syx_symbol path)
 
   syx_fetch_basic ();
   
+  /* Fix lazy pointers */
+  for (i=0; i < _syx_memory_lazy_pointers_top; i++)
+    {
+      lazy = &_syx_memory_lazy_pointers[i];
+      *lazy->entry = SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (lazy->stack) + lazy->offset);
+    }
+  syx_free (_syx_memory_lazy_pointers);
+
   SYX_END_PROFILE(load_image);
 
   syx_initialize_system ();
