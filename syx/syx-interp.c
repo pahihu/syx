@@ -252,13 +252,30 @@ syx_interp_quit (void)
 
 /*!
   Swap the current context with the given one.
+  The context must be already existing in the process stack.
   
   \return FALSE if the context was syx_nil
 */
 syx_bool
 syx_interp_swap_context (SyxOop process, SyxOop context)
 {
-  /* TODO: implement */
+  SyxInterpState _state = SYX_INTERP_STATE_NEW;
+  SyxInterpState *state = &_state;
+  SyxInterpFrame *frame = syx_interp_context_to_frame (context);
+
+  if (!frame)
+    return TRUE;
+
+  if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
+    return FALSE;
+
+  if (SYX_OOP_EQ (process, _syx_interp_state.process))
+    state = &_syx_interp_state;
+  else if (!_syx_interp_switch_process (state, process))
+    return TRUE;
+
+  _syx_interp_state_update (state, frame);
+
   return TRUE;
 }
 
@@ -917,7 +934,6 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
                      so pop its returned object */
                   _syx_interp_state.frame->stack--;
                   SYX_BLOCK_CONTEXT_ENSURE_BLOCK (_syx_interp_state.frame->this_context) = syx_nil;
-                  returned_object = syx_interp_stack_pop ();
                 }
               else if (!SYX_IS_NIL (ensure_block))
                 {
@@ -932,8 +948,7 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
                   return TRUE;
                 }
             }
-          else
-            returned_object = syx_interp_stack_pop ();
+          returned_object = syx_interp_stack_pop ();
         }
       else
         returned_object = _syx_interp_state.frame->receiver;

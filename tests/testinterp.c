@@ -169,11 +169,10 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method ^[Signal signal] on: Signal do: [:ex | true]");
   assert (SYX_IS_TRUE (ret_obj));
 
-  /*
   puts ("- Test resuming");
   ret_obj = _interpret ("method ^[Signal signal. 123] on: Signal do: [ :ex | ex resume. 321]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
-
+  /*
   puts ("- Test pass");
   ret_obj = _interpret ("method ^[[Error signal. 123] on: Error do: [ :ex | ex pass. 213]] on: Exception do: [:ex | 321]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
