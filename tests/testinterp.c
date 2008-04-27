@@ -172,7 +172,7 @@ main (int argc, char *argv[])
   puts ("- Test resuming");
   ret_obj = _interpret ("method ^[Signal signal. 123] on: Signal do: [ :ex | ex resume. 321]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
-  /*
+
   puts ("- Test pass");
   ret_obj = _interpret ("method ^[[Error signal. 123] on: Error do: [ :ex | ex pass. 213]] on: Exception do: [:ex | 321]");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
@@ -180,7 +180,10 @@ main (int argc, char *argv[])
   puts ("- Test ensuring");
   ret_obj = _interpret ("method [Signal signal. 123] ensure: [^321]. 213");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
-  */
+
+  puts ("- Test ensuring 2");
+  ret_obj = _interpret ("method [^123] ensure: [^321]. 213");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
   puts ("- Test loops");
   ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");

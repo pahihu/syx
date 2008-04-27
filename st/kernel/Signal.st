@@ -34,19 +34,23 @@ signal
 
 !Signal methodsFor: 'signaling'!
 
-handlerContext
-    "Finds the context which handles the exception"
+handlerContextStartingFrom: aContext
     | ctx |
-    handlerContext
-	ifNotNil: [ ^handlerContext ].
-
-    ctx := signalerContext parent.
+    ctx := aContext.
     [ ctx notNil ]
 	whileTrue: [
 	    (ctx handles: self)
 		ifTrue: [ ^handlerContext := ctx ].
 	    ctx := ctx parent ].
     ^nil
+!
+
+handlerContext
+    "Finds the context which handles the exception"
+    handlerContext
+	ifNotNil: [ ^handlerContext ].
+
+    ^self handlerContextStartingFrom: signalerContext parent
 !
 
 isResumable
@@ -97,8 +101,7 @@ debug
 
 pass
     "Drop the exception to parent contexts"
-    thisContext parent: handlerContext parent.
-    handlerContext := nil.
+    self handlerContextStartingFrom: handlerContext parent.
     self signal
 !
 
