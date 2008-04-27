@@ -1,8 +1,38 @@
+2008-04-27  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (_syx_memory_write_frame): only write arguments and temporaries for detached frames
+	(_syx_memory_write_process_stack): check for collected stacks, store the index of the frames
+	(_syx_memory_read_process_stack): seek back by one
+
+	* syx/syx-interp.c (syx_inter_push_block_closure): only copy arguments and temporaries
+
+2008-04-26  Luca Bruno  <lethalman88@gmail.com>
+
+	Do not seek the file, instead read frames as is: this makes the image smaller.
+	Mark beginning and end of whole stacks instead of single frames.
+	Fix reading of frame fields when loading the image.
+	
+	* syx/syx-memory.c (_syx_memory_read): use _read_lazy_pointer and start using to read the process stack
+	(_syx_memory_write_process_stack): store everything in reverse order but saving the index of each frame
+
+	* syx/syx-memory.c (syx_memory_save_image): skip if object is marked
+	(_syx_memory_gc_sweep): unmark constants
+
+	* syx/syx-memory.c (_syx_memory_write_object_with_vars): added
+	(_syx_memory_write_lazy_pointer): added
+	(_syx_memory_write_frame): added
+	(_syx_memory_write_process_stack): added
+	(syx_memory_save_image): save the process state before doing any operation
+	(_syx_memory_read_lazy_pointer): added
+	(_syx_memory_read_process_stack): added
+
 2008-04-25  Luca Bruno  <lethalman88@gmail.com>
 
-        * syx/syx-memory.c (_syx_memory_read): read framePointer variables
+        * syx/syx-memory.c (struct SyxMemoryLazyPointer): added
+	(enum SyxMemoryType): rename RAW to IMMEDIATE and FP to FRAME_POINTER
+
+	* syx/syx-memory.c (_syx_memory_read): read framePointer variables
         (syx_memory_load_image): free lazy pointers
-        (struct SyxMemoryLazyPointer): added
 
 2008-04-23  Luca Bruno  <lethalman88@gmail.com>
 

@@ -801,8 +801,10 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
     SYX_BLOCK_CLOSURE_OUTER_FRAME(closure) = _syx_interp_state.frame->detached_frame;
   else
     {
-      /* Copy a piece of the process stack */
-      frame_size = SYX_POINTERS_OFFSET (_syx_interp_state.frame->stack, _syx_interp_state.frame);
+      /* Copy up to temporaries */
+      frame_size = SYX_POINTERS_OFFSET (&_syx_interp_state.frame->local, _syx_interp_state.frame) +
+        SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (_syx_interp_state.frame->method)) +
+        SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (_syx_interp_state.frame->method));
       frame_oop = syx_array_new_ref (frame_size, (SyxOop *)_syx_interp_state.frame);
       frame = (SyxInterpFrame *)SYX_OBJECT_DATA (frame_oop);
       frame->detached_frame = frame_oop;
