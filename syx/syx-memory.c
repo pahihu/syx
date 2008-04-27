@@ -356,7 +356,7 @@ syx_memory_save_image (syx_symbol path)
                   fseek (image, offset, SEEK_CUR);
                 }
               else
-#endif
+#endif /* HAVE_LIBGMP */
                 {
                   /* it's not a large integer */
                   fputc (0, image);

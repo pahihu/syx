@@ -85,9 +85,7 @@ _syx_save_recovered_image (void)
       return;
     }
 
-  SYX_PROCESS_STACK(process) = syx_nil;
-  SYX_PROCESS_SUSPENDED(process) = syx_true;
-  SYX_PROCESS_SCHEDULED(process) = syx_false;
+  /* Remove the affected process */
   syx_scheduler_remove_process (process);
 
   if (!syx_memory_save_image (image_path))

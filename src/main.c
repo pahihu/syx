@@ -67,9 +67,6 @@ static void
 _do_recovery (const char *rim_path)
 {
   SyxOop process = syx_processor_active_process;
-  SYX_PROCESS_STACK(process) = syx_nil;
-  SYX_PROCESS_SUSPENDED(process) = syx_true;
-  SYX_PROCESS_SCHEDULED(process) = syx_false;
   syx_scheduler_remove_process (process);
 
   if (!syx_memory_save_image (rim_path))
