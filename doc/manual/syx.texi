@@ -131,6 +131,39 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @node Introducing the Syx environment
 @chapter Introducing the Syx environment
 
+@cindex Command line, Startup
+@pindex syx
+
+Syx has two kind of environments for both launching and developing your applications.
+The first, less intuitive but useful for small scripts and immediate tests, is the command line interpreter.
+The name of the program is @command{syx}. Once you run it you will get into a console like this:
+
+@example
+Smalltalk YX @value{VERSION} is ready.
+Type "help!" to get help.
+>
+@end example
+
+When you see the @code{>} character at the beginnig, it means the previous command has been executed then the program is ready to interpret your next commands ``on the fly''.
+To get a first approach to the environment, type @kbd{help!} and press @key{Enter} to get a basic list of available commands that might help you. This would be the result on your screen:
+
+@example
+> help!
+'===========
+To quit Smalltalk YX type "Smalltalk quit!" or press ^D (ctrl+D).
+To say Hello World type:
+ 'Hello world'!
+
+For more documentation and examples please visit the homepage or contact us.
+
+Homepage: http://syx.googlecode.com
+Mailing list: http://groups.google.com/group/syx-discuss
+IRC channel: #syx on irc.freenode.net
+E-mail: lethalman88 at gmail.com
+==========='
+>
+@end example
+
 @node Introduction to the language
 @chapter Introduction to the language
 
@@ -156,8 +189,14 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @unnumbered Index
 
 @menu
+* Programs::
 * Concepts::
 @end menu
+
+@node Programs
+@section Programs
+
+@printindex pg
 
 @node Concepts
 @section Concepts
