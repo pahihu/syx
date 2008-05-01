@@ -335,7 +335,7 @@ static void
 _syx_memory_write_vars_with_fp (SyxObject *object, SyxVariables stack_var, SyxVariables fp_var, FILE *image)
 {
   syx_int32 stack_idx = SYX_COMPAT_SWAP_32 (SYX_MEMORY_INDEX_OF (object->vars[stack_var]));
-  syx_int32 offset = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (object->vars[fp_var], object->vars[stack_var]));
+  syx_int32 offset = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (object->vars[fp_var], SYX_OBJECT_DATA (object->vars[stack_var])));
   /* Write all variables before FRAME_POINTER */
   _syx_memory_write (object->vars, TRUE, fp_var, image);
   /* Now specify our own type for frame pointers */
@@ -444,6 +444,9 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
   SyxObject *stack = SYX_OBJECT (process->vars[SYX_VARS_PROCESS_STACK]);
   SyxInterpFrame *bottom_frame = (SyxInterpFrame *)stack->data;
   SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (process->vars[SYX_VARS_PROCESS_FRAME_POINTER]);
+  
+  if (SYX_IS_NIL (SYX_POINTER_CAST_OOP (stack)))
+    return;
 
   _syx_memory_write_object_with_vars (stack, image);
 
@@ -452,7 +455,6 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
   fwrite (&data, sizeof (syx_varsize), 1, image);
   /* We have to do things in reverse order because the stack is such a reverse single linked list,
      each frame connected by parent frames */
-  fputc (SYX_MEMORY_TYPE_BOS, image);
   while (frame)
     {
       /* We store detached frames later */
@@ -462,11 +464,11 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
           continue;
         }
 
+      fputc (SYX_MEMORY_TYPE_BOS, image);
       /* Store the index of this frame */
       data = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (frame, bottom_frame));
       fwrite (&data, sizeof (syx_varsize), 1, image);
       _syx_memory_write_frame (process, frame, image);
-      fputc (SYX_MEMORY_TYPE_BOS, image);
       frame = frame->parent_frame;
     }
   fputc (SYX_MEMORY_TYPE_EOS, image);
@@ -545,9 +547,7 @@ syx_memory_save_image (syx_symbol path)
   process = syx_processor_first_process;
   while (!SYX_IS_NIL (process))
     {
-      _syx_memory_write_object_with_vars (SYX_OBJECT (process), image);
       _syx_memory_write_process_stack (SYX_OBJECT (process), image);
-      SYX_OBJECT(process)->is_marked = TRUE;
       process = SYX_PROCESS_NEXT (process);
     }
 
