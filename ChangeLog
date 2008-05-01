@@ -1,3 +1,11 @@
+2008-05-01  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c:
+	Fix lazy pointers.
+	Fix BOS/EOS sequence for writing and reading.
+	Store block closures that are not attached to any process.
+	Save processes before any other object.
+
 2008-04-27  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (_syx_memory_write_frame): only write arguments and temporaries for detached frames
