@@ -1,6 +1,9 @@
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c:
+	(_syx_memory_gc_mark): mark detached frames
+
+	* syx/syx-memory.c:
 	Fix lazy pointers.
 	Fix BOS/EOS sequence for writing and reading.
 	Store block closures that are not attached to any process.

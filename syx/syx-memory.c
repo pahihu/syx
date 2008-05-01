@@ -213,6 +213,8 @@ INLINE void
 _syx_memory_gc_mark (SyxOop object)
 {
   syx_varsize i;
+  SyxInterpFrame *frame;
+
   if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
     return;
 
@@ -223,6 +225,16 @@ _syx_memory_gc_mark (SyxOop object)
   for (i=0; i < syx_object_vars_size (object); i++)
     _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
 
+  if (SYX_OOP_EQ (syx_object_get_class (object), syx_process_class))
+    {
+      frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (object));
+      while (frame)
+        {
+          if (!SYX_IS_NIL (frame->detached_frame))
+            _syx_memory_gc_mark (frame->detached_frame);
+          frame = frame->parent_frame;
+        }
+    }
   if (SYX_OBJECT_HAS_REFS (object))
     {
       for (i=0; i < SYX_OBJECT_DATA_SIZE (object); i++)
