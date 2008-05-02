@@ -1,10 +1,5 @@
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
 
-	Create reference to doc/reference.
-	Add doc/manual.
-
-	* doc/manual/syx.texinfo: added
-	
         * syx/syx-memory.c:
         (syx_memory_save_image): only store the stack of each process
         (_syx_memory_write_process_stack): fixed beginning and end of frames
