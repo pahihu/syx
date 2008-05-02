@@ -9,7 +9,7 @@
 * Hello world::
 * Number operations::
 * Quitting the interpreter::
-* Invoking syx::
+* Command line arguments: Invoking syx.
 @end menu
 
 @cindex Command line

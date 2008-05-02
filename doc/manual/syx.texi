@@ -64,7 +64,7 @@ Smalltalk YX is an open source programming language. It's an implementation of t
 * C Reference::
 * Embedding::
 * Advanced topics::
-* Copying This Manual: GNU Free Documentation License
+* Copying This Manual: GNU Free Documentation License.
 * Index::
 @end menu
 
