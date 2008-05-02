@@ -146,3 +146,4 @@ The other way, more console-ish is to send an @acronym{EOF, End Of File}. This i
 @node Invoking syx
 @section Invoking syx
 
+The @command{syx} command has some arguments that you might be interested in.

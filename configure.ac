@@ -238,6 +238,7 @@ Makefile
 syx/Makefile
 src/Makefile
 share/Makefile
+doc/Makefile
 examples/Makefile
 examples/basic/Makefile
 examples/console/Makefile

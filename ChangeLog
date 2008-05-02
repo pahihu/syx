@@ -1,5 +1,9 @@
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
+	* doc/Makefile.am: added
+
+	* configure.ac:
+	
 	* doc/manual/introsyx.texi: splitted from syx.texi
 
 	* doc/manual/syx.texi (Introducing the Syx environment): basic Strings
