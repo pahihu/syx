@@ -1,6 +1,9 @@
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
+	* doc/manpage/syx.1: added
+	
 	* doc/Makefile.am: added
+	add doc target
 
 	* configure.ac:
 	

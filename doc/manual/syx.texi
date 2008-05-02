@@ -10,7 +10,7 @@
 @documentencoding UTF-8
 @c %**end of header
 
-@set VERSION 0.1.6
+@set VERSION 0.1.7
 @set UPDATED Thu May, 1
 
 @documentdescription

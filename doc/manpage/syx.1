@@ -1,0 +1,77 @@
+.TH SYX 1 "MAY 2008" "Smalltalk YX 0.1.7" "User Commands"
+.SH NAME
+syx \- Smalltalk YX interpreter
+.SH SYNOPSIS
+.B syx \fIoptions \fB[ -c ] \fB[ -e code ] \fIfile \fB...
+.br
+.B syx \fIoptions \fB[ -S ]
+.SH DESCRIPTION
+.B syx
+is the Smalltalk YX command for launching the interpreter.
+.br
+All files are processed in the order specified.
+.SH OPTIONS
+.TP
+.B "-r, --root=\fIDIRECTORY"\fR
+Use the alternate system wide
+.I root path
+for Syx.
+.TP
+.B "-i, --image=\fIFILE"\fR
+Use the alternate system wide
+.I image file\fP.
+This overrides any
+.B SYX_IMAGE_PATH
+environment variable.
+.TP
+.B "-s, --scratch"\fR
+Build the environment from scratch and save the image.
+Continue the startup and enter the environment.
+.TP
+.B "-S"\fR
+Build the environment from scratch and save the image. Exits once the \fIimage\fP is built.
+.TP
+.B "-c"\fR
+Continue startup process after loading files or evaluating code.
+.TP
+.B "-e \fICODE"\fR
+Evaluate one line of code.
+.TP
+.B "--recovery=\fIIMAGEFILE"\fR
+Load the default image and save the recovered copy of it to \fIIMAGEFILE\fP.
+.SH FILES
+.I /usr/share/syx/st
+.RS
+Contains all the Smalltalk files used to create the image from scratch.
+The root directory /usr/share/syx can be overridden with the \fB-r, --root\fP option.
+.RE
+.I /usr/share/syx/default.sim
+.RS
+The default image loaded on startup. The path can be overridden with the \fISYX_IMAGE_PATH\fP environment variable or with the \fB-i, --image\fP option.
+.RE
+.I /usr/lib/syx
+.RS
+This directory contains all the C plugins that are loadable from within Smalltalk.
+.SH ENVIRONMENT
+.IP SYX_IMAGE_PATH
+If non-null the full pathname for an alternate system wide
+.I image file\fP.
+Overridden by the
+.B -i, --image
+option.
+.SH AUTHOR
+Luca Bruno <lethalman88@gmail.com>
+.SH REPORTING BUGS
+Report bugs to <lethalman88@gmail.com> or visit the issue tracker at http://syx.googlecode.com/issues/list.
+.SH COPYRIGHT
+Copyright (c) 2008 Luca Bruno <lethalman88@@gmail.com>.
+
+Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+
+.SH SEE ALSO
+The full documentation for \fIsyx\fP is maintained as a Texinfo manual. If the \fIinfo\fP and \fIsyx\fP programs are properly installed at your site, the command
+.IP
+.B info syx
+.PP
+should give you access to the complete manual.
+

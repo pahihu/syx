@@ -15,7 +15,11 @@ html_docs		= manual/syx.html
 .texi.html:
 	$(MAKEINFO) --html $<
 
-.PHONY: info pdf html
+reference:
+	cd $(top_srcdir) && doxygen Doxyfile
+
+.PHONY: info pdf html doc man reference
 info: manual/syx.texi $(info_docs)
 pdf: manual/syx.texi $(pdf_docs)
 html: manual/syx.texi $(html_docs)
+doc: info pdf html reference
