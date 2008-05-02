@@ -7,6 +7,7 @@
 @c %**start of header
 @setfilename syx.info
 @settitle Smalltalk YX Manual
+@documentencoding UTF-8
 @c %**end of header
 
 @set VERSION 0.1.6
@@ -57,8 +58,8 @@ Smalltalk YX is an open source programming language. It's an implementation of t
 @menu
 * What is Smalltalk::
 * Why Smalltalk YX::
-* Introduction to the language::
 * Introducing the Syx environment::
+* Introduction to the language::
 * Smalltalk Reference::
 * C Reference::
 * Embedding::
@@ -70,7 +71,9 @@ Smalltalk YX is an open source programming language. It's an implementation of t
 @setchapternewpage on
 
 @node What is Smalltalk
-@chapter What is Smalltalk
+@chapter What is Smalltalk 
+
+@cindex Smalltalk, Pure objects
 
 @uref{http://www.smalltalk.org, Smalltalk} is a dynamic object-oriented programming language.
 With the name @strong{Smalltalk} we usually refer to the language standard (syntax, semantics, philosophy, etc.). You can think of Smalltalk-80 like the C99 standard.
@@ -84,6 +87,8 @@ The way you develop Smalltalk applications is extremely clean and let you make y
 
 @node Why Smalltalk YX
 @chapter Why Smalltalk YX
+
+@cindex Syx purposes
 
 @acronym{Syx, Smalltalk YX} is an @uref{http://opensource.org/, open source} implementation of the Smalltalk-80 standard, distributed under the terms of the MIT license.
 @strong{Syx} is written in C has the following purposes:
@@ -123,12 +128,11 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 
 @end itemize
 
+@node Introducing the Syx environment
+@chapter Introducing the Syx environment
 
 @node Introduction to the language
 @chapter Introduction to the language
-
-@node Introducing the Syx environment
-@chapter Introducing the Syx environment
 
 @node Smalltalk Reference
 @chapter Smalltalk Reference
@@ -150,6 +154,13 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 
 @node Index
 @unnumbered Index
+
+@menu
+* Concepts::
+@end menu
+
+@node Concepts
+@section Concepts
 
 @printindex cp
 

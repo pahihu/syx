@@ -13,7 +13,10 @@
 	* doc/manual/fdl-1.2.texi: added
 
 	* doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
-	
+	(Introducing the Syx environment): moved up
+	(Index): add menu and Concepts section
+	Added some concepts.
+
 	* doc/manual/fdl-1.2.texi: added
 
 	Create reference to doc/reference.
