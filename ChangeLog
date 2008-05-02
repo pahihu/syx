@@ -1,9 +1,5 @@
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
-	
-	* doc/manual/fdl-1.2.texi: added
-
 	Create reference to doc/reference.
 	Add doc/manual.
 
