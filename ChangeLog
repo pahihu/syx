@@ -1,7 +1,10 @@
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
+	* doc/manual/introsyx.texi: splitted from syx.texi
+
 	* doc/manual/syx.texi (Introducing the Syx environment): basic Strings
 	(What is Smalltalk): Image concept
+	(Index): added Classes and Methods
 
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
     

@@ -80,7 +80,7 @@ With the name @strong{Smalltalk} we usually refer to the language standard (synt
 
 Smalltalk was one of the first language @emph{to be invented to invent} the pure object system, where everything is an 'object'.
 
-@acronym{ST, Smalltalk} is a powerful language which comes with a big environment for both users and developers. The syntax is elegant and its features are yet innovative.
+@abbr{ST, Smalltalk} is a powerful language which comes with a big environment for both users and developers. The syntax is elegant and its features are yet innovative.
 It features a great reflection and introspection system which gave to the IDE what a real ``integrated development environment'' is for.
 
 The way you develop Smalltalk applications is extremely clean and let you make your choice the right way, keeping your eyes between the internal logic and the final product. What you write in Smalltalk is really what you expect to get, with the highest coherence and quality of the whole collection of classes.
@@ -96,7 +96,7 @@ This concept is the reason why Smalltalk differs so much from other programmin l
 
 @cindex Syx purposes
 
-@acronym{Syx, Smalltalk YX} is an @uref{http://opensource.org/, open source} implementation of the Smalltalk-80 standard, distributed under the terms of the MIT license.
+@abbr{Syx, Smalltalk YX} is an @uref{http://opensource.org/, open source} implementation of the Smalltalk-80 standard, distributed under the terms of the MIT license.
 @strong{Syx} is written in C has the following purposes:
 
 @itemize @bullet
@@ -137,80 +137,7 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @node Introducing the Syx environment
 @chapter Introducing the Syx environment
 
-@cindex Command line
-@pindex syx
-
-Syx has two kind of environments for both launching and developing your applications.
-The first, less intuitive but useful for small scripts and immediate tests, is the command line interpreter.
-The name of the program is @command{syx}. Once you run it you will get into a console like this:
-
-@example
-Smalltalk YX @value{VERSION} is ready.
-Type "help!" to get help.
->
-@end example
-
-@cindex Startup sequence
-
-Behind the scene, launching @command{syx} would do the following steps:
-@enumerate
-@item load the @file{libsyx} library
-@item initialize the external environment (root directory, image file, plugins directory, etc.)
-@item load the @file{default.sim} image
-@item initialize the Smalltalk environment
-@item run the @var{Console}
-@end enumerate
-
-This manual will give you more explanations on how to customize this sequence from Smalltalk and also how to follow this boot sequence from your C/C++ applications in the next chapters.
-
-When you see the @code{>} character at the beginnig, it means the previous command has been executed then the program is ready to interpret your next commands ``on the fly''.
-To get a first approach to the environment, type @kbd{help!} and press @key{Enter} to get a basic list of available commands that might help you. This would be the result on your screen:
-
-@example
-> help!
-'===========
-To quit Smalltalk YX type "Smalltalk quit!" or press ^D (ctrl+D).
-To say Hello World type:
- 'Hello world'!
-
-For more documentation and examples please visit the homepage or contact us.
-
-Homepage: http://syx.googlecode.com
-Mailing list: http://groups.google.com/group/syx-discuss
-IRC channel: #syx on irc.freenode.net
-E-mail: lethalman88 at gmail.com
-==========='
->
-@end example
-
-@tindex String
-@cindex Hello world
-
-Notice that at the beginning and at the end of the text there's a @key{'} (single quote). Single quotes are used to create @var{String}s, which are @dfn{a sequence of human readable characters}. All the text you type inside two single quotes will be interpreted by Syx as a @var{String}. For instance, let's say the famous Hello world from Syx:
-
-@code{'Hello world'!}
-
-And this would be the output:
-
-@example
-> 'Hello world'!
-'Hello world'
->
-@end example
-
-@cindex Exclamation mark
-
-We have written our second command being interpreted by Syx. Please notice also that we ended our two commands with a @key{!} (exclamation mark). The exclamation mark is really important for parsing and interpreting, it's used to @dfn{end a sequence of statements}. Both with @code{help!} and @code{'Hello world'!} we specified one statement and then terminated it with the exclamation mark.
-
-But, what if you want to use a single quote inside your text if @var{String}s are enclosed between single quotes? In this case the solution is trivial, just use two single quotes one next the other (''):
-
-@example
-> 'Hello''s world'!
-'Hello's world'
->
-@end example
-
-@strong{Important}: from now on I will mostly show commands in the examples themselves, as first rows after the @code{>}.
+@include introsyx.texi
 
 @node Introduction to the language
 @chapter Introduction to the language
@@ -239,6 +166,8 @@ But, what if you want to use a single quote inside your text if @var{String}s ar
 @menu
 * Programs::
 * Concepts::
+* Classes::
+* Methods::
 @end menu
 
 @node Programs
@@ -250,5 +179,15 @@ But, what if you want to use a single quote inside your text if @var{String}s ar
 @section Concepts
 
 @printindex cp
+
+@node Classes
+@section Classes
+
+@printindex tp
+
+@node Methods
+@section Methods
+
+@printindex fn
 
 @bye
