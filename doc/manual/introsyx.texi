@@ -147,3 +147,74 @@ The other way, more console-ish is to send an @acronym{EOF, End Of File}. This i
 @section Invoking syx
 
 The @command{syx} command has some arguments that you might be interested in.
+First of all, you can specify multiple Smalltalk files to be executed, in the specified order, and pass arguments to them:
+
+@command{syx file1.st file2.st ...}
+
+Once they have been executed the interpreter exits. If you want it to continue the startup process after the files have been processed, see the @command{-c} option below.
+
+@itemize @bullet
+@item @command{-r, --root=DIR}
+
+This option is used to specify the root directory where Syx will find @strong{Smalltalk files}, the @strong{default.sim} image and packages. 
+
+@enumerate
+@item check for @command{-r, --root}
+@item use the default path specified at compile time (usually @file{/usr/share/syx})
+@end enumerate
+
+@item @command{-i, --image=IMAGEFILE}
+
+@vindex SYX_IMAGE_PATH
+Specify the @emph{image} to load. This can be specified also with the @var{SYX_IMAGE_PATH} environment variable. This is the order of the image path resolution:
+
+@enumerate
+@item check for @command{-i, --image}
+@item check for a @file{default.sim} in the current directory
+@item check for the @var{SYX_IMAGE_PATH} environment variable
+@item use the default path specified at compile time (usually @file{/usr/share/syx/default.sim})
+@end enumerate
+
+@item @command{-s, --scratch}
+
+Build the environment from scratch and snapshot it to the image file.
+This implies the following operations:
+
+@findex #initializeFirstSystem
+@enumerate
+@item initialize the object memory
+@item parse known Smalltalk files in the root path
+@item invoke Smalltalk>>#initializeFirstSystem
+@end enumerate
+
+After this has been done, the console is started and you can work with your new image.
+
+@item @command{-S}
+
+Like @command{-s, --scratch} but exits once the image is built.
+@string{Note} that if you use this option, all the options (except -r and -i) have no effect.
+
+@item @command{--recovery=IMAGEFILE}
+
+This option is very useful when Syx crashed due to a bad Process and you don't want to lose unsaved changes to the image. This is what the command performs:
+
+@enumerate
+@item load the default image
+@item remove the broken process from being scheduled
+@item save the safe image to the specified image file
+@end enumerate
+
+Usually this critical operation is done automatically when a crash is encountered. The safe image in such case is named with a @file{.recover} suffix in the same directory of the broken one.
+
+The options that follows are passed directly to the Smalltalk environment, this means that if you want to specify -r or -i you must specify them before these options. All remaining options and files, in fact, are passed to Smalltalk.
+
+@item @command{-c}
+
+After all input files have been processed, the startup process continues and you will get a running console.
+This is useful when you want to test something that could be changed due to the file execution.
+
+@item @command{-e CODE}
+
+
+
+@end itemize

@@ -168,6 +168,7 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 * Concepts::
 * Classes::
 * Methods::
+* Variables::
 @end menu
 
 @node Programs
@@ -189,5 +190,10 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @section Methods
 
 @printindex fn
+
+@node Variables
+@section Variables
+
+@printindex vr
 
 @bye
