@@ -358,7 +358,7 @@ _syx_memory_write_object_with_vars (SyxObject *object, FILE *image)
   _syx_memory_write (&object->klass, FALSE, 1, image);
   fputc (object->has_refs, image);
   fputc (object->is_constant, image);
-  
+
   data = syx_object_vars_size ((SyxOop)object);
   data = SYX_COMPAT_SWAP_32(data);
   fwrite (&data, sizeof (syx_varsize), 1, image);

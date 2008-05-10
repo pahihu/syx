@@ -620,7 +620,8 @@ _syx_parser_parse_expression (SyxParser *self)
       syx_token_free (token);
 
       token = syx_lexer_next_token (self->lexer);
-      if (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, ":="))
+      if (token.type == SYX_TOKEN_BINARY &&
+          (!strcmp (token.value.string, ":=") || !strcmp (token.value.string, "<-")))
         {
           syx_token_free (token);
           syx_lexer_next_token (self->lexer);

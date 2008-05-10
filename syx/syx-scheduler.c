@@ -392,17 +392,18 @@ syx_scheduler_remove_process (SyxOop process)
     {
       SYX_PROCESS_SCHEDULED(process) = syx_false;
       syx_processor_first_process = SYX_PROCESS_NEXT(process);
-      return;
     }
-
-  for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
+  else
     {
-      inter_process = SYX_PROCESS_NEXT(prev_process);
-      if (SYX_OOP_EQ (inter_process, process))
+      for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
         {
-          SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
-          SYX_PROCESS_SCHEDULED(process) = syx_false;
-          break;
+          inter_process = SYX_PROCESS_NEXT(prev_process);
+          if (SYX_OOP_EQ (inter_process, process))
+            {
+              SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
+              SYX_PROCESS_SCHEDULED(process) = syx_false;
+              break;
+            }
         }
     }
 

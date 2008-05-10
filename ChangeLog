@@ -1,5 +1,11 @@
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-scheduler.c (syx_scheduler_remove_process): always check for active process
+
+	* syx/syx-lexer.c (_syx_char_is_binary_second): temporarly removed '-'
+
+	* syx/syx-parser.c: support <- assignment
+
 	* syx/syx-memory.c (_syx_memory_write_frame): fix stack pointer
 	(_syx_memory_write_lazy_pointer): fix on NULL process
 
