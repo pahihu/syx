@@ -379,12 +379,12 @@ _syx_memory_write_lazy_pointer (SyxObject *process, SyxInterpFrame *frame, FILE 
 {
   SyxOop stack;
   syx_int32 offset;
-  if (!frame)
+  if (!process)
     stack = syx_nil;
-  else if (SYX_IS_NIL (frame->detached_frame) && process)
-    stack = process->vars[SYX_VARS_PROCESS_STACK];
-  else
+  else if (frame && !SYX_IS_NIL (frame->detached_frame))
     stack = frame->detached_frame;
+  else
+    stack = process->vars[SYX_VARS_PROCESS_STACK];
 
   _syx_memory_write (&stack, FALSE, 1, image);
   offset = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (frame, SYX_OBJECT_DATA (stack)));
@@ -415,7 +415,7 @@ _syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, FILE *image)
   fwrite (&data, sizeof (syx_int32), 1, image);
   /* the stack pointer should point inside the process stack itself */
   if (process)
-    _syx_memory_write ((SyxOop *)process->vars[SYX_VARS_PROCESS_STACK], FALSE, 1, image);
+    _syx_memory_write (&process->vars[SYX_VARS_PROCESS_STACK], FALSE, 1, image);
   else
     {
       data = SYX_COMPAT_SWAP_32 (0);
@@ -645,7 +645,7 @@ _syx_memory_read_lazy_pointer (SyxOop *entry, FILE *image)
   fread(&idx, sizeof (syx_int32), 1, image);
   idx = SYX_COMPAT_SWAP_32 (idx);
   if (!idx)
-    lazy->stack = syx_nil;
+    lazy->stack = (SyxOop)NULL;
   else
     lazy->stack = (SyxOop)(syx_memory + idx);
   
@@ -714,6 +714,7 @@ _syx_memory_read_process_stack (SyxOop *oop, FILE *image)
       i = 0;
       if (!fread (&data, sizeof (syx_int32), 1, image)) 
         return FALSE;
+
       frame = oop + SYX_COMPAT_SWAP_32 (data);
       _syx_memory_read (frame+i++, FALSE, 1, image); /* this context */
       _syx_memory_read (frame+i++, FALSE, 1, image); /* detached frame */
@@ -724,7 +725,7 @@ _syx_memory_read_process_stack (SyxOop *oop, FILE *image)
       _syx_memory_read (frame+i++, FALSE, 1, image); /* closure */
       if (!fread (&data, sizeof (syx_int32), 1, image))
         return FALSE;
-      oop[i] = SYX_COMPAT_SWAP_32 (data); /* next instruction */
+      frame[i++] = SYX_COMPAT_SWAP_32 (data); /* next instruction */
       _syx_memory_read_lazy_pointer (frame+i++, image); /* stack pointer */
       _syx_memory_read (frame+i++, FALSE, 1, image); /* receiver */
       if (!fread (&data, sizeof (syx_int32), 1, image))
