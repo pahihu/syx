@@ -106,7 +106,7 @@ extern EXPORT SyxObject *syx_memory;
 extern EXPORT syx_int32 _syx_memory_size;
 
 /*! Returns the index of the oop in the object table */
-#define SYX_MEMORY_INDEX_OF(oop) (((oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
+#define SYX_MEMORY_INDEX_OF(oop) ((((SyxOop)oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
 
 
 /* References to commonly used oops */

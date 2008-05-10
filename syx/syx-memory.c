@@ -226,6 +226,7 @@ _syx_memory_gc_mark (SyxOop object)
   for (i=0; i < syx_object_vars_size (object); i++)
     _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
 
+  /* FIXME: mark objects inside this loop instead of iterating through the entire stack again */
   if (SYX_OOP_EQ (syx_object_get_class (object), syx_process_class))
     {
       frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (object));
@@ -439,7 +440,6 @@ _syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, SyxInterpFra
       fwrite (&data, sizeof (syx_int32), 1, image);
     }
   data = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (frame->stack, bottom_frame));
-
   fwrite (&data, sizeof (syx_int32), 1, image);
   _syx_memory_write (&frame->receiver, TRUE, 1, image);
   /* Store arguments, temporaries and local stack.

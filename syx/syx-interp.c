@@ -185,6 +185,9 @@ _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure)
 SyxInterpFrame *
 syx_interp_context_to_frame (SyxOop context)
 {
+  if (SYX_IS_NIL (context))
+    return NULL;
+
   return (SyxInterpFrame *) SYX_OOP_CAST_POINTER (SYX_CONTEXT_PART_FRAME_POINTER (context));
 }
 
