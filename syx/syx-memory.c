@@ -410,7 +410,7 @@ _syx_memory_write_lazy_pointer (SyxObject *process, SyxInterpFrame *frame, FILE 
 
 /* Dump a single frame */
 static void
-_syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, FILE *image)
+_syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, SyxInterpFrame *upper_frame, FILE *image)
 {
   syx_int32 data;
   SyxInterpFrame *bottom_frame;
@@ -445,7 +445,13 @@ _syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, FILE *image)
   /* Store arguments, temporaries and local stack.
      Only copy arguments and temporaries for detached frames without following the stack pointer */
   if (SYX_IS_NIL (frame->detached_frame))
-    data = SYX_POINTERS_OFFSET (frame->stack, &frame->local);
+    {
+      /* if no upper_frame is given, this frame is the top most frame of the process stack */
+      if (!upper_frame)
+        data = SYX_POINTERS_OFFSET (frame->stack, &frame->local);
+      else
+        data = SYX_POINTERS_OFFSET (upper_frame, &frame->local);
+    }
   else
     data = SYX_OBJECT_DATA_SIZE (frame->detached_frame) - SYX_POINTERS_OFFSET (&frame->local, frame);
   data = SYX_COMPAT_SWAP_32 (data);
@@ -462,6 +468,7 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
   SyxObject *stack = SYX_OBJECT (process->vars[SYX_VARS_PROCESS_STACK]);
   SyxInterpFrame *bottom_frame = (SyxInterpFrame *)stack->data;
   SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (process->vars[SYX_VARS_PROCESS_FRAME_POINTER]);
+  SyxInterpFrame *upper_frame = NULL;
 
   if (SYX_IS_NIL (SYX_POINTER_CAST_OOP (stack)))
     return;
@@ -486,7 +493,8 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
       fputc (SYX_MEMORY_TYPE_BOF, image);
       data = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (frame, bottom_frame));
       fwrite (&data, sizeof (syx_varsize), 1, image);
-      _syx_memory_write_frame (process, frame, image);
+      _syx_memory_write_frame (process, frame, NULL, image);
+      upper_frame = frame;
       frame = frame->parent_frame;
     }
   fputc (SYX_MEMORY_TYPE_EOS, image);
@@ -512,7 +520,7 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
       fputc (SYX_MEMORY_TYPE_BOF, image);
       data = SYX_COMPAT_SWAP_32 (0);
       fwrite (&data, sizeof (syx_varsize), 1, image);
-      _syx_memory_write_frame (process, frame, image);
+      _syx_memory_write_frame (process, frame, NULL, image);
       fputc (SYX_MEMORY_TYPE_EOS, image);
 
       stack->is_marked = TRUE;
@@ -638,7 +646,7 @@ syx_memory_save_image (syx_symbol path)
           data = SYX_COMPAT_SWAP_32 (0);
           fwrite (&data, sizeof (syx_varsize), 1, image);
           /* Outer frames have only one frame */
-          _syx_memory_write_frame (NULL, (SyxInterpFrame *)stack->data, image);
+          _syx_memory_write_frame (NULL, (SyxInterpFrame *)stack->data, NULL, image);
           fputc (SYX_MEMORY_TYPE_EOS, image);
           
           stack->is_marked = TRUE;

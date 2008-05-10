@@ -1,3 +1,7 @@
+2008-05-06  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (_syx_memory_write_frame): save all the stack from locals to the upper frame
+
 2008-05-04  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (_syx_memory_write_frame): receiver is not only an object
