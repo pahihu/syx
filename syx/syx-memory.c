@@ -877,6 +877,7 @@ syx_memory_load_image (syx_symbol path)
         *lazy->entry = SYX_POINTER_CAST_OOP (NULL);
     }
   syx_free (_syx_memory_lazy_pointers);
+  _syx_memory_lazy_pointers_top = 0;
 
   SYX_END_PROFILE(load_image);
 
