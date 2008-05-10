@@ -441,7 +441,7 @@ _syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, FILE *image)
   data = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (frame->stack, bottom_frame));
 
   fwrite (&data, sizeof (syx_int32), 1, image);
-  _syx_memory_write (&frame->receiver, FALSE, 1, image);
+  _syx_memory_write (&frame->receiver, TRUE, 1, image);
   /* Store arguments, temporaries and local stack.
      Only copy arguments and temporaries for detached frames without following the stack pointer */
   if (SYX_IS_NIL (frame->detached_frame))
@@ -748,7 +748,7 @@ _syx_memory_read_process_stack (SyxOop *oop, FILE *image)
         return FALSE;
       frame[i++] = SYX_COMPAT_SWAP_32 (data); /* next instruction */
       _syx_memory_read_lazy_pointer (frame+i++, image); /* stack pointer */
-      _syx_memory_read (frame+i++, FALSE, 1, image); /* receiver */
+      _syx_memory_read (frame+i++, TRUE, 1, image); /* receiver */
       if (!fread (&data, sizeof (syx_int32), 1, image))
         return FALSE;
       data = SYX_COMPAT_SWAP_32 (data);

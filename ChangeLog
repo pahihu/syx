@@ -1,5 +1,8 @@
 2008-05-04  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-memory.c (_syx_memory_write_frame): receiver is not only an object
+	(_syx_memory_read_process_stack): 
+
 	* syx/syx-scheduler.c (syx_scheduler_add_process): run the given process just after the active process
 	(syx_scheduler_init): set default timeslice to 100
 
