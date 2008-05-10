@@ -255,7 +255,7 @@ syx_scheduler_init (void)
   if (SYX_IS_NIL (syx_processor))
     {
       syx_processor = syx_object_new (syx_processor_scheduler_class);
-      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (50);
+      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (100);
       syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);
 
       FD_ZERO(&_syx_scheduler_poll_rfds);
@@ -375,8 +375,8 @@ syx_scheduler_add_process (SyxOop process)
         syx_processor_first_process = syx_processor_active_process = process;
       else
         {
-          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_first_process);
-          SYX_PROCESS_NEXT(syx_processor_first_process) = process;
+          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
+          SYX_PROCESS_NEXT(syx_processor_active_process) = process;
         }
       SYX_PROCESS_SCHEDULED(process) = syx_true;
     }

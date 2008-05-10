@@ -1,7 +1,16 @@
+2008-05-04  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-scheduler.c (syx_scheduler_add_process): run the given process just after the active process
+	(syx_scheduler_init): set default timeslice to 100
+
+	* syx/syx-memory.c (enum): rename _BOS to _BOF
+	All calls have been updated.
+
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
 	(_syx_memory_write_object_with_vars): ensure the stack
+	(_syx_memory_write_vars_with_fp): take care of detached frames
 
 	* syx/syx-scheduler.c (syx_scheduler_remove_process): always check for active process
 
