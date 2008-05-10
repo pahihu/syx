@@ -1,36 +1,45 @@
+2008-05-10  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-memory.c (_syx_memory_write_process_stack): store stack if the first frames are detached
+        (_syx_memory_write_process_stack): check if the stack has been already wrote
+        (_syx_memory_read): read first detached frames
+        (syx_memory_load_image): first fix pointers
+
+        * syx/syx-types.h:
+
 2008-05-06  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-interp.c (syx_interp_context_to_frame): add check
+        * syx/syx-interp.c (syx_interp_context_to_frame): add check
 
-	* syx/syx-memory.c (_syx_memory_write_frame): save all the stack from locals to the upper frame
-	(_syx_memory_read_lazy_pointer): missing big endian compatibility, rename idx to data
-	(_syx_memory_write_lazy_pointer): give precedence to detached frames
+        * syx/syx-memory.c (_syx_memory_write_frame): save all the stack from locals to the upper frame
+        (_syx_memory_read_lazy_pointer): missing big endian compatibility, rename idx to data
+        (_syx_memory_write_lazy_pointer): give precedence to detached frames
 
 2008-05-04  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-memory.c (_syx_memory_write_frame): receiver is not only an object
-	(_syx_memory_read_process_stack): 
+        * syx/syx-memory.c (_syx_memory_write_frame): receiver is not only an object
+        (_syx_memory_read_process_stack): 
 
-	* syx/syx-scheduler.c (syx_scheduler_add_process): run the given process just after the active process
-	(syx_scheduler_init): set default timeslice to 100
+        * syx/syx-scheduler.c (syx_scheduler_add_process): run the given process just after the active process
+        (syx_scheduler_init): set default timeslice to 100
 
-	* syx/syx-memory.c (enum): rename _BOS to _BOF
-	All calls have been updated.
+        * syx/syx-memory.c (enum): rename _BOS to _BOF
+        All calls have been updated.
 
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
-	(_syx_memory_write_object_with_vars): ensure the stack
-	(_syx_memory_write_vars_with_fp): take care of detached frames
+        * syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
+        (_syx_memory_write_object_with_vars): ensure the stack
+        (_syx_memory_write_vars_with_fp): take care of detached frames
 
-	* syx/syx-scheduler.c (syx_scheduler_remove_process): always check for active process
+        * syx/syx-scheduler.c (syx_scheduler_remove_process): always check for active process
 
-	* syx/syx-lexer.c (_syx_char_is_binary_second): temporarly removed '-'
+        * syx/syx-lexer.c (_syx_char_is_binary_second): temporarly removed '-'
 
-	* syx/syx-parser.c: support <- assignment
+        * syx/syx-parser.c: support <- assignment
 
-	* syx/syx-memory.c (_syx_memory_write_frame): fix stack pointer
-	(_syx_memory_write_lazy_pointer): fix on NULL process
+        * syx/syx-memory.c (_syx_memory_write_frame): fix stack pointer
+        (_syx_memory_write_lazy_pointer): fix on NULL process
 
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
 

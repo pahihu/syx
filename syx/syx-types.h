@@ -52,7 +52,7 @@ SYX_BEGIN_DECLS
 #define SYX_OOP_EQ(oop1, oop2) ((oop1) == (oop2))
 #define SYX_OOP_NE(oop1, oop2) ((oop1) != (oop2))
 
-#define SYX_POINTERS_OFFSET(top, base) ((syx_int32)(((syx_nint)top - (syx_nint)base)/sizeof (syx_pointer)))
+#define SYX_POINTERS_OFFSET(top, base) ((syx_int32)(((syx_nint)(top) - (syx_nint)(base))/sizeof (syx_pointer)))
 
 /*! Cast a SyxOop to a native pointer type */
 #define SYX_OOP_CAST_POINTER(oop) ((syx_pointer) (oop))
