@@ -1503,9 +1503,8 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
   
   filename = es->message_arguments[0];
 
-  /* save the current execution state */
+  /* store the returned object for this process before saving the image */
   syx_interp_stack_push (es->message_receiver);
-  _syx_interp_save_process_state ();
 
   if (SYX_IS_NIL (filename))
     ret = syx_memory_save_image (NULL);

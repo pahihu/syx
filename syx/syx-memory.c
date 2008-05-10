@@ -87,6 +87,7 @@ syx_int32 _syx_memory_gc_trans_running = 0;
 
 void _syx_interp_save_process_state (SyxInterpState *state);
 static syx_bool _syx_memory_read_process_stack (SyxOop *oop, FILE *image);
+static syx_bool _syx_memory_read (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image);
 
 /*! \page syx_memory Syx Memory
     
@@ -361,13 +362,15 @@ _syx_memory_write_object_with_vars (SyxObject *object, FILE *image)
 
   data = syx_object_vars_size ((SyxOop)object);
   data = SYX_COMPAT_SWAP_32(data);
-  fwrite (&data, sizeof (syx_varsize), 1, image);
+  fwrite (&data, sizeof (syx_int32), 1, image);
 
   /* store instance variables, keep an eye on special cases */
-  if (SYX_OOP_EQ (object->klass, syx_block_context_class) ||
-      SYX_OOP_EQ (object->klass, syx_method_context_class))
+  if ((SYX_OOP_EQ (object->klass, syx_block_context_class) ||
+       SYX_OOP_EQ (object->klass, syx_method_context_class))
+      && !SYX_IS_NIL (object->vars[SYX_VARS_CONTEXT_PART_STACK]))
     _syx_memory_write_vars_with_fp (object, SYX_VARS_CONTEXT_PART_STACK, SYX_VARS_CONTEXT_PART_FRAME_POINTER, image);
-  else if (SYX_OOP_EQ (object->klass, syx_process_class))
+  else if (SYX_OOP_EQ (object->klass, syx_process_class)
+           && !SYX_IS_NIL (object->vars[SYX_VARS_PROCESS_STACK]))
     _syx_memory_write_vars_with_fp (object, SYX_VARS_PROCESS_STACK, SYX_VARS_PROCESS_FRAME_POINTER, image);
   else
     _syx_memory_write (object->vars, TRUE, SYX_COMPAT_SWAP_32(data), image);
@@ -379,9 +382,9 @@ _syx_memory_write_lazy_pointer (SyxObject *process, SyxInterpFrame *frame, FILE 
 {
   SyxOop stack;
   syx_int32 offset;
-  if (!process)
+  if (!process || !frame)
     stack = syx_nil;
-  else if (frame && !SYX_IS_NIL (frame->detached_frame))
+  else if (!SYX_IS_NIL (frame->detached_frame))
     stack = frame->detached_frame;
   else
     stack = process->vars[SYX_VARS_PROCESS_STACK];
@@ -410,7 +413,7 @@ _syx_memory_write_frame (SyxObject *process, SyxInterpFrame *frame, FILE *image)
   _syx_memory_write_lazy_pointer (process, frame->stack_return_frame, image);
   _syx_memory_write (&frame->method, FALSE, 1, image);
   _syx_memory_write (&frame->closure, FALSE, 1, image);
-  /* this is not a small integer */
+  /* this is not a SmallInteger */
   data = SYX_COMPAT_SWAP_32 (frame->next_instruction);
   fwrite (&data, sizeof (syx_int32), 1, image);
   /* the stack pointer should point inside the process stack itself */
@@ -480,7 +483,7 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
     {
       stack = SYX_OBJECT (frame->detached_frame);
       /* Also check if the stack has been collected */
-      if (SYX_IS_NIL (frame->detached_frame) || SYX_IS_NIL (stack->klass))
+      if (SYX_IS_NIL (frame->detached_frame))
         {
           frame = frame->parent_frame;
           continue;
@@ -608,7 +611,7 @@ syx_memory_save_image (syx_symbol path)
         {
           stack = SYX_OBJECT (object->vars[SYX_VARS_BLOCK_CLOSURE_OUTER_FRAME]);
           /* Check if the stack has been collected or written to the image */
-          if (SYX_IS_NIL (SYX_POINTER_CAST_OOP (stack)) || SYX_IS_NIL (stack->klass) || stack->is_marked)
+          if (SYX_IS_NIL (SYX_POINTER_CAST_OOP (stack)) || stack->is_marked)
             continue;
 
           _syx_memory_write_object_with_vars (stack, image);
@@ -629,6 +632,10 @@ syx_memory_save_image (syx_symbol path)
 
   fclose (image);
 
+  /* be sure all objects are unmarked */
+  for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
+    object->is_marked = FALSE;
+
   return TRUE;
 }
 
@@ -643,9 +650,8 @@ _syx_memory_read_lazy_pointer (SyxOop *entry, FILE *image)
   
   /* Store the stack oop */
   fread(&idx, sizeof (syx_int32), 1, image);
-  idx = SYX_COMPAT_SWAP_32 (idx);
   if (!idx)
-    lazy->stack = (SyxOop)NULL;
+    lazy->stack = 0;
   else
     lazy->stack = (SyxOop)(syx_memory + idx);
   
@@ -841,7 +847,7 @@ syx_memory_load_image (syx_symbol path)
   for (i=0; i < _syx_memory_lazy_pointers_top; i++)
     {
       lazy = &_syx_memory_lazy_pointers[i];
-      if (!SYX_IS_NIL (lazy->stack))
+      if (lazy->stack != 0)
         *lazy->entry = SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (lazy->stack) + lazy->offset);
       else
         *lazy->entry = SYX_POINTER_CAST_OOP (NULL);
