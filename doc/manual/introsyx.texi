@@ -192,7 +192,7 @@ After this has been done, the console is started and you can work with your new 
 @item @command{-S}
 
 Like @command{-s, --scratch} but exits once the image is built.
-@string{Note} that if you use this option, all the options (except -r and -i) have no effect.
+@strong{Note} that if you use this option, all the options (except -r and -i) have no effect.
 
 @item @command{--recovery=IMAGEFILE}
 
