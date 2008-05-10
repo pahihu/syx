@@ -1,6 +1,8 @@
 2008-05-06  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (_syx_memory_write_frame): save all the stack from locals to the upper frame
+	(_syx_memory_read_lazy_pointer): missing big endian compatibility, rename idx to data
+	(_syx_memory_write_lazy_pointer): give precedence to detached frames
 
 2008-05-04  Luca Bruno  <lethalman88@gmail.com>
 

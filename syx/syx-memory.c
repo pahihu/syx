@@ -395,10 +395,10 @@ _syx_memory_write_lazy_pointer (SyxObject *process, SyxInterpFrame *frame, FILE 
 {
   SyxOop stack;
   syx_int32 offset;
-  if (!process || !frame)
-    stack = syx_nil;
-  else if (!SYX_IS_NIL (frame->detached_frame))
+  if (frame && !SYX_IS_NIL (frame->detached_frame))
     stack = frame->detached_frame;
+  else if (!process || !frame)
+    stack = syx_nil; /* this will be encoded as 0 */
   else
     stack = process->vars[SYX_VARS_PROCESS_STACK];
 
@@ -666,22 +666,23 @@ static void
 _syx_memory_read_lazy_pointer (SyxOop *entry, FILE *image)
 {
   SyxMemoryLazyPointer *lazy;
-  syx_int32 idx;
+  syx_int32 data;
   _syx_memory_lazy_pointers = syx_realloc (_syx_memory_lazy_pointers,
                                            ++_syx_memory_lazy_pointers_top * sizeof (SyxMemoryLazyPointer));
   lazy = &_syx_memory_lazy_pointers[_syx_memory_lazy_pointers_top - 1];
   
   /* Store the stack oop */
-  fread(&idx, sizeof (syx_int32), 1, image);
-  if (!idx)
+  fread(&data, sizeof (syx_int32), 1, image);
+  data = SYX_COMPAT_SWAP_32 (data);
+  if (!data)
     lazy->stack = 0;
   else
-    lazy->stack = (SyxOop)(syx_memory + idx);
+    lazy->stack = (SyxOop)(syx_memory + data);
   
   /* Store the offset */
-  fread(&idx, sizeof (syx_int32), 1, image);
-  idx = SYX_COMPAT_SWAP_32 (idx);
-  lazy->offset = idx;
+  fread(&data, sizeof (syx_int32), 1, image);
+  data = SYX_COMPAT_SWAP_32 (data);
+  lazy->offset = data;
 
   /* Save the address of the framePointer variable */
   lazy->entry = entry;
