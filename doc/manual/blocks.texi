@@ -1,0 +1,71 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Block closures
+@tindex BlockClosure
+Block closures are a kind of methods, @xref{Methods}, that are useful for executing code in methods for certain circumstances. Block closures, in fact, are declared inside methods. You can write code in blocks just like you do with methods.
+
+In particular, in other programming languages, a closure is a method declared inside a method, but they are not often used. 
+Instead in Smalltalk block closures have a very important role.
+
+Like everything in Smalltalk, methods are objects and yet again block closures are objects. You can then send messages to them. Block closures won't be executed until you or the interpreter will send a particular message to them.
+
+@findex value
+The common message for executing block closures without passing any argument is @code{#value}. They are defined using squared braces:
+
+@example
+> [ ]!
+a BlockClosure
+@end example
+
+This is an empty block closure, that hasn't been executed. Let's run something more interesting:
+
+@example
+> [ 'block' ] value!
+'block'
+@end example
+
+What we done in the above example is creating a @var{BlockClosure}, with the statement @code{'block'} and send @code{#value} on it. This is straight the same result as doing the following operation:
+
+@example
+> 'block'!
+'block'
+@end example
+
+The main differences between a method and a block are the following:
+
+@itemize @bullet
+@item Blocks are declared inside methods, while methods are declared inside a class.
+@item A method has a selector, while a block doesn't, it's anonymous.
+@item A block doesn't have a message pattern, but it can get arguments.
+@item A method is relative to a class and its instance, instead a block can be transported among methods and stored inside variables.
+@item A method must be explicit to return a specific value, a block returns automatically the last evaluated object.
+@end itemize
+
+The thing ``a block returns automatically the last evaluated object'' is the reason why in the previous example we saw 'block' on the output. That's because the block automatically returned the @var{String} 'block' from the block.
+
+Now do something more useful. Let's pass some arguments to the block:
+
+@example
+> [ :arg1 :arg2 | arg1 + arg2 ] value: 2 value: 3!
+5
+@end example
+
+Each parameter must have the prefix @kbd{:} (colon) and the body is separated from the parameters by a @kbd{|} (vertical bar).
+
+We created a block closure, receiving 2 arguments. We called the block using the @code{#value:value:} message. The two arguments given to @code{#value:value:} are the ones passed to the block: (2, 3) -> (arg1, arg2).
+The block gets executed, does the sum between arg1 and arg2, then the interpreter automatically returns the result 5.
+
+Block closures have also the message @code{#value:} that requires a single argument.
+
+Now let's use the message @code{#valueWithArguments:}. This method expects an array as its argument, @xref{Common classes}. This array will hold all the arguments that will be passed to the block:
+
+@example
+> [ :arg1 :arg2 | arg1 + arg2 ] valueWithArguments: #(2 3)!
+5
+@end example
+
+The result is the same as before. Think that if you need to pass more than 2 arguments, for example 20, the @var{BlockClosure} class can't hold 20 different methods @code{#value:value:value:...}. @code{#valueWithArguments:} then is a valid choice when you have more than 2 arguments or when you don't know explicitely how many arguments to pass to the block.

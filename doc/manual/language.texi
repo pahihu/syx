@@ -9,9 +9,11 @@
 * Variables::
 * Methods::
 * Messages::
+* Common classes::
+* Block closures::
+* Variables scope::
 * Inheritance::
 * Class definition::
-* Block closures::
 * Life of objects: Garbage collector.
 @end menu
 
@@ -35,14 +37,26 @@
 
 @include messages.texi
 
+@node Common classes
+@section Common classes
+
+@include commonobjects.texi
+
+@node Block closures
+@section Block closures
+
+#include blocks.texi
+
+@node Variables scope
+@section Variables scope
+
+@include varscope.texi
+
 @node Inheritance
 @section Inheritance
 
 @node Class definition
 @section Class definition
-
-@node Block closures
-@section Block closures
 
 @node Garbage collector
 @section Life of objects: Garbage collector

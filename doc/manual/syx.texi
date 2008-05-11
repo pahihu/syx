@@ -60,8 +60,8 @@ Smalltalk YX is an open source programming language. It's an implementation of t
 * Why Smalltalk YX::
 * Introducing the Syx environment::
 * The language::
-* Smalltalk Reference::
-* C Reference::
+* Smalltalk reference::
+* C reference::
 * Embedding::
 * Advanced topics::
 * Copying This Manual: GNU Free Documentation License.
@@ -144,13 +144,13 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 
 @include language.texi
 
-@node Smalltalk Reference
-@chapter Smalltalk Reference
+@node Smalltalk reference
+@chapter Smalltalk reference
 
 @include streference.texi
 
-@node C Reference
-@chapter C Reference
+@node C reference
+@chapter C reference
 
 @node Embedding
 @chapter Embedding

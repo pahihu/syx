@@ -1,0 +1,8 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Variables scope
+

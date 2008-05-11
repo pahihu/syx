@@ -1,0 +1,25 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+Smalltalk has a set of basic objects to let you do basic operations.
+These classes will be yet more documented, @xref{Smalltalk reference}.
+
+@itemize @bullet
+@item @strong{Object}
+
+This class is the base class of all objects, @xref{Inheritance}. It has the basic methods that are common to all objects, classes, metaclasses, and so on.
+
+@item @strong{Number}
+
+You already saw numbers along this manual. You can create a number by just writing it in your code.
+
+@item @strong{Character}
+
+@item @strong{String}
+
+@item @strong{Array}
+
+@end itemize
