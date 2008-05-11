@@ -11,7 +11,7 @@
 @c %**end of header
 
 @set VERSION 0.1.7
-@set UPDATED Thu May, 1
+@set UPDATED Thu May, 11
 
 @documentdescription
 Smalltalk YX manual.

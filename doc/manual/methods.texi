@@ -91,6 +91,8 @@ A @strong{term} can be a non-colon identifier, a @var{String}, a (negative) @var
 @cindex Message
 A @strong{message}, @xref{Messages}, can be either unary, binary or keyworded. First look for a keyword message, then each argument can be an expression. A keyword message is characterized by having a colon identifier. If there's no keyword message, look for a binary message. Multiple binary messages can be sent one after the other, but on different objects. Before sending the binary message, look for unary messages.
 
+Messages can be also handled in a cascaded sequence, @xref{Messages}.
+
 @item
 @cindex Non-colon identifier
 A @strong{non-colon identifier} is an identifier, starting with a letter then followed by alphanumeric characters. It must be not terminated by a @kbd{:} (colon). It can be an argument, a variable, or one of the special names: nil, true, false, thisContext, self.

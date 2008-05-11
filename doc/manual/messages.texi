@@ -54,3 +54,154 @@ Then we can create an instance and send a @code{#moveX:y:z:} message to it:
 > p := Person new.
 > p moveX: 2 y: 3 z: 0!
 @end example
+
+@tindex Console
+@cindex Console
+@findex goDoIt
+The console in Smalltalk is handled by the @var{Console} class.
+Everytime you type something, it will be stored into a unique string until @kbd{!} is found.
+Then, the string will be inserted into a method with @code{goDoIt} as message pattern and executed.
+
+@findex +, *
+Now that you know what methods and messages are, you shouldn't be surprised that @code{#+} and @code{#*} are binary messages:
+
+@example
+> 2 * 3!
+6
+@end example
+
+Operators in Smalltalk are not syntax related, but they are plain methods of the class @var{Number}. In other words, every symbol after a term is the message to be sent to the term itself (receiver), @xref{Methods}. The argument, of course, is the literal @code{3}.
+All methods return an object, at least they return the receiver itself when nothing is expected to be returned.
+
+@cindex Messages precedence
+The thing you must know is that messages have a specific precedence. It's not difficult to understand this precedence. But it's important you forget temporarly everything you learnt by other programming languages.
+
+@itemize @bullet
+@item Unary messages have precedence over binary and keyword messages
+@item Binary messages have precedence over keyword messages
+@item Keyword messages are the last message sent
+@end itemize
+
+Now let's analyze what this method does:
+
+@example
+> 2 + 3 * 3!
+15
+@end example
+
+Well, I'm sure you would expect 18 as result, but Smalltalk has neither specific syntax nor precedence for mathematical operations.
+That because @code{+} and @code{*} are simply methods and the parser is coherent with the order of what's written in the code.
+
+Step by step:
+@enumerate
+@item Send binary message @code{+} to 2 with argument 3
+@item Result is 2 + 3 = 5
+@item Send binary message @code{*} to 5 with argument 3
+@item Result is 5 * 3 = 15
+@end enumerate
+
+You can see that every time a message is sent, the returned object is placed in the stack to be the receiver of the next messages:
+
+@example
+> Object new class!
+Object
+> Object new class class!
+Object class
+> Object class!
+Object class
+@end example
+
+The first statement evaluates to:
+@enumerate
+@item Send unary message @code{#new} to @var{Object}
+@item A new instance of @var{Object} is created
+@item Send unary message @code{#class} to the instance
+@item The class of an @var{Object} instance is of course @var{Object} itself
+@end enumerate
+
+The second statement evaluates to:
+@enumerate
+@item Send unary message @code{#new} to @var{Object}
+@item A new instance of @var{Object} is created
+@item Send unary message @code{#class} to the instance
+@item The class of an @var{Object} instance is of course @var{Object} itself
+@item Send unary message @code{#class} to @var{Object}
+@item The class of @var{Object} is the metaclass named ``Object class'', @xref{Objects}.
+@end enumerate
+
+The third statement is equivalent, but not the same, as the second statement.
+
+Let's suppose that @code{#address} and @code{#moveX:y:z:} methods of @var{Person} return the receiver itself:
+
+@example
+> Person new address: 'sserddA' reverse!
+a Person
+> Person new moveX: 1 + 2 y: (3 max: 5) z: 0!
+a Person
+@end example
+
+First statement Step by step:
+@enumerate
+@item Send unary message @code{#new} to @var{Person}
+@item A new instance of @var{Person} is created, call it @var{aPerson} for simplicity
+@item `- Send unary message @code{#reverse} to 'sserddA'
+@item `- 'Address' is returned
+@item Send keyword message @code{#address} to @var{aPerson} with argument 'Address'
+@item The object returned is the receiver
+@end enumerate
+
+Notice that the @code{#reverse} operation is explicitely indented to mark the precedence of the unary message over the keyword message.
+Same thing for the second statement:
+
+@enumerate
+@item @item Send unary message @code{#new} to @var{Person}
+@item A new instance of @var{Person} is created, call it @var{aPerson} for simplicity
+@item `- Send binary message @code{#+} to 1 with argument 2
+@item `- 3 is returned
+@item `- Send keyword message @code{#max:} to 3 with argument 5
+@item `- 5 is returned because is the maximum number between 3 and 5
+@item Send keyword message @code{#moveX:y:z:} to @var{aPerson} with arguments 3, 5 and 0
+@item The object returned is the receiver
+@end enumerate
+
+Take care I had to use parenthesis to force the interpreter to evaluate that expression before the top keyword message was sent.
+Now look at this example. We try to send @code{#address:} then @code{#moveX:y:z:} to the @var{Person} instance:
+
+@example
+> Person new address: 'New address' moveX: 1 y: 2 z: 3!
+= An error occurred during program execution.
+== Person: did not understood #address:moveX:y:z:
+
+Traceback:
+MessageNotUnderstood(Signal)>>#signal
+MessageNotUnderstood class>>#message:receiver:
+Person(Object)>>#doesNotUnderstand:
+...
+@end example
+
+@cindex Message cascading
+Read the error, it says there's no method with the @code{#address:moveX:y:z:} message pattern. When we want to send multiple instances to the same instance, use cascading:
+
+@example
+> Person new address: 'New address'; moveX: 1 y: 2 z: 3!
+a Person
+@end example
+
+Now everything works correctly. Both @code{#address:} and @code{#moveX:y:z:} have been called on the @var{Person} instance created with @code{#new}.
+Cascaded messages will have as receiver the last evaluated object by the last non-cascaded message or term. In this case the last non-cascaded message was @code{#new}.
+
+What if we put @code{#new} in the cascade too?
+
+@example
+> Person new; address: 'New address'; moveX: 1 y: 2 z: 3!
+= An error occurred during program execution.
+== Person class: did not understood #address:
+
+Traceback:
+MessageNotUnderstood(Signal)>>#signal
+MessageNotUnderstood class>>#message:receiver:
+Person class(Object)>>#doesNotUnderstand:
+...
+@end example
+
+We send the @code{#new} message on @var{Person} but it's in the cascading, so the receiver for the next message @code{#address:} will be sent again to the @var{Person} class.
