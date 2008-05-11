@@ -1,3 +1,15 @@
+2008-05-11  Luca Bruno  <lethalman88@gmail.com>
+
+	* doc/manual/variables.texi: added
+
+	* doc/manual/methods.texi: added
+
+	* doc/manual/messages.texi: added
+
+	* doc/manual/objects.texi: added
+
+	* doc/manual/language.texi: 
+
 2008-05-10  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manual/language.texi: added

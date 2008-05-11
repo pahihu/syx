@@ -1,0 +1,16 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Variable
+A @strong{variable} is a @dfn{place where to store values that can change, identified by a symbol}.
+In Smalltalk all variables must be declared before they are used. There are several ways to define a variable and its usage depends on what you need:
+
+@itemize @bullet
+@item
+Instance variables are defined in classes, and they are accessible only by the relative instance, @xref{Objects}. Instance variables exist until the object is alive (referenced by another object), @xref{Garbage collector}.
+@item
+Temporary variables are defined
+@end itemize

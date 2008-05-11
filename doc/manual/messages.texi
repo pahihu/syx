@@ -1,0 +1,16 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Message, Selector, Receiver
+Often interpreted OOPL, like Syx, use @strong{messages} as @dfn{a way to call a method}.
+A message contains a @strong{selector} and a @strong{receiver}:
+
+@itemize @bullet
+@item
+The ``selector'' is @dfn{a @var{Symbol} containing the method message pattern}.
+@item
+The ``receiver'' is @dfn{the @var{Object} on which the method will be called, or the @var{Object} receiving the message}.
+@end itemize

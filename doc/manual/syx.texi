@@ -166,35 +166,35 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @unnumbered Index
 
 @menu
-* Programs::
-* Concepts::
-* Classes::
-* Methods::
-* Variables::
+* Programs index::
+* Concepts index::
+* Classes index::
+* Methods index::
+* Variables index::
 @end menu
 
-@node Programs
-@section Programs
+@node Programs index
+@section Programs index
 
 @printindex pg
 
-@node Concepts
-@section Concepts
+@node Concepts index
+@section Concepts index
 
 @printindex cp
 
-@node Classes
-@section Classes
+@node Classes index
+@section Classes index
 
 @printindex tp
 
-@node Methods
-@section Methods
+@node Methods index
+@section Methods index
 
 @printindex fn
 
-@node Variables
-@section Variables
+@node Variables index
+@section Variables index
 
 @printindex vr
 

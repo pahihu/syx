@@ -1,0 +1,38 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Method
+The @acronym{OOP, Object Oriented Programming} paradigm is characterized not only by instance variables that are stored per instance but also by @strong{methods}. A method is an @dfn{action executed over an object}.
+An @var{Object} without methods is dead and unuseful. Think a @var{Person} without neither brain nor hearth, it's dead because it can't move, talk, see, etc. Same thing for a @var{Car}, it can have both an engine and wheels but they are not useful if it doesn't move.
+
+We can say then that either letting a @var{Person} talk or a @var{Car} move is an action: @code{move} is then a method of @var{Car} and @code{talk} is a method of @var{Person}.
+``Executing a method'' can be also written/read as ``calling a method''.
+Method are sometimes called ``function'' indirectly, but a ``method'' is a @dfn{procedure that executes a function over an object}.
+
+Remind a method is executed @emph{on an object} called @strong{receiver}, so the method can work primarly on that object and @strong{know all of its status and instance variables}.
+@cindex Arguments, Formal parameters
+The informations passed to the method are called @strong{arguments}.
+The name of these informations, defined in the message pattern, are called @strong{formal parameters}.
+
+@cindex Message pattern
+In Smalltalk a method is defined with a signature or @strong{message pattern}, then a body made up of a sequence of statements.
+This message pattern specify how you call the method.
+
+Try to imagine some methods for a @var{Person}.
+@itemize @bullet
+@item
+For example we want to get its name, then the message pattern will be only @code{name}. You don't need to pass any arguments to know the name of a @var{Person}.
+@item
+If we want to know if a @var{Person} comes before another one, we can use < and >, then the message pattern will be @code{< aPerson} or @code{> aPerson}. You need to pass another @var{Person} or you won't be able to compare the receiver object with anything else.
+@item
+If we want to change the address of a @var{Person}, we have to pass an argument which is the address, then the message pattern will be @code{address: aString}.
+@item
+Again, if we want to move the @var{Person} to a point (x, y, z), we can define a method such as @code{moveX: x y: y z: z}.
+@end itemize
+
+The first message pattern is called @strong{unary message pattern}, because it doesn't have any formal parameters. 
+The second one is called @strong{binary message pattern}, because it uses a symbol that has max 2 characters, in our case ``<'' and ``>'' and operates only on one parameter.
+The third and fourth ones are called @strong{keyworded message pattern}, because they look like @code{key: value}.

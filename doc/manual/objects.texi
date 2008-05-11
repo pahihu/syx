@@ -1,0 +1,74 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+@cindex Object, Class, Concept
+Smalltalk is a pure @strong{@acronym{OOPL, object-oriented programming language}}. OOP is a well known and maybe the most commonly used paradigm. @emph{Everything} in Smalltalk is an object: numbers, characters, strings, and so on. An object @dfn{is an instance of the representation of a specific real concept}. A concept is usually represented by a @strong{Class}. A Class, then, is like a snapshot of a real concept, holding behaviors and characteristics that are shared between instances of that Class.
+@cindex Camel case
+In Smalltalk, classes are always written with capital letters, without underscores. This style is called ``camel case''. Everything else is written also camel case but not capitalized.
+
+For example, let's take a @var{Person} in consideration. A @var{Person} is a concept of the real life, and we can say it's abstract until we see a real @var{Person} born.
+Another example is a @var{Car}. We have the concept of a @var{Car} but it's abstract until we really construct it.
+Then, we call @var{Person} and @var{Car} @strong{classes}, since @dfn{they are an abstract representation of a real concept}.
+
+@cindex Instance
+But we don't want only an abstract thing, we want a @var{Person} to born and we want to construct a @var{Car}. If we identify an @strong{object} that is represented by a class, that is an @strong{instance}.
+For example, we have a Luca, a BMW, a Rhaul, a Michael and a Ferrari.
+In the real life, Luca, Rhaul and Michael are people, while a BMW and a Ferrari are cars.
+Then we can say Luca, Rhaul and Michael are @strong{instances of} the class @var{Person}, while BMW and Ferrari are @strong{instances of} the class @var{Car}.
+
+@cindex Factory
+You can also think a class as a @strong{factory} of instances.
+You should now understand that @dfn{all the instances know about its own class, but that class doesn't know about all its instances by default, and each instance is never detached from its class}.
+
+But how we construct a class?
+
+@example
+> Object subclass: #Person!
+Person
+@end example
+
+We will talk about the above code deeply later on, @xref{Class definition}.
+For now, let's read it as ``snapshot a real concept @strong{from scratch} and name it @var{Person}''.
+I said ``from scratch'' because @var{Person} doesn't have any parent concept associated that can @strong{inherit} from, @xref{Inheritance}.
+Notice that the class @var{Person} will be printed to the output as @strong{Person}.
+
+We defined a class also as a factory and that is, again, a snapshot of a concept. But a concept is not only characterized by a name, but by several informations that belong to that concept, to make it differ from others.
+A @var{Person} has a name, a surname, a unique identifier, an address, a gender, and so on.
+A @var{Car} has a name, a version, the brand, a color, wheels, an engine, and so on.
+
+@cindex Instance variables, attributes, fields
+Notice that @var{Person} and @var{Car} have some equal fields and some others different. This means they are different in the life, then different as classes.
+But those attributes are relative to a single instance of a Person and a single instance of a Car. Each Person and each Car differ each other, then all those attributes are different for each instance.
+In fact they are called either @strong{instance variables} or @strong{attributes} or @strong{fields} of the instance, because they're owned by each instance.
+
+An instance has instance variables, but all instances have the same kind of attributes. If a @var{Person} has a name, then another @var{Person} will have a name, but they won't be the same. If a @var{Car} has an engine, another @var{Car} will have another engine.
+
+We can't say every time the attributes for each instance, but instead we can group them all in a single place, in a single concept, into a @strong{class}. So that if an object is an instance of a class, we know which fields it owns.
+Smalltalk let us define instance variables in the class definition itself, separated by a whitespace into a @var{String}, @xref{Hello world}.
+
+@example
+> Object subclass: #Person instanceVariableNames: 'name surname uniqueIdentifier address gender'!
+> Object subclass: #Car instanceVariableNames: 'name version brand color wheels engine'!
+@end example
+
+If you run the previous example, don't worry, classes can be redefined in Smalltalk.
+@findex #new
+Then we created two classes, now let's create new instances:
+
+@example
+> Person new!
+a Person
+> Car new!
+a Car
+@end example
+
+We created two instances.
+Notice that now the output is @strong{a Person} and @strong{a Car}. In Smalltalk, the article before the name of a class means @dfn{an instance of that class}. 
+
+@cindex Encapsulation
+In Smalltalk all instance variables are related to the instance and they're not accessible to any external resource.
+A @var{Person} can't access the attributes of a @var{Car} and again a @var{Person} can't access the attributes of another @var{Person}. You must use accessors to access them, @xref{Methods}, @xref{Messages}.
+In modern languages this is called ``encapsulation'', because fields are encapsulated and they are not accessible by any resource but the single instance.
