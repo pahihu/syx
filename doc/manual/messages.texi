@@ -14,3 +14,43 @@ The ``selector'' is @dfn{a @var{Symbol} containing the method message pattern}.
 @item
 The ``receiver'' is @dfn{the @var{Object} on which the method will be called, or the @var{Object} receiving the message}.
 @end itemize
+
+This is needed because Syx don't know the method to be called since it doesn't know which is the receiver. So the method is looked up when the message is sent.
+
+@tindex Symbol
+A @var{Symbol} is a kind of @var{String} but it's immutable. While @var{String}s are enclosed by single quotes, @var{Symbol}s start with a @kbd{#}:
+
+@example
+> #symbol!
+#symbol
+> #>!
+#>
+> #x:y:!
+#x:y:
+@end example
+
+Since selectors are @var{Symbol}s, from now on I will write message patterns as @var{Symbol}s.
+
+@itemize @bullet
+@item
+Unary messages - @code{#unary}
+@item
+Binary messages - @code{#bn}, two characters wide
+@item
+Keyword messages - @code{#a:b:c:}
+@end itemize
+
+Let's suppose a @var{Person} has the following method:
+
+@example
+moveX: x y: y z: z
+  ... body ...
+@end example
+
+Then we can create an instance and send a @code{#moveX:y:z:} message to it:
+
+@example
+> | p |
+> p := Person new.
+> p moveX: 2 y: 3 z: 0!
+@end example

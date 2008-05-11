@@ -41,7 +41,7 @@ Behind the scene, launching @command{syx} would do the following steps:
 This manual will give you more explanations on how to customize this sequence from Smalltalk and also how to follow this boot sequence from your C/C++ applications in the next chapters.
 
 When you see the @code{>} character at the beginnig, it means the previous command has been executed then the program is ready to interpret your next commands ``on the fly''.
-To get a first approach to the environment, type @kbd{help!} and press @key{Enter} to get a basic list of available commands that might help you. This would be the result on your screen:
+To get a first approach to the environment, type @kbd{help!} and press @key{RET} to get a basic list of available commands that might help you. This would be the result on your screen:
 
 @example
 > help!
@@ -140,7 +140,7 @@ Now that you have done all the above tests, you can quit the program. The Smallt
 > Smalltalk quit!
 @end example
 
-The other way, more console-ish is to send an @acronym{EOF, End Of File}. This is done by pressing @key{Ctrl+D}, and you will see ``EOF'' on the output.
+The other way, more console-ish is to send an @acronym{EOF, End Of File}. This is done by pressing @key{CTRL+D}, and you will see ``EOF'' on the output.
 
 @cindex Command line arguments
 @node Invoking syx

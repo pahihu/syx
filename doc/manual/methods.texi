@@ -4,6 +4,15 @@
 @c   Luca Bruno <lethalman88@gmail.com>
 @c See the file syx.texi for copying conditions.
 
+@menu
+* Message pattern::
+* Method body::
+* Return value::
+@end menu
+
+@node Message pattern
+@subsection Message pattern
+
 @cindex Method
 The @acronym{OOP, Object Oriented Programming} paradigm is characterized not only by instance variables that are stored per instance but also by @strong{methods}. A method is an @dfn{action executed over an object}.
 An @var{Object} without methods is dead and unuseful. Think a @var{Person} without neither brain nor hearth, it's dead because it can't move, talk, see, etc. Same thing for a @var{Car}, it can have both an engine and wheels but they are not useful if it doesn't move.
@@ -36,3 +45,142 @@ Again, if we want to move the @var{Person} to a point (x, y, z), we can define a
 The first message pattern is called @strong{unary message pattern}, because it doesn't have any formal parameters. 
 The second one is called @strong{binary message pattern}, because it uses a symbol that has max 2 characters, in our case ``<'' and ``>'' and operates only on one parameter.
 The third and fourth ones are called @strong{keyworded message pattern}, because they look like @code{key: value}.
+
+@node Method body
+@subsection Method body
+
+@cindex Method body
+The @strong{method body} is the part of the method that really executes the wanted action.
+The resulting action can differ every time you call a method, because it might work on different inputs: instance variables, global variables, time and method parameters can change.
+
+@itemize @bullet
+@item
+The body is a @dfn{sequence of statements separated by a dot @key{.}}.
+
+@item
+@cindex Statement
+A @strong{statement} @dfn{can be either an expression or a returning expression}, @xref{Return value}.
+
+@item
+@cindex Expression
+An @strong{expression} @dfn{can be an assignment or a term followed by a message}.
+An expression usually returns back the result value of the entire expression.
+For instance @samp{2 + 3} is an expression that reduces to @code{5}.
+
+@item
+@cindex Assignment
+An @strong{assignment} @dfn{is an non-colon identifier followed by := or <- then an expression}.
+Notice this recursive definition, that an expression can be an assignment and that an assignment contains an expression. In fact an assignment IS an expression that returns back a value.
+The assignment in Smalltalk is done always @strong{by value}. The value in Smalltalk is an immediate value, like numbers, characters, nil, booleans, or the reference to an @var{Object}.
+
+When you assign an @var{Object} to a variable you don't copy the object, but only its reference:
+
+@example
+> | a b |
+> a := Object new.
+> b := a!
+@end example
+
+In this case, @var{a} and @var{b} @dfn{point to the same object}.
+
+@item
+@cindex Term
+A @strong{term} can be a non-colon identifier, a @var{String}, a (negative) @var{Number}, a @var{Symbol}, a @var{Character}, a (literal) @var{Array}, an expression enclosed by parenthesis, a @var{BlockClosure}.
+
+@item
+@cindex Message
+A @strong{message}, @xref{Messages}, can be either unary, binary or keyworded. First look for a keyword message, then each argument can be an expression. A keyword message is characterized by having a colon identifier. If there's no keyword message, look for a binary message. Multiple binary messages can be sent one after the other, but on different objects. Before sending the binary message, look for unary messages.
+
+@item
+@cindex Non-colon identifier
+A @strong{non-colon identifier} is an identifier, starting with a letter then followed by alphanumeric characters. It must be not terminated by a @kbd{:} (colon). It can be an argument, a variable, or one of the special names: nil, true, false, thisContext, self.
+@vindex nil, true, false, thisContext, self
+@var{self} is the pseudo-variable in the method containing the receiver of the message.
+
+@item
+@cindex Colon identifier
+A @strong{colon identifier} is an identifier, starting with a letter then followed by alphanumeric characters. It must be terminated by a @kbd{:} (colon).
+
+@item
+@cindex String literal
+A @strong{string} is an immutable set of human readable characters. Once you copy the @var{String} it can be modified. A string is enclosed by two single quotes @kbd{'}, @samp{'my string'}.
+
+@item
+@cindex Symbol literal
+A @strong{symbol} is an immutable set of human readable characters, identified once. It must start with @kbd{#} and it terminates when a special binary character  or a whitespace is found. Special binary characters are only allowed only in a two-characters-wide symbol. If you have to specify a special symbol that might be truncated you can use @kbd{#} followed by a string, such as @samp{#'my symbol'}.
+
+@item
+@cindex Character literal
+A @strong{character} is an object identified once, and contains only one character. It must start with @kbd{$} (dollar). All characters are allowed to be represented in this form, also a space @samp{$ }.
+
+@item
+@cindex Array of literals
+An @strong{array of literals}, @xref{Arrays}, is an immutable set of literals. Elements are enclosed between @code{#(} and @code{)}. Elements parsed as identifiers are threated as @var{Symbol}s. Since an array of literals is also a literal, you can put nested arrays of literals.
+
+@item
+@cindex Array
+An @strong{array} containing dynamic objects can be also created. Elements are enclosed between @verb{.{.} and @verb{.}.}. It's like a method body, the difference is that each element is an expression separated by dots, instead of being a statement. An example could be @samp{@{ Object new. 2. #sym. 4 * 5 / 2 @}}.
+
+@item
+@cindex Block closures
+A @strong{block closure} is a kind of method. It does the same job of a method, but it's not relative to a class and has no message pattern, but can receive arguments. @xref{Block closures}.
+
+@end itemize
+
+@node Return value
+@subsection Return value
+
+@cindex Return value
+The return value of a method is an important information that methods give to the @emph{caller/sender} of the @emph{method/message}. After a method does its job you can expect a result from it.
+
+@example
+> 'hello' reverse!
+'ollew'
+> 2 * 3!
+6
+@end example
+
+The return value into a method must be explicit, otherwise the receiver (self) is returned automatically.
+To return a wanted @var{Object} you must start an expression with @kbd{^}, then the resulting object from the expression will be returned.
+Take in consideration this method:
+
+@example
+method
+        2 + 3
+@end example
+
+Called on a @var{Person} instance, will return the instance itself:
+
+@example
+> aPerson method!
+a Person
+@end example
+
+Instead take in consideration this simple method:
+
+@example
+method
+        ^2 + 3
+@end example
+
+And let's see the output of calling it:
+
+@example
+> aPerson method!
+6
+@end example
+
+You can compile a method in the console as follows:
+
+@example
+> Person compile: 'method
+^2 + 3'
+a CompiledMethod
+> Person new method!
+6
+@end example
+
+Remind, the first line is the message pattern. @strong{Notice} I didn't ended the method with the exlamation mark.
+But these are only theoric examples to let you understand how methods work in Smalltalk. This manual will cover how to create classes and methods later on.
+
+Smalltalk' syntax is very little, but before programming you must understand the power of what you have in your hand. Declaring a class or a method is not only syntax like with other languages. Things here are much more dynamic than a simple class declaration.

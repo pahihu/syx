@@ -12,7 +12,7 @@ Instance variables are defined in classes, and they are accessible only by the r
 
 @cindex Temporary variables
 Temporary variables are defined inside methods. As the name says, they are used to store temporary variables that might be useful to accomplish some complex operations. Their life time is related to the method call. This means temporary variables become inaccessible by their symbol after the method has been terminated.
-These variables are declared enclosed by @input<|> (vertical bar).
+These variables are declared enclosed by @kbd{|} (vertical bar).
 
 For example, take in consideration the console. By the way, the console creates a method on-the-fly, so we can declare temporary variables:
 
@@ -32,7 +32,7 @@ Smalltalk threats everything as an object, then we can say @var{nil} is also an 
 nil
 @end example
 
-With the issue of @kdb{!} tmp, tmp1 and tmp2 won't be never more accessible, because @kdb{!} terminated the method definition:
+With the issue of @kbd{!} tmp, tmp1 and tmp2 won't be never more accessible, because @kbd{!} terminated the method definition:
 
 @example
 > tmp!

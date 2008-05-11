@@ -5,8 +5,12 @@
 @c See the file syx.texi for copying conditions.
 
 @menu
+* Arrays::
 * Dictionaries::
 @end menu
+
+@node Arrays
+@section Arrays
 
 @node Dictionaries
 @section Dictionaries

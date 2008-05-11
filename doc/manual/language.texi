@@ -10,8 +10,8 @@
 * Methods::
 * Messages::
 * Inheritance::
-* Syntax::
 * Class definition::
+* Block closures::
 * Life of objects: Garbage collector.
 @end menu
 
@@ -38,11 +38,11 @@
 @node Inheritance
 @section Inheritance
 
-@node Syntax
-@section Syntax
-
 @node Class definition
 @section Class definition
+
+@node Block closures
+@section Block closures
 
 @node Garbage collector
 @section Life of objects: Garbage collector
