@@ -8,9 +8,62 @@
 A @strong{variable} is a @dfn{place where to store values that can change, identified by a symbol}.
 In Smalltalk all variables must be declared before they are used. There are several ways to define a variable and its usage depends on what you need:
 
-@itemize @bullet
-@item
 Instance variables are defined in classes, and they are accessible only by the relative instance, @xref{Objects}. Instance variables exist until the object is alive (referenced by another object), @xref{Garbage collector}.
-@item
-Temporary variables are defined
-@end itemize
+
+@cindex Temporary variables
+Temporary variables are defined inside methods. As the name says, they are used to store temporary variables that might be useful to accomplish some complex operations. Their life time is related to the method call. This means temporary variables become inaccessible by their symbol after the method has been terminated.
+These variables are declared enclosed by @input<|> (vertical bar).
+
+For example, take in consideration the console. By the way, the console creates a method on-the-fly, so we can declare temporary variables:
+
+@example
+> | tmp1 tmp2 |
+> !
+@end example
+
+@vindex nil
+@cindex Null value
+We declared two temporary variables, named @var{tmp1} and @var{tmp2}. Both are initialized to a null value, called @var{nil}.
+Smalltalk threats everything as an object, then we can say @var{nil} is also an object. @var{nil} can be used to set a variable to an undefined/uninitialized/null value:
+
+@example
+> | tmp |
+> tmp!
+nil
+@end example
+
+With the issue of @kdb{!} tmp, tmp1 and tmp2 won't be never more accessible, because @kdb{!} terminated the method definition:
+
+@example
+> tmp!
+= An error occurred during program execution.
+== tmp
+
+Traceback:
+NotFound(Signal)>>#signal
+NotFound(Signal)>>#signal:
+...
+@end example
+
+@cindex Class variables
+@strong{Class variables} are another kind of variables that are defined in the class and that are accesible by the class and all its instances.
+Any other resources won't be able to see them. We will see them deeply later in the manual.
+
+@cindex Global variables
+@strong{Global variables} are accessible by all resources. We know a class is also an object, @xref{Objects}, and it's stored into a variable with the same name of the class:
+
+@example
+> Person!
+Person
+@end example
+
+@vindex Smalltalk
+All the global variables are stored into a dictionary, @xref{Dictionaries}, named @var{Smalltalk}.
+You can also access global variables directly from the @var{Smalltalk} dictionary, @xref{Dictionaries}.
+
+@example
+> Smalltalk at: #Person!
+Person
+@end example
+
+The global variable ceases to exist once it's removed from the @var{Smalltalk} dictionary.

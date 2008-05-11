@@ -72,3 +72,16 @@ Notice that now the output is @strong{a Person} and @strong{a Car}. In Smalltalk
 In Smalltalk all instance variables are related to the instance and they're not accessible to any external resource.
 A @var{Person} can't access the attributes of a @var{Car} and again a @var{Person} can't access the attributes of another @var{Person}. You must use accessors to access them, @xref{Methods}, @xref{Messages}.
 In modern languages this is called ``encapsulation'', because fields are encapsulated and they are not accessible by any resource but the single instance.
+
+@cindex Metaclass
+In Smalltalk, instances of a class are objects, but also classes are objects. In fact a class is an instance of another class called @var{Metaclass}.
+A @var{Metaclass} is a kind of class that's able to create a class. Each class has its own metaclass:
+
+@example
+> Person class!
+Person class
+> Car class!
+Car class
+@end example
+
+But again, @var{Metaclass} is an object then it has its own class, and so on. It's a perfect circle.

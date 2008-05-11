@@ -147,6 +147,8 @@ The final Syx product must be both powerful and @emph{small}, in order to be ado
 @node Smalltalk Reference
 @chapter Smalltalk Reference
 
+@include streference.texi
+
 @node C Reference
 @chapter C Reference
 

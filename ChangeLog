@@ -1,5 +1,9 @@
 2008-05-11  Luca Bruno  <lethalman88@gmail.com>
 
+	* doc/manual/variables.texi: completed
+
+	* doc/manual/streference.texi (Dictionaries): added
+
 	* doc/manual/variables.texi: added
 
 	* doc/manual/methods.texi: added
