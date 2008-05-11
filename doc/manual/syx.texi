@@ -78,7 +78,7 @@ Smalltalk YX is an open source programming language. It's an implementation of t
 @uref{http://www.smalltalk.org, Smalltalk} is a dynamic object-oriented programming language.
 With the name @strong{Smalltalk} we usually refer to the language standard (syntax, semantics, philosophy, etc.). You can think of Smalltalk-80 like the C99 standard.
 
-Smalltalk was one of the first language @emph{to be invented to invent} the pure object system, where everything is an 'object'.
+Smalltalk was one of the first language @emph{involving} the pure object system, where everything is an 'object'.
 
 @abbr{ST, Smalltalk} is a powerful language which comes with a big environment for both users and developers. The syntax is elegant and its features are yet innovative.
 It features a great reflection and introspection system which gave to the IDE what a real ``integrated development environment'' is for.

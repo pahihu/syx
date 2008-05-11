@@ -135,7 +135,7 @@ The return value of a method is an important information that methods give to th
 
 @example
 > 'hello' reverse!
-'ollew'
+'olleh'
 > 2 * 3!
 6
 @end example
