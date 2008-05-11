@@ -103,30 +103,6 @@ A @strong{non-colon identifier} is an identifier, starting with a letter then fo
 @cindex Colon identifier
 A @strong{colon identifier} is an identifier, starting with a letter then followed by alphanumeric characters. It must be terminated by a @kbd{:} (colon).
 
-@item
-@cindex String literal
-A @strong{string} is an immutable set of human readable characters. Once you copy the @var{String} it can be modified. A string is enclosed by two single quotes @kbd{'}, @samp{'my string'}.
-
-@item
-@cindex Symbol literal
-A @strong{symbol} is an immutable set of human readable characters, identified once. It must start with @kbd{#} and it terminates when a special binary character  or a whitespace is found. Special binary characters are only allowed only in a two-characters-wide symbol. If you have to specify a special symbol that might be truncated you can use @kbd{#} followed by a string, such as @samp{#'my symbol'}.
-
-@item
-@cindex Character literal
-A @strong{character} is an object identified once, and contains only one character. It must start with @kbd{$} (dollar). All characters are allowed to be represented in this form, also a space @samp{$ }.
-
-@item
-@cindex Array of literals
-An @strong{array of literals}, @xref{Arrays}, is an immutable set of literals. Elements are enclosed between @code{#(} and @code{)}. Elements parsed as identifiers are threated as @var{Symbol}s. Since an array of literals is also a literal, you can put nested arrays of literals.
-
-@item
-@cindex Array
-An @strong{array} containing dynamic objects can be also created. Elements are enclosed between @verb{.{.} and @verb{.}.}. It's like a method body, the difference is that each element is an expression separated by dots, instead of being a statement. An example could be @samp{@{ Object new. 2. #sym. 4 * 5 / 2 @}}.
-
-@item
-@cindex Block closures
-A @strong{block closure} is a kind of method. It does the same job of a method, but it's not relative to a class and has no message pattern, but can receive arguments. @xref{Block closures}.
-
 @end itemize
 
 @node Return value
