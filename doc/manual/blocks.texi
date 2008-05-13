@@ -4,7 +4,13 @@
 @c   Luca Bruno <lethalman88@gmail.com>
 @c See the file syx.texi for copying conditions.
 
-@cindex Block closures
+@menu
+* Return value::
+* Conditions::
+* Loops::
+@end menu
+
+@cindex Block closures, Blocks
 @tindex BlockClosure
 Block closures are a kind of methods, @xref{Methods}, that are useful for executing code in methods for certain circumstances. Block closures, in fact, are declared inside methods. You can write code in blocks just like you do with methods.
 
@@ -56,11 +62,14 @@ Now do something more useful. Let's pass some arguments to the block:
 
 Each parameter must have the prefix @kbd{:} (colon) and the body is separated from the parameters by a @kbd{|} (vertical bar).
 
+@findex value:value:
 We created a block closure, receiving 2 arguments. We called the block using the @code{#value:value:} message. The two arguments given to @code{#value:value:} are the ones passed to the block: (2, 3) -> (arg1, arg2).
 The block gets executed, does the sum between arg1 and arg2, then the interpreter automatically returns the result 5.
 
+@findex value:
 Block closures have also the message @code{#value:} that requires a single argument.
 
+@findex valueWithArguments:
 Now let's use the message @code{#valueWithArguments:}. This method expects an array as its argument, @xref{Common classes}. This array will hold all the arguments that will be passed to the block:
 
 @example
@@ -69,3 +78,77 @@ Now let's use the message @code{#valueWithArguments:}. This method expects an ar
 @end example
 
 The result is the same as before. Think that if you need to pass more than 2 arguments, for example 20, the @var{BlockClosure} class can't hold 20 different methods @code{#value:value:value:...}. @code{#valueWithArguments:} then is a valid choice when you have more than 2 arguments or when you don't know explicitely how many arguments to pass to the block.
+
+@node Return value of blocks
+@subsection Return value of blocks
+
+The return value of a @var{BlockClosure} is different to the one of a straight method, but has the same meaning.
+
+If you don't specify any particular value to be returned from a method, it will automatically return the receiver.
+In blocks, the last evaluated object is returned:
+
+@example
+> [ #notReturned. 2 + 3 ] value!
+5
+@end example
+
+Try switching statements now:
+
+@example
+> [ 2 + 3. #nowReturned ] value!
+#nowReturned
+@end example
+
+But usually we want to return from the method itself, not only from the current block. This is done using the well known @kbd{^}, @xref{Return value}, but this time won't return only from the block but back to the caller of the method:
+
+@example
+method
+        [ 'some ops'. ^2 + 3. #notExecuted ] value.
+        "nothing gets executed here"
+@end example
+
+This method will return directly 5. 
+
+@node Conditions
+@subsection Conditions
+
+@cindex Conditional control structures, Conditional expression
+Conditional expressions are one of the three most important control structures that an imperative programming language has got. What we used until now are a plain sequence of statements.
+
+The conditional structure is used to run a specific portion of code depending on the result of a conditional expression. A conditional expression must return a @var{Boolean} value: @var{true} or @var{false}. This expression @strong{decides} which portion of code is executed. Since only two values can be evaluated from such expression, there will be only to branches that can be executed.
+
+For instance your applications wants to do an operation between two numbers. The user will give you three inputs: the first number, the operation (+, -) and the second number. The applicaiton doesn't know the operation before the user input, so if the user specifies ``+'', it will do the sum, if ``-'' the subtraction, and so on. @dfn{The application must decide which code to execute depending on the condition}.
+
+This would be an algorithm:
+@example
+num1 = input
+operator = input
+num2 = input
+if operator is '+' then
+   result = num1 + num2
+else if operator is '-' then
+   result = num1 - num2
+output result
+@end example
+
+The conditional expressions are @code{operator is '+'} and @code{operator is '-'}, while the two branches are @code{result = num1 + num2} and @code{result = num1 - num2}.
+Of course, the first branch is executed when the operator is '+' while the second for '-'.
+
+@findex =
+@findex ifTrue:ifFalse:
+A Smalltalk method that would concretize this algorithm would look like the following code:
+@example
+doOperation: operator on: num1 and: num2
+   operator = '+'
+      ifTrue: [ ^num1 + num2 ]
+      ifFalse: [ ^num1 - num2 ]
+@end example
+
+The @code{#=} method of all @var{Object}s returns @var{true} if the receiver is equal to the argument, otherwise @var{false}. So, we are sure that expression evaluates to a @var{Boolean}.
+Then the @var{Boolean} has a method named @code{#ifTrue:ifFalse:}. Both arguments receive a @var{BlockClosure}. Notice that the blocks are passed like any other normal @var{Object}, because they are @var{Object}s.
+
+We used to send @code{#value} to execute a @var{BlockClosure}, @xref{Block closures}, but if now we send it both will be executed without taking care of the condition. Instead, only one must be executed depending on the condition. The @var{Boolean} class will send @var{#value} to the right @var{BlockClosure} for us.
+
+@node Loops
+@subsection Loops
+

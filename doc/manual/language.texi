@@ -5,6 +5,7 @@
 @c See the file syx.texi for copying conditions.
 
 @menu
+* Comments::
 * Objects::
 * Variables::
 * Methods::
@@ -16,6 +17,25 @@
 * Class definition::
 * Life of objects: Garbage collector.
 @end menu
+
+@node Comments
+@section Comments
+
+@cindex Comments
+
+Before starting reading, you must know that Smalltalk won't execute code enclosed by double quotes. @dfn{All the characters enclosed by double quotes} are called @strong{comments}.
+
+So please, if you are coming from any other programming language that uses double quotes @kbd{"} to create a string object, in Smalltalk it will be threated as a comment.
+Literal strings can be created only using sinle quotes @kbd{'}:
+
+@example
+> 'this is a string' "this is a comment"!
+'this is a string'
+> 'this contains a " double quote'!
+'this contains a " double quote'
+> "this a comment with ' single quote"!
+nil
+@end example
 
 @node Objects
 @section Objects

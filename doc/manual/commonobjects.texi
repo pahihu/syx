@@ -44,6 +44,7 @@ $e
 
 You can also create a @var{Character} using a specific class method, for example when the value is special and it's to write using the keyboard:
 
+@findex value:
 @example
 > Character value: 50!
 $2
@@ -53,6 +54,8 @@ In this example, the output was $2 because 50 is the ASCII code of the number 2.
 
 The range of ASCII character values is between 0 and 255 included (0xFF characters).
 
+@tindex String
+@cindex Literal strings
 @item @strong{String}
 
 @var{String}s are @dfn{an ordered list of @var{Character}s used to represent a human readable text}.
@@ -78,6 +81,7 @@ method
 If you invoke the method, you will get that 'literal string'. Then, if you change the contents of the method to hold 'not immutable string', the next time you invoke that method you will get 'not immutable string' even you didn't rewrite the method.
 
 @tindex Array
+@cindex Array of literals, Literal arrays
 @item @strong{Array}
 
 An @var{Array} is @dfn{fixed-size ordered list of objects}. That ``fixed-size'' stands for @dfn{you can't grow or shrink the array}. This doesn't mean it's immutable. You can replace an element in the array at any time, just like @var{String}s.
@@ -101,7 +105,7 @@ For the same reason explained above for @var{String}s, literal arrays are immuta
 You can create arrays in the methods on-the-fly like strings with two methods:
 @enumerate
 @item Arrays of literals are defined with #(...). They can contain only literals, not variables. Since the array of literals is itself a literal, you can put multiple nested array of literals: @samp{#(symbol #symbol #(nested array) 123 'string')}. Identifiers not starting with @code{#} are threated as symbols.
-@item Dynamic arrays. This is a powerful aggregated method for creating arrays. Each element of the array is obtained by evaluating an expression. Each element/expression is separated by a @kbd{.} (dot): @verb{.{ 1 + 2. Object new. 'yarra' reverse}.}.
+@item Dynamic arrays. This is a powerful aggregated method for creating arrays. Each element of the array is obtained by evaluating an expression. Each element/expression is separated by a @kbd{.} (dot): @verb{.{ 1 + 2. Object new. 'yarrA' reverse}.}.
 @end enumerate
 
 @end itemize

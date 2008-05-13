@@ -1,3 +1,10 @@
+2008-05-13  Luca Bruno  <lethalman88@gmail.com>
+
+	* doc/manual/blocks.texi (Return value of blocks): added
+	(Conditions): added
+
+	* doc/manual/language.texi (Comments): added
+
 2008-05-11  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manual/commonobjects.texi: filled in but not complete
