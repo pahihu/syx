@@ -72,24 +72,11 @@ _syx_interp_save_process_state (SyxInterpState *state)
 }
 
 /* Fetches and updates the execution state of the interpreter to be ready for next instructions */
-static syx_bool
+static void
 _syx_interp_state_update (SyxInterpState *state, SyxInterpFrame *frame)
 {
-  SyxOop method;
   SyxOop bytecodes;
-
-  if (!frame)
-    {
-      state->frame = NULL;
-      return FALSE;
-    }
-
-  method = frame->method;
-  if (SYX_IS_NIL (method))
-    {
-      state->frame = NULL;
-      return FALSE;
-    }
+  SyxOop method = frame->method;;
 
   state->frame = frame;
 
@@ -99,30 +86,22 @@ _syx_interp_state_update (SyxInterpState *state, SyxInterpFrame *frame)
   state->method_literals = SYX_OBJECT_DATA (SYX_CODE_LITERALS (method));
   state->method_bytecodes = (syx_uint16 *)SYX_OBJECT_DATA (bytecodes);
   state->method_bytecodes_count = SYX_OBJECT_DATA_SIZE (bytecodes);
-
-  return TRUE;
 }
 
 /*! "Maybe" switch process and return TRUE if it's valid, FALSE otherwise */
-static syx_bool
+static void
 _syx_interp_switch_process (SyxInterpState *state, SyxOop process)
 {
   SyxInterpFrame *frame;
 
   if (SYX_OOP_NE (process, state->process))
     {
-      if (SYX_IS_NIL (process))
-        return FALSE;
-
       frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
-      if (!_syx_interp_state_update (state, frame))
-        return FALSE;
-
+      _syx_interp_state_update (state, frame);
       state->process = process;
     }
 
   state->byteslice = SYX_SMALL_INTEGER (syx_processor_byteslice);
-  return TRUE;
 }
 
 /*! Sending the message means changing the frame and gaining all necessary informations to run
@@ -261,8 +240,8 @@ syx_bool
 syx_interp_swap_context (SyxOop process, SyxOop context)
 {
   SyxInterpState _state = SYX_INTERP_STATE_NEW;
-  SyxInterpState *state = &_state;
   SyxInterpFrame *frame = syx_interp_context_to_frame (context);
+  SyxInterpState *state;
 
   if (!frame)
     return TRUE;
@@ -272,8 +251,11 @@ syx_interp_swap_context (SyxOop process, SyxOop context)
 
   if (SYX_OOP_EQ (process, _syx_interp_state.process))
     state = &_syx_interp_state;
-  else if (!_syx_interp_switch_process (state, process))
-    return TRUE;
+  else
+    {
+      state = &_state;
+      _syx_interp_switch_process (state, process);
+    }
 
   _syx_interp_state_update (state, frame);
 
@@ -291,20 +273,22 @@ syx_interp_enter_context (SyxOop process, SyxOop context)
   SyxOop arguments;
   syx_bool reset_parent_frame = FALSE;
   SyxInterpState _state = SYX_INTERP_STATE_NEW;
-  SyxInterpState *state = &_state;
+  SyxInterpState *state;
+  SyxInterpFrame *frame;
 
   if (SYX_IS_NIL (process) || SYX_IS_NIL (context))
     return FALSE;
 
   if (SYX_OOP_EQ (process, _syx_interp_state.process))
     state = &_syx_interp_state;
-  else if (!_syx_interp_switch_process (state, process))
+  else 
     {
-      /* The frame is not valid, maybe it's a new process.
-         The new frame will have the bottom frame as parent, then we have to reset it
-         to avoid infinite loops / invalid memory accesses */
-      reset_parent_frame = TRUE;
-      state->frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+      state = &_state;
+      frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (process));
+      /* This is a new Process, reset the parent_frame once we created the frame */
+      if (SYX_IS_NIL (frame->method))
+        reset_parent_frame = TRUE;
+      state->frame = frame;
       state->process = process;
     }
 
@@ -377,17 +361,15 @@ syx_interp_leave_and_answer (SyxOop return_object, syx_bool use_stack_return)
 /*!
   Executes the given process and returns once the byteslice is reached, no more instructions left or
   yield has been requested.
+
+  \param process must not be nil
 */
 void
 syx_process_execute_scheduled (SyxOop process)
 {
   syx_uint16 byte;
 
-  if (!_syx_interp_switch_process (&_syx_interp_state, process))
-    {
-      syx_scheduler_remove_process (process);
-      return;
-    }
+  _syx_interp_switch_process (&_syx_interp_state, process);
 
   while (_syx_interp_state.frame && _syx_interp_state.byteslice >= 0)
     {
@@ -413,16 +395,17 @@ syx_process_execute_blocking (SyxOop process)
 
   SYX_START_PROFILE;
 
+  if (SYX_IS_NIL (process))
+    {
+      syx_scheduler_remove_process (process);
+      return;
+    }
+
   orig_process = syx_processor_active_process;
   orig_state = _syx_interp_state;
 
   _syx_interp_save_process_state (&_syx_interp_state);
-  if (!_syx_interp_switch_process (&_syx_interp_state, process))
-    {
-      _syx_interp_switch_process (&_syx_interp_state, orig_process);
-      syx_scheduler_remove_process (process);
-      return;
-    }
+  _syx_interp_switch_process (&_syx_interp_state, process);
 
   syx_processor_active_process = process;
 
