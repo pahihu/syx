@@ -505,7 +505,7 @@ _syx_memory_write_process_stack (SyxObject *process, FILE *image)
     {
       data = SYX_COMPAT_SWAP_32 (SYX_POINTERS_OFFSET (upper_frame, bottom_frame));
       fwrite (&data, sizeof (syx_int32), 1, image);
-      for (oop = bottom_frame; oop != upper_frame; oop++)
+      for (oop = (SyxOop *)bottom_frame; oop != (SyxOop *)upper_frame; oop++)
         {
           if (SYX_IS_CPOINTER (*oop))
             _syx_memory_write (&syx_nil, TRUE, 1, image);

@@ -177,7 +177,7 @@ typedef enum
 
     SYX_BYTECODE_DO_SPECIAL,
   
-    SYX_BYTECODE_EXTENDED = 0x1F
+    SYX_BYTECODE_EXTENDED
   } SyxBytecodeCommand;
 
 /*! Special commands performed by the command SYX_BYTECODE_DO_SPECIAL */

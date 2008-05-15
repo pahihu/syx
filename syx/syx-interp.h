@@ -32,7 +32,7 @@
 
 SYX_BEGIN_DECLS
 
-#define SYX_INTERP_STATE_NEW {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {0}, 0}
+#define SYX_INTERP_STATE_NEW {0, 0, 0, 0, 0, 0, 0, 0, 0, {0}, 0}
 
 /*
   Remember SyxOop has the same size of a pointer.
@@ -74,7 +74,7 @@ struct SyxInterpState
 
 EXPORT SyxInterpFrame *syx_interp_context_to_frame (SyxOop context);
 EXPORT SyxOop syx_interp_frame_to_context (SyxOop stack, SyxInterpFrame *frame);
-
+EXPORT void _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method);
 
 /* Primitives */
 
@@ -203,6 +203,7 @@ EXPORT SYX_FUNC_INTERPRETER (syx_interp_push_block_closure);
 
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_assign_instance);
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_assign_temporary);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable);
 
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_mark_arguments);
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_message);
@@ -211,6 +212,7 @@ EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_unary);
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_send_binary);
 
 EXPORT SYX_FUNC_INTERPRETER (syx_interp_do_special);
+EXPORT SYX_FUNC_INTERPRETER (syx_interp_do_extended);
 
 SYX_END_DECLS
 

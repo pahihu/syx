@@ -55,7 +55,6 @@
 
 /* Prototype of the interpreter function for creating frames without using contexts */
 void _syx_interp_save_process_state (void);
-void _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method);
 void _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure);
 
 /* This method is inlined in syx_interp_call_primitive */

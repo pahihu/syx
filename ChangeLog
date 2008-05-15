@@ -1,3 +1,13 @@
+2008-05-15  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-memory.c (_syx_memory_write_process_stack): fixed warnings
+
+	* syx/syx-interp.h: add missing interp functions
+
+	* syx/syx-interp.c (_syx_interp_execute_byte): remove rarely used branch
+	(syx_interp_do_extended): added
+	(syx_interp_mark_arguments):
+
 2008-05-10  Luca Bruno  <lethalman88@gmail.com>
 
         * syx/syx-memory.c (_syx_memory_write_process_stack): store stack if the first frames are detached

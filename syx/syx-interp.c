@@ -442,6 +442,31 @@ syx_process_execute_blocking (SyxOop process)
 
 /* Bytecode intepreter */
 
+static SyxInterpreterFunc handlers[] =
+  {
+    syx_interp_push_instance,
+    syx_interp_push_argument,
+    syx_interp_push_temporary,
+    syx_interp_push_literal,
+    syx_interp_push_constant,
+    syx_interp_push_binding_variable,
+    syx_interp_push_array,
+    syx_interp_push_block_closure,
+
+    syx_interp_assign_instance,
+    syx_interp_assign_temporary,
+    syx_interp_assign_binding_variable,
+
+    syx_interp_mark_arguments,
+    syx_interp_send_message,
+    syx_interp_send_super,
+    syx_interp_send_unary,
+    syx_interp_send_binary,
+
+    syx_interp_do_special,
+    syx_interp_do_extended
+  };
+
 static SyxOop *
 _syx_interp_find_argument (syx_uint16 argument)
 {
@@ -626,8 +651,6 @@ SYX_FUNC_INTERPRETER (syx_interp_assign_binding_variable)
 
 SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
 {
-  syx_varsize i;
-
 #ifdef SYX_DEBUG_BYTECODE
   syx_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
@@ -1043,6 +1066,15 @@ SYX_FUNC_INTERPRETER (syx_interp_do_special)
   return TRUE;
 }
 
+SYX_FUNC_INTERPRETER (syx_interp_do_extended)
+{
+  SyxInterpreterFunc handler;
+  syx_uint16 command = argument;
+  argument = _syx_interp_get_next_byte ();
+  handler = handlers[command];
+  return handler (argument);
+}
+
 static syx_uint16
 _syx_interp_get_next_byte (void)
 {
@@ -1057,40 +1089,10 @@ static syx_bool
 _syx_interp_execute_byte (syx_uint16 byte)
 {
   syx_uint16 command, argument;
-  static SyxInterpreterFunc handlers[] =
-    {
-      syx_interp_push_instance,
-      syx_interp_push_argument,
-      syx_interp_push_temporary,
-      syx_interp_push_literal,
-      syx_interp_push_constant,
-      syx_interp_push_binding_variable,
-      syx_interp_push_array,
-      syx_interp_push_block_closure,
-
-      syx_interp_assign_instance,
-      syx_interp_assign_temporary,
-      syx_interp_assign_binding_variable,
-
-      syx_interp_mark_arguments,
-      syx_interp_send_message,
-      syx_interp_send_super,
-      syx_interp_send_unary,
-      syx_interp_send_binary,
-
-      syx_interp_do_special
-    };
   SyxInterpreterFunc handler;
 
   command = (byte & SYX_BYTECODE_COMMAND_MASK) >> SYX_BYTECODE_ARGUMENT_BITS;
   argument = byte & SYX_BYTECODE_ARGUMENT_MASK;
-
-  if (command == SYX_BYTECODE_EXTENDED)
-    {
-      command = argument;
-      argument = _syx_interp_get_next_byte ();
-    }
-
   handler = handlers[command];
 
   return handler (argument);

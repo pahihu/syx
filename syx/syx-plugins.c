@@ -29,6 +29,7 @@
 #include "syx-lexer.h"
 #include "syx-plugins.h"
 #include "syx-error.h"
+#include "syx-interp.h"
 
 #ifdef WITH_PLUGINS
 

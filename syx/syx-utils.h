@@ -25,11 +25,10 @@
 #ifndef SYX_UTILS_H
 #define SYX_UTILS_H
 
-#define _ISOC99_SOURCE 1
-
 #include "syx-platform.h"
 
 #ifdef HAVE_STDARG_H
+#define _ISOC99_SOURCE 1
 #include <stdarg.h>
 #endif
 
