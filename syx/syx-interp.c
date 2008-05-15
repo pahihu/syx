@@ -152,7 +152,7 @@ _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method)
   frame->closure = syx_nil;
   frame->next_instruction = 0;
 
-  assert (_syx_interp_state_update (state, frame));
+  _syx_interp_state_update (state, frame);
 
   temporaries_count = SYX_SMALL_INTEGER (SYX_CODE_TEMPORARIES_COUNT (method));
   frame->stack = state->temporaries + temporaries_count;
@@ -632,12 +632,11 @@ SYX_FUNC_INTERPRETER (syx_interp_mark_arguments)
   syx_debug ("BYTECODE - Mark arguments %d + receiver\n", argument);
 #endif
 
-  if (argument > 0xFF)
-    syx_signal (SYX_ERROR_INTERP, syx_string_new ("Max number of arguments exceeded: %d\n", argument));
-
   _syx_interp_state.message_arguments_count = argument;
-  for (i=argument - 1; i >= 0; i--)
-    _syx_interp_state.message_arguments[i] = syx_interp_stack_pop ();
+  _syx_interp_state.frame->stack -= argument;
+  memcpy (_syx_interp_state.message_arguments,
+          _syx_interp_state.frame->stack,
+          argument * sizeof(SyxOop));
 
   _syx_interp_state.message_receiver = syx_interp_stack_pop ();
   _syx_interp_state.byteslice++; /* be sure we send the message */
@@ -813,7 +812,7 @@ SYX_FUNC_INTERPRETER (syx_interp_push_block_closure)
       frame->detached_frame = frame_oop;
       /* Detach this frame from the process stack.
          The stack pointer will still refer to the process stack */
-      assert (_syx_interp_state_update (&_syx_interp_state, frame));
+      _syx_interp_state_update (&_syx_interp_state, frame);
       /* Update this_context if available */
       if (!SYX_IS_NIL (frame->this_context))
         {
@@ -1082,7 +1081,6 @@ _syx_interp_execute_byte (syx_uint16 byte)
       syx_interp_do_special
     };
   SyxInterpreterFunc handler;
-  syx_bool res;
 
   command = (byte & SYX_BYTECODE_COMMAND_MASK) >> SYX_BYTECODE_ARGUMENT_BITS;
   argument = byte & SYX_BYTECODE_ARGUMENT_MASK;
@@ -1095,7 +1093,5 @@ _syx_interp_execute_byte (syx_uint16 byte)
 
   handler = handlers[command];
 
-  res = handler (argument);
-
-  return res;
+  return handler (argument);
 }
