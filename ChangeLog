@@ -1,3 +1,7 @@
+2008-05-16  Luca Bruno  <lethalman88@gmail.com>
+
+	* doc/manual/blocks.texi (Loops): completed
+
 2008-05-13  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manual/blocks.texi (Return value of blocks): added

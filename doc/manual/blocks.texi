@@ -135,7 +135,7 @@ The conditional expressions are @code{operator is '+'} and @code{operator is '-'
 Of course, the first branch is executed when the operator is '+' while the second for '-'.
 
 @findex =
-@findex ifTrue:ifFalse:
+@findex ifTrue:ifFalse:, ifTrue:, ifFalse, ifFalse:ifTrue:
 A Smalltalk method that would concretize this algorithm would look like the following code:
 @example
 doOperation: operator on: num1 and: num2
@@ -149,6 +149,131 @@ Then the @var{Boolean} has a method named @code{#ifTrue:ifFalse:}. Both argument
 
 We used to send @code{#value} to execute a @var{BlockClosure}, @xref{Block closures}, but if now we send it both will be executed without taking care of the condition. Instead, only one must be executed depending on the condition. The @var{Boolean} class will send @var{#value} to the right @var{BlockClosure} for us.
 
+@strong{Note}: in reality, @code{#ifTrue:ifFalse:} message is never sent. It's not parsed like a regular keyword message and it's compiled with special bytecodes.
+
+@var{Boolean} objects doesn't have only @code{#ifTrue:ifFalse:}, but also @code{#ifTrue:}, @code{#ifFalse:} and @code{#ifFalse:ifTrue:}, which sometimes can be useful in terms of coding style.
+
+The above code can be simplified further by using the return value of the blocks, without using the @kbd{^} operation:
+@example
+doOperation: operator on: num1 and: num2
+   ^operator = '+'
+      ifTrue: [ num1 + num2 ]
+      ifFalse: [ num1 - num2 ]
+@end example
+
+Step by step:
+@enumerate
+@item
+Send @code{#=} to operator with argument '+'
+@item
+This will result in a @var{Boolean} object
+@item
+If the result was @var{true}, execute the first block and get the value
+@item
+If the result was @var{false}, execute the second block and get the value
+@item
+Return the value returned by @var{#ifTrue:ifFalse:}
+@end enumerate
+
+These blocks are called also ``optimized blocks'' because the true/false blocks are inlined in the method itself. Then there's no need to create a @var{BlockClosure} and evaluating it. If the conditional statements weren't handled internally by the interpreter, it would have lead to a drastic slowdown of performances. But, don't be afraid they are called ``optimized blocks'', you can put in those blocks everything, jst like normal @var{BlockClosure}s.
+
 @node Loops
 @subsection Loops
 
+Loops are the other important control structure of imperative programming languages. A loop or cycle is a block of instructions executed until a block evaluates to @var{false}. While in conditional structures you had an expression, this time you have a block. This because the condition must be checked everytime the a single cycle ends and another one is to begin depending on the conditional block return value:
+
+@findex whileTrue:
+@example
+method
+        | i |
+        i := 0.
+        [ i < 3 ]
+            whileTrue: [ i := i + 1. i printNl ].
+        ^i
+@end example
+
+Step by step:
+@enumerate
+@item
+Declare a temporary variable named @var{i}
+@item
+Assign 0 to @var{i}
+@item
+Evaluate the conditional block
+@item
+`- 0 < 3? @var{true}, run the @code{#whileTrue:} block
+@item
+`-- increment @var{i} to 1 and print it
+@item
+`- 1 < 3? @var{true}, continue
+@item
+`-- increment @var{i} to 2 and print it
+@item
+`- 2 < 3? @var{true}
+@item
+`-- increment @var{i} to 3 and print it
+@item
+`- 3 < 3? @var{false}, stop the cycle
+@item
+Return 3
+@end enumerate
+
+As for conditional structures, there are also variants of this method for running loops:
+@findex whileFalse:, whileTrue, whileFalse, repeat
+@itemize @bullet
+@item @code{#whileFalse:}, runs the cycle until the conditional block evaluates to @var{true} as opposite to @code{#whileTrue:}
+@item @code{#whileTrue}, use only the @var{BlockClosure} (the receiver of the message) and execute it until the receiver answers @var{false}
+@item @code{#whileFalse}, as opposite to @code{#whileTrue}, executes the @var{BlockClosure} until it answers @var{true}
+@item @code{#repeat}, evaluates the @var{BlockClosure} forever, an infinite loop
+@end itemize
+
+Several ways for creating an infinite loop:
+@example
+[ true ] whileTrue: [ code ]
+or
+[ code. true ] whileTrue
+or
+[ code ] repeat
+@end example
+
+@findex timesRepeat:
+Smalltalk is a flexible language, in fact there are other elegant ways to perform loops depending on what you need. Say you want to repeat a block a defined number of times:
+
+@example
+> 3 timesRepeat: [ 'Hello' printNl ]!
+'Hello'
+'Hello'
+'Hello'
+@end example
+
+Notice that @code{#timesRepeat:} is a method of the @var{Integer} class. You must keep in mind that all methods for doing loops are based on @code{#whileTrue:}.
+
+@findex do:
+Now imagine you want to iterate through the elements of a @var{Collection}, say a @var{String}:
+@example
+> 'Hello' do: [ :ea | ea printNl ]!
+$H
+$e
+$l
+$l
+$o
+@end example
+
+@tindex ArrayedCollection
+The @var{#do:} method is widely used on many classes to iterate through elements. Notice that the @var{BlockClosure} you pass to the method accepts an argument: that argument holds the nth element of the @var{Collection} each time it's called. The order the block is called with depends on the @var{Collection} implementation. In this case, @var{String} and with all other @var{ArrayedCollection}s and @var{OrderedCollection}s, the @var{BlockClosure} is called with the same order you inserted the elements.
+
+Another useful method in the @var{Integer} class is @code{#to:do:}:
+@example
+> 1 to: 3 do: [ :i | i printNl ]!
+1
+2
+3
+@end example
+
+You guess what it does. It iterates 3 times and the argument of the @var{BlockClosure} is the index which goes from 1 to 3. There are several variants of this method, one of these is @code{#to:by:do}, which also accepts the steps toward the final number:
+@example
+> 2 to: 6 by: 2 do: [ :i | i printNl ]!
+2
+4
+6
+@end example
