@@ -1,22 +1,23 @@
 Major:
-- C layer for number operations
-- Change the execution state of the interpreter to be less expensive
-- Create examples and yet more documentation
-- Fix exception handling sequence
-- Fix and improve file/IO streams
-- Create extra GC roots
-- Cover most of the standard
+1. Cache the hash of symbols
+2. Cover most of the standard
+3. Fix and improve file/IO streams
+4. Fix exception handling sequence
+5. C layer for number operations
+6. Create extra GC roots
+7. Create examples and yet more documentation (under development)
 
 Minor:
 - Object inspecting
+- Complete the SWIG module
 
 Later:
 - Add pool dictionaries
 - Create a series of Smalltalk tests and benchmarks
-- Create a SWIG module (partially done)
+- Create a syxcc command like perlcc, to create a standalone Syx application
 
 Finally:
-- Method inlining
+- Method inlining and polymorphic inline cache
 - JIT
 - OS-threads scheduler
 - Implement another kind of hash probing
