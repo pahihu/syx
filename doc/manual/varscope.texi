@@ -6,3 +6,81 @@
 
 @cindex Variables scope
 
+Variables are looked up in a particular way, much similar to other programming languages.
+In fact, also Smalltalk uses the ``most recent variable'' philosophy. Think like you are in a hierarchy of contexts:
+
+@var{Smalltalk} dictionary
+`- A @var{Class}
+   `- A method
+      `- A @var{BlockClosure}
+         `- Other nested blocks
+
+Resolution of variables goes from the upper block down to the @var{Smalltalk} dictionary containing global variables.
+This means if you have several temporary variables in the method, the one of the blocks are used first:
+
+@example
+> | tmp |
+> tmp := 2.
+> [ tmp := 3 ] value.
+> tmp printNl!
+3
+@end example
+
+@cindex Outer scope
+You assigned the @var{tmp} variable to 3 from the @var{BlockClosure} and it has been printed to the stdout in out of the block. This means the @var{tmp} variable in the @var{BlockClosure} was the same declared in the @emph{outer scope}.
+
+Now try declaring another @var{tmp} variable in the @var{BlockClosure}:
+
+@example
+> | tmp |
+> tmp := 2.
+> [ | tmp | tmp := 3 ] value.
+> tmp printNl!
+2
+@end example
+
+Now happened that in the @var{BlockClosure} there is another temporary variable named @var{tmp} which @emph{overrides the outer one}. So in the @var{BlockClosure} you @dfn{see the most recent declared variables}.
+
+Same thing for arguments:
+@example
+> | tmp |
+> tmp := 2.
+> [ :tmp | tmp printNl ] value: tmp!
+2
+@end example
+
+Remember that you can't assign values to parameters, @xref{Message pattern}.
+
+A more complicated example:
+@example
+> | tmp |
+> tmp := 2.
+> [ | tmp | tmp := 3.
+    [ | tmp | tmp := 4 ] value.
+    tmp printNl ] value.
+> tmp printNl!
+3
+2
+@end example
+
+After temporary variables and arguments, instance variables are looked up. Say you have this class:
+@example
+Object subclass: #Person instanceVariableNames: 'name surname'!
+@end example
+
+Let's create some useful methods:
+@example
+name
+      ^name!
+
+surname
+      ^surname!
+
+name: aString
+      name := aString!
+
+surname: aString
+      surname := aString!
+@end example
+
+@var{name} and @var{surname} symbols refer to the instance variables.

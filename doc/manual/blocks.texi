@@ -270,7 +270,7 @@ Another useful method in the @var{Integer} class is @code{#to:do:}:
 3
 @end example
 
-You guess what it does. It iterates 3 times and the argument of the @var{BlockClosure} is the index which goes from 1 to 3. There are several variants of this method, one of these is @code{#to:by:do}, which also accepts the steps toward the final number:
+You guess what it does. It iterates 3 times and the argument of the @var{BlockClosure} is an index that goes from 1 to 3. There are several variants of this method, one of these is @code{#to:by:do}, which also accepts the steps toward the final number:
 @example
 > 2 to: 6 by: 2 do: [ :i | i printNl ]!
 2

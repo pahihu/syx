@@ -25,6 +25,7 @@ Remind a method is executed @emph{on an object} called @strong{receiver}, so the
 @cindex Arguments, Formal parameters
 The informations passed to the method are called @strong{arguments}.
 The name of these informations, defined in the message pattern, are called @strong{formal parameters}.
+@dfn{Inside the method you @strong{cannot} assign values to a parameter}.
 
 @cindex Message pattern
 In Smalltalk a method is defined with a signature or @strong{message pattern}, then a body made up of a sequence of statements.
