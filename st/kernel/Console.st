@@ -127,10 +127,8 @@ run
     chunkReader := ConsoleChunkReader new.
     [
 	[
-            | lastObject |
             (chunkReader nextChunks: self nextLine) do: [ :chunk |
-                lastObject := ('^[', chunk, '] value') doIt ].
-            lastObject printNl
+                ('^[', chunk, '] value') doIt printNl ]
 	] on: Signal do: [ :ex | ex debug ]
     ] repeat
 ! !

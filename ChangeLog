@@ -1,5 +1,7 @@
 2008-05-17  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Console.st: only print last object when a block is executed
+
 	* src/main.c: convert to UNIX
 
 	* syx/syx-init.c (syx_initialize_system): let's save here the startupProcess, sometimes the scheduler won't run and it won't be saved in #startupSystem. This fixes the image recovering with multiple processes.
