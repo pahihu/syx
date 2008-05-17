@@ -1,3 +1,13 @@
+2008-05-17  Luca Bruno  <lethalman88@gmail.com>
+
+	* src/main.c: convert to UNIX
+
+	* syx/syx-init.c (syx_initialize_system): let's save here the startupProcess, sometimes the scheduler won't run and it won't be saved in #startupSystem. This fixes the image recovering with multiple processes.
+
+	* st/kernel/SystemDictionary.st (initializeSystem): startupProcess is saved inside the VM
+
+	* syx/syx-memory.c (_syx_memory_gc_mark): complete marking of detached frames
+
 2008-05-15  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-interp.c (syx_interp_enter_context): do not really switch the process

@@ -72,8 +72,6 @@ initializeSystem: commandLineArguments
 
 startupSystem
     | continueStartup evalString |
-    startupProcess := Processor activeProcess.
-
     commandLine parse: #(c e:).
     continueStartup := commandLine options at: #c ifAbsent: [ false ].
     evalString := commandLine options at: #e: ifAbsent: [ nil ].

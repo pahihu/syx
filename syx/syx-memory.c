@@ -226,17 +226,21 @@ _syx_memory_gc_mark (SyxOop object)
   for (i=0; i < syx_object_vars_size (object); i++)
     _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
 
-  /* FIXME: mark objects inside this loop instead of iterating through the entire stack again */
+  /* Mark detached frames */
   if (SYX_OOP_EQ (syx_object_get_class (object), syx_process_class))
     {
       frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (object));
       while (frame)
         {
           if (!SYX_IS_NIL (frame->detached_frame))
-            _syx_memory_gc_mark (frame->detached_frame);
+            {
+              for (i=0; i < SYX_OBJECT_DATA_SIZE (frame->detached_frame); i++)
+                _syx_memory_gc_mark (SYX_OBJECT_DATA(frame->detached_frame)[i]);
+            }
           frame = frame->parent_frame;
         }
     }
+
   if (SYX_OBJECT_HAS_REFS (object))
     {
       for (i=0; i < SYX_OBJECT_DATA_SIZE (object); i++)
@@ -574,10 +578,10 @@ syx_memory_save_image (syx_symbol path)
   if (!image)
     return FALSE;
 
-  syx_memory_gc ();
-
   /* save the state of the current process, if any */
   _syx_interp_save_process_state (&_syx_interp_state);
+
+  syx_memory_gc ();
 
   data = SYX_COMPAT_SWAP_32 (_syx_memory_size);
   fwrite (&data, sizeof (syx_int32), 1, image);

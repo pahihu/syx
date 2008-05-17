@@ -340,6 +340,7 @@ syx_initialize_system (void)
   context = syx_send_unary_message (syx_globals, "startupSystem");
   assert (syx_interp_enter_context (process, context));
   SYX_PROCESS_SUSPENDED (process) = syx_false;
+  SYX_OBJECT_VARS(syx_globals)[3] = process;
   
   syx_system_initialized = TRUE;
 }

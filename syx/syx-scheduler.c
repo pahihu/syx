@@ -81,15 +81,14 @@ _syx_scheduler_find_next_process ()
 
   for (process=SYX_PROCESS_NEXT (syx_processor_active_process); ; process = SYX_PROCESS_NEXT (process))
     {
+      /* Reached the end of the linked list */
       if (SYX_IS_NIL (process))
         {
           process = syx_processor_first_process;
+          /* Both first and last processes are nil. No more processes then. */
           if (SYX_IS_NIL (process))
             return syx_nil;
         }
-
-      if (_syx_scheduler_poll_nfds != -1)
-        _syx_scheduler_poll_wait ();
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
         return process;
@@ -290,6 +289,8 @@ syx_scheduler_run (void)
 
       syx_process_execute_scheduled (syx_processor_active_process);
       syx_processor_active_process = _syx_scheduler_find_next_process ();
+      if (_syx_scheduler_poll_nfds != -1)
+        _syx_scheduler_poll_wait ();
     }
 
   running = FALSE;
