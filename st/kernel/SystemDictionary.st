@@ -137,5 +137,5 @@ environmentVariableAt: aStringOrSymbol
 !
 
 version
-    ^'Smalltalk YX 0.1.6'
+    ^'Smalltalk YX 0.1.7'
 ! !

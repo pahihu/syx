@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -208,7 +208,7 @@ syx_plugin_initialize (void)
     }
   
   // CreateWindowA doesn't work with ANSI window name?
-  hWnd = CreateWindow(ClsName, L"Smalltalk YX 0.1.6", WS_OVERLAPPEDWINDOW,
+  hWnd = CreateWindow(ClsName, L"Smalltalk YX 0.1.7", WS_OVERLAPPEDWINDOW,
 		      0, 0,
 		      CW_USEDEFAULT, CW_USEDEFAULT,
 		      NULL, NULL,
