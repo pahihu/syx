@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -111,12 +111,12 @@ value: firstObject value: secondObject
 !BlockClosure methodsFor: 'accessing'!
 
 definedContext
-    ^definedContext
+    "^definedContext"
 !
 
 definedContext: aContext
     "Set the context where the closure has been defined."
-    definedContext := aContext
+    "definedContext := aContext"
 ! !
 
 !BlockClosure methodsFor: 'loops'!

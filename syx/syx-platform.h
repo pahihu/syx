@@ -89,6 +89,7 @@
 
 /* Some platform specific informations */
 
+/* TODO: use "extern" then remove it from headers */
 #ifdef WINDOWS
 # define SYX_PATH_SEPARATOR '\\'
 # ifdef _DLL

@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -59,12 +59,8 @@ EXPORT extern void syx_warning (syx_symbol fmt, ...);
 EXPORT extern void syx_error (syx_symbol fmt, ...);
 EXPORT extern void syx_perror (syx_symbol message);
 
-/*! Send receiver>>#doesNotUnderstand: with selector */
-#define syx_signal_does_not_understand(receiver, selector)              \
-  (syx_interp_enter_context (syx_send_binary_message (_syx_exec_state->process, syx_interp_get_current_context (), \
-                                                      receiver,         \
-                                                      "doesNotUnderstand:", \
-                                                      selector)))
+/*! Useful stuff */
+EXPORT extern syx_bool syx_signal_does_not_understand(SyxOop receiver, SyxOop selector);
 
 /*! Display debugging messages */
 #define syx_debug printf

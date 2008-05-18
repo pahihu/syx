@@ -25,11 +25,12 @@ int main (int argc, char *argv[])
    process = syx_process_new ();
 
    /* create a MethodContext which sends the #with:and: message */
-   context = syx_send_binary_message(process,
-				     syx_nil, // the parent context
-				     instance, // the receiver
+   context = syx_send_binary_message(instance, // the receiver
 				     "run:", // the selector
 				     syx_string_new(getenv("QUERY_STRING")));
+
+   /* setup the new frame in the process */
+   syx_interp_enter_context (process, context);
 
    /* execute the process in blocking mode */
    syx_process_execute_blocking (process);

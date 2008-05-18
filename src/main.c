@@ -1,24 +1,24 @@
-/* 
-   Copyright (c) 2007 Luca Bruno
+/*
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
    in the Software without restriction, including without limitation the rights
-   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell   
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
    copies of the Software, and to permit persons to whom the Software is
    furnished to do so, subject to the following conditions:
-   
+
    The above copyright notice and this permission notice shall be included in
    all copies or substantial portions of the Software.
-   
+
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER    
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
    DEALINGS IN THE SOFTWARE.
 */
 
@@ -59,7 +59,7 @@ static void
 _version (void)
 {
   printf ("Syx %s\nVisit the homepage: http://code.google.com/p/syx\n"
-	  "Copyright (c) 2007 Luca Bruno\n",
+	  "Copyright (c) 2007-2008 Luca Bruno\n",
 	  SYX_VERSION);
 }
 
@@ -67,9 +67,6 @@ static void
 _do_recovery (const char *rim_path)
 {
   SyxOop process = syx_processor_active_process;
-  SYX_PROCESS_CONTEXT(process) = syx_nil;
-  SYX_PROCESS_SUSPENDED(process) = syx_true;
-  SYX_PROCESS_SCHEDULED(process) = syx_false;
   syx_scheduler_remove_process (process);
 
   if (!syx_memory_save_image (rim_path))
@@ -84,9 +81,11 @@ _do_recovery (const char *rim_path)
     }
 }
 
-/* Thanks to Krzysztof Kowalczyk for this getopt */
+/* Thanks to Krzysztof Kowalczyk for this getopt.
+   We need it on Windows and Windows Mobile devices like PocketPC. */
 
-enum OptArgument{
+enum OptArgument
+{
   ARG_UNKNOWN,
   ARG_ERROR,
   ARG_ROOT,
@@ -99,7 +98,8 @@ enum OptArgument{
   ARG_CONTINUE_STARTUP
 };
 
-struct {
+struct
+{
   const char* arg_name;
   enum OptArgument arg_enum;
   int need_param;
@@ -122,7 +122,7 @@ struct {
 static int curr_arg=1;
 
 static enum OptArgument
-arg_enum_from_name (int argc, const char** argv, const char** arg_val)
+arg_enum_from_name (int argc, const char **argv, const char **arg_val)
 {
   const char *arg;
   int i;
@@ -226,7 +226,7 @@ _parse_args (int argc, char **argv)
       syx_set_image_path (image_path);
       syx_free (image_path);
     }
-  
+
   if (scratch)
     {
       syx_build_basic ();

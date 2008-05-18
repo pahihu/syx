@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -53,6 +53,7 @@
 #include <unistd.h>
 #endif
 
+#include <assert.h>
 #include <stdio.h>
 
 syx_bool syx_system_initialized = FALSE;
@@ -260,7 +261,8 @@ syx_build_basic (void)
   _syx_file_in_basic ();
 
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_globals, "initializeFirstSystem");
+  context = syx_send_unary_message (syx_globals, "initializeFirstSystem");
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
 }
 
@@ -270,7 +272,7 @@ syx_build_basic (void)
   Sets up syx_nil, syx_true and syx_false constants.
   Lookup all classes from the Smalltalk dictionary and insert them into the VM.
   Then initialize the interpreter, the errors system and the scheduler.
-  Finally send SystemDictionary>>#initializeSystem to initialize everything else from within Smalltalk
+  Finally send SystemDictionary>>#initializeSystem: to initialize everything else from within Smalltalk
 */
 void
 syx_fetch_basic (void)
@@ -329,13 +331,16 @@ syx_initialize_system (void)
 
   /* initialize the system */
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil, syx_globals, "initializeSystem:", arguments);
+  context = syx_send_binary_message (syx_globals, "initializeSystem:", arguments);
+  assert (syx_interp_enter_context (process, context));
   syx_process_execute_blocking (process);
 
   /* now schedule to startup */
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_globals, "startupSystem");
+  context = syx_send_unary_message (syx_globals, "startupSystem");
+  assert (syx_interp_enter_context (process, context));
   SYX_PROCESS_SUSPENDED (process) = syx_false;
+  SYX_OBJECT_VARS(syx_globals)[3] = process;
   
   syx_system_initialized = TRUE;
 }

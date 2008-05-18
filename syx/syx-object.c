@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -99,7 +99,8 @@ syx_object_initialize (SyxOop oop)
   if (syx_system_initialized)
     {
       process = syx_process_new ();
-      context = syx_send_unary_message (process, syx_nil, oop, "initialize");
+      context = syx_send_unary_message (oop, "initialize");
+      syx_interp_enter_context (process, context);
       syx_process_execute_blocking (process);
     }
 }
@@ -230,10 +231,19 @@ syx_large_integer_new_integer (syx_int32 i)
 SyxOop 
 syx_process_new (void)
 {
+  SyxInterpFrame *frame;
   SyxOop object = syx_object_new (syx_process_class);
-  SYX_PROCESS_STACK(object) = syx_array_new_size (1000);
+  SYX_PROCESS_STACK(object) = syx_array_new_size (5000);
   SYX_PROCESS_SUSPENDED(object) = syx_true;
   SYX_PROCESS_SCHEDULED(object) = syx_false;
+
+  /* initialize the first frame to avoid null checks in the interpreter */
+  frame = (SyxInterpFrame *) SYX_POINTER_CAST_OOP (SYX_OBJECT_DATA (SYX_PROCESS_STACK (object)));
+  /* the stack pointer is used to get the next available frame, which in our case is the bottom
+     of the process stack */
+  frame->stack = (SyxOop *) frame;
+  SYX_PROCESS_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (frame);
+
   syx_scheduler_add_process (object);
   return object;
 }
@@ -639,64 +649,29 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 
 
 /*!
-  Create a new MethodContext and setup the frame in the Process stack:
-  - arguments
-  - temporaries
-  - stack
+  Create a new MethodContext.
 
-  \param parent the parent context
   \param method a CompiledMethod
   \param receiver an Object receiving the message
   \param arguments the arguments passed to the message
 */
 SyxOop 
-syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop receiver, SyxOop arguments)
+syx_method_context_new (SyxOop method, SyxOop receiver, SyxOop arguments)
 {
   SyxOop object;
-  syx_int32 sp;
-  syx_int32 argument_stack_size;
-  syx_int32 temporary_stack_size;
 
   SYX_START_PROFILE;
 
+  syx_memory_gc_begin ();
+
   object = syx_object_new (syx_method_context_class);
 
-  SYX_METHOD_CONTEXT_PARENT(object) = parent;
-  SYX_METHOD_CONTEXT_METHOD(object) = method;
+  SYX_CONTEXT_PART_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (NULL);
+  SYX_CONTEXT_PART_METHOD(object) = method;
+  SYX_CONTEXT_PART_ARGUMENTS(object) = arguments;
   SYX_METHOD_CONTEXT_RECEIVER(object) = receiver;
 
-  /* argument pointer, which is the bottom of the local frame, is the stack pointer of the parent context */
-  if (SYX_IS_NIL (parent))
-    {
-      sp = 0;
-      SYX_METHOD_CONTEXT_AP(object) = syx_small_integer_new (0);
-    }
-  else if (SYX_OOP_EQ (parent, _syx_exec_state->context))
-    {
-      sp = _syx_exec_state->sp;
-      SYX_METHOD_CONTEXT_AP(object) = syx_small_integer_new (sp);
-    }
-  else
-    {
-      SYX_METHOD_CONTEXT_AP(object) = SYX_METHOD_CONTEXT_SP(parent);
-      sp = SYX_SMALL_INTEGER (SYX_METHOD_CONTEXT_AP(object));
-    }
-
-  argument_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_ARGUMENT_STACK_SIZE (method));
-  temporary_stack_size = SYX_SMALL_INTEGER(SYX_METHOD_TEMPORARY_STACK_SIZE (method));
-
-  if (!SYX_IS_NIL (arguments))
-    memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process))+sp,
-            SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
-
-  SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_TP(object) = syx_small_integer_new (sp + argument_stack_size);
-  SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (sp + argument_stack_size + temporary_stack_size);
-
-  SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = parent;
-
-  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
-    SYX_PROCESS_CONTEXT(process) = object;
+  syx_memory_gc_end ();
 
   SYX_END_PROFILE(method_context);
 
@@ -705,11 +680,12 @@ syx_method_context_new (SyxOop process, SyxOop parent, SyxOop method, SyxOop rec
 
 /*!
   Same as syx_method_context_new but for BlockContexts.
+  The receiver is guessed by looking at the outer context.
 
-  \param outer_context a MethodContext or BlockContext for a nested block
+  \param closure a BlockClosure
 */
 SyxOop 
-syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop arguments, SyxOop outer_context)
+syx_block_context_new (SyxOop closure, SyxOop arguments)
 {
   SyxOop object;
 
@@ -717,31 +693,10 @@ syx_block_context_new (SyxOop process, SyxOop parent, SyxOop block, SyxOop argum
 
   object = syx_object_new (syx_block_context_class);
 
-  SYX_METHOD_CONTEXT_PARENT(object) = parent;
-  SYX_METHOD_CONTEXT_METHOD(object) = block;
-  SYX_METHOD_CONTEXT_RECEIVER(object) = SYX_METHOD_CONTEXT_RECEIVER (outer_context);
-
-  SYX_METHOD_CONTEXT_AP(object) = SYX_METHOD_CONTEXT_AP(outer_context);
-
-  if (!SYX_IS_NIL (arguments))
-    memcpy (SYX_OBJECT_DATA(SYX_PROCESS_STACK(process)) + SYX_SMALL_INTEGER(SYX_METHOD_CONTEXT_AP(object)) + SYX_SMALL_INTEGER(SYX_BLOCK_ARGUMENT_STACK_TOP(block)),
-            SYX_OBJECT_DATA(arguments), SYX_OBJECT_DATA_SIZE(arguments) * sizeof (SyxOop));
-
-  SYX_METHOD_CONTEXT_IP(object) = syx_small_integer_new (0);
-  SYX_METHOD_CONTEXT_TP(object) = SYX_METHOD_CONTEXT_TP(outer_context);
-
-  if (SYX_IS_NIL (parent))
-    SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (0);
-  else if (SYX_OOP_EQ (parent, _syx_exec_state->context))
-    SYX_METHOD_CONTEXT_SP(object) = syx_small_integer_new (_syx_exec_state->sp);
-  else
-    SYX_METHOD_CONTEXT_SP(object) = SYX_METHOD_CONTEXT_SP(parent);
-
-  SYX_BLOCK_CONTEXT_OUTER_CONTEXT(object) = outer_context;
-  SYX_METHOD_CONTEXT_RETURN_CONTEXT(object) = SYX_METHOD_CONTEXT_RETURN_CONTEXT (outer_context);
-
-  if (SYX_IS_NIL (SYX_PROCESS_CONTEXT (process)))
-    SYX_PROCESS_CONTEXT(process) = object;
+  SYX_CONTEXT_PART_FRAME_POINTER(object) = SYX_POINTER_CAST_OOP (NULL);
+  SYX_CONTEXT_PART_METHOD(object) = SYX_BLOCK_CLOSURE_BLOCK (closure);
+  SYX_CONTEXT_PART_ARGUMENTS(object) = arguments;
+  SYX_BLOCK_CONTEXT_CLOSURE(object) = closure;
 
   SYX_END_PROFILE(block_context);
 
@@ -863,7 +818,8 @@ syx_object_free (SyxOop object)
   if (SYX_IS_TRUE (SYX_CLASS_FINALIZATION (klass)))
     {
       process = syx_process_new ();
-      context = syx_send_unary_message (process, syx_nil, object, "finalize");
+      context = syx_send_unary_message (object, "finalize");
+      syx_interp_enter_context (process, context);
       syx_process_execute_blocking (process);
     }
 
@@ -935,7 +891,7 @@ syx_class_get_all_instance_variable_names (SyxOop klass)
 }
 
 /*!
-  Returns a method in a class having a given selector.
+  Returns a method in a class having the given selector.
 
   \return syx_nil if no method has been found
 */

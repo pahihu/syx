@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -25,15 +25,13 @@
 #ifndef SYX_UTILS_H
 #define SYX_UTILS_H
 
-#define _ISOC99_SOURCE 1
-
+#include "syx-platform.h"
 
 #ifdef HAVE_STDARG_H
+#define _ISOC99_SOURCE 1
 #include <stdarg.h>
 #endif
 
-
-#include "syx-platform.h"
 #include "syx-types.h"
 #include "syx-lexer.h"
 
@@ -48,10 +46,10 @@ extern EXPORT void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-extern EXPORT SyxOop syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector);
-extern EXPORT SyxOop syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument);
-extern EXPORT SyxOop syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-extern EXPORT SyxOop syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
+extern EXPORT SyxOop syx_send_unary_message (SyxOop receiver, syx_symbol selector);
+extern EXPORT SyxOop syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument);
+extern EXPORT SyxOop syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+extern EXPORT SyxOop syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
 
 extern EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
 extern EXPORT SyxOop syx_do_it_blocking (syx_symbol code);

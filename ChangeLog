@@ -3,9 +3,35 @@
 	* doc/manual/varscope.texi: begun work
 	maybe complete for now
 
+	* st/kernel/Console.st: only print last object when a block is executed
+
+	* src/main.c: convert to UNIX
+
+	* syx/syx-init.c (syx_initialize_system): let's save here the startupProcess, sometimes the scheduler won't run and it won't be saved in #startupSystem. This fixes the image recovering with multiple processes.
+
+	* st/kernel/SystemDictionary.st (initializeSystem): startupProcess is saved inside the VM
+
+	* syx/syx-memory.c (_syx_memory_gc_mark): complete marking of detached frames
+
 2008-05-16  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manual/blocks.texi (Loops): completed
+
+2008-05-15  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-interp.c (syx_interp_enter_context): do not really switch the process
+	(_syx_interp_state_update): checks must be done before calling the method
+	(_syx_interp_switch_process): checks must be done before calling the method
+	(syx_interp_swap_context):
+	(syx_process_execute_scheduled): checks have to be done before calling the method
+
+	* syx/syx-memory.c (_syx_memory_write_process_stack): fixed warnings
+
+	* syx/syx-interp.h: add missing interp functions
+
+	* syx/syx-interp.c (_syx_interp_execute_byte): remove rarely used branch
+	(syx_interp_do_extended): added
+	(syx_interp_mark_arguments):
 
 2008-05-13  Luca Bruno  <lethalman88@gmail.com>
 
@@ -42,10 +68,36 @@
 
 	* doc/manual/language.texi: added
 
+	* syx/syx-memory.c (_syx_memory_write_process_stack): store stack if the first frames are detached
+        (_syx_memory_write_process_stack): check if the stack has been already wrote
+        (_syx_memory_read): read first detached frames
+        (syx_memory_load_image): first fix pointers
+
+        * syx/syx-types.h:
+
 2008-05-07  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manual/introsyx.texi (Invoking syx): documented
 
+2008-05-06  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-interp.c (syx_interp_context_to_frame): add check
+
+        * syx/syx-memory.c (_syx_memory_write_frame): save all the stack from locals to the upper frame
+        (_syx_memory_read_lazy_pointer): missing big endian compatibility, rename idx to data
+        (_syx_memory_write_lazy_pointer): give precedence to detached frames
+
+2008-05-04  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-memory.c (_syx_memory_write_frame): receiver is not only an object
+        (_syx_memory_read_process_stack): 
+
+        * syx/syx-scheduler.c (syx_scheduler_add_process): run the given process just after the active process
+        (syx_scheduler_init): set default timeslice to 100
+
+        * syx/syx-memory.c (enum): rename _BOS to _BOF
+        All calls have been updated.
+	
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
 	* doc/manpage/syx.1: added
@@ -60,6 +112,19 @@
 	* doc/manual/syx.texi (Introducing the Syx environment): basic Strings
 	(What is Smalltalk): Image concept
 	(Index): added Classes and Methods
+
+	* syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
+        (_syx_memory_write_object_with_vars): ensure the stack
+        (_syx_memory_write_vars_with_fp): take care of detached frames
+
+        * syx/syx-scheduler.c (syx_scheduler_remove_process): always check for active process
+
+        * syx/syx-lexer.c (_syx_char_is_binary_second): temporarly removed '-'
+
+        * syx/syx-parser.c: support <- assignment
+
+        * syx/syx-memory.c (_syx_memory_write_frame): fix stack pointer
+        (_syx_memory_write_lazy_pointer): fix on NULL process
 
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
     
@@ -88,8 +153,8 @@
 	Add doc/manual.
 
 	* doc/manual/syx.texinfo: added
-	
-        * syx/syx-memory.c:
+
+	* syx/syx-memory.c:
         (syx_memory_save_image): only store the stack of each process
         (_syx_memory_write_process_stack): fixed beginning and end of frames
         
@@ -333,6 +398,7 @@
         Changed the way of dealing with contexts and processes.
         The interpreter won't create any context except the ones demanded outside of it.
         All contexts informations are now kept inside the process stack.
+<<<<<<< HEAD:ChangeLog
 >>>>>>> 82a09eb... 2008-05-01  Luca Bruno  <lethalman88@gmail.com>:ChangeLog
 
 2008-02-20  Luca Bruno  <lethalman88@gmail.com>
@@ -362,6 +428,36 @@
 	All calls have been updated.
 
 	* syx/syx-parser.c (_syx_parser_parse_term): raise a new error for bad expression starts
+=======
+
+2008-02-20  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-object.h (syx_string_new_ref): renamed from syx_string_new_unref
+        All calls have been updated
+
+        * plugins/readline/plugin-init.c (ReadLine_readline): reference the returned string instead of creating a new one
+
+        * syx/syx-primitives.c (FileStream_fileOp): fixed possible memory leak
+
+        * st/kernel/Console.st: added ConsoleChunkReader to fix multiple statements handling
+
+        * syx/syx-object.h (syx_string_new): use SYX_VSPRINTF
+
+        * syx/syx-utils.h (SYX_VSPRINTF): added
+
+        * syx/syx-utils.c (syx_vsprintf): removed
+        (syx_sprintf): removed
+
+2008-02-18  Luca Bruno  <lethalman88@gmail.com>
+
+        * syx/syx-lexer.c (_syx_lexer_token_identifier): fix var:=val assignment
+        (_syx_lexer_token_number): fix D.! syntax, where D is a digit (issue #28)
+
+        * syx/syx-interp.h (syx_interp_is_initialized): removed, use syx_system_initialized instead
+        All calls have been updated.
+
+        * syx/syx-parser.c (_syx_parser_parse_term): raise a new error for bad expression starts
+>>>>>>> newinterp:ChangeLog
 
 2008-01-25  Luca Bruno  <lethalman88@gmail.com>
 

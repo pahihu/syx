@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,6 +22,8 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "syx-object.h"
+
 #ifdef WINDOWS
   #ifndef WIN32_LEAN_AND_MEAN
   #define WIN32_LEAN_AND_MEAN
@@ -31,7 +33,6 @@
 #endif
 
 #include "syx-types.h"
-#include "syx-object.h"
 #include "syx-enums.h"
 #include "syx-scheduler.h"
 #include "syx-utils.h"
@@ -80,15 +81,14 @@ _syx_scheduler_find_next_process ()
 
   for (process=SYX_PROCESS_NEXT (syx_processor_active_process); ; process = SYX_PROCESS_NEXT (process))
     {
+      /* Reached the end of the linked list */
       if (SYX_IS_NIL (process))
         {
           process = syx_processor_first_process;
+          /* Both first and last processes are nil. No more processes then. */
           if (SYX_IS_NIL (process))
             return syx_nil;
         }
-
-      if (_syx_scheduler_poll_nfds != -1)
-        _syx_scheduler_poll_wait ();
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
         return process;
@@ -254,7 +254,7 @@ syx_scheduler_init (void)
   if (SYX_IS_NIL (syx_processor))
     {
       syx_processor = syx_object_new (syx_processor_scheduler_class);
-      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (50);
+      SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (100);
       syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);
 
       FD_ZERO(&_syx_scheduler_poll_rfds);
@@ -289,6 +289,8 @@ syx_scheduler_run (void)
 
       syx_process_execute_scheduled (syx_processor_active_process);
       syx_processor_active_process = _syx_scheduler_find_next_process ();
+      if (_syx_scheduler_poll_nfds != -1)
+        _syx_scheduler_poll_wait ();
     }
 
   running = FALSE;
@@ -374,8 +376,8 @@ syx_scheduler_add_process (SyxOop process)
         syx_processor_first_process = syx_processor_active_process = process;
       else
         {
-          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_first_process);
-          SYX_PROCESS_NEXT(syx_processor_first_process) = process;
+          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
+          SYX_PROCESS_NEXT(syx_processor_active_process) = process;
         }
       SYX_PROCESS_SCHEDULED(process) = syx_true;
     }
@@ -391,17 +393,18 @@ syx_scheduler_remove_process (SyxOop process)
     {
       SYX_PROCESS_SCHEDULED(process) = syx_false;
       syx_processor_first_process = SYX_PROCESS_NEXT(process);
-      return;
     }
-
-  for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
+  else
     {
-      inter_process = SYX_PROCESS_NEXT(prev_process);
-      if (SYX_OOP_EQ (inter_process, process))
+      for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
         {
-          SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
-          SYX_PROCESS_SCHEDULED(process) = syx_false;
-          break;
+          inter_process = SYX_PROCESS_NEXT(prev_process);
+          if (SYX_OOP_EQ (inter_process, process))
+            {
+              SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
+              SYX_PROCESS_SCHEDULED(process) = syx_false;
+              break;
+            }
         }
     }
 

@@ -25,10 +25,10 @@
 #ifndef SYX_H
 #define SYX_H
 
+#include "syx-object.h"
 #include "syx-config.h"
 #include "syx-enums.h"
 #include "syx-types.h"
-#include "syx-object.h"
 #include "syx-init.h"
 #include "syx-lexer.h"
 #include "syx-parser.h"

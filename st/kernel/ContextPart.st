@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -26,11 +26,12 @@ DEALINGS IN THE SOFTWARE.
 
 tracebackString
     "Shows my single traceback"
-    | class |
+    | class receiver |
+    receiver := self receiver.
     class := method methodClass = receiver class
 	ifTrue: [ receiver class printString ]
 	ifFalse: [ receiver class printString, '(', method methodClass printString, ')' ].
-    ^class, '>>', self method selector printString
+    ^class, '>>', method selector printString
 !
 
 handles: anException
@@ -74,22 +75,23 @@ traceback
 
 isMethodContext
     self subclassResponsibility
-! !
-
-!ContextPart methodsFor: 'accessing'!
+!
 
 method
     ^method
 !
 
 receiver
-    ^receiver
+    <primitive: 'ContextPart_receiver'>
+    self primitiveFailed
 !
 
 parent: aContext
-    parent := aContext
+"    parent := aContext"
 !
 
 parent
-    ^parent
+    <primitive: 'ContextPart_parent'>
+    self primitiveFailed
+"    ^parent"
 ! !

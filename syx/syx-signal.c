@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,6 +22,7 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "syx-object.h"
 #include "syx-types.h"
 #include "syx-utils.h"
 #include "syx-interp.h"
@@ -64,8 +65,8 @@ _syx_smalltalk_sighandler (int signum)
       return;
     }
   
-  context = syx_send_unary_message (_syx_exec_state->process, syx_interp_get_current_context (), klass, "signal");
-  syx_interp_enter_context (context);
+  context = syx_send_unary_message (klass, "signal");
+  syx_interp_enter_context (syx_processor_active_process, context);
 }
 
 static void
@@ -84,9 +85,7 @@ _syx_save_recovered_image (void)
       return;
     }
 
-  SYX_PROCESS_CONTEXT(process) = syx_nil;
-  SYX_PROCESS_SUSPENDED(process) = syx_true;
-  SYX_PROCESS_SCHEDULED(process) = syx_false;
+  /* Remove the affected process */
   syx_scheduler_remove_process (process);
 
   if (!syx_memory_save_image (image_path))

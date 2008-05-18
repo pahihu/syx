@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -115,13 +115,14 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
 
   while ((lastChar = syx_lexer_forward (self)) && isalnum (lastChar))
     {
-      *(str+i) = lastChar;
+      str[i] = lastChar;
       i++;
     }
 
   if (lastChar == ':')
     {
       lastChar = syx_lexer_forward (self);
+      /* This one is an assignment := */
       if (lastChar == '=')
         {
           self->_pushed_back = 0;
@@ -131,8 +132,7 @@ _syx_lexer_token_identifier (SyxLexer *self, SyxToken *token, syx_char lastChar)
       else
         {
           syx_lexer_push_back (self);
-          *(str+i) = ':';
-          i++;
+          str[i++] = ':';
           token->type = SYX_TOKEN_NAME_COLON;
         }
     }
@@ -291,8 +291,7 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
   syx_string str = syx_malloc(length+2);
   syx_uint32 i = 0;
 
-  /* if it's not an alpha numeric symbol,
-     be sure to return a symbol of length 2 as the ANSI defines */
+  /* check for symbol enclosed by quotes like a string #'symbol' */
   lastChar = syx_lexer_forward (self);
   if (lastChar == '\'')
     {
@@ -301,6 +300,8 @@ _syx_lexer_token_symbol (SyxLexer *self, SyxToken *token, syx_char lastChar)
       return;
     }
 
+  /* if it's not an alpha numeric symbol,
+     be sure to return a symbol of length 2 representing a binary symbol */
   if (lastChar == '-' || _syx_char_is_binary_second (lastChar))
     {
       *(str+i) = lastChar;
@@ -410,7 +411,7 @@ _syx_char_is_single_binary (syx_char c)
 static syx_bool
 _syx_char_is_binary_second (syx_char c)
 {
-  return !(isalnum (c) || isspace (c) || c == '-' || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
+  return !(isalnum (c) || isspace (c) || _syx_char_is_closing (c) || _syx_char_is_single_binary (c));
 }
 
 /*! Get the next character or 0 */

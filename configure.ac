@@ -153,10 +153,10 @@ normal)
    CFLAGS="$CFLAGS -g -O2"
    ;;
 info)
-   CFLAGS="$CFLAGS -g -O -DSYX_DEBUG_INFO"
+   CFLAGS="$CFLAGS -g3 -O -DSYX_DEBUG_INFO"
    ;;
 full)
-   CFLAGS="$CFLAGS -g -O -DSYX_DEBUG_INFO -DSYX_DEBUG_FULL"
+   CFLAGS="$CFLAGS -g3 -O -DSYX_DEBUG_INFO -DSYX_DEBUG_FULL"
    ;;
 esac
 

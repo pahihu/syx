@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -85,7 +85,7 @@ nextLine
 		  line isNil
 		      ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit ].
 		  self primAddHistory: line ]
-	ifFalse: [ '> ' print. stdout flush.
+	ifFalse: [ stdout nextPutAll: '> '; flush.
 	           line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].
@@ -127,10 +127,8 @@ run
     chunkReader := ConsoleChunkReader new.
     [
 	[
-            | lastObject |
             (chunkReader nextChunks: self nextLine) do: [ :chunk |
-                lastObject := ('^[', chunk, '] value') doIt ].
-            lastObject printNl
+                ('^[', chunk, '] value') doIt printNl ]
 	] on: Signal do: [ :ex | ex debug ]
     ] repeat
 ! !

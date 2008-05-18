@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -53,18 +53,9 @@
 #include <gmp.h>
 #endif
 
-INLINE SyxOop 
-_syx_block_context_new_from_closure (SyxExecState *es, SyxOop process, SyxOop context, SyxOop arguments)
-{
-  SyxOop block = SYX_BLOCK_CLOSURE_BLOCK (es->message_receiver);
-  if (SYX_SMALL_INTEGER(SYX_CODE_ARGUMENT_COUNT(block)) != SYX_OBJECT_DATA_SIZE (arguments))
-    return syx_nil;
-  else
-    return syx_block_context_new (process, context,
-                                  block,
-                                  arguments,
-                                  SYX_BLOCK_CLOSURE_DEFINED_CONTEXT(es->message_receiver));
-}
+/* Prototype of the interpreter function for creating frames without using contexts */
+void _syx_interp_save_process_state (void);
+void _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure);
 
 /* This method is inlined in syx_interp_call_primitive */
 SYX_FUNC_PRIMITIVE (Processor_yield)
@@ -182,16 +173,16 @@ SYX_FUNC_PRIMITIVE (Object_copy)
   SYX_PRIM_RETURN (syx_object_copy (es->message_receiver));
 }
 
+/* This primitive handles both #perform: and #perform:with: */
 SYX_FUNC_PRIMITIVE (Object_perform)
 {
   SyxOop klass;
   SyxOop message_method;
-  SyxOop context;
   SyxOop selector;
-  SyxOop *message_arguments;
+  SyxOop message_arguments[0xFF];
   syx_varsize message_arguments_count;
   syx_int32 primitive;
-  syx_bool ret;
+  syx_bool ret = TRUE;
 
   SYX_START_PROFILE;
 
@@ -206,19 +197,19 @@ SYX_FUNC_PRIMITIVE (Object_perform)
       SYX_PRIM_FAIL;
     }
 
-  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENT_COUNT (message_method)) != es->message_arguments_count - 1)
+  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (message_method)) != es->message_arguments_count - 1)
     {
       SYX_PRIM_FAIL;
     }
 
   /* save the real state */
-  message_arguments = es->message_arguments;
+  memcpy (message_arguments, es->message_arguments, es->message_arguments_count * sizeof (SyxOop));
   message_arguments_count = es->message_arguments_count;
+
   es->message_arguments_count--;
-  if (!es->message_arguments_count)
-    es->message_arguments = NULL;
-  else
-    es->message_arguments++;
+  /* Check for #perform:with: then shift the only argument to the right by one */
+  if (es->message_arguments_count)
+    es->message_arguments[0] = es->message_arguments[1];
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
@@ -226,23 +217,10 @@ SYX_FUNC_PRIMITIVE (Object_perform)
   else if (primitive == -2)
     ret = syx_plugin_call_interp (es, message_method);
   else
-    {
-      if (es->message_arguments_count > 0)
-        {
-          syx_memory_gc_begin ();
-          context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver,
-                                            syx_array_new_ref (es->message_arguments_count,
-                                                               es->message_arguments));
-          syx_memory_gc_end ();
-        }
-      else
-        context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
-      
-      ret = syx_interp_enter_context (context);
-    }
+    _syx_interp_frame_prepare_new (es, message_method);
 
   /* restore the state */
-  es->message_arguments = message_arguments;
+  memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));
   es->message_arguments_count = message_arguments_count;
 
   SYX_END_PROFILE(perform_message);
@@ -254,14 +232,12 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
 {
   SyxOop klass;
   SyxOop message_method;
-  SyxOop context;
   SyxOop selector;
   SyxOop arguments;
-  SyxOop args;
-  SyxOop *message_arguments;
+  SyxOop message_arguments[0xFF];
   syx_varsize message_arguments_count;
   syx_int32 primitive;
-  syx_bool ret;
+  syx_bool ret = TRUE;
   
   SYX_START_PROFILE;
 
@@ -278,19 +254,21 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
       SYX_PRIM_FAIL;
     }
 
-  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENT_COUNT (message_method)) != SYX_OBJECT_DATA_SIZE (arguments))
+  if (SYX_SMALL_INTEGER (SYX_CODE_ARGUMENTS_COUNT (message_method)) != SYX_OBJECT_DATA_SIZE (arguments))
     {
       SYX_PRIM_FAIL;
     }
 
   /* save the real state */
-  message_arguments = es->message_arguments;
+  memcpy (message_arguments, es->message_arguments, es->message_arguments_count * sizeof (SyxOop));
   message_arguments_count = es->message_arguments_count;
-  es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
-  if (!es->message_arguments_count)
-    es->message_arguments = NULL;
+  if (SYX_IS_NIL (arguments))
+    es->message_arguments_count = 0;
   else
-    es->message_arguments = SYX_OBJECT_DATA(arguments);
+    {
+      es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
+      memcpy (es->message_arguments, SYX_OBJECT_DATA (arguments), es->message_arguments_count * sizeof (SyxOop));
+    }
 
   primitive = SYX_SMALL_INTEGER (SYX_METHOD_PRIMITIVE (message_method));
   if (primitive >= 0 && primitive < SYX_PRIMITIVES_MAX)
@@ -298,23 +276,10 @@ SYX_FUNC_PRIMITIVE (Object_performWithArguments)
   else if (primitive == -2)
     ret = syx_plugin_call_interp (es, message_method);
   else
-    {
-      if (SYX_OBJECT_DATA_SIZE (arguments) > 0)
-        {
-          syx_memory_gc_begin ();
-          args = syx_array_new_ref (es->message_arguments_count, es->message_arguments);
-          context = syx_method_context_new (es->process, es->context, message_method,
-                                            es->message_receiver, args);
-          syx_memory_gc_end ();
-        }
-      else
-        context = syx_method_context_new (es->process, es->context, message_method, es->message_receiver, syx_nil);
-
-      ret = syx_interp_enter_context (context);
-    }
+    _syx_interp_frame_prepare_new (es, message_method);
 
   /* restore the state */
-  es->message_arguments = message_arguments;
+  memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));
   es->message_arguments_count = message_arguments_count;
 
   SYX_END_PROFILE(perform_message);
@@ -418,64 +383,38 @@ SYX_FUNC_PRIMITIVE (ByteArray_at_put)
 
 SYX_FUNC_PRIMITIVE (BlockClosure_asContext)
 {
-  SyxOop args;
   SyxOop ctx;
   SYX_PRIM_ARGS(1);
 
-  syx_memory_gc_begin ();
-  args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, args);
-  syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
+  ctx = syx_block_context_new (es->message_receiver, es->message_arguments[0]);
   SYX_PRIM_RETURN (ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_value)
 {
-  SyxOop ctx = _syx_block_context_new_from_closure (es, es->process, es->context, syx_nil);
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  
-  return syx_interp_enter_context (ctx);
+  /* Unset arguments for the execution of the block */
+  es->message_arguments_count = 0;
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
+  return TRUE;
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWith)
 {
-  SyxOop args;
-  SyxOop ctx;
   SYX_PRIM_ARGS(1);
 
-  syx_memory_gc_begin ();
-  args = syx_array_new_size (1);
-  SYX_OBJECT_DATA(args)[0] = es->message_arguments[0];
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, args);
-  syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  return syx_interp_enter_context (ctx);
+  /* The only argument for this primitive is right the same argument for the block */
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
+  return TRUE;
 }
   
 SYX_FUNC_PRIMITIVE (BlockClosure_valueWithArguments)
 {
-  SyxOop args, ctx;
   SYX_PRIM_ARGS(1);
 
-  syx_memory_gc_begin ();
-  args = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(es->message_arguments[0]), SYX_OBJECT_DATA(es->message_arguments[0]));
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, args);
-  syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
-  return syx_interp_enter_context (ctx);
+  es->message_arguments_count = SYX_OBJECT_DATA_SIZE (es->message_arguments[0]);
+  memcpy (es->message_arguments, SYX_OBJECT_DATA (es->message_arguments[0]), es->message_arguments_count * sizeof (SyxOop));
+  _syx_interp_frame_prepare_new_closure (es, es->message_receiver);
+  return TRUE;
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
@@ -483,16 +422,12 @@ SYX_FUNC_PRIMITIVE (BlockClosure_on_do)
   SyxOop ctx;
   SYX_PRIM_ARGS(2);
 
-  ctx = _syx_block_context_new_from_closure (es, es->process, es->context, syx_nil);
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
+  ctx = syx_block_context_new (es->message_receiver, syx_nil);
 
   SYX_BLOCK_CONTEXT_HANDLED_EXCEPTION (ctx) = es->message_arguments[0];
   SYX_BLOCK_CONTEXT_HANDLER_BLOCK (ctx) = es->message_arguments[1];
 
-  return syx_interp_enter_context (ctx);
+  return syx_interp_enter_context (syx_processor_active_process, ctx);
 }
 
 SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
@@ -502,29 +437,36 @@ SYX_FUNC_PRIMITIVE (BlockClosure_newProcess)
 
   syx_memory_gc_begin ();
   proc = syx_process_new ();
-  ctx = _syx_block_context_new_from_closure (es, proc, syx_nil, syx_nil);
-  SYX_METHOD_CONTEXT_RETURN_CONTEXT (ctx) = syx_nil;
+  ctx = syx_block_context_new (es->message_receiver, syx_nil);
+  syx_interp_enter_context (proc, ctx);
   syx_memory_gc_end ();
-  if (SYX_IS_NIL(ctx))
-    {
-      SYX_PRIM_FAIL;
-    }
 
   SYX_PRIM_RETURN (proc);
 }
 
-SYX_FUNC_PRIMITIVE (String_asSymbol)
+
+
+/* Contexts */
+
+SYX_FUNC_PRIMITIVE (ContextPart_parent)
 {
-  SYX_PRIM_RETURN (syx_symbol_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (SYX_CONTEXT_PART_STACK (es->message_receiver),
+                                                frame->parent_frame));
 }
 
-/* These printing function are used ONLY for tests */
-SYX_FUNC_PRIMITIVE (Float_print)
+SYX_FUNC_PRIMITIVE (ContextPart_receiver)
 {
-  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
-  SYX_PRIM_RETURN (es->message_receiver);
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
+  SYX_PRIM_RETURN (frame->receiver);
 }
 
+SYX_FUNC_PRIMITIVE (BlockContext_outerContext)
+{
+  SyxInterpFrame *frame = syx_interp_context_to_frame (es->message_receiver);
+  SYX_PRIM_RETURN (syx_interp_frame_to_context (SYX_CONTEXT_PART_STACK (es->message_receiver),
+                                                frame->outer_frame));
+}
 
 
 /* Processor */
@@ -532,20 +474,22 @@ SYX_FUNC_PRIMITIVE (Float_print)
 SYX_FUNC_PRIMITIVE (Processor_enter)
 {
   SYX_PRIM_ARGS(1);
-  return syx_interp_enter_context (es->message_arguments[0]);
+  return syx_interp_enter_context (syx_processor_active_process, es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_swapWith)
 {
   SYX_PRIM_ARGS(1);
-  return syx_interp_swap_context (es->message_arguments[0]);
+  return syx_interp_swap_context (syx_processor_active_process, es->message_arguments[0]);
 }
 
 SYX_FUNC_PRIMITIVE (Processor_leaveTo_andAnswer)
 {
+  SyxInterpFrame *frame;
   SYX_PRIM_ARGS(2);
-  SYX_METHOD_CONTEXT_RETURN_CONTEXT(es->context) = es->message_arguments[0];
-  return syx_interp_leave_context_and_answer (es->message_arguments[1], TRUE);
+  frame = syx_interp_context_to_frame (es->message_arguments[0]);
+  es->frame->stack_return_frame = frame;
+  return syx_interp_leave_and_answer (es->message_arguments[1], TRUE);
 }
 
 SYX_FUNC_PRIMITIVE (Character_new)
@@ -789,6 +733,11 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
 SYX_FUNC_PRIMITIVE (String_hash)
 {
   SYX_PRIM_RETURN (syx_small_integer_new (syx_string_hash (SYX_OBJECT_SYMBOL (es->message_receiver))));
+}
+
+SYX_FUNC_PRIMITIVE (String_asSymbol)
+{
+  SYX_PRIM_RETURN (syx_symbol_new (SYX_OBJECT_SYMBOL (es->message_receiver)));
 }
 
 /* Small integers */
@@ -1298,6 +1247,13 @@ SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 
 /* Floats */
 
+/* This printing function is used ONLY for tests */
+SYX_FUNC_PRIMITIVE (Float_print)
+{
+  printf ("%f\n", SYX_OBJECT_FLOAT(es->message_receiver));
+  SYX_PRIM_RETURN (es->message_receiver);
+}
+
 SYX_FUNC_PRIMITIVE (Float_plus)
 {
   SyxOop first, second;
@@ -1546,9 +1502,8 @@ SYX_FUNC_PRIMITIVE (ObjectMemory_snapshot)
   
   filename = es->message_arguments[0];
 
-  /* save the current execution state */
+  /* store the returned object for this process before saving the image */
   syx_interp_stack_push (es->message_receiver);
-  syx_exec_state_save ();
 
   if (SYX_IS_NIL (filename))
     ret = syx_memory_save_image (NULL);
@@ -1616,7 +1571,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_quit)
 
 SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
 {
-  SyxOop *message_arguments;
+  SyxOop message_arguments[0xFF];
   syx_varsize message_arguments_count;
   SyxOop plugin = es->message_arguments[0];
   syx_symbol plugin_name = NULL;
@@ -1633,18 +1588,15 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
     plugin_name = SYX_OBJECT_SYMBOL (plugin);
 
   /* save the real state */
-  message_arguments = es->message_arguments;
+  memcpy (message_arguments, es->message_arguments, es->message_arguments_count * sizeof (SyxOop));
   message_arguments_count = es->message_arguments_count;
   es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
-  if (!es->message_arguments_count)
-    es->message_arguments = NULL;
-  else
-    es->message_arguments = SYX_OBJECT_DATA(arguments);
+  memcpy (es->message_arguments, SYX_OBJECT_DATA (arguments), es->message_arguments_count * sizeof (SyxOop));
 
   ret = syx_plugin_call (es, plugin_name, SYX_OBJECT_SYMBOL (func), syx_nil);
 
   /* restore the state */
-  es->message_arguments = message_arguments;
+  memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));
   es->message_arguments_count = message_arguments_count;
 
   return ret;
@@ -1718,12 +1670,9 @@ SYX_FUNC_PRIMITIVE (CompiledMethod_runOn)
   SyxOop context;
   SYX_PRIM_ARGS(2);
 
-  context = syx_method_context_new (_syx_exec_state->process, _syx_exec_state->context,
-                                    es->message_receiver,
-                                    es->message_arguments[0],
-                                    es->message_arguments[1]);
+  context = syx_method_context_new (es->message_receiver, es->message_arguments[0], es->message_arguments[1]);
 
-  return syx_interp_enter_context (context);
+  return syx_interp_enter_context (syx_processor_active_process, context);
 }
 
 SYX_FUNC_PRIMITIVE (Compiler_parse)
@@ -1748,6 +1697,7 @@ SYX_FUNC_PRIMITIVE (Compiler_parse)
     }
 
   syx_lexer_free (lexer, FALSE);
+  syx_free (parser->instance_names);
   syx_parser_free (parser, FALSE);
 
   SYX_PRIM_RETURN (meth);
@@ -1759,7 +1709,6 @@ SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
   SyxParser *parser;
   SyxOop meth;
   SyxOop pos;
-  SyxOop context;
   SyxToken token;
   SyxLexer saved_lexer;
   syx_symbol all_text;
@@ -1807,8 +1756,7 @@ SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
   SYX_METHOD_SELECTOR(meth) = syx_symbol_new ("goDoIt");
 
   /* finally execute */
-  context = syx_method_context_new (es->process, syx_interp_get_current_context (), meth, syx_nil, syx_nil);
-  syx_interp_enter_context (context);
+  _syx_interp_frame_prepare_new (es, meth);
 
   SYX_PRIM_RETURN (es->message_receiver);
 }
@@ -2020,8 +1968,10 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "BlockClosure_on_do", BlockClosure_on_do },
   { "BlockClosure_newProcess", BlockClosure_newProcess },
 
-  { "String_asSymbol", String_asSymbol },
-  { "Float_print", Float_print },
+  /* Contexts */
+  { "ContextPart_parent", ContextPart_parent },
+  { "ContextPart_receiver", ContextPart_receiver },
+  { "BlockContext_outerContext", BlockContext_outerContext },
 
   /* Interpreter */
   { "Processor_enter", Processor_enter },
@@ -2036,6 +1986,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
 
   /* Strings */
   { "String_hash", String_hash },
+  { "String_asSymbol", String_asSymbol },
 
   /* File streams */
   { "StdIOStream_nextPut", StdIOStream_nextPut },
@@ -2096,6 +2047,7 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Float_ceil", Float_ceil },
   { "Float_floor", Float_floor },
   { "Float_trunc", Float_trunc },
+  { "Float_print", Float_print },
 
   /* Date and time */
   { "DateTime_gmTime", DateTime_gmTime },

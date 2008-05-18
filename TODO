@@ -19,7 +19,8 @@ Later:
 Finally:
 - Method inlining and polymorphic inline cache
 - JIT
-- OS-threads scheduler
+- Optional OS-threads scheduler, compatible with the current scheduler
 - Implement another kind of hash probing
+- Maybe add namespaces
 
 - Other optimizations

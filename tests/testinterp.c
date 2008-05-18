@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -22,12 +22,13 @@
    DEALINGS IN THE SOFTWARE.
 */
 
+#include "../syx/syx.h"
+
 #include <assert.h>
 #include <stdio.h>
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-#include "../syx/syx.h"
 
 SyxOop
 _interpret (syx_symbol text)
@@ -46,7 +47,8 @@ _interpret (syx_symbol text)
   syx_parser_free (parser, FALSE);
   syx_lexer_free (lexer, FALSE);
   process = syx_process_new ();
-  context = syx_method_context_new (process, syx_nil, method, syx_nil, syx_nil);
+  context = syx_method_context_new (method, syx_nil, syx_nil);
+  syx_interp_enter_context (process, context);
 
   start = syx_nanotime ();
   syx_process_execute_blocking (process);
@@ -155,6 +157,14 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method | tmp | tmp := 123. true ifTrue: [ | tmp | tmp := 321 ]. ^tmp");
   assert (SYX_SMALL_INTEGER(ret_obj) == 123);
 
+  /* From issue #29 */
+  puts ("- Test block recursion");
+  _interpret ("method | b | b := [ :i | | d | Transcript nextPutAll: 'before ', i printString; cr."
+              "d := i - 1."
+              "(i > 0 ) ifTrue: [ b value: d]."
+              "Transcript nextPutAll: 'after ', i printString; cr. ]."
+              "b value: 5");
+
   puts ("- Test exception handling");
   ret_obj = _interpret ("method ^[Signal signal] on: Signal do: [:ex | true]");
   assert (SYX_IS_TRUE (ret_obj));
@@ -171,8 +181,12 @@ main (int argc, char *argv[])
   ret_obj = _interpret ("method [Signal signal. 123] ensure: [^321]. 213");
   assert (SYX_SMALL_INTEGER(ret_obj) == 321);
 
+  puts ("- Test ensuring 2");
+  ret_obj = _interpret ("method [^123] ensure: [^321]. 213");
+  assert (SYX_SMALL_INTEGER(ret_obj) == 321);
+
   puts ("- Test loops");
-  ret_obj = _interpret ("method | var | 1 to: 1000 do: [:i | var := i. 'test' print]. ^var");
+  ret_obj = _interpret ("method | var | 1 to: 1000 do: [ :i | var := i. 'test' printNl ]. ^var");
   assert (SYX_SMALL_INTEGER(ret_obj) == 1000);
 
   syx_quit ();

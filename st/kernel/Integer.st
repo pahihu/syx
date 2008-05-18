@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -139,7 +139,7 @@ printStringRadix: base
 !
 
 printOn: aStream
-    self storeOn: aStream base: 10
+    self printOn: aStream base: 10
 !
 
 storeOn: aStream

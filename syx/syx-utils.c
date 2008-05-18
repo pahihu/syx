@@ -1,5 +1,5 @@
 /* 
-   Copyright (c) 2007 Luca Bruno
+   Copyright (c) 2007-2008 Luca Bruno
 
    This file is part of Smalltalk YX.
 
@@ -495,7 +495,7 @@ syx_semaphore_wait (SyxOop semaphore)
 
 /*! Create a MethodContext for a unary message ready to enter a Process */
 SyxOop
-syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector)
+syx_send_unary_message (SyxOop receiver, syx_symbol selector)
 {
   SyxOop context;
   SyxOop klass;
@@ -504,15 +504,19 @@ syx_send_unary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, 
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_IS_NIL (SYX_CLASS_NAME(klass))
+               ? NULL
+               : SYX_OBJECT_STRING (SYX_CLASS_NAME(klass)));
 
-  context = syx_method_context_new (process, parent_context, method, receiver, syx_nil);
+  context = syx_method_context_new (method, receiver, syx_nil);
   return context;
 }
 
 /*! Create a MethodContext for a binary message ready to enter a Process */
 SyxOop
-syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, SyxOop argument)
+syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument)
 {
   SyxOop context;
   SyxOop klass;
@@ -522,13 +526,13 @@ syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver,
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
 
-  syx_memory_gc_begin ();
   arguments = syx_array_new_size (1);
   SYX_OBJECT_DATA(arguments)[0] = argument;
-  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
-  syx_memory_gc_end ();
+  context = syx_method_context_new (method, receiver, arguments);
 
   return context;
 }
@@ -539,13 +543,13 @@ syx_send_binary_message (SyxOop process, SyxOop parent_context, SyxOop receiver,
   \param num_args number of variadic SyxOop arguments
 */
 SyxOop
-syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
+syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...)
 {
   SyxOop context;
   va_list ap;
 
   va_start (ap, num_args);
-  context = syx_vsend_message (process, parent_context, receiver, selector, num_args, ap);
+  context = syx_vsend_message (receiver, selector, num_args, ap);
   va_end (ap);
 
   return context;
@@ -555,10 +559,11 @@ syx_send_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_sy
 /*!
   Create a MethodContext for an arbitrary message ready to enter a Process.
 
-  \param arguments an Array of arguments
+  \param num_args the number of arguments
+  \param ap a va_list containing all SyxOops
 */
 SyxOop
-syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
+syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_int32 num_args, va_list ap)
 {
   syx_varsize i;
   SyxOop context;
@@ -567,22 +572,20 @@ syx_vsend_message (SyxOop process, SyxOop parent_context, SyxOop receiver, syx_s
   SyxOop arguments;
 
   if (num_args == 0)
-    return syx_send_unary_message (process, parent_context, receiver, selector);
+    return syx_send_unary_message (receiver, selector);
 
   klass = syx_object_get_class (receiver);
   method = syx_class_lookup_method (klass, selector);
   if (SYX_IS_NIL (method))
-    syx_error ("Unable to lookup method #%s in class %p\n", selector, SYX_OOP_CAST_POINTER (klass));
-
-  syx_memory_gc_begin ();
+    syx_error ("Unable to lookup method #%s in class %p (%s)\n", selector,
+               SYX_OOP_CAST_POINTER (klass),
+               SYX_OBJECT_BYTE_ARRAY (SYX_CLASS_NAME(klass)));
 
   arguments = syx_array_new_size (num_args);
   for (i=0; i < num_args; i++)
     SYX_OBJECT_DATA(arguments)[i] = va_arg (ap, SyxOop);
 
-  context = syx_method_context_new (process, parent_context, method, receiver, arguments);
-
-  syx_memory_gc_end ();
+  context = syx_method_context_new (method, receiver, arguments);
 
   return context;
 }
@@ -601,10 +604,10 @@ syx_file_in_blocking (syx_symbol file)
   SyxOop process;
 
   process = syx_process_new ();
-  context = syx_send_binary_message (process, syx_nil,
-                                     syx_globals_at ("FileStream"),
+  context = syx_send_binary_message (syx_globals_at ("FileStream"),
                                      "fileIn:",
                                      syx_string_new (file));
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -622,8 +625,8 @@ syx_do_it_blocking (syx_symbol code)
   SyxOop process;
 
   process = syx_process_new ();
-  context = syx_send_unary_message (process, syx_nil, syx_string_new (code), "doIt");
-  
+  context = syx_send_unary_message (syx_string_new (code), "doIt");
+  syx_interp_enter_context (process, context);
   syx_process_execute_blocking (process);
   return SYX_PROCESS_RETURNED_OBJECT (process);
 }
@@ -667,8 +670,8 @@ syx_find_first_non_whitespace (syx_symbol string)
 void
 syx_show_traceback (void)
 {
-  SyxExecState *es;
-  SyxOop context, homecontext;
+  SyxInterpState *es;
+  SyxInterpFrame *frame, *homeframe;
   syx_symbol traceformat;
   SyxOop classname;
   syx_symbol extraclass;
@@ -680,7 +683,8 @@ syx_show_traceback (void)
       return;
     }
 
-  es = _syx_exec_state;
+  es = &_syx_interp_state;
+  frame = es->frame;
 
   puts ("Memory state:");
   printf("Memory size: %d\n", _syx_memory_size);
@@ -698,22 +702,24 @@ syx_show_traceback (void)
 
   puts ("\nExecution state:");
   printf("Process: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->process),
-         SYX_MEMORY_INDEX_OF (es->process));
-  printf("Context: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->context),
-         SYX_MEMORY_INDEX_OF (es->context));
+         SYX_OOP_CAST_POINTER (syx_processor_active_process),
+         SYX_MEMORY_INDEX_OF (syx_processor_active_process));
+  printf("Frame: %p\n", (syx_pointer) frame);
+
+  if (!frame)
+    return;
+
   printf("Receiver: %p (memory index: %ld)\n",
-         SYX_OOP_CAST_POINTER (es->receiver),
-         SYX_MEMORY_INDEX_OF (es->receiver));
+         SYX_OOP_CAST_POINTER (frame->receiver),
+         SYX_MEMORY_INDEX_OF (frame->receiver));
   printf("Arguments: %p\n", (syx_pointer) es->arguments);
   printf("Temporaries: %p\n", (syx_pointer) es->temporaries);
-  printf("Stack: %p\n", (syx_pointer) es->stack);
-  printf("Literals: %p\n", (syx_pointer) es->literals);
-  printf("Bytecodes: %p (size: %d)\n", (syx_pointer) es->bytecodes, es->bytecodes_count);
+  printf("Stack: %p\n", (syx_pointer) frame->stack);
+  printf("Literals: %p\n", (syx_pointer) es->method_literals);
+  printf("Bytecodes: %p (size: %d)\n", (syx_pointer) es->method_bytecodes, es->method_bytecodes_count);
   printf("Byteslice: %d\n", es->byteslice);
-  printf("Instruction pointer: %d\n", es->ip);
-  printf("Stack pointer: %d\n", es->sp);
+  printf("Instruction pointer: %p\n", (syx_pointer) frame->next_instruction);
+  printf("Stack pointer: %p\n", (syx_pointer) frame->stack);
   printf("Message receiver: %p (memory index: %ld)\n",
          SYX_OOP_CAST_POINTER (es->message_receiver),
          SYX_MEMORY_INDEX_OF (es->message_receiver));
@@ -722,23 +728,22 @@ syx_show_traceback (void)
          es->message_arguments_count);
 
   puts ("\nTraceback:");
-  context = syx_interp_get_current_context ();
-  while (!SYX_IS_NIL (context))
+  while (frame)
     {
-      if (syx_object_get_class (context) == syx_block_context_class)
+      if (frame->outer_frame)
         {
-          homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(context);
-          while (syx_object_get_class (homecontext) != syx_method_context_class)
-            homecontext = SYX_BLOCK_CONTEXT_OUTER_CONTEXT(homecontext);
+          homeframe = frame->outer_frame;
+          while (homeframe->outer_frame)
+            homeframe = homeframe->outer_frame;
           traceformat = "%s%s>>%s[]\n";
         }
       else
         {
-          homecontext = context;
+          homeframe = frame;
           traceformat = "%s%s>>%s\n";
         }
 
-      receiver = SYX_METHOD_CONTEXT_RECEIVER(context);
+      receiver = frame->receiver;
       classname = SYX_CLASS_NAME(syx_object_get_class(receiver));
       if (SYX_IS_NIL (classname))
         {
@@ -751,9 +756,9 @@ syx_show_traceback (void)
       printf (traceformat,
               SYX_OBJECT_SYMBOL(classname),
               extraclass,
-              SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(SYX_METHOD_CONTEXT_METHOD(homecontext))));
+              SYX_OBJECT_SYMBOL(SYX_METHOD_SELECTOR(homeframe->method)));
 
-      context = SYX_METHOD_CONTEXT_PARENT (context);
+      frame = frame->parent_frame;
     }
 }
 

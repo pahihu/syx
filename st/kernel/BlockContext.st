@@ -1,5 +1,5 @@
 "
-Copyright (c) 2007 Luca Bruno
+Copyright (c) 2007-2008 Luca Bruno
 
 This file is part of Smalltalk YX.
 
@@ -65,11 +65,12 @@ tracebackString
 !
 
 homeContext
-    ^outerContext homeContext
+    ^self outerContext homeContext
 !
 
 outerContext
-    ^outerContext
+    <primitive: 'BlockContext_outerContext'>
+    self primitiveFailed
 ! !
 
 !BlockContext methodsFor: 'testing'!
