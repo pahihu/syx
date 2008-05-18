@@ -317,6 +317,7 @@ syx_symbol_new (syx_symbol symbol)
   SyxOop *table;
   syx_int32 tally;
   syx_varsize size;
+  syx_int32 hash;
 
   if (!symbol)
     return syx_nil;
@@ -330,7 +331,8 @@ syx_symbol_new (syx_symbol symbol)
   if (tally >= size / 2)
     syx_dictionary_rehash (syx_symbols);
 
-  index = syx_dictionary_index_of (syx_symbols, symbol, TRUE);
+  hash = syx_string_hash (symbol);
+  index = syx_dictionary_index_of (syx_symbols, symbol, hash, TRUE);
 
   if (index < 0)
     syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (syx_symbols));
@@ -340,6 +342,7 @@ syx_symbol_new (syx_symbol symbol)
     return table[index+1];
 
   obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)syx_strdup (symbol));
+  SYX_SYMBOL_HASH(obj) = hash;
   table[index] = obj;
   table[index+1] = obj;
   SYX_DICTIONARY_TALLY (syx_symbols) = syx_small_integer_new (tally + 1);
@@ -367,15 +370,16 @@ syx_string_hash (syx_symbol string)
 
   Take care the dictionary MUST contain only key symbols
 
+  \param hash the hash code of the key symbol
   \param return_nil_index if TRUE returns the index of the first nil entry
 */
 syx_int32
-syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
+syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_int32 hash, syx_bool return_nil_index)
 {
   SyxOop entry;
   syx_varsize size = SYX_OBJECT_DATA_SIZE (dict);
   SyxOop *table = SYX_OBJECT_DATA (dict);
-  syx_varsize i = 2 * (syx_string_hash (key) % (size / 2));
+  syx_varsize i = 2 * (hash % (size / 2));
   syx_int32 tally = SYX_SMALL_INTEGER (SYX_DICTIONARY_TALLY (dict)) + return_nil_index;
   SYX_START_PROFILE;
 
@@ -419,7 +423,7 @@ syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index)
 SyxOop
 syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 {
-  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  syx_int32 index = syx_dictionary_index_of (dict, key, syx_string_hash (key), FALSE);
   SyxOop *table;
   if (index < 0)
     {
@@ -441,7 +445,7 @@ syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop
 syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  syx_int32 index = syx_dictionary_index_of (dict, key, syx_string_hash (key), FALSE);
   SyxOop *table;
   if (index < 0)
     return object;
@@ -477,7 +481,7 @@ syx_dictionary_bind (SyxOop binding)
   if (SYX_OOP_EQ (entry, key))
     return table[index+1];
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
   if (index < 0)
     {
       syx_signal (SYX_ERROR_NOT_FOUND, key);
@@ -516,7 +520,7 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
         return table[index+1];
     }
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
   if (index < 0)
     return object;
 
@@ -549,7 +553,7 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 
   if (SYX_OOP_NE (entry, key))
     {
-      index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), FALSE);
+      index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
       if (index < 0)
         {
           syx_signal (SYX_ERROR_NOT_FOUND, key);
@@ -569,7 +573,7 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 SyxOop 
 syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 {
-  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  syx_int32 index = syx_dictionary_index_of (dict, key, syx_string_hash (key), FALSE);
   if (index < 0)
     {
       syx_signal (SYX_ERROR_NOT_FOUND, syx_symbol_new (key));
@@ -587,7 +591,7 @@ syx_dictionary_at_symbol (SyxOop dict, syx_symbol key)
 SyxOop 
 syx_dictionary_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object)
 {
-  syx_int32 index = syx_dictionary_index_of (dict, key, FALSE);
+  syx_int32 index = syx_dictionary_index_of (dict, key, syx_string_hash (key), FALSE);
   if (index < 0)
     return object;
 
@@ -636,7 +640,7 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   if (tally >= size / 2)
     syx_dictionary_rehash (dict);
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), TRUE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), TRUE);
 
   if (index < 0)
     syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (dict));

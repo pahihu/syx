@@ -180,7 +180,7 @@ ByteArray subclass: #String
           classVariableNames: ''!
 
 String subclass: #Symbol
-       instanceVariableNames: ''
+       instanceVariableNames: 'hash'
        classVariableNames: ''!
 
 Object subclass: #Magnitude

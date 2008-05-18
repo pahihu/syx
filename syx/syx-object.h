@@ -220,7 +220,7 @@ EXPORT syx_bool syx_class_is_superclass_of (SyxOop klass, SyxOop subclass);
 EXPORT SyxOop syx_class_lookup_method (SyxOop klass, syx_symbol selector);
 EXPORT SyxOop syx_class_lookup_method_binding (SyxOop klass, SyxOop binding);
 
-EXPORT syx_int32 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_bool return_nil_index);
+EXPORT syx_int32 syx_dictionary_index_of (SyxOop dict, syx_symbol key, syx_int32 hash, syx_bool return_nil_index);
 EXPORT void syx_dictionary_rehash (SyxOop dict);
 EXPORT SyxOop syx_dictionary_binding_at_symbol (SyxOop dict, syx_symbol key);
 EXPORT SyxOop syx_dictionary_binding_at_symbol_if_absent (SyxOop dict, syx_symbol key, SyxOop object);
@@ -260,6 +260,8 @@ EXPORT void syx_array_add (SyxOop array, SyxOop element, syx_bool unique);
 #define SYX_METACLASS_INSTANCE_CLASS(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_METACLASS_INSTANCE_CLASS])
 
 #define SYX_CLASS_CLASS_VARIABLES(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_CLASS_CLASS_VARIABLES])
+
+#define SYX_SYMBOL_HASH(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_SYMBOL_HASH])
 
 #define SYX_DICTIONARY_TALLY(oop) (SYX_OBJECT_VARS(oop)[SYX_VARS_DICTIONARY_TALLY])
 
