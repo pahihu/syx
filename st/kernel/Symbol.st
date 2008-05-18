@@ -51,8 +51,7 @@ basicAt: anIndex put: anObject
 !
 
 hash
-    <primitive: 'String_hash'>
-	self primitiveFailed
+    ^hash
 ! !
 
 !Symbol methodsFor: 'converting'!

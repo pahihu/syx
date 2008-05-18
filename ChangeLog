@@ -1,8 +1,14 @@
 2008-05-18  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-object.c (syx_symbol_new): make a SmallInteger
+
+	* syx/syx-object.h (syx_symbol_hash): added
+
+	* st/kernel/Symbol.st (hash): use the cached hash variable
+
 	* syx/syx-object.c (syx_symbol_new): cache the hash
 	(syx_dictionary_index_of): wants the hash of the symbol key
-	All calls have been updated.
+	All calls have been updated. This leads to dropping about 8% of executed instructions.
 
 	* syx/syx-enums.h (enum): 
 

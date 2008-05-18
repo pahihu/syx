@@ -342,7 +342,7 @@ syx_symbol_new (syx_symbol symbol)
     return table[index+1];
 
   obj = syx_object_new_data (syx_symbol_class, FALSE, strlen (symbol) + 1, (SyxOop *)syx_strdup (symbol));
-  SYX_SYMBOL_HASH(obj) = hash;
+  SYX_SYMBOL_HASH(obj) = syx_small_integer_new (hash);
   table[index] = obj;
   table[index+1] = obj;
   SYX_DICTIONARY_TALLY (syx_symbols) = syx_small_integer_new (tally + 1);
@@ -481,7 +481,7 @@ syx_dictionary_bind (SyxOop binding)
   if (SYX_OOP_EQ (entry, key))
     return table[index+1];
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), syx_symbol_hash (key), FALSE);
   if (index < 0)
     {
       syx_signal (SYX_ERROR_NOT_FOUND, key);
@@ -520,7 +520,7 @@ syx_dictionary_bind_if_absent (SyxOop binding, SyxOop object)
         return table[index+1];
     }
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), syx_symbol_hash (key), FALSE);
   if (index < 0)
     return object;
 
@@ -553,7 +553,7 @@ syx_dictionary_bind_set_value (SyxOop binding, SyxOop value)
 
   if (SYX_OOP_NE (entry, key))
     {
-      index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), FALSE);
+      index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), syx_symbol_hash (key), FALSE);
       if (index < 0)
         {
           syx_signal (SYX_ERROR_NOT_FOUND, key);
@@ -640,7 +640,7 @@ syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
   if (tally >= size / 2)
     syx_dictionary_rehash (dict);
 
-  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), SYX_SYMBOL_HASH (key), TRUE);
+  index = syx_dictionary_index_of (dict, SYX_OBJECT_SYMBOL (key), syx_symbol_hash (key), TRUE);
 
   if (index < 0)
     syx_error ("Not enough space for dictionary %p\n", SYX_OOP_CAST_POINTER (dict));

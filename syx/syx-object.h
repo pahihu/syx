@@ -232,6 +232,8 @@ EXPORT void syx_dictionary_at_symbol_put (SyxOop dict, SyxOop key, SyxOop value)
 
 EXPORT syx_int32 syx_string_hash (syx_symbol string);
 
+#define syx_symbol_hash(oop) (SYX_SMALL_INTEGER (SYX_SYMBOL_HASH (oop)))
+
 /* Constructors */
 
 EXPORT SyxOop syx_metaclass_new (SyxOop supermetaclass);
