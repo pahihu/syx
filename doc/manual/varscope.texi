@@ -84,3 +84,30 @@ surname: aString
 @end example
 
 @var{name} and @var{surname} symbols refer to the instance variables.
+Remember that the @emph{first letter} of temporaries, arguments and instance variables is lowercase.
+Capital variables are class variables and global variables. Of course, class variables are looked up before global variables. Class variables, @xref{Variables}, can be accessed from the class and its instances.
+
+@var{BlockClosure}s can be transported from a context to another one and evaluated at any time. They can be saved in instance variables or class variables for example. As you store them in a variable and the method will return, @dfn{the @var{BlockClosure} will still keep track of the method scope}.
+
+Take in consideration these two methods:
+@example
+makeBlock: methodArg
+         ^[ :blockArg | methodArg + blockArg ]!
+@end example
+
+Now create it, say we have an instance named @var{inst} which class holds the @code{#makeBlock:} method:
+@example
+> | block |
+> block := inst makeBlock: 3.
+> block value: 5!
+8
+@end example
+
+Notice that the method returned the @var{BlockClosure}, i.e. the method terminated. Though @var{methodArg} is still alive in the block when you ``value it'' in the console. This is an expected result also with temporaries. The thing that doesn't work is the explicit return in the block. Say we have this method again:
+
+@example
+makeBlock: methodArg
+        ^[ :blockArg | ^methodArg + blockArg]!
+@end example
+
+Once you value the @var{BlockClosure} in the console it won't work because the method context is dead. Remember with @kbd{^} you explicitely want to return from the method, but this is not possible once the method already returned.
