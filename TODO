@@ -1,5 +1,5 @@
 Major:
-1. Cache the hash of symbols
+1. Make the Console non-blocking
 2. Cover most of the standard
 3. Fix and improve file/IO streams
 4. Fix exception handling sequence
