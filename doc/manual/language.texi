@@ -75,6 +75,8 @@ nil
 @node Inheritance
 @section Inheritance
 
+@include inheritance.texi
+
 @node Class definition
 @section Class definition
 

@@ -1,0 +1,68 @@
+@c -*-texinfo-*-
+@c This is part of the Smalltalk YX Manual.
+@c Copyright (C) 2008
+@c   Luca Bruno <lethalman88@gmail.com>
+@c See the file syx.texi for copying conditions.
+
+Inheritance is the one of the most powerful aspects of the object-oriented programming. Classes define a series of fields and methods that are known to belong to that class. But usually you want to @strong{extend} an existing class and make your changes.
+
+Say we have the @var{Car} class, but we also want @var{Motorcycle} and @var{Bicycle}:
+@example
+> Object subclass: #Car instanceVariableNames: 'name brand engine'!
+Car
+> Object subclass: #Motorcycle instanceVariableNames: 'name brand engine'!
+Motorcycle
+> Object subclass: #Bicycle instanceVariableNames: 'name brand'!
+Bicycle
+@end example
+
+We see that they have @var{name} and @var{brand} in common. In the real life, we say that cars, motorcycles and bicycles are vehicles. We can create then a class named @var{Vehicle} to represent, as usual, a real life entity. Suppose all vehicles have a name and a brand, at least they should have:
+@example
+> Object subclass: #Vehicle instanceVariableNames: 'name brand'!
+Vehicle
+@end example
+
+But a @var{Car} @strong{IS} a @var{Vehicle}, then we can @strong{inherit} from @var{Vehicle}:
+@example
+> Vehicle subclass: #Car instanceVariableNames: 'engine'!
+Car
+@end example
+
+@cindex Superclass, Subclass
+The only difference is the first name, which changed from @var{Object} to @var{Vehicle}. Now the @var{Car} class inherits every aspect of @var{Vehicle} including instance variables and methods. In such case, @var{Vehicle} is the @strong{superclass} and @var{Car} is the @strong{subclass}. Now instance variables of @var{Vehicle} that were inaccessible to the extern, they are accessible to all subclasses.
+
+@cindex Single inheritance
+You can create many subclasses of the same superclass, but you can't inherit from multiple classes. This is called @strong{single inheritance}.
+
+Notice that until now, we always used @var{Object} as superclass. All classes must have a class as superclass, and @var{Object} is the top most class that all other classes inherit. In fact we say @dfn{everything is an object} because of this fact.
+
+Think we can create such hierarchy:
+Object
+`- Vehicle
+   `- MotorVehicle
+      `- Car
+      `- Motorcycle
+   `- Bicycle
+
+Let's do it:
+@example
+> Object subclass: #Vehicle instanceVariableNames: 'name brand'!
+Vehicle
+> Vehicle subclass: #MotorVehicle instanceVariableNames: 'engine'!
+MotorVehicle
+> MotorVehicle subclass: #Car instanceVariableNames: ''!
+Car
+> MotorVehicle subclass: #Motorcycle instanceVariableNames: ''!
+Motorcycle
+> Vehicle subclass: #Bicycle instanceVariableNames: ''!
+Bicycle
+@end example
+
+Notice that in the @var{MotorVehicle} I specified the @var{engine} variable. This is not intended to replace the previous inherited instace variables but to add a further one. @dfn{This means all subclasses are always bigger than superclasses}. Sometimes it can be said that the subclass ``expands'' the superclass.
+@var{Car} and @var{Motorcycle} objects will have @var{name}, @var{brand} and @var{engine} variables, while @var{Bicycle} won't get the @var{engine} instance variable.
+
+@cindex Specialization, Generalization
+When you look at the bottom you see @strong{specialized} classes, instead going upper in the hierarchy you get @strong{generalized} classes.
+
+@cindex Method overriding
+When you create a class what you do is of course to define new methods. With inheritance you can also define a method that was already defined in the upper classes. This is called @strong{method overriding}, because you replace generalized methods with your own specialized method.
