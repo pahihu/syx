@@ -90,17 +90,57 @@ _syx_scheduler_find_next_process ()
             return syx_nil;
         }
 
+      /* This loop won't break until a resumed process is found, so we call the poll from here */
+      if (_syx_scheduler_poll_nfds != -1)
+        _syx_scheduler_poll_wait ();
+
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
         return process;
     }
+}
+
+static int
+_syx_scheduler_process_poll (int res, SyxSchedulerPoll *poll, fd_set *fds)
+{
+  SyxSchedulerPoll *p, *oldp, *tmp;
+  for (oldp=NULL, p=poll; p && res > 0;)
+    {
+      if (FD_ISSET (p->fd, fds))
+        {
+          if (oldp)
+            oldp->next = p->next;
+          else
+            _syx_scheduler_poll_read = p->next;
+          syx_semaphore_signal (p->semaphore);
+
+          /* Unset the fd from the original fd_set */
+          FD_CLR (p->fd, fds);
+
+          tmp = p;
+          p = p->next;
+          syx_free (tmp);
+
+          /* Decrement res to stop the loop once we found all the ready descriptors */
+          res--;
+        }
+      else
+        {
+          /* Save the maximum file descriptor number */
+          if (p->fd > _syx_scheduler_poll_nfds)
+            _syx_scheduler_poll_nfds = p->fd;
+          oldp = p;
+          p = p->next;
+        }
+    }
+  return res;
 }
 
 static void
 _syx_scheduler_poll_wait (void)
 {
   static struct timeval tv = {0, 1};
-  syx_int32 res, nfds;
-  SyxSchedulerPoll *p, *oldp, *fp;
+  syx_int32 res;
+  /* we copy file descriptors because select will change them */
   fd_set r = _syx_scheduler_poll_rfds;
   fd_set w = _syx_scheduler_poll_wfds;
 
@@ -110,51 +150,13 @@ _syx_scheduler_poll_wait (void)
       syx_perror ("SCHEDULER: ");
     }
 
-  nfds = -1;
-
-  for (oldp=NULL,p=_syx_scheduler_poll_read; p;)
+  if (res > 0)
     {
-      if (FD_ISSET (p->fd, &r))
-        {
-          if (oldp)
-            oldp->next = p->next;
-          else
-            _syx_scheduler_poll_read = p->next;
-          syx_semaphore_signal (p->semaphore);
-          fp = p;
-          p = p->next;
-          syx_free (fp);
-        }
-      else
-        {
-          nfds = (nfds < p->fd ? p->fd : nfds);
-          oldp = p;
-          p = p->next;
-        }
-    }
+      _syx_scheduler_poll_nfds = -1;
 
-  for (oldp=NULL,p=_syx_scheduler_poll_write; p;)
-    {
-      if (FD_ISSET (p->fd, &w))
-        {
-          if (oldp)
-            oldp->next = p->next;
-          else
-            _syx_scheduler_poll_write = p->next;
-          syx_semaphore_signal (p->semaphore);
-          fp = p;
-          p = p->next;
-          syx_free (fp);
-        }
-      else
-        {
-          nfds = (nfds < p->fd ? p->fd : nfds);
-          oldp = p;
-          p = p->next;
-        }
+      res = _syx_scheduler_process_poll (res, _syx_scheduler_poll_read, &_syx_scheduler_poll_rfds);
+      (void) _syx_scheduler_process_poll (res, _syx_scheduler_poll_write, &_syx_scheduler_poll_wfds);
     }
-
-  _syx_scheduler_poll_nfds = nfds;
 }
 
 void
@@ -289,8 +291,6 @@ syx_scheduler_run (void)
 
       syx_process_execute_scheduled (syx_processor_active_process);
       syx_processor_active_process = _syx_scheduler_find_next_process ();
-      if (_syx_scheduler_poll_nfds != -1)
-        _syx_scheduler_poll_wait ();
     }
 
   running = FALSE;
@@ -302,7 +302,7 @@ syx_scheduler_run (void)
   Watch a file descriptor for reading
 
   \param fd the file descriptor
-  \param semaphore called when fd is ready for reading
+  \param semaphore to signal when fd is ready for reading
 */
 void
 syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
@@ -323,7 +323,7 @@ syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
   Watch a file descriptor for writing
 
   \param fd the file descriptor
-  \param semaphore called when fd is ready for writing
+  \param semaphore to signal when fd is ready for writing
 */
 void
 syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)

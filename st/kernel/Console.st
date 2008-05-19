@@ -79,14 +79,11 @@ primAddHistory: aString
 !
 
 nextLine
-    | line |
-    haveReadline
-	ifTrue: [ line := self primReadline: '> '.
-		  line isNil
-		      ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit ].
-		  self primAddHistory: line ]
-	ifFalse: [ stdout nextPutAll: '> '; flush.
-	           line := stdin next: 1024.
+    | line sem |
+    "Readline doesn't work with non blocking input"
+    stdout nextPutAll: '> '; flush.
+    Semaphore new waitForRead: 0.
+    line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].
 		   line := line copyFrom: 1 to: line size - 1 ].
