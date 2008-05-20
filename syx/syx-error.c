@@ -32,7 +32,7 @@
 
 #include <assert.h>
 
-static SyxErrorEntry **_syx_error_entries = NULL;
+static SyxErrorEntry *_syx_error_entries = NULL;
 static SyxErrorType _syx_error_entries_top = 0;
 
 #ifndef HAVE_ERRNO_H
@@ -67,10 +67,6 @@ syx_error_init (void)
 void
 syx_error_clear (void)
 {
-  SyxErrorType i;
-  for (i=0; i < _syx_error_entries_top; i++)
-    syx_free (_syx_error_entries[i]);
-
   syx_free (_syx_error_entries);
 }
 
@@ -84,17 +80,17 @@ syx_error_clear (void)
 SyxErrorType
 syx_error_register (syx_symbol name, SyxOop klass)
 {
-  SyxErrorEntry *entry = (SyxErrorEntry *)syx_malloc (sizeof (SyxErrorEntry));
+  SyxErrorEntry *entry;
   if (!_syx_error_entries)
-    _syx_error_entries = (SyxErrorEntry **)syx_calloc (++_syx_error_entries_top, sizeof (SyxErrorEntry *));
+    _syx_error_entries = (SyxErrorEntry *)syx_calloc (++_syx_error_entries_top, sizeof (SyxErrorEntry));
   else
-    _syx_error_entries = (SyxErrorEntry **)syx_realloc (_syx_error_entries,
-                                                        (++_syx_error_entries_top) * sizeof (SyxErrorEntry *));
+    _syx_error_entries = (SyxErrorEntry *)syx_realloc (_syx_error_entries,
+                                                       (++_syx_error_entries_top) * sizeof (SyxErrorEntry));
 
+  entry = &_syx_error_entries[_syx_error_entries_top - 1];
   entry->name = name;
   entry->klass = klass;
 
-  _syx_error_entries[_syx_error_entries_top - 1] = entry;
   return _syx_error_entries_top - 1;
 }
 
@@ -110,7 +106,7 @@ syx_error_lookup (SyxErrorType type)
   if (type >= _syx_error_entries_top)
     return NULL;
 
-  return _syx_error_entries[type];
+  return &_syx_error_entries[type];
 }
 
 /*!
