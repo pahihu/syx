@@ -214,7 +214,6 @@ INLINE void
 _syx_memory_gc_mark (SyxOop object)
 {
   syx_varsize i;
-  SyxInterpFrame *frame;
 
   if (!SYX_IS_OBJECT (object) || SYX_OBJECT_IS_MARKED(object) || SYX_IS_NIL(syx_object_get_class (object)))
     return;
@@ -223,22 +222,41 @@ _syx_memory_gc_mark (SyxOop object)
 
   _syx_memory_gc_mark (SYX_OBJECT(object)->klass);
 
-  for (i=0; i < syx_object_vars_size (object); i++)
-    _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
-
-  /* Mark detached frames */
+  /* Only the used stack part of the process must be marked */
   if (SYX_OOP_EQ (syx_object_get_class (object), syx_process_class))
     {
-      frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (object));
+      SyxOop stack = SYX_PROCESS_STACK (object);
+      SyxInterpFrame *frame = SYX_OOP_CAST_POINTER (SYX_PROCESS_FRAME_POINTER (object));
+      syx_int32 offset = SYX_POINTERS_OFFSET (frame->stack,
+                                              SYX_OBJECT_DATA (stack));
+
+      /* First mark variables except the process stack */
+      for (i=0; i < SYX_VARS_PROCESS_STACK; i++)
+        _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
+
+      /* Mark detached frames */
       while (frame)
         {
-          if (!SYX_IS_NIL (frame->detached_frame))
-            {
-              for (i=0; i < SYX_OBJECT_DATA_SIZE (frame->detached_frame); i++)
-                _syx_memory_gc_mark (SYX_OBJECT_DATA(frame->detached_frame)[i]);
-            }
+          _syx_memory_gc_mark (frame->detached_frame);
           frame = frame->parent_frame;
         }
+
+      /* Now mark the stack */
+      SYX_OBJECT_IS_MARKED(stack) = TRUE;
+      for (i=0; i < offset; i++)
+        _syx_memory_gc_mark (SYX_OBJECT_DATA(stack)[i]);
+
+      /* Mark variables after the process stack */
+      for (i=SYX_VARS_PROCESS_STACK+1; i < syx_object_vars_size (object); i++)
+        _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
+
+      /* Process has no data */
+      return;
+    }
+  else
+    {
+      for (i=0; i < syx_object_vars_size (object); i++)
+        _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
     }
 
   if (SYX_OBJECT_HAS_REFS (object))

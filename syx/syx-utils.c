@@ -727,6 +727,9 @@ syx_show_traceback (void)
          (syx_pointer) es->message_arguments,
          es->message_arguments_count);
 
+  if (SYX_IS_NIL (frame->detached_frame))
+    printf("Process offset: %d\n", SYX_POINTERS_OFFSET (frame, SYX_OBJECT_DATA (SYX_PROCESS_STACK (_syx_interp_state.process))));
+
   puts ("\nTraceback:");
   while (frame)
     {
