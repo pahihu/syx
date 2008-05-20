@@ -230,6 +230,8 @@ _syx_memory_gc_mark (SyxOop object)
       syx_int32 offset = SYX_POINTERS_OFFSET (frame->stack,
                                               SYX_OBJECT_DATA (stack));
 
+      SYX_OBJECT_IS_MARKED(stack) = TRUE;
+
       /* First mark variables except the process stack */
       for (i=0; i < SYX_VARS_PROCESS_STACK; i++)
         _syx_memory_gc_mark (SYX_OBJECT_VARS(object)[i]);
@@ -242,7 +244,6 @@ _syx_memory_gc_mark (SyxOop object)
         }
 
       /* Now mark the stack */
-      SYX_OBJECT_IS_MARKED(stack) = TRUE;
       for (i=0; i < offset; i++)
         _syx_memory_gc_mark (SYX_OBJECT_DATA(stack)[i]);
 
@@ -306,6 +307,9 @@ syx_memory_gc (void)
   memcpy (trans, _syx_memory_gc_trans, sizeof (SyxOop) * 0x100);
   _syx_memory_gc_trans_top = 0;
   _syx_memory_gc_trans_running = 0;
+
+  /* Save the active process state to make sure we mark the current frame */
+  _syx_interp_save_process_state (&_syx_interp_state);
 
   _syx_memory_gc_mark (syx_symbols);
   _syx_memory_gc_mark (syx_globals);
@@ -595,9 +599,6 @@ syx_memory_save_image (syx_symbol path)
   image = fopen (path, "wb");
   if (!image)
     return FALSE;
-
-  /* save the state of the current process, if any */
-  _syx_interp_save_process_state (&_syx_interp_state);
 
   syx_memory_gc ();
 
