@@ -52,9 +52,15 @@ void
 syx_error_init (void)
 {
   _syx_error_entries_top = 0;
-  REGISTER_SIGNAL("VMError", "Interpreter internal fail", SYX_ERROR_INTERP);
-  REGISTER_SIGNAL("NotFound", "Not found", SYX_ERROR_NOT_FOUND);
-  REGISTER_SIGNAL("WrongArgumentCount", "Wrong number of arguments", SYX_ERROR_WRONG_ARGUMENT_COUNT);
+  REGISTER_SIGNAL ("VMError", "Interpreter internal fail", SYX_ERROR_INTERP);
+  REGISTER_SIGNAL ("NotFound", "Not found", SYX_ERROR_NOT_FOUND);
+  REGISTER_SIGNAL ("WrongArgumentCount", "Wrong number of arguments", SYX_ERROR_WRONG_ARGUMENT_COUNT);
+
+  /* System signals */
+  REGISTER_SIGNAL ("UserInterrupt", "User interrupt", SYX_ERROR_USER_INTERRUPT);
+  REGISTER_SIGNAL ("FloatingPointException", "Floating point exception", SYX_ERROR_FLOATING_POINT_EXCEPTION);
+  REGISTER_SIGNAL ("TerminationSignal", "Received TERM signal", SYX_ERROR_TERMINATION);
+  REGISTER_SIGNAL ("AbnormalTermination", "Abort requested", SYX_ERROR_ABORT);
 }
 
 /*!

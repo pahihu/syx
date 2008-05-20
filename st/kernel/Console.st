@@ -129,6 +129,10 @@ run
 	[
             (chunkReader nextChunks: self nextLine) do: [ :chunk |
                 ('^[', chunk, '] value') doIt printNl ]
-	] on: Signal do: [ :ex | ex debug ]
+	] on: Signal do: [ :ex | 
+            (ex isKindOf: SystemSignal)
+                ifTrue: [ ex messageText printNl.
+                          Smalltalk quit ]
+                ifFalse: [ex debug ] ]
     ] repeat
 ! !

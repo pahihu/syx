@@ -45,28 +45,32 @@ _syx_smalltalk_sighandler (int signum)
 {
   SyxOop klass;
   SyxOop context;
+  SyxErrorType errtype;
 
   switch (signum)
     {
     case SIGINT:
       klass = sigint_class;
+      errtype = SYX_ERROR_USER_INTERRUPT;
       break;
     case SIGFPE:
       klass = sigfpe_class;
+      errtype = SYX_ERROR_FLOATING_POINT_EXCEPTION;
       break;
     case SIGTERM:
       klass = sigterm_class;
+      errtype = SYX_ERROR_TERMINATION;
       break;
     case SIGABRT:
       klass = sigabrt_class;
+      errtype = SYX_ERROR_ABORT;
       break;
     default:
       printf ("Unknown signal %d has been handled\n", signum);
       return;
     }
   
-  context = syx_send_unary_message (klass, "signal");
-  syx_interp_enter_context (syx_processor_active_process, context);
+  syx_signal (errtype, syx_nil);
 }
 
 static void

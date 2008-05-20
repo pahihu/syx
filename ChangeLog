@@ -1,3 +1,13 @@
+2008-05-20  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-signal.c (_syx_smalltalk_sighandler): use syx_signal
+
+	* syx/syx-error.c (syx_error_init): register new errors for system signals
+
+	* syx/syx-enums.h (SyxErrorType):
+
+	* st/kernel/Console.st: quit on system signal
+
 2008-05-19  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-error.c: simplified and fixed memory leak

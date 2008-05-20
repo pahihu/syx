@@ -214,7 +214,13 @@ typedef enum
   {
     SYX_ERROR_INTERP,
     SYX_ERROR_NOT_FOUND,
-    SYX_ERROR_WRONG_ARGUMENT_COUNT
+    SYX_ERROR_WRONG_ARGUMENT_COUNT,
+    SYX_ERROR_USER_INTERRUPT,
+    SYX_ERROR_FLOATING_POINT_EXCEPTION,
+    SYX_ERROR_TERMINATION,
+    SYX_ERROR_ABORT,
+
+    SYX_ERROR_LAST /* can used by applications to define their own enums */
   } SyxSignalInternal;
 
 SYX_END_DECLS
