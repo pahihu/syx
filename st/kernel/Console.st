@@ -66,7 +66,7 @@ startup
     ^self new run
 ! !
 
-!Console methodsFor: 'running'!
+!Console methodsFor: 'private'!
 
 primReadline: aString
     <cCall: 'Readline_readline' plugin: 'readline'>
@@ -115,9 +115,19 @@ showHelp
         showCr: 'Type "help!" to get help.'
 !
 
+registerUserInterruptHandler
+    UserInterrupt handlerBlock
+         ifNil: [ UserInterrupt
+                      handlerBlock: [ :ex |
+                           Transcript showCr: ex messageText.
+                           stdout nextPutAll: '> '; flush. ] ]
+! !
+
+!Console methodsFor: 'running'!
 run
     | chunkReader |
     self
+        registerUserInterruptHandler;
         setupHelp;
         showHelp.
     haveReadline := Smalltalk loadPlugin: 'readline'.

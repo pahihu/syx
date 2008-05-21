@@ -50,6 +50,10 @@ signal
 !UserInterrupt class methodsFor: 'initialize-release'!
 
 initialize
+    Smalltalk registerForSystemInitialization: self
+!
+
+initializeSystem
     HandlerBlock := nil
 ! !
 
@@ -85,6 +89,16 @@ signal
 
 signal
     ^self signal: 'Termination signal (SIGTERM)'
+! !
+
+!TerminationSignal class methodsFor: 'initialize-release'!
+
+initialize
+    Smalltalk registerForSystemInitialization: self
+!
+
+initializeSystem
+    HandlerBlock := nil
 ! !
 
 !TerminationSignal class methodsFor: 'handling'!

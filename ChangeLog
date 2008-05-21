@@ -1,5 +1,9 @@
 2008-05-20  Luca Bruno  <lethalman88@gmail.com>
 
+	* st/kernel/Console.st (registerUserInterruptHandler): added
+
+	* st/kernel/SystemSignal.st: request for being initialized at every startup
+
 	* syx/syx-init.c (_syx_file_in_basic):
 
 	* syx/syx-error.c (syx_signal): execute a blocking process for system signals
