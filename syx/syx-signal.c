@@ -44,7 +44,6 @@ static void
 _syx_smalltalk_sighandler (int signum)
 {
   SyxOop klass;
-  SyxOop context;
   SyxErrorType errtype;
 
   switch (signum)
@@ -69,7 +68,8 @@ _syx_smalltalk_sighandler (int signum)
       printf ("Unknown signal %d has been handled\n", signum);
       return;
     }
-  
+
+  signal (signum, _syx_smalltalk_sighandler);
   syx_signal (errtype, syx_nil);
 }
 
