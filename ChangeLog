@@ -1,5 +1,17 @@
 2008-05-20  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-init.c (_syx_file_in_basic):
+
+	* syx/syx-error.c (syx_signal): execute a blocking process for system signals
+
+	* syx/syx-enums.h (enum):
+
+	* st/kernel/Signal.st: generalized and separated Exception by SystemSignal
+
+	* st/kernel/SystemSignal.st: added
+
+	* st/kernel/initialDecl.st: add HandlerBlock instance variable to both UserInterrupt and TerminationSignal
+
 	* syx/syx-signal.c (_syx_smalltalk_sighandler): use syx_signal
 
 	* syx/syx-error.c (syx_error_init): register new errors for system signals

@@ -316,11 +316,11 @@ Object subclass: #Console
 "Exceptions"
 
 Object subclass: #Signal
-       instanceVariableNames: 'handlerContext signalerContext messageText'
+       instanceVariableNames: 'signalerContext messageText'
        classVariableNames: ''!
 
 Signal subclass: #Exception
-       instanceVariableNames: ''
+       instanceVariableNames: 'handlerContext'
        classVariableNames: ''!
 
 Exception subclass: #Error
@@ -347,9 +347,9 @@ VMError subclass: #PrimitiveFailed
 	instanceVariableNames: ''
         classVariableNames: ''!
 
-VMError subclass: #SystemSignal
-	instanceVariableNames: ''
-	classVariableNames: ''!
+Signal subclass: #SystemSignal
+       instanceVariableNames: 'handlerBlock'
+       classVariableNames: ''!
 
 PrimitiveFailed subclass: #WrongArgumentCount
 		instanceVariableNames: ''
@@ -389,11 +389,11 @@ InvalidArgument subclass: #NotKeyed
 
 SystemSignal subclass: #UserInterrupt
 	     instanceVariableNames: ''
-	     classVariableNames: ''!
+	     classVariableNames: 'HandlerBlock'!
 
 SystemSignal subclass: #TerminationSignal
 	     instanceVariableNames: ''
-	     classVariableNames: ''!
+	     classVariableNames: 'HandlerBlock'!
 
 SystemSignal subclass: #AbnormalTermination
 	     instanceVariableNames: ''

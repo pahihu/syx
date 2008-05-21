@@ -32,31 +32,23 @@ signal
     self new signal
 ! !
 
+!Signal methodsFor: 'testing'!
+
+isHandled
+    self subclassResponsibility
+! !
+
+!Signal methodsFor: 'private'!
+
+handle
+    self subclassResponsibility
+!
+
+notHandled
+    self subclassResponsibility
+! !
+
 !Signal methodsFor: 'signaling'!
-
-handlerContextStartingFrom: aContext
-    | ctx |
-    ctx := aContext.
-    [ ctx notNil ]
-	whileTrue: [
-	    (ctx handles: self)
-		ifTrue: [ ^handlerContext := ctx ].
-	    ctx := ctx parent ].
-    ^nil
-!
-
-handlerContext
-    "Finds the context which handles the exception"
-    handlerContext
-	ifNotNil: [ ^handlerContext ].
-
-    ^self handlerContextStartingFrom: signalerContext parent
-!
-
-isResumable
-    "Anwser if the signaler context can be resumed back"
-    ^true
-!
 
 description
     ^'A signal has been sent.'
@@ -73,13 +65,9 @@ messageText: aMessageText
 signal
     "Raises a signal. If it's not handled, debug the process"
     signalerContext := thisContext.
-    [
-	self handlerContext isNil
-            ifTrue: [ Transcript showCr: 'Unhandled exception... process is going to be terminated'.
-		      self debug.
-		      Processor activeProcess terminate]
-	    ifFalse: [ self return: (handlerContext handlerBlock value: self) ]
-    ] on: Signal do: [ :ex | ]
+    self isHandled
+         ifFalse: [ self notHandled ]
+	 ifTrue: [ self handle ]
 !
 
 signal: aMessageText
@@ -97,84 +85,5 @@ debug
     [ signalerContext traceback ]
 	on: Signal
         do: [ :ex | Transcript showCr: 'Unable to debug' ]
-!
-
-pass
-    "Drop the exception to parent contexts"
-    self handlerContextStartingFrom: handlerContext parent.
-    self signal
-!
-
-resume
-    "Resume the context which generated the error"
-    self isResumable
-	ifTrue: [ Processor swapWith: signalerContext parent ]
-!
-
-return: anObject
-    "Returns anObject"
-    Processor leaveTo: handlerContext parent andAnswer: anObject
-!
-
-return
-    self return: nil
 ! !
 
-!Exception methodsFor: 'signaling'!
-
-description
-    ^'An exception has been raised.'
-! !
-
-!Error methodsFor: 'signaling'!
-
-description
-    ^'An error occurred during program execution.'
-! !
-
-!MessageNotUnderstood class methodsFor: 'instance creation'!
-
-message: aMessage receiver: anObject
-    ^self new
-	message: aMessage receiver: anObject;
-	signal
-! !
-
-!MessageNotUnderstood methodsFor: 'signaling'!
-
-message
-    ^message
-! 
-
-receiver
-    ^receiver
-!
-
-message: aMessage receiver: anObject
-    message := aMessage.
-    receiver := anObject.
-    self messageText: anObject class printString, ': did not understood ', aMessage printString
-! !
-
-!ZeroDivide class methodsFor: 'instance creation'!
-
-signal
-    ^self signal: 'Division by zero.'
-! !
-
-!SubclassResponsibility class methodsFor: 'instance creation'!
-
-signal
-    ^self signal: 'This method is not responsibility of this class. A subclass must implement this method.'
-! !
-
-!WrongArgumentCount class methodsFor: 'instance creation'!
-
-signal
-    ^self signal: 'Wrong number of arguments.'
-! !
-
-!NotFound class methodsFor: 'instance creation'!
-
-what: anObject
-    ^self signal: 'Object not found

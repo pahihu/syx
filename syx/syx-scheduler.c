@@ -146,9 +146,7 @@ _syx_scheduler_poll_wait (void)
 
   res = select (_syx_scheduler_poll_nfds + 1, &r, &w, NULL, &tv);
   if (res == -1)
-    {
-      syx_perror ("SCHEDULER: ");
-    }
+    return;
 
   if (res > 0)
     {
