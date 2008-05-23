@@ -53,6 +53,7 @@ struct SyxSchedulerPoll
 typedef syx_bool (* SyxSchedulerSourceFunc) (void);
 
 EXPORT extern void syx_scheduler_init (void);
+EXPORT extern syx_bool syx_scheduler_iterate (void);
 EXPORT extern void syx_scheduler_run (void);
 EXPORT extern void syx_scheduler_quit (void);
 

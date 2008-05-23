@@ -109,7 +109,7 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
   context = syx_send_unary_message (callback, "invoke");
   syx_interp_enter_context (_syx_gtk_process, context);
   SYX_PROCESS_SUSPENDED (_syx_gtk_process) = syx_false;
-  do { syx_scheduler_run (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
+  do { syx_scheduler_iterate (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
 
   return;
 }
@@ -123,6 +123,7 @@ SYX_FUNC_PRIMITIVE(Gtk_main)
     {
       syx_scheduler_poll_register_source (_syx_gtk_iteration, syx_nil);
       _syx_gtk_process = es->message_arguments[0];
+      registered = TRUE;
     }
 
   SYX_PRIM_RETURN (es->message_receiver);

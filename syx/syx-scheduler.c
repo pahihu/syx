@@ -97,9 +97,9 @@ _syx_scheduler_find_next_process ()
 
       /* This loop won't break until a resumed process is found, so we call the poll from here */
 #ifdef WINDOWS
-      if (_syx_scheduler_poll_windows)
+      if (_syx_scheduler_poll_windows || _syx_scheduler_poll_sources)
 #else
-      if (_syx_scheduler_poll_nfds != -1)
+      if (_syx_scheduler_poll_nfds != -1 || _syx_scheduler_poll_sources)
 #endif /* WINDOWS */
         _syx_scheduler_poll_wait ();
 
@@ -321,6 +321,21 @@ syx_scheduler_init (void)
   _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
 }
 
+/*!
+  Do a single iteration of the scheduler.
+  Returns FALSE when no pending processes are left.
+*/
+syx_bool
+syx_scheduler_iterate (void)
+{
+  syx_processor_active_process = _syx_scheduler_find_next_process ();
+  if (SYX_IS_NIL (syx_processor_active_process))
+    return FALSE;
+
+  syx_process_execute_scheduled (syx_processor_active_process);
+  return TRUE;
+}
+
 /*! Run the scheduler in blocking mode. Exits once no Process is scheduled */
 void
 syx_scheduler_run (void)
@@ -335,15 +350,13 @@ syx_scheduler_run (void)
 
   running = TRUE;
 
-  syx_processor_active_process = _syx_scheduler_find_next_process ();
-  while (!SYX_IS_NIL (syx_processor_first_process))
+  while (!SYX_IS_NIL (syx_processor_active_process = _syx_scheduler_find_next_process ()))
     {  
 #ifdef SYX_DEBUG_PROCESS_SWITCH
       syx_debug ("SCHEDULER - Switch process with %p\n", SYX_OBJECT(syx_processor_active_process));
 #endif
 
       syx_process_execute_scheduled (syx_processor_active_process);
-      syx_processor_active_process = _syx_scheduler_find_next_process ();
     }
 
   running = FALSE;
