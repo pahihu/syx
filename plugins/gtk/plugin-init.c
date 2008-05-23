@@ -145,7 +145,7 @@ syx_plugin_initialize (void)
   syx_symbol *filename;
   syx_string full_filename;
   static syx_symbol gtk_filenames[] = {
-    "Gtk.st", "GObject.st",
+    "GObject.st", "Gtk.st",
     "GtkWidget.st", "GtkLabel.st", "GtkContainer.st",
     "GtkWindow.st", "GtkButton.st", "GtkTools.st", "GtkBox.st",
     "GtkAdjustment.st", "GtkScrolledWindow.st",
@@ -157,20 +157,15 @@ syx_plugin_initialize (void)
   if (_syx_gtk_initialized)
     return TRUE;
 
+  _syx_gtk_initialized = TRUE;
+
   for (filename = gtk_filenames; *filename; filename++)
     {
       full_filename = syx_find_file ("st", "gtk", *filename);
-      syx_cold_file_in (full_filename);
+      syx_file_in_blocking (full_filename);
       syx_free (full_filename);
     }
 
-  _syx_gtk_initialized = TRUE;
-  
-  process = syx_process_new ();
-  context = syx_send_unary_message (syx_globals_at ("Gtk"), "initialize");
-  syx_interp_enter_context (process, context);
-  syx_process_execute_blocking (process);
-  
   g_thread_init (NULL);
   gdk_threads_init ();
   gtk_init (0, NULL);

@@ -22,6 +22,22 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
+Object subclass: #GPointer
+       instanceVariableNames: 'handle'
+       classVariableNames: ''!
+
+GPointer subclass: #GCallback
+	 instanceVariableNames: 'selector arguments closure handlerId'
+	 classVariableNames: 'AllCallbacks GClosureMarshal'!
+
+GPointer subclass: #GClosure
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
+GPointer subclass: #GObject
+	 instanceVariableNames: ''
+	 classVariableNames: ''!
+
 !GPointer class methodsFor: 'instance creation'!
 
 new

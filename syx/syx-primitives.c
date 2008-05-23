@@ -1736,7 +1736,10 @@ SYX_FUNC_PRIMITIVE (Compiler_parseChunk)
   token = syx_lexer_next_token (lexer);
   while (token.type == SYX_TOKEN_BINARY && !strcmp (token.value.string, "!"))
     {
-      syx_cold_parse_methods (lexer);
+      if (!syx_cold_parse_methods (lexer))
+        {
+          SYX_PRIM_FAIL;
+        }
       saved_lexer = *lexer;
       token = syx_lexer_next_token (lexer);
     }

@@ -286,6 +286,9 @@ syx_cold_parse_methods (SyxLexer *lexer)
   klass = syx_globals_at (token.value.string);
   syx_token_free (token);
 
+  if (SYX_IS_NIL (klass))
+    return FALSE;
+
   token = syx_lexer_next_token (lexer);
   if (token.type == SYX_TOKEN_NAME_CONST && !strcmp (token.value.string, "class"))
     {

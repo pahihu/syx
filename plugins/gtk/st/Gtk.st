@@ -34,18 +34,6 @@ Object subclass: #Gtk
        instanceVariableNames: ''
        classVariableNames: ''!
 
-Object subclass: #GPointer
-       instanceVariableNames: 'handle'
-       classVariableNames: ''!
-
-GPointer subclass: #GCallback
-	 instanceVariableNames: 'selector arguments closure handlerId'
-	 classVariableNames: 'AllCallbacks GClosureMarshal'!
-
-GPointer subclass: #GClosure
-	 instanceVariableNames: ''
-	 classVariableNames: ''!
-
 GPointer subclass: #GtkTextIter
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
@@ -55,10 +43,6 @@ GPointer subclass: #GtkTextAttributes
 	 classVariableNames: ''!
 
 GPointer subclass: #PangoLanguage
-	 instanceVariableNames: ''
-	 classVariableNames: ''!
-
-GPointer subclass: #GObject
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
 
@@ -244,3 +228,7 @@ selector
 arguments
     ^arguments
 ! !
+
+" Initialization code "
+
+Gtk initialize!

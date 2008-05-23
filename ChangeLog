@@ -1,5 +1,9 @@
 2008-05-22  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/gtk/st/GObject.st: move gobject related classes here
+
+	* plugins/gtk/plugin-init.c (syx_plugin_initialize): non-cold loading and change the loading order
+
 	* st/kernel/FileStream.st (handleForSemaphore): added
 
 	* st/kernel/Semaphore.st (waitForWrite, waitForRead): updated
