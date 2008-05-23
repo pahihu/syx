@@ -367,7 +367,7 @@ syx_scheduler_run (void)
 /*!
   Watch a file descriptor for reading
 
-  \param fd the file descriptor
+  \param fd the file descriptor, on Windows it's an HANDLE
   \param semaphore to signal when fd is ready for reading
 */
 void
@@ -377,14 +377,7 @@ syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore)
 
 #ifdef WINDOWS
 #define HEAD _syx_scheduler_poll_windows
-  if (fd == 0)
-    p->fd = (syx_nint)GetStdHandle (STD_INPUT_HANDLE);
-  else if (fd == 1)
-    p->fd = (syx_nint)GetStdHandle (STD_OUTPUT_HANDLE);
-  else if (fd == 2)
-    p->fd = (syx_nint)GetStdHandle (STD_ERROR_HANDLE);
-  else
-    p->fd = fd;
+  p->fd = fd;
 #else /* not WINDOWS */
 #define HEAD _syx_scheduler_poll_read
   p->fd = fd;
@@ -402,22 +395,29 @@ syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore)
 /*!
   Watch a file descriptor for writing
 
-  \param fd the file descriptor
+  \param fd the file descriptor, on Windows it's an HANDLE
   \param semaphore to signal when fd is ready for writing
 */
 void
-syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
+syx_scheduler_poll_write_register (syx_nint fd, SyxOop semaphore)
 {
   SyxSchedulerPoll *p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-  p->fd = fd;
-  p->semaphore = semaphore;
-  p->next = _syx_scheduler_poll_write;
-  _syx_scheduler_poll_write = p;
 
+#ifdef WINDOWS
+#define HEAD _syx_scheduler_poll_windows
+  p->fd = fd;
+#else /* not WINDOWS */
+#define HEAD _syx_scheduler_poll_write
+  p->fd = fd;
   if (fd > _syx_scheduler_poll_nfds)
     _syx_scheduler_poll_nfds = fd;
 
   FD_SET(fd, &_syx_scheduler_poll_wfds);
+#endif /* WINDOWS */
+
+  p->semaphore = semaphore;
+  p->next = HEAD;
+  HEAD = p;
 }
 
 /*!

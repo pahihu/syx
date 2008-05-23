@@ -61,7 +61,7 @@ EXPORT extern void syx_scheduler_add_process (SyxOop process);
 EXPORT extern void syx_scheduler_remove_process (SyxOop process);
 
 EXPORT extern void syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore);
-EXPORT extern void syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore);
+EXPORT extern void syx_scheduler_poll_write_register (syx_nint fd, SyxOop semaphore);
 EXPORT extern void syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
 EXPORT extern void syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
 
