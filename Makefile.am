@@ -8,9 +8,17 @@ EXTRA_DIST =						\
 	syx.sln syx.vcproj makefile.vc			\
 	doc/html/extras/footer.html
 
+docdir	= $(top_builddir)/doc
+
+doc:
+	@echo Making $@ in $(docdir)
+	@cd $(docdir) && make $@
+
 install: install-recursive
 	@echo Generating default image at $(DESTDIR)$(datadir)/default.sim
 	LD_PRELOAD="$(DESTDIR)$(libdir)/libsyx.so" $(DESTDIR)$(bindir)/syx -r $(DESTDIR)$(pkgdatadir) -S
 	@echo ============================================
 	@echo Smalltalk YX has been installed successfully
 	@echo ============================================
+
+.PHONY: doc
