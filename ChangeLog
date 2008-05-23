@@ -1,3 +1,14 @@
+2008-05-22  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/FileStream.st (handleForSemaphore): added
+
+	* st/kernel/Semaphore.st (waitForWrite, waitForRead): updated
+
+	* st/kernel/Console.st (nextLine): updated
+
+	* syx/syx-primitives.c (fileOp): add fileno
+	(Semaphore_waitFor): updated
+
 2008-05-20  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-signal.c (_syx_smalltalk_sighandler): register signals again

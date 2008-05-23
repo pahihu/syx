@@ -82,7 +82,7 @@ nextLine
     | line sem |
     "Readline doesn't work with non blocking input"
     stdout nextPutAll: '> '; flush.
-    Semaphore new waitForRead: 0.
+    Semaphore new waitForRead: stdin.
     line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].

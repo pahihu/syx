@@ -518,11 +518,15 @@ SYX_FUNC_PRIMITIVE (Semaphore_wait)
 
 SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 {
-  syx_int32 fd;
+  syx_nint fd;
   syx_bool t;
   SYX_PRIM_ARGS(2);
 
-  fd = SYX_SMALL_INTEGER(es->message_arguments[0]);
+#ifdef WINDOWS
+  fd = es->message_arguments[0];
+#else
+  fd = fileno ((FILE *)es->message_arguments[0]);
+#endif /* WINDOWS */
   t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
   if (t == syx_true)
@@ -719,6 +723,10 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
           SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
           break;
         }
+      break;
+
+    case 9: /* fileno */
+      SYX_PRIM_RETURN (syx_small_integer_new (fileno (file)));
       break;
 
     default: /* unknown */
