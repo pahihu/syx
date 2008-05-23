@@ -26,13 +26,13 @@
 #include <gtk/gtk.h>
 #include "syx-gobject.h"
 
-static GThread *_syx_gtk_main_thread = NULL;
+static SyxOop _syx_gtk_process;
 
-static gpointer
-_syx_gtk_main (gpointer data)
+static syx_bool
+_syx_gtk_iteration (void)
 {
-  gtk_main ();
-  return NULL;
+  gtk_main_iteration_do (FALSE);
+  return FALSE;
 }
 
 EXPORT void syx_g_closure_marshal (GClosure *closure,
@@ -44,7 +44,6 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 {
   SyxOop array = syx_array_new_size (n_param_values);
   SyxOop context;
-  SyxOop process;
   SyxOop callback = (SyxOop) closure->data;
   syx_uint32 i;
   const GValue *v;
@@ -107,31 +106,31 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 	}
     }
 
-  process = syx_process_new ();
   context = syx_send_unary_message (callback, "invoke");
-  syx_interp_enter_context (process, context);
-  SYX_PROCESS_SUSPENDED (process) = syx_false;
-  gdk_threads_leave ();
-  do { g_thread_yield (); } while (SYX_IS_TRUE (SYX_PROCESS_SCHEDULED (process)));
+  syx_interp_enter_context (_syx_gtk_process, context);
+  SYX_PROCESS_SUSPENDED (_syx_gtk_process) = syx_false;
+  do { syx_scheduler_run (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
 
   return;
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_main)
 {
-  if (!_syx_gtk_main_thread)
-    _syx_gtk_main_thread = g_thread_create (_syx_gtk_main, NULL, FALSE, NULL);
+  static syx_bool registered = FALSE;
+  SYX_PRIM_ARGS (1);
 
-  SYX_PRIM_RETURN(es->message_receiver);
+  if (!registered)
+    {
+      syx_scheduler_poll_register_source (_syx_gtk_iteration, syx_nil);
+      _syx_gtk_process = es->message_arguments[0];
+    }
+
+  SYX_PRIM_RETURN (es->message_receiver);
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_mainQuit)
 {
-  if (_syx_gtk_main_thread)
-    {
-      gtk_main_quit ();
-      _syx_gtk_main_thread = NULL;
-    }
+  syx_scheduler_poll_unregister_source (_syx_gtk_iteration, syx_nil);
 
   SYX_PRIM_RETURN(es->message_receiver);
 }
@@ -164,8 +163,6 @@ syx_plugin_initialize (void)
       syx_free (full_filename);
     }
 
-  g_thread_init (NULL);
-  gdk_threads_init ();
   gtk_init (0, NULL);
 
   return TRUE;

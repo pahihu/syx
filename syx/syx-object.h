@@ -29,6 +29,7 @@
 #include "syx-platform.h"
 #include "syx-enums.h"
 #include "syx-error.h"
+#include "syx-init.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -435,6 +436,17 @@ syx_variable_binding_new (SyxOop key, syx_int32 index, SyxOop dictionary)
   SYX_ASSOCIATION_KEY(object) = key;
   SYX_ASSOCIATION_VALUE(object) = syx_small_integer_new (index);
   SYX_VARIABLE_BINDING_DICTIONARY(object) = dictionary;
+  return object;
+}
+
+/*!
+  Creates a new Semaphore and initializes it from Smalltalk itself.
+*/
+INLINE SyxOop
+syx_semaphore_new (void)
+{
+  SyxOop object = syx_object_new (syx_globals_at ("Semaphore"));
+  syx_object_initialize (object);
   return object;
 }
 

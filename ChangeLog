@@ -1,5 +1,14 @@
 2008-05-22  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/gtk/st/Gtk.st (main): create a process that does nothing. It will be only used to hold signal callbacks and to keep the scheduler on
+
+	* plugins/gtk/plugin-init.c (_syx_gtk_iteration): replaced _syx_gtk_main
+	(syx_g_closure_marshal): do it without threads and in a single process
+	(Gtk_main): register an idle and save the process where to put main loop callback executions
+	(Gtk_mainQuit): register an idle and save the process where to put main loop callback executions
+
+	* syx/syx-object.h (syx_semaphore_new): added
+
 	* syx/syx-scheduler.c (syx_scheduler_poll_register_source): added
 	(syx_scheduler_poll_unregister_source): added
 	(_syx_scheduler_poll_wait): check for sources
