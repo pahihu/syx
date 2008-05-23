@@ -64,6 +64,7 @@ static SyxSchedulerPoll *_syx_scheduler_poll_windows = NULL;
 #endif
 static SyxSchedulerPoll *_syx_scheduler_poll_read = NULL;
 static SyxSchedulerPoll *_syx_scheduler_poll_write = NULL;
+static SyxSchedulerPoll *_syx_scheduler_poll_sources = NULL;
 static fd_set _syx_scheduler_poll_rfds;
 static fd_set _syx_scheduler_poll_wfds;
 static syx_int32 _syx_scheduler_poll_nfds = -1;
@@ -148,7 +149,16 @@ _syx_scheduler_process_poll (int res, SyxSchedulerPoll *poll, fd_set *fds)
 static void
 _syx_scheduler_poll_wait (void)
 {
+  SyxSchedulerPoll *source = _syx_scheduler_poll_sources;
+  for (source=_syx_scheduler_poll_sources; source; source=source->next)
+    {
+      SyxSchedulerSourceFunc func = (SyxSchedulerSourceFunc)source->fd;
+      if (func ())
+        syx_semaphore_signal (source->semaphore);
+    }
+
 #ifdef WINDOWS
+  {
   SyxSchedulerPoll *wpoll = _syx_scheduler_poll_windows;
   SyxSchedulerPoll *oldwpoll = NULL;
   SyxSchedulerPoll *tmp = NULL;
@@ -178,8 +188,9 @@ _syx_scheduler_poll_wait (void)
 	  return;
 	}
     }
-
+  }
 #else /* not WINDOWS */
+  {
   static struct timeval tv = {0, 1};
   syx_int32 res;
   /* we copy file descriptors because select will change them */
@@ -197,6 +208,7 @@ _syx_scheduler_poll_wait (void)
       res = _syx_scheduler_process_poll (res, _syx_scheduler_poll_read, &_syx_scheduler_poll_rfds);
       (void) _syx_scheduler_process_poll (res, _syx_scheduler_poll_write, &_syx_scheduler_poll_wfds);
     }
+  }
 #endif
 }
 
@@ -393,6 +405,46 @@ syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
     _syx_scheduler_poll_nfds = fd;
 
   FD_SET(fd, &_syx_scheduler_poll_wfds);
+}
+
+/*!
+  The scheduler runs the callback to check whether the source is ready then signal the semaphore.
+  To tell that the source is ready, return TRUE from the callback, otherwise FALSE.
+
+  \param callback the callback to call for each scheduler iteration
+  \param semaphore the semaphore to signal when the source is ready
+*/
+
+void
+syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore)
+{
+  SyxSchedulerPoll *s = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+  s->fd = (syx_nint) callback;
+  s->semaphore = semaphore;
+  s->next = _syx_scheduler_poll_sources;
+  _syx_scheduler_poll_sources = s;
+}
+
+/*!
+  Remove an idle source previously added with syx_scheduler_poll_register_source
+*/
+
+void
+syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore)
+{
+  SyxSchedulerPoll *s, *pre;
+
+  for (s=_syx_scheduler_poll_sources, pre=NULL; s; s=s->next)
+    {
+      if (s->fd == (syx_nint)callback && s->semaphore == semaphore)
+        {
+          if (!pre)
+            _syx_scheduler_poll_sources = s->next;
+          else
+            pre->next = s->next;
+          syx_free (s);
+        }
+    }
 }
 
 /*! Stop the scheduler */

@@ -1,5 +1,9 @@
 2008-05-22  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-scheduler.c (syx_scheduler_poll_register_source): added
+	(syx_scheduler_poll_unregister_source): added
+	(_syx_scheduler_poll_wait): check for sources
+
 	* plugins/gtk/st/GObject.st: move gobject related classes here
 
 	* plugins/gtk/plugin-init.c (syx_plugin_initialize): non-cold loading and change the loading order

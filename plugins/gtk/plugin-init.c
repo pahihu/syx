@@ -139,8 +139,6 @@ SYX_FUNC_PRIMITIVE(Gtk_mainQuit)
 EXPORT syx_bool
 syx_plugin_initialize (void)
 {
-  SyxOop context;
-  SyxOop process;
   static syx_bool _syx_gtk_initialized = FALSE;
   syx_symbol *filename;
   syx_string full_filename;
