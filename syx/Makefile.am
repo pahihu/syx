@@ -9,12 +9,17 @@ INCLUDES		=	\
 
 lib_LTLIBRARIES		= libsyx.la
 
-
 libsyx_la_SOURCES	= 	\
 	syx-bytecode.c syx-init.c syx-interp.c \
 	syx-lexer.c syx-memory.c syx-object.c syx-parser.c \
 	syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c \
         syx-plugins.c syx-signal.c syx-profile.c
+
+if WIN32
+libsyx_la_SOURCES	+= syx-scheduler-win.c
+else
+libsyx_la_SOURCES	+= syx-scheduler-posix.c
+endif
 
 libsyx_la_CFLAGS	= $(SYX_DEP_CFLAGS) $(SYX_OTHER_CFLAGS)
 libsyx_la_LIBADD	= $(SYX_DEP_LIBS) $(SYX_OTHER_LIBS)

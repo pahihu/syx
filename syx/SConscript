@@ -30,12 +30,6 @@ Import ('env', 'distdir')
 
 libenv = env.Clone ()
 
-if libenv['PLATFORM'] == 'win32':
-    libenv.MergeFlags ('-D_DLL')
-
-if not 'wince' in libenv['host']:
-   libenv.MergeFlags ('-ansi -pedantic')
-
 # Build the shared library
 
 lib_sources = Split ("""
@@ -44,6 +38,15 @@ lib_sources = Split ("""
 	    syx-primitives.c syx-scheduler.c syx-utils.c syx-error.c
             syx-plugins.c syx-signal.c syx-profile.c
 	    """)
+
+if libenv['PLATFORM'] == 'win32':
+    libenv.MergeFlags ('-D_DLL')
+
+if not 'wince' in libenv['host']:
+    libenv.MergeFlags ('-ansi -pedantic')
+    lib_sources.append ("syx-scheduler-win.c")
+else:
+    lib_sources.append ("syx-scheduler-posix.c")
 
 if env['static']:
     lib_objects = libenv.StaticObject (lib_sources)
