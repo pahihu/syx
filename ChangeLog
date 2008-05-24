@@ -1,5 +1,9 @@
 2008-05-24  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx.vcproj: add scheduler-win
+
+	* makefile.vc (OBJS): compile syx-scheduler-win
+
 	* plugins/readline/plugin-init.c (syx_plugin_initialize): 
 
 	* plugins/readline/st/Readline.st: added
