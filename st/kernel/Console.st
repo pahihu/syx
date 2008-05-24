@@ -68,16 +68,6 @@ startup
 
 !Console methodsFor: 'private'!
 
-primReadline: aString
-    <cCall: 'Readline_readline' plugin: 'readline'>
-	self primitiveFailed
-!
-
-primAddHistory: aString
-    <cCall: 'Readline_addHistory' plugin: 'readline'>
-	self primitiveFailed
-!
-
 nextLine
     | line sem |
     "Readline doesn't work with non blocking input"
@@ -130,7 +120,7 @@ run
         registerUserInterruptHandler;
         setupHelp;
         showHelp.
-    haveReadline := Smalltalk loadPlugin: 'readline'.
+
     chunkReader := ConsoleChunkReader new.
     [
 	[
