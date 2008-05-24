@@ -39,11 +39,11 @@ lib_sources = Split ("""
             syx-plugins.c syx-signal.c syx-profile.c
 	    """)
 
-if libenv['PLATFORM'] == 'win32':
-    libenv.MergeFlags ('-D_DLL')
-
 if not 'wince' in libenv['host']:
     libenv.MergeFlags ('-ansi -pedantic')
+
+if libenv['host'] == 'win32':
+    libenv.MergeFlags ('-D_DLL')
     lib_sources.append ("syx-scheduler-win.c")
 else:
     lib_sources.append ("syx-scheduler-posix.c")

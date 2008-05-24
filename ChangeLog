@@ -1,5 +1,7 @@
 2008-05-24  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/SConscript: fix scheduler choice
+
 	* syx.vcproj: add scheduler-win
 
 	* makefile.vc (OBJS): compile syx-scheduler-win
