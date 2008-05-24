@@ -1,5 +1,11 @@
 2008-05-24  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/readline/plugin-init.c (syx_plugin_initialize): 
+
+	* plugins/readline/st/Readline.st: added
+
+	* plugins/readline/Makefile.am:
+
 	* st/kernel/Console.st: dropped readline
 
 2008-05-23  Luca Bruno  <lethalman88@gmail.com>
