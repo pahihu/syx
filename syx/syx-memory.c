@@ -344,6 +344,15 @@ _syx_memory_write (SyxOop *oops, syx_bool mark_type, syx_varsize n, FILE *image)
           idx = SYX_COMPAT_SWAP_32 (idx);
           fwrite (&idx, sizeof (syx_int32), 1, image);
         }
+      else if (SYX_IS_CPOINTER (oop))
+        {
+          /* Write nil for C pointers, they must not be available when starting again the interpreter */
+          if (mark_type)
+            fputc (SYX_MEMORY_TYPE_IMMEDIATE, image);
+
+          idx = SYX_COMPAT_SWAP_32 (0);
+          fwrite (&idx, sizeof (syx_int32), 1, image);
+        }
       else
         {
           if (mark_type)
