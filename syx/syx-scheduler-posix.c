@@ -126,6 +126,8 @@ _syx_scheduler_quit_platform (void)
   _syx_scheduler_poll_write = NULL;
 }
 
+/* WARNING: save and read from the image is not safe and tested. It has been written a long time ago and never revised. It needs to be rethinked to work properly since file descriptors are no alive after the interpreter shuts down */
+
 void
 _syx_scheduler_save (FILE *image)
 {

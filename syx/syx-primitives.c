@@ -600,6 +600,7 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
       if (!(file = fopen (SYX_OBJECT_SYMBOL(es->message_arguments[1]), mode)))
         {
+          puts(SYX_OBJECT_SYMBOL(es->message_arguments[1]));
           SYX_PRIM_FAIL;
         }
 

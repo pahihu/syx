@@ -152,6 +152,8 @@ syx_signal (SyxErrorType type, SyxOop message)
       syx_interp_enter_context (process, context);
       syx_process_execute_blocking (process);
     }
+  else
+    syx_interp_enter_context (syx_processor_active_process, context);
 
   return TRUE;
 }
