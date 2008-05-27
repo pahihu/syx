@@ -131,86 +131,13 @@ _syx_scheduler_quit_platform (void)
 void
 _syx_scheduler_save (FILE *image)
 {
-  syx_int32 index, data;
-  SyxSchedulerPoll *p = _syx_scheduler_poll_read;
-  
-  while (p)
-    {
-      fputc (1, image);
-      index = SYX_MEMORY_INDEX_OF (p->semaphore);
-      data = p->fd;
-      data = SYX_COMPAT_SWAP_32 (data);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      data = SYX_COMPAT_SWAP_32 (index);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      p = p->next;
-    }
-  fputc (0, image);
-      
-  p = _syx_scheduler_poll_write;
-  while (p)
-    {
-      fputc (1, image);
-      index = SYX_MEMORY_INDEX_OF (p->semaphore);
-      data = p->fd;
-      data = SYX_COMPAT_SWAP_32 (data);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      data = SYX_COMPAT_SWAP_32 (index);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      p = p->next;
-    }
-  fputc (0, image);
+  /* TODO: save valid data for being safely reopened*/
 }
 
 void
 _syx_scheduler_load (FILE *image)
 {
-  syx_int32 index, data;
-  SyxSchedulerPoll *p = NULL;
-
-  _syx_scheduler_poll_read = NULL;
-  while (fgetc (image))
-    {
-      if (p)
-        {
-          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-          p = p->next;
-        }
-      else
-        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-
-      fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = SYX_COMPAT_SWAP_32 (data);
-      fread (&data, sizeof (syx_int32), 1, image);
-      index = SYX_COMPAT_SWAP_32 (data);
-      p->semaphore = (SyxOop)(syx_memory + index);
-      p->next = NULL;
-
-      if (!_syx_scheduler_poll_read)
-        _syx_scheduler_poll_read = p;
-    }
-
-  _syx_scheduler_poll_write = NULL;
-  while (fgetc (image))
-    {
-      if (p)
-        {
-          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-          p = p->next;
-        }
-      else
-        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-
-      fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = SYX_COMPAT_SWAP_32 (data);
-      fread (&data, sizeof (syx_int32), 1, image);
-      index = SYX_COMPAT_SWAP_32 (data);
-      p->semaphore = (SyxOop)(syx_memory + index);
-      p->next = NULL;
-
-      if (!_syx_scheduler_poll_write)
-        _syx_scheduler_poll_write = p;
-    }
+  /* TODO: implement reopening descriptors safely */
 }
 
 /*!

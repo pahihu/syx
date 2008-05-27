@@ -1,5 +1,8 @@
 2008-05-26  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-scheduler-posix.c (_syx_scheduler_load): dropped implementation
+	(_syx_scheduler_save): dropped implementation
+
 	* syx/syx-scheduler.h: changed add_process and remove_process signatures
 
 	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): do a simpler round robin
