@@ -128,7 +128,7 @@ Object subclass: #BlockClosure
 "Management"
 
 Object subclass: #ProcessorScheduler
-       instanceVariableNames: 'processByteslice firstProcess activeProcess'
+       instanceVariableNames: 'processByteslice activeProcess'
        classVariableNames: ''!
 
 Object subclass: #ObjectMemory

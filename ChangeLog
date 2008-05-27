@@ -1,3 +1,18 @@
+2008-05-26  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-scheduler.h: changed add_process and remove_process signatures
+
+	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): do a simpler round robin
+	(syx_scheduler_add_process, syx_scheduler_remove_process): 
+
+	* syx/syx-object.h (SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+
+	* syx/syx-memory.c (syx_memory_save_image): store the round robin
+
+	* syx/syx-enums.h (SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+
+	* st/kernel/initialDecl.st (ProcessorScheduler): removed firstProcess instance variable
+
 2008-05-24  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/SConscript: fix scheduler choice

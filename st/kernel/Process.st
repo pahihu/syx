@@ -34,14 +34,6 @@ initialize
     self suspend
 !
 
-context
-"    ^context"
-!
-
-context: aContext
-"    context := aContext"
-!
-
 suspend
     suspended := true.
     self isActive ifTrue: [Processor yield]

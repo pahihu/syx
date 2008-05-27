@@ -39,7 +39,6 @@
 #endif
 
 SyxOop syx_processor;
-SyxOop *_syx_processor_first_process;
 SyxOop *_syx_processor_active_process;
 SyxOop *_syx_processor_byteslice;
 
@@ -70,23 +69,11 @@ _syx_scheduler_find_next_process ()
   SyxOop process;
 
   /* no processes have been scheduled */
-  if (SYX_IS_NIL (syx_processor_first_process))
-    return syx_nil;
-
   if (SYX_IS_NIL (syx_processor_active_process))
-    syx_processor_active_process = syx_processor_first_process;
+    return syx_nil;
 
   for (process=SYX_PROCESS_NEXT (syx_processor_active_process); ; process = SYX_PROCESS_NEXT (process))
     {
-      /* Reached the end of the linked list */
-      if (SYX_IS_NIL (process))
-        {
-          process = syx_processor_first_process;
-          /* Both first and last processes are nil. No more processes then. */
-          if (SYX_IS_NIL (process))
-            return syx_nil;
-        }
-
       /* This loop won't break until a resumed process is found, so we call the poll from here */
       _syx_scheduler_poll_wait ();
 
@@ -114,7 +101,6 @@ syx_scheduler_init (void)
     }
 
   _syx_processor_active_process = &SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(syx_processor);
-  _syx_processor_first_process = &SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(syx_processor);
   _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
 }
 
@@ -206,52 +192,55 @@ syx_scheduler_quit (void)
   _syx_scheduler_quit_platform ();
 }
 
-/*! Add a Process to be scheduled */
-void
+/*! Add a Process to be scheduled.
+  \param process a valid Process
+  \return TRUE if the given Process has been scheduled successfully, FALSE otherwise */
+syx_bool
 syx_scheduler_add_process (SyxOop process)
 {
-  if (!SYX_IS_OBJECT (process))
-    return;
+  if (SYX_IS_TRUE (SYX_PROCESS_SCHEDULED (process)))
+    return FALSE;
 
-  if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))
+  if (SYX_IS_NIL (syx_processor_active_process))
+    SYX_PROCESS_NEXT(process) = syx_processor_active_process = process;
+  else
     {
-      if (SYX_IS_NIL (syx_processor_first_process))
-        syx_processor_first_process = syx_processor_active_process = process;
-      else
-        {
-          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
-          SYX_PROCESS_NEXT(syx_processor_active_process) = process;
-        }
-      SYX_PROCESS_SCHEDULED(process) = syx_true;
+      SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
+      SYX_PROCESS_NEXT(syx_processor_active_process) = process;
     }
+  SYX_PROCESS_SCHEDULED(process) = syx_true;
+  return TRUE;
 }
 
-/*! Remove a Process from being scheduled */
-void
+/*! Remove a Process from being scheduled.
+  \param process a valid Process
+  \return TRUE if the given Process has been found and removed successfully, FALSE otherwise */
+syx_bool
 syx_scheduler_remove_process (SyxOop process)
 {
-  SyxOop inter_process, prev_process;
+  SyxOop cur_process, prev_process;
 
-  if (SYX_OOP_EQ (process, syx_processor_first_process))
+  if (SYX_OOP_EQ (process, syx_processor_active_process) && SYX_OOP_EQ (SYX_PROCESS_NEXT (process), process))
     {
+      /* The active process was the only to being scheduled */
       SYX_PROCESS_SCHEDULED(process) = syx_false;
-      syx_processor_first_process = SYX_PROCESS_NEXT(process);
+      syx_processor_active_process = syx_nil;
+      return TRUE;
     }
   else
     {
-      for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
+      for (prev_process=syx_processor_active_process; !SYX_IS_NIL(prev_process); prev_process=cur_process)
         {
-          inter_process = SYX_PROCESS_NEXT(prev_process);
-          if (SYX_OOP_EQ (inter_process, process))
+          cur_process = SYX_PROCESS_NEXT(prev_process);
+          if (SYX_OOP_EQ (cur_process, process))
             {
               SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
               SYX_PROCESS_SCHEDULED(process) = syx_false;
-              break;
+              return TRUE;
             }
         }
     }
 
-  if (SYX_OOP_EQ (process, syx_processor_active_process))
-    syx_processor_active_process = syx_processor_first_process;
+  return FALSE;
 }
 

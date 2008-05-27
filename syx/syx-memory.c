@@ -614,12 +614,12 @@ syx_memory_save_image (syx_symbol path)
   _syx_memory_write (&syx_symbols, FALSE, 1, image);
 
   /* First store the processes */
-  process = syx_processor_first_process;
-  while (!SYX_IS_NIL (process))
+  process = syx_processor_active_process;
+  do
     {
       _syx_memory_write_process_stack (SYX_OBJECT (process), image);
       process = SYX_PROCESS_NEXT (process);
-    }
+    } while (SYX_OOP_NE (process, syx_processor_active_process));
 
   for (object=syx_memory; object <= SYX_MEMORY_TOP; object++)
     {
