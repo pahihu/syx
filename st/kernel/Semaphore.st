@@ -73,12 +73,12 @@ wait: aFD for: aBoolean
 
 waitForRead: aStream
     "Wait a file descriptor to be ready for reading"
-    self wait: aStream handleForSemaphore for: false
+    self wait: aStream fileno for: false
 !
 
 waitForWrite: aStream
     "Wait a file descriptor to be ready for writing"
-    self wait: aStream handleForSemaphore for: true
+    self wait: aStream fileno for: true
 !
 
 signal

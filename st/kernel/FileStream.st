@@ -145,10 +145,6 @@ fileOp: anInteger on: fileHandle with: anArgument
 
 !FileStream methodsFor: 'private'!
 
-handleForSemaphore
-    ^handle
-!
-
 nextPutBuffer: aByteArray
     | pos |
     pos := curPos + 1.
@@ -160,6 +156,10 @@ nextPutBuffer: aByteArray
 ! !
 
 !FileStream methodsFor: 'basic'!
+
+fileno
+    ^self fileOp: 9 on: handle
+!
 
 close
     self fileOp: 1 on: handle.

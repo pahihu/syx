@@ -53,13 +53,9 @@ _syx_scheduler_poll_wait_platform (void)
 
   while (wpoll)
     {
-      res = WaitForSingleObjectEx ((HANDLE)wpoll->fd, 0, TRUE);
+      res = WaitForSingleObject ((HANDLE)wpoll->fd, 0);
       switch (res)
 	{
-	case WAIT_TIMEOUT:
-	  oldwpoll = wpoll;
-	  wpoll = wpoll->next;
-	  break;
 	case WAIT_OBJECT_0:
 	  if (oldwpoll)
 	    oldwpoll->next = wpoll->next;
@@ -72,7 +68,9 @@ _syx_scheduler_poll_wait_platform (void)
 	  syx_free (wpoll);
 	  break;
 	default:
-	  return;
+	  oldwpoll = wpoll;
+	  wpoll = wpoll->next;
+	  break;
 	}
     }
 }

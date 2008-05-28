@@ -523,9 +523,9 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
   SYX_PRIM_ARGS(2);
 
 #ifdef WINDOWS
-  fd = es->message_arguments[0];
+  fd = _get_osfhandle (SYX_SMALL_INTEGER (es->message_arguments[0]));
 #else
-  fd = fileno ((FILE *)es->message_arguments[0]);
+  fd = SYX_SMALL_INTEGER (es->message_arguments[0]);
 #endif /* WINDOWS */
   t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
@@ -699,32 +699,36 @@ SYX_FUNC_PRIMITIVE (FileStream_fileOp)
       break;
 
     case 8: /* fdopen */
-      switch (SYX_SMALL_INTEGER(es->message_arguments[1]))
+      if (SYX_OBJECT_IS_SYMBOL (es->message_arguments[1]))
         {
-        case 0:
-          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdin));
-          break;
-        case 1:
-          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdout));
-          break;
-        case 2:
-          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stderr));
-          break;
-        default:
-          if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+          if (!strcmp (SYX_OBJECT_SYMBOL (es->message_arguments[1]), "stdin"))
+            {
+              SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdin));
+            }
+          else if (!strcmp (SYX_OBJECT_SYMBOL (es->message_arguments[1]), "stdout"))
+            {
+              SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stdout));
+            }
+          else if (!strcmp (SYX_OBJECT_SYMBOL (es->message_arguments[1]), "stderr"))
+            {
+              SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (stderr));
+            }
+          else
             {
               SYX_PRIM_FAIL;
             }
-          mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
-          if (!(file = fdopen (SYX_SMALL_INTEGER(es->message_arguments[1]), mode)))
-            {
-              SYX_PRIM_FAIL;
-            }
-          SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
-          break;
         }
+      if (!SYX_OBJECT_IS_STRING (es->message_arguments[2]))
+	{
+	  SYX_PRIM_FAIL;
+	}
+      mode = SYX_OBJECT_SYMBOL (es->message_arguments[2]);
+      if (!(file = fdopen (SYX_SMALL_INTEGER(es->message_arguments[1]), mode)))
+	{
+	  SYX_PRIM_FAIL;
+	}
+      SYX_PRIM_RETURN (SYX_POINTER_CAST_OOP (file));
       break;
-
     case 9: /* fileno */
       SYX_PRIM_RETURN (syx_small_integer_new (fileno (file)));
       break;
