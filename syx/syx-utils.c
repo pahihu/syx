@@ -71,7 +71,6 @@
 
 static syx_bool _syx_cold_parse_class (SyxLexer *lexer);
 static SyxOop _syx_cold_parse_vars (SyxLexer *lexer, syx_bool capitalized);
-static syx_uint8 _syx_sem_lock = 0;
 
 /* A cold parser */
 
@@ -287,6 +286,9 @@ syx_cold_parse_methods (SyxLexer *lexer)
   klass = syx_globals_at (token.value.string);
   syx_token_free (token);
 
+  if (SYX_IS_NIL (klass))
+    return FALSE;
+
   token = syx_lexer_next_token (lexer);
   if (token.type == SYX_TOKEN_NAME_CONST && !strcmp (token.value.string, "class"))
     {
@@ -425,70 +427,6 @@ syx_cold_file_in (syx_symbol filename)
 
   syx_lexer_free (lexer, TRUE);
   return TRUE;
-}
-
-/*!
-  Send a signal to a Semaphore to wake up waiting processes.
-
-  The function is thread-safe
-*/
-void
-syx_semaphore_signal (SyxOop semaphore)
-{
-  SyxOop signals;
-  SyxOop list;
-  syx_int32 i=0;
-    
-  /* wait */
-  while (_syx_sem_lock != 0);
-  /* acquire */
-  _syx_sem_lock++;
-
-  list = SYX_SEMAPHORE_LIST(semaphore);
-  signals = SYX_SMALL_INTEGER (SYX_SEMAPHORE_SIGNALS(semaphore));
-  signals++;
-
-  while (signals > 0 && SYX_OBJECT_DATA_SIZE (list) > 0)
-    {
-      SYX_PROCESS_SUSPENDED (SYX_OBJECT_DATA(list)[i]) = syx_false;
-      signals--;
-      i++;
-    }
-
-  /* create a new array without signaled processes */
-  SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(list) - i,
-                                                     SYX_OBJECT_DATA(list) + i);
-  SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
-
-  /* release */
-  _syx_sem_lock--;
-}
-
-/*!
-  Put the active process in waiting state until semaphore is signaled.
-
-  The function is thread-safe
-*/
-void
-syx_semaphore_wait (SyxOop semaphore)
-{
-  SyxOop process;
-  SyxOop list;
-
-  /* wait */
-  while (_syx_sem_lock != 0);
-  /* acquire */
-  _syx_sem_lock++;
-
-  list = SYX_SEMAPHORE_LIST (semaphore);
-  
-  process = syx_processor_active_process;
-  SYX_PROCESS_SUSPENDED (process) = syx_true;
-  syx_object_grow_by (list, 1);
-  SYX_OBJECT_DATA(list)[SYX_OBJECT_DATA_SIZE(list) - 1] = process;
-
-  /* release */
-  _syx_sem_lock--;
 }
 
 /* Utilities to interact with Smalltalk */

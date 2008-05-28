@@ -64,6 +64,8 @@ case "$target" in
         ;;
 esac
 
+AM_CONDITIONAL(WIN32, test "$native_win32" != no)
+
 dnl default final output
 build_gmp="no"
 build_plugins="no"

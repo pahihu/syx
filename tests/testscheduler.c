@@ -55,7 +55,7 @@ main (int argc, char *argv[])
   context = syx_method_context_new (method, syx_nil, syx_nil);          \
   syx_interp_enter_context (process, context);
 
-  syx_processor_first_process = syx_nil;
+  syx_processor_active_process = syx_nil;
 
   puts ("- Test processes");
   INTERPRET ("method"\

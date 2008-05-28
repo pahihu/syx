@@ -61,9 +61,9 @@ initializeSystem: commandLineArguments
     commandLine := CommandLine new: commandLineArguments.
 
     self
-	at: #stdin put: (StdIOStream on: 0 for: FileStream read);
-	at: #stdout put: (StdIOStream on: 1 for: FileStream write);
-	at: #stderr put: (StdIOStream on: 2 for: FileStream write);
+	at: #stdin put: (StdIOStream on: #stdin for: FileStream read);
+	at: #stdout put: (StdIOStream on: #stdout for: FileStream write);
+	at: #stderr put: (StdIOStream on: #stderr for: FileStream write);
 	at: #Transcript put: (TextCollector proxyMessage: stdout -> #nextPutAll:).
 
     systemInitializationRequests do: [ :ea |

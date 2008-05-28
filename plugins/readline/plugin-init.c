@@ -49,6 +49,26 @@ SYX_FUNC_PRIMITIVE(Readline_addHistory)
 syx_bool
 syx_plugin_initialize (void)
 {
+  static syx_bool _syx_readline_initialized = FALSE;
+  syx_symbol *filename;
+  syx_string full_filename;
+  static syx_symbol gtk_filenames[] = {
+    "Readline.st",
+    NULL
+  };
+
+  if (_syx_readline_initialized)
+    return TRUE;
+
+  _syx_readline_initialized = TRUE;
+
+  for (filename = gtk_filenames; *filename; filename++)
+    {
+      full_filename = syx_find_file ("st", "readline", *filename);
+      syx_file_in_blocking (full_filename);
+      syx_free (full_filename);
+    }
+
   using_history ();
   return TRUE;
 }

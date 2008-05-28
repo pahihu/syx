@@ -81,6 +81,8 @@ SyxOop syx_nil,
   syx_symbols,
   syx_globals;
 
+static syx_uint8 _syx_sem_lock = 0;
+
 /*!
   Initialize a class from the Smalltalk-side
 
@@ -941,6 +943,69 @@ syx_class_lookup_method_binding (SyxOop klass, SyxOop binding)
     }
   
   return syx_nil;
+}
+
+/*!
+  Send a signal to a Semaphore to wake up waiting processes.
+
+  The function is thread-safe
+*/
+void
+syx_semaphore_signal (SyxOop semaphore)
+{
+  SyxOop signals;
+  SyxOop list;
+  syx_int32 i;
+
+  /* FIXME: See http://www-128.ibm.com/developerworks/eserver/library/es-win32linux-sem.html */
+
+  /* wait */
+  while (_syx_sem_lock != 0);
+  /* acquire */
+  _syx_sem_lock++;
+
+  list = SYX_SEMAPHORE_LIST(semaphore);
+  /* add 1 because we signaled it right now */
+  signals = SYX_SMALL_INTEGER (SYX_SEMAPHORE_SIGNALS(semaphore)) + 1;
+
+  /* the i variable is used to keep track of how many processed we woke up */
+  for (i=0; signals > 0 && SYX_OBJECT_DATA_SIZE (list) > 0; signals--, i++)
+    SYX_PROCESS_SUSPENDED (SYX_OBJECT_DATA(list)[i]) = syx_false;
+
+  /* create a new array without signaled processes */
+  SYX_SEMAPHORE_LIST(semaphore) = syx_array_new_ref (SYX_OBJECT_DATA_SIZE(list) - i,
+                                                     SYX_OBJECT_DATA(list) + i);
+  SYX_SEMAPHORE_SIGNALS(semaphore) = syx_small_integer_new (signals);
+
+  /* release */
+  _syx_sem_lock--;
+}
+
+/*!
+  Put the active process in waiting state until semaphore is signaled.
+
+  The function is thread-safe
+*/
+void
+syx_semaphore_wait (SyxOop semaphore)
+{
+  SyxOop process;
+  SyxOop list;
+
+  /* wait */
+  while (_syx_sem_lock != 0);
+  /* acquire */
+  _syx_sem_lock++;
+
+  list = SYX_SEMAPHORE_LIST (semaphore);
+
+  process = syx_processor_active_process;
+  SYX_PROCESS_SUSPENDED (process) = syx_true;
+  syx_object_grow_by (list, 1);
+  SYX_OBJECT_DATA(list)[SYX_OBJECT_DATA_SIZE(list) - 1] = process;
+
+  /* release */
+  _syx_sem_lock--;
 }
 
 

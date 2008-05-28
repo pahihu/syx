@@ -113,6 +113,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\syx\syx-scheduler-win.c"
+				>
+			</File>
+			<File
 				RelativePath=".\syx\syx-signal.c"
 				>
 			</File>

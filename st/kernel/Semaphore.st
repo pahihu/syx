@@ -71,14 +71,14 @@ wait: aFD for: aBoolean
 
 !Semaphore methodsFor: 'basic'!
 
-waitForRead: aFD
+waitForRead: aStream
     "Wait a file descriptor to be ready for reading"
-    self wait: aFD for: false
+    self wait: aStream fileno for: false
 !
 
-waitForWrite: aFD
+waitForWrite: aStream
     "Wait a file descriptor to be ready for writing"
-    self wait: aFD for: true
+    self wait: aStream fileno for: true
 !
 
 signal

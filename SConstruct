@@ -98,13 +98,6 @@ opts.AddOptions (
 opts.Update (env)
 opts.Save ('options.cache', env)
 
-# My 64bit LFS keep its toolchain in /tools64 and set LD_LIBRARY_PATH for tests
-if env['PLATFORM'] == 'posix':
-   env['ENV']['PATH'] = '/tools64/bin:' + env['ENV']['PATH']
-
-# Specify the toolchain
-env['tools'] = ['default', 'mingw']
-
 CC=os.getenv ('CC')
 LINK=os.getenv ('LINK')
 AR=os.getenv ('AR')

@@ -26,13 +26,13 @@
 #include <gtk/gtk.h>
 #include "syx-gobject.h"
 
-static GThread *_syx_gtk_main_thread = NULL;
+static SyxOop _syx_gtk_process;
 
-static gpointer
-_syx_gtk_main (gpointer data)
+static syx_bool
+_syx_gtk_iteration (void)
 {
-  gtk_main ();
-  return NULL;
+  gtk_main_iteration_do (FALSE);
+  return FALSE;
 }
 
 EXPORT void syx_g_closure_marshal (GClosure *closure,
@@ -44,7 +44,6 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 {
   SyxOop array = syx_array_new_size (n_param_values);
   SyxOop context;
-  SyxOop process;
   SyxOop callback = (SyxOop) closure->data;
   syx_uint32 i;
   const GValue *v;
@@ -107,31 +106,32 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 	}
     }
 
-  process = syx_process_new ();
   context = syx_send_unary_message (callback, "invoke");
-  syx_interp_enter_context (process, context);
-  SYX_PROCESS_SUSPENDED (process) = syx_false;
-  gdk_threads_leave ();
-  do { g_thread_yield (); } while (SYX_IS_TRUE (SYX_PROCESS_SCHEDULED (process)));
+  syx_interp_enter_context (_syx_gtk_process, context);
+  SYX_PROCESS_SUSPENDED (_syx_gtk_process) = syx_false;
+  do { syx_scheduler_iterate (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
 
   return;
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_main)
 {
-  if (!_syx_gtk_main_thread)
-    _syx_gtk_main_thread = g_thread_create (_syx_gtk_main, NULL, FALSE, NULL);
+  static syx_bool registered = FALSE;
+  SYX_PRIM_ARGS (1);
 
-  SYX_PRIM_RETURN(es->message_receiver);
+  if (!registered)
+    {
+      syx_scheduler_poll_register_source (_syx_gtk_iteration, syx_nil);
+      _syx_gtk_process = es->message_arguments[0];
+      registered = TRUE;
+    }
+
+  SYX_PRIM_RETURN (es->message_receiver);
 }
 
 SYX_FUNC_PRIMITIVE(Gtk_mainQuit)
 {
-  if (_syx_gtk_main_thread)
-    {
-      gtk_main_quit ();
-      _syx_gtk_main_thread = NULL;
-    }
+  syx_scheduler_poll_unregister_source (_syx_gtk_iteration, syx_nil);
 
   SYX_PRIM_RETURN(es->message_receiver);
 }
@@ -139,13 +139,11 @@ SYX_FUNC_PRIMITIVE(Gtk_mainQuit)
 EXPORT syx_bool
 syx_plugin_initialize (void)
 {
-  SyxOop context;
-  SyxOop process;
   static syx_bool _syx_gtk_initialized = FALSE;
   syx_symbol *filename;
   syx_string full_filename;
   static syx_symbol gtk_filenames[] = {
-    "Gtk.st", "GObject.st",
+    "GObject.st", "Gtk.st",
     "GtkWidget.st", "GtkLabel.st", "GtkContainer.st",
     "GtkWindow.st", "GtkButton.st", "GtkTools.st", "GtkBox.st",
     "GtkAdjustment.st", "GtkScrolledWindow.st",
@@ -157,22 +155,15 @@ syx_plugin_initialize (void)
   if (_syx_gtk_initialized)
     return TRUE;
 
+  _syx_gtk_initialized = TRUE;
+
   for (filename = gtk_filenames; *filename; filename++)
     {
       full_filename = syx_find_file ("st", "gtk", *filename);
-      syx_cold_file_in (full_filename);
+      syx_file_in_blocking (full_filename);
       syx_free (full_filename);
     }
 
-  _syx_gtk_initialized = TRUE;
-  
-  process = syx_process_new ();
-  context = syx_send_unary_message (syx_globals_at ("Gtk"), "initialize");
-  syx_interp_enter_context (process, context);
-  syx_process_execute_blocking (process);
-  
-  g_thread_init (NULL);
-  gdk_threads_init ();
   gtk_init (0, NULL);
 
   return TRUE;

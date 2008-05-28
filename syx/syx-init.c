@@ -121,7 +121,7 @@ _syx_file_in_basic (void)
     "ContextPart.st", "BlockContext.st",
     "BlockClosure.st",
     "True.st", "False.st",
-    "Signal.st", "SystemSignal.st",
+    "Signal.st", "Exception.st", "SystemSignal.st",
     "Process.st", "ProcessorScheduler.st", "Semaphore.st",
     "CompiledMethod.st",
     "Association.st",

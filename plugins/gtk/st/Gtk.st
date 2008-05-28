@@ -34,18 +34,6 @@ Object subclass: #Gtk
        instanceVariableNames: ''
        classVariableNames: ''!
 
-Object subclass: #GPointer
-       instanceVariableNames: 'handle'
-       classVariableNames: ''!
-
-GPointer subclass: #GCallback
-	 instanceVariableNames: 'selector arguments closure handlerId'
-	 classVariableNames: 'AllCallbacks GClosureMarshal'!
-
-GPointer subclass: #GClosure
-	 instanceVariableNames: ''
-	 classVariableNames: ''!
-
 GPointer subclass: #GtkTextIter
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
@@ -55,10 +43,6 @@ GPointer subclass: #GtkTextAttributes
 	 classVariableNames: ''!
 
 GPointer subclass: #PangoLanguage
-	 instanceVariableNames: ''
-	 classVariableNames: ''!
-
-GPointer subclass: #GObject
 	 instanceVariableNames: ''
 	 classVariableNames: ''!
 
@@ -161,7 +145,7 @@ Workspace subclass: #GtkWorkspace
 
 !Gtk class methodsFor: 'main loop'!
 
-primMain
+primMain: idleProcess
     <cCall: 'Gtk_main' plugin: 'gtk'>
 	self primitiveFailed
 !
@@ -171,11 +155,10 @@ initialize
 !
 
 main
-    | sem |
+    | proc |
     "Use a semaphore to keep the process alive but suspended forever"
-    [ sem := Semaphore new.
-      self primMain.
-      sem wait ] fork
+    proc := [ [ ] repeat ] newProcess.
+    self primMain: proc
 !
 
 mainQuit
@@ -244,3 +227,7 @@ selector
 arguments
     ^arguments
 ! !
+
+" Initialization code "
+
+Gtk initialize!

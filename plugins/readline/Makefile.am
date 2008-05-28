@@ -12,4 +12,6 @@ libsyx_readline_la_SOURCES	= 	\
 
 libsyx_readline_la_LIBADD	= $(SYX_DEP_LIBS) $(READLINE_DEP_LIBS)
 
+dist_streadlinedata_DATA = st/*.st
+
 EXTRA_DIST = SConscript

@@ -144,7 +144,16 @@ syx_signal (SyxErrorType type, SyxOop message)
   else
     context = syx_send_binary_message (entry->klass, "signal:", message);
 
-  syx_interp_enter_context (syx_processor_active_process, context);
+  /* Create a blocking context into another process for system signals, because it's not related
+     to any specific process. */
+  if (type >= SYX_ERROR_SYSTEM)
+    {
+      SyxOop process = syx_process_new ();
+      syx_interp_enter_context (process, context);
+      syx_process_execute_blocking (process);
+    }
+  else
+    syx_interp_enter_context (syx_processor_active_process, context);
 
   return TRUE;
 }

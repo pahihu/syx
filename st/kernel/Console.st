@@ -66,27 +66,14 @@ startup
     ^self new run
 ! !
 
-!Console methodsFor: 'running'!
-
-primReadline: aString
-    <cCall: 'Readline_readline' plugin: 'readline'>
-	self primitiveFailed
-!
-
-primAddHistory: aString
-    <cCall: 'Readline_addHistory' plugin: 'readline'>
-	self primitiveFailed
-!
+!Console methodsFor: 'private'!
 
 nextLine
-    | line |
-    haveReadline
-	ifTrue: [ line := self primReadline: '> '.
-		  line isNil
-		      ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit ].
-		  self primAddHistory: line ]
-	ifFalse: [ stdout nextPutAll: '> '; flush.
-	           line := stdin next: 1024.
+    | line sem |
+    "Readline doesn't work with non blocking input"
+    stdout nextPutAll: '> '; flush.
+    Semaphore new waitForRead: stdin.
+    line := stdin next: 1024.
 		   line isNil
 		       ifTrue: [ Transcript showCr: 'EOF'. Smalltalk quit].
 		   line := line copyFrom: 1 to: line size - 1 ].
@@ -118,12 +105,22 @@ showHelp
         showCr: 'Type "help!" to get help.'
 !
 
+registerUserInterruptHandler
+    UserInterrupt handlerBlock
+         ifNil: [ UserInterrupt
+                      handlerBlock: [ :ex |
+                           Transcript showCr: ex messageText.
+                           stdout nextPutAll: '> '; flush. ] ]
+! !
+
+!Console methodsFor: 'running'!
 run
     | chunkReader |
     self
+        registerUserInterruptHandler;
         setupHelp;
         showHelp.
-    haveReadline := Smalltalk loadPlugin: 'readline'.
+
     chunkReader := ConsoleChunkReader new.
     [
 	[

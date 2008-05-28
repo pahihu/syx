@@ -28,10 +28,55 @@ description
     ^'The application received a signal from the system.'
 ! !
 
+!SystemSignal methodsFor: 'testing'!
+
+isHandled
+    ^false
+! !
+
+!SystemSignal methodsFor: 'private'!
+
+notHandled
+    Transcript showCr: self messageText.
+    Smalltalk quit
+! !
+
 !UserInterrupt class methodsFor: 'signaling'!
 
 signal
     ^self signal: 'User interrupt (SIGINT)'
+! !
+
+!UserInterrupt class methodsFor: 'initialize-release'!
+
+initialize
+    Smalltalk registerForSystemInitialization: self
+!
+
+initializeSystem
+    HandlerBlock := nil
+! !
+
+!UserInterrupt class methodsFor: 'handling'!
+
+handlerBlock: aBlock
+    HandlerBlock := aBlock
+!
+
+handlerBlock
+    ^HandlerBlock
+! !
+
+!UserInterrupt methodsFor: 'private'!
+
+handle
+    ^HandlerBlock value: self
+! !
+
+!UserInterrupt methodsFor: 'testing'!
+
+isHandled
+    ^HandlerBlock notNil
 ! !
 
 !FloatingPointException class methodsFor: 'signaling'!
@@ -44,6 +89,38 @@ signal
 
 signal
     ^self signal: 'Termination signal (SIGTERM)'
+! !
+
+!TerminationSignal class methodsFor: 'initialize-release'!
+
+initialize
+    Smalltalk registerForSystemInitialization: self
+!
+
+initializeSystem
+    HandlerBlock := nil
+! !
+
+!TerminationSignal class methodsFor: 'handling'!
+
+handlerBlock: aBlock
+    HandlerBlock := aBlock
+!
+
+handlerBlock
+    ^HandlerBlock
+! !
+
+!TerminationSignal methodsFor: 'private'!
+
+handle
+    ^HandlerBlock value: self
+! !
+
+!TerminationSignal methodsFor: 'testing'!
+
+isHandled
+    ^HandlerBlock notNil
 ! !
 
 !AbnormalTermination class methodsFor: 'signaling'!

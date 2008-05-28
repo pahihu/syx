@@ -1,116 +1,245 @@
+2008-05-27  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-primitives.c (Semaphore_waitFor):
+
+	* SConstruct: cleaned
+
+	* syx/SConscript:
+
+	* syx/syx-primitives.c (FileStream_fileOp): can use symbols
+
+	* st/kernel/FileStream.st (fileno): added
+	(handleForSemaphore): removed
+
+2008-05-26  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-scheduler-posix.c (_syx_scheduler_load): dropped implementation
+	(_syx_scheduler_save): dropped implementation
+
+	* syx/syx-scheduler.h: changed add_process and remove_process signatures
+
+	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): do a simpler round robin
+	(syx_scheduler_add_process, syx_scheduler_remove_process): 
+
+	* syx/syx-object.h (SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+
+	* syx/syx-memory.c (syx_memory_save_image): store the round robin
+
+	* syx/syx-enums.h (SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+
+	* st/kernel/initialDecl.st (ProcessorScheduler): removed firstProcess instance variable
+
+2008-05-24  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/SConscript: fix scheduler choice
+
+	* syx.vcproj: add scheduler-win
+
+	* makefile.vc (OBJS): compile syx-scheduler-win
+
+	* plugins/readline/plugin-init.c (syx_plugin_initialize): 
+
+	* plugins/readline/st/Readline.st: added
+
+	* plugins/readline/Makefile.am:
+
+	* st/kernel/Console.st: dropped readline
+
 2008-05-23  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-memory.c (_syx_memory_write): nullify C pointers to avoid bad accesses on next startup
+	
+	* syx/syx-error.c (syx_signal): forgot to readd the old code
+
+	* configure.ac (WIN32): added conditional
+
+	* syx/SConscript:
+
+	* syx/Makefile.am (libsyx_la_SOURCES):
+
+	* syx/syx-scheduler.c: splitted platform code
+
+	* syx/syx-scheduler-win.c (_syx_scheduler_init_platform): added
+
+	* syx/syx-scheduler-posix.c (_syx_scheduler_init_platform): added
+
+        * TODO (Major):
+
+        * syx/syx-scheduler.c (syx_scheduler_poll_write_register): updated
+
+        * syx/syx-scheduler.h: 
+
+        * syx/syx-scheduler.c (_syx_scheduler_find_next_process): 
+
+        * plugins/gtk/plugin-init.c (syx_g_closure_marshal): use iterate
+
+        * syx/syx-scheduler.c (syx_scheduler_iterate): added
+        
+2008-05-22  Luca Bruno  <lethalman88@gmail.com>
+
+        * plugins/gtk/st/Gtk.st (main): create a process that does nothing. It will be only used to hold signal callbacks and to keep the scheduler on
+
+        * plugins/gtk/plugin-init.c (_syx_gtk_iteration): replaced _syx_gtk_main
+        (syx_g_closure_marshal): do it without threads and in a single process
+        (Gtk_main): register an idle and save the process where to put main loop callback executions
+        (Gtk_mainQuit): register an idle and save the process where to put main loop callback executions
+
+        * syx/syx-object.h (syx_semaphore_new): added
+
+        * syx/syx-scheduler.c (syx_scheduler_poll_register_source): added
+        (syx_scheduler_poll_unregister_source): added
+        (_syx_scheduler_poll_wait): check for sources
+
+        * plugins/gtk/st/GObject.st: move gobject related classes here
+
+        * plugins/gtk/plugin-init.c (syx_plugin_initialize): non-cold loading and change the loading order
+
+        * st/kernel/FileStream.st (handleForSemaphore): added
+
+        * st/kernel/Semaphore.st (waitForWrite, waitForRead): updated
+
+        * st/kernel/Console.st (nextLine): updated
+
+        * syx/syx-primitives.c (fileOp): add fileno
+        (Semaphore_waitFor): updated
 
 2008-05-20  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-signal.c (_syx_smalltalk_sighandler): use syx_signal
+        * syx/syx-signal.c (_syx_smalltalk_sighandler): register signals again
 
-	* syx/syx-error.c (syx_error_init): register new errors for system signals
+        * st/kernel/Console.st (registerUserInterruptHandler): added
 
-	* syx/syx-enums.h (SyxErrorType):
+        * st/kernel/SystemSignal.st: request for being initialized at every startup
 
-	* st/kernel/Console.st: quit on system signal
+        * syx/syx-init.c (_syx_file_in_basic):
+
+        * syx/syx-error.c (syx_signal): execute a blocking process for system signals
+
+        * syx/syx-enums.h (enum):
+
+        * st/kernel/Signal.st: generalized and separated Exception by SystemSignal
+
+        * st/kernel/SystemSignal.st: added
+
+        * st/kernel/initialDecl.st: add HandlerBlock instance variable to both UserInterrupt and TerminationSignal
+
+        * syx/syx-signal.c (_syx_smalltalk_sighandler): use syx_signal
+
+        * syx/syx-error.c (syx_error_init): register new errors for system signals
+
+        * syx/syx-enums.h (SyxErrorType):
+
+        * st/kernel/Console.st: quit on system signal
 
 2008-05-19  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-error.c: simplified and fixed memory leak
+        * syx/syx-error.c: simplified and fixed memory leak
 
-	* syx/syx-memory.c (_syx_memory_gc_mark): only mark the used part of the stack
-	(syx_memory_gc): save the process state
-	(syx_memory_save_image): 
+        * syx/syx-memory.c (_syx_memory_gc_mark): only mark the used part of the stack
+        (syx_memory_gc): save the process state
+        (syx_memory_save_image): 
 
 2008-05-18  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/inheritance.texi: not yet complete
+        * syx/syx-scheduler.c (_syx_scheduler_find_next_process):
 
-	* syx/syx-object.c (syx_symbol_new): make a SmallInteger
+        * st/kernel/Console.st (nextLine): use the semaphore
 
-	* syx/syx-object.h (syx_symbol_hash): added
+        * syx/syx-object.c (syx_semaphore_wait): moved from syx-utils
+        (syx_semaphore_signal): moved from utils
 
-	* st/kernel/Symbol.st (hash): use the cached hash variable
+        * syx/syx-scheduler.c (_syx_scheduler_process_poll): added. Clear the handled FD from the set.
+        (_syx_scheduler_poll_wait):
 
-	* syx/syx-object.c (syx_symbol_new): cache the hash
-	(syx_dictionary_index_of): wants the hash of the symbol key
-	All calls have been updated. This leads to dropping about 8% of executed instructions.
+        * doc/manual/inheritance.texi: not yet complete
 
-	* syx/syx-enums.h (enum): 
+        * syx/syx-object.c (syx_symbol_new): make a SmallInteger
 
-	* st/kernel/initialDecl.st: add hash variable
+        * syx/syx-object.h (syx_symbol_hash): added
 
-	Updated copyright and bumped version number to 0.1.7.
+        * st/kernel/Symbol.st (hash): use the cached hash variable
+
+        * syx/syx-object.c (syx_symbol_new): cache the hash
+        (syx_dictionary_index_of): wants the hash of the symbol key
+        All calls have been updated. This leads to dropping about 8% of executed instructions.
+
+        * syx/syx-enums.h (enum): 
+
+        * st/kernel/initialDecl.st: add hash variable
+
+        Updated copyright and bumped version number to 0.1.7.
 
 2008-05-17  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/varscope.texi: begun work
-	maybe complete for now
+        * doc/manual/varscope.texi: begun work
+        maybe complete for now
 
-	* st/kernel/Console.st: only print last object when a block is executed
+        * st/kernel/Console.st: only print last object when a block is executed
 
-	* src/main.c: convert to UNIX
+        * src/main.c: convert to UNIX
 
-	* syx/syx-init.c (syx_initialize_system): let's save here the startupProcess, sometimes the scheduler won't run and it won't be saved in #startupSystem. This fixes the image recovering with multiple processes.
+        * syx/syx-init.c (syx_initialize_system): let's save here the startupProcess, sometimes the scheduler won't run and it won't be saved in #startupSystem. This fixes the image recovering with multiple processes.
 
-	* st/kernel/SystemDictionary.st (initializeSystem): startupProcess is saved inside the VM
+        * st/kernel/SystemDictionary.st (initializeSystem): startupProcess is saved inside the VM
 
-	* syx/syx-memory.c (_syx_memory_gc_mark): complete marking of detached frames
+        * syx/syx-memory.c (_syx_memory_gc_mark): complete marking of detached frames
 
 2008-05-16  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/blocks.texi (Loops): completed
+        * doc/manual/blocks.texi (Loops): completed
 
 2008-05-15  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-interp.c (syx_interp_enter_context): do not really switch the process
-	(_syx_interp_state_update): checks must be done before calling the method
-	(_syx_interp_switch_process): checks must be done before calling the method
-	(syx_interp_swap_context):
-	(syx_process_execute_scheduled): checks have to be done before calling the method
+        * syx/syx-interp.c (syx_interp_enter_context): do not really switch the process
+        (_syx_interp_state_update): checks must be done before calling the method
+        (_syx_interp_switch_process): checks must be done before calling the method
+        (syx_interp_swap_context):
+        (syx_process_execute_scheduled): checks have to be done before calling the method
 
-	* syx/syx-memory.c (_syx_memory_write_process_stack): fixed warnings
+        * syx/syx-memory.c (_syx_memory_write_process_stack): fixed warnings
 
-	* syx/syx-interp.h: add missing interp functions
+        * syx/syx-interp.h: add missing interp functions
 
-	* syx/syx-interp.c (_syx_interp_execute_byte): remove rarely used branch
-	(syx_interp_do_extended): added
-	(syx_interp_mark_arguments):
+        * syx/syx-interp.c (_syx_interp_execute_byte): remove rarely used branch
+        (syx_interp_do_extended): added
+        (syx_interp_mark_arguments):
 
 2008-05-13  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/blocks.texi (Return value of blocks): added
-	(Conditions): added
+        * doc/manual/blocks.texi (Return value of blocks): added
+        (Conditions): added
 
-	* doc/manual/language.texi (Comments): added
+        * doc/manual/language.texi (Comments): added
 
 2008-05-11  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/commonobjects.texi: filled in but not complete
+        * doc/manual/commonobjects.texi: filled in but not complete
 
-	* doc/manual/varscope.texi: added
+        * doc/manual/varscope.texi: added
 
-	* doc/manual/commonobjects.texi: added
+        * doc/manual/commonobjects.texi: added
 
-	* doc/manual/blocks.texi: added
+        * doc/manual/blocks.texi: added
 
-	* doc/manual/variables.texi: completed
+        * doc/manual/variables.texi: completed
 
-	* doc/manual/streference.texi (Dictionaries): added
+        * doc/manual/streference.texi (Dictionaries): added
 
-	* doc/manual/variables.texi: added
+        * doc/manual/variables.texi: added
 
-	* doc/manual/methods.texi: added
+        * doc/manual/methods.texi: added
 
-	* doc/manual/messages.texi: added
+        * doc/manual/messages.texi: added
 
-	* doc/manual/objects.texi: added
+        * doc/manual/objects.texi: added
 
-	* doc/manual/language.texi: 
+        * doc/manual/language.texi: 
 
 2008-05-10  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/language.texi: added
+        * doc/manual/language.texi: added
 
-	* syx/syx-memory.c (_syx_memory_write_process_stack): store stack if the first frames are detached
+        * syx/syx-memory.c (_syx_memory_write_process_stack): store stack if the first frames are detached
         (_syx_memory_write_process_stack): check if the stack has been already wrote
         (_syx_memory_read): read first detached frames
         (syx_memory_load_image): first fix pointers
@@ -119,7 +248,7 @@
 
 2008-05-07  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manual/introsyx.texi (Invoking syx): documented
+        * doc/manual/introsyx.texi (Invoking syx): documented
 
 2008-05-06  Luca Bruno  <lethalman88@gmail.com>
 
@@ -139,23 +268,23 @@
 
         * syx/syx-memory.c (enum): rename _BOS to _BOF
         All calls have been updated.
-	
+        
 2008-05-02  Luca Bruno  <lethalman88@gmail.com>
 
-	* doc/manpage/syx.1: added
-	
-	* doc/Makefile.am: added
-	add doc target
+        * doc/manpage/syx.1: added
+        
+        * doc/Makefile.am: added
+        add doc target
 
-	* configure.ac:
-	
-	* doc/manual/introsyx.texi: splitted from syx.texi
+        * configure.ac:
+        
+        * doc/manual/introsyx.texi: splitted from syx.texi
 
-	* doc/manual/syx.texi (Introducing the Syx environment): basic Strings
-	(What is Smalltalk): Image concept
-	(Index): added Classes and Methods
+        * doc/manual/syx.texi (Introducing the Syx environment): basic Strings
+        (What is Smalltalk): Image concept
+        (Index): added Classes and Methods
 
-	* syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
+        * syx/syx-memory.c (syx_memory_save_image): unmark the object being skipped
         (_syx_memory_write_object_with_vars): ensure the stack
         (_syx_memory_write_vars_with_fp): take care of detached frames
 
@@ -175,28 +304,28 @@
     
         * doc/manual/syx.texinfo: added
 
-	* doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
-	(Introducing the Syx environment): moved up
-	(Index): add menu and Concepts section
-	Added some concepts.
+        * doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
+        (Introducing the Syx environment): moved up
+        (Index): add menu and Concepts section
+        Added some concepts.
 
-	* doc/manual/fdl-1.2.texi: added
+        * doc/manual/fdl-1.2.texi: added
 
-	* doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
-	(Introducing the Syx environment): moved up
-	(Index): add menu and Concepts section
-	Added some concepts.
-	(Programs): added
-	(Introducing the Syx environment): started some docs
+        * doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
+        (Introducing the Syx environment): moved up
+        (Index): add menu and Concepts section
+        Added some concepts.
+        (Programs): added
+        (Introducing the Syx environment): started some docs
 
-	* doc/manual/fdl-1.2.texi: added
+        * doc/manual/fdl-1.2.texi: added
 
-	Create reference to doc/reference.
-	Add doc/manual.
+        Create reference to doc/reference.
+        Add doc/manual.
 
-	* doc/manual/syx.texinfo: added
+        * doc/manual/syx.texinfo: added
 
-	* syx/syx-memory.c:
+        * syx/syx-memory.c:
         (syx_memory_save_image): only store the stack of each process
         (_syx_memory_write_process_stack): fixed beginning and end of frames
         
@@ -440,44 +569,13 @@
         Changed the way of dealing with contexts and processes.
         The interpreter won't create any context except the ones demanded outside of it.
         All contexts informations are now kept inside the process stack.
-<<<<<<< HEAD:ChangeLog
->>>>>>> 82a09eb... 2008-05-01  Luca Bruno  <lethalman88@gmail.com>:ChangeLog
-
-2008-02-20  Luca Bruno  <lethalman88@gmail.com>
-
-	* syx/syx-object.h (syx_string_new_ref): renamed from syx_string_new_unref
-	All calls have been updated
-
-	* plugins/readline/plugin-init.c (ReadLine_readline): reference the returned string instead of creatinga new one
-
-	* syx/syx-primitives.c (FileStream_fileOp): fixed possible memory leak
-
-	* st/kernel/Console.st: added ConsoleChunkReader to fix multiple statements handling
-
-	* syx/syx-object.h (syx_string_new): use SYX_VSPRINTF
-
-	* syx/syx-utils.h (SYX_VSPRINTF): added
-
-	* syx/syx-utils.c (syx_vsprintf): removed
-	(syx_sprintf): removed
-
-2008-02-18  Luca Bruno  <lethalman88@gmail.com>
-
-	* syx/syx-lexer.c (_syx_lexer_token_identifier): fix var:=val assignment
-	(_syx_lexer_token_number): fix D.! syntax, where D is a digit (issue #28)
-
-	* syx/syx-interp.h (syx_interp_is_initialized): removed, use syx_system_initialized instead
-	All calls have been updated.
-
-	* syx/syx-parser.c (_syx_parser_parse_term): raise a new error for bad expression starts
-=======
 
 2008-02-20  Luca Bruno  <lethalman88@gmail.com>
 
         * syx/syx-object.h (syx_string_new_ref): renamed from syx_string_new_unref
         All calls have been updated
 
-        * plugins/readline/plugin-init.c (ReadLine_readline): reference the returned string instead of creating a new one
+        * plugins/readline/plugin-init.c (ReadLine_readline): reference the returned string instead of creatinga new one
 
         * syx/syx-primitives.c (FileStream_fileOp): fixed possible memory leak
 
@@ -499,7 +597,6 @@
         All calls have been updated.
 
         * syx/syx-parser.c (_syx_parser_parse_term): raise a new error for bad expression starts
->>>>>>> newinterp:ChangeLog
 
 2008-01-25  Luca Bruno  <lethalman88@gmail.com>
 

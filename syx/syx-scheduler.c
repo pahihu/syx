@@ -24,14 +24,6 @@
 
 #include "syx-object.h"
 
-#ifdef WINDOWS
-  #ifndef WIN32_LEAN_AND_MEAN
-  #define WIN32_LEAN_AND_MEAN
-  #endif
-  #include <windows.h>
-  #include <winsock2.h>
-#endif
-
 #include "syx-types.h"
 #include "syx-enums.h"
 #include "syx-scheduler.h"
@@ -42,30 +34,34 @@
 #include "syx-init.h"
 #include "syx-profile.h"
 
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif
-#include <sys/types.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #ifdef SYX_DEBUG_FULL
 #define SYX_DEBUG_PROCESS_SWITCH
 #endif
 
 SyxOop syx_processor;
-SyxOop *_syx_processor_first_process;
 SyxOop *_syx_processor_active_process;
 SyxOop *_syx_processor_byteslice;
 
-static SyxSchedulerPoll *_syx_scheduler_poll_read = NULL;
-static SyxSchedulerPoll *_syx_scheduler_poll_write = NULL;
-static fd_set _syx_scheduler_poll_rfds;
-static fd_set _syx_scheduler_poll_wfds;
-static syx_int32 _syx_scheduler_poll_nfds = -1;
-static void _syx_scheduler_poll_wait (void);
-static SyxOop _syx_scheduler_find_next_process ();
+SyxSchedulerPoll *_syx_scheduler_poll_sources = NULL;
+
+/* These are implemented in scheduler-posix or scheduler-win */
+void _syx_scheduler_init_platform (void);
+void _syx_scheduler_poll_wait_platform (void);
+void _syx_scheduler_quit_platform (void);
+
+static void
+_syx_scheduler_poll_wait (void)
+{
+  SyxSchedulerPoll *source = _syx_scheduler_poll_sources;
+  for (source=_syx_scheduler_poll_sources; source; source=source->next)
+    {
+      SyxSchedulerSourceFunc func = (SyxSchedulerSourceFunc)source->fd;
+      if (func ())
+        syx_semaphore_signal (source->semaphore);
+    }
+
+  _syx_scheduler_poll_wait_platform ();
+}
 
 static SyxOop 
 _syx_scheduler_find_next_process ()
@@ -73,172 +69,16 @@ _syx_scheduler_find_next_process ()
   SyxOop process;
 
   /* no processes have been scheduled */
-  if (SYX_IS_NIL (syx_processor_first_process))
-    return syx_nil;
-
   if (SYX_IS_NIL (syx_processor_active_process))
-    syx_processor_active_process = syx_processor_first_process;
+    return syx_nil;
 
   for (process=SYX_PROCESS_NEXT (syx_processor_active_process); ; process = SYX_PROCESS_NEXT (process))
     {
-      /* Reached the end of the linked list */
-      if (SYX_IS_NIL (process))
-        {
-          process = syx_processor_first_process;
-          /* Both first and last processes are nil. No more processes then. */
-          if (SYX_IS_NIL (process))
-            return syx_nil;
-        }
+      /* This loop won't break until a resumed process is found, so we call the poll from here */
+      _syx_scheduler_poll_wait ();
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
         return process;
-    }
-}
-
-static void
-_syx_scheduler_poll_wait (void)
-{
-  static struct timeval tv = {0, 1};
-  syx_int32 res, nfds;
-  SyxSchedulerPoll *p, *oldp, *fp;
-  fd_set r = _syx_scheduler_poll_rfds;
-  fd_set w = _syx_scheduler_poll_wfds;
-
-  res = select (_syx_scheduler_poll_nfds + 1, &r, &w, NULL, &tv);
-  if (res == -1)
-    {
-      syx_perror ("SCHEDULER: ");
-    }
-
-  nfds = -1;
-
-  for (oldp=NULL,p=_syx_scheduler_poll_read; p;)
-    {
-      if (FD_ISSET (p->fd, &r))
-        {
-          if (oldp)
-            oldp->next = p->next;
-          else
-            _syx_scheduler_poll_read = p->next;
-          syx_semaphore_signal (p->semaphore);
-          fp = p;
-          p = p->next;
-          syx_free (fp);
-        }
-      else
-        {
-          nfds = (nfds < p->fd ? p->fd : nfds);
-          oldp = p;
-          p = p->next;
-        }
-    }
-
-  for (oldp=NULL,p=_syx_scheduler_poll_write; p;)
-    {
-      if (FD_ISSET (p->fd, &w))
-        {
-          if (oldp)
-            oldp->next = p->next;
-          else
-            _syx_scheduler_poll_write = p->next;
-          syx_semaphore_signal (p->semaphore);
-          fp = p;
-          p = p->next;
-          syx_free (fp);
-        }
-      else
-        {
-          nfds = (nfds < p->fd ? p->fd : nfds);
-          oldp = p;
-          p = p->next;
-        }
-    }
-
-  _syx_scheduler_poll_nfds = nfds;
-}
-
-void
-_syx_scheduler_save (FILE *image)
-{
-  syx_int32 index, data;
-  SyxSchedulerPoll *p = _syx_scheduler_poll_read;
-  
-  while (p)
-    {
-      fputc (1, image);
-      index = SYX_MEMORY_INDEX_OF (p->semaphore);
-      data = p->fd;
-      data = SYX_COMPAT_SWAP_32 (data);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      data = SYX_COMPAT_SWAP_32 (index);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      p = p->next;
-    }
-  fputc (0, image);
-      
-  p = _syx_scheduler_poll_write;
-  while (p)
-    {
-      fputc (1, image);
-      index = SYX_MEMORY_INDEX_OF (p->semaphore);
-      data = p->fd;
-      data = SYX_COMPAT_SWAP_32 (data);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      data = SYX_COMPAT_SWAP_32 (index);
-      fwrite (&data, sizeof (syx_int32), 1, image);
-      p = p->next;
-    }
-  fputc (0, image);
-}
-
-void
-_syx_scheduler_load (FILE *image)
-{
-  syx_int32 index, data;
-  SyxSchedulerPoll *p = NULL;
-
-  _syx_scheduler_poll_read = NULL;
-  while (fgetc (image))
-    {
-      if (p)
-        {
-          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-          p = p->next;
-        }
-      else
-        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-
-      fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = SYX_COMPAT_SWAP_32 (data);
-      fread (&data, sizeof (syx_int32), 1, image);
-      index = SYX_COMPAT_SWAP_32 (data);
-      p->semaphore = (SyxOop)(syx_memory + index);
-      p->next = NULL;
-
-      if (!_syx_scheduler_poll_read)
-        _syx_scheduler_poll_read = p;
-    }
-
-  _syx_scheduler_poll_write = NULL;
-  while (fgetc (image))
-    {
-      if (p)
-        {
-          p->next = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-          p = p->next;
-        }
-      else
-        p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-
-      fread (&data, sizeof (syx_int32), 1, image);
-      p->fd = SYX_COMPAT_SWAP_32 (data);
-      fread (&data, sizeof (syx_int32), 1, image);
-      index = SYX_COMPAT_SWAP_32 (data);
-      p->semaphore = (SyxOop)(syx_memory + index);
-      p->next = NULL;
-
-      if (!_syx_scheduler_poll_write)
-        _syx_scheduler_poll_write = p;
     }
 }
 
@@ -257,13 +97,26 @@ syx_scheduler_init (void)
       SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor) = syx_small_integer_new (100);
       syx_globals_at_put (syx_symbol_new ("Processor"), syx_processor);
 
-      FD_ZERO(&_syx_scheduler_poll_rfds);
-      FD_ZERO(&_syx_scheduler_poll_wfds);
+      _syx_scheduler_init_platform ();
     }
 
   _syx_processor_active_process = &SYX_PROCESSOR_SCHEDULER_ACTIVE_PROCESS(syx_processor);
-  _syx_processor_first_process = &SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS(syx_processor);
   _syx_processor_byteslice = &SYX_PROCESSOR_SCHEDULER_BYTESLICE(syx_processor);
+}
+
+/*!
+  Do a single iteration of the scheduler.
+  Returns FALSE when no pending processes are left.
+*/
+syx_bool
+syx_scheduler_iterate (void)
+{
+  syx_processor_active_process = _syx_scheduler_find_next_process ();
+  if (SYX_IS_NIL (syx_processor_active_process))
+    return FALSE;
+
+  syx_process_execute_scheduled (syx_processor_active_process);
+  return TRUE;
 }
 
 /*! Run the scheduler in blocking mode. Exits once no Process is scheduled */
@@ -280,17 +133,13 @@ syx_scheduler_run (void)
 
   running = TRUE;
 
-  syx_processor_active_process = _syx_scheduler_find_next_process ();
-  while (!SYX_IS_NIL (syx_processor_first_process))
+  while (!SYX_IS_NIL (syx_processor_active_process = _syx_scheduler_find_next_process ()))
     {  
 #ifdef SYX_DEBUG_PROCESS_SWITCH
       syx_debug ("SCHEDULER - Switch process with %p\n", SYX_OBJECT(syx_processor_active_process));
 #endif
 
       syx_process_execute_scheduled (syx_processor_active_process);
-      syx_processor_active_process = _syx_scheduler_find_next_process ();
-      if (_syx_scheduler_poll_nfds != -1)
-        _syx_scheduler_poll_wait ();
     }
 
   running = FALSE;
@@ -299,116 +148,99 @@ syx_scheduler_run (void)
 }
 
 /*!
-  Watch a file descriptor for reading
+  The scheduler runs the callback to check whether the source is ready then signal the semaphore.
+  To tell that the source is ready, return TRUE from the callback, otherwise FALSE.
 
-  \param fd the file descriptor
-  \param semaphore called when fd is ready for reading
+  \param callback the callback to call for each scheduler iteration
+  \param semaphore the semaphore to signal when the source is ready
 */
 void
-syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore)
+syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore)
 {
-  SyxSchedulerPoll *p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-  p->fd = fd;
-  p->semaphore = semaphore;
-  p->next = _syx_scheduler_poll_read;
-  _syx_scheduler_poll_read = p;
-
-  if (fd > _syx_scheduler_poll_nfds)
-    _syx_scheduler_poll_nfds = fd;
-
-  FD_SET(fd, &_syx_scheduler_poll_rfds);
+  SyxSchedulerPoll *s = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
+  s->fd = (syx_nint) callback;
+  s->semaphore = semaphore;
+  s->next = _syx_scheduler_poll_sources;
+  _syx_scheduler_poll_sources = s;
 }
 
 /*!
-  Watch a file descriptor for writing
-
-  \param fd the file descriptor
-  \param semaphore called when fd is ready for writing
+  Remove an idle source previously added with syx_scheduler_poll_register_source
 */
 void
-syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore)
+syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore)
 {
-  SyxSchedulerPoll *p = (SyxSchedulerPoll *) syx_malloc (sizeof (SyxSchedulerPoll));
-  p->fd = fd;
-  p->semaphore = semaphore;
-  p->next = _syx_scheduler_poll_write;
-  _syx_scheduler_poll_write = p;
+  SyxSchedulerPoll *s, *pre;
 
-  if (fd > _syx_scheduler_poll_nfds)
-    _syx_scheduler_poll_nfds = fd;
-
-  FD_SET(fd, &_syx_scheduler_poll_wfds);
+  for (s=_syx_scheduler_poll_sources, pre=NULL; s; s=s->next)
+    {
+      if (s->fd == (syx_nint)callback && s->semaphore == semaphore)
+        {
+          if (!pre)
+            _syx_scheduler_poll_sources = s->next;
+          else
+            pre->next = s->next;
+          syx_free (s);
+        }
+    }
 }
 
 /*! Stop the scheduler */
 void
 syx_scheduler_quit (void)
 {
-  SyxSchedulerPoll *p, *pp;
-
-  for (p=_syx_scheduler_poll_read; p;)
-    {
-      pp = p;
-      p = p->next;
-      syx_free (pp);
-    }
-  _syx_scheduler_poll_read = NULL;
-
-  for (p=_syx_scheduler_poll_write; p;)
-    {
-      pp = p;
-      p = p->next;
-      syx_free (pp);
-    }
-  _syx_scheduler_poll_write = NULL;
+  _syx_scheduler_quit_platform ();
 }
 
-/*! Add a Process to be scheduled */
-void
+/*! Add a Process to be scheduled.
+  \param process a valid Process
+  \return TRUE if the given Process has been scheduled successfully, FALSE otherwise */
+syx_bool
 syx_scheduler_add_process (SyxOop process)
 {
-  if (!SYX_IS_OBJECT (process))
-    return;
+  if (SYX_IS_TRUE (SYX_PROCESS_SCHEDULED (process)))
+    return FALSE;
 
-  if (SYX_IS_FALSE (SYX_PROCESS_SCHEDULED(process)))
+  if (SYX_IS_NIL (syx_processor_active_process))
+    SYX_PROCESS_NEXT(process) = syx_processor_active_process = process;
+  else
     {
-      if (SYX_IS_NIL (syx_processor_first_process))
-        syx_processor_first_process = syx_processor_active_process = process;
-      else
-        {
-          SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
-          SYX_PROCESS_NEXT(syx_processor_active_process) = process;
-        }
-      SYX_PROCESS_SCHEDULED(process) = syx_true;
+      SYX_PROCESS_NEXT(process) = SYX_PROCESS_NEXT(syx_processor_active_process);
+      SYX_PROCESS_NEXT(syx_processor_active_process) = process;
     }
+  SYX_PROCESS_SCHEDULED(process) = syx_true;
+  return TRUE;
 }
 
-/*! Remove a Process from being scheduled */
-void
+/*! Remove a Process from being scheduled.
+  \param process a valid Process
+  \return TRUE if the given Process has been found and removed successfully, FALSE otherwise */
+syx_bool
 syx_scheduler_remove_process (SyxOop process)
 {
-  SyxOop inter_process, prev_process;
+  SyxOop cur_process, prev_process;
 
-  if (SYX_OOP_EQ (process, syx_processor_first_process))
+  if (SYX_OOP_EQ (process, syx_processor_active_process) && SYX_OOP_EQ (SYX_PROCESS_NEXT (process), process))
     {
+      /* The active process was the only to being scheduled */
       SYX_PROCESS_SCHEDULED(process) = syx_false;
-      syx_processor_first_process = SYX_PROCESS_NEXT(process);
+      syx_processor_active_process = syx_nil;
+      return TRUE;
     }
   else
     {
-      for (prev_process=syx_processor_first_process; !SYX_IS_NIL(prev_process); prev_process=inter_process)
+      for (prev_process=syx_processor_active_process; !SYX_IS_NIL(prev_process); prev_process=cur_process)
         {
-          inter_process = SYX_PROCESS_NEXT(prev_process);
-          if (SYX_OOP_EQ (inter_process, process))
+          cur_process = SYX_PROCESS_NEXT(prev_process);
+          if (SYX_OOP_EQ (cur_process, process))
             {
               SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
               SYX_PROCESS_SCHEDULED(process) = syx_false;
-              break;
+              return TRUE;
             }
         }
     }
 
-  if (SYX_OOP_EQ (process, syx_processor_active_process))
-    syx_processor_active_process = syx_processor_first_process;
+  return FALSE;
 }
 

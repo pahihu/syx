@@ -22,34 +22,23 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 "
 
-!GtkTextTag class methodsFor: 'instance creationg'!
+Object subclass: #Readline
+       instanceVariableNames: ''
+       classVariableNames: ''!
 
-primNew: tagName
-    <cCall: 'Gtk_gtk_text_tag_new' plugin: 'gtk'>
+
+!Readline class methodsFor: 'console'!
+
+readline: aString
+    <cCall: 'Readline_readline' plugin: 'readline'>
 	self primitiveFailed
 !
 
-new: tagName
-    ^self handle: (self primNew: tagName)
-!
-
-new
-    ^self new: nil
-! !
-
-!GtkTextTag methodsFor: 'primitives'!
-
-priority
-    <cCall: 'Gtk_gtk_text_tag_get_priority' plugin: 'gtk'>
+addToHistory: aString
+    <cCall: 'Readline_addHistory' plugin: 'readline'>
 	self primitiveFailed
 !
 
-priority: anInteger
-    <cCall: 'Gtk_gtk_text_tag_set_priority' plugin: 'gtk'>
-	self primitiveFailed
-!
-
-emitOn: eventObject event: gdkEvent iter: textIter
-    <cCall: 'Gtk_gtk_text_tag_event' plugin: 'gtk'>
-	self primitiveFailed
+readline
+    ^self readline: ''
 ! !

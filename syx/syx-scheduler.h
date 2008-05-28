@@ -44,24 +44,26 @@ typedef struct SyxSchedulerPoll SyxSchedulerPoll;
 struct SyxSchedulerPoll
 {
   /*! File descriptor to wait for reading or writing */
-  syx_int32 fd;
+  syx_nint fd;
   /*! Semaphore to signal once ready to read or write */
   SyxOop semaphore;
   SyxSchedulerPoll *next;
 };
 
+typedef syx_bool (* SyxSchedulerSourceFunc) (void);
+
 EXPORT extern void syx_scheduler_init (void);
+EXPORT extern syx_bool syx_scheduler_iterate (void);
 EXPORT extern void syx_scheduler_run (void);
 EXPORT extern void syx_scheduler_quit (void);
 
-EXPORT extern void syx_scheduler_add_process (SyxOop process);
-EXPORT extern void syx_scheduler_remove_process (SyxOop process);
+EXPORT extern syx_bool syx_scheduler_add_process (SyxOop process);
+EXPORT extern syx_bool syx_scheduler_remove_process (SyxOop process);
 
-EXPORT extern void syx_scheduler_poll_read_register (syx_int32 fd, SyxOop semaphore);
-EXPORT extern void syx_scheduler_poll_write_register (syx_int32 fd, SyxOop semaphore);
-
-/*! Get the first process in the process linked list */
-#define syx_processor_first_process (*_syx_processor_first_process)
+EXPORT extern void syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore);
+EXPORT extern void syx_scheduler_poll_write_register (syx_nint fd, SyxOop semaphore);
+EXPORT extern void syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
+EXPORT extern void syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
 
 /*! Get the byteslice */
 #define syx_processor_byteslice (*_syx_processor_byteslice)

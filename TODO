@@ -1,11 +1,10 @@
 Major:
-1. Make the Console non-blocking
-2. Cover most of the standard
-3. Fix and improve file/IO streams
-4. Fix exception handling sequence
-5. C layer for number operations
-6. Create extra GC roots
-7. Create examples and yet more documentation (under development)
+1. Cover most of the standard
+2. Fix and improve file/IO streams
+3. Fix exception handling sequence
+4. C layer for number operations
+5. Create extra GC roots
+6. Create examples and yet more documentation (under development)
 
 Minor:
 - Object inspecting
