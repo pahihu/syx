@@ -1,3 +1,15 @@
+2008-05-28  Luca Bruno  <lethalman88@gmail.com>
+
+	* syx/syx-plugins.h:
+
+	* syx/syx-plugins.c: split plugin paths
+	(syx_plugins_init): implemented
+	(syx_plugins_quit): added
+
+	* syx/syx-platform.h (SYX_ENV_PATH_SEPARATOR): added
+
+	* syx/syx-init.c (syx_quit): use plugins_quit
+
 2008-05-27  Luca Bruno  <lethalman88@gmail.com>
 
 	* syx/syx-primitives.c (Semaphore_waitFor):

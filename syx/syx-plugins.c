@@ -44,6 +44,8 @@
 
 static SyxPluginEntry *_syx_plugins = NULL;
 static syx_int32 _syx_plugins_top = 0;
+static syx_string *_syx_plugins_path = NULL;
+static syx_int32 _syx_plugins_path_top = 0;
 
 #endif /* WITH_PLUGINS */
 
@@ -55,6 +57,47 @@ static syx_int32 _syx_plugins_top = 0;
 void
 syx_plugins_init (void)
 {
+  syx_int32 size = 0;
+  syx_string path, token;
+
+  /* Obtain the full path including SYX_PLUGIN_PATH env variable when possible */
+  size += strlen (SYX_PLUGIN_PATH);
+#ifdef HAVE_GETENV
+  if (getenv ("SYX_PLUGIN_PATH"))
+    size += strlen (getenv ("SYX_PLUGIN_PATH"));
+#endif
+  path = (syx_string) syx_malloc (size+1);
+  strcpy (path, SYX_PLUGIN_PATH);
+#ifdef HAVE_GETENV
+  if (getenv ("SYX_PLUGIN_PATH"))
+    strcat (path, getenv ("SYX_PLUGIN_PATH"));
+#endif
+  path[size] = '\0';
+
+  token = strtok (path, ":;");
+  while (token)
+    {
+      _syx_plugins_path = (syx_string *)syx_realloc (_syx_plugins_path, ++_syx_plugins_path_top * sizeof (syx_string));
+      _syx_plugins_path[_syx_plugins_path_top-1] = syx_strdup (token);
+      token = strtok (NULL, ":;");
+    }
+  syx_free (path);
+}
+
+/*!
+  Finalize the plugin system and all loaded plugins.
+
+  This function is called internally, usually applications don't need to use this function directly.
+*/
+void
+syx_plugins_quit (void)
+{
+  syx_int32 i;
+  for (i=0; i < _syx_plugins_path_top; i++)
+    syx_free (_syx_plugins_path[i]);
+  syx_free (_syx_plugins_path);
+
+  syx_plugin_finalize_all ();
 }
 
 static SyxOop

@@ -92,13 +92,15 @@
 /* TODO: use "extern" then remove it from headers */
 #ifdef WINDOWS
 # define SYX_PATH_SEPARATOR '\\'
+# define SYX_ENV_PATH_SEPARATOR ';'
 # ifdef _DLL
 #  define EXPORT __declspec(dllexport)
 # else
 #  define EXPORT __declspec(dllimport)
 # endif /* _DLL */
-#else /* WINDOWS */
+#else /* !WINDOWS */
 # define SYX_PATH_SEPARATOR '/'
+# define SYX_ENV_PATH_SEPARATOR ':'
 # define EXPORT
 #endif /* WINDOWS */
 
