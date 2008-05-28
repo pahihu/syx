@@ -4,6 +4,12 @@
 
 	* doc/manual/introsyx.texi (Invoking syx): updated
 
+	* syx/syx-init.c (syx_set_root_path): use SYX_ROOT_PATH
+
+	* doc/manpage/syx.1: updated
+
+	* doc/manual/introsyx.texi (Invoking syx): updated
+
 	* syx/syx-plugins.c (syx_plugins_init): fixed
 	(syx_plugin_load): try all possible plugin paths
 

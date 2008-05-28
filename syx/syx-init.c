@@ -443,7 +443,14 @@ syx_bool
 syx_set_root_path (syx_symbol root_path)
 {
   if (!root_path)
-     root_path = SYX_ROOT_PATH;
+    {
+#ifdef HAVE_GETENV
+      if (getenv ("SYX_ROOT_PATH"))
+        root_path = getenv ("SYX_ROOT_PATH");
+      else
+#endif
+        root_path = SYX_ROOT_PATH;
+    }
 
   if (_syx_root_path)
      syx_free (_syx_root_path);

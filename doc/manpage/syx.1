@@ -53,8 +53,14 @@ The default image loaded on startup. The path can be overridden with the \fISYX_
 .RS
 This directory contains all the C plugins that are loadable from within Smalltalk.
 .SH ENVIRONMENT
+.IP SYX_ROOT_PATH
+If non-null specifies the full pathname for an alternate system wide
+.I root path\fP.
+Overridden by the
+.B -r, --root
+option.
 .IP SYX_IMAGE_PATH
-If non-null the full pathname for an alternate system wide
+If non-null specifies the full pathname for an alternate system wide
 .I image file\fP.
 Overridden by the
 .B -i, --image

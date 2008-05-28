@@ -156,10 +156,12 @@ Once they have been executed the interpreter exits. If you want it to continue t
 @itemize @bullet
 @item @command{-r, --root=DIR}
 
-This option is used to specify the root directory where Syx will find @strong{Smalltalk files}, the @strong{default.sim} image and packages. 
+@vindex SYX_ROOT_PATH
+This option is used to specify the root directory where Syx will find @strong{Smalltalk files}, the @strong{default.sim} image and packages. This can be specified also with the @var{SYX_ROOT_PATH} environment variable. This is the order of the root path resolution:
 
 @enumerate
 @item check for @command{-r, --root}
+@item check for the @var{SYX_ROOT_PATH} environment variable
 @item use the default path specified at compile time (usually @file{/usr/share/syx})
 @end enumerate
 
