@@ -93,6 +93,7 @@
 #ifdef WINDOWS
 # define SYX_PATH_SEPARATOR '\\'
 # define SYX_ENV_PATH_SEPARATOR ';'
+# define SYX_ENV_PATH_SEPARATOR_S ";"
 # ifdef _DLL
 #  define EXPORT __declspec(dllexport)
 # else
@@ -101,6 +102,7 @@
 #else /* !WINDOWS */
 # define SYX_PATH_SEPARATOR '/'
 # define SYX_ENV_PATH_SEPARATOR ':'
+# define SYX_ENV_PATH_SEPARATOR_S ":"
 # define EXPORT
 #endif /* WINDOWS */
 

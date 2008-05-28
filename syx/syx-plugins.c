@@ -64,13 +64,16 @@ syx_plugins_init (void)
   size += strlen (SYX_PLUGIN_PATH);
 #ifdef HAVE_GETENV
   if (getenv ("SYX_PLUGIN_PATH"))
-    size += strlen (getenv ("SYX_PLUGIN_PATH"));
+    size += strlen (getenv ("SYX_PLUGIN_PATH")) + 1;
 #endif
   path = (syx_string) syx_malloc (size+1);
   strcpy (path, SYX_PLUGIN_PATH);
 #ifdef HAVE_GETENV
   if (getenv ("SYX_PLUGIN_PATH"))
-    strcat (path, getenv ("SYX_PLUGIN_PATH"));
+    {
+      strcat (path, SYX_ENV_PATH_SEPARATOR_S);
+      strcat (path, getenv ("SYX_PLUGIN_PATH"));
+    }
 #endif
   path[size] = '\0';
 
