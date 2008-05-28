@@ -234,6 +234,7 @@ syx_plugin_load (syx_symbol name)
   syx_string namext;
   SyxPluginInitializeFunc func;
   SyxPluginEntry *entry;
+  syx_int32 i;
 
   if (name)
     {
@@ -253,22 +254,26 @@ syx_plugin_load (syx_symbol name)
       strcat (namext, ".so");
 #endif /* WINDOWS */
 
-      location = (syx_string) syx_calloc (strlen (SYX_PLUGIN_PATH)
-                                          + strlen (name)
-                                          + strlen (namext) + 3, sizeof (syx_char));
-      sprintf (location, "%s%c%s%c%s",
-               SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
-               name, SYX_PATH_SEPARATOR,
-               namext);
-
-      syx_free (namext);
-      
 #ifdef SYX_DEBUG_INFO
-      syx_debug ("Loading plugin %s at %s\n", name, location);
+      syx_debug ("Loading plugin %s\n", name);
 #endif
 
-      handle = syx_library_open (location);
-      syx_free (location);
+      /* Try all possible paths */
+      for (handle=NULL, i=0; !handle && i < _syx_plugins_path_top; i++)
+        {
+          location = (syx_string) syx_calloc (strlen (SYX_PLUGIN_PATH)
+                                              + strlen (name)
+                                              + strlen (namext) + 3, sizeof (syx_char));
+          sprintf (location, "%s%c%s%c%s",
+                   SYX_PLUGIN_PATH, SYX_PATH_SEPARATOR,
+                   name, SYX_PATH_SEPARATOR,
+                   namext);
+
+          handle = syx_library_open (location);
+          syx_free (location);
+        }
+
+      syx_free (namext);
     }
   else
     handle = syx_library_open (NULL);
