@@ -327,7 +327,7 @@ syx_initialize_system (void)
 
   process = SYX_OBJECT_VARS(syx_globals)[3];
   if (!SYX_IS_NIL (process))
-    syx_scheduler_remove_process (process);
+    assert (syx_scheduler_remove_process (process));
 
   /* initialize the system */
   process = syx_process_new ();

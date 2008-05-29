@@ -220,25 +220,33 @@ syx_scheduler_remove_process (SyxOop process)
 {
   SyxOop cur_process, prev_process;
 
+  if (SYX_IS_NIL (syx_processor_active_process))
+    return FALSE;
+
   if (SYX_OOP_EQ (process, syx_processor_active_process) && SYX_OOP_EQ (SYX_PROCESS_NEXT (process), process))
     {
-      /* The active process was the only to being scheduled */
+      /* The active process was the only being scheduled */
       SYX_PROCESS_SCHEDULED(process) = syx_false;
       syx_processor_active_process = syx_nil;
       return TRUE;
     }
   else
     {
-      for (prev_process=syx_processor_active_process; !SYX_IS_NIL(prev_process); prev_process=cur_process)
+      prev_process = syx_processor_active_process;
+      cur_process = SYX_PROCESS_NEXT (prev_process);
+      do
         {
-          cur_process = SYX_PROCESS_NEXT(prev_process);
           if (SYX_OOP_EQ (cur_process, process))
             {
-              SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT(process);
+              SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT (process);
               SYX_PROCESS_SCHEDULED(process) = syx_false;
+              if (SYX_OOP_EQ (process, syx_processor_active_process))
+                syx_processor_active_process = SYX_PROCESS_NEXT (process);
               return TRUE;
             }
-        }
+          prev_process=cur_process;
+          cur_process = SYX_PROCESS_NEXT(prev_process);
+        } while (SYX_OOP_NE (cur_process, SYX_PROCESS_NEXT (syx_processor_active_process)));
     }
 
   return FALSE;
