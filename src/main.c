@@ -253,7 +253,14 @@ _parse_args (int argc, char **argv)
       /* Force WinWorkspace startup on WinCE */
 #ifdef WINCE
       SYX_OBJECT_VARS(syx_globals)[4] = syx_globals_at ("WinWorkspace");
-#endif
+#else
+      /* Now schedule to startup */
+      SyxOop process = syx_process_new ();
+      SyxOop context = syx_send_unary_message (syx_globals, "startupSystem");
+      syx_interp_enter_context (process, context);
+      SYX_PROCESS_SUSPENDED (process) = syx_false;
+      SYX_OBJECT_VARS(syx_globals)[3] = process;
+#endif /* WINCE */
     }
 }
 

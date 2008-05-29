@@ -419,6 +419,8 @@ syx_process_execute_blocking (SyxOop process)
   syx_processor_active_process = orig_process;
   _syx_interp_switch_process (&_syx_interp_state, orig_process);
 
+  syx_scheduler_remove_process (process);
+
   SYX_END_PROFILE(blocking);
 }
 

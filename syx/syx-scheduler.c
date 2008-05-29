@@ -240,8 +240,10 @@ syx_scheduler_remove_process (SyxOop process)
             {
               SYX_PROCESS_NEXT(prev_process) = SYX_PROCESS_NEXT (process);
               SYX_PROCESS_SCHEDULED(process) = syx_false;
+              /* We can't remove the activeProcess without replacing it with another one.
+                 We chose the previous so that the next one is executed. */
               if (SYX_OOP_EQ (process, syx_processor_active_process))
-                syx_processor_active_process = SYX_PROCESS_NEXT (process);
+                syx_processor_active_process = prev_process;
               return TRUE;
             }
           prev_process=cur_process;

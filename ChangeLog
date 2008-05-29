@@ -1,5 +1,17 @@
 2008-05-28  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-scheduler.c (syx_scheduler_remove_process): let's run the next process of the activeProcess
+
+	* syx/syx-interp.c (syx_process_execute_blocking): unschedule the process at the end
+
+	* syx/syx-memory.c (syx_memory_save_image): activeProcess can be nil
+
+	* tests/testscheduler.c (main): no need to clear the scheduler anymore
+
+	* src/main.c (_parse_args): startup the system from here
+
+	* syx/syx-init.c (syx_build_basic): drop responsibility to startup the system for embedding purposes
+
 	* syx/syx-scheduler.c (syx_scheduler_remove_process): fix when the process is the active process
 
 	* syx/syx-plugins.c (syx_plugins_quit): fixed when building without plugins
