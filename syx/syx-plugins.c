@@ -57,6 +57,7 @@ static syx_int32 _syx_plugins_path_top = 0;
 void
 syx_plugins_init (void)
 {
+#ifdef WITH_PLUGINS
   syx_int32 size = 0;
   syx_string path, token;
 
@@ -85,6 +86,8 @@ syx_plugins_init (void)
       token = strtok (NULL, ":;");
     }
   syx_free (path);
+
+#endif /* WITH_PLUGINS */
 }
 
 /*!
@@ -95,12 +98,14 @@ syx_plugins_init (void)
 void
 syx_plugins_quit (void)
 {
+#ifdef WITH_PLUGINS
   syx_int32 i;
   for (i=0; i < _syx_plugins_path_top; i++)
     syx_free (_syx_plugins_path[i]);
   syx_free (_syx_plugins_path);
 
   syx_plugin_finalize_all ();
+#endif /* WITH_PLUGINS */
 }
 
 static SyxOop
