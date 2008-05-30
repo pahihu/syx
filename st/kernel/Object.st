@@ -298,6 +298,14 @@ briefInspect
 
 !Object methodsFor: 'printing'!
 
+display
+    Transcript show: self displayString
+!
+
+displayNl
+    Transcript showCr: self displayString
+!
+
 print
     Transcript show: self printString
 !
@@ -306,12 +314,25 @@ printNl
     Transcript showCr: self printString
 !
 
+displayOn: aStream
+    "Append to aStream a String representation of the receiver for being displayed"
+    self printOn: aStream
+!
+
 printOn: aStream
     "Append to aStream a String representation of the receiver"
     aStream
         nextPutAll: self class article;
         space;
         nextPutAll: self class name
+!
+
+displayString
+    "Answer a String repsenentation of the receiver for being displayed"
+    | stream |
+    stream := WriteStream on: String new.
+    self displayOn: stream.
+    ^stream contents
 !
 
 printString

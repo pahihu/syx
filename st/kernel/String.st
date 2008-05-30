@@ -56,6 +56,10 @@ basicAt: anIndex put: aCharacter
 
 !String methodsFor: 'printing'!
 
+displayOn: aStream
+    aStream nextPutAll: self
+!
+
 printOn: aStream
     aStream
         nextPut: $';
