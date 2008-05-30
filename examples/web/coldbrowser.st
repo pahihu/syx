@@ -20,53 +20,53 @@ showHead
 !
 
 showClasses
-    '<td width="20%">' printNl.
+    '<td width="20%">' displayNl.
     (Smalltalk select: [ :ea | ea isClass ])
 	do: [ :ea |
-	    ('<a href="?', ea printString, '">', ea printString, '</a><br/>') printNl ].
-    '</td>' printNl
+	    ('<a href="?', ea displayString, '">', ea displayString, '</a><br/>') displayNl ].
+    '</td>' displayNl
 !
 
 showMethodsOf: aClass
-    '<table>' printNl.
+    '<table>' displayNl.
     aClass methodDictionary keysDo: [ :key |
-	('<tr><td><a href="?', aClass printString, '&', key asString printString, '">') printNl.
-	(key asString printString, '</td></tr>') printNl ].
-    '</table>' printNl.
+	('<tr><td><a href="?', aClass displayString, '&', key asString displayString, '">') displayNl.
+	(key asString displayString, '</td></tr>') displayNl ].
+    '</table>' displayNl.
 !
 
 showParentOf: aClass
-    ('Parent: <a href="?', aClass superclass printString, '">',
-	 aClass superclass printString, '</a>') printNl.
+    ('Parent: <a href="?', aClass superclass displayString, '">',
+	 aClass superclass displayString, '</a>') displayNl.
 !
 
 showMembersOf: aClass
-    'Members:<br/>' printNl.
-    '<ul>' printNl.
+    'Members:<br/>' displayNl.
+    '<ul>' displayNl.
     aClass instanceVariableNames do: [:name |
-	('<li>', name printString, '</li>') printNl ].
-    '</ul>' printNl.
+	('<li>', name displayString, '</li>') displayNl ].
+    '</ul>' displayNl.
 !
 
 inspectClass: aClass
     aClass ifNil: [ ^self ].
 
-    '<td valign="top">' printNl.
+    '<td valign="top">' displayNl.
 
     self showMethodsOf: aClass.
-    '<hr />' printNl.  
+    '<hr />' displayNl.  
     self showParentOf: aClass.
-    '<br />' printNl.
+    '<br />' displayNl.
     self showMembersOf: aClass.
 
-    '</td>' printNl
+    '</td>' displayNl
 !
 
 inspectMethod: aMethod
     aMethod isNil ifFalse: [
-	'<td valign="top">' printNl.
-	('<pre>', aMethod text, '</pre>') printNl.
-	'</td>' printNl ]
+	'<td valign="top">' displayNl.
+	('<pre>', aMethod text, '</pre>') displayNl.
+	'</td>' displayNl ]
 !
     
 run: queryString
@@ -77,7 +77,7 @@ run: queryString
     queryString
 	ifNotNil: [ args := queryString subStrings: '&' ].
     args do: [:each |
-	(each printString, '<br/>') printNl ].
+	(each displayString, '<br/>') displayNl ].
     
     classes := Object allSubclasses.
     args notEmpty ifTrue: [
@@ -90,7 +90,7 @@ run: queryString
     self inspectClass: class.
     self inspectMethod: method.
     
-    '</tr></table>' printNl.
-    '<p><small>Mailme: dominic.letz AT berlin.de</small></p>' printNl.
-    '</body></html>' printNl.
+    '</tr></table>' displayNl.
+    '<p><small>Mailme: dominic.letz AT berlin.de</small></p>' displayNl.
+    '</body></html>' displayNl.
 ! !

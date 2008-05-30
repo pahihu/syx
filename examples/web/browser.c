@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
    syx_memory_load_image (NULL);
 
    /* now file in class and method declarations from our ST file */
-   syx_cold_file_in ("coldbrowser.st");
+   syx_file_in_blocking ("coldbrowser.st");
 
    /* create a WebBrowser instance */
    instance = syx_object_new(syx_globals_at("WebBrowser"));
