@@ -1605,7 +1605,7 @@ SYX_FUNC_PRIMITIVE (Smalltalk_pluginCall)
   es->message_arguments_count = SYX_OBJECT_DATA_SIZE(arguments);
   memcpy (es->message_arguments, SYX_OBJECT_DATA (arguments), es->message_arguments_count * sizeof (SyxOop));
 
-  ret = syx_plugin_call (es, plugin_name, SYX_OBJECT_SYMBOL (func), syx_nil);
+  ret = syx_plugin_call (es, plugin_name, SYX_OBJECT_SYMBOL (func), method);
 
   /* restore the state */
   memcpy (es->message_arguments, message_arguments, message_arguments_count * sizeof (SyxOop));

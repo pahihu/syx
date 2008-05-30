@@ -1,11 +1,12 @@
 #!/usr/bin/env syx
 | choice menu |
 
-'Smalltalk YX simple example menu:' printNl.
-menu := ['1 - Reverse a string' printNl.
-	 '2 - Do a math operation with 2 numbers' printNl.
-	 'q - Quit' printNl.
-	 'Choice: ' print].
+'Smalltalk YX simple example menu:' displayNl.
+menu := ['1 - Reverse a string' displayNl.
+         '2 - Do a math operation with 2 numbers' displayNl.
+         'q - Quit' displayNl.
+         'Choice: ' display.
+          stdout flush ].
 
 choice := nil.
 [ menu value. (choice := stdin next asLowercase) = $q ]
@@ -18,20 +19,20 @@ choice := nil.
 		[$1] -> [
 		    | s |
 		    s := (stdin next: 1024) copyWithout: Character nl.
-		    s reverse printNl ].
+		    s reverse displayNl ].
 
 		[$2] -> [
 		    | n1 n2 op |
-		    'First number: ' print.
+		    'First number: ' display.
 		    n1 := Number readFrom: stdin.
-		    'Operation (+, /, -, *, <, >, =, ...): ' print.
+		    'Operation (+, /, -, *, <, >, =, ...): ' display.
 		    op := ((stdin next: 1024) copyWithout: Character nl) asSymbol.
-		    'Second number: ' print.
+		    'Second number: ' display.
 		    n2 := Number readFrom: stdin.
-		    ('Result: ', (n1 perform: op with: n2) printString) printNl ].
+		    ('Result: ', (n1 perform: op with: n2) displayString) displayNl ].
 
 		}
-	    otherwise: [ 'Not a valid choice' printNl ].
+	    otherwise: [ 'Not a valid choice' displayNl ].
 	Transcript cr ].
 
-'See you soon. Bye.' printNl
+'See you soon. Bye.' displayNl

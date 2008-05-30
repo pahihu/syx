@@ -16,7 +16,6 @@ SYX_FUNC_PRIMITIVE(average)
     {
       /* get the nth argument */
       oop = es->message_arguments[i];
-
       /* assert the object is a SmallInteger */
       if (!SYX_IS_SMALL_INTEGER (oop))
 	{

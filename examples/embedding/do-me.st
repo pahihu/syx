@@ -1,4 +1,4 @@
-'Start' printNl
+'Start' displayNl
 1 to: 10 do: [ :i |
-    i printNl ].
-'End' printNl
+    i displayNl ].
+'End' displayNl
