@@ -1,5 +1,7 @@
 2008-06-01  Luca Bruno  <lethalman88@gmail.com>
 
+	Prepared NEWS file
+
         * examples/x11: adjusted the example
 
         * syx/syx-scheduler.c (_syx_scheduler_find_next_process): check for a valid activeProcess
@@ -377,18 +379,6 @@
 
 2008-05-01  Luca Bruno  <lethalman88@gmail.com>
     
-        Create reference to doc/reference.
-        Add doc/manual.
-    
-        * doc/manual/syx.texinfo: added
-
-        * doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
-        (Introducing the Syx environment): moved up
-        (Index): add menu and Concepts section
-        Added some concepts.
-
-        * doc/manual/fdl-1.2.texi: added
-
         * doc/manual/syx.texi: added license informations and a brief introduction, renamed from .texinfo
         (Introducing the Syx environment): moved up
         (Index): add menu and Concepts section
