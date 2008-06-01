@@ -1,3 +1,15 @@
+= Startup =
+
+To startup the Window Manager in a new X session run:
+
+  sh startx.sh
+
+This command will open a new X server on a new display with a terminal.
+When you want to close X and return to the original display just `exit'
+the shell in the terminal.
+
+= WM instructions =
+
 The window manager in Wm.st has been written by Rahul aka blufox,
 inspired by tinywm.
 

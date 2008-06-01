@@ -1,3 +1,5 @@
+#!/usr/bin/env syx
+
 (Smalltalk loadPlugin: 'x11')
     ifFalse: [ self error: 'No X11 plugin was found' ]!
 
@@ -23,11 +25,11 @@ initialize
 !
 
 invoke
-    ^self initialize new invoke
+    ^self new invoke
 !
 
 win
-    ^self initialize new win
+    ^self new win
 
 ! !
 
@@ -84,7 +86,7 @@ invoke "TinyWM in Syx"
             [ButtonRelease] -> [
                 display unGrabPointer: CurrentTime.
             ].
-        }.
+        } otherwise: [ ]
     ] repeat.
     attr delete.
 !
@@ -117,4 +119,5 @@ win "Create a simple window with a rectangle on it, and show"
 
 ! !
 
+Wm initialize!
 Wm invoke!
