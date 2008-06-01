@@ -1,145 +1,145 @@
 2008-06-01  Luca Bruno  <lethalman88@gmail.com>
 
-	* examples/x11: adjusted the example
+        * examples/x11: adjusted the example
 
-	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): check for a valid activeProcess
+        * syx/syx-scheduler.c (_syx_scheduler_find_next_process): check for a valid activeProcess
 
-	* plugins/gtk/st/GObject.st (when:do:, when:do:send:): accept symbols as signal name
+        * plugins/gtk/st/GObject.st (when:do:, when:do:send:): accept symbols as signal name
 
-	* syx/syx-scheduler.c (syx_scheduler_poll_unregister_source): fix re-entrancy troubles
-	(_syx_scheduler_poll_wait): fix re-entrancy troubles
+        * syx/syx-scheduler.c (syx_scheduler_poll_unregister_source): fix re-entrancy troubles
+        (_syx_scheduler_poll_wait): fix re-entrancy troubles
 
-	* plugins/gtk/st/Gtk.st (main): use the semaphore
+        * plugins/gtk/st/Gtk.st (main): use the semaphore
 
-	* plugins/gtk/plugin-init.c: save the semaphore
+        * plugins/gtk/plugin-init.c: save the semaphore
 
-	* plugins/gtk/st/GObject.st: moved GCallback here and splitted into GMethodCallback and GBlockCallback
+        * plugins/gtk/st/GObject.st: moved GCallback here and splitted into GMethodCallback and GBlockCallback
 
-	* plugins/gtk/plugin-init.c (syx_g_closure_marshal): pass the arguments and be gc-safe
-	(Gtk_mainQuit): remove the idle Process and yield the control
+        * plugins/gtk/plugin-init.c (syx_g_closure_marshal): pass the arguments and be gc-safe
+        (Gtk_mainQuit): remove the idle Process and yield the control
 
 2008-05-30  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-primitives.c (Smalltalk_pluginCall): forgot to pass the failing method
+        * syx/syx-primitives.c (Smalltalk_pluginCall): forgot to pass the failing method
 
-	* examples/embedding/add.c: fixed to use newinterp API
+        * examples/embedding/add.c: fixed to use newinterp API
 
-	Use #display and #displayNl when possible.
-	
+        Use #display and #displayNl when possible.
+        
 2008-05-29  Luca Bruno  <lethalman88@gmail.com>
 
-	* st/kernel/String.st (displayOn): added
+        * st/kernel/String.st (displayOn): added
 
-	* st/kernel/Object.st (display, displayNl, displayString displayOn:): added
+        * st/kernel/Object.st (display, displayNl, displayString, displayOn:): added
 
 2008-05-28  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-scheduler.c (syx_scheduler_remove_process): let's run the next process of the activeProcess
+        * syx/syx-scheduler.c (syx_scheduler_remove_process): let's run the next process of the activeProcess
 
-	* syx/syx-interp.c (syx_process_execute_blocking): unschedule the process at the end
+        * syx/syx-interp.c (syx_process_execute_blocking): unschedule the process at the end
 
-	* syx/syx-memory.c (syx_memory_save_image): activeProcess can be nil
+        * syx/syx-memory.c (syx_memory_save_image): activeProcess can be nil
 
-	* tests/testscheduler.c (main): no need to clear the scheduler anymore
+        * tests/testscheduler.c (main): no need to clear the scheduler anymore
 
-	* src/main.c (_parse_args): startup the system from here
+        * src/main.c (_parse_args): startup the system from here
 
-	* syx/syx-init.c (syx_build_basic): drop responsibility to startup the system for embedding purposes
+        * syx/syx-init.c (syx_build_basic): drop responsibility to startup the system for embedding purposes
 
-	* syx/syx-scheduler.c (syx_scheduler_remove_process): fix when the process is the active process
+        * syx/syx-scheduler.c (syx_scheduler_remove_process): fix when the process is the active process
 
-	* syx/syx-plugins.c (syx_plugins_quit): fixed when building without plugins
-	(syx_plugins_init): fixed when building without plugins
+        * syx/syx-plugins.c (syx_plugins_quit): fixed when building without plugins
+        (syx_plugins_init): fixed when building without plugins
 
-	* doc/manpage/syx.1: updated
+        * doc/manpage/syx.1: updated
 
-	* doc/manual/introsyx.texi (Invoking syx): updated
+        * doc/manual/introsyx.texi (Invoking syx): updated
 
-	* syx/syx-init.c (syx_set_root_path): use SYX_ROOT_PATH
+        * syx/syx-init.c (syx_set_root_path): use SYX_ROOT_PATH
 
-	* doc/manpage/syx.1: updated
+        * doc/manpage/syx.1: updated
 
-	* doc/manual/introsyx.texi (Invoking syx): updated
+        * doc/manual/introsyx.texi (Invoking syx): updated
 
-	* syx/syx-plugins.c (syx_plugins_init): fixed
-	(syx_plugin_load): try all possible plugin paths
+        * syx/syx-plugins.c (syx_plugins_init): fixed
+        (syx_plugin_load): try all possible plugin paths
 
-	* syx/syx-platform.h (SYX_ENV_PATH_SEPARATOR_S): added
+        * syx/syx-platform.h (SYX_ENV_PATH_SEPARATOR_S): added
 
-	* syx/syx-plugins.h:
+        * syx/syx-plugins.h:
 
-	* syx/syx-plugins.c: split plugin paths
-	(syx_plugins_init): implemented
-	(syx_plugins_quit): added
+        * syx/syx-plugins.c: split plugin paths
+        (syx_plugins_init): implemented
+        (syx_plugins_quit): added
 
-	* syx/syx-platform.h (SYX_ENV_PATH_SEPARATOR): added
+        * syx/syx-platform.h (SYX_ENV_PATH_SEPARATOR): added
 
-	* syx/syx-init.c (syx_quit): use plugins_quit
+        * syx/syx-init.c (syx_quit): use plugins_quit
 
 2008-05-27  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-primitives.c (Semaphore_waitFor):
+        * syx/syx-primitives.c (Semaphore_waitFor):
 
-	* SConstruct: cleaned
+        * SConstruct: cleaned
 
-	* syx/SConscript:
+        * syx/SConscript:
 
-	* syx/syx-primitives.c (FileStream_fileOp): can use symbols
+        * syx/syx-primitives.c (FileStream_fileOp): can use symbols
 
-	* st/kernel/FileStream.st (fileno): added
-	(handleForSemaphore): removed
+        * st/kernel/FileStream.st (fileno): added
+        (handleForSemaphore): removed
 
 2008-05-26  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-scheduler-posix.c (_syx_scheduler_load): dropped implementation
-	(_syx_scheduler_save): dropped implementation
+        * syx/syx-scheduler-posix.c (_syx_scheduler_load): dropped implementation
+        (_syx_scheduler_save): dropped implementation
 
-	* syx/syx-scheduler.h: changed add_process and remove_process signatures
+        * syx/syx-scheduler.h: changed add_process and remove_process signatures
 
-	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): do a simpler round robin
-	(syx_scheduler_add_process, syx_scheduler_remove_process): 
+        * syx/syx-scheduler.c (_syx_scheduler_find_next_process): do a simpler round robin
+        (syx_scheduler_add_process, syx_scheduler_remove_process): 
 
-	* syx/syx-object.h (SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+        * syx/syx-object.h (SYX_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
 
-	* syx/syx-memory.c (syx_memory_save_image): store the round robin
+        * syx/syx-memory.c (syx_memory_save_image): store the round robin
 
-	* syx/syx-enums.h (SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
+        * syx/syx-enums.h (SYX_VARS_PROCESSOR_SCHEDULER_FIRST_PROCESS): removed
 
-	* st/kernel/initialDecl.st (ProcessorScheduler): removed firstProcess instance variable
+        * st/kernel/initialDecl.st (ProcessorScheduler): removed firstProcess instance variable
 
 2008-05-24  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/SConscript: fix scheduler choice
+        * syx/SConscript: fix scheduler choice
 
-	* syx.vcproj: add scheduler-win
+        * syx.vcproj: add scheduler-win
 
-	* makefile.vc (OBJS): compile syx-scheduler-win
+        * makefile.vc (OBJS): compile syx-scheduler-win
 
-	* plugins/readline/plugin-init.c (syx_plugin_initialize): 
+        * plugins/readline/plugin-init.c (syx_plugin_initialize): 
 
-	* plugins/readline/st/Readline.st: added
+        * plugins/readline/st/Readline.st: added
 
-	* plugins/readline/Makefile.am:
+        * plugins/readline/Makefile.am:
 
-	* st/kernel/Console.st: dropped readline
+        * st/kernel/Console.st: dropped readline
 
 2008-05-23  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-memory.c (_syx_memory_write): nullify C pointers to avoid bad accesses on next startup
-	
-	* syx/syx-error.c (syx_signal): forgot to readd the old code
+        * syx/syx-memory.c (_syx_memory_write): nullify C pointers to avoid bad accesses on next startup
+        
+        * syx/syx-error.c (syx_signal): forgot to readd the old code
 
-	* configure.ac (WIN32): added conditional
+        * configure.ac (WIN32): added conditional
 
-	* syx/SConscript:
+        * syx/SConscript:
 
-	* syx/Makefile.am (libsyx_la_SOURCES):
+        * syx/Makefile.am (libsyx_la_SOURCES):
 
-	* syx/syx-scheduler.c: splitted platform code
+        * syx/syx-scheduler.c: splitted platform code
 
-	* syx/syx-scheduler-win.c (_syx_scheduler_init_platform): added
+        * syx/syx-scheduler-win.c (_syx_scheduler_init_platform): added
 
-	* syx/syx-scheduler-posix.c (_syx_scheduler_init_platform): added
+        * syx/syx-scheduler-posix.c (_syx_scheduler_init_platform): added
 
         * TODO (Major):
 
