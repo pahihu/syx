@@ -70,7 +70,7 @@ _syx_scheduler_find_next_process ()
 {
   SyxOop process;
 
-  /* no processes have been scheduled */
+  /* No processes have been scheduled */
   if (SYX_IS_NIL (syx_processor_active_process))
     return syx_nil;
 
@@ -78,6 +78,10 @@ _syx_scheduler_find_next_process ()
     {
       /* This loop won't break until a resumed process is found, so we call the poll from here */
       _syx_scheduler_poll_wait ();
+
+      /* An external source could have nullified the activeProcess in the meanwhile */
+      if (SYX_IS_NIL (syx_processor_active_process))
+        return syx_nil;
 
       if (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (process)))
         return process;

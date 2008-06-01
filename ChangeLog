@@ -1,5 +1,9 @@
 2008-06-01  Luca Bruno  <lethalman88@gmail.com>
 
+	* syx/syx-scheduler.c (_syx_scheduler_find_next_process): check for a valid activeProcess
+
+	* plugins/gtk/st/GObject.st (when:do:, when:do:send:): accept symbols as signal name
+
 	* syx/syx-scheduler.c (syx_scheduler_poll_unregister_source): fix re-entrancy troubles
 	(_syx_scheduler_poll_wait): fix re-entrancy troubles
 

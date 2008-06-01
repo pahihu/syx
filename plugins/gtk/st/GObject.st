@@ -83,7 +83,7 @@ when: signalName send: aSelector
 when: signalName send: aSelector withArguments: anArray
     | callback id |
     callback := GMethodCallback selector: aSelector withArguments: anArray.
-    id := self primConnect: signalName closure: callback closure after: false.
+    id := self primConnect: signalName asString closure: callback closure after: false.
     callback handlerId: id.
     ^callback
 !
@@ -95,7 +95,7 @@ when: signalName do: aBlock
 when: signalName do: aBlock withArguments: anArray
     | callback id |
     callback := GBlockCallback block: aBlock withArguments: anArray.
-    id := self primConnect: signalName closure: callback closure after: false.
+    id := self primConnect: signalName asString closure: callback closure after: false.
     callback handlerId: id.
     ^callback
 ! !
