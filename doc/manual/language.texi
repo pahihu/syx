@@ -65,7 +65,7 @@ nil
 @node Block closures
 @section Block closures
 
-#include blocks.texi
+@include blocks.texi
 
 @node Variables scope
 @section Variables scope

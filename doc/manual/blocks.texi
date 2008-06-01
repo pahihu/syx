@@ -5,7 +5,7 @@
 @c See the file syx.texi for copying conditions.
 
 @menu
-* Return value::
+* Return value of blocks::
 * Conditions::
 * Loops::
 @end menu

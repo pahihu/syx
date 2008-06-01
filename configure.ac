@@ -16,6 +16,7 @@ AC_CANONICAL_TARGET
 dnl init automake
 AM_INIT_AUTOMAKE([syx], [syx_version()])
 AM_CONFIG_HEADER(syx/syx-config.h)
+AM_MAINTAINER_MODE
 
 CFLAGS="$CFLAGS -Wall -Wno-strict-aliasing -DROOT_PATH=$datadir/syx -DIMAGE_PATH=$datadir/syx/default.sim -DPLUGIN_PATH=$libdir/syx"
 
