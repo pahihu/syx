@@ -26,7 +26,7 @@
 #include <gtk/gtk.h>
 #include "syx-gobject.h"
 
-static SyxOop _syx_gtk_process;
+static SyxOop _syx_gtk_process, _syx_gtk_semaphore;
 
 static syx_bool
 _syx_gtk_iteration (void)
@@ -109,10 +109,10 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 
   context = syx_send_binary_message (callback, "invoke:", array);
   syx_interp_enter_context (_syx_gtk_process, context);
-  SYX_PROCESS_SUSPENDED (_syx_gtk_process) = syx_false;
+  syx_semaphore_signal (_syx_gtk_semaphore);
   syx_memory_gc_end ();
 
-  do { syx_scheduler_iterate (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
+  while (syx_scheduler_iterate () && SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
 
   return;
 }
@@ -120,12 +120,13 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 SYX_FUNC_PRIMITIVE(Gtk_main)
 {
   static syx_bool registered = FALSE;
-  SYX_PRIM_ARGS (1);
+  SYX_PRIM_ARGS (2);
 
   if (!registered)
     {
       syx_scheduler_poll_register_source (_syx_gtk_iteration, syx_nil);
       _syx_gtk_process = es->message_arguments[0];
+      _syx_gtk_semaphore = es->message_arguments[1];
       registered = TRUE;
     }
 

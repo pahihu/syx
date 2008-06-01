@@ -53,9 +53,11 @@ static void
 _syx_scheduler_poll_wait (void)
 {
   SyxSchedulerPoll *source = _syx_scheduler_poll_sources;
-  for (source=_syx_scheduler_poll_sources; source; source=source->next)
+  for (source=_syx_scheduler_poll_sources; source;)
     {
       SyxSchedulerSourceFunc func = (SyxSchedulerSourceFunc)source->fd;
+      /* Take next source here for possible re-entrancy troubles */
+      source=source->next;
       if (func ())
         syx_semaphore_signal (source->semaphore);
     }
@@ -111,11 +113,13 @@ syx_scheduler_init (void)
 syx_bool
 syx_scheduler_iterate (void)
 {
-  syx_processor_active_process = _syx_scheduler_find_next_process ();
-  if (SYX_IS_NIL (syx_processor_active_process))
+  SyxOop proc;
+  proc = _syx_scheduler_find_next_process ();
+  if (SYX_IS_NIL (proc))
     return FALSE;
 
-  syx_process_execute_scheduled (syx_processor_active_process);
+  syx_processor_active_process = proc;
+  syx_process_execute_scheduled (proc);
   return TRUE;
 }
 
@@ -172,7 +176,7 @@ syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop se
 {
   SyxSchedulerPoll *s, *pre;
 
-  for (s=_syx_scheduler_poll_sources, pre=NULL; s; s=s->next)
+  for (s=_syx_scheduler_poll_sources, pre=NULL; s;)
     {
       if (s->fd == (syx_nint)callback && s->semaphore == semaphore)
         {
@@ -180,6 +184,8 @@ syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop se
             _syx_scheduler_poll_sources = s->next;
           else
             pre->next = s->next;
+          /* Take next source here for possible re-entrancy troubles */
+          s=s->next;
           syx_free (s);
         }
     }

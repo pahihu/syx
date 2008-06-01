@@ -6,5 +6,5 @@
 label := GtkLabel new: 'Hello world'.
 window := GtkWindow new.
 window add: label; showAll.
-window when: 'destroy' do: [ Gtk mainQuit ].
+window when: 'destroy' do: [ 'Quitting.' displayNl. Gtk mainQuit ].
 Gtk main!

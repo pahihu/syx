@@ -145,7 +145,7 @@ Workspace subclass: #GtkWorkspace
 
 !Gtk class methodsFor: 'main loop'!
 
-primMain: idleProcess
+primMain: idleProcess on: aSemaphore
     <cCall: 'Gtk_main' plugin: 'gtk'>
 	self primitiveFailed
 !
@@ -155,9 +155,11 @@ initialize
 !
 
 main
-    | proc |
-    proc := [ [ ] repeat ] newProcess.
-    self primMain: proc
+    | proc sem |
+    "Use a semaphore to keep the process alive but suspended forever"
+    sem := Semaphore new.
+    proc := [ [ sem wait ] repeat ] fork.
+    self primMain: proc on: sem
 !
 
 mainQuit
