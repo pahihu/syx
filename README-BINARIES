@@ -12,3 +12,7 @@ To install the binary distribution, you must copy the contents of this
 directory in the root of your device, except this README file.
 For example, if you're running on Linux, you must copy all folders
 directly in the root /.
+
+On Windows CE you have to extract files in the root of the device.
+
+Instead, on Windows you can extract files wherever you want.
