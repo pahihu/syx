@@ -156,7 +156,6 @@ initialize
 
 main
     | proc |
-    "Use a semaphore to keep the process alive but suspended forever"
     proc := [ [ ] repeat ] newProcess.
     self primMain: proc
 !
@@ -166,67 +165,6 @@ mainQuit
 	self primitiveFailed
 ! !
 
-
-"Callbacks"
-
-!GCallback class methodsFor: 'initialize-release'!
-
-initialize
-    AllCallbacks := Bag new.
-    GClosureMarshal := GPointer handle: (Smalltalk plugin: 'gtk' cSymbol: 'syx_g_closure_marshal')
-! !
-
-!GCallback class methodsFor: 'instance creation'!
-
-selector: aSelector withArguments: anArray
-    ^self basicNew initializeSelector: aSelector arguments: anArray
-! !
-
-!GCallback methodsFor: 'initialize-release'!
-
-initializeSelector: aSelector arguments: anArray
-    selector := aSelector.
-    arguments := anArray.
-    handle := self.
-    
-    self initializeGClosure.
-    AllCallbacks add: self
-!
-
-initializeGClosure
-    | callback marshal |
-    marshal := GClosureMarshal.
-    closure := GClosure on: self.
-    closure ref.
-    closure marshal: marshal
-!
-
-handlerId: aSignalHandler
-    handlerId := aSignalHandler
-!
-
-invoke
-    "This method is called directly from syx_gtk_callback"
-    selector key perform: selector value withArguments: arguments
-! !
-
-!GCallback methodsFor: 'accessing'!
-
-closure
-    ^closure
-!
-
-handlerId
-    ^handlerId
-!
-
-selector
-    ^selector
-!
-
-arguments
-    ^arguments
-! !
 
 " Initialization code "
 

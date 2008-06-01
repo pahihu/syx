@@ -42,6 +42,7 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
                                    gpointer invocation_hint,
                                    gpointer marshal_data)
 {
+  syx_memory_gc_begin ();
   SyxOop array = syx_array_new_size (n_param_values);
   SyxOop context;
   SyxOop callback = (SyxOop) closure->data;
@@ -106,9 +107,11 @@ EXPORT void syx_g_closure_marshal (GClosure *closure,
 	}
     }
 
-  context = syx_send_unary_message (callback, "invoke");
+  context = syx_send_binary_message (callback, "invoke:", array);
   syx_interp_enter_context (_syx_gtk_process, context);
   SYX_PROCESS_SUSPENDED (_syx_gtk_process) = syx_false;
+  syx_memory_gc_end ();
+
   do { syx_scheduler_iterate (); } while (SYX_IS_FALSE (SYX_PROCESS_SUSPENDED (_syx_gtk_process)));
 
   return;
@@ -132,8 +135,9 @@ SYX_FUNC_PRIMITIVE(Gtk_main)
 SYX_FUNC_PRIMITIVE(Gtk_mainQuit)
 {
   syx_scheduler_poll_unregister_source (_syx_gtk_iteration, syx_nil);
+  syx_scheduler_remove_process (_syx_gtk_process);
 
-  SYX_PRIM_RETURN(es->message_receiver);
+  SYX_PRIM_YIELD(es->message_receiver);
 }
 
 EXPORT syx_bool

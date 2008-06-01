@@ -27,8 +27,16 @@ Object subclass: #GPointer
        classVariableNames: ''!
 
 GPointer subclass: #GCallback
-	 instanceVariableNames: 'selector arguments closure handlerId'
+	 instanceVariableNames: 'arguments closure handlerId'
 	 classVariableNames: 'AllCallbacks GClosureMarshal'!
+
+GCallback subclass: #GMethodCallback
+          instanceVariableNames: 'selector'
+          classVariableNames: ''!
+
+GCallback subclass: #GBlockCallback
+          instanceVariableNames: 'block'
+          classVariableNames: ''!
 
 GPointer subclass: #GClosure
 	 instanceVariableNames: ''
@@ -74,13 +82,110 @@ when: signalName send: aSelector
 
 when: signalName send: aSelector withArguments: anArray
     | callback id |
-    callback := GCallback selector: aSelector withArguments: anArray.
+    callback := GMethodCallback selector: aSelector withArguments: anArray.
+    id := self primConnect: signalName closure: callback closure after: false.
+    callback handlerId: id.
+    ^callback
+!
+
+when: signalName do: aBlock
+    ^self when: signalName do: aBlock withArguments: #()
+!
+
+when: signalName do: aBlock withArguments: anArray
+    | callback id |
+    callback := GBlockCallback block: aBlock withArguments: anArray.
     id := self primConnect: signalName closure: callback closure after: false.
     callback handlerId: id.
     ^callback
 ! !
 
+"Callbacks"
 
+!GCallback class methodsFor: 'initialize-release'!
+
+initialize
+    AllCallbacks := Bag new.
+    GClosureMarshal := GPointer handle: (Smalltalk plugin: 'gtk' cSymbol: 'syx_g_closure_marshal')
+! !
+
+!GCallback class methodsFor: 'instance creation'!
+
+new
+    ^self basicNew initialize
+! !
+
+!GCallback methodsFor: 'initialize-release'!
+
+initialize
+    | callback marshal |
+    handle := self.
+    marshal := GClosureMarshal.
+    closure := GClosure on: self.
+    closure ref.
+    closure marshal: marshal.
+    AllCallbacks add: self
+!
+
+handlerId: aSignalHandler
+    handlerId := aSignalHandler
+! !
+
+!GCallback methodsFor: 'accessing'!
+
+closure
+    ^closure
+!
+
+handlerId
+    ^handlerId
+!
+
+arguments
+    ^arguments
+! !
+
+!GMethodCallback class methodsFor: 'instance creation'!
+
+selector: aSelector withArguments: anArray
+    ^self new initializeSelector: aSelector arguments: anArray
+! !
+
+!GMethodCallback methodsFor: 'initialize-release'!
+
+initializeSelector: aSelector arguments: anArray
+    selector := aSelector.
+    arguments := anArray
+! !
+
+!GMethodCallback methodsFor: 'invoking'!
+
+invoke: anArray
+    "This method is called directly from syx_gtk_callback"
+    ^selector key perform: selector value withArguments: anArray, arguments
+! !
+
+!GBlockCallback class methodsFor: 'instance creation'!
+
+block: aBlock withArguments: anArray
+    ^self new initializeBlock: aBlock arguments: anArray
+! !
+
+!GBlockCallback methodsFor: 'initialize-release'!
+
+initializeBlock: aBlock arguments: anArray
+    block := aBlock.
+    arguments := anArray
+! !
+
+!GBlockCallback methodsFor: 'invoking'!
+
+invoke: anArray
+    "This method is called directly from syx_gtk_callback"
+    ^block valueWithArguments: anArray, arguments
+! !
+
+" C callback closures "
 
 !GClosure class methodsFor: 'instance creation'!
 
