@@ -8,7 +8,11 @@ EXTRA_DIST =						\
 	syx.sln syx.vcproj makefile.vc			\
 	doc/html/extras/footer.html
 
-docdir	= $(top_builddir)/doc
+CLEANFILES	= syx.pc
+
+docdir		= $(top_builddir)/doc
+pkgconfigdir	= $(libdir)/pkgconfig
+pkgconfig_DATA	= syx.pc
 
 doc:
 	@echo Making $@ in $(docdir)

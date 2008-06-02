@@ -237,6 +237,7 @@ AH_BOTTOM(
 [#endif /* SYX_CONFIG_H */])
 
 AC_CONFIG_FILES([
+syx.pc
 Makefile
 syx/Makefile
 src/Makefile
