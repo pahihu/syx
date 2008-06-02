@@ -38,6 +38,7 @@ if penv['plugins'] and penv['READLINE']:
       conf = Configure (env)
       if conf.CheckLibWithHeader ('curses', ['curses.h', 'term.h'], 'c', 'tgetnum(NULL);') and conf.CheckLibWithHeader ('readline', ['stdio.h', 'curses.h', 'term.h', 'readline/readline.h', 'readline/history.h'], 'c', 'add_history("testline");'):
          conf.Finish ()
+         env.MergeFlags ("-lsyx")
          lib_objects = env.SharedObject (lib_sources)
          lib_shared = env.SharedLibrary (target='syx-readline', source=lib_objects)
          Default (lib_shared)
