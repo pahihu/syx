@@ -217,6 +217,8 @@ This is useful when you want to test something that could be changed due to the 
 
 @item @command{-e CODE}
 
+The argument of this option is Smalltalk code. It will be evaluated once the system has been initiazed. This option is handled the Smalltalk-side. Like with files, use the @code{-c} command to continue the startup process.
+
 @vindex SYX_PLUGIN_PATH
 @item SYX_PLUGIN_PATH environment variable
 Specify the possible paths to find plugins. This variable won’t override the default path where to find plugins.
