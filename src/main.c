@@ -168,12 +168,15 @@ arg_enum_from_name (int argc, const char **argv, const char **arg_val)
 static void
 _parse_args (int argc, char **argv)
 {
+#ifndef WINCE
+  SyxOop process, context;
+#endif
+  syx_bool init;
   syx_string root_path = NULL;
   syx_string image_path = NULL;
   syx_symbol recovery = NULL;
   syx_bool scratch = FALSE;
   syx_bool quit = FALSE;
-  syx_bool init;
 
   while (curr_arg < argc)
     {
@@ -255,8 +258,8 @@ _parse_args (int argc, char **argv)
       SYX_OBJECT_VARS(syx_globals)[4] = syx_globals_at ("WinWorkspace");
 #else
       /* Now schedule to startup */
-      SyxOop process = syx_process_new ();
-      SyxOop context = syx_send_unary_message (syx_globals, "startupSystem");
+      process = syx_process_new ();
+      context = syx_send_unary_message (syx_globals, "startupSystem");
       syx_interp_enter_context (process, context);
       SYX_PROCESS_SUSPENDED (process) = syx_false;
       SYX_OBJECT_VARS(syx_globals)[3] = process;

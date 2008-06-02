@@ -402,7 +402,7 @@ env.SConscript (dirs=['examples'], exports=['env', 'distdir'])
 
 env['doxygen'] = env.WhereIs ('doxygen')
 if env['doc'] and env['doxygen']:
-   target = env.Command ('build/doc', '#Doxyfile', '$doxygen $SOURCES')
+   target = env.Command ('doc/reference', '#Doxyfile', '$doxygen $SOURCES')
    Default (target)
    path = os.path.join (env['docdir'], distdir[1:])
    t1 = env.SyxInstall (path, target)
@@ -470,7 +470,7 @@ sources = ['#share/syx.desktop', '#share/syx.png', '#share/gnome-application-syx
 target = env.Install (os.path.join (distdir, 'share'), sources)
 env.Alias ('sdist', target)
 
-target = env.Install (os.path.join (distdir, 'doc', 'html', 'extras'), '#doc/html/extras/footer.html')
+target = env.Install (os.path.join (distdir, 'doc', 'reference', 'html', 'extras'), '#doc/reference/html/extras/footer.html')
 env.Alias ('sdist', target)
 
 # Binary distribution

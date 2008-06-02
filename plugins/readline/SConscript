@@ -29,6 +29,8 @@ import os
 Import ('penv', 'distdir')
 
 lib_sources = Split ("plugin-init.c")
+st_sources = Split("""st/Readline.st""")
+extras = Split("""SConscript Makefile.am""")
 
 if penv['plugins'] and penv['READLINE']:
    env = penv.Clone ()
@@ -42,10 +44,16 @@ if penv['plugins'] and penv['READLINE']:
          
          instdir = os.path.join (env['plugindir'], 'readline')
          env.SyxInstall (instdir, lib_shared)
+
+         path = os.path.join (env['rootdir'], 'st', 'readline')
+         env.SyxInstall (path, st_sources)
       else:
          conf.Finish ()
          print 'WARNING: building without readline plugin'
 
-target = penv.Install (os.path.join (distdir, 'plugins', 'readline'),
-                       lib_sources + ['Makefile.am', 'SConscript'])
+target = penv.Install (os.path.join (distdir, 'plugins', 'readline'), lib_sources + extras)
+penv.Alias ('sdist', target)
+
+path = os.path.join (distdir, 'plugins', 'readline', 'st')
+target = penv.Install (path, st_sources)
 penv.Alias ('sdist', target)
