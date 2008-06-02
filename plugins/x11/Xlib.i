@@ -23,6 +23,8 @@ typedef void * XPointer;
     Atom, VisualID, KeyCode
 }
 
+%apply bool { Bool }
+
 %include Xlib_structs.i
 
 %module X11

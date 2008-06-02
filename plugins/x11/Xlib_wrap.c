@@ -131,19 +131,14 @@
   else						\
     arg = (ltype) SYX_OBJECT_VARS(oop)[0];
 
-#define SYX_OBJECT_IS_NIL_OR_STRING(o) (SYX_IS_NIL(o) || SYX_OBJECT_IS_STRING(o))
-#define SYX_OBJECT_NIL_OR_STRING(o) \
-    (SYX_IS_NIL(o) ? NULL : SYX_OBJECT_STRING(o))
-
+#define SWIG_SYX_OBJECT_STRING(oop) (SYX_IS_NIL(oop) ? NULL : SYX_OBJECT_STRING(oop))
+#define SWIG_SYX_OBJECT_IS_NIL_OR_STRING(oop) (SYX_IS_NIL(oop) || SYX_OBJECT_IS_STRING(oop))
 
 #include <X11/Xlib.h>
 #include <X11/X.h>
 #include <X11/Xproto.h>
 #include <X11/Xprotostr.h>
 #include <X11/Xfuncproto.h>
-
-
-#include <stdint.h>		// Use the C99 official header
 
 
 typedef struct {		/* image manipulation routines */
@@ -2675,6 +2670,7 @@ extern void XRemoveConnectionWatch(
 );
 
 
+/* Module: X11 Function: XExtData_number_set */
 SYX_FUNC_PRIMITIVE(X11_XExtData_number_set)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2696,6 +2692,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_number_set)
 }
 
 
+/* Module: X11 Function: XExtData_number_get */
 SYX_FUNC_PRIMITIVE(X11_XExtData_number_get)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2709,6 +2706,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_number_get)
 }
 
 
+/* Module: X11 Function: XExtData_next_set */
 SYX_FUNC_PRIMITIVE(X11_XExtData_next_set)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2724,6 +2722,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_next_set)
 }
 
 
+/* Module: X11 Function: XExtData_next_get */
 SYX_FUNC_PRIMITIVE(X11_XExtData_next_get)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2737,6 +2736,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_next_get)
 }
 
 
+/* Module: X11 Function: XExtData_free_private_set */
 SYX_FUNC_PRIMITIVE(X11_XExtData_free_private_set)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2752,6 +2752,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_free_private_set)
 }
 
 
+/* Module: X11 Function: XExtData_free_private_get */
 SYX_FUNC_PRIMITIVE(X11_XExtData_free_private_get)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2765,6 +2766,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_free_private_get)
 }
 
 
+/* Module: X11 Function: XExtData_private_data_set */
 SYX_FUNC_PRIMITIVE(X11_XExtData_private_data_set)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2780,6 +2782,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_private_data_set)
 }
 
 
+/* Module: X11 Function: XExtData_private_data_get */
 SYX_FUNC_PRIMITIVE(X11_XExtData_private_data_get)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2793,6 +2796,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtData_private_data_get)
 }
 
 
+/* Module: X11 Function: new_XExtData */
 SYX_FUNC_PRIMITIVE(X11_new_XExtData)
 {
   XExtData *result = 0 ;
@@ -2804,6 +2808,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XExtData)
 }
 
 
+/* Module: X11 Function: delete_XExtData */
 SYX_FUNC_PRIMITIVE(X11_delete_XExtData)
 {
   XExtData *arg1 = (XExtData *) 0 ;
@@ -2817,6 +2822,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XExtData)
 }
 
 
+/* Module: X11 Function: XExtCodes_extension_set */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_extension_set)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2838,6 +2844,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_extension_set)
 }
 
 
+/* Module: X11 Function: XExtCodes_extension_get */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_extension_get)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2851,6 +2858,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_extension_get)
 }
 
 
+/* Module: X11 Function: XExtCodes_major_opcode_set */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_major_opcode_set)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2872,6 +2880,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_major_opcode_set)
 }
 
 
+/* Module: X11 Function: XExtCodes_major_opcode_get */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_major_opcode_get)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2885,6 +2894,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_major_opcode_get)
 }
 
 
+/* Module: X11 Function: XExtCodes_first_event_set */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_event_set)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2906,6 +2916,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_event_set)
 }
 
 
+/* Module: X11 Function: XExtCodes_first_event_get */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_event_get)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2919,6 +2930,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_event_get)
 }
 
 
+/* Module: X11 Function: XExtCodes_first_error_set */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_error_set)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2940,6 +2952,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_error_set)
 }
 
 
+/* Module: X11 Function: XExtCodes_first_error_get */
 SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_error_get)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2953,6 +2966,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtCodes_first_error_get)
 }
 
 
+/* Module: X11 Function: new_XExtCodes */
 SYX_FUNC_PRIMITIVE(X11_new_XExtCodes)
 {
   XExtCodes *result = 0 ;
@@ -2964,6 +2978,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XExtCodes)
 }
 
 
+/* Module: X11 Function: delete_XExtCodes */
 SYX_FUNC_PRIMITIVE(X11_delete_XExtCodes)
 {
   XExtCodes *arg1 = (XExtCodes *) 0 ;
@@ -2977,6 +2992,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XExtCodes)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_depth_set */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_depth_set)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -2998,6 +3014,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_depth_set)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_depth_get */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_depth_get)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3011,6 +3028,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_depth_get)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_bits_per_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_bits_per_pixel_set)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3032,6 +3050,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_bits_per_pixel_set)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_bits_per_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_bits_per_pixel_get)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3045,6 +3064,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_bits_per_pixel_get)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_scanline_pad_set */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_scanline_pad_set)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3066,6 +3086,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_scanline_pad_set)
 }
 
 
+/* Module: X11 Function: XPixmapFormatValues_scanline_pad_get */
 SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_scanline_pad_get)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3079,6 +3100,7 @@ SYX_FUNC_PRIMITIVE(X11_XPixmapFormatValues_scanline_pad_get)
 }
 
 
+/* Module: X11 Function: new_XPixmapFormatValues */
 SYX_FUNC_PRIMITIVE(X11_new_XPixmapFormatValues)
 {
   XPixmapFormatValues *result = 0 ;
@@ -3090,6 +3112,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XPixmapFormatValues)
 }
 
 
+/* Module: X11 Function: delete_XPixmapFormatValues */
 SYX_FUNC_PRIMITIVE(X11_delete_XPixmapFormatValues)
 {
   XPixmapFormatValues *arg1 = (XPixmapFormatValues *) 0 ;
@@ -3103,6 +3126,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XPixmapFormatValues)
 }
 
 
+/* Module: X11 Function: XGCValues_function_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_function_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3124,6 +3148,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_function_set)
 }
 
 
+/* Module: X11 Function: XGCValues_function_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_function_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3137,6 +3162,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_function_get)
 }
 
 
+/* Module: X11 Function: XGCValues_plane_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_plane_mask_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3158,6 +3184,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_plane_mask_set)
 }
 
 
+/* Module: X11 Function: XGCValues_plane_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_plane_mask_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3171,6 +3198,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_plane_mask_get)
 }
 
 
+/* Module: X11 Function: XGCValues_foreground_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_foreground_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3192,6 +3220,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_foreground_set)
 }
 
 
+/* Module: X11 Function: XGCValues_foreground_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_foreground_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3205,6 +3234,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_foreground_get)
 }
 
 
+/* Module: X11 Function: XGCValues_background_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_background_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3226,6 +3256,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_background_set)
 }
 
 
+/* Module: X11 Function: XGCValues_background_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_background_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3239,6 +3270,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_background_get)
 }
 
 
+/* Module: X11 Function: XGCValues_line_width_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_line_width_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3260,6 +3292,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_line_width_set)
 }
 
 
+/* Module: X11 Function: XGCValues_line_width_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_line_width_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3273,6 +3306,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_line_width_get)
 }
 
 
+/* Module: X11 Function: XGCValues_line_style_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_line_style_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3294,6 +3328,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_line_style_set)
 }
 
 
+/* Module: X11 Function: XGCValues_line_style_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_line_style_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3307,6 +3342,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_line_style_get)
 }
 
 
+/* Module: X11 Function: XGCValues_cap_style_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_cap_style_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3328,6 +3364,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_cap_style_set)
 }
 
 
+/* Module: X11 Function: XGCValues_cap_style_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_cap_style_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3341,6 +3378,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_cap_style_get)
 }
 
 
+/* Module: X11 Function: XGCValues_join_style_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_join_style_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3362,6 +3400,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_join_style_set)
 }
 
 
+/* Module: X11 Function: XGCValues_join_style_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_join_style_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3375,6 +3414,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_join_style_get)
 }
 
 
+/* Module: X11 Function: XGCValues_fill_style_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_style_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3396,6 +3436,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_style_set)
 }
 
 
+/* Module: X11 Function: XGCValues_fill_style_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_style_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3409,6 +3450,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_style_get)
 }
 
 
+/* Module: X11 Function: XGCValues_fill_rule_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_rule_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3430,6 +3472,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_rule_set)
 }
 
 
+/* Module: X11 Function: XGCValues_fill_rule_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_rule_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3443,6 +3486,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_fill_rule_get)
 }
 
 
+/* Module: X11 Function: XGCValues_arc_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_arc_mode_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3464,6 +3508,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_arc_mode_set)
 }
 
 
+/* Module: X11 Function: XGCValues_arc_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_arc_mode_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3477,6 +3522,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_arc_mode_get)
 }
 
 
+/* Module: X11 Function: XGCValues_tile_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_tile_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3498,6 +3544,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_tile_set)
 }
 
 
+/* Module: X11 Function: XGCValues_tile_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_tile_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3511,6 +3558,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_tile_get)
 }
 
 
+/* Module: X11 Function: XGCValues_stipple_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_stipple_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3532,6 +3580,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_stipple_set)
 }
 
 
+/* Module: X11 Function: XGCValues_stipple_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_stipple_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3545,6 +3594,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_stipple_get)
 }
 
 
+/* Module: X11 Function: XGCValues_ts_x_origin_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_x_origin_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3566,6 +3616,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_x_origin_set)
 }
 
 
+/* Module: X11 Function: XGCValues_ts_x_origin_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_x_origin_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3579,6 +3630,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_x_origin_get)
 }
 
 
+/* Module: X11 Function: XGCValues_ts_y_origin_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_y_origin_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3600,6 +3652,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_y_origin_set)
 }
 
 
+/* Module: X11 Function: XGCValues_ts_y_origin_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_y_origin_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3613,6 +3666,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_ts_y_origin_get)
 }
 
 
+/* Module: X11 Function: XGCValues_font_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_font_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3634,6 +3688,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_font_set)
 }
 
 
+/* Module: X11 Function: XGCValues_font_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_font_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3647,6 +3702,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_font_get)
 }
 
 
+/* Module: X11 Function: XGCValues_subwindow_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_subwindow_mode_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3668,6 +3724,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_subwindow_mode_set)
 }
 
 
+/* Module: X11 Function: XGCValues_subwindow_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_subwindow_mode_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3681,6 +3738,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_subwindow_mode_get)
 }
 
 
+/* Module: X11 Function: XGCValues_graphics_exposures_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_graphics_exposures_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3702,6 +3760,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_graphics_exposures_set)
 }
 
 
+/* Module: X11 Function: XGCValues_graphics_exposures_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_graphics_exposures_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3715,6 +3774,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_graphics_exposures_get)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_x_origin_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_x_origin_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3736,6 +3796,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_x_origin_set)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_x_origin_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_x_origin_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3749,6 +3810,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_x_origin_get)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_y_origin_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_y_origin_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3770,6 +3832,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_y_origin_set)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_y_origin_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_y_origin_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3783,6 +3846,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_y_origin_get)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_mask_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3804,6 +3868,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_mask_set)
 }
 
 
+/* Module: X11 Function: XGCValues_clip_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_mask_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3817,6 +3882,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_clip_mask_get)
 }
 
 
+/* Module: X11 Function: XGCValues_dash_offset_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_dash_offset_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3838,6 +3904,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_dash_offset_set)
 }
 
 
+/* Module: X11 Function: XGCValues_dash_offset_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_dash_offset_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3851,6 +3918,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_dash_offset_get)
 }
 
 
+/* Module: X11 Function: XGCValues_dashes_set */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_dashes_set)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3872,6 +3940,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_dashes_set)
 }
 
 
+/* Module: X11 Function: XGCValues_dashes_get */
 SYX_FUNC_PRIMITIVE(X11_XGCValues_dashes_get)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3885,6 +3954,7 @@ SYX_FUNC_PRIMITIVE(X11_XGCValues_dashes_get)
 }
 
 
+/* Module: X11 Function: new_XGCValues */
 SYX_FUNC_PRIMITIVE(X11_new_XGCValues)
 {
   XGCValues *result = 0 ;
@@ -3896,6 +3966,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XGCValues)
 }
 
 
+/* Module: X11 Function: delete_XGCValues */
 SYX_FUNC_PRIMITIVE(X11_delete_XGCValues)
 {
   XGCValues *arg1 = (XGCValues *) 0 ;
@@ -3909,6 +3980,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XGCValues)
 }
 
 
+/* Module: X11 Function: Visual_ext_data_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_ext_data_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -3924,6 +3996,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_ext_data_set)
 }
 
 
+/* Module: X11 Function: Visual_ext_data_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_ext_data_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -3937,6 +4010,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_ext_data_get)
 }
 
 
+/* Module: X11 Function: Visual_visualid_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_visualid_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -3958,6 +4032,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_visualid_set)
 }
 
 
+/* Module: X11 Function: Visual_visualid_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_visualid_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -3971,6 +4046,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_visualid_get)
 }
 
 
+/* Module: X11 Function: Visual_class_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_class_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -3992,6 +4068,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_class_set)
 }
 
 
+/* Module: X11 Function: Visual_class_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_class_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4005,6 +4082,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_class_get)
 }
 
 
+/* Module: X11 Function: Visual_red_mask_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_red_mask_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4026,6 +4104,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_red_mask_set)
 }
 
 
+/* Module: X11 Function: Visual_red_mask_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_red_mask_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4039,6 +4118,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_red_mask_get)
 }
 
 
+/* Module: X11 Function: Visual_green_mask_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_green_mask_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4060,6 +4140,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_green_mask_set)
 }
 
 
+/* Module: X11 Function: Visual_green_mask_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_green_mask_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4073,6 +4154,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_green_mask_get)
 }
 
 
+/* Module: X11 Function: Visual_blue_mask_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_blue_mask_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4094,6 +4176,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_blue_mask_set)
 }
 
 
+/* Module: X11 Function: Visual_blue_mask_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_blue_mask_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4107,6 +4190,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_blue_mask_get)
 }
 
 
+/* Module: X11 Function: Visual_bits_per_rgb_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_bits_per_rgb_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4128,6 +4212,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_bits_per_rgb_set)
 }
 
 
+/* Module: X11 Function: Visual_bits_per_rgb_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_bits_per_rgb_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4141,6 +4226,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_bits_per_rgb_get)
 }
 
 
+/* Module: X11 Function: Visual_map_entries_set */
 SYX_FUNC_PRIMITIVE(X11_Visual_map_entries_set)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4162,6 +4248,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_map_entries_set)
 }
 
 
+/* Module: X11 Function: Visual_map_entries_get */
 SYX_FUNC_PRIMITIVE(X11_Visual_map_entries_get)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4175,6 +4262,7 @@ SYX_FUNC_PRIMITIVE(X11_Visual_map_entries_get)
 }
 
 
+/* Module: X11 Function: new_Visual */
 SYX_FUNC_PRIMITIVE(X11_new_Visual)
 {
   Visual *result = 0 ;
@@ -4186,6 +4274,7 @@ SYX_FUNC_PRIMITIVE(X11_new_Visual)
 }
 
 
+/* Module: X11 Function: delete_Visual */
 SYX_FUNC_PRIMITIVE(X11_delete_Visual)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -4199,6 +4288,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_Visual)
 }
 
 
+/* Module: X11 Function: Depth_depth_set */
 SYX_FUNC_PRIMITIVE(X11_Depth_depth_set)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4220,6 +4310,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_depth_set)
 }
 
 
+/* Module: X11 Function: Depth_depth_get */
 SYX_FUNC_PRIMITIVE(X11_Depth_depth_get)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4233,6 +4324,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_depth_get)
 }
 
 
+/* Module: X11 Function: Depth_nvisuals_set */
 SYX_FUNC_PRIMITIVE(X11_Depth_nvisuals_set)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4254,6 +4346,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_nvisuals_set)
 }
 
 
+/* Module: X11 Function: Depth_nvisuals_get */
 SYX_FUNC_PRIMITIVE(X11_Depth_nvisuals_get)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4267,6 +4360,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_nvisuals_get)
 }
 
 
+/* Module: X11 Function: Depth_visuals_set */
 SYX_FUNC_PRIMITIVE(X11_Depth_visuals_set)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4282,6 +4376,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_visuals_set)
 }
 
 
+/* Module: X11 Function: Depth_visuals_get */
 SYX_FUNC_PRIMITIVE(X11_Depth_visuals_get)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4295,6 +4390,7 @@ SYX_FUNC_PRIMITIVE(X11_Depth_visuals_get)
 }
 
 
+/* Module: X11 Function: new_Depth */
 SYX_FUNC_PRIMITIVE(X11_new_Depth)
 {
   Depth *result = 0 ;
@@ -4306,6 +4402,7 @@ SYX_FUNC_PRIMITIVE(X11_new_Depth)
 }
 
 
+/* Module: X11 Function: delete_Depth */
 SYX_FUNC_PRIMITIVE(X11_delete_Depth)
 {
   Depth *arg1 = (Depth *) 0 ;
@@ -4319,6 +4416,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_Depth)
 }
 
 
+/* Module: X11 Function: Screen_ext_data_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_ext_data_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4334,6 +4432,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_ext_data_set)
 }
 
 
+/* Module: X11 Function: Screen_ext_data_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_ext_data_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4347,6 +4446,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_ext_data_get)
 }
 
 
+/* Module: X11 Function: Screen_display_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_display_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4362,6 +4462,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_display_set)
 }
 
 
+/* Module: X11 Function: Screen_display_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_display_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4375,6 +4476,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_display_get)
 }
 
 
+/* Module: X11 Function: Screen_root_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4396,6 +4498,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_set)
 }
 
 
+/* Module: X11 Function: Screen_root_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4409,6 +4512,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_get)
 }
 
 
+/* Module: X11 Function: Screen_width_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_width_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4430,6 +4534,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_width_set)
 }
 
 
+/* Module: X11 Function: Screen_width_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_width_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4443,6 +4548,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_width_get)
 }
 
 
+/* Module: X11 Function: Screen_height_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_height_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4464,6 +4570,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_height_set)
 }
 
 
+/* Module: X11 Function: Screen_height_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_height_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4477,6 +4584,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_height_get)
 }
 
 
+/* Module: X11 Function: Screen_mwidth_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_mwidth_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4498,6 +4606,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_mwidth_set)
 }
 
 
+/* Module: X11 Function: Screen_mwidth_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_mwidth_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4511,6 +4620,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_mwidth_get)
 }
 
 
+/* Module: X11 Function: Screen_mheight_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_mheight_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4532,6 +4642,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_mheight_set)
 }
 
 
+/* Module: X11 Function: Screen_mheight_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_mheight_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4545,6 +4656,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_mheight_get)
 }
 
 
+/* Module: X11 Function: Screen_ndepths_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_ndepths_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4566,6 +4678,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_ndepths_set)
 }
 
 
+/* Module: X11 Function: Screen_ndepths_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_ndepths_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4579,6 +4692,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_ndepths_get)
 }
 
 
+/* Module: X11 Function: Screen_depths_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_depths_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4594,6 +4708,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_depths_set)
 }
 
 
+/* Module: X11 Function: Screen_depths_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_depths_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4607,6 +4722,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_depths_get)
 }
 
 
+/* Module: X11 Function: Screen_root_depth_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_depth_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4628,6 +4744,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_depth_set)
 }
 
 
+/* Module: X11 Function: Screen_root_depth_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_depth_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4641,6 +4758,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_depth_get)
 }
 
 
+/* Module: X11 Function: Screen_root_visual_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_visual_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4656,6 +4774,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_visual_set)
 }
 
 
+/* Module: X11 Function: Screen_root_visual_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_visual_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4669,6 +4788,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_visual_get)
 }
 
 
+/* Module: X11 Function: Screen_default_gc_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_default_gc_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4684,6 +4804,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_default_gc_set)
 }
 
 
+/* Module: X11 Function: Screen_default_gc_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_default_gc_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4697,6 +4818,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_default_gc_get)
 }
 
 
+/* Module: X11 Function: Screen_cmap_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_cmap_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4718,6 +4840,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_cmap_set)
 }
 
 
+/* Module: X11 Function: Screen_cmap_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_cmap_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4731,6 +4854,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_cmap_get)
 }
 
 
+/* Module: X11 Function: Screen_white_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_white_pixel_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4752,6 +4876,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_white_pixel_set)
 }
 
 
+/* Module: X11 Function: Screen_white_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_white_pixel_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4765,6 +4890,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_white_pixel_get)
 }
 
 
+/* Module: X11 Function: Screen_black_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_black_pixel_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4786,6 +4912,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_black_pixel_set)
 }
 
 
+/* Module: X11 Function: Screen_black_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_black_pixel_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4799,6 +4926,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_black_pixel_get)
 }
 
 
+/* Module: X11 Function: Screen_max_maps_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_max_maps_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4820,6 +4948,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_max_maps_set)
 }
 
 
+/* Module: X11 Function: Screen_max_maps_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_max_maps_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4833,6 +4962,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_max_maps_get)
 }
 
 
+/* Module: X11 Function: Screen_min_maps_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_min_maps_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4854,6 +4984,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_min_maps_set)
 }
 
 
+/* Module: X11 Function: Screen_min_maps_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_min_maps_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4867,6 +4998,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_min_maps_get)
 }
 
 
+/* Module: X11 Function: Screen_backing_store_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_backing_store_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4888,6 +5020,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_backing_store_set)
 }
 
 
+/* Module: X11 Function: Screen_backing_store_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_backing_store_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4901,6 +5034,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_backing_store_get)
 }
 
 
+/* Module: X11 Function: Screen_save_unders_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_save_unders_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4922,6 +5056,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_save_unders_set)
 }
 
 
+/* Module: X11 Function: Screen_save_unders_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_save_unders_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4935,6 +5070,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_save_unders_get)
 }
 
 
+/* Module: X11 Function: Screen_root_input_mask_set */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_input_mask_set)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4956,6 +5092,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_input_mask_set)
 }
 
 
+/* Module: X11 Function: Screen_root_input_mask_get */
 SYX_FUNC_PRIMITIVE(X11_Screen_root_input_mask_get)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4969,6 +5106,7 @@ SYX_FUNC_PRIMITIVE(X11_Screen_root_input_mask_get)
 }
 
 
+/* Module: X11 Function: new_Screen */
 SYX_FUNC_PRIMITIVE(X11_new_Screen)
 {
   Screen *result = 0 ;
@@ -4980,6 +5118,7 @@ SYX_FUNC_PRIMITIVE(X11_new_Screen)
 }
 
 
+/* Module: X11 Function: delete_Screen */
 SYX_FUNC_PRIMITIVE(X11_delete_Screen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -4993,6 +5132,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_Screen)
 }
 
 
+/* Module: X11 Function: ScreenFormat_ext_data_set */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_ext_data_set)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5008,6 +5148,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_ext_data_set)
 }
 
 
+/* Module: X11 Function: ScreenFormat_ext_data_get */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_ext_data_get)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5021,6 +5162,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_ext_data_get)
 }
 
 
+/* Module: X11 Function: ScreenFormat_depth_set */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_depth_set)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5042,6 +5184,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_depth_set)
 }
 
 
+/* Module: X11 Function: ScreenFormat_depth_get */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_depth_get)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5055,6 +5198,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_depth_get)
 }
 
 
+/* Module: X11 Function: ScreenFormat_bits_per_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_bits_per_pixel_set)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5076,6 +5220,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_bits_per_pixel_set)
 }
 
 
+/* Module: X11 Function: ScreenFormat_bits_per_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_bits_per_pixel_get)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5089,6 +5234,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_bits_per_pixel_get)
 }
 
 
+/* Module: X11 Function: ScreenFormat_scanline_pad_set */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_scanline_pad_set)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5110,6 +5256,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_scanline_pad_set)
 }
 
 
+/* Module: X11 Function: ScreenFormat_scanline_pad_get */
 SYX_FUNC_PRIMITIVE(X11_ScreenFormat_scanline_pad_get)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5123,6 +5270,7 @@ SYX_FUNC_PRIMITIVE(X11_ScreenFormat_scanline_pad_get)
 }
 
 
+/* Module: X11 Function: new_ScreenFormat */
 SYX_FUNC_PRIMITIVE(X11_new_ScreenFormat)
 {
   ScreenFormat *result = 0 ;
@@ -5134,6 +5282,7 @@ SYX_FUNC_PRIMITIVE(X11_new_ScreenFormat)
 }
 
 
+/* Module: X11 Function: delete_ScreenFormat */
 SYX_FUNC_PRIMITIVE(X11_delete_ScreenFormat)
 {
   ScreenFormat *arg1 = (ScreenFormat *) 0 ;
@@ -5147,6 +5296,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_ScreenFormat)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_background_pixmap_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixmap_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5168,6 +5318,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixmap_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_background_pixmap_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixmap_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5181,6 +5332,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixmap_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_background_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixel_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5202,6 +5354,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixel_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_background_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixel_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5215,6 +5368,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_background_pixel_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_border_pixmap_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixmap_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5236,6 +5390,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixmap_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_border_pixmap_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixmap_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5249,6 +5404,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixmap_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_border_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixel_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5270,6 +5426,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixel_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_border_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixel_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5283,6 +5440,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_border_pixel_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_bit_gravity_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_bit_gravity_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5304,6 +5462,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_bit_gravity_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_bit_gravity_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_bit_gravity_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5317,6 +5476,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_bit_gravity_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_win_gravity_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_win_gravity_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5338,6 +5498,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_win_gravity_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_win_gravity_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_win_gravity_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5351,6 +5512,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_win_gravity_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_store_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_store_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5372,6 +5534,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_store_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_store_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_store_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5385,6 +5548,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_store_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_planes_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_planes_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5406,6 +5570,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_planes_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_planes_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_planes_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5419,6 +5584,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_planes_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_pixel_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5440,6 +5606,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_pixel_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_backing_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_pixel_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5453,6 +5620,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_backing_pixel_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_save_under_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_save_under_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5474,6 +5642,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_save_under_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_save_under_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_save_under_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5487,6 +5656,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_save_under_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_event_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_event_mask_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5508,6 +5678,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_event_mask_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_event_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_event_mask_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5521,6 +5692,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_event_mask_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_do_not_propagate_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_do_not_propagate_mask_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5542,6 +5714,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_do_not_propagate_mask_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_do_not_propagate_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_do_not_propagate_mask_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5555,6 +5728,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_do_not_propagate_mask_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_override_redirect_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5576,6 +5750,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_override_redirect_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5589,6 +5764,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_override_redirect_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_colormap_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_colormap_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5610,6 +5786,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_colormap_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_colormap_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_colormap_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5623,6 +5800,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_colormap_get)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_cursor_set */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_cursor_set)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5644,6 +5822,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_cursor_set)
 }
 
 
+/* Module: X11 Function: XSetWindowAttributes_cursor_get */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_cursor_get)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5657,6 +5836,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowAttributes_cursor_get)
 }
 
 
+/* Module: X11 Function: new_XSetWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_new_XSetWindowAttributes)
 {
   XSetWindowAttributes *result = 0 ;
@@ -5668,6 +5848,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XSetWindowAttributes)
 }
 
 
+/* Module: X11 Function: delete_XSetWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_delete_XSetWindowAttributes)
 {
   XSetWindowAttributes *arg1 = (XSetWindowAttributes *) 0 ;
@@ -5681,6 +5862,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XSetWindowAttributes)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_x_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_x_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5702,6 +5884,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_x_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_x_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_x_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5715,6 +5898,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_x_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_y_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_y_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5736,6 +5920,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_y_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_y_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_y_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5749,6 +5934,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_y_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_width_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_width_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5770,6 +5956,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_width_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_width_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_width_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5783,6 +5970,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_width_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_height_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_height_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5804,6 +5992,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_height_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_height_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_height_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5817,6 +6006,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_height_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_border_width_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_border_width_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5838,6 +6028,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_border_width_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_border_width_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_border_width_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5851,6 +6042,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_border_width_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_depth_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_depth_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5872,6 +6064,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_depth_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_depth_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_depth_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5885,6 +6078,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_depth_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_visual_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_visual_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5900,6 +6094,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_visual_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_visual_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_visual_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5913,6 +6108,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_visual_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_root_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_root_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5934,6 +6130,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_root_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_root_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_root_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5947,6 +6144,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_root_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_class_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_class_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5968,6 +6166,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_class_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_class_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_class_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -5981,6 +6180,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_class_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_bit_gravity_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_bit_gravity_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6002,6 +6202,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_bit_gravity_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_bit_gravity_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_bit_gravity_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6015,6 +6216,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_bit_gravity_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_win_gravity_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_win_gravity_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6036,6 +6238,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_win_gravity_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_win_gravity_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_win_gravity_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6049,6 +6252,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_win_gravity_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_store_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_store_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6070,6 +6274,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_store_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_store_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_store_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6083,6 +6288,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_store_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_planes_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_planes_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6104,6 +6310,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_planes_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_planes_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_planes_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6117,6 +6324,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_planes_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_pixel_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6138,6 +6346,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_pixel_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_backing_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_pixel_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6151,6 +6360,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_backing_pixel_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_save_under_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_save_under_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6172,6 +6382,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_save_under_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_save_under_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_save_under_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6185,6 +6396,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_save_under_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_colormap_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_colormap_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6206,6 +6418,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_colormap_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_colormap_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_colormap_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6219,6 +6432,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_colormap_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_map_installed_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_installed_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6240,6 +6454,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_installed_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_map_installed_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_installed_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6253,6 +6468,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_installed_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_map_state_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_state_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6274,6 +6490,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_state_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_map_state_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_state_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6287,6 +6504,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_map_state_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_all_event_masks_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_all_event_masks_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6308,6 +6526,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_all_event_masks_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_all_event_masks_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_all_event_masks_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6321,6 +6540,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_all_event_masks_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_your_event_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_your_event_mask_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6342,6 +6562,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_your_event_mask_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_your_event_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_your_event_mask_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6355,6 +6576,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_your_event_mask_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_do_not_propagate_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_do_not_propagate_mask_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6376,6 +6598,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_do_not_propagate_mask_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_do_not_propagate_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_do_not_propagate_mask_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6389,6 +6612,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_do_not_propagate_mask_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_override_redirect_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6410,6 +6634,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_override_redirect_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6423,6 +6648,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_override_redirect_get)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_screen_set)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6438,6 +6664,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_screen_set)
 }
 
 
+/* Module: X11 Function: XWindowAttributes_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_screen_get)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6451,6 +6678,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowAttributes_screen_get)
 }
 
 
+/* Module: X11 Function: new_XWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_new_XWindowAttributes)
 {
   XWindowAttributes *result = 0 ;
@@ -6462,6 +6690,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XWindowAttributes)
 }
 
 
+/* Module: X11 Function: delete_XWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_delete_XWindowAttributes)
 {
   XWindowAttributes *arg1 = (XWindowAttributes *) 0 ;
@@ -6475,6 +6704,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XWindowAttributes)
 }
 
 
+/* Module: X11 Function: XHostAddress_family_set */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_family_set)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6496,6 +6726,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_family_set)
 }
 
 
+/* Module: X11 Function: XHostAddress_family_get */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_family_get)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6509,6 +6740,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_family_get)
 }
 
 
+/* Module: X11 Function: XHostAddress_length_set */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_length_set)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6530,6 +6762,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_length_set)
 }
 
 
+/* Module: X11 Function: XHostAddress_length_get */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_length_get)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6543,6 +6776,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_length_get)
 }
 
 
+/* Module: X11 Function: XHostAddress_address_set */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_address_set)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6551,11 +6785,11 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_address_set)
   
   SWIG_FIRST_SELF(arg1, XHostAddress *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->address) free((char *)arg1->address);
@@ -6571,6 +6805,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_address_set)
 }
 
 
+/* Module: X11 Function: XHostAddress_address_get */
 SYX_FUNC_PRIMITIVE(X11_XHostAddress_address_get)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6584,6 +6819,7 @@ SYX_FUNC_PRIMITIVE(X11_XHostAddress_address_get)
 }
 
 
+/* Module: X11 Function: new_XHostAddress */
 SYX_FUNC_PRIMITIVE(X11_new_XHostAddress)
 {
   XHostAddress *result = 0 ;
@@ -6595,6 +6831,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XHostAddress)
 }
 
 
+/* Module: X11 Function: delete_XHostAddress */
 SYX_FUNC_PRIMITIVE(X11_delete_XHostAddress)
 {
   XHostAddress *arg1 = (XHostAddress *) 0 ;
@@ -6608,6 +6845,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XHostAddress)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_typelength_set */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_typelength_set)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6629,6 +6867,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_typelength_set)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_typelength_get */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_typelength_get)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6642,6 +6881,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_typelength_get)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_valuelength_set */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_valuelength_set)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6663,6 +6903,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_valuelength_set)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_valuelength_get */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_valuelength_get)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6676,6 +6917,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_valuelength_get)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_type_set */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_type_set)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6684,11 +6926,11 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_type_set)
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->type) free((char *)arg1->type);
@@ -6704,6 +6946,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_type_set)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_type_get */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_type_get)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6717,6 +6960,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_type_get)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_value_set */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_value_set)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6725,11 +6969,11 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_value_set)
   
   SWIG_FIRST_SELF(arg1, XServerInterpretedAddress *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->value) free((char *)arg1->value);
@@ -6745,6 +6989,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_value_set)
 }
 
 
+/* Module: X11 Function: XServerInterpretedAddress_value_get */
 SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_value_get)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6758,6 +7003,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerInterpretedAddress_value_get)
 }
 
 
+/* Module: X11 Function: new_XServerInterpretedAddress */
 SYX_FUNC_PRIMITIVE(X11_new_XServerInterpretedAddress)
 {
   XServerInterpretedAddress *result = 0 ;
@@ -6769,6 +7015,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XServerInterpretedAddress)
 }
 
 
+/* Module: X11 Function: delete_XServerInterpretedAddress */
 SYX_FUNC_PRIMITIVE(X11_delete_XServerInterpretedAddress)
 {
   XServerInterpretedAddress *arg1 = (XServerInterpretedAddress *) 0 ;
@@ -6782,6 +7029,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XServerInterpretedAddress)
 }
 
 
+/* Module: X11 Function: XImage_width_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_width_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6803,6 +7051,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_width_set)
 }
 
 
+/* Module: X11 Function: XImage_width_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_width_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6816,6 +7065,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_width_get)
 }
 
 
+/* Module: X11 Function: XImage_height_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_height_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6837,6 +7087,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_height_set)
 }
 
 
+/* Module: X11 Function: XImage_height_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_height_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6850,6 +7101,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_height_get)
 }
 
 
+/* Module: X11 Function: XImage_xoffset_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_xoffset_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6871,6 +7123,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_xoffset_set)
 }
 
 
+/* Module: X11 Function: XImage_xoffset_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_xoffset_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6884,6 +7137,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_xoffset_get)
 }
 
 
+/* Module: X11 Function: XImage_format_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_format_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6905,6 +7159,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_format_set)
 }
 
 
+/* Module: X11 Function: XImage_format_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_format_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6918,6 +7173,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_format_get)
 }
 
 
+/* Module: X11 Function: XImage_data_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_data_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6926,11 +7182,11 @@ SYX_FUNC_PRIMITIVE(X11_XImage_data_set)
   
   SWIG_FIRST_SELF(arg1, XImage *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->data) free((char *)arg1->data);
@@ -6946,6 +7202,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_data_set)
 }
 
 
+/* Module: X11 Function: XImage_data_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_data_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6959,6 +7216,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_data_get)
 }
 
 
+/* Module: X11 Function: XImage_byte_order_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_byte_order_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6980,6 +7238,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_byte_order_set)
 }
 
 
+/* Module: X11 Function: XImage_byte_order_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_byte_order_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -6993,6 +7252,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_byte_order_get)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_unit_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_unit_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7014,6 +7274,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_unit_set)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_unit_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_unit_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7027,6 +7288,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_unit_get)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_bit_order_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_bit_order_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7048,6 +7310,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_bit_order_set)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_bit_order_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_bit_order_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7061,6 +7324,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_bit_order_get)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_pad_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_pad_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7082,6 +7346,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_pad_set)
 }
 
 
+/* Module: X11 Function: XImage_bitmap_pad_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_pad_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7095,6 +7360,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bitmap_pad_get)
 }
 
 
+/* Module: X11 Function: XImage_depth_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_depth_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7116,6 +7382,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_depth_set)
 }
 
 
+/* Module: X11 Function: XImage_depth_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_depth_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7129,6 +7396,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_depth_get)
 }
 
 
+/* Module: X11 Function: XImage_bytes_per_line_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_bytes_per_line_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7150,6 +7418,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bytes_per_line_set)
 }
 
 
+/* Module: X11 Function: XImage_bytes_per_line_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_bytes_per_line_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7163,6 +7432,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bytes_per_line_get)
 }
 
 
+/* Module: X11 Function: XImage_bits_per_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_bits_per_pixel_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7184,6 +7454,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bits_per_pixel_set)
 }
 
 
+/* Module: X11 Function: XImage_bits_per_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_bits_per_pixel_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7197,6 +7468,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_bits_per_pixel_get)
 }
 
 
+/* Module: X11 Function: XImage_red_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_red_mask_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7218,6 +7490,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_red_mask_set)
 }
 
 
+/* Module: X11 Function: XImage_red_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_red_mask_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7231,6 +7504,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_red_mask_get)
 }
 
 
+/* Module: X11 Function: XImage_green_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_green_mask_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7252,6 +7526,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_green_mask_set)
 }
 
 
+/* Module: X11 Function: XImage_green_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_green_mask_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7265,6 +7540,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_green_mask_get)
 }
 
 
+/* Module: X11 Function: XImage_blue_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_blue_mask_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7286,6 +7562,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_blue_mask_set)
 }
 
 
+/* Module: X11 Function: XImage_blue_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_blue_mask_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7299,6 +7576,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_blue_mask_get)
 }
 
 
+/* Module: X11 Function: XImage_obdata_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_obdata_set)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7314,6 +7592,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_obdata_set)
 }
 
 
+/* Module: X11 Function: XImage_obdata_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_obdata_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7327,6 +7606,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_obdata_get)
 }
 
 
+/* Module: X11 Function: XImage_f_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_get)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7340,6 +7620,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_get)
 }
 
 
+/* Module: X11 Function: new_XImage */
 SYX_FUNC_PRIMITIVE(X11_new_XImage)
 {
   XImage *result = 0 ;
@@ -7351,6 +7632,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XImage)
 }
 
 
+/* Module: X11 Function: delete_XImage */
 SYX_FUNC_PRIMITIVE(X11_delete_XImage)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -7364,6 +7646,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XImage)
 }
 
 
+/* Module: X11 Function: XImage_f_create_image_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_create_image_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7379,6 +7662,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_create_image_set)
 }
 
 
+/* Module: X11 Function: XImage_f_create_image_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_create_image_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7392,6 +7676,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_create_image_get)
 }
 
 
+/* Module: X11 Function: XImage_f_destroy_image_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_destroy_image_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7407,6 +7692,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_destroy_image_set)
 }
 
 
+/* Module: X11 Function: XImage_f_destroy_image_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_destroy_image_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7420,6 +7706,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_destroy_image_get)
 }
 
 
+/* Module: X11 Function: XImage_f_get_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_get_pixel_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7435,6 +7722,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_get_pixel_set)
 }
 
 
+/* Module: X11 Function: XImage_f_get_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_get_pixel_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7448,6 +7736,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_get_pixel_get)
 }
 
 
+/* Module: X11 Function: XImage_f_put_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_put_pixel_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7463,6 +7752,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_put_pixel_set)
 }
 
 
+/* Module: X11 Function: XImage_f_put_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_put_pixel_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7476,6 +7766,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_put_pixel_get)
 }
 
 
+/* Module: X11 Function: XImage_f_sub_image_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_sub_image_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7491,6 +7782,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_sub_image_set)
 }
 
 
+/* Module: X11 Function: XImage_f_sub_image_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_sub_image_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7504,6 +7796,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_sub_image_get)
 }
 
 
+/* Module: X11 Function: XImage_f_add_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_add_pixel_set)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7519,6 +7812,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_add_pixel_set)
 }
 
 
+/* Module: X11 Function: XImage_f_add_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XImage_f_add_pixel_get)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7532,6 +7826,7 @@ SYX_FUNC_PRIMITIVE(X11_XImage_f_add_pixel_get)
 }
 
 
+/* Module: X11 Function: new_XImage_f */
 SYX_FUNC_PRIMITIVE(X11_new_XImage_f)
 {
   XImage_f *result = 0 ;
@@ -7543,6 +7838,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XImage_f)
 }
 
 
+/* Module: X11 Function: delete_XImage_f */
 SYX_FUNC_PRIMITIVE(X11_delete_XImage_f)
 {
   XImage_f *arg1 = (XImage_f *) 0 ;
@@ -7556,6 +7852,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XImage_f)
 }
 
 
+/* Module: X11 Function: XWindowChanges_x_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_x_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7577,6 +7874,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_x_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_x_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_x_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7590,6 +7888,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_x_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_y_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_y_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7611,6 +7910,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_y_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_y_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_y_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7624,6 +7924,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_y_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_width_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_width_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7645,6 +7946,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_width_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_width_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_width_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7658,6 +7960,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_width_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_height_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_height_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7679,6 +7982,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_height_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_height_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_height_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7692,6 +7996,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_height_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_border_width_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_border_width_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7713,6 +8018,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_border_width_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_border_width_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_border_width_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7726,6 +8032,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_border_width_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_sibling_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_sibling_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7747,6 +8054,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_sibling_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_sibling_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_sibling_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7760,6 +8068,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_sibling_get)
 }
 
 
+/* Module: X11 Function: XWindowChanges_stack_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_stack_mode_set)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7781,6 +8090,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_stack_mode_set)
 }
 
 
+/* Module: X11 Function: XWindowChanges_stack_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XWindowChanges_stack_mode_get)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7794,6 +8104,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowChanges_stack_mode_get)
 }
 
 
+/* Module: X11 Function: new_XWindowChanges */
 SYX_FUNC_PRIMITIVE(X11_new_XWindowChanges)
 {
   XWindowChanges *result = 0 ;
@@ -7805,6 +8116,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XWindowChanges)
 }
 
 
+/* Module: X11 Function: delete_XWindowChanges */
 SYX_FUNC_PRIMITIVE(X11_delete_XWindowChanges)
 {
   XWindowChanges *arg1 = (XWindowChanges *) 0 ;
@@ -7818,6 +8130,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XWindowChanges)
 }
 
 
+/* Module: X11 Function: XColor_pixel_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_pixel_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7839,6 +8152,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_pixel_set)
 }
 
 
+/* Module: X11 Function: XColor_pixel_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_pixel_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7852,6 +8166,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_pixel_get)
 }
 
 
+/* Module: X11 Function: XColor_red_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_red_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7873,6 +8188,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_red_set)
 }
 
 
+/* Module: X11 Function: XColor_red_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_red_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7886,6 +8202,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_red_get)
 }
 
 
+/* Module: X11 Function: XColor_green_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_green_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7907,6 +8224,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_green_set)
 }
 
 
+/* Module: X11 Function: XColor_green_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_green_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7920,6 +8238,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_green_get)
 }
 
 
+/* Module: X11 Function: XColor_blue_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_blue_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7941,6 +8260,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_blue_set)
 }
 
 
+/* Module: X11 Function: XColor_blue_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_blue_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7954,6 +8274,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_blue_get)
 }
 
 
+/* Module: X11 Function: XColor_flags_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_flags_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7975,6 +8296,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_flags_set)
 }
 
 
+/* Module: X11 Function: XColor_flags_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_flags_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -7988,6 +8310,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_flags_get)
 }
 
 
+/* Module: X11 Function: XColor_pad_set */
 SYX_FUNC_PRIMITIVE(X11_XColor_pad_set)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -8009,6 +8332,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_pad_set)
 }
 
 
+/* Module: X11 Function: XColor_pad_get */
 SYX_FUNC_PRIMITIVE(X11_XColor_pad_get)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -8022,6 +8346,7 @@ SYX_FUNC_PRIMITIVE(X11_XColor_pad_get)
 }
 
 
+/* Module: X11 Function: new_XColor */
 SYX_FUNC_PRIMITIVE(X11_new_XColor)
 {
   XColor *result = 0 ;
@@ -8033,6 +8358,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XColor)
 }
 
 
+/* Module: X11 Function: delete_XColor */
 SYX_FUNC_PRIMITIVE(X11_delete_XColor)
 {
   XColor *arg1 = (XColor *) 0 ;
@@ -8046,6 +8372,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XColor)
 }
 
 
+/* Module: X11 Function: XSegment_x1_set */
 SYX_FUNC_PRIMITIVE(X11_XSegment_x1_set)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8067,6 +8394,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_x1_set)
 }
 
 
+/* Module: X11 Function: XSegment_x1_get */
 SYX_FUNC_PRIMITIVE(X11_XSegment_x1_get)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8080,6 +8408,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_x1_get)
 }
 
 
+/* Module: X11 Function: XSegment_y1_set */
 SYX_FUNC_PRIMITIVE(X11_XSegment_y1_set)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8101,6 +8430,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_y1_set)
 }
 
 
+/* Module: X11 Function: XSegment_y1_get */
 SYX_FUNC_PRIMITIVE(X11_XSegment_y1_get)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8114,6 +8444,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_y1_get)
 }
 
 
+/* Module: X11 Function: XSegment_x2_set */
 SYX_FUNC_PRIMITIVE(X11_XSegment_x2_set)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8135,6 +8466,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_x2_set)
 }
 
 
+/* Module: X11 Function: XSegment_x2_get */
 SYX_FUNC_PRIMITIVE(X11_XSegment_x2_get)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8148,6 +8480,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_x2_get)
 }
 
 
+/* Module: X11 Function: XSegment_y2_set */
 SYX_FUNC_PRIMITIVE(X11_XSegment_y2_set)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8169,6 +8502,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_y2_set)
 }
 
 
+/* Module: X11 Function: XSegment_y2_get */
 SYX_FUNC_PRIMITIVE(X11_XSegment_y2_get)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8182,6 +8516,7 @@ SYX_FUNC_PRIMITIVE(X11_XSegment_y2_get)
 }
 
 
+/* Module: X11 Function: new_XSegment */
 SYX_FUNC_PRIMITIVE(X11_new_XSegment)
 {
   XSegment *result = 0 ;
@@ -8193,6 +8528,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XSegment)
 }
 
 
+/* Module: X11 Function: delete_XSegment */
 SYX_FUNC_PRIMITIVE(X11_delete_XSegment)
 {
   XSegment *arg1 = (XSegment *) 0 ;
@@ -8206,6 +8542,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XSegment)
 }
 
 
+/* Module: X11 Function: XPoint_x_set */
 SYX_FUNC_PRIMITIVE(X11_XPoint_x_set)
 {
   XPoint *arg1 = (XPoint *) 0 ;
@@ -8227,6 +8564,7 @@ SYX_FUNC_PRIMITIVE(X11_XPoint_x_set)
 }
 
 
+/* Module: X11 Function: XPoint_x_get */
 SYX_FUNC_PRIMITIVE(X11_XPoint_x_get)
 {
   XPoint *arg1 = (XPoint *) 0 ;
@@ -8240,6 +8578,7 @@ SYX_FUNC_PRIMITIVE(X11_XPoint_x_get)
 }
 
 
+/* Module: X11 Function: XPoint_y_set */
 SYX_FUNC_PRIMITIVE(X11_XPoint_y_set)
 {
   XPoint *arg1 = (XPoint *) 0 ;
@@ -8261,6 +8600,7 @@ SYX_FUNC_PRIMITIVE(X11_XPoint_y_set)
 }
 
 
+/* Module: X11 Function: XPoint_y_get */
 SYX_FUNC_PRIMITIVE(X11_XPoint_y_get)
 {
   XPoint *arg1 = (XPoint *) 0 ;
@@ -8274,6 +8614,7 @@ SYX_FUNC_PRIMITIVE(X11_XPoint_y_get)
 }
 
 
+/* Module: X11 Function: new_XPoint */
 SYX_FUNC_PRIMITIVE(X11_new_XPoint)
 {
   XPoint *result = 0 ;
@@ -8285,6 +8626,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XPoint)
 }
 
 
+/* Module: X11 Function: delete_XPoint */
 SYX_FUNC_PRIMITIVE(X11_delete_XPoint)
 {
   XPoint *arg1 = (XPoint *) 0 ;
@@ -8298,6 +8640,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XPoint)
 }
 
 
+/* Module: X11 Function: XRectangle_x_set */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_x_set)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8319,6 +8662,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_x_set)
 }
 
 
+/* Module: X11 Function: XRectangle_x_get */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_x_get)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8332,6 +8676,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_x_get)
 }
 
 
+/* Module: X11 Function: XRectangle_y_set */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_y_set)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8353,6 +8698,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_y_set)
 }
 
 
+/* Module: X11 Function: XRectangle_y_get */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_y_get)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8366,6 +8712,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_y_get)
 }
 
 
+/* Module: X11 Function: XRectangle_width_set */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_width_set)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8387,6 +8734,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_width_set)
 }
 
 
+/* Module: X11 Function: XRectangle_width_get */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_width_get)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8400,6 +8748,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_width_get)
 }
 
 
+/* Module: X11 Function: XRectangle_height_set */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_height_set)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8421,6 +8770,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_height_set)
 }
 
 
+/* Module: X11 Function: XRectangle_height_get */
 SYX_FUNC_PRIMITIVE(X11_XRectangle_height_get)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8434,6 +8784,7 @@ SYX_FUNC_PRIMITIVE(X11_XRectangle_height_get)
 }
 
 
+/* Module: X11 Function: new_XRectangle */
 SYX_FUNC_PRIMITIVE(X11_new_XRectangle)
 {
   XRectangle *result = 0 ;
@@ -8445,6 +8796,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XRectangle)
 }
 
 
+/* Module: X11 Function: delete_XRectangle */
 SYX_FUNC_PRIMITIVE(X11_delete_XRectangle)
 {
   XRectangle *arg1 = (XRectangle *) 0 ;
@@ -8458,6 +8810,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XRectangle)
 }
 
 
+/* Module: X11 Function: XArc_x_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_x_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8479,6 +8832,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_x_set)
 }
 
 
+/* Module: X11 Function: XArc_x_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_x_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8492,6 +8846,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_x_get)
 }
 
 
+/* Module: X11 Function: XArc_y_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_y_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8513,6 +8868,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_y_set)
 }
 
 
+/* Module: X11 Function: XArc_y_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_y_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8526,6 +8882,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_y_get)
 }
 
 
+/* Module: X11 Function: XArc_width_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_width_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8547,6 +8904,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_width_set)
 }
 
 
+/* Module: X11 Function: XArc_width_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_width_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8560,6 +8918,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_width_get)
 }
 
 
+/* Module: X11 Function: XArc_height_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_height_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8581,6 +8940,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_height_set)
 }
 
 
+/* Module: X11 Function: XArc_height_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_height_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8594,6 +8954,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_height_get)
 }
 
 
+/* Module: X11 Function: XArc_angle1_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_angle1_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8615,6 +8976,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_angle1_set)
 }
 
 
+/* Module: X11 Function: XArc_angle1_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_angle1_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8628,6 +8990,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_angle1_get)
 }
 
 
+/* Module: X11 Function: XArc_angle2_set */
 SYX_FUNC_PRIMITIVE(X11_XArc_angle2_set)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8649,6 +9012,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_angle2_set)
 }
 
 
+/* Module: X11 Function: XArc_angle2_get */
 SYX_FUNC_PRIMITIVE(X11_XArc_angle2_get)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8662,6 +9026,7 @@ SYX_FUNC_PRIMITIVE(X11_XArc_angle2_get)
 }
 
 
+/* Module: X11 Function: new_XArc */
 SYX_FUNC_PRIMITIVE(X11_new_XArc)
 {
   XArc *result = 0 ;
@@ -8673,6 +9038,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XArc)
 }
 
 
+/* Module: X11 Function: delete_XArc */
 SYX_FUNC_PRIMITIVE(X11_delete_XArc)
 {
   XArc *arg1 = (XArc *) 0 ;
@@ -8686,6 +9052,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XArc)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_key_click_percent_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_click_percent_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8707,6 +9074,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_click_percent_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_key_click_percent_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_click_percent_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8720,6 +9088,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_click_percent_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_percent_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_percent_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8741,6 +9110,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_percent_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_percent_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_percent_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8754,6 +9124,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_percent_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_pitch_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_pitch_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8775,6 +9146,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_pitch_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_pitch_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_pitch_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8788,6 +9160,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_pitch_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_duration_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_duration_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8809,6 +9182,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_duration_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_bell_duration_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_duration_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8822,6 +9196,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_bell_duration_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_led_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8843,6 +9218,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_led_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8856,6 +9232,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_led_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_mode_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8877,6 +9254,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_mode_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_led_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_mode_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8890,6 +9268,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_led_mode_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_key_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8911,6 +9290,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_key_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8924,6 +9304,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_key_get)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_auto_repeat_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_auto_repeat_mode_set)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8945,6 +9326,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_auto_repeat_mode_set)
 }
 
 
+/* Module: X11 Function: XKeyboardControl_auto_repeat_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_auto_repeat_mode_get)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8958,6 +9340,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardControl_auto_repeat_mode_get)
 }
 
 
+/* Module: X11 Function: new_XKeyboardControl */
 SYX_FUNC_PRIMITIVE(X11_new_XKeyboardControl)
 {
   XKeyboardControl *result = 0 ;
@@ -8969,6 +9352,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XKeyboardControl)
 }
 
 
+/* Module: X11 Function: delete_XKeyboardControl */
 SYX_FUNC_PRIMITIVE(X11_delete_XKeyboardControl)
 {
   XKeyboardControl *arg1 = (XKeyboardControl *) 0 ;
@@ -8982,6 +9366,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XKeyboardControl)
 }
 
 
+/* Module: X11 Function: XKeyboardState_key_click_percent_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_key_click_percent_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9003,6 +9388,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_key_click_percent_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_key_click_percent_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_key_click_percent_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9016,6 +9402,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_key_click_percent_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_percent_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_percent_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9037,6 +9424,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_percent_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_percent_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_percent_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9050,6 +9438,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_percent_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_pitch_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_pitch_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9071,6 +9460,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_pitch_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_pitch_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_pitch_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9084,6 +9474,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_pitch_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_duration_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_duration_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9105,6 +9496,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_duration_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_bell_duration_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_duration_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9118,6 +9510,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_bell_duration_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_led_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_led_mask_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9139,6 +9532,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_led_mask_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_led_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_led_mask_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9152,6 +9546,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_led_mask_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_global_auto_repeat_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_global_auto_repeat_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9173,6 +9568,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_global_auto_repeat_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_global_auto_repeat_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_global_auto_repeat_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9186,6 +9582,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_global_auto_repeat_get)
 }
 
 
+/* Module: X11 Function: XKeyboardState_auto_repeats_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_auto_repeats_set)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9203,6 +9600,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_auto_repeats_set)
 }
 
 
+/* Module: X11 Function: XKeyboardState_auto_repeats_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyboardState_auto_repeats_get)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9216,6 +9614,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyboardState_auto_repeats_get)
 }
 
 
+/* Module: X11 Function: new_XKeyboardState */
 SYX_FUNC_PRIMITIVE(X11_new_XKeyboardState)
 {
   XKeyboardState *result = 0 ;
@@ -9227,6 +9626,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XKeyboardState)
 }
 
 
+/* Module: X11 Function: delete_XKeyboardState */
 SYX_FUNC_PRIMITIVE(X11_delete_XKeyboardState)
 {
   XKeyboardState *arg1 = (XKeyboardState *) 0 ;
@@ -9240,6 +9640,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XKeyboardState)
 }
 
 
+/* Module: X11 Function: XTimeCoord_time_set */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_time_set)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9261,6 +9662,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_time_set)
 }
 
 
+/* Module: X11 Function: XTimeCoord_time_get */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_time_get)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9274,6 +9676,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_time_get)
 }
 
 
+/* Module: X11 Function: XTimeCoord_x_set */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_x_set)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9295,6 +9698,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_x_set)
 }
 
 
+/* Module: X11 Function: XTimeCoord_x_get */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_x_get)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9308,6 +9712,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_x_get)
 }
 
 
+/* Module: X11 Function: XTimeCoord_y_set */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_y_set)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9329,6 +9734,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_y_set)
 }
 
 
+/* Module: X11 Function: XTimeCoord_y_get */
 SYX_FUNC_PRIMITIVE(X11_XTimeCoord_y_get)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9342,6 +9748,7 @@ SYX_FUNC_PRIMITIVE(X11_XTimeCoord_y_get)
 }
 
 
+/* Module: X11 Function: new_XTimeCoord */
 SYX_FUNC_PRIMITIVE(X11_new_XTimeCoord)
 {
   XTimeCoord *result = 0 ;
@@ -9353,6 +9760,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XTimeCoord)
 }
 
 
+/* Module: X11 Function: delete_XTimeCoord */
 SYX_FUNC_PRIMITIVE(X11_delete_XTimeCoord)
 {
   XTimeCoord *arg1 = (XTimeCoord *) 0 ;
@@ -9366,6 +9774,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XTimeCoord)
 }
 
 
+/* Module: X11 Function: XModifierKeymap_max_keypermod_set */
 SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_max_keypermod_set)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -9387,6 +9796,7 @@ SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_max_keypermod_set)
 }
 
 
+/* Module: X11 Function: XModifierKeymap_max_keypermod_get */
 SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_max_keypermod_get)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -9400,6 +9810,7 @@ SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_max_keypermod_get)
 }
 
 
+/* Module: X11 Function: XModifierKeymap_modifiermap_set */
 SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_modifiermap_set)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -9415,6 +9826,7 @@ SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_modifiermap_set)
 }
 
 
+/* Module: X11 Function: XModifierKeymap_modifiermap_get */
 SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_modifiermap_get)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -9428,6 +9840,7 @@ SYX_FUNC_PRIMITIVE(X11_XModifierKeymap_modifiermap_get)
 }
 
 
+/* Module: X11 Function: new_XModifierKeymap */
 SYX_FUNC_PRIMITIVE(X11_new_XModifierKeymap)
 {
   XModifierKeymap *result = 0 ;
@@ -9439,6 +9852,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XModifierKeymap)
 }
 
 
+/* Module: X11 Function: delete_XModifierKeymap */
 SYX_FUNC_PRIMITIVE(X11_delete_XModifierKeymap)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -9452,6 +9866,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XModifierKeymap)
 }
 
 
+/* Module: X11 Function: XKeyEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_type_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9473,6 +9888,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_type_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_type_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9486,6 +9902,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_type_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_serial_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9507,6 +9924,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_serial_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9520,6 +9938,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_send_event_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9541,6 +9960,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_send_event_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9554,6 +9974,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_display_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9569,6 +9990,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_display_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_display_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9582,6 +10004,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_display_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_window_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9603,6 +10026,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_window_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_window_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9616,6 +10040,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_window_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_root_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_root_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9637,6 +10062,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_root_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_root_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_root_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9650,6 +10076,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_root_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_subwindow_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_subwindow_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9671,6 +10098,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_subwindow_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_subwindow_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_subwindow_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9684,6 +10112,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_subwindow_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_time_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9705,6 +10134,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_time_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_time_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9718,6 +10148,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_time_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9739,6 +10170,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9752,6 +10184,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9773,6 +10206,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9786,6 +10220,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_x_root_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_root_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9807,6 +10242,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_root_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_x_root_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_root_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9820,6 +10256,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_x_root_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_y_root_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_root_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9841,6 +10278,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_root_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_y_root_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_root_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9854,6 +10292,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_y_root_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_state_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9875,6 +10314,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_state_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_state_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9888,6 +10328,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_state_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_keycode_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_keycode_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9909,6 +10350,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_keycode_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_keycode_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_keycode_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9922,6 +10364,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_keycode_get)
 }
 
 
+/* Module: X11 Function: XKeyEvent_same_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_same_screen_set)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9943,6 +10386,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_same_screen_set)
 }
 
 
+/* Module: X11 Function: XKeyEvent_same_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XKeyEvent_same_screen_get)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9956,6 +10400,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeyEvent_same_screen_get)
 }
 
 
+/* Module: X11 Function: new_XKeyEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XKeyEvent)
 {
   XKeyEvent *result = 0 ;
@@ -9967,6 +10412,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XKeyEvent)
 }
 
 
+/* Module: X11 Function: delete_XKeyEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XKeyEvent)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -9980,6 +10426,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XKeyEvent)
 }
 
 
+/* Module: X11 Function: XButtonEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_type_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10001,6 +10448,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_type_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_type_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10014,6 +10462,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_type_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_serial_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10035,6 +10484,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_serial_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10048,6 +10498,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_send_event_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10069,6 +10520,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_send_event_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10082,6 +10534,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_display_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10097,6 +10550,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_display_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_display_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10110,6 +10564,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_display_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_window_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10131,6 +10586,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_window_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_window_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10144,6 +10600,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_window_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_root_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_root_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10165,6 +10622,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_root_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_root_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_root_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10178,6 +10636,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_root_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_subwindow_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_subwindow_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10199,6 +10658,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_subwindow_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_subwindow_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_subwindow_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10212,6 +10672,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_subwindow_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_time_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10233,6 +10694,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_time_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_time_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10246,6 +10708,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_time_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10267,6 +10730,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10280,6 +10744,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10301,6 +10766,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10314,6 +10780,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_x_root_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_root_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10335,6 +10802,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_root_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_x_root_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_root_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10348,6 +10816,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_x_root_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_y_root_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_root_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10369,6 +10838,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_root_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_y_root_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_root_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10382,6 +10852,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_y_root_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_state_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10403,6 +10874,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_state_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_state_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10416,6 +10888,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_state_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_button_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_button_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10437,6 +10910,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_button_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_button_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_button_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10450,6 +10924,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_button_get)
 }
 
 
+/* Module: X11 Function: XButtonEvent_same_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_same_screen_set)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10471,6 +10946,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_same_screen_set)
 }
 
 
+/* Module: X11 Function: XButtonEvent_same_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XButtonEvent_same_screen_get)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10484,6 +10960,7 @@ SYX_FUNC_PRIMITIVE(X11_XButtonEvent_same_screen_get)
 }
 
 
+/* Module: X11 Function: new_XButtonEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XButtonEvent)
 {
   XButtonEvent *result = 0 ;
@@ -10495,6 +10972,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XButtonEvent)
 }
 
 
+/* Module: X11 Function: delete_XButtonEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XButtonEvent)
 {
   XButtonEvent *arg1 = (XButtonEvent *) 0 ;
@@ -10508,6 +10986,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XButtonEvent)
 }
 
 
+/* Module: X11 Function: XMotionEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_type_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10529,6 +11008,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_type_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_type_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10542,6 +11022,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_type_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_serial_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10563,6 +11044,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_serial_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10576,6 +11058,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_send_event_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10597,6 +11080,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_send_event_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10610,6 +11094,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_display_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10625,6 +11110,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_display_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_display_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10638,6 +11124,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_display_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_window_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10659,6 +11146,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_window_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_window_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10672,6 +11160,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_window_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_root_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_root_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10693,6 +11182,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_root_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_root_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_root_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10706,6 +11196,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_root_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_subwindow_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_subwindow_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10727,6 +11218,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_subwindow_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_subwindow_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_subwindow_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10740,6 +11232,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_subwindow_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_time_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10761,6 +11254,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_time_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_time_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10774,6 +11268,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_time_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10795,6 +11290,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10808,6 +11304,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10829,6 +11326,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10842,6 +11340,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_x_root_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_root_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10863,6 +11362,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_root_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_x_root_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_root_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10876,6 +11376,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_x_root_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_y_root_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_root_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10897,6 +11398,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_root_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_y_root_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_root_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10910,6 +11412,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_y_root_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_state_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10931,6 +11434,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_state_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_state_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10944,6 +11448,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_state_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_is_hint_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_is_hint_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10965,6 +11470,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_is_hint_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_is_hint_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_is_hint_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10978,6 +11484,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_is_hint_get)
 }
 
 
+/* Module: X11 Function: XMotionEvent_same_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_same_screen_set)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -10999,6 +11506,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_same_screen_set)
 }
 
 
+/* Module: X11 Function: XMotionEvent_same_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XMotionEvent_same_screen_get)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -11012,6 +11520,7 @@ SYX_FUNC_PRIMITIVE(X11_XMotionEvent_same_screen_get)
 }
 
 
+/* Module: X11 Function: new_XMotionEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XMotionEvent)
 {
   XMotionEvent *result = 0 ;
@@ -11023,6 +11532,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XMotionEvent)
 }
 
 
+/* Module: X11 Function: delete_XMotionEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XMotionEvent)
 {
   XMotionEvent *arg1 = (XMotionEvent *) 0 ;
@@ -11036,6 +11546,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XMotionEvent)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_type_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11057,6 +11568,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_type_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_type_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11070,6 +11582,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_type_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_serial_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11091,6 +11604,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_serial_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11104,6 +11618,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_send_event_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11125,6 +11640,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_send_event_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11138,6 +11654,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_display_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11153,6 +11670,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_display_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_display_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11166,6 +11684,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_display_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_window_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11187,6 +11706,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_window_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_window_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11200,6 +11720,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_window_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_root_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_root_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11221,6 +11742,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_root_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_root_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_root_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11234,6 +11756,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_root_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_subwindow_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_subwindow_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11255,6 +11778,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_subwindow_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_subwindow_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_subwindow_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11268,6 +11792,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_subwindow_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_time_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11289,6 +11814,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_time_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_time_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11302,6 +11828,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_time_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11323,6 +11850,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11336,6 +11864,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11357,6 +11886,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11370,6 +11900,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_x_root_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_root_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11391,6 +11922,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_root_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_x_root_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_root_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11404,6 +11936,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_x_root_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_y_root_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_root_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11425,6 +11958,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_root_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_y_root_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_root_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11438,6 +11972,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_y_root_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_mode_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11459,6 +11994,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_mode_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_mode_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11472,6 +12008,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_mode_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_detail_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_detail_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11493,6 +12030,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_detail_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_detail_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_detail_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11506,6 +12044,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_detail_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_same_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_same_screen_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11527,6 +12066,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_same_screen_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_same_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_same_screen_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11540,6 +12080,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_same_screen_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_focus_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_focus_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11561,6 +12102,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_focus_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_focus_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_focus_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11574,6 +12116,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_focus_get)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_state_set)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11595,6 +12138,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_state_set)
 }
 
 
+/* Module: X11 Function: XCrossingEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_state_get)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11608,6 +12152,7 @@ SYX_FUNC_PRIMITIVE(X11_XCrossingEvent_state_get)
 }
 
 
+/* Module: X11 Function: new_XCrossingEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XCrossingEvent)
 {
   XCrossingEvent *result = 0 ;
@@ -11619,6 +12164,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XCrossingEvent)
 }
 
 
+/* Module: X11 Function: delete_XCrossingEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XCrossingEvent)
 {
   XCrossingEvent *arg1 = (XCrossingEvent *) 0 ;
@@ -11632,6 +12178,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XCrossingEvent)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_type_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11653,6 +12200,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_type_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_type_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11666,6 +12214,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_type_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_serial_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11687,6 +12236,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_serial_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11700,6 +12250,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_send_event_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11721,6 +12272,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_send_event_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11734,6 +12286,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_display_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11749,6 +12302,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_display_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_display_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11762,6 +12316,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_display_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_window_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11783,6 +12338,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_window_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_window_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11796,6 +12352,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_window_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_mode_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_mode_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11817,6 +12374,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_mode_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_mode_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_mode_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11830,6 +12388,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_mode_get)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_detail_set */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_detail_set)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11851,6 +12410,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_detail_set)
 }
 
 
+/* Module: X11 Function: XFocusChangeEvent_detail_get */
 SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_detail_get)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11864,6 +12424,7 @@ SYX_FUNC_PRIMITIVE(X11_XFocusChangeEvent_detail_get)
 }
 
 
+/* Module: X11 Function: new_XFocusChangeEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XFocusChangeEvent)
 {
   XFocusChangeEvent *result = 0 ;
@@ -11875,6 +12436,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XFocusChangeEvent)
 }
 
 
+/* Module: X11 Function: delete_XFocusChangeEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XFocusChangeEvent)
 {
   XFocusChangeEvent *arg1 = (XFocusChangeEvent *) 0 ;
@@ -11888,6 +12450,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XFocusChangeEvent)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_type_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11909,6 +12472,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_type_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_type_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11922,6 +12486,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_type_get)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_serial_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11943,6 +12508,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_serial_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11956,6 +12522,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_send_event_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11977,6 +12544,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_send_event_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -11990,6 +12558,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_display_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12005,6 +12574,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_display_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_display_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12018,6 +12588,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_display_get)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_window_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12039,6 +12610,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_window_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_window_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12052,6 +12624,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_window_get)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_key_vector_set */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_key_vector_set)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12069,6 +12642,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_key_vector_set)
 }
 
 
+/* Module: X11 Function: XKeymapEvent_key_vector_get */
 SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_key_vector_get)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12082,6 +12656,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeymapEvent_key_vector_get)
 }
 
 
+/* Module: X11 Function: new_XKeymapEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XKeymapEvent)
 {
   XKeymapEvent *result = 0 ;
@@ -12093,6 +12668,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XKeymapEvent)
 }
 
 
+/* Module: X11 Function: delete_XKeymapEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XKeymapEvent)
 {
   XKeymapEvent *arg1 = (XKeymapEvent *) 0 ;
@@ -12106,6 +12682,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XKeymapEvent)
 }
 
 
+/* Module: X11 Function: XExposeEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_type_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12127,6 +12704,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_type_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_type_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12140,6 +12718,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_type_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_serial_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12161,6 +12740,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_serial_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12174,6 +12754,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_send_event_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12195,6 +12776,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_send_event_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12208,6 +12790,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_display_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12223,6 +12806,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_display_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_display_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12236,6 +12820,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_display_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_window_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12257,6 +12842,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_window_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_window_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12270,6 +12856,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_window_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_x_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12291,6 +12878,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_x_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_x_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12304,6 +12892,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_x_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_y_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12325,6 +12914,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_y_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_y_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12338,6 +12928,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_y_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_width_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12359,6 +12950,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_width_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_width_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12372,6 +12964,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_width_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_height_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12393,6 +12986,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_height_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_height_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12406,6 +13000,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_height_get)
 }
 
 
+/* Module: X11 Function: XExposeEvent_count_set */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_count_set)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12427,6 +13022,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_count_set)
 }
 
 
+/* Module: X11 Function: XExposeEvent_count_get */
 SYX_FUNC_PRIMITIVE(X11_XExposeEvent_count_get)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12440,6 +13036,7 @@ SYX_FUNC_PRIMITIVE(X11_XExposeEvent_count_get)
 }
 
 
+/* Module: X11 Function: new_XExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XExposeEvent)
 {
   XExposeEvent *result = 0 ;
@@ -12451,6 +13048,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XExposeEvent)
 }
 
 
+/* Module: X11 Function: delete_XExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XExposeEvent)
 {
   XExposeEvent *arg1 = (XExposeEvent *) 0 ;
@@ -12464,6 +13062,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XExposeEvent)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_type_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12485,6 +13084,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_type_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_type_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12498,6 +13098,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_type_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_serial_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12519,6 +13120,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_serial_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12532,6 +13134,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_send_event_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12553,6 +13156,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_send_event_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12566,6 +13170,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_display_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12581,6 +13186,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_display_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_display_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12594,6 +13200,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_display_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_drawable_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_drawable_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12615,6 +13222,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_drawable_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_drawable_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_drawable_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12628,6 +13236,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_drawable_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_x_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12649,6 +13258,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_x_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_x_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12662,6 +13272,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_x_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_y_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12683,6 +13294,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_y_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_y_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12696,6 +13308,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_y_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_width_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12717,6 +13330,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_width_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_width_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12730,6 +13344,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_width_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_height_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12751,6 +13366,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_height_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_height_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12764,6 +13380,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_height_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_count_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_count_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12785,6 +13402,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_count_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_count_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_count_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12798,6 +13416,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_count_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_major_code_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_major_code_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12819,6 +13438,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_major_code_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_major_code_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_major_code_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12832,6 +13452,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_major_code_get)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_minor_code_set */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_minor_code_set)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12853,6 +13474,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_minor_code_set)
 }
 
 
+/* Module: X11 Function: XGraphicsExposeEvent_minor_code_get */
 SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_minor_code_get)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12866,6 +13488,7 @@ SYX_FUNC_PRIMITIVE(X11_XGraphicsExposeEvent_minor_code_get)
 }
 
 
+/* Module: X11 Function: new_XGraphicsExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XGraphicsExposeEvent)
 {
   XGraphicsExposeEvent *result = 0 ;
@@ -12877,6 +13500,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XGraphicsExposeEvent)
 }
 
 
+/* Module: X11 Function: delete_XGraphicsExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XGraphicsExposeEvent)
 {
   XGraphicsExposeEvent *arg1 = (XGraphicsExposeEvent *) 0 ;
@@ -12890,6 +13514,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XGraphicsExposeEvent)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_type_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12911,6 +13536,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_type_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_type_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12924,6 +13550,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_type_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_serial_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12945,6 +13572,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_serial_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12958,6 +13586,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_send_event_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12979,6 +13608,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_send_event_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -12992,6 +13622,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_display_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13007,6 +13638,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_display_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_display_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13020,6 +13652,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_display_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_drawable_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_drawable_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13041,6 +13674,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_drawable_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_drawable_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_drawable_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13054,6 +13688,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_drawable_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_major_code_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_major_code_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13075,6 +13710,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_major_code_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_major_code_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_major_code_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13088,6 +13724,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_major_code_get)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_minor_code_set */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_minor_code_set)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13109,6 +13746,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_minor_code_set)
 }
 
 
+/* Module: X11 Function: XNoExposeEvent_minor_code_get */
 SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_minor_code_get)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13122,6 +13760,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoExposeEvent_minor_code_get)
 }
 
 
+/* Module: X11 Function: new_XNoExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XNoExposeEvent)
 {
   XNoExposeEvent *result = 0 ;
@@ -13133,6 +13772,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XNoExposeEvent)
 }
 
 
+/* Module: X11 Function: delete_XNoExposeEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XNoExposeEvent)
 {
   XNoExposeEvent *arg1 = (XNoExposeEvent *) 0 ;
@@ -13146,6 +13786,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XNoExposeEvent)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_type_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13167,6 +13808,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_type_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_type_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13180,6 +13822,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_type_get)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_serial_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13201,6 +13844,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_serial_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13214,6 +13858,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_send_event_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13235,6 +13880,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_send_event_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13248,6 +13894,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_display_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13263,6 +13910,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_display_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_display_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13276,6 +13924,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_display_get)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_window_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13297,6 +13946,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_window_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_window_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13310,6 +13960,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_window_get)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_state_set)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13331,6 +13982,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_state_set)
 }
 
 
+/* Module: X11 Function: XVisibilityEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_state_get)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13344,6 +13996,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisibilityEvent_state_get)
 }
 
 
+/* Module: X11 Function: new_XVisibilityEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XVisibilityEvent)
 {
   XVisibilityEvent *result = 0 ;
@@ -13355,6 +14008,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XVisibilityEvent)
 }
 
 
+/* Module: X11 Function: delete_XVisibilityEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XVisibilityEvent)
 {
   XVisibilityEvent *arg1 = (XVisibilityEvent *) 0 ;
@@ -13368,6 +14022,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XVisibilityEvent)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_type_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13389,6 +14044,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_type_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_type_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13402,6 +14058,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_type_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_serial_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13423,6 +14080,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_serial_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13436,6 +14094,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_send_event_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13457,6 +14116,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_send_event_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13470,6 +14130,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_display_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13485,6 +14146,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_display_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_display_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13498,6 +14160,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_display_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_parent_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_parent_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13519,6 +14182,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_parent_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_parent_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_parent_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13532,6 +14196,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_parent_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_window_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13553,6 +14218,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_window_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_window_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13566,6 +14232,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_window_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_x_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13587,6 +14254,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_x_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_x_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13600,6 +14268,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_x_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_y_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13621,6 +14290,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_y_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_y_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13634,6 +14304,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_y_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_width_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13655,6 +14326,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_width_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_width_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13668,6 +14340,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_width_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_height_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13689,6 +14362,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_height_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_height_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13702,6 +14376,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_height_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_border_width_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_border_width_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13723,6 +14398,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_border_width_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_border_width_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_border_width_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13736,6 +14412,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_border_width_get)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_override_redirect_set)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13757,6 +14434,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XCreateWindowEvent_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_override_redirect_get)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13770,6 +14448,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindowEvent_override_redirect_get)
 }
 
 
+/* Module: X11 Function: new_XCreateWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XCreateWindowEvent)
 {
   XCreateWindowEvent *result = 0 ;
@@ -13781,6 +14460,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XCreateWindowEvent)
 }
 
 
+/* Module: X11 Function: delete_XCreateWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XCreateWindowEvent)
 {
   XCreateWindowEvent *arg1 = (XCreateWindowEvent *) 0 ;
@@ -13794,6 +14474,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XCreateWindowEvent)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_type_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13815,6 +14496,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_type_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_type_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13828,6 +14510,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_type_get)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_serial_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13849,6 +14532,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_serial_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13862,6 +14546,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_send_event_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13883,6 +14568,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_send_event_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13896,6 +14582,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_display_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13911,6 +14598,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_display_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_display_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13924,6 +14612,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_display_get)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_event_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13945,6 +14634,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_event_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_event_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13958,6 +14648,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_event_get)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_window_set)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13979,6 +14670,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_window_set)
 }
 
 
+/* Module: X11 Function: XDestroyWindowEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_window_get)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -13992,6 +14684,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindowEvent_window_get)
 }
 
 
+/* Module: X11 Function: new_XDestroyWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XDestroyWindowEvent)
 {
   XDestroyWindowEvent *result = 0 ;
@@ -14003,6 +14696,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XDestroyWindowEvent)
 }
 
 
+/* Module: X11 Function: delete_XDestroyWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XDestroyWindowEvent)
 {
   XDestroyWindowEvent *arg1 = (XDestroyWindowEvent *) 0 ;
@@ -14016,6 +14710,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XDestroyWindowEvent)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_type_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14037,6 +14732,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_type_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_type_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14050,6 +14746,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_type_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_serial_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14071,6 +14768,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_serial_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14084,6 +14782,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_send_event_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14105,6 +14804,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_send_event_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14118,6 +14818,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_display_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14133,6 +14834,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_display_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_display_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14146,6 +14848,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_display_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_event_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14167,6 +14870,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_event_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_event_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14180,6 +14884,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_event_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_window_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14201,6 +14906,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_window_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_window_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14214,6 +14920,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_window_get)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_from_configure_set */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_from_configure_set)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14235,6 +14942,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_from_configure_set)
 }
 
 
+/* Module: X11 Function: XUnmapEvent_from_configure_get */
 SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_from_configure_get)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14248,6 +14956,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapEvent_from_configure_get)
 }
 
 
+/* Module: X11 Function: new_XUnmapEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XUnmapEvent)
 {
   XUnmapEvent *result = 0 ;
@@ -14259,6 +14968,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XUnmapEvent)
 }
 
 
+/* Module: X11 Function: delete_XUnmapEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XUnmapEvent)
 {
   XUnmapEvent *arg1 = (XUnmapEvent *) 0 ;
@@ -14272,6 +14982,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XUnmapEvent)
 }
 
 
+/* Module: X11 Function: XMapEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_type_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14293,6 +15004,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_type_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_type_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14306,6 +15018,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_type_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_serial_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14327,6 +15040,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_serial_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14340,6 +15054,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_send_event_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14361,6 +15076,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_send_event_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14374,6 +15090,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_display_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14389,6 +15106,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_display_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_display_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14402,6 +15120,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_display_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_event_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14423,6 +15142,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_event_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_event_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14436,6 +15156,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_event_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_window_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14457,6 +15178,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_window_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_window_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14470,6 +15192,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_window_get)
 }
 
 
+/* Module: X11 Function: XMapEvent_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_override_redirect_set)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14491,6 +15214,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XMapEvent_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XMapEvent_override_redirect_get)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14504,6 +15228,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapEvent_override_redirect_get)
 }
 
 
+/* Module: X11 Function: new_XMapEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XMapEvent)
 {
   XMapEvent *result = 0 ;
@@ -14515,6 +15240,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XMapEvent)
 }
 
 
+/* Module: X11 Function: delete_XMapEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XMapEvent)
 {
   XMapEvent *arg1 = (XMapEvent *) 0 ;
@@ -14528,6 +15254,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XMapEvent)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_type_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14549,6 +15276,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_type_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_type_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14562,6 +15290,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_type_get)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_serial_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14583,6 +15312,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_serial_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14596,6 +15326,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_send_event_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14617,6 +15348,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_send_event_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14630,6 +15362,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_display_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14645,6 +15378,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_display_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_display_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14658,6 +15392,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_display_get)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_parent_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_parent_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14679,6 +15414,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_parent_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_parent_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_parent_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14692,6 +15428,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_parent_get)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_window_set)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14713,6 +15450,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_window_set)
 }
 
 
+/* Module: X11 Function: XMapRequestEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_window_get)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14726,6 +15464,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRequestEvent_window_get)
 }
 
 
+/* Module: X11 Function: new_XMapRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XMapRequestEvent)
 {
   XMapRequestEvent *result = 0 ;
@@ -14737,6 +15476,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XMapRequestEvent)
 }
 
 
+/* Module: X11 Function: delete_XMapRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XMapRequestEvent)
 {
   XMapRequestEvent *arg1 = (XMapRequestEvent *) 0 ;
@@ -14750,6 +15490,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XMapRequestEvent)
 }
 
 
+/* Module: X11 Function: XReparentEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_type_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14771,6 +15512,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_type_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_type_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14784,6 +15526,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_type_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_serial_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14805,6 +15548,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_serial_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14818,6 +15562,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_send_event_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14839,6 +15584,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_send_event_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14852,6 +15598,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_display_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14867,6 +15614,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_display_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_display_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14880,6 +15628,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_display_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_event_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14901,6 +15650,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_event_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_event_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14914,6 +15664,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_event_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_window_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14935,6 +15686,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_window_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_window_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14948,6 +15700,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_window_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_parent_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_parent_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14969,6 +15722,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_parent_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_parent_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_parent_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -14982,6 +15736,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_parent_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_x_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15003,6 +15758,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_x_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_x_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15016,6 +15772,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_x_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_y_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15037,6 +15794,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_y_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_y_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15050,6 +15808,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_y_get)
 }
 
 
+/* Module: X11 Function: XReparentEvent_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_override_redirect_set)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15071,6 +15830,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XReparentEvent_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XReparentEvent_override_redirect_get)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15084,6 +15844,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentEvent_override_redirect_get)
 }
 
 
+/* Module: X11 Function: new_XReparentEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XReparentEvent)
 {
   XReparentEvent *result = 0 ;
@@ -15095,6 +15856,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XReparentEvent)
 }
 
 
+/* Module: X11 Function: delete_XReparentEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XReparentEvent)
 {
   XReparentEvent *arg1 = (XReparentEvent *) 0 ;
@@ -15108,6 +15870,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XReparentEvent)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_type_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15129,6 +15892,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_type_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_type_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15142,6 +15906,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_type_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_serial_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15163,6 +15928,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_serial_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15176,6 +15942,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_send_event_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15197,6 +15964,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_send_event_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15210,6 +15978,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_display_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15225,6 +15994,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_display_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_display_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15238,6 +16008,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_display_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_event_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15259,6 +16030,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_event_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_event_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15272,6 +16044,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_event_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_window_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15293,6 +16066,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_window_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_window_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15306,6 +16080,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_window_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_x_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15327,6 +16102,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_x_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_x_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15340,6 +16116,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_x_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_y_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15361,6 +16138,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_y_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_y_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15374,6 +16152,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_y_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_width_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15395,6 +16174,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_width_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_width_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15408,6 +16188,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_width_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_height_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15429,6 +16210,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_height_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_height_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15442,6 +16224,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_height_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_border_width_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_border_width_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15463,6 +16246,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_border_width_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_border_width_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_border_width_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15476,6 +16260,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_border_width_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_above_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_above_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15497,6 +16282,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_above_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_above_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_above_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15510,6 +16296,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_above_get)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_override_redirect_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_override_redirect_set)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15531,6 +16318,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_override_redirect_set)
 }
 
 
+/* Module: X11 Function: XConfigureEvent_override_redirect_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_override_redirect_get)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15544,6 +16332,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureEvent_override_redirect_get)
 }
 
 
+/* Module: X11 Function: new_XConfigureEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XConfigureEvent)
 {
   XConfigureEvent *result = 0 ;
@@ -15555,6 +16344,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XConfigureEvent)
 }
 
 
+/* Module: X11 Function: delete_XConfigureEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XConfigureEvent)
 {
   XConfigureEvent *arg1 = (XConfigureEvent *) 0 ;
@@ -15568,6 +16358,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XConfigureEvent)
 }
 
 
+/* Module: X11 Function: XGravityEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_type_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15589,6 +16380,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_type_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_type_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15602,6 +16394,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_type_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_serial_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15623,6 +16416,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_serial_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15636,6 +16430,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_send_event_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15657,6 +16452,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_send_event_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15670,6 +16466,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_display_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15685,6 +16482,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_display_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_display_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15698,6 +16496,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_display_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_event_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15719,6 +16518,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_event_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_event_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15732,6 +16532,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_event_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_window_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15753,6 +16554,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_window_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_window_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15766,6 +16568,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_window_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_x_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15787,6 +16590,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_x_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_x_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15800,6 +16604,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_x_get)
 }
 
 
+/* Module: X11 Function: XGravityEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_y_set)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15821,6 +16626,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_y_set)
 }
 
 
+/* Module: X11 Function: XGravityEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XGravityEvent_y_get)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15834,6 +16640,7 @@ SYX_FUNC_PRIMITIVE(X11_XGravityEvent_y_get)
 }
 
 
+/* Module: X11 Function: new_XGravityEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XGravityEvent)
 {
   XGravityEvent *result = 0 ;
@@ -15845,6 +16652,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XGravityEvent)
 }
 
 
+/* Module: X11 Function: delete_XGravityEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XGravityEvent)
 {
   XGravityEvent *arg1 = (XGravityEvent *) 0 ;
@@ -15858,6 +16666,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XGravityEvent)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_type_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15879,6 +16688,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_type_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_type_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15892,6 +16702,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_type_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_serial_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15913,6 +16724,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_serial_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15926,6 +16738,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_send_event_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15947,6 +16760,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_send_event_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15960,6 +16774,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_display_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15975,6 +16790,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_display_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_display_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -15988,6 +16804,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_display_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_window_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16009,6 +16826,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_window_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_window_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16022,6 +16840,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_window_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_width_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16043,6 +16862,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_width_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_width_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16056,6 +16876,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_width_get)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_height_set)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16077,6 +16898,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_height_set)
 }
 
 
+/* Module: X11 Function: XResizeRequestEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_height_get)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16090,6 +16912,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeRequestEvent_height_get)
 }
 
 
+/* Module: X11 Function: new_XResizeRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XResizeRequestEvent)
 {
   XResizeRequestEvent *result = 0 ;
@@ -16101,6 +16924,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XResizeRequestEvent)
 }
 
 
+/* Module: X11 Function: delete_XResizeRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XResizeRequestEvent)
 {
   XResizeRequestEvent *arg1 = (XResizeRequestEvent *) 0 ;
@@ -16114,6 +16938,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XResizeRequestEvent)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_type_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16135,6 +16960,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_type_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_type_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16148,6 +16974,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_type_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_serial_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16169,6 +16996,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_serial_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16182,6 +17010,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_send_event_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16203,6 +17032,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_send_event_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16216,6 +17046,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_display_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16231,6 +17062,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_display_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_display_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16244,6 +17076,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_display_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_parent_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_parent_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16265,6 +17098,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_parent_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_parent_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_parent_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16278,6 +17112,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_parent_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_window_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16299,6 +17134,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_window_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_window_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16312,6 +17148,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_window_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_x_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_x_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16333,6 +17170,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_x_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_x_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_x_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16346,6 +17184,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_x_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_y_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_y_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16367,6 +17206,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_y_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_y_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_y_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16380,6 +17220,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_y_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_width_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_width_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16401,6 +17242,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_width_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_width_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_width_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16414,6 +17256,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_width_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_height_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_height_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16435,6 +17278,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_height_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_height_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_height_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16448,6 +17292,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_height_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_border_width_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_border_width_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16469,6 +17314,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_border_width_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_border_width_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_border_width_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16482,6 +17328,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_border_width_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_above_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_above_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16503,6 +17350,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_above_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_above_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_above_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16516,6 +17364,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_above_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_detail_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_detail_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16537,6 +17386,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_detail_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_detail_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_detail_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16550,6 +17400,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_detail_get)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_value_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_value_mask_set)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16571,6 +17422,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_value_mask_set)
 }
 
 
+/* Module: X11 Function: XConfigureRequestEvent_value_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_value_mask_get)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16584,6 +17436,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureRequestEvent_value_mask_get)
 }
 
 
+/* Module: X11 Function: new_XConfigureRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XConfigureRequestEvent)
 {
   XConfigureRequestEvent *result = 0 ;
@@ -16595,6 +17448,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XConfigureRequestEvent)
 }
 
 
+/* Module: X11 Function: delete_XConfigureRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XConfigureRequestEvent)
 {
   XConfigureRequestEvent *arg1 = (XConfigureRequestEvent *) 0 ;
@@ -16608,6 +17462,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XConfigureRequestEvent)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_type_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16629,6 +17484,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_type_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_type_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16642,6 +17498,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_type_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_serial_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16663,6 +17520,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_serial_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16676,6 +17534,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_send_event_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16697,6 +17556,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_send_event_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16710,6 +17570,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_display_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16725,6 +17586,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_display_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_display_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16738,6 +17600,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_display_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_event_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_event_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16759,6 +17622,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_event_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_event_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_event_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16772,6 +17636,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_event_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_window_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16793,6 +17658,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_window_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_window_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16806,6 +17672,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_window_get)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_place_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_place_set)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16827,6 +17694,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_place_set)
 }
 
 
+/* Module: X11 Function: XCirculateEvent_place_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_place_get)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16840,6 +17708,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateEvent_place_get)
 }
 
 
+/* Module: X11 Function: new_XCirculateEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XCirculateEvent)
 {
   XCirculateEvent *result = 0 ;
@@ -16851,6 +17720,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XCirculateEvent)
 }
 
 
+/* Module: X11 Function: delete_XCirculateEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XCirculateEvent)
 {
   XCirculateEvent *arg1 = (XCirculateEvent *) 0 ;
@@ -16864,6 +17734,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XCirculateEvent)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_type_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16885,6 +17756,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_type_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_type_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16898,6 +17770,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_type_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_serial_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16919,6 +17792,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_serial_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16932,6 +17806,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_send_event_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16953,6 +17828,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_send_event_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16966,6 +17842,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_display_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16981,6 +17858,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_display_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_display_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -16994,6 +17872,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_display_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_parent_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_parent_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17015,6 +17894,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_parent_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_parent_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_parent_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17028,6 +17908,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_parent_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_window_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17049,6 +17930,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_window_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_window_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17062,6 +17944,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_window_get)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_place_set */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_place_set)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17083,6 +17966,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_place_set)
 }
 
 
+/* Module: X11 Function: XCirculateRequestEvent_place_get */
 SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_place_get)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17096,6 +17980,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateRequestEvent_place_get)
 }
 
 
+/* Module: X11 Function: new_XCirculateRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XCirculateRequestEvent)
 {
   XCirculateRequestEvent *result = 0 ;
@@ -17107,6 +17992,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XCirculateRequestEvent)
 }
 
 
+/* Module: X11 Function: delete_XCirculateRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XCirculateRequestEvent)
 {
   XCirculateRequestEvent *arg1 = (XCirculateRequestEvent *) 0 ;
@@ -17120,6 +18006,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XCirculateRequestEvent)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_type_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17141,6 +18028,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_type_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_type_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17154,6 +18042,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_type_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_serial_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17175,6 +18064,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_serial_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17188,6 +18078,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_send_event_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17209,6 +18100,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_send_event_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17222,6 +18114,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_display_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17237,6 +18130,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_display_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_display_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17250,6 +18144,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_display_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_window_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17271,6 +18166,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_window_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_window_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17284,6 +18180,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_window_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_atom_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_atom_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17305,6 +18202,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_atom_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_atom_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_atom_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17318,6 +18216,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_atom_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_time_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17339,6 +18238,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_time_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_time_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17352,6 +18252,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_time_get)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_state_set)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17373,6 +18274,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_state_set)
 }
 
 
+/* Module: X11 Function: XPropertyEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_state_get)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17386,6 +18288,7 @@ SYX_FUNC_PRIMITIVE(X11_XPropertyEvent_state_get)
 }
 
 
+/* Module: X11 Function: new_XPropertyEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XPropertyEvent)
 {
   XPropertyEvent *result = 0 ;
@@ -17397,6 +18300,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XPropertyEvent)
 }
 
 
+/* Module: X11 Function: delete_XPropertyEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XPropertyEvent)
 {
   XPropertyEvent *arg1 = (XPropertyEvent *) 0 ;
@@ -17410,6 +18314,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XPropertyEvent)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_type_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17431,6 +18336,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_type_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_type_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17444,6 +18350,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_type_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_serial_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17465,6 +18372,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_serial_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17478,6 +18386,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_send_event_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17499,6 +18408,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_send_event_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17512,6 +18422,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_display_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17527,6 +18438,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_display_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_display_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17540,6 +18452,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_display_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_window_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17561,6 +18474,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_window_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_window_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17574,6 +18488,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_window_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_selection_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_selection_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17595,6 +18510,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_selection_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_selection_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_selection_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17608,6 +18524,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_selection_get)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_time_set)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17629,6 +18546,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_time_set)
 }
 
 
+/* Module: X11 Function: XSelectionClearEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_time_get)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17642,6 +18560,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionClearEvent_time_get)
 }
 
 
+/* Module: X11 Function: new_XSelectionClearEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XSelectionClearEvent)
 {
   XSelectionClearEvent *result = 0 ;
@@ -17653,6 +18572,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XSelectionClearEvent)
 }
 
 
+/* Module: X11 Function: delete_XSelectionClearEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XSelectionClearEvent)
 {
   XSelectionClearEvent *arg1 = (XSelectionClearEvent *) 0 ;
@@ -17666,6 +18586,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XSelectionClearEvent)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_type_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17687,6 +18608,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_type_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_type_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17700,6 +18622,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_type_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_serial_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17721,6 +18644,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_serial_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17734,6 +18658,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_send_event_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17755,6 +18680,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_send_event_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17768,6 +18694,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_display_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17783,6 +18710,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_display_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_display_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17796,6 +18724,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_display_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_owner_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_owner_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17817,6 +18746,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_owner_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_owner_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_owner_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17830,6 +18760,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_owner_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_requestor_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_requestor_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17851,6 +18782,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_requestor_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_requestor_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_requestor_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17864,6 +18796,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_requestor_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_selection_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_selection_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17885,6 +18818,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_selection_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_selection_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_selection_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17898,6 +18832,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_selection_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_target_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_target_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17919,6 +18854,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_target_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_target_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_target_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17932,6 +18868,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_target_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_property_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_property_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17953,6 +18890,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_property_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_property_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_property_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17966,6 +18904,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_property_get)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_time_set)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -17987,6 +18926,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_time_set)
 }
 
 
+/* Module: X11 Function: XSelectionRequestEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_time_get)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -18000,6 +18940,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionRequestEvent_time_get)
 }
 
 
+/* Module: X11 Function: new_XSelectionRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XSelectionRequestEvent)
 {
   XSelectionRequestEvent *result = 0 ;
@@ -18011,6 +18952,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XSelectionRequestEvent)
 }
 
 
+/* Module: X11 Function: delete_XSelectionRequestEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XSelectionRequestEvent)
 {
   XSelectionRequestEvent *arg1 = (XSelectionRequestEvent *) 0 ;
@@ -18024,6 +18966,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XSelectionRequestEvent)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_type_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18045,6 +18988,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_type_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_type_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18058,6 +19002,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_type_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_serial_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18079,6 +19024,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_serial_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18092,6 +19038,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_send_event_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18113,6 +19060,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_send_event_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18126,6 +19074,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_display_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18141,6 +19090,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_display_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_display_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18154,6 +19104,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_display_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_requestor_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_requestor_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18175,6 +19126,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_requestor_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_requestor_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_requestor_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18188,6 +19140,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_requestor_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_selection_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_selection_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18209,6 +19162,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_selection_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_selection_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_selection_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18222,6 +19176,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_selection_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_target_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_target_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18243,6 +19198,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_target_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_target_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_target_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18256,6 +19212,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_target_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_property_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_property_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18277,6 +19234,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_property_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_property_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_property_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18290,6 +19248,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_property_get)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_time_set */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_time_set)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18311,6 +19270,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_time_set)
 }
 
 
+/* Module: X11 Function: XSelectionEvent_time_get */
 SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_time_get)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18324,6 +19284,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectionEvent_time_get)
 }
 
 
+/* Module: X11 Function: new_XSelectionEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XSelectionEvent)
 {
   XSelectionEvent *result = 0 ;
@@ -18335,6 +19296,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XSelectionEvent)
 }
 
 
+/* Module: X11 Function: delete_XSelectionEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XSelectionEvent)
 {
   XSelectionEvent *arg1 = (XSelectionEvent *) 0 ;
@@ -18348,6 +19310,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XSelectionEvent)
 }
 
 
+/* Module: X11 Function: XColormapEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_type_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18369,6 +19332,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_type_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_type_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18382,6 +19346,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_type_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_serial_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18403,6 +19368,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_serial_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18416,6 +19382,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_send_event_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18437,6 +19404,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_send_event_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18450,6 +19418,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_display_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18465,6 +19434,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_display_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_display_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18478,6 +19448,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_display_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_window_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18499,6 +19470,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_window_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_window_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18512,6 +19484,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_window_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_colormap_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_colormap_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18533,6 +19506,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_colormap_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_colormap_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_colormap_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18546,6 +19520,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_colormap_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_new_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_new_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18567,6 +19542,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_new_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_new_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_new_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18580,6 +19556,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_new_get)
 }
 
 
+/* Module: X11 Function: XColormapEvent_state_set */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_state_set)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18601,6 +19578,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_state_set)
 }
 
 
+/* Module: X11 Function: XColormapEvent_state_get */
 SYX_FUNC_PRIMITIVE(X11_XColormapEvent_state_get)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18614,6 +19592,7 @@ SYX_FUNC_PRIMITIVE(X11_XColormapEvent_state_get)
 }
 
 
+/* Module: X11 Function: new_XColormapEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XColormapEvent)
 {
   XColormapEvent *result = 0 ;
@@ -18625,6 +19604,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XColormapEvent)
 }
 
 
+/* Module: X11 Function: delete_XColormapEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XColormapEvent)
 {
   XColormapEvent *arg1 = (XColormapEvent *) 0 ;
@@ -18638,6 +19618,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XColormapEvent)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_type_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18659,6 +19640,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_type_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_type_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18672,6 +19654,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_type_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_serial_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18693,6 +19676,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_serial_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18706,6 +19690,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_send_event_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18727,6 +19712,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_send_event_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18740,6 +19726,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_display_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18755,6 +19742,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_display_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_display_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18768,6 +19756,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_display_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_window_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18789,6 +19778,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_window_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_window_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18802,6 +19792,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_window_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_message_type_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_message_type_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18823,6 +19814,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_message_type_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_message_type_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_message_type_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18836,6 +19828,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_message_type_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_format_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_format_set)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18857,6 +19850,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_format_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_format_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_format_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18870,6 +19864,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_format_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_get)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18883,6 +19878,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_get)
 }
 
 
+/* Module: X11 Function: new_XClientMessageEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XClientMessageEvent)
 {
   XClientMessageEvent *result = 0 ;
@@ -18894,6 +19890,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XClientMessageEvent)
 }
 
 
+/* Module: X11 Function: delete_XClientMessageEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XClientMessageEvent)
 {
   XClientMessageEvent *arg1 = (XClientMessageEvent *) 0 ;
@@ -18907,6 +19904,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XClientMessageEvent)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_b_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_b_set)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18924,6 +19922,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_b_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_b_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_b_get)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18937,6 +19936,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_b_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_s_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_s_set)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18955,6 +19955,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_s_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_s_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_s_get)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18968,6 +19969,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_s_get)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_l_set */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_l_set)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18986,6 +19988,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_l_set)
 }
 
 
+/* Module: X11 Function: XClientMessageEvent_data_l_get */
 SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_l_get)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -18999,6 +20002,7 @@ SYX_FUNC_PRIMITIVE(X11_XClientMessageEvent_data_l_get)
 }
 
 
+/* Module: X11 Function: new_XClientMessageEvent_data */
 SYX_FUNC_PRIMITIVE(X11_new_XClientMessageEvent_data)
 {
   XClientMessageEvent_data *result = 0 ;
@@ -19010,6 +20014,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XClientMessageEvent_data)
 }
 
 
+/* Module: X11 Function: delete_XClientMessageEvent_data */
 SYX_FUNC_PRIMITIVE(X11_delete_XClientMessageEvent_data)
 {
   XClientMessageEvent_data *arg1 = (XClientMessageEvent_data *) 0 ;
@@ -19023,6 +20028,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XClientMessageEvent_data)
 }
 
 
+/* Module: X11 Function: XMappingEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_type_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19044,6 +20050,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_type_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_type_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19057,6 +20064,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_type_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_serial_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19078,6 +20086,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_serial_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19091,6 +20100,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_send_event_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19112,6 +20122,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_send_event_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19125,6 +20136,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_display_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19140,6 +20152,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_display_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_display_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19153,6 +20166,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_display_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_window_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19174,6 +20188,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_window_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_window_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19187,6 +20202,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_window_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_request_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_request_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19208,6 +20224,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_request_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_request_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_request_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19221,6 +20238,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_request_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_first_keycode_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_first_keycode_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19242,6 +20260,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_first_keycode_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_first_keycode_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_first_keycode_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19255,6 +20274,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_first_keycode_get)
 }
 
 
+/* Module: X11 Function: XMappingEvent_count_set */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_count_set)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19276,6 +20296,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_count_set)
 }
 
 
+/* Module: X11 Function: XMappingEvent_count_get */
 SYX_FUNC_PRIMITIVE(X11_XMappingEvent_count_get)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19289,6 +20310,7 @@ SYX_FUNC_PRIMITIVE(X11_XMappingEvent_count_get)
 }
 
 
+/* Module: X11 Function: new_XMappingEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XMappingEvent)
 {
   XMappingEvent *result = 0 ;
@@ -19300,6 +20322,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XMappingEvent)
 }
 
 
+/* Module: X11 Function: delete_XMappingEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XMappingEvent)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -19313,6 +20336,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XMappingEvent)
 }
 
 
+/* Module: X11 Function: XErrorEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_type_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19334,6 +20358,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_type_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_type_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19347,6 +20372,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_type_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_display_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19362,6 +20388,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_display_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_display_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19375,6 +20402,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_display_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_resourceid_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_resourceid_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19396,6 +20424,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_resourceid_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_resourceid_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_resourceid_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19409,6 +20438,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_resourceid_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_serial_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19430,6 +20460,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_serial_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19443,6 +20474,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_error_code_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_error_code_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19464,6 +20496,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_error_code_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_error_code_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_error_code_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19477,6 +20510,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_error_code_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_request_code_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_request_code_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19498,6 +20532,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_request_code_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_request_code_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_request_code_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19511,6 +20546,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_request_code_get)
 }
 
 
+/* Module: X11 Function: XErrorEvent_minor_code_set */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_minor_code_set)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19532,6 +20568,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_minor_code_set)
 }
 
 
+/* Module: X11 Function: XErrorEvent_minor_code_get */
 SYX_FUNC_PRIMITIVE(X11_XErrorEvent_minor_code_get)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19545,6 +20582,7 @@ SYX_FUNC_PRIMITIVE(X11_XErrorEvent_minor_code_get)
 }
 
 
+/* Module: X11 Function: new_XErrorEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XErrorEvent)
 {
   XErrorEvent *result = 0 ;
@@ -19556,6 +20594,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XErrorEvent)
 }
 
 
+/* Module: X11 Function: delete_XErrorEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XErrorEvent)
 {
   XErrorEvent *arg1 = (XErrorEvent *) 0 ;
@@ -19569,6 +20608,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XErrorEvent)
 }
 
 
+/* Module: X11 Function: XAnyEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_type_set)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19590,6 +20630,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_type_set)
 }
 
 
+/* Module: X11 Function: XAnyEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_type_get)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19603,6 +20644,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_type_get)
 }
 
 
+/* Module: X11 Function: XAnyEvent_serial_set */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_serial_set)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19624,6 +20666,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_serial_set)
 }
 
 
+/* Module: X11 Function: XAnyEvent_serial_get */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_serial_get)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19637,6 +20680,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_serial_get)
 }
 
 
+/* Module: X11 Function: XAnyEvent_send_event_set */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_send_event_set)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19658,6 +20702,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_send_event_set)
 }
 
 
+/* Module: X11 Function: XAnyEvent_send_event_get */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_send_event_get)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19671,6 +20716,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_send_event_get)
 }
 
 
+/* Module: X11 Function: XAnyEvent_display_set */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_display_set)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19686,6 +20732,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_display_set)
 }
 
 
+/* Module: X11 Function: XAnyEvent_display_get */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_display_get)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19699,6 +20746,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_display_get)
 }
 
 
+/* Module: X11 Function: XAnyEvent_window_set */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_window_set)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19720,6 +20768,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_window_set)
 }
 
 
+/* Module: X11 Function: XAnyEvent_window_get */
 SYX_FUNC_PRIMITIVE(X11_XAnyEvent_window_get)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19733,6 +20782,7 @@ SYX_FUNC_PRIMITIVE(X11_XAnyEvent_window_get)
 }
 
 
+/* Module: X11 Function: new_XAnyEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XAnyEvent)
 {
   XAnyEvent *result = 0 ;
@@ -19744,6 +20794,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XAnyEvent)
 }
 
 
+/* Module: X11 Function: delete_XAnyEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XAnyEvent)
 {
   XAnyEvent *arg1 = (XAnyEvent *) 0 ;
@@ -19757,6 +20808,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XAnyEvent)
 }
 
 
+/* Module: X11 Function: XEvent_type_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_type_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19778,6 +20830,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_type_set)
 }
 
 
+/* Module: X11 Function: XEvent_type_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_type_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19791,6 +20844,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_type_get)
 }
 
 
+/* Module: X11 Function: XEvent_xany_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xany_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19806,6 +20860,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xany_set)
 }
 
 
+/* Module: X11 Function: XEvent_xany_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xany_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19819,6 +20874,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xany_get)
 }
 
 
+/* Module: X11 Function: XEvent_xkey_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xkey_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19834,6 +20890,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xkey_set)
 }
 
 
+/* Module: X11 Function: XEvent_xkey_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xkey_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19847,6 +20904,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xkey_get)
 }
 
 
+/* Module: X11 Function: XEvent_xbutton_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xbutton_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19862,6 +20920,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xbutton_set)
 }
 
 
+/* Module: X11 Function: XEvent_xbutton_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xbutton_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19875,6 +20934,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xbutton_get)
 }
 
 
+/* Module: X11 Function: XEvent_xmotion_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmotion_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19890,6 +20950,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmotion_set)
 }
 
 
+/* Module: X11 Function: XEvent_xmotion_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmotion_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19903,6 +20964,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmotion_get)
 }
 
 
+/* Module: X11 Function: XEvent_xcrossing_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcrossing_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19918,6 +20980,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcrossing_set)
 }
 
 
+/* Module: X11 Function: XEvent_xcrossing_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcrossing_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19931,6 +20994,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcrossing_get)
 }
 
 
+/* Module: X11 Function: XEvent_xfocus_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xfocus_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19946,6 +21010,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xfocus_set)
 }
 
 
+/* Module: X11 Function: XEvent_xfocus_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xfocus_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19959,6 +21024,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xfocus_get)
 }
 
 
+/* Module: X11 Function: XEvent_xexpose_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xexpose_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19974,6 +21040,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xexpose_set)
 }
 
 
+/* Module: X11 Function: XEvent_xexpose_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xexpose_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -19987,6 +21054,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xexpose_get)
 }
 
 
+/* Module: X11 Function: XEvent_xgraphicsexpose_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xgraphicsexpose_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20002,6 +21070,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xgraphicsexpose_set)
 }
 
 
+/* Module: X11 Function: XEvent_xgraphicsexpose_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xgraphicsexpose_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20015,6 +21084,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xgraphicsexpose_get)
 }
 
 
+/* Module: X11 Function: XEvent_xnoexpose_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xnoexpose_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20030,6 +21100,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xnoexpose_set)
 }
 
 
+/* Module: X11 Function: XEvent_xnoexpose_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xnoexpose_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20043,6 +21114,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xnoexpose_get)
 }
 
 
+/* Module: X11 Function: XEvent_xvisibility_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xvisibility_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20058,6 +21130,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xvisibility_set)
 }
 
 
+/* Module: X11 Function: XEvent_xvisibility_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xvisibility_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20071,6 +21144,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xvisibility_get)
 }
 
 
+/* Module: X11 Function: XEvent_xcreatewindow_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcreatewindow_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20086,6 +21160,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcreatewindow_set)
 }
 
 
+/* Module: X11 Function: XEvent_xcreatewindow_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcreatewindow_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20099,6 +21174,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcreatewindow_get)
 }
 
 
+/* Module: X11 Function: XEvent_xdestroywindow_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xdestroywindow_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20114,6 +21190,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xdestroywindow_set)
 }
 
 
+/* Module: X11 Function: XEvent_xdestroywindow_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xdestroywindow_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20127,6 +21204,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xdestroywindow_get)
 }
 
 
+/* Module: X11 Function: XEvent_xunmap_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xunmap_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20142,6 +21220,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xunmap_set)
 }
 
 
+/* Module: X11 Function: XEvent_xunmap_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xunmap_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20155,6 +21234,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xunmap_get)
 }
 
 
+/* Module: X11 Function: XEvent_xmap_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmap_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20170,6 +21250,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmap_set)
 }
 
 
+/* Module: X11 Function: XEvent_xmap_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmap_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20183,6 +21264,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmap_get)
 }
 
 
+/* Module: X11 Function: XEvent_xmaprequest_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmaprequest_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20198,6 +21280,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmaprequest_set)
 }
 
 
+/* Module: X11 Function: XEvent_xmaprequest_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmaprequest_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20211,6 +21294,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmaprequest_get)
 }
 
 
+/* Module: X11 Function: XEvent_xreparent_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xreparent_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20226,6 +21310,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xreparent_set)
 }
 
 
+/* Module: X11 Function: XEvent_xreparent_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xreparent_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20239,6 +21324,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xreparent_get)
 }
 
 
+/* Module: X11 Function: XEvent_xconfigure_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigure_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20254,6 +21340,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigure_set)
 }
 
 
+/* Module: X11 Function: XEvent_xconfigure_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigure_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20267,6 +21354,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigure_get)
 }
 
 
+/* Module: X11 Function: XEvent_xgravity_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xgravity_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20282,6 +21370,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xgravity_set)
 }
 
 
+/* Module: X11 Function: XEvent_xgravity_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xgravity_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20295,6 +21384,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xgravity_get)
 }
 
 
+/* Module: X11 Function: XEvent_xresizerequest_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xresizerequest_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20310,6 +21400,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xresizerequest_set)
 }
 
 
+/* Module: X11 Function: XEvent_xresizerequest_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xresizerequest_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20323,6 +21414,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xresizerequest_get)
 }
 
 
+/* Module: X11 Function: XEvent_xconfigurerequest_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigurerequest_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20338,6 +21430,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigurerequest_set)
 }
 
 
+/* Module: X11 Function: XEvent_xconfigurerequest_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigurerequest_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20351,6 +21444,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xconfigurerequest_get)
 }
 
 
+/* Module: X11 Function: XEvent_xcirculate_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculate_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20366,6 +21460,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculate_set)
 }
 
 
+/* Module: X11 Function: XEvent_xcirculate_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculate_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20379,6 +21474,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculate_get)
 }
 
 
+/* Module: X11 Function: XEvent_xcirculaterequest_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculaterequest_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20394,6 +21490,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculaterequest_set)
 }
 
 
+/* Module: X11 Function: XEvent_xcirculaterequest_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculaterequest_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20407,6 +21504,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcirculaterequest_get)
 }
 
 
+/* Module: X11 Function: XEvent_xproperty_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xproperty_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20422,6 +21520,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xproperty_set)
 }
 
 
+/* Module: X11 Function: XEvent_xproperty_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xproperty_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20435,6 +21534,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xproperty_get)
 }
 
 
+/* Module: X11 Function: XEvent_xselectionclear_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionclear_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20450,6 +21550,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionclear_set)
 }
 
 
+/* Module: X11 Function: XEvent_xselectionclear_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionclear_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20463,6 +21564,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionclear_get)
 }
 
 
+/* Module: X11 Function: XEvent_xselectionrequest_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionrequest_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20478,6 +21580,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionrequest_set)
 }
 
 
+/* Module: X11 Function: XEvent_xselectionrequest_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionrequest_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20491,6 +21594,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselectionrequest_get)
 }
 
 
+/* Module: X11 Function: XEvent_xselection_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselection_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20506,6 +21610,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselection_set)
 }
 
 
+/* Module: X11 Function: XEvent_xselection_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xselection_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20519,6 +21624,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xselection_get)
 }
 
 
+/* Module: X11 Function: XEvent_xcolormap_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcolormap_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20534,6 +21640,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcolormap_set)
 }
 
 
+/* Module: X11 Function: XEvent_xcolormap_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xcolormap_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20547,6 +21654,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xcolormap_get)
 }
 
 
+/* Module: X11 Function: XEvent_xclient_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xclient_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20562,6 +21670,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xclient_set)
 }
 
 
+/* Module: X11 Function: XEvent_xclient_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xclient_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20575,6 +21684,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xclient_get)
 }
 
 
+/* Module: X11 Function: XEvent_xmapping_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmapping_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20590,6 +21700,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmapping_set)
 }
 
 
+/* Module: X11 Function: XEvent_xmapping_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xmapping_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20603,6 +21714,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xmapping_get)
 }
 
 
+/* Module: X11 Function: XEvent_xerror_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xerror_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20618,6 +21730,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xerror_set)
 }
 
 
+/* Module: X11 Function: XEvent_xerror_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xerror_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20631,6 +21744,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xerror_get)
 }
 
 
+/* Module: X11 Function: XEvent_xkeymap_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xkeymap_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20646,6 +21760,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xkeymap_set)
 }
 
 
+/* Module: X11 Function: XEvent_xkeymap_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_xkeymap_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20659,6 +21774,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_xkeymap_get)
 }
 
 
+/* Module: X11 Function: XEvent_pad_set */
 SYX_FUNC_PRIMITIVE(X11_XEvent_pad_set)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20677,6 +21793,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_pad_set)
 }
 
 
+/* Module: X11 Function: XEvent_pad_get */
 SYX_FUNC_PRIMITIVE(X11_XEvent_pad_get)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20690,6 +21807,7 @@ SYX_FUNC_PRIMITIVE(X11_XEvent_pad_get)
 }
 
 
+/* Module: X11 Function: new_XEvent */
 SYX_FUNC_PRIMITIVE(X11_new_XEvent)
 {
   XEvent *result = 0 ;
@@ -20701,6 +21819,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XEvent)
 }
 
 
+/* Module: X11 Function: delete_XEvent */
 SYX_FUNC_PRIMITIVE(X11_delete_XEvent)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -20714,6 +21833,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XEvent)
 }
 
 
+/* Module: X11 Function: XCharStruct_lbearing_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_lbearing_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20735,6 +21855,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_lbearing_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_lbearing_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_lbearing_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20748,6 +21869,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_lbearing_get)
 }
 
 
+/* Module: X11 Function: XCharStruct_rbearing_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_rbearing_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20769,6 +21891,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_rbearing_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_rbearing_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_rbearing_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20782,6 +21905,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_rbearing_get)
 }
 
 
+/* Module: X11 Function: XCharStruct_width_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_width_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20803,6 +21927,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_width_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_width_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_width_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20816,6 +21941,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_width_get)
 }
 
 
+/* Module: X11 Function: XCharStruct_ascent_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_ascent_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20837,6 +21963,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_ascent_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_ascent_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_ascent_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20850,6 +21977,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_ascent_get)
 }
 
 
+/* Module: X11 Function: XCharStruct_descent_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_descent_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20871,6 +21999,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_descent_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_descent_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_descent_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20884,6 +22013,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_descent_get)
 }
 
 
+/* Module: X11 Function: XCharStruct_attributes_set */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_attributes_set)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20905,6 +22035,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_attributes_set)
 }
 
 
+/* Module: X11 Function: XCharStruct_attributes_get */
 SYX_FUNC_PRIMITIVE(X11_XCharStruct_attributes_get)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20918,6 +22049,7 @@ SYX_FUNC_PRIMITIVE(X11_XCharStruct_attributes_get)
 }
 
 
+/* Module: X11 Function: new_XCharStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XCharStruct)
 {
   XCharStruct *result = 0 ;
@@ -20929,6 +22061,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XCharStruct)
 }
 
 
+/* Module: X11 Function: delete_XCharStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XCharStruct)
 {
   XCharStruct *arg1 = (XCharStruct *) 0 ;
@@ -20942,6 +22075,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XCharStruct)
 }
 
 
+/* Module: X11 Function: XFontProp_name_set */
 SYX_FUNC_PRIMITIVE(X11_XFontProp_name_set)
 {
   XFontProp *arg1 = (XFontProp *) 0 ;
@@ -20963,6 +22097,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontProp_name_set)
 }
 
 
+/* Module: X11 Function: XFontProp_name_get */
 SYX_FUNC_PRIMITIVE(X11_XFontProp_name_get)
 {
   XFontProp *arg1 = (XFontProp *) 0 ;
@@ -20976,6 +22111,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontProp_name_get)
 }
 
 
+/* Module: X11 Function: XFontProp_card32_set */
 SYX_FUNC_PRIMITIVE(X11_XFontProp_card32_set)
 {
   XFontProp *arg1 = (XFontProp *) 0 ;
@@ -20997,6 +22133,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontProp_card32_set)
 }
 
 
+/* Module: X11 Function: XFontProp_card32_get */
 SYX_FUNC_PRIMITIVE(X11_XFontProp_card32_get)
 {
   XFontProp *arg1 = (XFontProp *) 0 ;
@@ -21010,6 +22147,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontProp_card32_get)
 }
 
 
+/* Module: X11 Function: new_XFontProp */
 SYX_FUNC_PRIMITIVE(X11_new_XFontProp)
 {
   XFontProp *result = 0 ;
@@ -21021,6 +22159,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XFontProp)
 }
 
 
+/* Module: X11 Function: delete_XFontProp */
 SYX_FUNC_PRIMITIVE(X11_delete_XFontProp)
 {
   XFontProp *arg1 = (XFontProp *) 0 ;
@@ -21034,6 +22173,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XFontProp)
 }
 
 
+/* Module: X11 Function: XFontStruct_ext_data_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_ext_data_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21049,6 +22189,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_ext_data_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_ext_data_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_ext_data_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21062,6 +22203,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_ext_data_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_fid_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_fid_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21083,6 +22225,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_fid_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_fid_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_fid_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21096,6 +22239,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_fid_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_direction_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_direction_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21117,6 +22261,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_direction_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_direction_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_direction_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21130,6 +22275,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_direction_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_char_or_byte2_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_char_or_byte2_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21151,6 +22297,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_char_or_byte2_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_char_or_byte2_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_char_or_byte2_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21164,6 +22311,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_char_or_byte2_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_char_or_byte2_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_char_or_byte2_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21185,6 +22333,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_char_or_byte2_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_char_or_byte2_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_char_or_byte2_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21198,6 +22347,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_char_or_byte2_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_byte1_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_byte1_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21219,6 +22369,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_byte1_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_byte1_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_byte1_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21232,6 +22383,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_byte1_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_byte1_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_byte1_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21253,6 +22405,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_byte1_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_byte1_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_byte1_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21266,6 +22419,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_byte1_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_all_chars_exist_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_all_chars_exist_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21287,6 +22441,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_all_chars_exist_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_all_chars_exist_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_all_chars_exist_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21300,6 +22455,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_all_chars_exist_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_default_char_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_default_char_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21321,6 +22477,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_default_char_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_default_char_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_default_char_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21334,6 +22491,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_default_char_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_n_properties_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_n_properties_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21355,6 +22513,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_n_properties_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_n_properties_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_n_properties_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21368,6 +22527,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_n_properties_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_properties_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_properties_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21383,6 +22543,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_properties_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_properties_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_properties_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21396,6 +22557,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_properties_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_bounds_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_bounds_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21411,6 +22573,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_bounds_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_min_bounds_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_bounds_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21424,6 +22587,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_min_bounds_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_bounds_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_bounds_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21439,6 +22603,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_bounds_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_max_bounds_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_bounds_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21452,6 +22617,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_max_bounds_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_per_char_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_per_char_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21467,6 +22633,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_per_char_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_per_char_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_per_char_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21480,6 +22647,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_per_char_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_ascent_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_ascent_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21501,6 +22669,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_ascent_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_ascent_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_ascent_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21514,6 +22683,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_ascent_get)
 }
 
 
+/* Module: X11 Function: XFontStruct_descent_set */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_descent_set)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21535,6 +22705,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_descent_set)
 }
 
 
+/* Module: X11 Function: XFontStruct_descent_get */
 SYX_FUNC_PRIMITIVE(X11_XFontStruct_descent_get)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21548,6 +22719,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontStruct_descent_get)
 }
 
 
+/* Module: X11 Function: new_XFontStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XFontStruct)
 {
   XFontStruct *result = 0 ;
@@ -21559,6 +22731,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XFontStruct)
 }
 
 
+/* Module: X11 Function: delete_XFontStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XFontStruct)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -21572,6 +22745,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XFontStruct)
 }
 
 
+/* Module: X11 Function: XTextItem_chars_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_chars_set)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21580,11 +22754,11 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_chars_set)
   
   SWIG_FIRST_SELF(arg1, XTextItem *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->chars) free((char *)arg1->chars);
@@ -21600,6 +22774,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_chars_set)
 }
 
 
+/* Module: X11 Function: XTextItem_chars_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_chars_get)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21613,6 +22788,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_chars_get)
 }
 
 
+/* Module: X11 Function: XTextItem_nchars_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_nchars_set)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21634,6 +22810,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_nchars_set)
 }
 
 
+/* Module: X11 Function: XTextItem_nchars_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_nchars_get)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21647,6 +22824,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_nchars_get)
 }
 
 
+/* Module: X11 Function: XTextItem_delta_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_delta_set)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21668,6 +22846,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_delta_set)
 }
 
 
+/* Module: X11 Function: XTextItem_delta_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_delta_get)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21681,6 +22860,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_delta_get)
 }
 
 
+/* Module: X11 Function: XTextItem_font_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_font_set)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21702,6 +22882,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_font_set)
 }
 
 
+/* Module: X11 Function: XTextItem_font_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem_font_get)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21715,6 +22896,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem_font_get)
 }
 
 
+/* Module: X11 Function: new_XTextItem */
 SYX_FUNC_PRIMITIVE(X11_new_XTextItem)
 {
   XTextItem *result = 0 ;
@@ -21726,6 +22908,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XTextItem)
 }
 
 
+/* Module: X11 Function: delete_XTextItem */
 SYX_FUNC_PRIMITIVE(X11_delete_XTextItem)
 {
   XTextItem *arg1 = (XTextItem *) 0 ;
@@ -21739,6 +22922,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XTextItem)
 }
 
 
+/* Module: X11 Function: XChar2b_byte1_set */
 SYX_FUNC_PRIMITIVE(X11_XChar2b_byte1_set)
 {
   XChar2b *arg1 = (XChar2b *) 0 ;
@@ -21760,6 +22944,7 @@ SYX_FUNC_PRIMITIVE(X11_XChar2b_byte1_set)
 }
 
 
+/* Module: X11 Function: XChar2b_byte1_get */
 SYX_FUNC_PRIMITIVE(X11_XChar2b_byte1_get)
 {
   XChar2b *arg1 = (XChar2b *) 0 ;
@@ -21773,6 +22958,7 @@ SYX_FUNC_PRIMITIVE(X11_XChar2b_byte1_get)
 }
 
 
+/* Module: X11 Function: XChar2b_byte2_set */
 SYX_FUNC_PRIMITIVE(X11_XChar2b_byte2_set)
 {
   XChar2b *arg1 = (XChar2b *) 0 ;
@@ -21794,6 +22980,7 @@ SYX_FUNC_PRIMITIVE(X11_XChar2b_byte2_set)
 }
 
 
+/* Module: X11 Function: XChar2b_byte2_get */
 SYX_FUNC_PRIMITIVE(X11_XChar2b_byte2_get)
 {
   XChar2b *arg1 = (XChar2b *) 0 ;
@@ -21807,6 +22994,7 @@ SYX_FUNC_PRIMITIVE(X11_XChar2b_byte2_get)
 }
 
 
+/* Module: X11 Function: new_XChar2b */
 SYX_FUNC_PRIMITIVE(X11_new_XChar2b)
 {
   XChar2b *result = 0 ;
@@ -21818,6 +23006,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XChar2b)
 }
 
 
+/* Module: X11 Function: delete_XChar2b */
 SYX_FUNC_PRIMITIVE(X11_delete_XChar2b)
 {
   XChar2b *arg1 = (XChar2b *) 0 ;
@@ -21831,6 +23020,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XChar2b)
 }
 
 
+/* Module: X11 Function: XTextItem16_chars_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_chars_set)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21846,6 +23036,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_chars_set)
 }
 
 
+/* Module: X11 Function: XTextItem16_chars_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_chars_get)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21859,6 +23050,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_chars_get)
 }
 
 
+/* Module: X11 Function: XTextItem16_nchars_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_nchars_set)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21880,6 +23072,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_nchars_set)
 }
 
 
+/* Module: X11 Function: XTextItem16_nchars_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_nchars_get)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21893,6 +23086,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_nchars_get)
 }
 
 
+/* Module: X11 Function: XTextItem16_delta_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_delta_set)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21914,6 +23108,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_delta_set)
 }
 
 
+/* Module: X11 Function: XTextItem16_delta_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_delta_get)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21927,6 +23122,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_delta_get)
 }
 
 
+/* Module: X11 Function: XTextItem16_font_set */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_font_set)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21948,6 +23144,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_font_set)
 }
 
 
+/* Module: X11 Function: XTextItem16_font_get */
 SYX_FUNC_PRIMITIVE(X11_XTextItem16_font_get)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21961,6 +23158,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextItem16_font_get)
 }
 
 
+/* Module: X11 Function: new_XTextItem16 */
 SYX_FUNC_PRIMITIVE(X11_new_XTextItem16)
 {
   XTextItem16 *result = 0 ;
@@ -21972,6 +23170,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XTextItem16)
 }
 
 
+/* Module: X11 Function: delete_XTextItem16 */
 SYX_FUNC_PRIMITIVE(X11_delete_XTextItem16)
 {
   XTextItem16 *arg1 = (XTextItem16 *) 0 ;
@@ -21985,6 +23184,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XTextItem16)
 }
 
 
+/* Module: X11 Function: XEDataObject_display_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_display_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22000,6 +23200,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_display_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_display_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_display_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22013,6 +23214,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_display_get)
 }
 
 
+/* Module: X11 Function: XEDataObject_gc_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_gc_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22028,6 +23230,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_gc_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_gc_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_gc_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22041,6 +23244,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_gc_get)
 }
 
 
+/* Module: X11 Function: XEDataObject_visual_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_visual_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22056,6 +23260,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_visual_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_visual_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_visual_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22069,6 +23274,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_visual_get)
 }
 
 
+/* Module: X11 Function: XEDataObject_screen_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_screen_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22084,6 +23290,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_screen_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_screen_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_screen_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22097,6 +23304,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_screen_get)
 }
 
 
+/* Module: X11 Function: XEDataObject_pixmap_format_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_pixmap_format_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22112,6 +23320,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_pixmap_format_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_pixmap_format_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_pixmap_format_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22125,6 +23334,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_pixmap_format_get)
 }
 
 
+/* Module: X11 Function: XEDataObject_font_set */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_font_set)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22140,6 +23350,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_font_set)
 }
 
 
+/* Module: X11 Function: XEDataObject_font_get */
 SYX_FUNC_PRIMITIVE(X11_XEDataObject_font_get)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22153,6 +23364,7 @@ SYX_FUNC_PRIMITIVE(X11_XEDataObject_font_get)
 }
 
 
+/* Module: X11 Function: new_XEDataObject */
 SYX_FUNC_PRIMITIVE(X11_new_XEDataObject)
 {
   XEDataObject *result = 0 ;
@@ -22164,6 +23376,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XEDataObject)
 }
 
 
+/* Module: X11 Function: delete_XEDataObject */
 SYX_FUNC_PRIMITIVE(X11_delete_XEDataObject)
 {
   XEDataObject *arg1 = (XEDataObject *) 0 ;
@@ -22177,6 +23390,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XEDataObject)
 }
 
 
+/* Module: X11 Function: XFontSetExtents_max_ink_extent_set */
 SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_ink_extent_set)
 {
   XFontSetExtents *arg1 = (XFontSetExtents *) 0 ;
@@ -22192,6 +23406,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_ink_extent_set)
 }
 
 
+/* Module: X11 Function: XFontSetExtents_max_ink_extent_get */
 SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_ink_extent_get)
 {
   XFontSetExtents *arg1 = (XFontSetExtents *) 0 ;
@@ -22205,6 +23420,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_ink_extent_get)
 }
 
 
+/* Module: X11 Function: XFontSetExtents_max_logical_extent_set */
 SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_logical_extent_set)
 {
   XFontSetExtents *arg1 = (XFontSetExtents *) 0 ;
@@ -22220,6 +23436,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_logical_extent_set)
 }
 
 
+/* Module: X11 Function: XFontSetExtents_max_logical_extent_get */
 SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_logical_extent_get)
 {
   XFontSetExtents *arg1 = (XFontSetExtents *) 0 ;
@@ -22233,6 +23450,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontSetExtents_max_logical_extent_get)
 }
 
 
+/* Module: X11 Function: new_XFontSetExtents */
 SYX_FUNC_PRIMITIVE(X11_new_XFontSetExtents)
 {
   XFontSetExtents *result = 0 ;
@@ -22244,6 +23462,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XFontSetExtents)
 }
 
 
+/* Module: X11 Function: delete_XFontSetExtents */
 SYX_FUNC_PRIMITIVE(X11_delete_XFontSetExtents)
 {
   XFontSetExtents *arg1 = (XFontSetExtents *) 0 ;
@@ -22257,6 +23476,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XFontSetExtents)
 }
 
 
+/* Module: X11 Function: XmbTextItem_chars_set */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_chars_set)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22265,11 +23485,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_chars_set)
   
   SWIG_FIRST_SELF(arg1, XmbTextItem *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->chars) free((char *)arg1->chars);
@@ -22285,6 +23505,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_chars_set)
 }
 
 
+/* Module: X11 Function: XmbTextItem_chars_get */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_chars_get)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22298,6 +23519,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_chars_get)
 }
 
 
+/* Module: X11 Function: XmbTextItem_nchars_set */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_nchars_set)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22319,6 +23541,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_nchars_set)
 }
 
 
+/* Module: X11 Function: XmbTextItem_nchars_get */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_nchars_get)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22332,6 +23555,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_nchars_get)
 }
 
 
+/* Module: X11 Function: XmbTextItem_delta_set */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_delta_set)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22353,6 +23577,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_delta_set)
 }
 
 
+/* Module: X11 Function: XmbTextItem_delta_get */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_delta_get)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22366,6 +23591,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_delta_get)
 }
 
 
+/* Module: X11 Function: XmbTextItem_font_set_set */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_font_set_set)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22381,6 +23607,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_font_set_set)
 }
 
 
+/* Module: X11 Function: XmbTextItem_font_set_get */
 SYX_FUNC_PRIMITIVE(X11_XmbTextItem_font_set_get)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22394,6 +23621,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextItem_font_set_get)
 }
 
 
+/* Module: X11 Function: new_XmbTextItem */
 SYX_FUNC_PRIMITIVE(X11_new_XmbTextItem)
 {
   XmbTextItem *result = 0 ;
@@ -22405,6 +23633,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XmbTextItem)
 }
 
 
+/* Module: X11 Function: delete_XmbTextItem */
 SYX_FUNC_PRIMITIVE(X11_delete_XmbTextItem)
 {
   XmbTextItem *arg1 = (XmbTextItem *) 0 ;
@@ -22418,6 +23647,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XmbTextItem)
 }
 
 
+/* Module: X11 Function: XwcTextItem_chars_set */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_chars_set)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22433,6 +23663,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_chars_set)
 }
 
 
+/* Module: X11 Function: XwcTextItem_chars_get */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_chars_get)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22446,6 +23677,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_chars_get)
 }
 
 
+/* Module: X11 Function: XwcTextItem_nchars_set */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_nchars_set)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22467,6 +23699,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_nchars_set)
 }
 
 
+/* Module: X11 Function: XwcTextItem_nchars_get */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_nchars_get)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22480,6 +23713,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_nchars_get)
 }
 
 
+/* Module: X11 Function: XwcTextItem_delta_set */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_delta_set)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22501,6 +23735,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_delta_set)
 }
 
 
+/* Module: X11 Function: XwcTextItem_delta_get */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_delta_get)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22514,6 +23749,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_delta_get)
 }
 
 
+/* Module: X11 Function: XwcTextItem_font_set_set */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_font_set_set)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22529,6 +23765,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_font_set_set)
 }
 
 
+/* Module: X11 Function: XwcTextItem_font_set_get */
 SYX_FUNC_PRIMITIVE(X11_XwcTextItem_font_set_get)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22542,6 +23779,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextItem_font_set_get)
 }
 
 
+/* Module: X11 Function: new_XwcTextItem */
 SYX_FUNC_PRIMITIVE(X11_new_XwcTextItem)
 {
   XwcTextItem *result = 0 ;
@@ -22553,6 +23791,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XwcTextItem)
 }
 
 
+/* Module: X11 Function: delete_XwcTextItem */
 SYX_FUNC_PRIMITIVE(X11_delete_XwcTextItem)
 {
   XwcTextItem *arg1 = (XwcTextItem *) 0 ;
@@ -22566,6 +23805,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XwcTextItem)
 }
 
 
+/* Module: X11 Function: XOMCharSetList_charset_count_set */
 SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_count_set)
 {
   XOMCharSetList *arg1 = (XOMCharSetList *) 0 ;
@@ -22587,6 +23827,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_count_set)
 }
 
 
+/* Module: X11 Function: XOMCharSetList_charset_count_get */
 SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_count_get)
 {
   XOMCharSetList *arg1 = (XOMCharSetList *) 0 ;
@@ -22600,6 +23841,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_count_get)
 }
 
 
+/* Module: X11 Function: XOMCharSetList_charset_list_set */
 SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_list_set)
 {
   XOMCharSetList *arg1 = (XOMCharSetList *) 0 ;
@@ -22609,7 +23851,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_list_set)
   
   SWIG_FIRST_SELF(arg1, XOMCharSetList *, es->message_receiver)
   
-  temp2 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp2 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg2 = &temp2;
   
 #undef SWIG_APPEND_VALUE
@@ -22626,6 +23868,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_list_set)
 }
 
 
+/* Module: X11 Function: XOMCharSetList_charset_list_get */
 SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_list_get)
 {
   XOMCharSetList *arg1 = (XOMCharSetList *) 0 ;
@@ -22639,6 +23882,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMCharSetList_charset_list_get)
 }
 
 
+/* Module: X11 Function: new_XOMCharSetList */
 SYX_FUNC_PRIMITIVE(X11_new_XOMCharSetList)
 {
   XOMCharSetList *result = 0 ;
@@ -22650,6 +23894,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XOMCharSetList)
 }
 
 
+/* Module: X11 Function: delete_XOMCharSetList */
 SYX_FUNC_PRIMITIVE(X11_delete_XOMCharSetList)
 {
   XOMCharSetList *arg1 = (XOMCharSetList *) 0 ;
@@ -22663,6 +23908,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XOMCharSetList)
 }
 
 
+/* Module: X11 Function: XOMOrientation_num_orientation_set */
 SYX_FUNC_PRIMITIVE(X11_XOMOrientation_num_orientation_set)
 {
   XOMOrientation *arg1 = (XOMOrientation *) 0 ;
@@ -22684,6 +23930,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMOrientation_num_orientation_set)
 }
 
 
+/* Module: X11 Function: XOMOrientation_num_orientation_get */
 SYX_FUNC_PRIMITIVE(X11_XOMOrientation_num_orientation_get)
 {
   XOMOrientation *arg1 = (XOMOrientation *) 0 ;
@@ -22697,6 +23944,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMOrientation_num_orientation_get)
 }
 
 
+/* Module: X11 Function: XOMOrientation_orientation_set */
 SYX_FUNC_PRIMITIVE(X11_XOMOrientation_orientation_set)
 {
   XOMOrientation *arg1 = (XOMOrientation *) 0 ;
@@ -22712,6 +23960,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMOrientation_orientation_set)
 }
 
 
+/* Module: X11 Function: XOMOrientation_orientation_get */
 SYX_FUNC_PRIMITIVE(X11_XOMOrientation_orientation_get)
 {
   XOMOrientation *arg1 = (XOMOrientation *) 0 ;
@@ -22725,6 +23974,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMOrientation_orientation_get)
 }
 
 
+/* Module: X11 Function: new_XOMOrientation */
 SYX_FUNC_PRIMITIVE(X11_new_XOMOrientation)
 {
   XOMOrientation *result = 0 ;
@@ -22736,6 +23986,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XOMOrientation)
 }
 
 
+/* Module: X11 Function: delete_XOMOrientation */
 SYX_FUNC_PRIMITIVE(X11_delete_XOMOrientation)
 {
   XOMOrientation *arg1 = (XOMOrientation *) 0 ;
@@ -22749,6 +24000,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XOMOrientation)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_num_font_set */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_num_font_set)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22770,6 +24022,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_num_font_set)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_num_font_get */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_num_font_get)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22783,6 +24036,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_num_font_get)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_font_struct_list_set */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_struct_list_set)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22798,6 +24052,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_struct_list_set)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_font_struct_list_get */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_struct_list_get)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22811,6 +24066,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_struct_list_get)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_font_name_list_set */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_name_list_set)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22820,7 +24076,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_name_list_set)
   
   SWIG_FIRST_SELF(arg1, XOMFontInfo *, es->message_receiver)
   
-  temp2 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp2 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg2 = &temp2;
   
 #undef SWIG_APPEND_VALUE
@@ -22837,6 +24093,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_name_list_set)
 }
 
 
+/* Module: X11 Function: XOMFontInfo_font_name_list_get */
 SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_name_list_get)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22850,6 +24107,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMFontInfo_font_name_list_get)
 }
 
 
+/* Module: X11 Function: new_XOMFontInfo */
 SYX_FUNC_PRIMITIVE(X11_new_XOMFontInfo)
 {
   XOMFontInfo *result = 0 ;
@@ -22861,6 +24119,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XOMFontInfo)
 }
 
 
+/* Module: X11 Function: delete_XOMFontInfo */
 SYX_FUNC_PRIMITIVE(X11_delete_XOMFontInfo)
 {
   XOMFontInfo *arg1 = (XOMFontInfo *) 0 ;
@@ -22874,6 +24133,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XOMFontInfo)
 }
 
 
+/* Module: X11 Function: XIMStyles_count_styles_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStyles_count_styles_set)
 {
   XIMStyles *arg1 = (XIMStyles *) 0 ;
@@ -22895,6 +24155,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStyles_count_styles_set)
 }
 
 
+/* Module: X11 Function: XIMStyles_count_styles_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStyles_count_styles_get)
 {
   XIMStyles *arg1 = (XIMStyles *) 0 ;
@@ -22908,6 +24169,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStyles_count_styles_get)
 }
 
 
+/* Module: X11 Function: XIMStyles_supported_styles_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStyles_supported_styles_set)
 {
   XIMStyles *arg1 = (XIMStyles *) 0 ;
@@ -22923,6 +24185,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStyles_supported_styles_set)
 }
 
 
+/* Module: X11 Function: XIMStyles_supported_styles_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStyles_supported_styles_get)
 {
   XIMStyles *arg1 = (XIMStyles *) 0 ;
@@ -22936,6 +24199,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStyles_supported_styles_get)
 }
 
 
+/* Module: X11 Function: new_XIMStyles */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStyles)
 {
   XIMStyles *result = 0 ;
@@ -22947,6 +24211,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStyles)
 }
 
 
+/* Module: X11 Function: delete_XIMStyles */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStyles)
 {
   XIMStyles *arg1 = (XIMStyles *) 0 ;
@@ -22960,6 +24225,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStyles)
 }
 
 
+/* Module: X11 Function: XIMCallback_client_data_set */
 SYX_FUNC_PRIMITIVE(X11_XIMCallback_client_data_set)
 {
   XIMCallback *arg1 = (XIMCallback *) 0 ;
@@ -22975,6 +24241,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMCallback_client_data_set)
 }
 
 
+/* Module: X11 Function: XIMCallback_client_data_get */
 SYX_FUNC_PRIMITIVE(X11_XIMCallback_client_data_get)
 {
   XIMCallback *arg1 = (XIMCallback *) 0 ;
@@ -22988,6 +24255,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMCallback_client_data_get)
 }
 
 
+/* Module: X11 Function: XIMCallback_callback_set */
 SYX_FUNC_PRIMITIVE(X11_XIMCallback_callback_set)
 {
   XIMCallback *arg1 = (XIMCallback *) 0 ;
@@ -23003,6 +24271,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMCallback_callback_set)
 }
 
 
+/* Module: X11 Function: XIMCallback_callback_get */
 SYX_FUNC_PRIMITIVE(X11_XIMCallback_callback_get)
 {
   XIMCallback *arg1 = (XIMCallback *) 0 ;
@@ -23016,6 +24285,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMCallback_callback_get)
 }
 
 
+/* Module: X11 Function: new_XIMCallback */
 SYX_FUNC_PRIMITIVE(X11_new_XIMCallback)
 {
   XIMCallback *result = 0 ;
@@ -23027,6 +24297,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMCallback)
 }
 
 
+/* Module: X11 Function: delete_XIMCallback */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMCallback)
 {
   XIMCallback *arg1 = (XIMCallback *) 0 ;
@@ -23040,6 +24311,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMCallback)
 }
 
 
+/* Module: X11 Function: XIMText_length_set */
 SYX_FUNC_PRIMITIVE(X11_XIMText_length_set)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23061,6 +24333,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_length_set)
 }
 
 
+/* Module: X11 Function: XIMText_length_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_length_get)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23074,6 +24347,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_length_get)
 }
 
 
+/* Module: X11 Function: XIMText_feedback_set */
 SYX_FUNC_PRIMITIVE(X11_XIMText_feedback_set)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23089,6 +24363,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_feedback_set)
 }
 
 
+/* Module: X11 Function: XIMText_feedback_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_feedback_get)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23102,6 +24377,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_feedback_get)
 }
 
 
+/* Module: X11 Function: XIMText_encoding_is_wchar_set */
 SYX_FUNC_PRIMITIVE(X11_XIMText_encoding_is_wchar_set)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23123,6 +24399,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_encoding_is_wchar_set)
 }
 
 
+/* Module: X11 Function: XIMText_encoding_is_wchar_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_encoding_is_wchar_get)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23136,6 +24413,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_encoding_is_wchar_get)
 }
 
 
+/* Module: X11 Function: XIMText_string_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_string_get)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23149,6 +24427,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_get)
 }
 
 
+/* Module: X11 Function: new_XIMText */
 SYX_FUNC_PRIMITIVE(X11_new_XIMText)
 {
   XIMText *result = 0 ;
@@ -23160,6 +24439,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMText)
 }
 
 
+/* Module: X11 Function: delete_XIMText */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMText)
 {
   XIMText *arg1 = (XIMText *) 0 ;
@@ -23173,6 +24453,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMText)
 }
 
 
+/* Module: X11 Function: XIMText_string_multi_byte_set */
 SYX_FUNC_PRIMITIVE(X11_XIMText_string_multi_byte_set)
 {
   XIMText_string *arg1 = (XIMText_string *) 0 ;
@@ -23181,11 +24462,11 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_multi_byte_set)
   
   SWIG_FIRST_SELF(arg1, XIMText_string *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->multi_byte) free((char *)arg1->multi_byte);
@@ -23201,6 +24482,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_multi_byte_set)
 }
 
 
+/* Module: X11 Function: XIMText_string_multi_byte_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_string_multi_byte_get)
 {
   XIMText_string *arg1 = (XIMText_string *) 0 ;
@@ -23214,6 +24496,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_multi_byte_get)
 }
 
 
+/* Module: X11 Function: XIMText_string_wide_char_set */
 SYX_FUNC_PRIMITIVE(X11_XIMText_string_wide_char_set)
 {
   XIMText_string *arg1 = (XIMText_string *) 0 ;
@@ -23229,6 +24512,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_wide_char_set)
 }
 
 
+/* Module: X11 Function: XIMText_string_wide_char_get */
 SYX_FUNC_PRIMITIVE(X11_XIMText_string_wide_char_get)
 {
   XIMText_string *arg1 = (XIMText_string *) 0 ;
@@ -23242,6 +24526,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMText_string_wide_char_get)
 }
 
 
+/* Module: X11 Function: new_XIMText_string */
 SYX_FUNC_PRIMITIVE(X11_new_XIMText_string)
 {
   XIMText_string *result = 0 ;
@@ -23253,6 +24538,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMText_string)
 }
 
 
+/* Module: X11 Function: delete_XIMText_string */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMText_string)
 {
   XIMText_string *arg1 = (XIMText_string *) 0 ;
@@ -23266,6 +24552,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMText_string)
 }
 
 
+/* Module: X11 Function: XIMPreeditStateNotifyCallbackStruct_state_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditStateNotifyCallbackStruct_state_set)
 {
   XIMPreeditStateNotifyCallbackStruct *arg1 = (XIMPreeditStateNotifyCallbackStruct *) 0 ;
@@ -23287,6 +24574,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditStateNotifyCallbackStruct_state_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditStateNotifyCallbackStruct_state_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditStateNotifyCallbackStruct_state_get)
 {
   XIMPreeditStateNotifyCallbackStruct *arg1 = (XIMPreeditStateNotifyCallbackStruct *) 0 ;
@@ -23300,6 +24588,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditStateNotifyCallbackStruct_state_get)
 }
 
 
+/* Module: X11 Function: new_XIMPreeditStateNotifyCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditStateNotifyCallbackStruct)
 {
   XIMPreeditStateNotifyCallbackStruct *result = 0 ;
@@ -23311,6 +24600,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditStateNotifyCallbackStruct)
 }
 
 
+/* Module: X11 Function: delete_XIMPreeditStateNotifyCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditStateNotifyCallbackStruct)
 {
   XIMPreeditStateNotifyCallbackStruct *arg1 = (XIMPreeditStateNotifyCallbackStruct *) 0 ;
@@ -23324,6 +24614,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditStateNotifyCallbackStruct)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_length_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_length_set)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23345,6 +24636,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_length_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_length_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_length_get)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23358,6 +24650,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_length_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_feedback_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_feedback_set)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23373,6 +24666,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_feedback_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_feedback_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_feedback_get)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23386,6 +24680,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_feedback_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_encoding_is_wchar_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_encoding_is_wchar_set)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23407,6 +24702,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_encoding_is_wchar_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_encoding_is_wchar_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_encoding_is_wchar_get)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23420,6 +24716,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_encoding_is_wchar_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_string_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_get)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23433,6 +24730,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_get)
 }
 
 
+/* Module: X11 Function: new_XIMStringConversionText */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionText)
 {
   XIMStringConversionText *result = 0 ;
@@ -23444,6 +24742,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionText)
 }
 
 
+/* Module: X11 Function: delete_XIMStringConversionText */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionText)
 {
   XIMStringConversionText *arg1 = (XIMStringConversionText *) 0 ;
@@ -23457,6 +24756,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionText)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_string_mbs_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_mbs_set)
 {
   XIMStringConversionText_string *arg1 = (XIMStringConversionText_string *) 0 ;
@@ -23465,11 +24765,11 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_mbs_set)
   
   SWIG_FIRST_SELF(arg1, XIMStringConversionText_string *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   {
     if (arg1->mbs) free((char *)arg1->mbs);
@@ -23485,6 +24785,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_mbs_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_string_mbs_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_mbs_get)
 {
   XIMStringConversionText_string *arg1 = (XIMStringConversionText_string *) 0 ;
@@ -23498,6 +24799,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_mbs_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_string_wcs_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_wcs_set)
 {
   XIMStringConversionText_string *arg1 = (XIMStringConversionText_string *) 0 ;
@@ -23513,6 +24815,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_wcs_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionText_string_wcs_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_wcs_get)
 {
   XIMStringConversionText_string *arg1 = (XIMStringConversionText_string *) 0 ;
@@ -23526,6 +24829,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionText_string_wcs_get)
 }
 
 
+/* Module: X11 Function: new_XIMStringConversionText_string */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionText_string)
 {
   XIMStringConversionText_string *result = 0 ;
@@ -23537,6 +24841,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionText_string)
 }
 
 
+/* Module: X11 Function: delete_XIMStringConversionText_string */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionText_string)
 {
   XIMStringConversionText_string *arg1 = (XIMStringConversionText_string *) 0 ;
@@ -23550,6 +24855,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionText_string)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_position_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_position_set)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23571,6 +24877,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_position_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_position_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_position_get)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23584,6 +24891,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_position_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_direction_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_direction_set)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23605,6 +24913,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_direction_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_direction_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_direction_get)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23618,6 +24927,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_direction_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_operation_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_operation_set)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23639,6 +24949,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_operation_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_operation_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_operation_get)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23652,6 +24963,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_operation_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_factor_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_factor_set)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23673,6 +24985,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_factor_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_factor_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_factor_get)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23686,6 +24999,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_factor_get)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_text_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_text_set)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23701,6 +25015,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_text_set)
 }
 
 
+/* Module: X11 Function: XIMStringConversionCallbackStruct_text_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_text_get)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23714,6 +25029,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStringConversionCallbackStruct_text_get)
 }
 
 
+/* Module: X11 Function: new_XIMStringConversionCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionCallbackStruct)
 {
   XIMStringConversionCallbackStruct *result = 0 ;
@@ -23725,6 +25041,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStringConversionCallbackStruct)
 }
 
 
+/* Module: X11 Function: delete_XIMStringConversionCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionCallbackStruct)
 {
   XIMStringConversionCallbackStruct *arg1 = (XIMStringConversionCallbackStruct *) 0 ;
@@ -23738,6 +25055,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStringConversionCallbackStruct)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_caret_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_caret_set)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23759,6 +25077,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_caret_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_caret_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_caret_get)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23772,6 +25091,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_caret_get)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_chg_first_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_first_set)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23793,6 +25113,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_first_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_chg_first_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_first_get)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23806,6 +25127,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_first_get)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_chg_length_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_length_set)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23827,6 +25149,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_length_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_chg_length_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_length_get)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23840,6 +25163,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_chg_length_get)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_text_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_text_set)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23855,6 +25179,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_text_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditDrawCallbackStruct_text_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_text_get)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23868,6 +25193,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditDrawCallbackStruct_text_get)
 }
 
 
+/* Module: X11 Function: new_XIMPreeditDrawCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditDrawCallbackStruct)
 {
   XIMPreeditDrawCallbackStruct *result = 0 ;
@@ -23879,6 +25205,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditDrawCallbackStruct)
 }
 
 
+/* Module: X11 Function: delete_XIMPreeditDrawCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditDrawCallbackStruct)
 {
   XIMPreeditDrawCallbackStruct *arg1 = (XIMPreeditDrawCallbackStruct *) 0 ;
@@ -23892,6 +25219,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditDrawCallbackStruct)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_position_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_position_set)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23913,6 +25241,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_position_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_position_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_position_get)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23926,6 +25255,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_position_get)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_direction_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_direction_set)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23947,6 +25277,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_direction_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_direction_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_direction_get)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23960,6 +25291,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_direction_get)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_style_set */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_style_set)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23981,6 +25313,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_style_set)
 }
 
 
+/* Module: X11 Function: XIMPreeditCaretCallbackStruct_style_get */
 SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_style_get)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -23994,6 +25327,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMPreeditCaretCallbackStruct_style_get)
 }
 
 
+/* Module: X11 Function: new_XIMPreeditCaretCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditCaretCallbackStruct)
 {
   XIMPreeditCaretCallbackStruct *result = 0 ;
@@ -24005,6 +25339,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMPreeditCaretCallbackStruct)
 }
 
 
+/* Module: X11 Function: delete_XIMPreeditCaretCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditCaretCallbackStruct)
 {
   XIMPreeditCaretCallbackStruct *arg1 = (XIMPreeditCaretCallbackStruct *) 0 ;
@@ -24018,6 +25353,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMPreeditCaretCallbackStruct)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_type_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_type_set)
 {
   XIMStatusDrawCallbackStruct *arg1 = (XIMStatusDrawCallbackStruct *) 0 ;
@@ -24039,6 +25375,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_type_set)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_type_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_type_get)
 {
   XIMStatusDrawCallbackStruct *arg1 = (XIMStatusDrawCallbackStruct *) 0 ;
@@ -24052,6 +25389,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_type_get)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_data_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_get)
 {
   XIMStatusDrawCallbackStruct *arg1 = (XIMStatusDrawCallbackStruct *) 0 ;
@@ -24065,6 +25403,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_get)
 }
 
 
+/* Module: X11 Function: new_XIMStatusDrawCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStatusDrawCallbackStruct)
 {
   XIMStatusDrawCallbackStruct *result = 0 ;
@@ -24076,6 +25415,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStatusDrawCallbackStruct)
 }
 
 
+/* Module: X11 Function: delete_XIMStatusDrawCallbackStruct */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStatusDrawCallbackStruct)
 {
   XIMStatusDrawCallbackStruct *arg1 = (XIMStatusDrawCallbackStruct *) 0 ;
@@ -24089,6 +25429,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStatusDrawCallbackStruct)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_data_text_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_text_set)
 {
   XIMStatusDrawCallbackStruct_data *arg1 = (XIMStatusDrawCallbackStruct_data *) 0 ;
@@ -24104,6 +25445,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_text_set)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_data_text_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_text_get)
 {
   XIMStatusDrawCallbackStruct_data *arg1 = (XIMStatusDrawCallbackStruct_data *) 0 ;
@@ -24117,6 +25459,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_text_get)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_data_bitmap_set */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_bitmap_set)
 {
   XIMStatusDrawCallbackStruct_data *arg1 = (XIMStatusDrawCallbackStruct_data *) 0 ;
@@ -24138,6 +25481,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_bitmap_set)
 }
 
 
+/* Module: X11 Function: XIMStatusDrawCallbackStruct_data_bitmap_get */
 SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_bitmap_get)
 {
   XIMStatusDrawCallbackStruct_data *arg1 = (XIMStatusDrawCallbackStruct_data *) 0 ;
@@ -24151,6 +25495,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMStatusDrawCallbackStruct_data_bitmap_get)
 }
 
 
+/* Module: X11 Function: new_XIMStatusDrawCallbackStruct_data */
 SYX_FUNC_PRIMITIVE(X11_new_XIMStatusDrawCallbackStruct_data)
 {
   XIMStatusDrawCallbackStruct_data *result = 0 ;
@@ -24162,6 +25507,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMStatusDrawCallbackStruct_data)
 }
 
 
+/* Module: X11 Function: delete_XIMStatusDrawCallbackStruct_data */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMStatusDrawCallbackStruct_data)
 {
   XIMStatusDrawCallbackStruct_data *arg1 = (XIMStatusDrawCallbackStruct_data *) 0 ;
@@ -24175,6 +25521,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMStatusDrawCallbackStruct_data)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_keysym_set */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_keysym_set)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24196,6 +25543,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_keysym_set)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_keysym_get */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_keysym_get)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24209,6 +25557,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_keysym_get)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_modifier_set */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_set)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24230,6 +25579,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_set)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_modifier_get */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_get)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24243,6 +25593,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_get)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_modifier_mask_set */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_mask_set)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24264,6 +25615,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_mask_set)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTrigger_modifier_mask_get */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_mask_get)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24277,6 +25629,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTrigger_modifier_mask_get)
 }
 
 
+/* Module: X11 Function: new_XIMHotKeyTrigger */
 SYX_FUNC_PRIMITIVE(X11_new_XIMHotKeyTrigger)
 {
   XIMHotKeyTrigger *result = 0 ;
@@ -24288,6 +25641,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMHotKeyTrigger)
 }
 
 
+/* Module: X11 Function: delete_XIMHotKeyTrigger */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMHotKeyTrigger)
 {
   XIMHotKeyTrigger *arg1 = (XIMHotKeyTrigger *) 0 ;
@@ -24301,6 +25655,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMHotKeyTrigger)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTriggers_num_hot_key_set */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_num_hot_key_set)
 {
   XIMHotKeyTriggers *arg1 = (XIMHotKeyTriggers *) 0 ;
@@ -24322,6 +25677,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_num_hot_key_set)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTriggers_num_hot_key_get */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_num_hot_key_get)
 {
   XIMHotKeyTriggers *arg1 = (XIMHotKeyTriggers *) 0 ;
@@ -24335,6 +25691,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_num_hot_key_get)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTriggers_key_set */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_key_set)
 {
   XIMHotKeyTriggers *arg1 = (XIMHotKeyTriggers *) 0 ;
@@ -24350,6 +25707,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_key_set)
 }
 
 
+/* Module: X11 Function: XIMHotKeyTriggers_key_get */
 SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_key_get)
 {
   XIMHotKeyTriggers *arg1 = (XIMHotKeyTriggers *) 0 ;
@@ -24363,6 +25721,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMHotKeyTriggers_key_get)
 }
 
 
+/* Module: X11 Function: new_XIMHotKeyTriggers */
 SYX_FUNC_PRIMITIVE(X11_new_XIMHotKeyTriggers)
 {
   XIMHotKeyTriggers *result = 0 ;
@@ -24374,6 +25733,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMHotKeyTriggers)
 }
 
 
+/* Module: X11 Function: delete_XIMHotKeyTriggers */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMHotKeyTriggers)
 {
   XIMHotKeyTriggers *arg1 = (XIMHotKeyTriggers *) 0 ;
@@ -24387,6 +25747,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMHotKeyTriggers)
 }
 
 
+/* Module: X11 Function: XIMValuesList_count_values_set */
 SYX_FUNC_PRIMITIVE(X11_XIMValuesList_count_values_set)
 {
   XIMValuesList *arg1 = (XIMValuesList *) 0 ;
@@ -24408,6 +25769,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMValuesList_count_values_set)
 }
 
 
+/* Module: X11 Function: XIMValuesList_count_values_get */
 SYX_FUNC_PRIMITIVE(X11_XIMValuesList_count_values_get)
 {
   XIMValuesList *arg1 = (XIMValuesList *) 0 ;
@@ -24421,6 +25783,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMValuesList_count_values_get)
 }
 
 
+/* Module: X11 Function: XIMValuesList_supported_values_set */
 SYX_FUNC_PRIMITIVE(X11_XIMValuesList_supported_values_set)
 {
   XIMValuesList *arg1 = (XIMValuesList *) 0 ;
@@ -24430,7 +25793,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMValuesList_supported_values_set)
   
   SWIG_FIRST_SELF(arg1, XIMValuesList *, es->message_receiver)
   
-  temp2 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp2 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg2 = &temp2;
   
 #undef SWIG_APPEND_VALUE
@@ -24447,6 +25810,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMValuesList_supported_values_set)
 }
 
 
+/* Module: X11 Function: XIMValuesList_supported_values_get */
 SYX_FUNC_PRIMITIVE(X11_XIMValuesList_supported_values_get)
 {
   XIMValuesList *arg1 = (XIMValuesList *) 0 ;
@@ -24460,6 +25824,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMValuesList_supported_values_get)
 }
 
 
+/* Module: X11 Function: new_XIMValuesList */
 SYX_FUNC_PRIMITIVE(X11_new_XIMValuesList)
 {
   XIMValuesList *result = 0 ;
@@ -24471,6 +25836,7 @@ SYX_FUNC_PRIMITIVE(X11_new_XIMValuesList)
 }
 
 
+/* Module: X11 Function: delete_XIMValuesList */
 SYX_FUNC_PRIMITIVE(X11_delete_XIMValuesList)
 {
   XIMValuesList *arg1 = (XIMValuesList *) 0 ;
@@ -24484,6 +25850,7 @@ SYX_FUNC_PRIMITIVE(X11_delete_XIMValuesList)
 }
 
 
+/* Module: X11 Function: XLoadQueryFont */
 SYX_FUNC_PRIMITIVE(X11_XLoadQueryFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24493,11 +25860,11 @@ SYX_FUNC_PRIMITIVE(X11_XLoadQueryFont)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = (XFontStruct *)XLoadQueryFont(arg1,(char const *)arg2);
   SWIG_APPEND_VALUE ((SyxOop) result);
@@ -24505,6 +25872,7 @@ SYX_FUNC_PRIMITIVE(X11_XLoadQueryFont)
 }
 
 
+/* Module: X11 Function: XQueryFont */
 SYX_FUNC_PRIMITIVE(X11_XQueryFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24526,6 +25894,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryFont)
 }
 
 
+/* Module: X11 Function: XGetMotionEvents */
 SYX_FUNC_PRIMITIVE(X11_XGetMotionEvents)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24576,6 +25945,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetMotionEvents)
 }
 
 
+/* Module: X11 Function: XDeleteModifiermapEntry */
 SYX_FUNC_PRIMITIVE(X11_XDeleteModifiermapEntry)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -24605,6 +25975,7 @@ SYX_FUNC_PRIMITIVE(X11_XDeleteModifiermapEntry)
 }
 
 
+/* Module: X11 Function: XGetModifierMapping */
 SYX_FUNC_PRIMITIVE(X11_XGetModifierMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24618,6 +25989,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetModifierMapping)
 }
 
 
+/* Module: X11 Function: XInsertModifiermapEntry */
 SYX_FUNC_PRIMITIVE(X11_XInsertModifiermapEntry)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -24647,6 +26019,7 @@ SYX_FUNC_PRIMITIVE(X11_XInsertModifiermapEntry)
 }
 
 
+/* Module: X11 Function: XNewModifiermap */
 SYX_FUNC_PRIMITIVE(X11_XNewModifiermap)
 {
   int arg1 ;
@@ -24666,6 +26039,7 @@ SYX_FUNC_PRIMITIVE(X11_XNewModifiermap)
 }
 
 
+/* Module: X11 Function: XCreateImage */
 SYX_FUNC_PRIMITIVE(X11_XCreateImage)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24705,11 +26079,11 @@ SYX_FUNC_PRIMITIVE(X11_XCreateImage)
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg6 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[4]);
+  arg6 = SWIG_SYX_OBJECT_STRING(es->message_arguments[4]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[5]))
@@ -24745,6 +26119,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateImage)
 }
 
 
+/* Module: X11 Function: XInitImage */
 SYX_FUNC_PRIMITIVE(X11_XInitImage)
 {
   XImage *arg1 = (XImage *) 0 ;
@@ -24758,6 +26133,7 @@ SYX_FUNC_PRIMITIVE(X11_XInitImage)
 }
 
 
+/* Module: X11 Function: XGetImage */
 SYX_FUNC_PRIMITIVE(X11_XGetImage)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24827,6 +26203,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetImage)
 }
 
 
+/* Module: X11 Function: XGetSubImage */
 SYX_FUNC_PRIMITIVE(X11_XGetSubImage)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24914,6 +26291,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetSubImage)
 }
 
 
+/* Module: X11 Function: XOpenDisplay */
 SYX_FUNC_PRIMITIVE(X11_XOpenDisplay)
 {
   char *arg1 = (char *) 0 ;
@@ -24921,11 +26299,11 @@ SYX_FUNC_PRIMITIVE(X11_XOpenDisplay)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = (Display *)XOpenDisplay((char const *)arg1);
   SWIG_APPEND_VALUE ((SyxOop) result);
@@ -24933,6 +26311,7 @@ SYX_FUNC_PRIMITIVE(X11_XOpenDisplay)
 }
 
 
+/* Module: X11 Function: XrmInitialize */
 SYX_FUNC_PRIMITIVE(X11_XrmInitialize)
 {
   SyxOop result_oop;
@@ -24943,6 +26322,7 @@ SYX_FUNC_PRIMITIVE(X11_XrmInitialize)
 }
 
 
+/* Module: X11 Function: XFetchBytes */
 SYX_FUNC_PRIMITIVE(X11_XFetchBytes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -24969,6 +26349,7 @@ SYX_FUNC_PRIMITIVE(X11_XFetchBytes)
 }
 
 
+/* Module: X11 Function: XFetchBuffer */
 SYX_FUNC_PRIMITIVE(X11_XFetchBuffer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25003,6 +26384,7 @@ SYX_FUNC_PRIMITIVE(X11_XFetchBuffer)
 }
 
 
+/* Module: X11 Function: XGetAtomName */
 SYX_FUNC_PRIMITIVE(X11_XGetAtomName)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25024,6 +26406,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetAtomName)
 }
 
 
+/* Module: X11 Function: XGetAtomNames */
 SYX_FUNC_PRIMITIVE(X11_XGetAtomNames)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25044,7 +26427,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetAtomNames)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   
-  temp4 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  temp4 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   arg4 = &temp4;
   
 #undef SWIG_APPEND_VALUE
@@ -25060,6 +26443,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetAtomNames)
 }
 
 
+/* Module: X11 Function: XGetDefault */
 SYX_FUNC_PRIMITIVE(X11_XGetDefault)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25070,18 +26454,18 @@ SYX_FUNC_PRIMITIVE(X11_XGetDefault)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   result = (char *)XGetDefault(arg1,(char const *)arg2,(char const *)arg3);
   SWIG_APPEND_VALUE (syx_string_new(result));
@@ -25089,6 +26473,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetDefault)
 }
 
 
+/* Module: X11 Function: XDisplayName */
 SYX_FUNC_PRIMITIVE(X11_XDisplayName)
 {
   char *arg1 = (char *) 0 ;
@@ -25096,11 +26481,11 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayName)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = (char *)XDisplayName((char const *)arg1);
   SWIG_APPEND_VALUE (syx_string_new(result));
@@ -25108,6 +26493,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayName)
 }
 
 
+/* Module: X11 Function: XKeysymToString */
 SYX_FUNC_PRIMITIVE(X11_XKeysymToString)
 {
   KeySym arg1 ;
@@ -25127,6 +26513,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeysymToString)
 }
 
 
+/* Module: X11 Function: XSynchronize */
 SYX_FUNC_PRIMITIVE(X11_XSynchronize)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25148,6 +26535,7 @@ SYX_FUNC_PRIMITIVE(X11_XSynchronize)
 }
 
 
+/* Module: X11 Function: XSetAfterFunction */
 SYX_FUNC_PRIMITIVE(X11_XSetAfterFunction)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25163,6 +26551,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetAfterFunction)
 }
 
 
+/* Module: X11 Function: XInternAtom */
 SYX_FUNC_PRIMITIVE(X11_XInternAtom)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25173,11 +26562,11 @@ SYX_FUNC_PRIMITIVE(X11_XInternAtom)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_BOOLEAN(es->message_arguments[1]))
@@ -25192,6 +26581,7 @@ SYX_FUNC_PRIMITIVE(X11_XInternAtom)
 }
 
 
+/* Module: X11 Function: XInternAtoms */
 SYX_FUNC_PRIMITIVE(X11_XInternAtoms)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25205,7 +26595,7 @@ SYX_FUNC_PRIMITIVE(X11_XInternAtoms)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  temp2 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp2 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg2 = &temp2;
   
   
@@ -25236,6 +26626,7 @@ SYX_FUNC_PRIMITIVE(X11_XInternAtoms)
 }
 
 
+/* Module: X11 Function: XCopyColormapAndFree */
 SYX_FUNC_PRIMITIVE(X11_XCopyColormapAndFree)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25257,6 +26648,7 @@ SYX_FUNC_PRIMITIVE(X11_XCopyColormapAndFree)
 }
 
 
+/* Module: X11 Function: XCreateColormap */
 SYX_FUNC_PRIMITIVE(X11_XCreateColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25288,6 +26680,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateColormap)
 }
 
 
+/* Module: X11 Function: XCreatePixmapCursor */
 SYX_FUNC_PRIMITIVE(X11_XCreatePixmapCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25337,6 +26730,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreatePixmapCursor)
 }
 
 
+/* Module: X11 Function: XCreateGlyphCursor */
 SYX_FUNC_PRIMITIVE(X11_XCreateGlyphCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25386,6 +26780,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateGlyphCursor)
 }
 
 
+/* Module: X11 Function: XCreateFontCursor */
 SYX_FUNC_PRIMITIVE(X11_XCreateFontCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25407,6 +26802,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateFontCursor)
 }
 
 
+/* Module: X11 Function: XLoadFont */
 SYX_FUNC_PRIMITIVE(X11_XLoadFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25416,11 +26812,11 @@ SYX_FUNC_PRIMITIVE(X11_XLoadFont)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = XLoadFont(arg1,(char const *)arg2);
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
@@ -25428,6 +26824,7 @@ SYX_FUNC_PRIMITIVE(X11_XLoadFont)
 }
 
 
+/* Module: X11 Function: XCreateGC */
 SYX_FUNC_PRIMITIVE(X11_XCreateGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25459,6 +26856,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateGC)
 }
 
 
+/* Module: X11 Function: XGContextFromGC */
 SYX_FUNC_PRIMITIVE(X11_XGContextFromGC)
 {
   GC arg1 = (GC) 0 ;
@@ -25472,6 +26870,7 @@ SYX_FUNC_PRIMITIVE(X11_XGContextFromGC)
 }
 
 
+/* Module: X11 Function: XFlushGC */
 SYX_FUNC_PRIMITIVE(X11_XFlushGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25486,6 +26885,7 @@ SYX_FUNC_PRIMITIVE(X11_XFlushGC)
 }
 
 
+/* Module: X11 Function: XCreatePixmap */
 SYX_FUNC_PRIMITIVE(X11_XCreatePixmap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25531,6 +26931,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreatePixmap)
 }
 
 
+/* Module: X11 Function: XCreateBitmapFromData */
 SYX_FUNC_PRIMITIVE(X11_XCreateBitmapFromData)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25550,11 +26951,11 @@ SYX_FUNC_PRIMITIVE(X11_XCreateBitmapFromData)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -25576,6 +26977,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateBitmapFromData)
 }
 
 
+/* Module: X11 Function: XCreatePixmapFromBitmapData */
 SYX_FUNC_PRIMITIVE(X11_XCreatePixmapFromBitmapData)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25598,11 +27000,11 @@ SYX_FUNC_PRIMITIVE(X11_XCreatePixmapFromBitmapData)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -25645,6 +27047,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreatePixmapFromBitmapData)
 }
 
 
+/* Module: X11 Function: XCreateSimpleWindow */
 SYX_FUNC_PRIMITIVE(X11_XCreateSimpleWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25722,6 +27125,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateSimpleWindow)
 }
 
 
+/* Module: X11 Function: XGetSelectionOwner */
 SYX_FUNC_PRIMITIVE(X11_XGetSelectionOwner)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25743,6 +27147,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetSelectionOwner)
 }
 
 
+/* Module: X11 Function: XCreateWindow */
 SYX_FUNC_PRIMITIVE(X11_XCreateWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25832,6 +27237,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateWindow)
 }
 
 
+/* Module: X11 Function: XListInstalledColormaps */
 SYX_FUNC_PRIMITIVE(X11_XListInstalledColormaps)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25866,6 +27272,7 @@ SYX_FUNC_PRIMITIVE(X11_XListInstalledColormaps)
 }
 
 
+/* Module: X11 Function: XListFonts */
 SYX_FUNC_PRIMITIVE(X11_XListFonts)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25878,11 +27285,11 @@ SYX_FUNC_PRIMITIVE(X11_XListFonts)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -25908,6 +27315,7 @@ SYX_FUNC_PRIMITIVE(X11_XListFonts)
 }
 
 
+/* Module: X11 Function: XListFontsWithInfo */
 SYX_FUNC_PRIMITIVE(X11_XListFontsWithInfo)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25921,11 +27329,11 @@ SYX_FUNC_PRIMITIVE(X11_XListFontsWithInfo)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -25952,6 +27360,7 @@ SYX_FUNC_PRIMITIVE(X11_XListFontsWithInfo)
 }
 
 
+/* Module: X11 Function: XGetFontPath */
 SYX_FUNC_PRIMITIVE(X11_XGetFontPath)
 {
   Display *arg1 = (Display *) 0 ;
@@ -25978,6 +27387,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetFontPath)
 }
 
 
+/* Module: X11 Function: XListExtensions */
 SYX_FUNC_PRIMITIVE(X11_XListExtensions)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26004,6 +27414,7 @@ SYX_FUNC_PRIMITIVE(X11_XListExtensions)
 }
 
 
+/* Module: X11 Function: XListProperties */
 SYX_FUNC_PRIMITIVE(X11_XListProperties)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26038,6 +27449,7 @@ SYX_FUNC_PRIMITIVE(X11_XListProperties)
 }
 
 
+/* Module: X11 Function: XListHosts */
 SYX_FUNC_PRIMITIVE(X11_XListHosts)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26066,6 +27478,7 @@ SYX_FUNC_PRIMITIVE(X11_XListHosts)
 }
 
 
+/* Module: X11 Function: XKeycodeToKeysym */
 SYX_FUNC_PRIMITIVE(X11_XKeycodeToKeysym)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26095,6 +27508,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeycodeToKeysym)
 }
 
 
+/* Module: X11 Function: XLookupKeysym */
 SYX_FUNC_PRIMITIVE(X11_XLookupKeysym)
 {
   XKeyEvent *arg1 = (XKeyEvent *) 0 ;
@@ -26116,6 +27530,7 @@ SYX_FUNC_PRIMITIVE(X11_XLookupKeysym)
 }
 
 
+/* Module: X11 Function: XGetKeyboardMapping */
 SYX_FUNC_PRIMITIVE(X11_XGetKeyboardMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26158,6 +27573,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetKeyboardMapping)
 }
 
 
+/* Module: X11 Function: XStringToKeysym */
 SYX_FUNC_PRIMITIVE(X11_XStringToKeysym)
 {
   char *arg1 = (char *) 0 ;
@@ -26165,11 +27581,11 @@ SYX_FUNC_PRIMITIVE(X11_XStringToKeysym)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = XStringToKeysym((char const *)arg1);
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
@@ -26177,6 +27593,7 @@ SYX_FUNC_PRIMITIVE(X11_XStringToKeysym)
 }
 
 
+/* Module: X11 Function: XMaxRequestSize */
 SYX_FUNC_PRIMITIVE(X11_XMaxRequestSize)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26190,6 +27607,7 @@ SYX_FUNC_PRIMITIVE(X11_XMaxRequestSize)
 }
 
 
+/* Module: X11 Function: XExtendedMaxRequestSize */
 SYX_FUNC_PRIMITIVE(X11_XExtendedMaxRequestSize)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26203,6 +27621,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtendedMaxRequestSize)
 }
 
 
+/* Module: X11 Function: XResourceManagerString */
 SYX_FUNC_PRIMITIVE(X11_XResourceManagerString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26216,6 +27635,7 @@ SYX_FUNC_PRIMITIVE(X11_XResourceManagerString)
 }
 
 
+/* Module: X11 Function: XScreenResourceString */
 SYX_FUNC_PRIMITIVE(X11_XScreenResourceString)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26229,6 +27649,7 @@ SYX_FUNC_PRIMITIVE(X11_XScreenResourceString)
 }
 
 
+/* Module: X11 Function: XDisplayMotionBufferSize */
 SYX_FUNC_PRIMITIVE(X11_XDisplayMotionBufferSize)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26242,6 +27663,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayMotionBufferSize)
 }
 
 
+/* Module: X11 Function: XVisualIDFromVisual */
 SYX_FUNC_PRIMITIVE(X11_XVisualIDFromVisual)
 {
   Visual *arg1 = (Visual *) 0 ;
@@ -26255,6 +27677,7 @@ SYX_FUNC_PRIMITIVE(X11_XVisualIDFromVisual)
 }
 
 
+/* Module: X11 Function: XInitThreads */
 SYX_FUNC_PRIMITIVE(X11_XInitThreads)
 {
   Status result;
@@ -26266,6 +27689,7 @@ SYX_FUNC_PRIMITIVE(X11_XInitThreads)
 }
 
 
+/* Module: X11 Function: XLockDisplay */
 SYX_FUNC_PRIMITIVE(X11_XLockDisplay)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26278,6 +27702,7 @@ SYX_FUNC_PRIMITIVE(X11_XLockDisplay)
 }
 
 
+/* Module: X11 Function: XUnlockDisplay */
 SYX_FUNC_PRIMITIVE(X11_XUnlockDisplay)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26290,6 +27715,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnlockDisplay)
 }
 
 
+/* Module: X11 Function: XInitExtension */
 SYX_FUNC_PRIMITIVE(X11_XInitExtension)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26299,11 +27725,11 @@ SYX_FUNC_PRIMITIVE(X11_XInitExtension)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = (XExtCodes *)XInitExtension(arg1,(char const *)arg2);
   SWIG_APPEND_VALUE ((SyxOop) result);
@@ -26311,6 +27737,7 @@ SYX_FUNC_PRIMITIVE(X11_XInitExtension)
 }
 
 
+/* Module: X11 Function: XAddExtension */
 SYX_FUNC_PRIMITIVE(X11_XAddExtension)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26324,6 +27751,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddExtension)
 }
 
 
+/* Module: X11 Function: XFindOnExtensionList */
 SYX_FUNC_PRIMITIVE(X11_XFindOnExtensionList)
 {
   XExtData **arg1 = (XExtData **) 0 ;
@@ -26345,6 +27773,7 @@ SYX_FUNC_PRIMITIVE(X11_XFindOnExtensionList)
 }
 
 
+/* Module: X11 Function: XRootWindow */
 SYX_FUNC_PRIMITIVE(X11_XRootWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26366,6 +27795,7 @@ SYX_FUNC_PRIMITIVE(X11_XRootWindow)
 }
 
 
+/* Module: X11 Function: XDefaultRootWindow */
 SYX_FUNC_PRIMITIVE(X11_XDefaultRootWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26379,6 +27809,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultRootWindow)
 }
 
 
+/* Module: X11 Function: XRootWindowOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XRootWindowOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26392,6 +27823,7 @@ SYX_FUNC_PRIMITIVE(X11_XRootWindowOfScreen)
 }
 
 
+/* Module: X11 Function: XDefaultVisual */
 SYX_FUNC_PRIMITIVE(X11_XDefaultVisual)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26413,6 +27845,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultVisual)
 }
 
 
+/* Module: X11 Function: XDefaultVisualOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XDefaultVisualOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26426,6 +27859,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultVisualOfScreen)
 }
 
 
+/* Module: X11 Function: XDefaultGC */
 SYX_FUNC_PRIMITIVE(X11_XDefaultGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26447,6 +27881,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultGC)
 }
 
 
+/* Module: X11 Function: XDefaultGCOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XDefaultGCOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26460,6 +27895,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultGCOfScreen)
 }
 
 
+/* Module: X11 Function: XBlackPixel */
 SYX_FUNC_PRIMITIVE(X11_XBlackPixel)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26481,6 +27917,7 @@ SYX_FUNC_PRIMITIVE(X11_XBlackPixel)
 }
 
 
+/* Module: X11 Function: XWhitePixel */
 SYX_FUNC_PRIMITIVE(X11_XWhitePixel)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26502,6 +27939,7 @@ SYX_FUNC_PRIMITIVE(X11_XWhitePixel)
 }
 
 
+/* Module: X11 Function: XAllPlanes */
 SYX_FUNC_PRIMITIVE(X11_XAllPlanes)
 {
   unsigned long result;
@@ -26513,6 +27951,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllPlanes)
 }
 
 
+/* Module: X11 Function: XBlackPixelOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XBlackPixelOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26526,6 +27965,7 @@ SYX_FUNC_PRIMITIVE(X11_XBlackPixelOfScreen)
 }
 
 
+/* Module: X11 Function: XWhitePixelOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XWhitePixelOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26539,6 +27979,7 @@ SYX_FUNC_PRIMITIVE(X11_XWhitePixelOfScreen)
 }
 
 
+/* Module: X11 Function: XNextRequest */
 SYX_FUNC_PRIMITIVE(X11_XNextRequest)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26552,6 +27993,7 @@ SYX_FUNC_PRIMITIVE(X11_XNextRequest)
 }
 
 
+/* Module: X11 Function: XLastKnownRequestProcessed */
 SYX_FUNC_PRIMITIVE(X11_XLastKnownRequestProcessed)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26565,6 +28007,7 @@ SYX_FUNC_PRIMITIVE(X11_XLastKnownRequestProcessed)
 }
 
 
+/* Module: X11 Function: XServerVendor */
 SYX_FUNC_PRIMITIVE(X11_XServerVendor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26578,6 +28021,7 @@ SYX_FUNC_PRIMITIVE(X11_XServerVendor)
 }
 
 
+/* Module: X11 Function: XDisplayString */
 SYX_FUNC_PRIMITIVE(X11_XDisplayString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26591,6 +28035,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayString)
 }
 
 
+/* Module: X11 Function: XDefaultColormap */
 SYX_FUNC_PRIMITIVE(X11_XDefaultColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26612,6 +28057,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultColormap)
 }
 
 
+/* Module: X11 Function: XDefaultColormapOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XDefaultColormapOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26625,6 +28071,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultColormapOfScreen)
 }
 
 
+/* Module: X11 Function: XDisplayOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XDisplayOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26638,6 +28085,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayOfScreen)
 }
 
 
+/* Module: X11 Function: XScreenOfDisplay */
 SYX_FUNC_PRIMITIVE(X11_XScreenOfDisplay)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26659,6 +28107,7 @@ SYX_FUNC_PRIMITIVE(X11_XScreenOfDisplay)
 }
 
 
+/* Module: X11 Function: XDefaultScreenOfDisplay */
 SYX_FUNC_PRIMITIVE(X11_XDefaultScreenOfDisplay)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26672,6 +28121,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultScreenOfDisplay)
 }
 
 
+/* Module: X11 Function: XEventMaskOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XEventMaskOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26685,6 +28135,7 @@ SYX_FUNC_PRIMITIVE(X11_XEventMaskOfScreen)
 }
 
 
+/* Module: X11 Function: XScreenNumberOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XScreenNumberOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -26698,6 +28149,7 @@ SYX_FUNC_PRIMITIVE(X11_XScreenNumberOfScreen)
 }
 
 
+/* Module: X11 Function: XSetErrorHandler */
 SYX_FUNC_PRIMITIVE(X11_XSetErrorHandler)
 {
   XErrorHandler arg1 = (XErrorHandler) 0 ;
@@ -26711,6 +28163,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetErrorHandler)
 }
 
 
+/* Module: X11 Function: XSetIOErrorHandler */
 SYX_FUNC_PRIMITIVE(X11_XSetIOErrorHandler)
 {
   XIOErrorHandler arg1 = (XIOErrorHandler) 0 ;
@@ -26724,6 +28177,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetIOErrorHandler)
 }
 
 
+/* Module: X11 Function: XListPixmapFormats */
 SYX_FUNC_PRIMITIVE(X11_XListPixmapFormats)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26750,6 +28204,7 @@ SYX_FUNC_PRIMITIVE(X11_XListPixmapFormats)
 }
 
 
+/* Module: X11 Function: XListDepths */
 SYX_FUNC_PRIMITIVE(X11_XListDepths)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26784,6 +28239,7 @@ SYX_FUNC_PRIMITIVE(X11_XListDepths)
 }
 
 
+/* Module: X11 Function: XReconfigureWMWindow */
 SYX_FUNC_PRIMITIVE(X11_XReconfigureWMWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26823,6 +28279,7 @@ SYX_FUNC_PRIMITIVE(X11_XReconfigureWMWindow)
 }
 
 
+/* Module: X11 Function: XGetWMProtocols */
 SYX_FUNC_PRIMITIVE(X11_XGetWMProtocols)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26859,6 +28316,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetWMProtocols)
 }
 
 
+/* Module: X11 Function: XSetWMProtocols */
 SYX_FUNC_PRIMITIVE(X11_XSetWMProtocols)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26890,6 +28348,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWMProtocols)
 }
 
 
+/* Module: X11 Function: XIconifyWindow */
 SYX_FUNC_PRIMITIVE(X11_XIconifyWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26919,6 +28378,7 @@ SYX_FUNC_PRIMITIVE(X11_XIconifyWindow)
 }
 
 
+/* Module: X11 Function: XWithdrawWindow */
 SYX_FUNC_PRIMITIVE(X11_XWithdrawWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26948,6 +28408,7 @@ SYX_FUNC_PRIMITIVE(X11_XWithdrawWindow)
 }
 
 
+/* Module: X11 Function: XGetCommand */
 SYX_FUNC_PRIMITIVE(X11_XGetCommand)
 {
   Display *arg1 = (Display *) 0 ;
@@ -26984,6 +28445,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetCommand)
 }
 
 
+/* Module: X11 Function: XGetWMColormapWindows */
 SYX_FUNC_PRIMITIVE(X11_XGetWMColormapWindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27020,6 +28482,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetWMColormapWindows)
 }
 
 
+/* Module: X11 Function: XSetWMColormapWindows */
 SYX_FUNC_PRIMITIVE(X11_XSetWMColormapWindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27051,6 +28514,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWMColormapWindows)
 }
 
 
+/* Module: X11 Function: XFreeStringList */
 SYX_FUNC_PRIMITIVE(X11_XFreeStringList)
 {
   char **arg1 = (char **) 0 ;
@@ -27058,7 +28522,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeStringList)
   SyxOop result_oop;
   
   
-  temp1 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp1 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg1 = &temp1;
   
 #undef SWIG_APPEND_VALUE
@@ -27074,6 +28538,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeStringList)
 }
 
 
+/* Module: X11 Function: XSetTransientForHint */
 SYX_FUNC_PRIMITIVE(X11_XSetTransientForHint)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27103,6 +28568,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetTransientForHint)
 }
 
 
+/* Module: X11 Function: XActivateScreenSaver */
 SYX_FUNC_PRIMITIVE(X11_XActivateScreenSaver)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27116,6 +28582,7 @@ SYX_FUNC_PRIMITIVE(X11_XActivateScreenSaver)
 }
 
 
+/* Module: X11 Function: XAddHost */
 SYX_FUNC_PRIMITIVE(X11_XAddHost)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27131,6 +28598,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddHost)
 }
 
 
+/* Module: X11 Function: XAddHosts */
 SYX_FUNC_PRIMITIVE(X11_XAddHosts)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27154,6 +28622,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddHosts)
 }
 
 
+/* Module: X11 Function: XAddToExtensionList */
 SYX_FUNC_PRIMITIVE(X11_XAddToExtensionList)
 {
   struct _XExtData **arg1 = (struct _XExtData **) 0 ;
@@ -27169,6 +28638,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddToExtensionList)
 }
 
 
+/* Module: X11 Function: XAddToSaveSet */
 SYX_FUNC_PRIMITIVE(X11_XAddToSaveSet)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27190,6 +28660,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddToSaveSet)
 }
 
 
+/* Module: X11 Function: XAllocColor */
 SYX_FUNC_PRIMITIVE(X11_XAllocColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27213,6 +28684,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllocColor)
 }
 
 
+/* Module: X11 Function: XAllocColorCells */
 SYX_FUNC_PRIMITIVE(X11_XAllocColorCells)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27262,6 +28734,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllocColorCells)
 }
 
 
+/* Module: X11 Function: XAllocColorPlanes */
 SYX_FUNC_PRIMITIVE(X11_XAllocColorPlanes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27331,6 +28804,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllocColorPlanes)
 }
 
 
+/* Module: X11 Function: XAllocNamedColor */
 SYX_FUNC_PRIMITIVE(X11_XAllocNamedColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27350,11 +28824,11 @@ SYX_FUNC_PRIMITIVE(X11_XAllocNamedColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XColor *, es->message_arguments[3])
@@ -27364,6 +28838,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllocNamedColor)
 }
 
 
+/* Module: X11 Function: XAllowEvents */
 SYX_FUNC_PRIMITIVE(X11_XAllowEvents)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27393,6 +28868,7 @@ SYX_FUNC_PRIMITIVE(X11_XAllowEvents)
 }
 
 
+/* Module: X11 Function: XAutoRepeatOff */
 SYX_FUNC_PRIMITIVE(X11_XAutoRepeatOff)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27406,6 +28882,7 @@ SYX_FUNC_PRIMITIVE(X11_XAutoRepeatOff)
 }
 
 
+/* Module: X11 Function: XAutoRepeatOn */
 SYX_FUNC_PRIMITIVE(X11_XAutoRepeatOn)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27419,6 +28896,7 @@ SYX_FUNC_PRIMITIVE(X11_XAutoRepeatOn)
 }
 
 
+/* Module: X11 Function: XBell */
 SYX_FUNC_PRIMITIVE(X11_XBell)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27440,6 +28918,7 @@ SYX_FUNC_PRIMITIVE(X11_XBell)
 }
 
 
+/* Module: X11 Function: XBitmapBitOrder */
 SYX_FUNC_PRIMITIVE(X11_XBitmapBitOrder)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27453,6 +28932,7 @@ SYX_FUNC_PRIMITIVE(X11_XBitmapBitOrder)
 }
 
 
+/* Module: X11 Function: XBitmapPad */
 SYX_FUNC_PRIMITIVE(X11_XBitmapPad)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27466,6 +28946,7 @@ SYX_FUNC_PRIMITIVE(X11_XBitmapPad)
 }
 
 
+/* Module: X11 Function: XBitmapUnit */
 SYX_FUNC_PRIMITIVE(X11_XBitmapUnit)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27479,6 +28960,7 @@ SYX_FUNC_PRIMITIVE(X11_XBitmapUnit)
 }
 
 
+/* Module: X11 Function: XCellsOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XCellsOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -27492,6 +28974,7 @@ SYX_FUNC_PRIMITIVE(X11_XCellsOfScreen)
 }
 
 
+/* Module: X11 Function: XChangeActivePointerGrab */
 SYX_FUNC_PRIMITIVE(X11_XChangeActivePointerGrab)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27529,6 +29012,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeActivePointerGrab)
 }
 
 
+/* Module: X11 Function: XChangeGC */
 SYX_FUNC_PRIMITIVE(X11_XChangeGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27554,6 +29038,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeGC)
 }
 
 
+/* Module: X11 Function: XChangeKeyboardControl */
 SYX_FUNC_PRIMITIVE(X11_XChangeKeyboardControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27577,6 +29062,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeKeyboardControl)
 }
 
 
+/* Module: X11 Function: XChangeKeyboardMapping */
 SYX_FUNC_PRIMITIVE(X11_XChangeKeyboardMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27616,6 +29102,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeKeyboardMapping)
 }
 
 
+/* Module: X11 Function: XChangePointerControl */
 SYX_FUNC_PRIMITIVE(X11_XChangePointerControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27669,6 +29156,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangePointerControl)
 }
 
 
+/* Module: X11 Function: XChangeProperty */
 SYX_FUNC_PRIMITIVE(X11_XChangeProperty)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27732,6 +29220,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeProperty)
 }
 
 
+/* Module: X11 Function: XChangeSaveSet */
 SYX_FUNC_PRIMITIVE(X11_XChangeSaveSet)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27761,6 +29250,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeSaveSet)
 }
 
 
+/* Module: X11 Function: XChangeWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_XChangeWindowAttributes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27792,6 +29282,7 @@ SYX_FUNC_PRIMITIVE(X11_XChangeWindowAttributes)
 }
 
 
+/* Module: X11 Function: XCheckIfEvent */
 SYX_FUNC_PRIMITIVE(X11_XCheckIfEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27811,6 +29302,7 @@ SYX_FUNC_PRIMITIVE(X11_XCheckIfEvent)
 }
 
 
+/* Module: X11 Function: XCheckMaskEvent */
 SYX_FUNC_PRIMITIVE(X11_XCheckMaskEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27834,6 +29326,7 @@ SYX_FUNC_PRIMITIVE(X11_XCheckMaskEvent)
 }
 
 
+/* Module: X11 Function: XCheckTypedEvent */
 SYX_FUNC_PRIMITIVE(X11_XCheckTypedEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27857,6 +29350,7 @@ SYX_FUNC_PRIMITIVE(X11_XCheckTypedEvent)
 }
 
 
+/* Module: X11 Function: XCheckTypedWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_XCheckTypedWindowEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27888,6 +29382,7 @@ SYX_FUNC_PRIMITIVE(X11_XCheckTypedWindowEvent)
 }
 
 
+/* Module: X11 Function: XCheckWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_XCheckWindowEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27919,6 +29414,7 @@ SYX_FUNC_PRIMITIVE(X11_XCheckWindowEvent)
 }
 
 
+/* Module: X11 Function: XCirculateSubwindows */
 SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27948,6 +29444,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindows)
 }
 
 
+/* Module: X11 Function: XCirculateSubwindowsDown */
 SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindowsDown)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27969,6 +29466,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindowsDown)
 }
 
 
+/* Module: X11 Function: XCirculateSubwindowsUp */
 SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindowsUp)
 {
   Display *arg1 = (Display *) 0 ;
@@ -27990,6 +29488,7 @@ SYX_FUNC_PRIMITIVE(X11_XCirculateSubwindowsUp)
 }
 
 
+/* Module: X11 Function: XClearArea */
 SYX_FUNC_PRIMITIVE(X11_XClearArea)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28051,6 +29550,7 @@ SYX_FUNC_PRIMITIVE(X11_XClearArea)
 }
 
 
+/* Module: X11 Function: XClearWindow */
 SYX_FUNC_PRIMITIVE(X11_XClearWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28072,6 +29572,7 @@ SYX_FUNC_PRIMITIVE(X11_XClearWindow)
 }
 
 
+/* Module: X11 Function: XCloseDisplay */
 SYX_FUNC_PRIMITIVE(X11_XCloseDisplay)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28085,6 +29586,7 @@ SYX_FUNC_PRIMITIVE(X11_XCloseDisplay)
 }
 
 
+/* Module: X11 Function: XConfigureWindow */
 SYX_FUNC_PRIMITIVE(X11_XConfigureWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28116,6 +29618,7 @@ SYX_FUNC_PRIMITIVE(X11_XConfigureWindow)
 }
 
 
+/* Module: X11 Function: XConnectionNumber */
 SYX_FUNC_PRIMITIVE(X11_XConnectionNumber)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28129,6 +29632,7 @@ SYX_FUNC_PRIMITIVE(X11_XConnectionNumber)
 }
 
 
+/* Module: X11 Function: XConvertSelection */
 SYX_FUNC_PRIMITIVE(X11_XConvertSelection)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28182,6 +29686,7 @@ SYX_FUNC_PRIMITIVE(X11_XConvertSelection)
 }
 
 
+/* Module: X11 Function: XCopyArea */
 SYX_FUNC_PRIMITIVE(X11_XCopyArea)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28261,6 +29766,7 @@ SYX_FUNC_PRIMITIVE(X11_XCopyArea)
 }
 
 
+/* Module: X11 Function: XCopyGC */
 SYX_FUNC_PRIMITIVE(X11_XCopyGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28286,6 +29792,7 @@ SYX_FUNC_PRIMITIVE(X11_XCopyGC)
 }
 
 
+/* Module: X11 Function: XCopyPlane */
 SYX_FUNC_PRIMITIVE(X11_XCopyPlane)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28373,6 +29880,7 @@ SYX_FUNC_PRIMITIVE(X11_XCopyPlane)
 }
 
 
+/* Module: X11 Function: XDefaultDepth */
 SYX_FUNC_PRIMITIVE(X11_XDefaultDepth)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28394,6 +29902,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultDepth)
 }
 
 
+/* Module: X11 Function: XDefaultDepthOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XDefaultDepthOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -28407,6 +29916,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultDepthOfScreen)
 }
 
 
+/* Module: X11 Function: XDefaultScreen */
 SYX_FUNC_PRIMITIVE(X11_XDefaultScreen)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28420,6 +29930,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefaultScreen)
 }
 
 
+/* Module: X11 Function: XDefineCursor */
 SYX_FUNC_PRIMITIVE(X11_XDefineCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28449,6 +29960,7 @@ SYX_FUNC_PRIMITIVE(X11_XDefineCursor)
 }
 
 
+/* Module: X11 Function: XDeleteProperty */
 SYX_FUNC_PRIMITIVE(X11_XDeleteProperty)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28478,6 +29990,7 @@ SYX_FUNC_PRIMITIVE(X11_XDeleteProperty)
 }
 
 
+/* Module: X11 Function: XDestroyWindow */
 SYX_FUNC_PRIMITIVE(X11_XDestroyWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28499,6 +30012,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyWindow)
 }
 
 
+/* Module: X11 Function: XDestroySubwindows */
 SYX_FUNC_PRIMITIVE(X11_XDestroySubwindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28520,6 +30034,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroySubwindows)
 }
 
 
+/* Module: X11 Function: XDoesBackingStore */
 SYX_FUNC_PRIMITIVE(X11_XDoesBackingStore)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -28533,6 +30048,7 @@ SYX_FUNC_PRIMITIVE(X11_XDoesBackingStore)
 }
 
 
+/* Module: X11 Function: XDoesSaveUnders */
 SYX_FUNC_PRIMITIVE(X11_XDoesSaveUnders)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -28546,6 +30062,7 @@ SYX_FUNC_PRIMITIVE(X11_XDoesSaveUnders)
 }
 
 
+/* Module: X11 Function: XDisableAccessControl */
 SYX_FUNC_PRIMITIVE(X11_XDisableAccessControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28559,6 +30076,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisableAccessControl)
 }
 
 
+/* Module: X11 Function: XDisplayCells */
 SYX_FUNC_PRIMITIVE(X11_XDisplayCells)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28580,6 +30098,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayCells)
 }
 
 
+/* Module: X11 Function: XDisplayHeight */
 SYX_FUNC_PRIMITIVE(X11_XDisplayHeight)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28601,6 +30120,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayHeight)
 }
 
 
+/* Module: X11 Function: XDisplayHeightMM */
 SYX_FUNC_PRIMITIVE(X11_XDisplayHeightMM)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28622,6 +30142,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayHeightMM)
 }
 
 
+/* Module: X11 Function: XDisplayKeycodes */
 SYX_FUNC_PRIMITIVE(X11_XDisplayKeycodes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28655,6 +30176,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayKeycodes)
 }
 
 
+/* Module: X11 Function: XDisplayPlanes */
 SYX_FUNC_PRIMITIVE(X11_XDisplayPlanes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28676,6 +30198,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayPlanes)
 }
 
 
+/* Module: X11 Function: XDisplayWidth */
 SYX_FUNC_PRIMITIVE(X11_XDisplayWidth)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28697,6 +30220,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayWidth)
 }
 
 
+/* Module: X11 Function: XDisplayWidthMM */
 SYX_FUNC_PRIMITIVE(X11_XDisplayWidthMM)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28718,6 +30242,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayWidthMM)
 }
 
 
+/* Module: X11 Function: XDrawArc */
 SYX_FUNC_PRIMITIVE(X11_XDrawArc)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28789,6 +30314,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawArc)
 }
 
 
+/* Module: X11 Function: XDrawArcs */
 SYX_FUNC_PRIMITIVE(X11_XDrawArcs)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28822,6 +30348,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawArcs)
 }
 
 
+/* Module: X11 Function: XDrawImageString */
 SYX_FUNC_PRIMITIVE(X11_XDrawImageString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28858,11 +30385,11 @@ SYX_FUNC_PRIMITIVE(X11_XDrawImageString)
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg6 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[4]);
+  arg6 = SWIG_SYX_OBJECT_STRING(es->message_arguments[4]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[5]))
@@ -28877,6 +30404,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawImageString)
 }
 
 
+/* Module: X11 Function: XDrawImageString16 */
 SYX_FUNC_PRIMITIVE(X11_XDrawImageString16)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28926,6 +30454,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawImageString16)
 }
 
 
+/* Module: X11 Function: XDrawLine */
 SYX_FUNC_PRIMITIVE(X11_XDrawLine)
 {
   Display *arg1 = (Display *) 0 ;
@@ -28981,6 +30510,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawLine)
 }
 
 
+/* Module: X11 Function: XDrawLines */
 SYX_FUNC_PRIMITIVE(X11_XDrawLines)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29022,6 +30552,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawLines)
 }
 
 
+/* Module: X11 Function: XDrawPoint */
 SYX_FUNC_PRIMITIVE(X11_XDrawPoint)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29061,6 +30592,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawPoint)
 }
 
 
+/* Module: X11 Function: XDrawPoints */
 SYX_FUNC_PRIMITIVE(X11_XDrawPoints)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29102,6 +30634,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawPoints)
 }
 
 
+/* Module: X11 Function: XDrawRectangle */
 SYX_FUNC_PRIMITIVE(X11_XDrawRectangle)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29157,6 +30690,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawRectangle)
 }
 
 
+/* Module: X11 Function: XDrawRectangles */
 SYX_FUNC_PRIMITIVE(X11_XDrawRectangles)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29190,6 +30724,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawRectangles)
 }
 
 
+/* Module: X11 Function: XDrawSegments */
 SYX_FUNC_PRIMITIVE(X11_XDrawSegments)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29223,6 +30758,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawSegments)
 }
 
 
+/* Module: X11 Function: XDrawString */
 SYX_FUNC_PRIMITIVE(X11_XDrawString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29259,11 +30795,11 @@ SYX_FUNC_PRIMITIVE(X11_XDrawString)
   arg5 = SYX_SMALL_INTEGER(es->message_arguments[3]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[4]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg6 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[4]);
+  arg6 = SWIG_SYX_OBJECT_STRING(es->message_arguments[4]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[5]))
@@ -29278,6 +30814,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawString)
 }
 
 
+/* Module: X11 Function: XDrawString16 */
 SYX_FUNC_PRIMITIVE(X11_XDrawString16)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29327,6 +30864,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawString16)
 }
 
 
+/* Module: X11 Function: XDrawText */
 SYX_FUNC_PRIMITIVE(X11_XDrawText)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29376,6 +30914,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawText)
 }
 
 
+/* Module: X11 Function: XDrawText16 */
 SYX_FUNC_PRIMITIVE(X11_XDrawText16)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29425,6 +30964,7 @@ SYX_FUNC_PRIMITIVE(X11_XDrawText16)
 }
 
 
+/* Module: X11 Function: XEnableAccessControl */
 SYX_FUNC_PRIMITIVE(X11_XEnableAccessControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29438,6 +30978,7 @@ SYX_FUNC_PRIMITIVE(X11_XEnableAccessControl)
 }
 
 
+/* Module: X11 Function: XEventsQueued */
 SYX_FUNC_PRIMITIVE(X11_XEventsQueued)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29459,6 +31000,7 @@ SYX_FUNC_PRIMITIVE(X11_XEventsQueued)
 }
 
 
+/* Module: X11 Function: XFetchName */
 SYX_FUNC_PRIMITIVE(X11_XFetchName)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29477,7 +31019,7 @@ SYX_FUNC_PRIMITIVE(X11_XFetchName)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  temp3 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  temp3 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   arg3 = &temp3;
   
 #undef SWIG_APPEND_VALUE
@@ -29493,6 +31035,7 @@ SYX_FUNC_PRIMITIVE(X11_XFetchName)
 }
 
 
+/* Module: X11 Function: XFillArc */
 SYX_FUNC_PRIMITIVE(X11_XFillArc)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29564,6 +31107,7 @@ SYX_FUNC_PRIMITIVE(X11_XFillArc)
 }
 
 
+/* Module: X11 Function: XFillArcs */
 SYX_FUNC_PRIMITIVE(X11_XFillArcs)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29597,6 +31141,7 @@ SYX_FUNC_PRIMITIVE(X11_XFillArcs)
 }
 
 
+/* Module: X11 Function: XFillPolygon */
 SYX_FUNC_PRIMITIVE(X11_XFillPolygon)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29646,6 +31191,7 @@ SYX_FUNC_PRIMITIVE(X11_XFillPolygon)
 }
 
 
+/* Module: X11 Function: XFillRectangle */
 SYX_FUNC_PRIMITIVE(X11_XFillRectangle)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29701,6 +31247,7 @@ SYX_FUNC_PRIMITIVE(X11_XFillRectangle)
 }
 
 
+/* Module: X11 Function: XFillRectangles */
 SYX_FUNC_PRIMITIVE(X11_XFillRectangles)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29734,6 +31281,7 @@ SYX_FUNC_PRIMITIVE(X11_XFillRectangles)
 }
 
 
+/* Module: X11 Function: XFlush */
 SYX_FUNC_PRIMITIVE(X11_XFlush)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29747,6 +31295,7 @@ SYX_FUNC_PRIMITIVE(X11_XFlush)
 }
 
 
+/* Module: X11 Function: XForceScreenSaver */
 SYX_FUNC_PRIMITIVE(X11_XForceScreenSaver)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29768,6 +31317,7 @@ SYX_FUNC_PRIMITIVE(X11_XForceScreenSaver)
 }
 
 
+/* Module: X11 Function: XFree */
 SYX_FUNC_PRIMITIVE(X11_XFree)
 {
   void *arg1 = (void *) 0 ;
@@ -29781,6 +31331,7 @@ SYX_FUNC_PRIMITIVE(X11_XFree)
 }
 
 
+/* Module: X11 Function: XFreeColormap */
 SYX_FUNC_PRIMITIVE(X11_XFreeColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29802,6 +31353,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeColormap)
 }
 
 
+/* Module: X11 Function: XFreeColors */
 SYX_FUNC_PRIMITIVE(X11_XFreeColors)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29841,6 +31393,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeColors)
 }
 
 
+/* Module: X11 Function: XFreeCursor */
 SYX_FUNC_PRIMITIVE(X11_XFreeCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29862,6 +31415,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeCursor)
 }
 
 
+/* Module: X11 Function: XFreeExtensionList */
 SYX_FUNC_PRIMITIVE(X11_XFreeExtensionList)
 {
   char **arg1 = (char **) 0 ;
@@ -29870,7 +31424,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeExtensionList)
   SyxOop result_oop;
   
   
-  temp1 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp1 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg1 = &temp1;
   
 #undef SWIG_APPEND_VALUE
@@ -29886,6 +31440,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeExtensionList)
 }
 
 
+/* Module: X11 Function: XFreeFont */
 SYX_FUNC_PRIMITIVE(X11_XFreeFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29901,6 +31456,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFont)
 }
 
 
+/* Module: X11 Function: XFreeFontInfo */
 SYX_FUNC_PRIMITIVE(X11_XFreeFontInfo)
 {
   char **arg1 = (char **) 0 ;
@@ -29911,7 +31467,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontInfo)
   SyxOop result_oop;
   
   
-  temp1 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp1 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg1 = &temp1;
   
   SWIG_FIRST_SELF(arg2, XFontStruct *, es->message_arguments[1])
@@ -29935,6 +31491,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontInfo)
 }
 
 
+/* Module: X11 Function: XFreeFontNames */
 SYX_FUNC_PRIMITIVE(X11_XFreeFontNames)
 {
   char **arg1 = (char **) 0 ;
@@ -29943,7 +31500,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontNames)
   SyxOop result_oop;
   
   
-  temp1 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp1 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg1 = &temp1;
   
 #undef SWIG_APPEND_VALUE
@@ -29959,6 +31516,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontNames)
 }
 
 
+/* Module: X11 Function: XFreeFontPath */
 SYX_FUNC_PRIMITIVE(X11_XFreeFontPath)
 {
   char **arg1 = (char **) 0 ;
@@ -29967,7 +31525,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontPath)
   SyxOop result_oop;
   
   
-  temp1 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp1 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg1 = &temp1;
   
 #undef SWIG_APPEND_VALUE
@@ -29983,6 +31541,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontPath)
 }
 
 
+/* Module: X11 Function: XFreeGC */
 SYX_FUNC_PRIMITIVE(X11_XFreeGC)
 {
   Display *arg1 = (Display *) 0 ;
@@ -29998,6 +31557,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeGC)
 }
 
 
+/* Module: X11 Function: XFreeModifiermap */
 SYX_FUNC_PRIMITIVE(X11_XFreeModifiermap)
 {
   XModifierKeymap *arg1 = (XModifierKeymap *) 0 ;
@@ -30011,6 +31571,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeModifiermap)
 }
 
 
+/* Module: X11 Function: XFreePixmap */
 SYX_FUNC_PRIMITIVE(X11_XFreePixmap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30032,6 +31593,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreePixmap)
 }
 
 
+/* Module: X11 Function: XGeometry */
 SYX_FUNC_PRIMITIVE(X11_XGeometry)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30063,18 +31625,18 @@ SYX_FUNC_PRIMITIVE(X11_XGeometry)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
@@ -30143,6 +31705,7 @@ SYX_FUNC_PRIMITIVE(X11_XGeometry)
 }
 
 
+/* Module: X11 Function: XGetErrorDatabaseText */
 SYX_FUNC_PRIMITIVE(X11_XGetErrorDatabaseText)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30156,32 +31719,32 @@ SYX_FUNC_PRIMITIVE(X11_XGetErrorDatabaseText)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[3]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[3]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg5 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[3]);
+  arg5 = SWIG_SYX_OBJECT_STRING(es->message_arguments[3]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[4]))
@@ -30196,6 +31759,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetErrorDatabaseText)
 }
 
 
+/* Module: X11 Function: XGetErrorText */
 SYX_FUNC_PRIMITIVE(X11_XGetErrorText)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30214,11 +31778,11 @@ SYX_FUNC_PRIMITIVE(X11_XGetErrorText)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -30233,6 +31797,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetErrorText)
 }
 
 
+/* Module: X11 Function: XGetFontProperty */
 SYX_FUNC_PRIMITIVE(X11_XGetFontProperty)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -30256,6 +31821,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetFontProperty)
 }
 
 
+/* Module: X11 Function: XGetGCValues */
 SYX_FUNC_PRIMITIVE(X11_XGetGCValues)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30281,6 +31847,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetGCValues)
 }
 
 
+/* Module: X11 Function: XGetGeometry */
 SYX_FUNC_PRIMITIVE(X11_XGetGeometry)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30332,6 +31899,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetGeometry)
 }
 
 
+/* Module: X11 Function: XGetIconName */
 SYX_FUNC_PRIMITIVE(X11_XGetIconName)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30350,7 +31918,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetIconName)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  temp3 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  temp3 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   arg3 = &temp3;
   
 #undef SWIG_APPEND_VALUE
@@ -30366,6 +31934,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetIconName)
 }
 
 
+/* Module: X11 Function: XGetInputFocus */
 SYX_FUNC_PRIMITIVE(X11_XGetInputFocus)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30394,6 +31963,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetInputFocus)
 }
 
 
+/* Module: X11 Function: XGetKeyboardControl */
 SYX_FUNC_PRIMITIVE(X11_XGetKeyboardControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30409,6 +31979,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetKeyboardControl)
 }
 
 
+/* Module: X11 Function: XGetPointerControl */
 SYX_FUNC_PRIMITIVE(X11_XGetPointerControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30449,6 +32020,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetPointerControl)
 }
 
 
+/* Module: X11 Function: XGetPointerMapping */
 SYX_FUNC_PRIMITIVE(X11_XGetPointerMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30472,6 +32044,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetPointerMapping)
 }
 
 
+/* Module: X11 Function: XGetScreenSaver */
 SYX_FUNC_PRIMITIVE(X11_XGetScreenSaver)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30519,6 +32092,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetScreenSaver)
 }
 
 
+/* Module: X11 Function: XGetTransientForHint */
 SYX_FUNC_PRIMITIVE(X11_XGetTransientForHint)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30542,6 +32116,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetTransientForHint)
 }
 
 
+/* Module: X11 Function: XGetWindowProperty */
 SYX_FUNC_PRIMITIVE(X11_XGetWindowProperty)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30624,6 +32199,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetWindowProperty)
 }
 
 
+/* Module: X11 Function: XGetWindowAttributes */
 SYX_FUNC_PRIMITIVE(X11_XGetWindowAttributes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30647,6 +32223,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetWindowAttributes)
 }
 
 
+/* Module: X11 Function: XGrabButton */
 SYX_FUNC_PRIMITIVE(X11_XGrabButton)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30732,6 +32309,7 @@ SYX_FUNC_PRIMITIVE(X11_XGrabButton)
 }
 
 
+/* Module: X11 Function: XGrabKey */
 SYX_FUNC_PRIMITIVE(X11_XGrabKey)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30793,6 +32371,7 @@ SYX_FUNC_PRIMITIVE(X11_XGrabKey)
 }
 
 
+/* Module: X11 Function: XGrabKeyboard */
 SYX_FUNC_PRIMITIVE(X11_XGrabKeyboard)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30846,6 +32425,7 @@ SYX_FUNC_PRIMITIVE(X11_XGrabKeyboard)
 }
 
 
+/* Module: X11 Function: XGrabPointer */
 SYX_FUNC_PRIMITIVE(X11_XGrabPointer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30923,6 +32503,7 @@ SYX_FUNC_PRIMITIVE(X11_XGrabPointer)
 }
 
 
+/* Module: X11 Function: XGrabServer */
 SYX_FUNC_PRIMITIVE(X11_XGrabServer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30936,6 +32517,7 @@ SYX_FUNC_PRIMITIVE(X11_XGrabServer)
 }
 
 
+/* Module: X11 Function: XHeightMMOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XHeightMMOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -30949,6 +32531,7 @@ SYX_FUNC_PRIMITIVE(X11_XHeightMMOfScreen)
 }
 
 
+/* Module: X11 Function: XHeightOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XHeightOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -30962,6 +32545,7 @@ SYX_FUNC_PRIMITIVE(X11_XHeightOfScreen)
 }
 
 
+/* Module: X11 Function: XIfEvent */
 SYX_FUNC_PRIMITIVE(X11_XIfEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30981,6 +32565,7 @@ SYX_FUNC_PRIMITIVE(X11_XIfEvent)
 }
 
 
+/* Module: X11 Function: XImageByteOrder */
 SYX_FUNC_PRIMITIVE(X11_XImageByteOrder)
 {
   Display *arg1 = (Display *) 0 ;
@@ -30994,6 +32579,7 @@ SYX_FUNC_PRIMITIVE(X11_XImageByteOrder)
 }
 
 
+/* Module: X11 Function: XInstallColormap */
 SYX_FUNC_PRIMITIVE(X11_XInstallColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31015,6 +32601,7 @@ SYX_FUNC_PRIMITIVE(X11_XInstallColormap)
 }
 
 
+/* Module: X11 Function: XKeysymToKeycode */
 SYX_FUNC_PRIMITIVE(X11_XKeysymToKeycode)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31036,6 +32623,7 @@ SYX_FUNC_PRIMITIVE(X11_XKeysymToKeycode)
 }
 
 
+/* Module: X11 Function: XKillClient */
 SYX_FUNC_PRIMITIVE(X11_XKillClient)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31057,6 +32645,7 @@ SYX_FUNC_PRIMITIVE(X11_XKillClient)
 }
 
 
+/* Module: X11 Function: XLookupColor */
 SYX_FUNC_PRIMITIVE(X11_XLookupColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31076,11 +32665,11 @@ SYX_FUNC_PRIMITIVE(X11_XLookupColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, XColor *, es->message_arguments[3])
@@ -31090,6 +32679,7 @@ SYX_FUNC_PRIMITIVE(X11_XLookupColor)
 }
 
 
+/* Module: X11 Function: XLowerWindow */
 SYX_FUNC_PRIMITIVE(X11_XLowerWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31111,6 +32701,7 @@ SYX_FUNC_PRIMITIVE(X11_XLowerWindow)
 }
 
 
+/* Module: X11 Function: XMapRaised */
 SYX_FUNC_PRIMITIVE(X11_XMapRaised)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31132,6 +32723,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapRaised)
 }
 
 
+/* Module: X11 Function: XMapSubwindows */
 SYX_FUNC_PRIMITIVE(X11_XMapSubwindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31153,6 +32745,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapSubwindows)
 }
 
 
+/* Module: X11 Function: XMapWindow */
 SYX_FUNC_PRIMITIVE(X11_XMapWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31174,6 +32767,7 @@ SYX_FUNC_PRIMITIVE(X11_XMapWindow)
 }
 
 
+/* Module: X11 Function: XMaskEvent */
 SYX_FUNC_PRIMITIVE(X11_XMaskEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31197,6 +32791,7 @@ SYX_FUNC_PRIMITIVE(X11_XMaskEvent)
 }
 
 
+/* Module: X11 Function: XMaxCmapsOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XMaxCmapsOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -31210,6 +32805,7 @@ SYX_FUNC_PRIMITIVE(X11_XMaxCmapsOfScreen)
 }
 
 
+/* Module: X11 Function: XMinCmapsOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XMinCmapsOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -31223,6 +32819,7 @@ SYX_FUNC_PRIMITIVE(X11_XMinCmapsOfScreen)
 }
 
 
+/* Module: X11 Function: XMoveResizeWindow */
 SYX_FUNC_PRIMITIVE(X11_XMoveResizeWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31276,6 +32873,7 @@ SYX_FUNC_PRIMITIVE(X11_XMoveResizeWindow)
 }
 
 
+/* Module: X11 Function: XMoveWindow */
 SYX_FUNC_PRIMITIVE(X11_XMoveWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31313,6 +32911,7 @@ SYX_FUNC_PRIMITIVE(X11_XMoveWindow)
 }
 
 
+/* Module: X11 Function: XNextEvent */
 SYX_FUNC_PRIMITIVE(X11_XNextEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31328,6 +32927,7 @@ SYX_FUNC_PRIMITIVE(X11_XNextEvent)
 }
 
 
+/* Module: X11 Function: XNoOp */
 SYX_FUNC_PRIMITIVE(X11_XNoOp)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31341,6 +32941,7 @@ SYX_FUNC_PRIMITIVE(X11_XNoOp)
 }
 
 
+/* Module: X11 Function: XParseColor */
 SYX_FUNC_PRIMITIVE(X11_XParseColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31359,11 +32960,11 @@ SYX_FUNC_PRIMITIVE(X11_XParseColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, XColor *, es->message_arguments[2])
   result = XParseColor(arg1,arg2,(char const *)arg3,arg4);
@@ -31372,6 +32973,7 @@ SYX_FUNC_PRIMITIVE(X11_XParseColor)
 }
 
 
+/* Module: X11 Function: XParseGeometry */
 SYX_FUNC_PRIMITIVE(X11_XParseGeometry)
 {
   char *arg1 = (char *) 0 ;
@@ -31385,11 +32987,11 @@ SYX_FUNC_PRIMITIVE(X11_XParseGeometry)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   temp2 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
@@ -31415,6 +33017,7 @@ SYX_FUNC_PRIMITIVE(X11_XParseGeometry)
 }
 
 
+/* Module: X11 Function: XPeekEvent */
 SYX_FUNC_PRIMITIVE(X11_XPeekEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31430,6 +33033,7 @@ SYX_FUNC_PRIMITIVE(X11_XPeekEvent)
 }
 
 
+/* Module: X11 Function: XPeekIfEvent */
 SYX_FUNC_PRIMITIVE(X11_XPeekIfEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31449,6 +33053,7 @@ SYX_FUNC_PRIMITIVE(X11_XPeekIfEvent)
 }
 
 
+/* Module: X11 Function: XPending */
 SYX_FUNC_PRIMITIVE(X11_XPending)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31462,6 +33067,7 @@ SYX_FUNC_PRIMITIVE(X11_XPending)
 }
 
 
+/* Module: X11 Function: XPlanesOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XPlanesOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -31475,6 +33081,7 @@ SYX_FUNC_PRIMITIVE(X11_XPlanesOfScreen)
 }
 
 
+/* Module: X11 Function: XProtocolRevision */
 SYX_FUNC_PRIMITIVE(X11_XProtocolRevision)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31488,6 +33095,7 @@ SYX_FUNC_PRIMITIVE(X11_XProtocolRevision)
 }
 
 
+/* Module: X11 Function: XProtocolVersion */
 SYX_FUNC_PRIMITIVE(X11_XProtocolVersion)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31501,6 +33109,7 @@ SYX_FUNC_PRIMITIVE(X11_XProtocolVersion)
 }
 
 
+/* Module: X11 Function: XPutBackEvent */
 SYX_FUNC_PRIMITIVE(X11_XPutBackEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31516,6 +33125,7 @@ SYX_FUNC_PRIMITIVE(X11_XPutBackEvent)
 }
 
 
+/* Module: X11 Function: XPutImage */
 SYX_FUNC_PRIMITIVE(X11_XPutImage)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31589,6 +33199,7 @@ SYX_FUNC_PRIMITIVE(X11_XPutImage)
 }
 
 
+/* Module: X11 Function: XQLength */
 SYX_FUNC_PRIMITIVE(X11_XQLength)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31602,6 +33213,7 @@ SYX_FUNC_PRIMITIVE(X11_XQLength)
 }
 
 
+/* Module: X11 Function: XQueryBestCursor */
 SYX_FUNC_PRIMITIVE(X11_XQueryBestCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31643,6 +33255,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryBestCursor)
 }
 
 
+/* Module: X11 Function: XQueryBestSize */
 SYX_FUNC_PRIMITIVE(X11_XQueryBestSize)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31692,6 +33305,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryBestSize)
 }
 
 
+/* Module: X11 Function: XQueryBestStipple */
 SYX_FUNC_PRIMITIVE(X11_XQueryBestStipple)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31733,6 +33347,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryBestStipple)
 }
 
 
+/* Module: X11 Function: XQueryBestTile */
 SYX_FUNC_PRIMITIVE(X11_XQueryBestTile)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31774,6 +33389,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryBestTile)
 }
 
 
+/* Module: X11 Function: XQueryColor */
 SYX_FUNC_PRIMITIVE(X11_XQueryColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31797,6 +33413,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryColor)
 }
 
 
+/* Module: X11 Function: XQueryColors */
 SYX_FUNC_PRIMITIVE(X11_XQueryColors)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31828,6 +33445,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryColors)
 }
 
 
+/* Module: X11 Function: XQueryExtension */
 SYX_FUNC_PRIMITIVE(X11_XQueryExtension)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31843,11 +33461,11 @@ SYX_FUNC_PRIMITIVE(X11_XQueryExtension)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   temp3 = (int) SYX_SMALL_INTEGER(es->message_arguments[1]);
@@ -31876,6 +33494,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryExtension)
 }
 
 
+/* Module: X11 Function: XQueryKeymap */
 SYX_FUNC_PRIMITIVE(X11_XQueryKeymap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31891,6 +33510,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryKeymap)
 }
 
 
+/* Module: X11 Function: XQueryPointer */
 SYX_FUNC_PRIMITIVE(X11_XQueryPointer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31952,6 +33572,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryPointer)
 }
 
 
+/* Module: X11 Function: XQueryTextExtents */
 SYX_FUNC_PRIMITIVE(X11_XQueryTextExtents)
 {
   Display *arg1 = (Display *) 0 ;
@@ -31977,11 +33598,11 @@ SYX_FUNC_PRIMITIVE(X11_XQueryTextExtents)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -32018,6 +33639,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryTextExtents)
 }
 
 
+/* Module: X11 Function: XQueryTextExtents16 */
 SYX_FUNC_PRIMITIVE(X11_XQueryTextExtents16)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32078,6 +33700,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryTextExtents16)
 }
 
 
+/* Module: X11 Function: XQueryTree */
 SYX_FUNC_PRIMITIVE(X11_XQueryTree)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32107,6 +33730,7 @@ SYX_FUNC_PRIMITIVE(X11_XQueryTree)
 }
 
 
+/* Module: X11 Function: XRaiseWindow */
 SYX_FUNC_PRIMITIVE(X11_XRaiseWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32128,6 +33752,7 @@ SYX_FUNC_PRIMITIVE(X11_XRaiseWindow)
 }
 
 
+/* Module: X11 Function: XReadBitmapFile */
 SYX_FUNC_PRIMITIVE(X11_XReadBitmapFile)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32152,11 +33777,11 @@ SYX_FUNC_PRIMITIVE(X11_XReadBitmapFile)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   SWIG_FIRST_SELF(arg4, unsigned int *, es->message_arguments[2])
   SWIG_FIRST_SELF(arg5, unsigned int *, es->message_arguments[3])
@@ -32183,6 +33808,7 @@ SYX_FUNC_PRIMITIVE(X11_XReadBitmapFile)
 }
 
 
+/* Module: X11 Function: XReadBitmapFileData */
 SYX_FUNC_PRIMITIVE(X11_XReadBitmapFileData)
 {
   char *arg1 = (char *) 0 ;
@@ -32197,11 +33823,11 @@ SYX_FUNC_PRIMITIVE(X11_XReadBitmapFileData)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg2, unsigned int *, es->message_arguments[1])
   SWIG_FIRST_SELF(arg3, unsigned int *, es->message_arguments[2])
@@ -32228,6 +33854,7 @@ SYX_FUNC_PRIMITIVE(X11_XReadBitmapFileData)
 }
 
 
+/* Module: X11 Function: XRebindKeysym */
 SYX_FUNC_PRIMITIVE(X11_XRebindKeysym)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32269,6 +33896,7 @@ SYX_FUNC_PRIMITIVE(X11_XRebindKeysym)
 }
 
 
+/* Module: X11 Function: XRecolorCursor */
 SYX_FUNC_PRIMITIVE(X11_XRecolorCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32294,6 +33922,7 @@ SYX_FUNC_PRIMITIVE(X11_XRecolorCursor)
 }
 
 
+/* Module: X11 Function: XRefreshKeyboardMapping */
 SYX_FUNC_PRIMITIVE(X11_XRefreshKeyboardMapping)
 {
   XMappingEvent *arg1 = (XMappingEvent *) 0 ;
@@ -32307,6 +33936,7 @@ SYX_FUNC_PRIMITIVE(X11_XRefreshKeyboardMapping)
 }
 
 
+/* Module: X11 Function: XRemoveFromSaveSet */
 SYX_FUNC_PRIMITIVE(X11_XRemoveFromSaveSet)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32328,6 +33958,7 @@ SYX_FUNC_PRIMITIVE(X11_XRemoveFromSaveSet)
 }
 
 
+/* Module: X11 Function: XRemoveHost */
 SYX_FUNC_PRIMITIVE(X11_XRemoveHost)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32343,6 +33974,7 @@ SYX_FUNC_PRIMITIVE(X11_XRemoveHost)
 }
 
 
+/* Module: X11 Function: XRemoveHosts */
 SYX_FUNC_PRIMITIVE(X11_XRemoveHosts)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32366,6 +33998,7 @@ SYX_FUNC_PRIMITIVE(X11_XRemoveHosts)
 }
 
 
+/* Module: X11 Function: XReparentWindow */
 SYX_FUNC_PRIMITIVE(X11_XReparentWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32411,6 +34044,7 @@ SYX_FUNC_PRIMITIVE(X11_XReparentWindow)
 }
 
 
+/* Module: X11 Function: XResetScreenSaver */
 SYX_FUNC_PRIMITIVE(X11_XResetScreenSaver)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32424,6 +34058,7 @@ SYX_FUNC_PRIMITIVE(X11_XResetScreenSaver)
 }
 
 
+/* Module: X11 Function: XResizeWindow */
 SYX_FUNC_PRIMITIVE(X11_XResizeWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32461,6 +34096,7 @@ SYX_FUNC_PRIMITIVE(X11_XResizeWindow)
 }
 
 
+/* Module: X11 Function: XRestackWindows */
 SYX_FUNC_PRIMITIVE(X11_XRestackWindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32484,6 +34120,7 @@ SYX_FUNC_PRIMITIVE(X11_XRestackWindows)
 }
 
 
+/* Module: X11 Function: XRotateBuffers */
 SYX_FUNC_PRIMITIVE(X11_XRotateBuffers)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32505,6 +34142,7 @@ SYX_FUNC_PRIMITIVE(X11_XRotateBuffers)
 }
 
 
+/* Module: X11 Function: XRotateWindowProperties */
 SYX_FUNC_PRIMITIVE(X11_XRotateWindowProperties)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32544,6 +34182,7 @@ SYX_FUNC_PRIMITIVE(X11_XRotateWindowProperties)
 }
 
 
+/* Module: X11 Function: XScreenCount */
 SYX_FUNC_PRIMITIVE(X11_XScreenCount)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32557,6 +34196,7 @@ SYX_FUNC_PRIMITIVE(X11_XScreenCount)
 }
 
 
+/* Module: X11 Function: XSelectInput */
 SYX_FUNC_PRIMITIVE(X11_XSelectInput)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32586,6 +34226,7 @@ SYX_FUNC_PRIMITIVE(X11_XSelectInput)
 }
 
 
+/* Module: X11 Function: XSendEvent */
 SYX_FUNC_PRIMITIVE(X11_XSendEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32625,6 +34266,7 @@ SYX_FUNC_PRIMITIVE(X11_XSendEvent)
 }
 
 
+/* Module: X11 Function: XSetAccessControl */
 SYX_FUNC_PRIMITIVE(X11_XSetAccessControl)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32646,6 +34288,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetAccessControl)
 }
 
 
+/* Module: X11 Function: XSetArcMode */
 SYX_FUNC_PRIMITIVE(X11_XSetArcMode)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32669,6 +34312,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetArcMode)
 }
 
 
+/* Module: X11 Function: XSetBackground */
 SYX_FUNC_PRIMITIVE(X11_XSetBackground)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32692,6 +34336,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetBackground)
 }
 
 
+/* Module: X11 Function: XSetClipMask */
 SYX_FUNC_PRIMITIVE(X11_XSetClipMask)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32715,6 +34360,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetClipMask)
 }
 
 
+/* Module: X11 Function: XSetClipOrigin */
 SYX_FUNC_PRIMITIVE(X11_XSetClipOrigin)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32746,6 +34392,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetClipOrigin)
 }
 
 
+/* Module: X11 Function: XSetClipRectangles */
 SYX_FUNC_PRIMITIVE(X11_XSetClipRectangles)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32795,6 +34442,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetClipRectangles)
 }
 
 
+/* Module: X11 Function: XSetCloseDownMode */
 SYX_FUNC_PRIMITIVE(X11_XSetCloseDownMode)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32816,6 +34464,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetCloseDownMode)
 }
 
 
+/* Module: X11 Function: XSetCommand */
 SYX_FUNC_PRIMITIVE(X11_XSetCommand)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32835,7 +34484,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetCommand)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  temp3 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  temp3 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   arg3 = &temp3;
   
   
@@ -32858,6 +34507,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetCommand)
 }
 
 
+/* Module: X11 Function: XSetDashes */
 SYX_FUNC_PRIMITIVE(X11_XSetDashes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32878,11 +34528,11 @@ SYX_FUNC_PRIMITIVE(X11_XSetDashes)
   arg3 = SYX_SMALL_INTEGER(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[3]))
@@ -32897,6 +34547,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetDashes)
 }
 
 
+/* Module: X11 Function: XSetFillRule */
 SYX_FUNC_PRIMITIVE(X11_XSetFillRule)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32920,6 +34571,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFillRule)
 }
 
 
+/* Module: X11 Function: XSetFillStyle */
 SYX_FUNC_PRIMITIVE(X11_XSetFillStyle)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32943,6 +34595,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFillStyle)
 }
 
 
+/* Module: X11 Function: XSetFont */
 SYX_FUNC_PRIMITIVE(X11_XSetFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32966,6 +34619,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFont)
 }
 
 
+/* Module: X11 Function: XSetFontPath */
 SYX_FUNC_PRIMITIVE(X11_XSetFontPath)
 {
   Display *arg1 = (Display *) 0 ;
@@ -32977,7 +34631,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFontPath)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  temp2 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  temp2 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   arg2 = &temp2;
   
   
@@ -33000,6 +34654,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFontPath)
 }
 
 
+/* Module: X11 Function: XSetForeground */
 SYX_FUNC_PRIMITIVE(X11_XSetForeground)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33023,6 +34678,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetForeground)
 }
 
 
+/* Module: X11 Function: XSetFunction */
 SYX_FUNC_PRIMITIVE(X11_XSetFunction)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33046,6 +34702,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetFunction)
 }
 
 
+/* Module: X11 Function: XSetGraphicsExposures */
 SYX_FUNC_PRIMITIVE(X11_XSetGraphicsExposures)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33069,6 +34726,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetGraphicsExposures)
 }
 
 
+/* Module: X11 Function: XSetIconName */
 SYX_FUNC_PRIMITIVE(X11_XSetIconName)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33086,11 +34744,11 @@ SYX_FUNC_PRIMITIVE(X11_XSetIconName)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   result = (int)XSetIconName(arg1,arg2,(char const *)arg3);
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
@@ -33098,6 +34756,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetIconName)
 }
 
 
+/* Module: X11 Function: XSetInputFocus */
 SYX_FUNC_PRIMITIVE(X11_XSetInputFocus)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33135,6 +34794,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetInputFocus)
 }
 
 
+/* Module: X11 Function: XSetLineAttributes */
 SYX_FUNC_PRIMITIVE(X11_XSetLineAttributes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33182,6 +34842,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetLineAttributes)
 }
 
 
+/* Module: X11 Function: XSetModifierMapping */
 SYX_FUNC_PRIMITIVE(X11_XSetModifierMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33197,6 +34858,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetModifierMapping)
 }
 
 
+/* Module: X11 Function: XSetPlaneMask */
 SYX_FUNC_PRIMITIVE(X11_XSetPlaneMask)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33220,6 +34882,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetPlaneMask)
 }
 
 
+/* Module: X11 Function: XSetPointerMapping */
 SYX_FUNC_PRIMITIVE(X11_XSetPointerMapping)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33243,6 +34906,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetPointerMapping)
 }
 
 
+/* Module: X11 Function: XSetScreenSaver */
 SYX_FUNC_PRIMITIVE(X11_XSetScreenSaver)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33288,6 +34952,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetScreenSaver)
 }
 
 
+/* Module: X11 Function: XSetSelectionOwner */
 SYX_FUNC_PRIMITIVE(X11_XSetSelectionOwner)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33325,6 +34990,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetSelectionOwner)
 }
 
 
+/* Module: X11 Function: XSetState */
 SYX_FUNC_PRIMITIVE(X11_XSetState)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33372,6 +35038,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetState)
 }
 
 
+/* Module: X11 Function: XSetStipple */
 SYX_FUNC_PRIMITIVE(X11_XSetStipple)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33395,6 +35062,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetStipple)
 }
 
 
+/* Module: X11 Function: XSetSubwindowMode */
 SYX_FUNC_PRIMITIVE(X11_XSetSubwindowMode)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33418,6 +35086,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetSubwindowMode)
 }
 
 
+/* Module: X11 Function: XSetTSOrigin */
 SYX_FUNC_PRIMITIVE(X11_XSetTSOrigin)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33449,6 +35118,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetTSOrigin)
 }
 
 
+/* Module: X11 Function: XSetTile */
 SYX_FUNC_PRIMITIVE(X11_XSetTile)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33472,6 +35142,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetTile)
 }
 
 
+/* Module: X11 Function: XSetWindowBackground */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowBackground)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33501,6 +35172,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowBackground)
 }
 
 
+/* Module: X11 Function: XSetWindowBackgroundPixmap */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowBackgroundPixmap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33530,6 +35202,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowBackgroundPixmap)
 }
 
 
+/* Module: X11 Function: XSetWindowBorder */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowBorder)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33559,6 +35232,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowBorder)
 }
 
 
+/* Module: X11 Function: XSetWindowBorderPixmap */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowBorderPixmap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33588,6 +35262,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowBorderPixmap)
 }
 
 
+/* Module: X11 Function: XSetWindowBorderWidth */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowBorderWidth)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33617,6 +35292,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowBorderWidth)
 }
 
 
+/* Module: X11 Function: XSetWindowColormap */
 SYX_FUNC_PRIMITIVE(X11_XSetWindowColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33646,6 +35322,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetWindowColormap)
 }
 
 
+/* Module: X11 Function: XStoreBuffer */
 SYX_FUNC_PRIMITIVE(X11_XStoreBuffer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33657,11 +35334,11 @@ SYX_FUNC_PRIMITIVE(X11_XStoreBuffer)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -33683,6 +35360,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreBuffer)
 }
 
 
+/* Module: X11 Function: XStoreBytes */
 SYX_FUNC_PRIMITIVE(X11_XStoreBytes)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33693,11 +35371,11 @@ SYX_FUNC_PRIMITIVE(X11_XStoreBytes)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -33712,6 +35390,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreBytes)
 }
 
 
+/* Module: X11 Function: XStoreColor */
 SYX_FUNC_PRIMITIVE(X11_XStoreColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33735,6 +35414,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreColor)
 }
 
 
+/* Module: X11 Function: XStoreColors */
 SYX_FUNC_PRIMITIVE(X11_XStoreColors)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33766,6 +35446,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreColors)
 }
 
 
+/* Module: X11 Function: XStoreName */
 SYX_FUNC_PRIMITIVE(X11_XStoreName)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33783,11 +35464,11 @@ SYX_FUNC_PRIMITIVE(X11_XStoreName)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   result = (int)XStoreName(arg1,arg2,(char const *)arg3);
   SWIG_APPEND_VALUE (syx_small_integer_new(result));
@@ -33795,6 +35476,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreName)
 }
 
 
+/* Module: X11 Function: XStoreNamedColor */
 SYX_FUNC_PRIMITIVE(X11_XStoreNamedColor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33814,11 +35496,11 @@ SYX_FUNC_PRIMITIVE(X11_XStoreNamedColor)
   arg2 = SYX_SMALL_INTEGER(es->message_arguments[0]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -33840,6 +35522,7 @@ SYX_FUNC_PRIMITIVE(X11_XStoreNamedColor)
 }
 
 
+/* Module: X11 Function: XSync */
 SYX_FUNC_PRIMITIVE(X11_XSync)
 {
   Display *arg1 = (Display *) 0 ;
@@ -33861,6 +35544,7 @@ SYX_FUNC_PRIMITIVE(X11_XSync)
 }
 
 
+/* Module: X11 Function: XTextExtents */
 SYX_FUNC_PRIMITIVE(X11_XTextExtents)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -33878,11 +35562,11 @@ SYX_FUNC_PRIMITIVE(X11_XTextExtents)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -33919,6 +35603,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextExtents)
 }
 
 
+/* Module: X11 Function: XTextExtents16 */
 SYX_FUNC_PRIMITIVE(X11_XTextExtents16)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -33971,6 +35656,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextExtents16)
 }
 
 
+/* Module: X11 Function: XTextWidth */
 SYX_FUNC_PRIMITIVE(X11_XTextWidth)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -33981,11 +35667,11 @@ SYX_FUNC_PRIMITIVE(X11_XTextWidth)
   
   SWIG_FIRST_SELF(arg1, XFontStruct *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -34000,6 +35686,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextWidth)
 }
 
 
+/* Module: X11 Function: XTextWidth16 */
 SYX_FUNC_PRIMITIVE(X11_XTextWidth16)
 {
   XFontStruct *arg1 = (XFontStruct *) 0 ;
@@ -34023,6 +35710,7 @@ SYX_FUNC_PRIMITIVE(X11_XTextWidth16)
 }
 
 
+/* Module: X11 Function: XTranslateCoordinates */
 SYX_FUNC_PRIMITIVE(X11_XTranslateCoordinates)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34090,6 +35778,7 @@ SYX_FUNC_PRIMITIVE(X11_XTranslateCoordinates)
 }
 
 
+/* Module: X11 Function: XUndefineCursor */
 SYX_FUNC_PRIMITIVE(X11_XUndefineCursor)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34111,6 +35800,7 @@ SYX_FUNC_PRIMITIVE(X11_XUndefineCursor)
 }
 
 
+/* Module: X11 Function: XUngrabButton */
 SYX_FUNC_PRIMITIVE(X11_XUngrabButton)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34148,6 +35838,7 @@ SYX_FUNC_PRIMITIVE(X11_XUngrabButton)
 }
 
 
+/* Module: X11 Function: XUngrabKey */
 SYX_FUNC_PRIMITIVE(X11_XUngrabKey)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34185,6 +35876,7 @@ SYX_FUNC_PRIMITIVE(X11_XUngrabKey)
 }
 
 
+/* Module: X11 Function: XUngrabKeyboard */
 SYX_FUNC_PRIMITIVE(X11_XUngrabKeyboard)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34206,6 +35898,7 @@ SYX_FUNC_PRIMITIVE(X11_XUngrabKeyboard)
 }
 
 
+/* Module: X11 Function: XUngrabPointer */
 SYX_FUNC_PRIMITIVE(X11_XUngrabPointer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34227,6 +35920,7 @@ SYX_FUNC_PRIMITIVE(X11_XUngrabPointer)
 }
 
 
+/* Module: X11 Function: XUngrabServer */
 SYX_FUNC_PRIMITIVE(X11_XUngrabServer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34240,6 +35934,7 @@ SYX_FUNC_PRIMITIVE(X11_XUngrabServer)
 }
 
 
+/* Module: X11 Function: XUninstallColormap */
 SYX_FUNC_PRIMITIVE(X11_XUninstallColormap)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34261,6 +35956,7 @@ SYX_FUNC_PRIMITIVE(X11_XUninstallColormap)
 }
 
 
+/* Module: X11 Function: XUnloadFont */
 SYX_FUNC_PRIMITIVE(X11_XUnloadFont)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34282,6 +35978,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnloadFont)
 }
 
 
+/* Module: X11 Function: XUnmapSubwindows */
 SYX_FUNC_PRIMITIVE(X11_XUnmapSubwindows)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34303,6 +36000,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapSubwindows)
 }
 
 
+/* Module: X11 Function: XUnmapWindow */
 SYX_FUNC_PRIMITIVE(X11_XUnmapWindow)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34324,6 +36022,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnmapWindow)
 }
 
 
+/* Module: X11 Function: XVendorRelease */
 SYX_FUNC_PRIMITIVE(X11_XVendorRelease)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34337,6 +36036,7 @@ SYX_FUNC_PRIMITIVE(X11_XVendorRelease)
 }
 
 
+/* Module: X11 Function: XWarpPointer */
 SYX_FUNC_PRIMITIVE(X11_XWarpPointer)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34414,6 +36114,7 @@ SYX_FUNC_PRIMITIVE(X11_XWarpPointer)
 }
 
 
+/* Module: X11 Function: XWidthMMOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XWidthMMOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -34427,6 +36128,7 @@ SYX_FUNC_PRIMITIVE(X11_XWidthMMOfScreen)
 }
 
 
+/* Module: X11 Function: XWidthOfScreen */
 SYX_FUNC_PRIMITIVE(X11_XWidthOfScreen)
 {
   Screen *arg1 = (Screen *) 0 ;
@@ -34440,6 +36142,7 @@ SYX_FUNC_PRIMITIVE(X11_XWidthOfScreen)
 }
 
 
+/* Module: X11 Function: XWindowEvent */
 SYX_FUNC_PRIMITIVE(X11_XWindowEvent)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34471,6 +36174,7 @@ SYX_FUNC_PRIMITIVE(X11_XWindowEvent)
 }
 
 
+/* Module: X11 Function: XWriteBitmapFile */
 SYX_FUNC_PRIMITIVE(X11_XWriteBitmapFile)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34485,11 +36189,11 @@ SYX_FUNC_PRIMITIVE(X11_XWriteBitmapFile)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -34532,6 +36236,7 @@ SYX_FUNC_PRIMITIVE(X11_XWriteBitmapFile)
 }
 
 
+/* Module: X11 Function: XSupportsLocale */
 SYX_FUNC_PRIMITIVE(X11_XSupportsLocale)
 {
   Bool result;
@@ -34543,6 +36248,7 @@ SYX_FUNC_PRIMITIVE(X11_XSupportsLocale)
 }
 
 
+/* Module: X11 Function: XSetLocaleModifiers */
 SYX_FUNC_PRIMITIVE(X11_XSetLocaleModifiers)
 {
   char *arg1 = (char *) 0 ;
@@ -34550,11 +36256,11 @@ SYX_FUNC_PRIMITIVE(X11_XSetLocaleModifiers)
   SyxOop result_oop;
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg1 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg1 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   result = (char *)XSetLocaleModifiers((char const *)arg1);
   SWIG_APPEND_VALUE (syx_string_new(result));
@@ -34562,6 +36268,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetLocaleModifiers)
 }
 
 
+/* Module: X11 Function: XOpenOM */
 SYX_FUNC_PRIMITIVE(X11_XOpenOM)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34574,18 +36281,18 @@ SYX_FUNC_PRIMITIVE(X11_XOpenOM)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XrmHashBucketRec *, es->message_arguments[0])
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   result = (XOM)XOpenOM(arg1,arg2,(char const *)arg3,(char const *)arg4);
   SWIG_APPEND_VALUE ((SyxOop) result);
@@ -34593,6 +36300,7 @@ SYX_FUNC_PRIMITIVE(X11_XOpenOM)
 }
 
 
+/* Module: X11 Function: XCloseOM */
 SYX_FUNC_PRIMITIVE(X11_XCloseOM)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34606,6 +36314,7 @@ SYX_FUNC_PRIMITIVE(X11_XCloseOM)
 }
 
 
+/* Module: X11 Function: XSetOMValues */
 SYX_FUNC_PRIMITIVE(X11_XSetOMValues)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34620,6 +36329,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetOMValues)
 }
 
 
+/* Module: X11 Function: XGetOMValues */
 SYX_FUNC_PRIMITIVE(X11_XGetOMValues)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34634,6 +36344,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetOMValues)
 }
 
 
+/* Module: X11 Function: XDisplayOfOM */
 SYX_FUNC_PRIMITIVE(X11_XDisplayOfOM)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34647,6 +36358,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayOfOM)
 }
 
 
+/* Module: X11 Function: XLocaleOfOM */
 SYX_FUNC_PRIMITIVE(X11_XLocaleOfOM)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34660,6 +36372,7 @@ SYX_FUNC_PRIMITIVE(X11_XLocaleOfOM)
 }
 
 
+/* Module: X11 Function: XCreateOC */
 SYX_FUNC_PRIMITIVE(X11_XCreateOC)
 {
   XOM arg1 = (XOM) 0 ;
@@ -34674,6 +36387,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateOC)
 }
 
 
+/* Module: X11 Function: XDestroyOC */
 SYX_FUNC_PRIMITIVE(X11_XDestroyOC)
 {
   XOC arg1 = (XOC) 0 ;
@@ -34686,6 +36400,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyOC)
 }
 
 
+/* Module: X11 Function: XOMOfOC */
 SYX_FUNC_PRIMITIVE(X11_XOMOfOC)
 {
   XOC arg1 = (XOC) 0 ;
@@ -34699,6 +36414,7 @@ SYX_FUNC_PRIMITIVE(X11_XOMOfOC)
 }
 
 
+/* Module: X11 Function: XSetOCValues */
 SYX_FUNC_PRIMITIVE(X11_XSetOCValues)
 {
   XOC arg1 = (XOC) 0 ;
@@ -34713,6 +36429,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetOCValues)
 }
 
 
+/* Module: X11 Function: XGetOCValues */
 SYX_FUNC_PRIMITIVE(X11_XGetOCValues)
 {
   XOC arg1 = (XOC) 0 ;
@@ -34727,6 +36444,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetOCValues)
 }
 
 
+/* Module: X11 Function: XCreateFontSet */
 SYX_FUNC_PRIMITIVE(X11_XCreateFontSet)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34741,11 +36459,11 @@ SYX_FUNC_PRIMITIVE(X11_XCreateFontSet)
   
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   SWIG_FIRST_SELF(arg3, char ***, es->message_arguments[1])
   
@@ -34753,7 +36471,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateFontSet)
   arg4 = &temp4;
   
   
-  temp5 = (char *) SYX_OBJECT_NIL_OR_STRING(es->message_arguments[3]);
+  temp5 = (char *) SWIG_SYX_OBJECT_STRING(es->message_arguments[3]);
   arg5 = &temp5;
   
 #undef SWIG_APPEND_VALUE
@@ -34770,6 +36488,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateFontSet)
 }
 
 
+/* Module: X11 Function: XFreeFontSet */
 SYX_FUNC_PRIMITIVE(X11_XFreeFontSet)
 {
   Display *arg1 = (Display *) 0 ;
@@ -34784,6 +36503,7 @@ SYX_FUNC_PRIMITIVE(X11_XFreeFontSet)
 }
 
 
+/* Module: X11 Function: XFontsOfFontSet */
 SYX_FUNC_PRIMITIVE(X11_XFontsOfFontSet)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34801,6 +36521,7 @@ SYX_FUNC_PRIMITIVE(X11_XFontsOfFontSet)
 }
 
 
+/* Module: X11 Function: XBaseFontNameListOfFontSet */
 SYX_FUNC_PRIMITIVE(X11_XBaseFontNameListOfFontSet)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34814,6 +36535,7 @@ SYX_FUNC_PRIMITIVE(X11_XBaseFontNameListOfFontSet)
 }
 
 
+/* Module: X11 Function: XLocaleOfFontSet */
 SYX_FUNC_PRIMITIVE(X11_XLocaleOfFontSet)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34827,6 +36549,7 @@ SYX_FUNC_PRIMITIVE(X11_XLocaleOfFontSet)
 }
 
 
+/* Module: X11 Function: XContextDependentDrawing */
 SYX_FUNC_PRIMITIVE(X11_XContextDependentDrawing)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34840,6 +36563,7 @@ SYX_FUNC_PRIMITIVE(X11_XContextDependentDrawing)
 }
 
 
+/* Module: X11 Function: XDirectionalDependentDrawing */
 SYX_FUNC_PRIMITIVE(X11_XDirectionalDependentDrawing)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34853,6 +36577,7 @@ SYX_FUNC_PRIMITIVE(X11_XDirectionalDependentDrawing)
 }
 
 
+/* Module: X11 Function: XContextualDrawing */
 SYX_FUNC_PRIMITIVE(X11_XContextualDrawing)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34866,6 +36591,7 @@ SYX_FUNC_PRIMITIVE(X11_XContextualDrawing)
 }
 
 
+/* Module: X11 Function: XExtentsOfFontSet */
 SYX_FUNC_PRIMITIVE(X11_XExtentsOfFontSet)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34879,6 +36605,7 @@ SYX_FUNC_PRIMITIVE(X11_XExtentsOfFontSet)
 }
 
 
+/* Module: X11 Function: XmbTextEscapement */
 SYX_FUNC_PRIMITIVE(X11_XmbTextEscapement)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34889,11 +36616,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextEscapement)
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -34908,6 +36635,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextEscapement)
 }
 
 
+/* Module: X11 Function: XwcTextEscapement */
 SYX_FUNC_PRIMITIVE(X11_XwcTextEscapement)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34931,6 +36659,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextEscapement)
 }
 
 
+/* Module: X11 Function: XmbTextExtents */
 SYX_FUNC_PRIMITIVE(X11_XmbTextExtents)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34943,11 +36672,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextExtents)
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -34964,6 +36693,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextExtents)
 }
 
 
+/* Module: X11 Function: XwcTextExtents */
 SYX_FUNC_PRIMITIVE(X11_XwcTextExtents)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -34991,6 +36721,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextExtents)
 }
 
 
+/* Module: X11 Function: XmbTextPerCharExtents */
 SYX_FUNC_PRIMITIVE(X11_XmbTextPerCharExtents)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -35008,11 +36739,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextPerCharExtents)
   
   SWIG_FIRST_SELF(arg1, XFontSet, es->message_receiver)
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[0]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg2 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[0]);
+  arg2 = SWIG_SYX_OBJECT_STRING(es->message_arguments[0]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[1]))
@@ -35049,6 +36780,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbTextPerCharExtents)
 }
 
 
+/* Module: X11 Function: XwcTextPerCharExtents */
 SYX_FUNC_PRIMITIVE(X11_XwcTextPerCharExtents)
 {
   XFontSet arg1 = (XFontSet) 0 ;
@@ -35101,6 +36833,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcTextPerCharExtents)
 }
 
 
+/* Module: X11 Function: XmbDrawText */
 SYX_FUNC_PRIMITIVE(X11_XmbDrawText)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35149,6 +36882,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbDrawText)
 }
 
 
+/* Module: X11 Function: XwcDrawText */
 SYX_FUNC_PRIMITIVE(X11_XwcDrawText)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35197,6 +36931,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcDrawText)
 }
 
 
+/* Module: X11 Function: XmbDrawString */
 SYX_FUNC_PRIMITIVE(X11_XmbDrawString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35234,11 +36969,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbDrawString)
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[5]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[5]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg7 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[5]);
+  arg7 = SWIG_SYX_OBJECT_STRING(es->message_arguments[5]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[6]))
@@ -35253,6 +36988,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbDrawString)
 }
 
 
+/* Module: X11 Function: XwcDrawString */
 SYX_FUNC_PRIMITIVE(X11_XwcDrawString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35303,6 +37039,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcDrawString)
 }
 
 
+/* Module: X11 Function: XmbDrawImageString */
 SYX_FUNC_PRIMITIVE(X11_XmbDrawImageString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35340,11 +37077,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbDrawImageString)
   arg6 = SYX_SMALL_INTEGER(es->message_arguments[4]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[5]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[5]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg7 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[5]);
+  arg7 = SWIG_SYX_OBJECT_STRING(es->message_arguments[5]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[6]))
@@ -35359,6 +37096,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbDrawImageString)
 }
 
 
+/* Module: X11 Function: XwcDrawImageString */
 SYX_FUNC_PRIMITIVE(X11_XwcDrawImageString)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35409,6 +37147,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcDrawImageString)
 }
 
 
+/* Module: X11 Function: XOpenIM */
 SYX_FUNC_PRIMITIVE(X11_XOpenIM)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35421,18 +37160,18 @@ SYX_FUNC_PRIMITIVE(X11_XOpenIM)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XrmHashBucketRec *, es->message_arguments[0])
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   result = (XIM)XOpenIM(arg1,arg2,arg3,arg4);
   SWIG_APPEND_VALUE ((SyxOop) result);
@@ -35440,6 +37179,7 @@ SYX_FUNC_PRIMITIVE(X11_XOpenIM)
 }
 
 
+/* Module: X11 Function: XCloseIM */
 SYX_FUNC_PRIMITIVE(X11_XCloseIM)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35453,6 +37193,7 @@ SYX_FUNC_PRIMITIVE(X11_XCloseIM)
 }
 
 
+/* Module: X11 Function: XGetIMValues */
 SYX_FUNC_PRIMITIVE(X11_XGetIMValues)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35467,6 +37208,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetIMValues)
 }
 
 
+/* Module: X11 Function: XSetIMValues */
 SYX_FUNC_PRIMITIVE(X11_XSetIMValues)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35481,6 +37223,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetIMValues)
 }
 
 
+/* Module: X11 Function: XDisplayOfIM */
 SYX_FUNC_PRIMITIVE(X11_XDisplayOfIM)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35494,6 +37237,7 @@ SYX_FUNC_PRIMITIVE(X11_XDisplayOfIM)
 }
 
 
+/* Module: X11 Function: XLocaleOfIM */
 SYX_FUNC_PRIMITIVE(X11_XLocaleOfIM)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35507,6 +37251,7 @@ SYX_FUNC_PRIMITIVE(X11_XLocaleOfIM)
 }
 
 
+/* Module: X11 Function: XCreateIC */
 SYX_FUNC_PRIMITIVE(X11_XCreateIC)
 {
   XIM arg1 = (XIM) 0 ;
@@ -35521,6 +37266,7 @@ SYX_FUNC_PRIMITIVE(X11_XCreateIC)
 }
 
 
+/* Module: X11 Function: XDestroyIC */
 SYX_FUNC_PRIMITIVE(X11_XDestroyIC)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35533,6 +37279,7 @@ SYX_FUNC_PRIMITIVE(X11_XDestroyIC)
 }
 
 
+/* Module: X11 Function: XSetICFocus */
 SYX_FUNC_PRIMITIVE(X11_XSetICFocus)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35545,6 +37292,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetICFocus)
 }
 
 
+/* Module: X11 Function: XUnsetICFocus */
 SYX_FUNC_PRIMITIVE(X11_XUnsetICFocus)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35557,6 +37305,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnsetICFocus)
 }
 
 
+/* Module: X11 Function: XwcResetIC */
 SYX_FUNC_PRIMITIVE(X11_XwcResetIC)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35570,6 +37319,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcResetIC)
 }
 
 
+/* Module: X11 Function: XmbResetIC */
 SYX_FUNC_PRIMITIVE(X11_XmbResetIC)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35583,6 +37333,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbResetIC)
 }
 
 
+/* Module: X11 Function: XSetICValues */
 SYX_FUNC_PRIMITIVE(X11_XSetICValues)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35597,6 +37348,7 @@ SYX_FUNC_PRIMITIVE(X11_XSetICValues)
 }
 
 
+/* Module: X11 Function: XGetICValues */
 SYX_FUNC_PRIMITIVE(X11_XGetICValues)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35611,6 +37363,7 @@ SYX_FUNC_PRIMITIVE(X11_XGetICValues)
 }
 
 
+/* Module: X11 Function: XIMOfIC */
 SYX_FUNC_PRIMITIVE(X11_XIMOfIC)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35624,6 +37377,7 @@ SYX_FUNC_PRIMITIVE(X11_XIMOfIC)
 }
 
 
+/* Module: X11 Function: XFilterEvent */
 SYX_FUNC_PRIMITIVE(X11_XFilterEvent)
 {
   XEvent *arg1 = (XEvent *) 0 ;
@@ -35645,6 +37399,7 @@ SYX_FUNC_PRIMITIVE(X11_XFilterEvent)
 }
 
 
+/* Module: X11 Function: XmbLookupString */
 SYX_FUNC_PRIMITIVE(X11_XmbLookupString)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35659,11 +37414,11 @@ SYX_FUNC_PRIMITIVE(X11_XmbLookupString)
   SWIG_FIRST_SELF(arg1, XIC, es->message_receiver)
   SWIG_FIRST_SELF(arg2, XKeyPressedEvent *, es->message_arguments[0])
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
   if (!SYX_IS_SMALL_INTEGER(es->message_arguments[2]))
@@ -35680,6 +37435,7 @@ SYX_FUNC_PRIMITIVE(X11_XmbLookupString)
 }
 
 
+/* Module: X11 Function: XwcLookupString */
 SYX_FUNC_PRIMITIVE(X11_XwcLookupString)
 {
   XIC arg1 = (XIC) 0 ;
@@ -35709,6 +37465,7 @@ SYX_FUNC_PRIMITIVE(X11_XwcLookupString)
 }
 
 
+/* Module: X11 Function: XVaCreateNestedList */
 SYX_FUNC_PRIMITIVE(X11_XVaCreateNestedList)
 {
   int arg1 ;
@@ -35729,6 +37486,7 @@ SYX_FUNC_PRIMITIVE(X11_XVaCreateNestedList)
 }
 
 
+/* Module: X11 Function: XRegisterIMInstantiateCallback */
 SYX_FUNC_PRIMITIVE(X11_XRegisterIMInstantiateCallback)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35743,18 +37501,18 @@ SYX_FUNC_PRIMITIVE(X11_XRegisterIMInstantiateCallback)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XrmHashBucketRec *, es->message_arguments[0])
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
@@ -35764,6 +37522,7 @@ SYX_FUNC_PRIMITIVE(X11_XRegisterIMInstantiateCallback)
 }
 
 
+/* Module: X11 Function: XUnregisterIMInstantiateCallback */
 SYX_FUNC_PRIMITIVE(X11_XUnregisterIMInstantiateCallback)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35778,18 +37537,18 @@ SYX_FUNC_PRIMITIVE(X11_XUnregisterIMInstantiateCallback)
   SWIG_FIRST_SELF(arg1, Display *, es->message_receiver)
   SWIG_FIRST_SELF(arg2, struct _XrmHashBucketRec *, es->message_arguments[0])
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[1]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg3 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[1]);
+  arg3 = SWIG_SYX_OBJECT_STRING(es->message_arguments[1]);
   
   
-  if (!SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
+  if (!SWIG_SYX_OBJECT_IS_NIL_OR_STRING(es->message_arguments[2]))
   {
     SYX_PRIM_FAIL;
   }	   
-  arg4 = SYX_OBJECT_NIL_OR_STRING(es->message_arguments[2]);
+  arg4 = SWIG_SYX_OBJECT_STRING(es->message_arguments[2]);
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
@@ -35799,6 +37558,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnregisterIMInstantiateCallback)
 }
 
 
+/* Module: X11 Function: XInternalConnectionNumbers */
 SYX_FUNC_PRIMITIVE(X11_XInternalConnectionNumbers)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35827,6 +37587,7 @@ SYX_FUNC_PRIMITIVE(X11_XInternalConnectionNumbers)
 }
 
 
+/* Module: X11 Function: XProcessInternalConnection */
 SYX_FUNC_PRIMITIVE(X11_XProcessInternalConnection)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35847,6 +37608,7 @@ SYX_FUNC_PRIMITIVE(X11_XProcessInternalConnection)
 }
 
 
+/* Module: X11 Function: XAddConnectionWatch */
 SYX_FUNC_PRIMITIVE(X11_XAddConnectionWatch)
 {
   Display *arg1 = (Display *) 0 ;
@@ -35864,6 +37626,7 @@ SYX_FUNC_PRIMITIVE(X11_XAddConnectionWatch)
 }
 
 
+/* Module: X11 Function: XRemoveConnectionWatch */
 SYX_FUNC_PRIMITIVE(X11_XRemoveConnectionWatch)
 {
   Display *arg1 = (Display *) 0 ;

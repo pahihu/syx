@@ -1,5 +1,9 @@
 2008-06-01  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/x11/Xlib_wrap.c: regenerated for comments and new SWIG macros
+
+	* plugins/x11/geninterface.sh: added
+
 	* plugins/gtk/gtk_wrap.c: added comments and removed Gdk threading
 
 	* plugins/gtk/gobject.i: ignore non-public API
