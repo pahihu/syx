@@ -1,1 +1,1 @@
-EXTRA_DIST = SConscript Wm.st
+EXTRA_DIST = SConscript Wm.st startx.sh xclient.sh

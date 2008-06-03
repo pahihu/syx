@@ -1,6 +1,6 @@
-SYX_OTHER_CFLAGS += -ansi -pedantic
+SYX_OTHER_CFLAGS	+= -ansi -pedantic
 
-EXTRA_DIST = SConscript
+EXTRA_DIST		= SConscript
 
 INCLUDES		=	\
 	-I$(top_srcdir) 	\

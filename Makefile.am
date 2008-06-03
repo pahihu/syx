@@ -6,7 +6,7 @@ dist_stforeigndata_DATA = st/foreign/*.st
 EXTRA_DIST =						\
 	autogen.sh Doxyfile README-BINARIES SConstruct	\
 	syx.sln syx.vcproj makefile.vc			\
-	doc/html/extras/footer.html
+	INSTALL-SCONS msvc/syx-config.h	scripts/excm.py
 
 CLEANFILES	= syx.pc
 

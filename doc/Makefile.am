@@ -13,6 +13,9 @@ pdf_docs		= manual/syx.pdf
 
 man1_MANS		= manpage/syx.1
 
+EXTRA_DIST		= reference/html/extras/footer.html manpage/syx.1	\
+			$(syx_TEXINFOS)
+
 .texi.info:
 	$(MAKEINFO) $<
 
