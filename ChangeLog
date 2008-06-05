@@ -1,5 +1,7 @@
 2008-06-04  Luca Bruno  <lethalman88@gmail.com>
 
+	* plugins/wingui/plugin-init.c (WndProcedure): fixed for new interpreter
+
 	* st/kernel/FileStream.st (handle): added
 
 	* st/kernel/Semaphore.st (waitForWrite, waitForRead): directly use the handle
