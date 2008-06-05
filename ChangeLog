@@ -1,3 +1,11 @@
+2008-06-04  Luca Bruno  <lethalman88@gmail.com>
+
+	* st/kernel/FileStream.st (handle): added
+
+	* st/kernel/Semaphore.st (waitForWrite, waitForRead): directly use the handle
+
+	* syx/syx-primitives.c (Semaphore_waitFor): explicitely use GetStdHandle
+
 2008-06-02  Luca Bruno  <lethalman88@gmail.com>
 
 	* plugins/readline/SConscript: on some systems -lsyx is required for building plugins with SCons

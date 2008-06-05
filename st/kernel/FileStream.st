@@ -145,6 +145,10 @@ fileOp: anInteger on: fileHandle with: anArgument
 
 !FileStream methodsFor: 'private'!
 
+handle
+    ^handle
+!
+
 nextPutBuffer: aByteArray
     | pos |
     pos := curPos + 1.

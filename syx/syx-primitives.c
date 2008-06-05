@@ -523,9 +523,21 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
   SYX_PRIM_ARGS(2);
 
 #ifdef WINDOWS
-  fd = _get_osfhandle (SYX_SMALL_INTEGER (es->message_arguments[0]));
+  fd = es->message_arguments[0];
+  switch (fd)
+    {
+    case stdin:
+      fd = GetStdHandle (0);
+      break;
+    case stdout:
+      fd = GetStdHandle (1);
+      break;
+    case stderr:
+      fd = GetStdHandle (2);
+      break;
+    }
 #else
-  fd = SYX_SMALL_INTEGER (es->message_arguments[0]);
+  fd = fileno ((FILE *)es->message_arguments[0]);
 #endif /* WINDOWS */
   t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
