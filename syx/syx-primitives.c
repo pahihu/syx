@@ -53,6 +53,10 @@
 #include <gmp.h>
 #endif
 
+#ifdef HAVE_WINDOWS_H
+#include <windows.h>
+#endif
+
 /* Prototype of the interpreter function for creating frames without using contexts */
 void _syx_interp_save_process_state (void);
 void _syx_interp_frame_prepare_new_closure (SyxInterpState *state, SyxOop closure);
@@ -524,21 +528,16 @@ SYX_FUNC_PRIMITIVE (Semaphore_waitFor)
 
 #ifdef WINDOWS
   fd = es->message_arguments[0];
-  switch (fd)
-    {
-    case stdin:
-      fd = GetStdHandle (0);
-      break;
-    case stdout:
-      fd = GetStdHandle (1);
-      break;
-    case stderr:
-      fd = GetStdHandle (2);
-      break;
-    }
+  if (fd == (syx_nint)stdin)
+    fd = (syx_nint)GetStdHandle (STD_INPUT_HANDLE);
+  else if (fd == (syx_nint)stdout)
+    fd = (syx_nint)GetStdHandle (STD_OUTPUT_HANDLE);
+  else if (fd == (syx_nint)stderr)
+    fd = (syx_nint)GetStdHandle (STD_ERROR_HANDLE);
 #else
   fd = fileno ((FILE *)es->message_arguments[0]);
 #endif /* WINDOWS */
+
   t = SYX_IS_TRUE (es->message_arguments[1]);
   syx_semaphore_wait (es->message_receiver);
   if (t == syx_true)
