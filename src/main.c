@@ -168,9 +168,7 @@ arg_enum_from_name (int argc, const char **argv, const char **arg_val)
 static void
 _parse_args (int argc, char **argv)
 {
-#ifndef WINCE
   SyxOop process, context;
-#endif
   syx_bool init;
   syx_string root_path = NULL;
   syx_string image_path = NULL;
@@ -256,14 +254,14 @@ _parse_args (int argc, char **argv)
       /* Force WinWorkspace startup on WinCE */
 #ifdef WINCE
       SYX_OBJECT_VARS(syx_globals)[4] = syx_globals_at ("WinWorkspace");
-#else
+#endif
+
       /* Now schedule to startup */
       process = syx_process_new ();
       context = syx_send_unary_message (syx_globals, "startupSystem");
       syx_interp_enter_context (process, context);
       SYX_PROCESS_SUSPENDED (process) = syx_false;
       SYX_OBJECT_VARS(syx_globals)[3] = process;
-#endif /* WINCE */
     }
 }
 
