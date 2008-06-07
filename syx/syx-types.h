@@ -149,9 +149,9 @@ typedef syx_nint SyxOop;
 
 
 /*! TRUE if an overflow occurs when doing b times a */
-extern EXPORT syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
+EXPORT syx_bool SYX_SMALL_INTEGER_MUL_OVERFLOW (syx_int32 a, syx_int32 b);
 /*! TRUE if an overflow occurs when shifting a on the left by b */
-extern EXPORT syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
+EXPORT syx_bool SYX_SMALL_INTEGER_SHIFT_OVERFLOW (syx_int32 a, syx_int32 b);
 
 
 

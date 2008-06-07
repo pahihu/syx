@@ -49,18 +49,18 @@ struct SyxErrorEntry
   SyxOop klass;
 };
 
-EXPORT extern void syx_error_init (void);
-EXPORT extern void syx_error_clear (void);
-EXPORT extern SyxErrorType syx_error_register (syx_symbol name, SyxOop klass);
-EXPORT extern SyxErrorEntry *syx_error_lookup (SyxErrorType type);
-EXPORT extern syx_bool syx_signal (SyxErrorType type, SyxOop message);
-EXPORT extern SyxOop syx_signal_create_context (SyxErrorType type, SyxOop message);
-EXPORT extern void syx_warning (syx_symbol fmt, ...);
-EXPORT extern void syx_error (syx_symbol fmt, ...);
-EXPORT extern void syx_perror (syx_symbol message);
+EXPORT void syx_error_init (void);
+EXPORT void syx_error_clear (void);
+EXPORT SyxErrorType syx_error_register (syx_symbol name, SyxOop klass);
+EXPORT SyxErrorEntry *syx_error_lookup (SyxErrorType type);
+EXPORT syx_bool syx_signal (SyxErrorType type, SyxOop message);
+EXPORT SyxOop syx_signal_create_context (SyxErrorType type, SyxOop message);
+EXPORT void syx_warning (syx_symbol fmt, ...);
+EXPORT void syx_error (syx_symbol fmt, ...);
+EXPORT void syx_perror (syx_symbol message);
 
 /*! Useful stuff */
-EXPORT extern syx_bool syx_signal_does_not_understand(SyxOop receiver, SyxOop selector);
+EXPORT syx_bool syx_signal_does_not_understand(SyxOop receiver, SyxOop selector);
 
 /*! Display debugging messages */
 #define syx_debug printf

@@ -68,9 +68,9 @@ struct SyxParser
   syx_int8 _argument_scopes_top;
 };
 
-EXPORT extern SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass);
-EXPORT extern void syx_parser_free (SyxParser *parser, syx_bool free_segment);
-EXPORT extern syx_bool syx_parser_parse (SyxParser *parser, syx_bool skip_message_pattern);
+EXPORT SyxParser *syx_parser_new (SyxLexer *lexer, SyxOop method, SyxOop klass);
+EXPORT void syx_parser_free (SyxParser *parser, syx_bool free_segment);
+EXPORT syx_bool syx_parser_parse (SyxParser *parser, syx_bool skip_message_pattern);
 
 SYX_END_DECLS
 

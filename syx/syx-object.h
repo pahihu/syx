@@ -103,8 +103,8 @@ struct SyxObject
   SyxOop *data;
 };
 
-extern EXPORT SyxObject *syx_memory;
-extern EXPORT syx_int32 _syx_memory_size;
+EXPORT SyxObject *syx_memory;
+EXPORT syx_int32 _syx_memory_size;
 
 /*! Returns the index of the oop in the object table */
 #define SYX_MEMORY_INDEX_OF(oop) ((((SyxOop)oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
@@ -112,7 +112,7 @@ extern EXPORT syx_int32 _syx_memory_size;
 
 /* References to commonly used oops */
 
-extern EXPORT SyxOop syx_nil,
+EXPORT SyxOop syx_nil,
   syx_true,
   syx_false,
 

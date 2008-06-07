@@ -95,19 +95,19 @@
 # define SYX_ENV_PATH_SEPARATOR ';'
 # define SYX_ENV_PATH_SEPARATOR_S ";"
 # ifdef _DLL
-#  define EXPORT __declspec(dllexport)
+#  define EXPORT __declspec(dllexport) extern
 # else
-#  define EXPORT __declspec(dllimport)
+#  define EXPORT __declspec(dllimport) extern
 # endif /* _DLL */
 #else /* !WINDOWS */
 # define SYX_PATH_SEPARATOR '/'
 # define SYX_ENV_PATH_SEPARATOR ':'
 # define SYX_ENV_PATH_SEPARATOR_S ":"
-# define EXPORT
+# define EXPORT extern
 #endif /* WINDOWS */
 
 #ifndef HAVE_ERRNO_H
-EXPORT extern int errno;
+EXPORT int errno;
 # define ERANGE -32
 #endif
 

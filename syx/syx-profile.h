@@ -28,10 +28,10 @@
 
 #include "syx-platform.h"
 
-EXPORT extern syx_uint64 syx_nanotime (void);
-EXPORT extern void syx_profile_print (void);
+EXPORT syx_uint64 syx_nanotime (void);
+EXPORT void syx_profile_print (void);
 
-#define SYX_PROFILE_ETYPE(p) EXPORT extern syx_uint64 _p_ ## p
+#define SYX_PROFILE_ETYPE(p) EXPORT syx_uint64 _p_ ## p
 
 SYX_PROFILE_ETYPE(load_image);
 SYX_PROFILE_ETYPE(exec_state_fetch);

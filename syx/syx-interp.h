@@ -117,7 +117,7 @@ struct SyxPrimitiveEntry {
   SyxPrimitiveFunc func;
 };
 
-extern EXPORT SyxPrimitiveEntry _syx_primitive_entries[SYX_PRIMITIVES_MAX];
+EXPORT SyxPrimitiveEntry _syx_primitive_entries[SYX_PRIMITIVES_MAX];
 
 /*! Returns the entry of a primitive at a given index */
 INLINE SyxPrimitiveEntry *

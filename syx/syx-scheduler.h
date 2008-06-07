@@ -33,10 +33,10 @@
 
 SYX_BEGIN_DECLS
 
-EXPORT extern SyxOop syx_processor;
-EXPORT extern SyxOop *_syx_processor_first_process;
-EXPORT extern SyxOop *_syx_processor_active_process;
-EXPORT extern SyxOop *_syx_processor_byteslice;
+EXPORT SyxOop syx_processor;
+EXPORT SyxOop *_syx_processor_first_process;
+EXPORT SyxOop *_syx_processor_active_process;
+EXPORT SyxOop *_syx_processor_byteslice;
 
 typedef struct SyxSchedulerPoll SyxSchedulerPoll;
 
@@ -52,18 +52,18 @@ struct SyxSchedulerPoll
 
 typedef syx_bool (* SyxSchedulerSourceFunc) (void);
 
-EXPORT extern void syx_scheduler_init (void);
-EXPORT extern syx_bool syx_scheduler_iterate (void);
-EXPORT extern void syx_scheduler_run (void);
-EXPORT extern void syx_scheduler_quit (void);
+EXPORT void syx_scheduler_init (void);
+EXPORT syx_bool syx_scheduler_iterate (void);
+EXPORT void syx_scheduler_run (void);
+EXPORT void syx_scheduler_quit (void);
 
-EXPORT extern syx_bool syx_scheduler_add_process (SyxOop process);
-EXPORT extern syx_bool syx_scheduler_remove_process (SyxOop process);
+EXPORT syx_bool syx_scheduler_add_process (SyxOop process);
+EXPORT syx_bool syx_scheduler_remove_process (SyxOop process);
 
-EXPORT extern void syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore);
-EXPORT extern void syx_scheduler_poll_write_register (syx_nint fd, SyxOop semaphore);
-EXPORT extern void syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
-EXPORT extern void syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
+EXPORT void syx_scheduler_poll_read_register (syx_nint fd, SyxOop semaphore);
+EXPORT void syx_scheduler_poll_write_register (syx_nint fd, SyxOop semaphore);
+EXPORT void syx_scheduler_poll_register_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
+EXPORT void syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc callback, SyxOop semaphore);
 
 /*! Get the byteslice */
 #define syx_processor_byteslice (*_syx_processor_byteslice)
@@ -73,8 +73,8 @@ EXPORT extern void syx_scheduler_poll_unregister_source (SyxSchedulerSourceFunc 
 
 
 /*! This is used internally */
-EXPORT extern void _syx_scheduler_save (FILE *image);
-EXPORT extern void _syx_scheduler_load (FILE *image);
+EXPORT void _syx_scheduler_save (FILE *image);
+EXPORT void _syx_scheduler_load (FILE *image);
 
 SYX_END_DECLS
 

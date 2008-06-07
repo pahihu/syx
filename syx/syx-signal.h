@@ -27,7 +27,7 @@
 
 SYX_BEGIN_DECLS
 
-extern EXPORT void syx_signal_init (void);
+EXPORT void syx_signal_init (void);
 
 SYX_END_DECLS
 

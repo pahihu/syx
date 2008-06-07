@@ -37,30 +37,30 @@
 
 SYX_BEGIN_DECLS
 
-extern EXPORT syx_bool syx_cold_parse (SyxLexer *lexer);
-extern EXPORT syx_bool syx_cold_parse_methods (SyxLexer *lexer);
-extern EXPORT syx_bool syx_cold_file_in (syx_symbol filename);
+EXPORT syx_bool syx_cold_parse (SyxLexer *lexer);
+EXPORT syx_bool syx_cold_parse_methods (SyxLexer *lexer);
+EXPORT syx_bool syx_cold_file_in (syx_symbol filename);
 
-extern EXPORT void syx_semaphore_signal (SyxOop semaphore);
-extern EXPORT void syx_semaphore_wait (SyxOop semaphore);
+EXPORT void syx_semaphore_signal (SyxOop semaphore);
+EXPORT void syx_semaphore_wait (SyxOop semaphore);
 
 /* Utilities to interact with Smalltalk */
 
-extern EXPORT SyxOop syx_send_unary_message (SyxOop receiver, syx_symbol selector);
-extern EXPORT SyxOop syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument);
-extern EXPORT SyxOop syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
-extern EXPORT SyxOop syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
+EXPORT SyxOop syx_send_unary_message (SyxOop receiver, syx_symbol selector);
+EXPORT SyxOop syx_send_binary_message (SyxOop receiver, syx_symbol selector, SyxOop argument);
+EXPORT SyxOop syx_send_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, ...);
+EXPORT SyxOop syx_vsend_message (SyxOop receiver, syx_symbol selector, syx_varsize num_args, va_list ap);
 
-extern EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
-extern EXPORT SyxOop syx_do_it_blocking (syx_symbol code);
+EXPORT SyxOop syx_file_in_blocking (syx_symbol file);
+EXPORT SyxOop syx_do_it_blocking (syx_symbol code);
 
-extern EXPORT void syx_show_traceback (void);
+EXPORT void syx_show_traceback (void);
 
 /* Utilities for strings */
 
-extern EXPORT syx_wstring syx_to_wstring (syx_symbol s);
-extern EXPORT syx_string syx_to_string (syx_wsymbol ws);
-extern EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
+EXPORT syx_wstring syx_to_wstring (syx_symbol s);
+EXPORT syx_string syx_to_string (syx_wsymbol ws);
+EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
 
 
 #ifdef UNICODE

@@ -79,7 +79,7 @@ struct SyxBytecode {
   syx_int32 stack_size;
 };
 
-EXPORT extern SyxBytecode *syx_bytecode_new (void);
+EXPORT SyxBytecode *syx_bytecode_new (void);
 
 /*!
   Frees the memory allocated for a SyxBytecode by syx_bytecode_new.
@@ -92,9 +92,9 @@ syx_bytecode_free (SyxBytecode *bytecode)
   syx_free (bytecode);
 }
 
-EXPORT extern void syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low);
-EXPORT extern void syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector);
-EXPORT extern syx_uint32 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal);
+EXPORT void syx_bytecode_gen_instruction (SyxBytecode *bytecode, syx_uint8 high, syx_uint16 low);
+EXPORT void syx_bytecode_gen_message (SyxBytecode *bytecode, syx_bool to_super, syx_uint32 argument_count, syx_symbol selector);
+EXPORT syx_uint32 syx_bytecode_gen_literal (SyxBytecode *bytecode, SyxOop literal);
 
 /*! Puts the bytecode into the code array and increment the code top. It's automatically called from syx_bytecode_gen_instruction */
 SYX_FUNC_BYTECODE (gen_code, syx_uint16 value)
