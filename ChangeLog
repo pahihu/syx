@@ -1,52 +1,56 @@
 2008-06-06  Luca Bruno  <lethalman88@gmail.com>
 
-	* src/main.c (_parse_args): startupSystem on WinCE too
+        == Released 0.1.7 version ==
+        
+        * NEWS: 
+
+        * src/main.c (_parse_args): startupSystem on WinCE too
 
 2008-06-05  Luca Bruno  <lethalman88@gmail.com>
 
-	* syx/syx-primitives.c (Semaphore_waitFor): fixed Windows part
+        * syx/syx-primitives.c (Semaphore_waitFor): fixed Windows part
 
 2008-06-04  Luca Bruno  <lethalman88@gmail.com>
 
-	* plugins/wingui/plugin-init.c (WndProcedure): fixed for new interpreter
+        * plugins/wingui/plugin-init.c (WndProcedure): fixed for new interpreter
 
-	* st/kernel/FileStream.st (handle): added
+        * st/kernel/FileStream.st (handle): added
 
-	* st/kernel/Semaphore.st (waitForWrite, waitForRead): directly use the handle
+        * st/kernel/Semaphore.st (waitForWrite, waitForRead): directly use the handle
 
-	* syx/syx-primitives.c (Semaphore_waitFor): explicitely use GetStdHandle
+        * syx/syx-primitives.c (Semaphore_waitFor): explicitely use GetStdHandle
 
 2008-06-02  Luca Bruno  <lethalman88@gmail.com>
 
-	* plugins/readline/SConscript: on some systems -lsyx is required for building plugins with SCons
+        * plugins/readline/SConscript: on some systems -lsyx is required for building plugins with SCons
 
-	* configure.ac: create syx.pc
+        * configure.ac: create syx.pc
 
-	* Makefile.am: install syx.pc
+        * Makefile.am: install syx.pc
 
-	* syx.pc.in: added
+        * syx.pc.in: added
 
 2008-06-01  Luca Bruno  <lethalman88@gmail.com>
 
-	* plugins/x11/Xlib_wrap.c: regenerated for comments and new SWIG macros
+        * plugins/x11/Xlib_wrap.c: regenerated for comments and new SWIG macros
 
-	* plugins/x11/geninterface.sh: added
+        * plugins/x11/geninterface.sh: added
 
-	* plugins/gtk/gtk_wrap.c: added comments and removed Gdk threading
+        * plugins/gtk/gtk_wrap.c: added comments and removed Gdk threading
 
-	* plugins/gtk/gobject.i: ignore non-public API
+        * plugins/gtk/gobject.i: ignore non-public API
 
-	* plugins/readline/SConscript: updated for installing Smalltalk sources
+        * plugins/readline/SConscript: updated for installing Smalltalk sources
 
-	* SConstruct: updated
+        * SConstruct: updated
 
-	* doc/Makefile.am: install manpages
+        * doc/Makefile.am: install manpages
 
-	* doc/manual/language.texi (Block closures): fixed typo
+        * doc/manual/language.texi (Block closures): fixed typo
 
-	* doc/Makefile.am: fixed making documentation
+        * doc/Makefile.am: fixed making documentation
 
-	Prepared NEWS file
+        Prepared NEWS file
 
         * examples/x11: adjusted the example
 
