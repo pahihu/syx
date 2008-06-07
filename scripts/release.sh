@@ -39,7 +39,7 @@ make_binary()
     make
     make install DESTDIR=$DESTDIR
 
-    tar -czf $ARCHIVE $DESTDIR
+    tar -czf $ARCHIVE $BINARY
     rm -rf $DESTDIR
     mv $ARCHIVE $ARCHIVEDIR
 }
