@@ -142,7 +142,7 @@ signal
 !NotFound class methodsFor: 'instance creation'!
 
 what: anObject
-    ^self signal: 'Object not found.'
+    ^self signal: 'Object not found: ', anObject displayString
 ! !
 
 

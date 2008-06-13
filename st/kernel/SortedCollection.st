@@ -40,7 +40,34 @@ sortBlock
 
 sortBlock: aBlock
     | c |
-    sortBlock := aBlock
+    sortBlock := aBlock.
+    "Do an insertion sort"
+    2 to: self size do: [ :i |
+        | x j |
+        x := self at: i.
+        j := i - 1.
+        [ j >= 1 and: [ sortBlock value: x value: (self at: j) ] ]
+            whileTrue: [
+                self at: j + 1 put: (self at: j).
+                j := j - 1  ].
+        self at: j + 1 put: x ]
+! !
+
+!SortedCollection methodsFor: 'basic'!
+
+indexOf: anObject
+    | low high pos |
+    low := pos := 0.
+    high := self size - 1.
+    "Find the right position with binary search"
+    [ low <= high ]
+        whileTrue: [ pos := (low + high) // 2.
+                     (self at: pos + 1) = anObject
+                         ifTrue: [ ^pos + 1 ].
+                     (sortBlock value: (self at: pos + 1) value: anObject)
+                         ifTrue: [ low := pos + 1 ]
+                         ifFalse: [ high := pos - 1 ] ].
+    NotFound what: anObject
 ! !
 
 !SortedCollection methodsFor: 'adding'!
