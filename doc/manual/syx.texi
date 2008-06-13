@@ -33,7 +33,7 @@ Free Documentation License".
 
 @dircategory Software development
 @direntry
-* syx: (syx)Smalltalk YX Manual.
+* syx: (syx). Smalltalk YX Manual.
 @end direntry
 
 @titlepage
