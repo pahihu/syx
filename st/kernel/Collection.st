@@ -233,6 +233,14 @@ asByteArray
 
 asOrderedCollection
     ^OrderedCollection withAll: self
+!
+
+asSortedCollection
+    ^SortedCollection withAll: self
+!
+
+asSortedCollection: aBlock
+    ^(SortedCollection sortBlock: aBlock) addAll: self
 ! !
 
 !Collection methodsFor: 'testing'!

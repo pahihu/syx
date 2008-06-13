@@ -293,7 +293,7 @@ reverseDo: aBlock
 
 at: anIndex
     <primitive: 'Object_at'>
-    anIndex printNl
+    anIndex printNl.
 	self primitiveFailed
 !
 

@@ -20,7 +20,7 @@ def extract_from_c (contents):
         if 'automatically generated' in match:
             continue
         print match
-        print '---------------------'
+#        print '---------------------'
 
 def extract_from_st (contents):
     matches = rx_st.findall (contents)

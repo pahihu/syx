@@ -78,6 +78,10 @@ SequenceableCollection subclass: #OrderedCollection
 		       instanceVariableNames: 'firstIndex lastIndex'
                        classVariableNames: ''!
 
+SequenceableCollection subclass: #SortedCollection
+                       instanceVariableNames: 'sortBlock'
+                       classVariableNames: ''!
+
 Object subclass: #Stack
        instanceVariableNames: 'collection top'
        classVariableNames: ''!
