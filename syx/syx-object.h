@@ -42,15 +42,27 @@
 SYX_BEGIN_DECLS
 
 #define SYX_OBJECT(oop) ((SyxObject *) (oop))
-#define SYX_OBJECT_FLOAT(oop) (*((syx_double *)(SYX_OBJECT(oop)->data)))
+#define SYX_OBJECT_TYPE(oop) (SYX_OBJECT (object)->object_type)
+#define SYX_ARRAYED_OBJECT(oop) ((SyxArrayedObject *) (oop))
+
+#define SYX_SYMBOL(oop) ((SyxSymbol *) (oop))
+#define SYX_FLOAT(oop) ((SyxFloat *) (oop))
+#define SYX_ARRAY(oop) ((SyxArray *) (oop))
+#define SYX_BYTE_ARRAY(oop) ((SyxByteArray *) (oop))
+#define SYX_FLOAT_ARRAY(oop) ((SyxFloatArray *) (oop))
+#define SYX_INTEGER_ARRAY(oop) ((SyxIntegerArray *) (oop))
+#define SYX_WORD_ARRAY(oop) ((SyxWordArray *) (oop))
+#define SYX_CONTEXT(oop) ((SyxContext *) (oop))
+#define SYX_METHOD_CONTEXT(oop) ((SyxMethodContext *) (oop))
+#define SYX_BLOCK_CONTEXT(oop) ((SyxBlockContext *) (oop))
+#define SYX_PROCESS(oop) ((SyxProcess *) (oop))
 
 #ifdef HAVE_LIBGMP
-#define SYX_OBJECT_LARGE_INTEGER(oop) (*(mpz_t *)(SYX_OBJECT(oop)->data))
+#define SYX_LARGE_INTEGER(oop) ((SyxLargeInteger *) (oop))
 #endif
 
-#define SYX_OBJECT_SYMBOL(oop) ((syx_symbol)(SYX_OBJECT(oop)->data))
-#define SYX_OBJECT_STRING(oop) ((syx_string)(SYX_OBJECT(oop)->data))
-#define SYX_OBJECT_BYTE_ARRAY(oop) ((syx_uint8 *)(SYX_OBJECT(oop)->data))
+#define SYX_STRING_VALUE(oop) ((syx_string)(SYX_BYTE_ARRAY(oop)->bytes))
+
 #define SYX_OBJECT_VARS(oop) (SYX_OBJECT(oop)->vars)
 #define SYX_OBJECT_DATA_SIZE(oop) (SYX_OBJECT(oop)->data_size)
 #define SYX_OBJECT_DATA(oop) (SYX_OBJECT(oop)->data)
@@ -81,8 +93,14 @@ typedef struct SyxObject SyxObject;
 /*! The core class of Syx holding necessary informations for each concrete object. */
 struct SyxObject
 {
-  /*! Contains the instance size, format, tag and unused bits */
-  SyxOop mark;
+  /*! This is needed by the GC and it's always SYX_TYPE_POINTER, see SyxType */
+  syx_int8 tag;
+
+  /*! The object type, see SyxObjectType */
+  syx_int8 type;
+
+  /*! Number of instance variables */
+  syx_int16 size;
 
   /*! Holds the hash code of the object */
   SyxOop hash;
@@ -197,14 +215,7 @@ syx_object_get_class (SyxOop object)
 
   If the object is a constant, a small integer or a character, no operation is done
 */
-INLINE void
-syx_object_set_class (SyxOop object, SyxOop klass)
-{
-  if (!SYX_IS_OBJECT(object))
-    return;
-
-  SYX_OBJECT(object)->klass = klass;
-}
+#define syx_object_set_class (oop, klass) (SYX_OBJECT (oop)->klass = klass)
 
 EXPORT syx_symbol *syx_class_get_all_instance_variable_names (SyxOop klass);
 EXPORT syx_bool syx_class_is_superclass_of (SyxOop klass, SyxOop subclass);
