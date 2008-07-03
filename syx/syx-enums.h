@@ -38,23 +38,6 @@ typedef enum
     SYX_TYPE_CHARACTER
   } SyxType;
 
-/*! Number of bits for header informations */
-typedef enum
-  {
-    SYX_OBJECT_TYPE_OBJECT,
-    SYX_OBJECT_TYPE_FLOAT,
-    SYX_OBJECT_TYPE_LARGE_INTEGER,
-    SYX_OBJECT_TYPE_ARRAY,
-    SYX_OBJECT_TYPE_BYTE_ARRAY,
-    SYX_OBJECT_TYPE_FLOAT_ARRAY,
-    SYX_OBJECT_TYPE_INTEGER_ARRAY,
-    SYX_OBJECT_TYPE_WORD_ARRAY,
-    SYX_OBJECT_TYPE_CONTEXT,
-    SYX_OBJECT_TYPE_PROCESS,
-
-    SYX_OBJECT_TYPE_ALL
-  } SyxObjectType;
-
 /*!
   Indexes of known instance variables.
 
