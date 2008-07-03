@@ -81,17 +81,26 @@ typedef struct SyxObject SyxObject;
 /*! The core class of Syx holding necessary informations for each concrete object. */
 struct SyxObject
 {
-  /*! Contains the instance size, format, tag and unused bits */
-  SyxOop mark;
-
-  /*! Holds the hash code of the object */
-  SyxOop hash;
-
   /*! Holds the class of the instance. Please use syx_object_get_class to obtain a class from a SyxOop */
   SyxOop klass;
   
-  /*! Instance variables if even */
-  SyxOop fields[];
+  /*! Specify if this object contains references to other objects in its data */
+  syx_bool has_refs;
+
+  /*! Used to mark the object by the garbage collector */
+  syx_bool is_marked;
+
+  /*! Set to TRUE if data shouldn't be modified */
+  syx_bool is_constant;
+
+  /*! A list of SyxOop containing instance variables. */
+  SyxOop *vars;
+
+  /*! The number of data elements held by the object */
+  syx_varsize data_size;
+
+  /*! This holds the data stored for the object. These can be oops, bytes, doubles and so on. */
+  SyxOop *data;
 };
 
 EXPORT SyxObject *syx_memory;
@@ -99,6 +108,7 @@ EXPORT syx_int32 _syx_memory_size;
 
 /*! Returns the index of the oop in the object table */
 #define SYX_MEMORY_INDEX_OF(oop) ((((SyxOop)oop) - (SyxOop)syx_memory) / sizeof (SyxObject))
+
 
 /* References to commonly used oops */
 
