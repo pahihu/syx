@@ -177,6 +177,6 @@ isInteger
 !Integer methodsFor: 'enumerating'!
 
 timesRepeat: aBlock
-    1 to: self to: [ :ea |
+    1 to: self do: [ :ea |
         aBlock value ]
 ! !
