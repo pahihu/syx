@@ -46,7 +46,7 @@ allMask: anInteger
 
 anyMask: anInteger
     "Answer true if any of the bits that are 1 in the argument are 1 in the receiver"
-    ^(self bitAnd: anInteger) ~~ anInteger
+    ^(self bitAnd: anInteger) ~= 0
 !
 
 noMask: anInteger
