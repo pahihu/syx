@@ -172,6 +172,12 @@ truncated
 
 isInteger
     ^true
+!
+
+odd
+    "Answer true if the receiver is odd"
+
+    ^(self bitAnd: 1) ~= 0
 ! !
 
 !Integer methodsFor: 'enumerating'!
