@@ -97,7 +97,7 @@ EXPORT syx_uint32 syx_find_first_non_whitespace (syx_symbol string);
         s = NULL;                               \
         while (TRUE)                            \
           {                                     \
-            s = syx_realloc(s, size);           \
+            s = (syx_string) syx_realloc(s, size);           \
             va_start(ap, fmt);                  \
             n = vsnprintf (s, size, fmt, ap);   \
             va_end(ap);                         \
