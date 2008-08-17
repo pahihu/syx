@@ -5,9 +5,9 @@ import string
 
 # Tune this
 
-FROM_MAIL = "yourmail"
-TO_MAIL = "announcemail"
-SENDMAIL = "sendmail -t"
+FROM_MAIL = "lethalman88@gmail.com"
+TO_MAIL = "syx-commit@googlegroups.com"
+SENDMAIL = "esmtp -t"
 
 # Some other config
 
@@ -65,10 +65,10 @@ $diff""")
         Rev.__init__ (self, name, verify)
         self.branch = branch
 
-    def email_report (self, fromail, tomail):
+    def email_report (self):
         whatchanged = self.whatchanged ()
         diff = self.diff (self.ancestor ())
-        return self.email_tmpl.substitute (fromail=fromail, tomail=tomail,
+        return self.email_tmpl.substitute (fromail=FROM_MAIL, tomail=TO_MAIL,
                                            branch=self.branch.name, hash=self.name,
                                            whatchanged=whatchanged,
                                            diff=diff)
@@ -133,7 +133,7 @@ for last_commit in last_commits:
     for commit in new_commits:
         print "* Sendmail %r" % commit
         if not dryrun:
-            sendmail (commit.email_report ("lethalman88@gmail.com", "syx-commit@googlegroups.com"))
+            sendmail (commit.email_report ())
     if new_commits:
         new_last_commits.append (new_commits[-1])
     else:
