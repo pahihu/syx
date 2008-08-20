@@ -38,7 +38,7 @@ class Rev (object):
             self.verify ()
     
     def verify (self):
-        assert not git_exit ("rev-list -n 1 "+self.name)
+        assert not git_exit ("rev-list -n 1 %s --" % self.name)
 
 class Branch (Rev):
     def checkout (self):
