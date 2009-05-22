@@ -1,3 +1,7 @@
+2009-05-22  Luca Bruno  <lethalman88@gmail.com>
+
+	* msvc/syx-config.h: define HAVE_FSTAT; thanks Gulam Faruque
+
 2008-07-16  Luca Bruno  <lethalman88@gmail.com>
 
 	Canol Gokel:

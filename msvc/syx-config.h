@@ -9,6 +9,7 @@
 #define HAVE__INLINE 1
 #define HAVE_WINDOWS_H 1
 #define HAVE_INT64_T
+#define HAVE_FSTAT 1
 
 #define open _open
 #define read _read
