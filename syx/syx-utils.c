@@ -574,8 +574,13 @@ syx_do_it_blocking (syx_symbol code)
 syx_wstring
 syx_to_wstring (syx_symbol s)
 {
-  syx_size size = strlen (s);
-  syx_wstring ws = (syx_wstring) syx_calloc (size+1, sizeof (wchar_t));
+  syx_size size;
+  syx_wstring ws;
+  if (!s)
+    return NULL;
+
+  size = strlen (s);
+  ws = (syx_wstring) syx_calloc (size+1, sizeof (wchar_t));
   mbstowcs (ws, s, size);
   return ws;
 }
@@ -584,8 +589,13 @@ syx_to_wstring (syx_symbol s)
 syx_string
 syx_to_string (syx_wsymbol ws)
 {
-  syx_size size = wcslen (ws);
-  syx_string s = (syx_string) syx_calloc (size+1, sizeof (syx_char));
+  syx_size size;
+  syx_string s;
+  if (!ws)
+    return NULL;
+
+  size = wcslen (ws);
+  s = (syx_string) syx_calloc (size+1, sizeof (syx_char));
   wcstombs (s, ws, size);
   return s;
 }

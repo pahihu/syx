@@ -16,6 +16,8 @@
 #define write _write
 #define close _close
 
+#define WITH_PLUGINS 1
+
 #define ROOT_PATH "."
 #define IMAGE_PATH "default.sim"
 #define PLUGIN_PATH "lib"

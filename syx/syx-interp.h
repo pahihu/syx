@@ -105,7 +105,7 @@ EXPORT void _syx_interp_frame_prepare_new (SyxInterpState *state, SyxOop method)
 
 typedef syx_bool (* SyxPrimitiveFunc) (SyxInterpState *es, SyxOop method);
 #define SYX_FUNC_PRIMITIVE(name)                          \
-  syx_bool                                                \
+  EXPORT syx_bool                                         \
   name (SyxInterpState *es, SyxOop method)
 
 typedef struct SyxPrimitiveEntry SyxPrimitiveEntry;

@@ -145,7 +145,10 @@ syx_library_open (syx_symbol location)
 #ifdef WITH_PLUGINS
 
 #ifndef HAVE_LIBDL
-  ret = LoadLibrary (SYX_IFDEF_UNICODE (location));
+  if (location)
+    ret = LoadLibrary (SYX_IFDEF_UNICODE (location));
+  else
+    ret = GetModuleHandle(NULL);
 #else /* HAVE_LIBDL */
   ret = dlopen (location, RTLD_NOW);
 
