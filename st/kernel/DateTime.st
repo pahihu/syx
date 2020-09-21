@@ -26,6 +26,10 @@ DEALINGS IN THE SOFTWARE.
 
 now
     ^self new initializeGMTime
+!
+
+milliseconds
+    ^self new primMilliseconds
 ! !
 
 !DateTime methodsFor: 'initialize-release'!
@@ -33,6 +37,11 @@ now
 primGMTime
     <primitive: 'DateTime_gmTime'>
 	self primitiveFailed
+!
+
+primMilliseconds
+    <primitive: 'DateTime_milliseconds'>
+  self primitiveFailed
 !
 
 initializeGMTime

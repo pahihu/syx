@@ -50,6 +50,16 @@ coerce: aNumber
 
 !Float methodsFor: 'printing'!
 
+asString
+    <primitive: 'Float_asString'>
+  self primitiveFailed
+!
+
+printOn: aStream
+  aStream nextPutAll: self asString
+! !
+
+"
 printNl
     ^self print
 !
@@ -58,6 +68,7 @@ print
     <primitive: 'Float_print'>
 	self primitiveFailed
 ! !
+"
 
 !Float methodsFor: 'testing'!
 

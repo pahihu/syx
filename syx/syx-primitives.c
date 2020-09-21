@@ -1270,6 +1270,14 @@ SYX_FUNC_PRIMITIVE(LargeInteger_clear)
 
 /* Floats */
 
+SYX_FUNC_PRIMITIVE (Float_asString)
+{
+  char buf[32];
+
+  sprintf (buf, "%f", SYX_OBJECT_FLOAT(es->message_receiver));
+  SYX_PRIM_RETURN(syx_string_new (buf));
+}
+
 /* This printing function is used ONLY for tests */
 SYX_FUNC_PRIMITIVE (Float_print)
 {
@@ -1486,6 +1494,19 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
 
 
 /* Date and time */
+
+SYX_FUNC_PRIMITIVE (DateTime_milliseconds)
+{
+  clock_t t;
+  
+  t = clock ();
+  if (t < 0)
+    {
+      SYX_PRIM_FAIL;
+    }
+
+  SYX_PRIM_RETURN (syx_small_integer_new (1000.0 * t / CLOCKS_PER_SEC));
+}
 
 SYX_FUNC_PRIMITIVE (DateTime_gmTime)
 {
@@ -2074,8 +2095,10 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Float_floor", Float_floor },
   { "Float_trunc", Float_trunc },
   { "Float_print", Float_print },
+  { "Float_asString", Float_asString },
 
   /* Date and time */
+  { "DateTime_milliseconds", DateTime_milliseconds },
   { "DateTime_gmTime", DateTime_gmTime },
 
   /* Object memory */
