@@ -53,7 +53,7 @@ with: firstObject with: secondObject
 
 with: firstObject with: secondObject with: thirdObject
     "Create a collection with the three given elements"
-    ^(self new: 4)
+    ^(self new: 3)
         at: 1 put: firstObject;
         at: 2 put: secondObject;
         at: 3 put: thirdObject;
