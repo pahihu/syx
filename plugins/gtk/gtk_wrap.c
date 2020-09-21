@@ -181,10 +181,10 @@ typedef union {
 /* Module: Gtk Function: new__GStaticMutex */
 SYX_FUNC_PRIMITIVE(Gtk_new__GStaticMutex)
 {
-  struct _GStaticMutex *result = 0 ;
+  GStaticMutex *result = 0 ;
   SyxOop result_oop;
   
-  result = (struct _GStaticMutex *)(struct _GStaticMutex *) calloc(1, sizeof(struct _GStaticMutex));
+  result = (GStaticMutex *) calloc(1, sizeof(GStaticMutex));
   SWIG_APPEND_VALUE ((SyxOop) result);
   SYX_PRIM_RETURN (result_oop);
 }
@@ -193,10 +193,10 @@ SYX_FUNC_PRIMITIVE(Gtk_new__GStaticMutex)
 /* Module: Gtk Function: delete__GStaticMutex */
 SYX_FUNC_PRIMITIVE(Gtk_delete__GStaticMutex)
 {
-  struct _GStaticMutex *arg1 = (struct _GStaticMutex *) 0 ;
+  GStaticMutex *arg1 = (GStaticMutex *) 0 ;
   SyxOop result_oop;
   
-  SWIG_FIRST_SELF(arg1, struct _GStaticMutex *, es->message_receiver)
+  SWIG_FIRST_SELF(arg1, GStaticMutex *, es->message_receiver)
   free((char *) arg1);
   
   SWIG_APPEND_VALUE (es->message_receiver);
@@ -230,6 +230,7 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GStaticMutex_static_mutex)
 }
 
 
+#ifdef HAS_GSYSTEMTHREAD
 /* Module: Gtk Function: new__GSystemThread */
 SYX_FUNC_PRIMITIVE(Gtk_new__GSystemThread)
 {
@@ -254,6 +255,7 @@ SYX_FUNC_PRIMITIVE(Gtk_delete__GSystemThread)
   SWIG_APPEND_VALUE (es->message_receiver);
   SYX_PRIM_RETURN (result_oop);
 }
+#endif
 
 
 /* Module: Gtk Function: new__GFloatIEEE754 */
