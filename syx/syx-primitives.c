@@ -1492,6 +1492,24 @@ SYX_FUNC_PRIMITIVE (Float_trunc)
   SYX_PRIM_RETURN (syx_small_integer_new (ret));
 }
 
+SYX_FUNC_PRIMITIVE (Float_exp)
+{
+  double ret = exp (SYX_OBJECT_FLOAT (es->message_receiver));
+  SYX_PRIM_RETURN (syx_float_new (ret));
+}
+
+SYX_FUNC_PRIMITIVE (Float_ln)
+{
+  double ret = log (SYX_OBJECT_FLOAT (es->message_receiver));
+  SYX_PRIM_RETURN (syx_float_new (ret));
+}
+
+SYX_FUNC_PRIMITIVE (Float_sqrt)
+{
+  double ret = sqrt (SYX_OBJECT_FLOAT (es->message_receiver));
+  SYX_PRIM_RETURN (syx_float_new (ret));
+}
+
 
 /* Date and time */
 
@@ -2096,6 +2114,9 @@ SyxPrimitiveEntry _syx_primitive_entries[] = {
   { "Float_trunc", Float_trunc },
   { "Float_print", Float_print },
   { "Float_asString", Float_asString },
+  { "Float_exp", Float_exp },
+  { "Float_ln", Float_ln },
+  { "Float_sqrt", Float_sqrt },
 
   /* Date and time */
   { "DateTime_milliseconds", DateTime_milliseconds },

@@ -356,15 +356,15 @@ zeroDivide
 !Number methodsFor: 'mathematical functions'!
 
 exp
-    self notYetImplemented
+    ^self asFloat exp
 !
 
 ln
-    self notYetImplemented
+    ^self asFloat ln
 !
 
 log: aNumber
-    self notYetImplemented
+    ^self ln / aNumber ln
 !
 
 floorLog: radix
@@ -372,15 +372,26 @@ floorLog: radix
 !
 
 raisedTo: aNumber
-    self notYetImplemented
+    aNumber isInteger ifTrue: [
+        ^self raisedToInteger: aNumber].
+    ^(aNumber * self ln) exp
 !
 
 raisedToInteger: anInteger
-    self notYetImplemented
+    anInteger isInteger
+	ifFalse: [ self error: 'An integer is required' ].
+
+    anInteger isZero ifTrue: [
+        ^self unity ].
+    anInteger = 1 ifTrue: [
+        ^self ].
+    ^anInteger odd
+        ifTrue: [ self * (self raisedToInteger: anInteger - 1)]
+        ifFalse: [ (self raisedToInteger: anInteger / 2) squared ]
 !
 
 sqrt
-    self notYetImplemented
+    ^self asFloat sqrt
 !
 
 squared

@@ -160,3 +160,21 @@ truncated
     <primitive: 'Float_trunc'>
 	self primitiveFailed
 ! !
+
+!Float methodsFor: 'mathematical functions'!
+
+exp
+    <primitive: 'Float_exp'>
+        self primitiveFailed
+!
+
+ln
+    <primitive: 'Float_ln'>
+        self primitiveFailed
+!
+
+sqrt
+    <primitive: 'Float_sqrt'>
+        self primitiveFailed
+! !
+
