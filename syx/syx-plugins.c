@@ -259,7 +259,11 @@ syx_plugin_load (syx_symbol name)
 #ifdef WINDOWS
       strcat (namext, ".dll");
 #else
+#ifdef __APPLE__
+      strcat (namext, ".dylib");
+#else
       strcat (namext, ".so");
+#endif /* __APPLE__ */
 #endif /* WINDOWS */
 
 #ifdef SYX_DEBUG_INFO
