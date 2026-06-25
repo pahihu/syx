@@ -28,8 +28,15 @@
 #include "syx-platform.h"
 
 #ifdef HAVE_STDARG_H
+#ifdef __APPLE__
+#define _ISOC99_SOURCE 1
+#define _C99_SOURCE 1
+#include <stdio.h>
+#include <stdarg.h>
+#else
 #define _ISOC99_SOURCE 1
 #include <stdarg.h>
+#endif
 #endif
 
 #include "syx-types.h"

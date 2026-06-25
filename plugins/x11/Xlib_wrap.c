@@ -37516,7 +37516,7 @@ SYX_FUNC_PRIMITIVE(X11_XRegisterIMInstantiateCallback)
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
-  result = XRegisterIMInstantiateCallback(arg1,arg2,arg3,arg4,arg5,arg6);
+  result = XRegisterIMInstantiateCallback(arg1,arg2,arg3,arg4,(XIDProc)arg5,(XPointer)arg6);
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
@@ -37552,7 +37552,7 @@ SYX_FUNC_PRIMITIVE(X11_XUnregisterIMInstantiateCallback)
   
   arg5 = (XIMProc) es->message_arguments[3];
   SWIG_FIRST_SELF(arg6, XPointer *, es->message_arguments[4])
-  result = XUnregisterIMInstantiateCallback(arg1,arg2,arg3,arg4,arg5,arg6);
+  result = XUnregisterIMInstantiateCallback(arg1,arg2,arg3,arg4,(XIDProc)arg5,(XPointer)arg6);
   SWIG_APPEND_VALUE (syx_boolean_new(result));
   SYX_PRIM_RETURN (result_oop);
 }
